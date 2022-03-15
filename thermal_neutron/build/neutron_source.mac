@@ -1,0 +1,66 @@
+###############################################################################
+#                                                                             #
+# neutron.mac                                                                 #
+# 1 neutron fired in the room                                                 #
+#                                                                             #
+###############################################################################
+
+# verbosities
+/control/verbose 1
+/run/verbose 1
+/tracking/verbose 1
+#/hits/verbose 0
+#turn off the scintillation
+
+#/process/optical/scintillation/setByParticleType False
+#/process/optical/scintillation/setStackPhotons 1
+
+#/process/list all
+#/process/inactivate Scintillation e-
+#/run/setCutForAGivenParticle e- 1 mm
+
+
+# draw flags
+/dmx/draw/drawColours custom
+/dmx/draw/gammaColour green
+##/dmx/draw/drawTracks noscint
+/dmx/draw/drawTracks all
+/dmx/draw/drawHits 0
+#
+# file output
+/dmx/savePmt  0
+/dmx/saveHits 1
+#
+# kill gammas in lab wall
+/dmx/KillGammasInConcrete 0
+
+# using GPS for ambe_spectrum:
+
+/gps/pos/type Plane
+/gps/pos/shape Square
+/gps/pos/halfx 0.5 m
+/gps/pos/halfy 0.5 m
+
+/gps/pos/centre 0 0 1 m
+
+/gps/direction 0 0 -1
+
+#
+#
+/gps/ene/type Bbody
+/gps/ene/temp 297
+/gps/ene/min 0.01 eV
+/gps/ene/max 0.1 eV
+
+#
+/gps/particle neutron
+
+
+/random/setDirectoryName ./seeds
+/random/setSavingFlag
+
+/dmx/hitsfile ambe_spectrum.out
+/dmx/histogramfile ambe_spectrum.his
+
+/run/beamOn 100
+

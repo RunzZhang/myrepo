@@ -1,0 +1,191 @@
+###############################################################################
+#                                                                             #
+# Poli_Th232.mac                                                                #
+# 1 neutron fired in the room                                                 #
+#                                                                             #
+###############################################################################
+# output log-file name
+#/run/filename n_phantom_100000.log
+#
+# verbosities
+/control/verbose 1
+/run/verbose 1
+/tracking/verbose 0
+/hits/verbose 1
+#
+# draw flags
+/dmx/draw/drawColours custom
+/dmx/draw/gammaColour green
+##/dmx/draw/drawTracks noscint
+/dmx/draw/drawTracks all
+/dmx/draw/drawHits 0
+#
+# file output
+/dmx/savePmt  0
+/dmx/saveHits 0
+#
+#
+# radioactive decay module
+/grdm/analogueMC 1
+/grdm/verbose 0
+/grdm/allVolumes
+#
+#
+# using GPS for ambe_spectrum:
+/gps/particle neutron
+/gps/pos/type Volume
+/gps/pos/shape Cylinder
+/gps/pos/centre 0. 0. 43.21 cm
+/gps/pos/radius 12.6 cm
+/gps/pos/halfz 18 cm
+/gps/pos/confine contenedor_HDPE_phys
+/gps/ang/type iso
+/gps/ene/type Arb
+/gps/hist/type arb
+#
+#
+#
+/gps/hist/point 0 3.87259e-13
+/gps/hist/point 0.1 3.25675e-10
+/gps/hist/point 0.2 2.14098e-10
+/gps/hist/point 0.3 1.74805e-10
+/gps/hist/point 0.4 2.01544e-10
+/gps/hist/point 0.5 1.77804e-10
+/gps/hist/point 0.6 1.97035e-10
+/gps/hist/point 0.7 2.17474e-10
+/gps/hist/point 0.8 2.19819e-10
+/gps/hist/point 0.9 1.91943e-10
+/gps/hist/point 1 1.79668e-10
+/gps/hist/point 1.1 1.83782e-10
+/gps/hist/point 1.2 1.93094e-10
+/gps/hist/point 1.3 1.35944e-10
+/gps/hist/point 1.4 1.25896e-10
+/gps/hist/point 1.5 1.29672e-10
+/gps/hist/point 1.6 1.33606e-10
+/gps/hist/point 1.7 1.39315e-10
+/gps/hist/point 1.8 1.42491e-10
+/gps/hist/point 1.9 1.3276e-10
+/gps/hist/point 2 1.25005e-10
+/gps/hist/point 2.1 1.06894e-10
+/gps/hist/point 2.2 1.08607e-10
+/gps/hist/point 2.3 1.11404e-10
+/gps/hist/point 2.4 1.14162e-10
+/gps/hist/point 2.5 1.15782e-10
+/gps/hist/point 2.6 1.16316e-10
+/gps/hist/point 2.7 1.16172e-10
+/gps/hist/point 2.8 9.25454e-11
+/gps/hist/point 2.9 6.03225e-11
+/gps/hist/point 3 5.70353e-11
+/gps/hist/point 3.1 5.79802e-11
+/gps/hist/point 3.2 6.0308e-11
+/gps/hist/point 3.3 6.28198e-11
+/gps/hist/point 3.4 6.52117e-11
+/gps/hist/point 3.5 6.68449e-11
+/gps/hist/point 3.6 6.8121e-11
+/gps/hist/point 3.7 7.10385e-11
+/gps/hist/point 3.8 7.5667e-11
+/gps/hist/point 3.9 8.12455e-11
+/gps/hist/point 4 8.77943e-11
+/gps/hist/point 4.1 9.56823e-11
+/gps/hist/point 4.2 1.04875e-10
+/gps/hist/point 4.3 1.14688e-10
+/gps/hist/point 4.4 1.24619e-10
+/gps/hist/point 4.5 1.34935e-10
+/gps/hist/point 4.6 1.45731e-10
+/gps/hist/point 4.7 1.56528e-10
+/gps/hist/point 4.8 1.67284e-10
+/gps/hist/point 4.9 1.78045e-10
+/gps/hist/point 5 1.88465e-10
+/gps/hist/point 5.1 1.98107e-10
+/gps/hist/point 5.2 2.06636e-10
+/gps/hist/point 5.3 2.1389e-10
+/gps/hist/point 5.4 2.19841e-10
+/gps/hist/point 5.5 2.24528e-10
+/gps/hist/point 5.6 2.28004e-10
+/gps/hist/point 5.7 2.30281e-10
+/gps/hist/point 5.8 2.31284e-10
+/gps/hist/point 5.9 2.30815e-10
+/gps/hist/point 6 2.2861e-10
+/gps/hist/point 6.1 2.24493e-10
+/gps/hist/point 6.2 2.1842e-10
+/gps/hist/point 6.3 2.10358e-10
+/gps/hist/point 6.4 2.00282e-10
+/gps/hist/point 6.5 1.88343e-10
+/gps/hist/point 6.6 1.74886e-10
+/gps/hist/point 6.7 1.60318e-10
+/gps/hist/point 6.8 1.45027e-10
+/gps/hist/point 6.9 1.29394e-10
+/gps/hist/point 7 1.13807e-10
+/gps/hist/point 7.1 9.86493e-11
+/gps/hist/point 7.2 8.42987e-11
+/gps/hist/point 7.3 7.11087e-11
+/gps/hist/point 7.4 5.93888e-11
+/gps/hist/point 7.5 4.93684e-11
+/gps/hist/point 7.6 4.11597e-11
+/gps/hist/point 7.7 3.47347e-11
+/gps/hist/point 7.8 2.9929e-11
+/gps/hist/point 7.9 2.64761e-11
+/gps/hist/point 8 2.40591e-11
+/gps/hist/point 8.1 2.2362e-11
+/gps/hist/point 8.2 2.11048e-11
+/gps/hist/point 8.3 2.00541e-11
+/gps/hist/point 8.4 1.90163e-11
+/gps/hist/point 8.5 1.78287e-11
+/gps/hist/point 8.6 1.63631e-11
+/gps/hist/point 8.7 1.45475e-11
+/gps/hist/point 8.8 1.23954e-11
+/gps/hist/point 8.9 1.00199e-11
+/gps/hist/point 9 7.61381e-12
+/gps/hist/point 9.1 5.39552e-12
+/gps/hist/point 9.2 3.54225e-12
+/gps/hist/point 9.3 2.14285e-12
+/gps/hist/point 9.4 1.18928e-12
+/gps/hist/point 9.5 6.03441e-13
+/gps/hist/point 9.6 2.79154e-13
+/gps/hist/point 9.7 1.17475e-13
+/gps/hist/point 9.8 4.4891e-14
+/gps/hist/point 9.9 1.5555e-14
+/gps/hist/point 10 4.88163e-15
+/gps/hist/point 10.1 1.38636e-15
+/gps/hist/point 10.2 3.56131e-16
+/gps/hist/point 10.3 8.28095e-17
+/gps/hist/point 10.4 1.75275e-17
+/gps/hist/point 10.5 3.47275e-18
+/gps/hist/point 10.6 7.29913e-19
+/gps/hist/point 10.7 2.30799e-19
+/gps/hist/point 10.8 1.33938e-19
+/gps/hist/point 10.9 3.8142e-20
+/gps/hist/point 11 2.90544e-20
+/gps/hist/point 11.1 5.3743e-22
+/gps/hist/point 11.2 3.50113e-22
+/gps/hist/point 11.3 5.95602e-25
+/gps/hist/point 11.4 2.60235e-25
+/gps/hist/point 11.5 6.83503e-28
+/gps/hist/point 11.6 5.86597e-29
+/gps/hist/point 11.7 2.06468e-30
+/gps/hist/point 11.8 1.0094e-31
+/gps/hist/point 11.9 4.41512e-33
+/gps/hist/point 12 1.74412e-34
+/gps/hist/point 12.1 6.20138e-36
+/gps/hist/point 12.2 1.98461e-37
+/gps/hist/point 12.3 5.7159e-39
+/gps/hist/point 12.4 1.48158e-40
+/gps/hist/point 12.5 3.4556e-42
+/gps/hist/point 12.6 7.28675e-44
+/gps/hist/point 12.7 1.4013e-45
+/gps/hist/point 12.8 0
+/gps/hist/point 12.9 0
+/gps/hist/point 13 0
+/gps/hist/point 13.1 0
+/gps/hist/point 13.2 0
+/gps/hist/point 13.3 0
+/gps/hist/inter Lin
+
+/random/setSeeds 5298 19704
+
+/dmx/hitsfile ambe_spectrum.out
+/dmx/histogramfile ambe_spectrum.his
+
+/run/beamOn 20000
+
+
