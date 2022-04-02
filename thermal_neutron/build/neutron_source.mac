@@ -8,8 +8,8 @@
 # verbosities
 /control/verbose 1
 /run/verbose 1
-/tracking/verbose 1
-#/hits/verbose 0
+/tracking/verbose  0
+/hits/verbose 1
 #turn off the scintillation
 
 #/process/optical/scintillation/setByParticleType False
@@ -47,12 +47,17 @@
 
 #
 #
-/gps/ene/type Bbody
-/gps/ene/temp 297
+#/gps/ene/type Bbody
+#/gps/ene/temp 297
+#/gps/ene/min 0.01 eV
+#/gps/ene/max 0.1 eV
+
+/gps/ene/type Lin
 /gps/ene/min 0.01 eV
 /gps/ene/max 0.1 eV
+/gps/ene/intercept 1
+/gps/ene/gradient 0
 
-#
 /gps/particle neutron
 
 
@@ -62,5 +67,7 @@
 /dmx/hitsfile ambe_spectrum.out
 /dmx/histogramfile ambe_spectrum.his
 
-/run/beamOn 100
+/run/beamOn 10000000
+#/run/beamOn 108000
+#/run/beamOn 10
 

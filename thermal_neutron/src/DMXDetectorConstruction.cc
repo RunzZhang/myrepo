@@ -180,7 +180,7 @@ G4VPhysicalVolume* DMXDetectorConstruction::Construct() {
 
 G4double ArcontainerWidth = 1*m ;
 G4double ArcontainerLength = 1*m ;
-G4double ArcontainerHeight = 2*cm ;
+G4double ArcontainerHeight = 1*cm ;
 
 G4Box* Ar_box = new G4Box("Ar_box",0.5*ArcontainerWidth, 0.5*ArcontainerLength, 0.5*ArcontainerHeight);
 Arbox_log = new G4LogicalVolume(Ar_box, LAr_mat,"Arbox_log");

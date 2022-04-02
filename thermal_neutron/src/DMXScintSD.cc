@@ -52,6 +52,8 @@
 #include "G4ParticleTypes.hh"
 #include "G4Ions.hh"
 #include "G4ios.hh"
+//#include "G4VProcess.hh"
+
 
 #include "G4OpticalPhoton.hh"
 
@@ -62,6 +64,7 @@
 
 
 int n=1;
+int outn = 0;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
@@ -70,11 +73,14 @@ DMXScintSD::DMXScintSD(G4String name)
 {
   G4String HCname="scintillatorCollection";
   collectionName.insert(HCname);
-
+	
+  
   Info.open("Informacion.txt");
   Info1.open("General.txt");
+  Info2.open("Q_sigma_Info.csv");
   Info << "Energia_Cinetica   " << "Energia_Depositada  " << "Particula  " << "Pos_Interaccion  "<< std::endl;
   Info1 << "Evento   " << "Hits_Generados  " << std::endl;
+  Info2 << "Event,particle name,Track ID,Parent ID,Kinetic E,Volume,Physics Process\n";
 
 
 
@@ -108,6 +114,7 @@ G4bool DMXScintSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
 
   if(aStep->GetTrack()->GetDefinition()
     == G4Electron::ElectronDefinition()) 
+
     {aStep->GetTrack()->SetTrackStatus(fKillTrackAndSecondaries);
     return false;}
 
@@ -120,12 +127,24 @@ G4bool DMXScintSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
   G4double posx = aStep->GetPostStepPoint()->GetPosition().x();
   G4double posy = aStep->GetPostStepPoint()->GetPosition().y();
   G4double posz = aStep->GetPostStepPoint()->GetPosition().z();
-  
+
+  G4int TrackID = aStep->GetTrack()->GetTrackID(); 
+  G4int ParentID = aStep->GetTrack()->GetParentID();
+  G4String Volume = aStep->GetTrack()->GetLogicalVolumeAtVertex()->GetName();
+  //G4VProcess Process = aStep->GetTrack()->GetCreatorProcess();
+  //G4String ProcessName = Process->GetProcessName();
+  //G4String& procName = aStep-> GetPreStepPoint()-> GetProcessDefinedStep()->GetProcessName();
+  G4bool FirstStep = aStep-> IsFirstStepInVolume();
+  G4bool LastStep = aStep-> IsLastStepInVolume();
+   
 
 
   char Ar36 [10]="Ar36";
   char Ar38 [10]="Ar38";
   char Ar40 [10]="Ar40";
+  char Ar41 [10]="Ar41";
+  char gamma [10]="gamma";
+  char neutron [10]= "neutron";
 
   G4double stepl = 0.;
   if (particleType->GetPDGCharge() != 0.)
@@ -146,10 +165,29 @@ G4bool DMXScintSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
 
  //if(strcmp(particleName,Ar36) == 0 || strcmp(particleName,Ar38) == 0 || strcmp(particleName,Ar40) == 0)
  //{
-  Info << n <<"  "<<G4BestUnit(ek,"Energy")<<"  "<<G4BestUnit(edep,"Energy") <<"  " <<particleName << "  "<<G4BestUnit(posx,"Length") << G4BestUnit(posy,"Length")<< G4BestUnit(posz,"Length")<< std::endl;
- //}
+  /*Info << n <<"  "<<G4BestUnit(ek,"Energy")<<"  "<<G4BestUnit(edep,"Energy") <<"  " <<particleName << "  "<<G4BestUnit(posx,"Length") << G4BestUnit(posy,"Length")<< G4BestUnit(posz,"Length")<< std::endl;*/
+ //
+   
+
+  if (strcmp(particleName, gamma) ==0&& FirstStep == true)
+  {Info2 << outn << "," <<particleName << ","<<TrackID << ","<< ParentID << "," <<ek*1000000 <<","<< Volume <<"\n";}
+  
+  if (strcmp(particleName, neutron) ==0&& FirstStep == true)
+  {Info2 << outn << "," <<particleName << ","<<TrackID << ","<< ParentID << "," <<ek*1000000 <<","<< Volume <<"," << "Incident\n";}
+  if (strcmp(particleName, neutron) ==0&& LastStep == true)
+  {Info2 << outn << "," <<particleName << ","<<TrackID << ","<< ParentID << "," <<ek*1000000 <<","<< Volume <<"," << "Outgoing\n";}
+
+  /*if (strcmp(particleName, neutron) ==0)
+  {Info2 << outn << "," <<particleName << ","<<TrackID << ","<< ParentID << "," <<G4BestUnit(ek,"Energy") << ","<< Volume <<",\n";}
+  if (outn== 10017|| outn==10065)
+   {Info2 << outn << "," <<particleName << ","<<TrackID << ","<< ParentID << "," <<G4BestUnit(ek,"Energy") << ","<< Volume <<",\n";}*/
+ 
+
   return true;
 }
+
+
+
 
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
@@ -169,6 +207,7 @@ void DMXScintSD::EndOfEvent(G4HCofThisEvent* HCE)
     G4cout << "     LXe collection: " <<  nHits << " hits" << G4endl;
     Info1 << n<<"  "<<nHits << std::endl;
     n++;
+    ++outn;
 
   }
   if (verboseLevel>=2)

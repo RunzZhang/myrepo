@@ -466,7 +466,7 @@ CMakeFiles/DMX.dir/DMX.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/trajectoryControl.hh
  /home/runze/geant4.10.03.p03/include/Geant4/trkdefs.hh
  /home/runze/geant4.10.03.p03/include/Geant4/windefs.hh
- /home/runze/myproject/thermal_neutron/DMX.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/DMX.cc
 CMakeFiles/DMX.dir/src/DMXActionInitializer.cc.o
  ../include/DMXActionInitializer.hh
  ../include/DMXEventAction.hh
@@ -500,7 +500,7 @@ CMakeFiles/DMX.dir/src/DMXActionInitializer.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/globals.hh
  /home/runze/geant4.10.03.p03/include/Geant4/templates.hh
  /home/runze/geant4.10.03.p03/include/Geant4/tls.hh
- /home/runze/myproject/thermal_neutron/src/DMXActionInitializer.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXActionInitializer.cc
 CMakeFiles/DMX.dir/src/DMXDetectorConstruction.cc.o
  ../include/DMXDetectorConstruction.hh
  ../include/DMXDetectorMaterial.ihh
@@ -850,8 +850,8 @@ CMakeFiles/DMX.dir/src/DMXDetectorConstruction.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/trajectoryControl.hh
  /home/runze/geant4.10.03.p03/include/Geant4/trkdefs.hh
  /home/runze/geant4.10.03.p03/include/Geant4/windefs.hh
- /home/runze/myproject/thermal_neutron/src/DMXDetectorConstruction.cc
- /home/runze/myproject/thermal_neutron/src/DMXDetectorMaterial.icc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXDetectorConstruction.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXDetectorMaterial.icc
 CMakeFiles/DMX.dir/src/DMXEventAction.cc.o
  ../include/DMXAnalysisManager.hh
  ../include/DMXEventAction.hh
@@ -1258,7 +1258,7 @@ CMakeFiles/DMX.dir/src/DMXEventAction.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/trkdefs.hh
  /home/runze/geant4.10.03.p03/include/Geant4/trkgdefs.hh
  /home/runze/geant4.10.03.p03/include/Geant4/windefs.hh
- /home/runze/myproject/thermal_neutron/src/DMXEventAction.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXEventAction.cc
 CMakeFiles/DMX.dir/src/DMXEventActionMessenger.cc.o
  ../include/DMXEventAction.hh
  ../include/DMXEventActionMessenger.hh
@@ -1291,7 +1291,7 @@ CMakeFiles/DMX.dir/src/DMXEventActionMessenger.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/globals.hh
  /home/runze/geant4.10.03.p03/include/Geant4/templates.hh
  /home/runze/geant4.10.03.p03/include/Geant4/tls.hh
- /home/runze/myproject/thermal_neutron/src/DMXEventActionMessenger.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXEventActionMessenger.cc
 CMakeFiles/DMX.dir/src/DMXMaxTimeCuts.cc.o
  ../include/DMXMaxTimeCuts.hh
  ../include/DMXSpecialCuts.hh
@@ -1448,7 +1448,7 @@ CMakeFiles/DMX.dir/src/DMXMaxTimeCuts.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/tls.hh
  /home/runze/geant4.10.03.p03/include/Geant4/trkdefs.hh
  /home/runze/geant4.10.03.p03/include/Geant4/windefs.hh
- /home/runze/myproject/thermal_neutron/src/DMXMaxTimeCuts.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXMaxTimeCuts.cc
 CMakeFiles/DMX.dir/src/DMXMinEkineCuts.cc.o
  ../include/DMXMinEkineCuts.hh
  ../include/DMXSpecialCuts.hh
@@ -1636,7 +1636,7 @@ CMakeFiles/DMX.dir/src/DMXMinEkineCuts.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/tls.hh
  /home/runze/geant4.10.03.p03/include/Geant4/trkdefs.hh
  /home/runze/geant4.10.03.p03/include/Geant4/windefs.hh
- /home/runze/myproject/thermal_neutron/src/DMXMinEkineCuts.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXMinEkineCuts.cc
 CMakeFiles/DMX.dir/src/DMXParticleSource.cc.o
  ../include/DMXParticleSource.hh
  ../include/DMXParticleSourceMessenger.hh
@@ -1880,7 +1880,7 @@ CMakeFiles/DMX.dir/src/DMXParticleSource.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/tls.hh
  /home/runze/geant4.10.03.p03/include/Geant4/trkdefs.hh
  /home/runze/geant4.10.03.p03/include/Geant4/windefs.hh
- /home/runze/myproject/thermal_neutron/src/DMXParticleSource.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXParticleSource.cc
 CMakeFiles/DMX.dir/src/DMXParticleSourceMessenger.cc.o
  ../include/DMXParticleSource.hh
  ../include/DMXParticleSourceMessenger.hh
@@ -2008,7 +2008,7 @@ CMakeFiles/DMX.dir/src/DMXParticleSourceMessenger.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/templates.hh
  /home/runze/geant4.10.03.p03/include/Geant4/tls.hh
  /home/runze/geant4.10.03.p03/include/Geant4/windefs.hh
- /home/runze/myproject/thermal_neutron/src/DMXParticleSourceMessenger.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXParticleSourceMessenger.cc
 CMakeFiles/DMX.dir/src/DMXPhysicsList.cc.o
  ../include/DMXMaxTimeCuts.hh
  ../include/DMXMinEkineCuts.hh
@@ -2678,7 +2678,7 @@ CMakeFiles/DMX.dir/src/DMXPhysicsList.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/tls.hh
  /home/runze/geant4.10.03.p03/include/Geant4/trkdefs.hh
  /home/runze/geant4.10.03.p03/include/Geant4/windefs.hh
- /home/runze/myproject/thermal_neutron/src/DMXPhysicsList.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXPhysicsList.cc
 CMakeFiles/DMX.dir/src/DMXPmtHit.cc.o
  ../include/DMXPmtHit.hh
  /home/runze/geant4.10.03.p03/include/Geant4/CLHEP/Geometry/BasicVector3D.h
@@ -2735,7 +2735,7 @@ CMakeFiles/DMX.dir/src/DMXPmtHit.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/globals.hh
  /home/runze/geant4.10.03.p03/include/Geant4/templates.hh
  /home/runze/geant4.10.03.p03/include/Geant4/tls.hh
- /home/runze/myproject/thermal_neutron/src/DMXPmtHit.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXPmtHit.cc
 CMakeFiles/DMX.dir/src/DMXPmtSD.cc.o
  ../include/DMXDetectorConstruction.hh
  ../include/DMXDetectorMaterial.ihh
@@ -2972,7 +2972,7 @@ CMakeFiles/DMX.dir/src/DMXPmtSD.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/tls.hh
  /home/runze/geant4.10.03.p03/include/Geant4/trkdefs.hh
  /home/runze/geant4.10.03.p03/include/Geant4/windefs.hh
- /home/runze/myproject/thermal_neutron/src/DMXPmtSD.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXPmtSD.cc
 CMakeFiles/DMX.dir/src/DMXPrimaryGeneratorAction.cc.o
  ../include/DMXAnalysisManager.hh
  ../include/DMXParticleSource.hh
@@ -3294,7 +3294,7 @@ CMakeFiles/DMX.dir/src/DMXPrimaryGeneratorAction.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/tools/wroot/tree
  /home/runze/geant4.10.03.p03/include/Geant4/tools/wroot/wbuf
  /home/runze/geant4.10.03.p03/include/Geant4/windefs.hh
- /home/runze/myproject/thermal_neutron/src/DMXPrimaryGeneratorAction.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXPrimaryGeneratorAction.cc
 CMakeFiles/DMX.dir/src/DMXRunAction.cc.o
  ../include/DMXAnalysisManager.hh
  ../include/DMXRunAction.hh
@@ -3454,7 +3454,7 @@ CMakeFiles/DMX.dir/src/DMXRunAction.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/tools/wroot/tree
  /home/runze/geant4.10.03.p03/include/Geant4/tools/wroot/wbuf
  /home/runze/geant4.10.03.p03/include/Geant4/windefs.hh
- /home/runze/myproject/thermal_neutron/src/DMXRunAction.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXRunAction.cc
 CMakeFiles/DMX.dir/src/DMXRunActionMessenger.cc.o
  ../include/DMXRunAction.hh
  ../include/DMXRunActionMessenger.hh
@@ -3479,7 +3479,7 @@ CMakeFiles/DMX.dir/src/DMXRunActionMessenger.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/globals.hh
  /home/runze/geant4.10.03.p03/include/Geant4/templates.hh
  /home/runze/geant4.10.03.p03/include/Geant4/tls.hh
- /home/runze/myproject/thermal_neutron/src/DMXRunActionMessenger.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXRunActionMessenger.cc
 CMakeFiles/DMX.dir/src/DMXScintHit.cc.o
  ../include/DMXScintHit.hh
  /home/runze/geant4.10.03.p03/include/Geant4/CLHEP/Geometry/BasicVector3D.h
@@ -3536,7 +3536,7 @@ CMakeFiles/DMX.dir/src/DMXScintHit.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/globals.hh
  /home/runze/geant4.10.03.p03/include/Geant4/templates.hh
  /home/runze/geant4.10.03.p03/include/Geant4/tls.hh
- /home/runze/myproject/thermal_neutron/src/DMXScintHit.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXScintHit.cc
 CMakeFiles/DMX.dir/src/DMXScintSD.cc.o
  ../include/DMXDetectorConstruction.hh
  ../include/DMXDetectorMaterial.ihh
@@ -3769,7 +3769,7 @@ CMakeFiles/DMX.dir/src/DMXScintSD.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/tls.hh
  /home/runze/geant4.10.03.p03/include/Geant4/trkdefs.hh
  /home/runze/geant4.10.03.p03/include/Geant4/windefs.hh
- /home/runze/myproject/thermal_neutron/src/DMXScintSD.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXScintSD.cc
 CMakeFiles/DMX.dir/src/DMXSpecialCuts.cc.o
  ../include/DMXSpecialCuts.hh
  /home/runze/geant4.10.03.p03/include/Geant4/CLHEP/Random/DualRand.h
@@ -3922,7 +3922,7 @@ CMakeFiles/DMX.dir/src/DMXSpecialCuts.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/tls.hh
  /home/runze/geant4.10.03.p03/include/Geant4/trkdefs.hh
  /home/runze/geant4.10.03.p03/include/Geant4/windefs.hh
- /home/runze/myproject/thermal_neutron/src/DMXSpecialCuts.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXSpecialCuts.cc
 CMakeFiles/DMX.dir/src/DMXStackingAction.cc.o
  ../include/DMXDetectorConstruction.hh
  ../include/DMXDetectorMaterial.ihh
@@ -4183,7 +4183,7 @@ CMakeFiles/DMX.dir/src/DMXStackingAction.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/tls.hh
  /home/runze/geant4.10.03.p03/include/Geant4/trkdefs.hh
  /home/runze/geant4.10.03.p03/include/Geant4/windefs.hh
- /home/runze/myproject/thermal_neutron/src/DMXStackingAction.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXStackingAction.cc
 CMakeFiles/DMX.dir/src/DMXStackingActionMessenger.cc.o
  ../include/DMXStackingAction.hh
  ../include/DMXStackingActionMessenger.hh
@@ -4208,7 +4208,7 @@ CMakeFiles/DMX.dir/src/DMXStackingActionMessenger.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/globals.hh
  /home/runze/geant4.10.03.p03/include/Geant4/templates.hh
  /home/runze/geant4.10.03.p03/include/Geant4/tls.hh
- /home/runze/myproject/thermal_neutron/src/DMXStackingActionMessenger.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXStackingActionMessenger.cc
 CMakeFiles/DMX.dir/src/DMXSteppingAction.cc.o
  ../include/DMXAnalysisManager.hh
  ../include/DMXEventAction.hh
@@ -4703,7 +4703,7 @@ CMakeFiles/DMX.dir/src/DMXSteppingAction.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/trajectoryControl.hh
  /home/runze/geant4.10.03.p03/include/Geant4/trkdefs.hh
  /home/runze/geant4.10.03.p03/include/Geant4/windefs.hh
- /home/runze/myproject/thermal_neutron/src/DMXSteppingAction.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXSteppingAction.cc
 CMakeFiles/DMX.dir/src/DMXSteppingActionMessenger.cc.o
  ../include/DMXEventActionMessenger.hh
  ../include/DMXSteppingAction.hh
@@ -4728,4 +4728,4 @@ CMakeFiles/DMX.dir/src/DMXSteppingActionMessenger.cc.o
  /home/runze/geant4.10.03.p03/include/Geant4/globals.hh
  /home/runze/geant4.10.03.p03/include/Geant4/templates.hh
  /home/runze/geant4.10.03.p03/include/Geant4/tls.hh
- /home/runze/myproject/thermal_neutron/src/DMXSteppingActionMessenger.cc
+ /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/src/DMXSteppingActionMessenger.cc
