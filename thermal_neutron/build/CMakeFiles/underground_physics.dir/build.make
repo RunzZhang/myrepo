@@ -43,10 +43,10 @@ RM = /usr/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron
+CMAKE_SOURCE_DIR = /mnt/d/Github/myrepo/thermal_neutron
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/build
+CMAKE_BINARY_DIR = /mnt/d/Github/myrepo/thermal_neutron/build
 
 # Utility rule file for underground_physics.
 
@@ -71,6 +71,6 @@ CMakeFiles/underground_physics.dir/clean:
 .PHONY : CMakeFiles/underground_physics.dir/clean
 
 CMakeFiles/underground_physics.dir/depend:
-	cd /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/build /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/build /mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/build/CMakeFiles/underground_physics.dir/DependInfo.cmake --color=$(COLOR)
+	cd /mnt/d/Github/myrepo/thermal_neutron/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /mnt/d/Github/myrepo/thermal_neutron /mnt/d/Github/myrepo/thermal_neutron /mnt/d/Github/myrepo/thermal_neutron/build /mnt/d/Github/myrepo/thermal_neutron/build /mnt/d/Github/myrepo/thermal_neutron/build/CMakeFiles/underground_physics.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/underground_physics.dir/depend
 

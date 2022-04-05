@@ -1,0 +1,15 @@
+/vis/open OGL
+/vis/sceneHandler/create OGL
+/vis/viewer/create ! ! 600
+/vis/viewer/refresh
+/tracking/storeTrajectory 1
+/vis/drawView 70 -90 0. 0. cm 1.5
+/vis/viewer/set/viewpointThetaPhi 70 -90 deg
+/vis/viewer/panTo 0. 0. cm
+/vis/viewer/zoomTo 1.5
+/vis/viewer/dollyTo 0 cm
+/vis/drawVolume
+/vis/scene/create
+/vis/scene/add/volume world
+/vis/sceneHandler/attach
+/vis/viewer/update
