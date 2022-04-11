@@ -11,10 +11,10 @@ class thermal_neutron_calibration():
         print(os.getcwd())
         self.base = os.getcwd()
 
-        self.Infoaddress = 'Q_sigma_Info_April1.csv'
+        self.Infoaddress = 'Q_sigma_Info_April6.csv'
         self.fullInfoaddress = os.path.join(self.base, self.Infoaddress)
-        self.outputfile = 'result_April1.csv'
-        self.gammafile = 'gammaresult_April1.csv'
+        self.outputfile = 'result_April6.csv'
+        self.gammafile = 'gammaresult_April6.csv'
         # ONe entry like this event number : (incident energy(float, ev), outgoing(bool), Q Value (float) in MeV)
         self.INFOmatrix = {}
         self.Q_list=[]
@@ -133,7 +133,8 @@ class thermal_neutron_calibration():
             pickle.dump(self.gamma_list, fp)
 
     def read_Information(self):
-        df = pd.read_csv(self.fullInfoaddress)
+        # df = pd.read_csv(self.fullInfoaddress)
+        df = pd.read_csv(self.fullInfoaddress, nrows = 2200000)
         print(df.head(5))
 
 
@@ -353,6 +354,14 @@ class thermal_neutron_calibration():
 
         plt.show()
 
+    def plot_endf(self):
+        fig, axs = plt.subplots(figsize=(9, 3))
+        axs.plot(self.endfE1, self.endfsig1,color = 'orange')
+        axs.semilogx()
+        axs.set_xlim([2*10**(-2),0.1])
+        axs.get_xaxis().set_visible(False)
+        plt.show()
+
 
 
 if __name__=="__main__":
@@ -362,5 +371,6 @@ if __name__=="__main__":
     # tnc.read_Information()
     # tnc.plot_Q(True)
     tnc.plot_cross(read=True)
-    # tnc.read_gamma_Information()
+    tnc.read_gamma_Information()
     # tnc.plot_gamma(True)
+    # tnc.plot_endf()
