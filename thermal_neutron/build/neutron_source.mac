@@ -8,7 +8,7 @@
 # verbosities
 /control/verbose 1
 /run/verbose 1
-/tracking/verbose  0
+/tracking/verbose  1
 /hits/verbose 1
 #turn off the scintillation
 
@@ -67,7 +67,7 @@
 /dmx/hitsfile ambe_spectrum.out
 /dmx/histogramfile ambe_spectrum.his
 
-/run/beamOn 10000000
+#/run/beamOn 10000000
 #/run/beamOn 108000
-#/run/beamOn 10
+/run/beamOn 10
 
