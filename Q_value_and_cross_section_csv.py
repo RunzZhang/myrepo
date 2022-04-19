@@ -291,7 +291,8 @@ class thermal_neutron_calibration():
     def plot_cross(self, read = False):
         print(self.outputfile)
         if read:
-            df=pd.read_csv(self.outputfile)
+            # df=pd.read_csv(self.outputfile)
+            df = pd.read_csv(self.outputfile, nrows = 1000)
         else:
             print("You have to first run read_information() function before plot_cross if read = False. Otherwise might cause error!")
         Incident_matrix = df['IE'].to_list()
@@ -353,6 +354,83 @@ class thermal_neutron_calibration():
 
         plt.show()
 
+<<<<<<< Updated upstream
+=======
+    def plot_endf(self):
+        fig, axs = plt.subplots(figsize=(9, 3))
+        axs.plot(self.endfE1, self.endfsig1,color = 'orange')
+        axs.semilogx()
+        axs.set_xlim([2*10**(-2),0.1])
+        axs.get_xaxis().set_visible(False)
+        plt.show()
+
+    def plot_cross(self, read = False):
+        print(self.outputfile)
+        if read:
+            # df=pd.read_csv(self.outputfile)
+            df = pd.read_csv(self.outputfile, nrows = 1000)
+        else:
+            print("You have to first run read_information() function before plot_cross if read = False. Otherwise might cause error!")
+        Incident_matrix = df['IE'].to_list()
+        Outgoing_matrix = df[df['OG']==True]['IE'].to_list()
+
+        print(Incident_matrix, '\n', Outgoing_matrix)
+
+        fig, axs = plt.subplots(2, 2, figsize=(9, 3), sharex=True)
+        (n0, bins0, patches0) = axs[0, 0].hist(Incident_matrix, bins=np.logspace(-2, -1, num=40))
+        axs[0, 0].set_title('Incident Neutron Energy Distribution')
+        axs[0, 0].grid(which='both')
+        axs[0, 0].set_xlabel('Incident Neutron Energy/eV')
+        axs[0, 0].set_ylabel('Numbers/bin')
+        axs[0, 0].semilogx()
+        (n1, bins1, patches1) = axs[0, 1].hist(Outgoing_matrix, bins=np.logspace(-2, -1, num=40))
+        axs[0, 1].set_title('Outgoing Neutron Energy Distribution')
+        axs[0, 1].grid(which='both')
+        axs[0, 1].set_xlabel('Outgoing Neutron Energy/eV')
+        axs[0, 1].set_ylabel('Numbers/bin')
+        axs[0, 1].semilogx()
+        plt.xscale('log')
+        # axs[0,0].xscale('log')
+        # axs[0,1].xscale('log')
+        # axs[0].hist(Incident_matrix)
+        # axs[1].hist(Outgoing_matrix)
+
+        print('n0', len(n0), n0)
+        print('n1', len(n1), n1)
+        print('bins', len(bins0), bins0)
+
+        # create new bins for x value in the following steps:
+        bin_x= []
+        for i in range(len(bins0)-1):
+            bin_x.append((bins0[i]+bins0[i+1])/2)
+        # print('patches0',len(patches0),patches0)
+        ratio = []
+        error = []
+
+        for n in range(len(n0)):
+            ratio_el = self.coefi * (n0[n] - n1[n]) / n0[n]
+            error_el =  (self.coefi - ratio_el) * (1 / (n0[n]) ** (1 / 2) + 1 / (n0[n]) ** (1 / 2))
+            # error_el = self.coefi * (1 - ratio_el) * (1 / (n0[n]) ** (1 / 2) + 1 / (n0[n]) ** (1 / 2))/ratio_el
+            ratio.append(ratio_el)
+            error.append(error_el)
+        print('ratios', len(ratio), ratio)
+        # axs[1,0].plot(bins0[:39],ratio)
+        axs[1, 0].errorbar(bin_x, ratio, yerr=error, ecolor='red', label = 'Simulation Data')
+        # axs[1, 0].set_xticks(np.arange(0.1,0.01,step=0.01))
+        # axs[1, 0].set_xticklabels([2 * 10 ** (-2), 3 * 10 ** (-2)])
+        axs[1, 0].set_title('Cross Section of Neutron-Ar Capture')
+        axs[1, 0].grid(which='both')
+        axs[1, 0].set_xlabel('Incident Neutron Energy/eV')
+        axs[1, 0].set_ylabel('Cross Section/mb')
+
+        axs[1, 0].semilogx()
+
+        axs[1,0].plot(self.endfE1, self.endfsig1, label = "ENDF DATA" , color = 'orange')
+        axs[1,0].legend()
+
+        plt.show()
+
+>>>>>>> Stashed changes
 
 
 if __name__=="__main__":
