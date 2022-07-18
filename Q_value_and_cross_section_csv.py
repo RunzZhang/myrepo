@@ -32,6 +32,9 @@ class thermal_neutron_calibration():
         print(self.sigma_matrix)
         self.gamma_list=[]
 
+        # https: // www - nds.iaea.org / exfor / servlet / E4sGetIntSection?SectID = 148438 & req = 2250 & e4up = 0 & PenSectID = 6570496 & pen = 0
+        # Library: JENDL - 3.3
+
 
 
         self.endfE= [1.265500*10**(-2),  1.581625*10**(-2),  1.697880*10**(-2),
@@ -267,6 +270,39 @@ class thermal_neutron_calibration():
         plt.show()
 
         # print(self.INFOmatrix)
+
+    def plot_gamma_spectrum(self, read=False):
+        # print(self.INFOmatrix)
+        df = pd.read_csv(self.fullInfoaddress)
+        print(df.head(5))
+        df1=df[df["particle name"]=="gamma"]["Kinetic E"]
+        self.gamma_list = []
+        list=df1.to_list()
+        for i in list:
+            if "MeV" in i:
+                j = float(i.strip(" MeV"))
+                self.gamma_list.append(j)
+            elif "keV" in i:
+                j = float(i.strip(" keV"))
+                self.gamma_list.append(j/1e3)
+            elif "eV" in i:
+                j = float(i.strip(" eV"))
+                self.gamma_list.append(j/1e6)
+            else:
+                pass
+
+        print(self.gamma_list)
+        print(len(self.gamma_list))
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        ax.set_title('Q Value in G4 Calibration')
+        ax.set_xlabel('Q Value/MeV')
+        ax.set_ylabel('entries/bin')
+        plt.hist(self.gamma_list, bins=1000, range=(0, 6.5), log=True)
+        plt.show()
+
+        # print(self.INFOmatrix)
     def plot_Q(self, read =False):
         # print(self.INFOmatrix)
 
@@ -354,8 +390,6 @@ class thermal_neutron_calibration():
 
         plt.show()
 
-<<<<<<< Updated upstream
-=======
     def plot_endf(self):
         fig, axs = plt.subplots(figsize=(9, 3))
         axs.plot(self.endfE1, self.endfsig1,color = 'orange')
@@ -430,15 +464,13 @@ class thermal_neutron_calibration():
 
         plt.show()
 
->>>>>>> Stashed changes
-
-
 if __name__=="__main__":
     # get hits number and plot positions
 
     tnc= thermal_neutron_calibration()
     # tnc.read_Information()
     # tnc.plot_Q(True)
-    tnc.plot_cross(read=True)
+    # tnc.plot_cross(read=True)
     # tnc.read_gamma_Information()
     # tnc.plot_gamma(True)
+    tnc.plot_gamma_spectrum()
