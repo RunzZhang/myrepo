@@ -6,5 +6,5 @@ CXX_FLAGS = -W -Wall -pedantic -Wno-non-virtual-dtor -Wno-long-long -Wwrite-stri
 
 CXX_DEFINES = -DDMXENV_GPS_USE -DG4INTY_USE_QT -DG4INTY_USE_XT -DG4UI_USE -DG4UI_USE_QT -DG4UI_USE_TCSH -DG4VERBOSE -DG4VIS_USE -DG4VIS_USE_OPENGL -DG4VIS_USE_OPENGLQT -DG4VIS_USE_RAYTRACERX -DG4_STORE_TRAJECTORY
 
-CXX_INCLUDES = -isystem /mnt/d/Github/geant4.10.03.p03/include/Geant4 -isystem /usr/include/qt4 -isystem /usr/include/qt4/QtCore -isystem /usr/include/qt4/QtGui -isystem /usr/include/qt4/QtOpenGL -I/mnt/d/Github/myrepo/thermal_neutron/include 
+CXX_INCLUDES = -isystem /home/runze/geant4.10.03.p03/include/Geant4 -isystem /usr/include/qt4 -isystem /usr/include/qt4/QtCore -isystem /usr/include/qt4/QtGui -isystem /usr/include/qt4/QtOpenGL -I/mnt/d/GIthub/runze/runze_private/myrepo/thermal_neutron/include 
 

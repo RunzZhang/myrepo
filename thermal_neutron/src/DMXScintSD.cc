@@ -52,7 +52,7 @@
 #include "G4ParticleTypes.hh"
 #include "G4Ions.hh"
 #include "G4ios.hh"
-//#include "G4VProcess.hh"
+#include "G4VProcess.hh"
 
 
 #include "G4OpticalPhoton.hh"
@@ -65,6 +65,7 @@
 
 int n=1;
 int outn = 0;
+int n1=1;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
@@ -75,10 +76,10 @@ DMXScintSD::DMXScintSD(G4String name)
   collectionName.insert(HCname);
 	
   
-  Info.open("Informacion.txt");
+  Info.open("Informacion_July18.csv");
   Info1.open("General.txt");
   Info2.open("Q_sigma_Info.csv");
-  Info << "Energia_Cinetica   " << "Energia_Depositada  " << "Particula  " << "Pos_Interaccion  "<< std::endl;
+  Info << "Event,"<<"Energy_Cinetica," << "Particle,TrackID,ParentID," << "x,"<<"y,"<<"z,"<<"Volume,"<<"Process"<<'\n';
   Info1 << "Evento   " << "Hits_Generados  " << std::endl;
   Info2 << "Event,particle name,Track ID,Parent ID,Kinetic E,Volume,Physics Process\n";
 
@@ -118,6 +119,10 @@ G4bool DMXScintSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
     {aStep->GetTrack()->SetTrackStatus(fKillTrackAndSecondaries);
     return false;}*/
 
+
+  if (aStep->GetPreStepPoint()->GetProcessDefinedStep() && aStep->GetPostStepPoint()->GetPhysicalVolume()->GetName() != "Arbox_phys") 
+  {aStep->GetTrack()->SetTrackStatus(fKillTrackAndSecondaries);
+    return false;}
   
   G4double edep = aStep->GetTotalEnergyDeposit();
   G4double ek = aStep->GetPreStepPoint()->GetKineticEnergy();
@@ -136,6 +141,7 @@ G4bool DMXScintSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
   //G4String& procName = aStep-> GetPreStepPoint()-> GetProcessDefinedStep()->GetProcessName();
   G4bool FirstStep = aStep-> IsFirstStepInVolume();
   G4bool LastStep = aStep-> IsLastStepInVolume();
+  const G4VProcess* ProcessTrue = aStep->GetPreStepPoint()->GetProcessDefinedStep();
    
 
 
@@ -169,18 +175,37 @@ G4bool DMXScintSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
  //
    
 
-  if (strcmp(particleName, gamma) ==0&& FirstStep == true)
+  /*if (strcmp(particleName, gamma) ==0&& FirstStep == true)
   {Info2 << outn << "," <<particleName << ","<<TrackID << ","<< ParentID << "," <<ek*1000000 <<","<< Volume <<"\n";}
   
   if (strcmp(particleName, neutron) ==0&& FirstStep == true)
   {Info2 << outn << "," <<particleName << ","<<TrackID << ","<< ParentID << "," <<ek*1000000 <<","<< Volume <<"," << "Incident\n";}
   if (strcmp(particleName, neutron) ==0&& LastStep == true)
-  {Info2 << outn << "," <<particleName << ","<<TrackID << ","<< ParentID << "," <<ek*1000000 <<","<< Volume <<"," << "Outgoing\n";}
+  {Info2 << outn << "," <<particleName << ","<<TrackID << ","<< ParentID << "," <<ek*1000000 <<","<< Volume <<"," << "Outgoing\n";}*/
 
   /*if (strcmp(particleName, neutron) ==0)
   {Info2 << outn << "," <<particleName << ","<<TrackID << ","<< ParentID << "," <<G4BestUnit(ek,"Energy") << ","<< Volume <<",\n";}
   if (outn== 10017|| outn==10065)
    {Info2 << outn << "," <<particleName << ","<<TrackID << ","<< ParentID << "," <<G4BestUnit(ek,"Energy") << ","<< Volume <<",\n";}*/
+
+
+if (aStep->GetPreStepPoint()->GetProcessDefinedStep() && aStep-> GetPostStepPoint()-> GetProcessDefinedStep()->GetProcessName()=="nCapture")
+{Info << n <<","<<ek<<"," <<particleName << ","<<TrackID<<','<<ParentID<<','<<posx<<","<< posy<<","<< posz<<","<< Volume <<','<< aStep-> GetPostStepPoint()-> GetProcessDefinedStep()->GetProcessName() <<'\n' ;
+n1 =n1+1;}
+
+if (aStep->GetPreStepPoint()->GetProcessDefinedStep() && aStep->GetTrack()->GetDefinition()
+    == G4Gamma::GammaDefinition()&& LastStep==true)
+
+  {Info << n <<","<<ek<<"," <<particleName << ","<<TrackID<<','<<ParentID<<','<<""<<","<< ""<<","<< ""<<","<< Volume <<','<< aStep-> GetPreStepPoint()-> GetProcessDefinedStep()->GetProcessName() <<'\n' ;
+  n1=n1+1;}
+
+  
+if (aStep->GetPreStepPoint()->GetProcessDefinedStep() && aStep->GetTrack()->GetDefinition()
+    == G4OpticalPhoton::OpticalPhotonDefinition()&& FirstStep==true) 
+   {Info << n <<","<<ek<<"," <<particleName << ","<<TrackID<<','<<ParentID<<','<<""<<","<< ""<<","<< ""<<","<< Volume <<','<< aStep-> GetPreStepPoint()-> GetProcessDefinedStep()->GetProcessName() <<'\n' ;
+  n1=n1+1;}
+
+ 
  
 
   return true;
