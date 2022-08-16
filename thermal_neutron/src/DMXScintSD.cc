@@ -64,8 +64,12 @@
 
 
 int n=1;
-int outn = 0;
+int outn = 1;
 int n1=1;
+int pho_n = 0;
+G4int parentid  = 0;
+  G4int startid  = 1;
+  G4int endid  = 0;
 
 //....oooOO0OOooo........oooOO0OOooo........oooOO0OOooo........oooOO0OOooo....
 
@@ -79,7 +83,7 @@ DMXScintSD::DMXScintSD(G4String name)
   Info.open("Informacion_July18.csv");
   Info1.open("General.txt");
   Info2.open("Q_sigma_Info.csv");
-  Info << "Event,"<<"Energy_Cinetica," << "Particle,TrackID,ParentID," << "x,"<<"y,"<<"z,"<<"Volume,"<<"Process"<<'\n';
+  Info << "Event,"<<"Energy_Cinetica," << "Particle,TrackID,ParentID," << "parentid,"<<"startid,"<<"endid,"<<"Volume,"<<"Process"<<'\n';
   Info1 << "Evento   " << "Hits_Generados  " << std::endl;
   Info2 << "Event,particle name,Track ID,Parent ID,Kinetic E,Volume,Physics Process\n";
 
@@ -151,7 +155,8 @@ G4bool DMXScintSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
   char Ar41 [10]="Ar41";
   char gamma [10]="gamma";
   char neutron [10]= "neutron";
-
+char electron [10]= "electron";
+  
   G4double stepl = 0.;
   if (particleType->GetPDGCharge() != 0.)
     stepl = aStep->GetStepLength();
@@ -193,17 +198,47 @@ if (aStep->GetPreStepPoint()->GetProcessDefinedStep() && aStep-> GetPostStepPoin
 {Info << n <<","<<ek<<"," <<particleName << ","<<TrackID<<','<<ParentID<<','<<posx<<","<< posy<<","<< posz<<","<< Volume <<','<< aStep-> GetPostStepPoint()-> GetProcessDefinedStep()->GetProcessName() <<'\n' ;
 n1 =n1+1;}
 
-if (aStep->GetPreStepPoint()->GetProcessDefinedStep() && aStep->GetTrack()->GetDefinition()
-    == G4Gamma::GammaDefinition()&& LastStep==true)
+if (strcmp(particleName, gamma) ==0 && LastStep==true)
 
-  {Info << n <<","<<ek<<"," <<particleName << ","<<TrackID<<','<<ParentID<<','<<""<<","<< ""<<","<< ""<<","<< Volume <<','<< aStep-> GetPreStepPoint()-> GetProcessDefinedStep()->GetProcessName() <<'\n' ;
+  {Info << n <<","<<ek<<"," <<particleName << ","<<TrackID<<','<<ParentID<<','<<""<<","<< ""<<","<< ""<<","<< Volume <<','<< "" <<'\n' ;
+  n1=n1+1;}
+
+if (aStep->GetTrack()->GetDefinition()
+    == G4Electron::ElectronDefinition()  && FirstStep==true)
+
+  {Info << n <<","<<ek<<"," <<particleName << ","<<TrackID<<','<<ParentID<<','<<""<<","<< ""<<","<< ""<<","<< Volume <<','<< "" <<'\n' ;
   n1=n1+1;}
 
   
-if (aStep->GetPreStepPoint()->GetProcessDefinedStep() && aStep->GetTrack()->GetDefinition()
-    == G4OpticalPhoton::OpticalPhotonDefinition()&& FirstStep==true) 
-   {Info << n <<","<<ek<<"," <<particleName << ","<<TrackID<<','<<ParentID<<','<<""<<","<< ""<<","<< ""<<","<< Volume <<','<< aStep-> GetPreStepPoint()-> GetProcessDefinedStep()->GetProcessName() <<'\n' ;
-  n1=n1+1;}
+/*if ( aStep->GetTrack()->GetDefinition()
+    == G4OpticalPhoton::OpticalPhotonDefinition()&& FirstStep==true && n > outn) */
+if (outn!= n && (endid != 0 || startid !=0 || parentid !=0))
+{Info << outn <<","<<pho_n<<"," <<particleName << ","<<""<<','<<","<<parentid<<','<<startid<<","<< endid<<","<< ""<<','<< "" <<'\n' ;
+outn = n;
+//Info <<n <<","<<pho_n<<"," <<"new"<<particleName << ","<<""<<','<<","<<parentid<<','<<startid<<","<< endid<<","<< ""<<','<< "" <<'\n' ;
+
+pho_n = 0;
+endid = 0 ;
+startid = 0 ; 
+parentid = 0;}
+if (aStep->GetTrack()->GetDefinition()
+    == G4OpticalPhoton::OpticalPhotonDefinition()&& LastStep==true)
+{
+if (parentid != ParentID)
+{
+Info << outn <<","<<pho_n<<"," <<particleName << ","<<""<<','<<","<<parentid<<','<<startid<<","<< endid<<","<< ""<<','<< "" <<'\n' ;
+//Info << n <<","<<pho_n<<"," <<"new"<<particleName << ","<<""<<','<<","<<parentid<<','<<startid<<","<< endid<<","<< ""<<','<< "" <<'\n' ;
+parentid = ParentID;
+startid = TrackID;
+endid =  TrackID;
+pho_n = 0;
+}
+else
+{endid = TrackID;
+pho_n ++;}
+}
+   /*{Info << n <<","<<ek<<"," <<particleName << ","<<TrackID<<','<<ParentID<<','<<""<<","<< ""<<","<< ""<<","<< Volume <<','<< aStep-> GetPreStepPoint()-> GetProcessDefinedStep()->GetProcessName() <<'\n' ;
+  n1=n1+1;}*/
 
  
  
@@ -232,8 +267,7 @@ void DMXScintSD::EndOfEvent(G4HCofThisEvent* HCE)
     G4cout << "     LXe collection: " <<  nHits << " hits" << G4endl;
     Info1 << n<<"  "<<nHits << std::endl;
     n++;
-    ++outn;
-
+    
   }
   if (verboseLevel>=2)
     scintillatorCollection->PrintAllHits();
