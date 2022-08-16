@@ -80,7 +80,7 @@ DMXScintSD::DMXScintSD(G4String name)
   collectionName.insert(HCname);
 	
   
-  Info.open("Informacion_July18.csv");
+  Info.open("Informacion_August18.csv");
   Info1.open("General.txt");
   Info2.open("Q_sigma_Info.csv");
   Info << "Event,"<<"Energy_Cinetica," << "Particle,TrackID,ParentID," << "parentid,"<<"startid,"<<"endid,"<<"Volume,"<<"Process"<<'\n';
@@ -112,12 +112,12 @@ G4bool DMXScintSD::ProcessHits(G4Step* aStep, G4TouchableHistory*)
 {
 
   //need to know if this is an optical photon and exclude it:
-  /*if(aStep->GetTrack()->GetDefinition()
+  if(aStep->GetTrack()->GetDefinition()
     == G4OpticalPhoton::OpticalPhotonDefinition()) 
     {aStep->GetTrack()->SetTrackStatus(fStopAndKill);
     return false;}
 
-  if(aStep->GetTrack()->GetDefinition()
+  /*if(aStep->GetTrack()->GetDefinition()
     == G4Electron::ElectronDefinition()) 
 
     {aStep->GetTrack()->SetTrackStatus(fKillTrackAndSecondaries);
@@ -173,10 +173,10 @@ char electron [10]= "electron";
   newHit->SetParticleEnergy(aStep->GetPreStepPoint()->GetKineticEnergy() );
 
   HitID = scintillatorCollection->insert(newHit);
-
- if(strcmp(particleName,Ar36) == 0 || strcmp(particleName,Ar38) == 0 || strcmp(particleName,Ar40) == 0|| strcmp(particleName,Ar40) == 0)
- {
-  Info << n <<"  "<<G4BestUnit(ek,"Energy")<<"  "<<G4BestUnit(edep,"Energy") <<"  " <<particleName << "  "<<G4BestUnit(posx,"Length") << G4BestUnit(posy,"Length")<< G4BestUnit(posz,"Length")<< std::endl;}
+if (n1 != n)
+ if(aStep->GetPreStepPoint()->GetProcessDefinedStep() && aStep->GetTrack()->GetDefinition()
+    == G4Electron::ElectronDefinition() && FirstStep == true)
+ {Info << n <<" , "<<"," <<particleName << ","<<TrackID << ","<< ParentID << "," <<ek*1000000  <<"\n";}
  
    
 
