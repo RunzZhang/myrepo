@@ -174,10 +174,10 @@ char electron [10]= "electron";
 
   HitID = scintillatorCollection->insert(newHit);
 
- //if(strcmp(particleName,Ar36) == 0 || strcmp(particleName,Ar38) == 0 || strcmp(particleName,Ar40) == 0)
- //{
-  /*Info << n <<"  "<<G4BestUnit(ek,"Energy")<<"  "<<G4BestUnit(edep,"Energy") <<"  " <<particleName << "  "<<G4BestUnit(posx,"Length") << G4BestUnit(posy,"Length")<< G4BestUnit(posz,"Length")<< std::endl;*/
- //
+ if(strcmp(particleName,Ar36) == 0 || strcmp(particleName,Ar38) == 0 || strcmp(particleName,Ar40) == 0|| strcmp(particleName,Ar40) == 0)
+ {
+  Info << n <<"  "<<G4BestUnit(ek,"Energy")<<"  "<<G4BestUnit(edep,"Energy") <<"  " <<particleName << "  "<<G4BestUnit(posx,"Length") << G4BestUnit(posy,"Length")<< G4BestUnit(posz,"Length")<< std::endl;}
+ 
    
 
   /*if (strcmp(particleName, gamma) ==0&& FirstStep == true)
@@ -194,53 +194,11 @@ char electron [10]= "electron";
    {Info2 << outn << "," <<particleName << ","<<TrackID << ","<< ParentID << "," <<G4BestUnit(ek,"Energy") << ","<< Volume <<",\n";}*/
 
 
-if (aStep->GetPreStepPoint()->GetProcessDefinedStep() && aStep-> GetPostStepPoint()-> GetProcessDefinedStep()->GetProcessName()=="nCapture")
-{Info << n <<","<<ek<<"," <<particleName << ","<<TrackID<<','<<ParentID<<','<<posx<<","<< posy<<","<< posz<<","<< Volume <<','<< aStep-> GetPostStepPoint()-> GetProcessDefinedStep()->GetProcessName() <<'\n' ;
-n1 =n1+1;}
 
-if (strcmp(particleName, gamma) ==0 && LastStep==true)
 
-  {Info << n <<","<<ek<<"," <<particleName << ","<<TrackID<<','<<ParentID<<','<<""<<","<< ""<<","<< ""<<","<< Volume <<','<< "" <<'\n' ;
-  n1=n1+1;}
+//tag efficiency
 
-if (aStep->GetTrack()->GetDefinition()
-    == G4Electron::ElectronDefinition()  && FirstStep==true)
 
-  {Info << n <<","<<ek<<"," <<particleName << ","<<TrackID<<','<<ParentID<<','<<""<<","<< ""<<","<< ""<<","<< Volume <<','<< "" <<'\n' ;
-  n1=n1+1;}
-
-  
-/*if ( aStep->GetTrack()->GetDefinition()
-    == G4OpticalPhoton::OpticalPhotonDefinition()&& FirstStep==true && n > outn) */
-if (outn!= n && (endid != 0 || startid !=0 || parentid !=0))
-{Info << outn <<","<<pho_n<<"," <<particleName << ","<<""<<','<<","<<parentid<<','<<startid<<","<< endid<<","<< ""<<','<< "" <<'\n' ;
-outn = n;
-//Info <<n <<","<<pho_n<<"," <<"new"<<particleName << ","<<""<<','<<","<<parentid<<','<<startid<<","<< endid<<","<< ""<<','<< "" <<'\n' ;
-
-pho_n = 0;
-endid = 0 ;
-startid = 0 ; 
-parentid = 0;}
-if (aStep->GetTrack()->GetDefinition()
-    == G4OpticalPhoton::OpticalPhotonDefinition()&& LastStep==true)
-{
-if (parentid != ParentID)
-{
-Info << outn <<","<<pho_n<<"," <<particleName << ","<<""<<','<<","<<parentid<<','<<startid<<","<< endid<<","<< ""<<','<< "" <<'\n' ;
-//Info << n <<","<<pho_n<<"," <<"new"<<particleName << ","<<""<<','<<","<<parentid<<','<<startid<<","<< endid<<","<< ""<<','<< "" <<'\n' ;
-parentid = ParentID;
-startid = TrackID;
-endid =  TrackID;
-pho_n = 0;
-}
-else
-{endid = TrackID;
-pho_n ++;}
-}
-   /*{Info << n <<","<<ek<<"," <<particleName << ","<<TrackID<<','<<ParentID<<','<<""<<","<< ""<<","<< ""<<","<< Volume <<','<< aStep-> GetPreStepPoint()-> GetProcessDefinedStep()->GetProcessName() <<'\n' ;
-  n1=n1+1;}*/
-
- 
  
 
   return true;
