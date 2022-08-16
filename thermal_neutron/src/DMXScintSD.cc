@@ -173,7 +173,7 @@ char electron [10]= "electron";
   newHit->SetParticleEnergy(aStep->GetPreStepPoint()->GetKineticEnergy() );
 
   HitID = scintillatorCollection->insert(newHit);
-if (n1 != n)
+
  if(aStep->GetPreStepPoint()->GetProcessDefinedStep() && aStep->GetTrack()->GetDefinition()
     == G4Electron::ElectronDefinition() && FirstStep == true)
  {Info << n <<" , "<<"," <<particleName << ","<<TrackID << ","<< ParentID << "," <<ek*1000000  <<"\n";}
