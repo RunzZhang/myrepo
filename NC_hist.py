@@ -43,6 +43,7 @@ class thermal_neutron_calibration():
         Capture_event=[]
 
         for idx in range(len(df.index)):
+            print(idx)
         # for idx in range(1000):
 
             try:
