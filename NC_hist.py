@@ -15,6 +15,7 @@ class thermal_neutron_calibration():
 
 
         self.fullInfoaddress = "/data/runzezhang/result/Informacion_20220119.csv"
+        self.captureoutaddress="/data/runzezhang/result/Informacion_20220119_ncout.csv"
 
         # ONe entry like this event number : (incident energy(float, ev), outgoing(bool), Q Value (float) in MeV)
         self.INFOmatrix = {}
@@ -90,6 +91,7 @@ class thermal_neutron_calibration():
         df_capture=df[df["Event"].isin(Capture_event)]
 
         print(df_capture.head(5))
+        df_capture.to_csv(path_or_buf=self.captureoutaddress,sep=',',index = False)
         #
         # print(self.INFOmatrix)
         # print(self.INFOmatrix)
