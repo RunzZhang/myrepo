@@ -87,7 +87,7 @@ class thermal_neutron_calibration():
             except Exception as e:
                 print(e)
 
-            df_capture=df[df["Event"] in Capture_event]
+            df_capture=df[df["Event"].isin(Capture_event)]
 
             print(df_capture.head(5))
         #
