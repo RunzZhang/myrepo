@@ -45,7 +45,7 @@ class thermal_neutron_calibration():
         # for idx in range(1000):
 
             try:
-                if df.iloc[idx]['particle name'] == "Ar41":
+                if df.iloc[idx]['Particle'] == "Ar41":
                     if df.iloc[idx]['Event'] not in Capture_event:
                         Capture_event.append(df.iloc[idx]['Event'])
 
