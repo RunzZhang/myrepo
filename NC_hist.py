@@ -30,15 +30,73 @@ class thermal_neutron_calibration():
         self.sigma_matrix = []
         for i in self.y:
             self.sigma_matrix.append((i,{"Total":0, "Out":0}))
-        print(self.sigma_matrix)
+
         self.gamma_list=[]
 
 
 
     def read_Information(self):
         # df = pd.read_csv(self.fullInfoaddress)
-        df = pd.read_csv(self.fullInfoaddress, nrows = 2200000)
+        df = pd.read_csv(self.fullInfoaddress)
         print(df.head(5))
+        Capture_event=[]
+
+        for idx in range(len(df.index)):
+        # for idx in range(1000):
+
+            try:
+                if df.iloc[idx]['particle name'] == "Ar41":
+                    if df.iloc[idx]['Event'] not in Capture_event:
+                        Capture_event.append(df.iloc[idx]['Event'])
+
+        #         if event_pointer == df.iloc[idx]['Event']:
+        #             pass
+        # #
+                # else:
+                #     print(idx)
+                #     event_pointer = df.iloc[idx]['Event']
+                #     track_history = []
+                #     pass
+                #
+                #
+                # if event_pointer in self.INFOmatrix.keys():
+                #
+                #     if df.iloc[idx]['particle name'] == "gamma" and df.iloc[idx]['Parent ID'] == 1:
+                #         self.INFOmatrix[event_pointer][1] = False
+                #         # make sure the gamma energy is the initial one with same Track ID and Parent ID.
+                #
+                #         if df.iloc[idx]['Track ID'] in track_history:
+                #
+                #             pass
+                #         else:
+                #             self.INFOmatrix[event_pointer][2] = self.INFOmatrix[event_pointer][2] + df.iloc[idx]['Kinetic E']
+                #             track_history.append(df.iloc[idx]['Track ID'])
+                #
+                #     if df.iloc[idx]['particle name'] == "neutron" and df.iloc[idx]['Physics Process'] == 'Outgoing':
+                #         self.INFOmatrix[event_pointer][1] = True
+                #
+                # else:
+                #     if df.iloc[idx]['particle name'] == "neutron" and df.iloc[idx]['Physics Process'] == "Incident":
+                #
+                #         self.INFOmatrix[event_pointer] = [df.iloc[idx]['Kinetic E'],False,0]
+                #
+                #     else:
+                #         print(df.iloc[idx])
+                #         print("Error! First Step is not Neutron!")
+                #         break
+            except Exception as e:
+                print(e)
+
+            df_capture=df[df["Event"] in Capture_event]
+
+            print(df_capture.head(5))
+        #
+        # print(self.INFOmatrix)
+        print(self.INFOmatrix)
+        wdf = pd.DataFrame.from_dict(self.INFOmatrix, orient = 'index', columns=['IE', 'OG', 'Q'])
+        wdf.to_csv(self.outputfile, sep=',')
+
+
 
 
 
