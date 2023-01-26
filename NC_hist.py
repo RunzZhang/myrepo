@@ -5,16 +5,17 @@ import numpy as np
 import os, pickle
 import pandas as pd
 
+
+#This plot the Informacion 2022-01119, which checked the 3 different process of neutron capture and recoiled energy
 class thermal_neutron_calibration():
     def __init__(self, parent=None, join='Q_sigma_Info.txt'):
         # super().__init__(parent)
         print(os.getcwd())
         self.base = os.getcwd()
 
-        self.Infoaddress = 'Q_sigma_Info_April6.csv'
-        self.fullInfoaddress = os.path.join(self.base, self.Infoaddress)
-        self.outputfile = 'result_April6.csv'
-        self.gammafile = 'gammaresult_April6.csv'
+
+        self.fullInfoaddress = "/data/runzezhang/data/Infomacion_20220109.csv"
+
         # ONe entry like this event number : (incident energy(float, ev), outgoing(bool), Q Value (float) in MeV)
         self.INFOmatrix = {}
         self.Q_list=[]
@@ -34,104 +35,6 @@ class thermal_neutron_calibration():
 
 
 
-        self.endfE= [1.265500*10**(-2),  1.581625*10**(-2),  1.697880*10**(-2),
-                     1.897750*10**(-2),  2.230510*10**(-2),  2.530000*10**(-2),
-                     3.062612*10**(-2),  3.295760*10**(-2),  3.595223*10**(-2),
-                     4.361020*10**(-2),  4.660445*10**(-2),  5.725668*10**(-2),
-                     6.491530*10**(-2),  6.790890*10**(-2),  8.622030*10**(-2),
-                     8.921335*10**(-2),  1.105178*10**(-1)]
-        self.endfsig = [9.174450*10**2,   8.209190*10**2,  7.849240*10**2,
-                        7.477450*10**2,   6.846480*10**2,  6.431150*10**2,
-                        5.878920*10**2,   5.633990*10**2,  5.429490*10**2,
-                        4.897090*10**2,   4.776170*10**2,  4.335600*10**2,
-                        4.014440*10**2,   3.941080*10**2,  3.483120*10**2,
-                        3.439990*10**2,   3.124790*10**2]
-
-
-        self.endfE1 = [.012928235,  .014032614,  .015242812,
-                       .016544912,  .017971775,  .019506993,
-                       .021189312,  .022999384,  .024798654,
-                       .025300000,  .027481919,  .029829529,
-                       .032402083,  .035169992,  .038203117,
-                       .041466574,  .045042727,  .048890449,
-                       .053106852,  .057643442,  .062614718,
-                       .067963507,  .073824805,  .080131202,
-                       .087041865,  .094477313,  .102625211]
-        self.endfsig1 = [.923960966*10**3,  .886862090*10**3,  .850933662*10**3,
-                         .816767141*10**3,  .783677319*10**3,  .752212948*10**3,
-                         .721740691*10**3,  .692764496*10**3,  .667165590*10**3,
-                         .660526127*10**3,  .633767036*10**3,  .608320515*10**3,
-                         .583678875*10**3,  .560256516*10**3,  .537581534*10**3,
-                         .516017376*10**3,  .495135423*10**3,  .475255633*10**3,
-                         .455990922*10**3,  .437664425*10**3,  .419915151*10**3,
-                         .403043834*10**3,  .386717603*10**3,  .371206768*10**3,
-                         .356188252*10**3,  .341894480*10**3,  .328034297*10**3]
-
-
-
-
-    def read_gamma_Information(self):
-        file = open(self.fullInfoaddress, 'r')
-
-
-        event_pointer=-1
-        track_pointer = 1
-        track_history =[]
-
-
-        lines = file.readlines()
-        for line in lines:
-            line_list = line.split()
-            try:
-                # print(line_list[0])
-                if line_list[0]=="Event":
-                    continue
-                if event_pointer == int(line_list[0]):
-                    pass
-
-                elif event_pointer +1 == int(line_list[0]) :
-                    event_pointer += 1
-                    track_history= []
-                    pass
-                elif event_pointer +2 == int(line_list[0]) :
-                    print(event_pointer, 'is lost. Skip and continue.')
-                    event_pointer += 2
-                    track_history= []
-                    pass
-                else:
-                    print("Pointer Not Matched! In line ",int(line_list[0]))
-                    break
-                    # pass
-
-                if line_list[1]=="gamma" and line_list[3]=='1':
-
-                    if line_list[2] in track_history:
-                        pass
-                    else:
-                        if line_list[5] == "MeV":
-                            self.gamma_list.append(float(line_list[4]))
-
-                        elif line_list[5] == "keV":
-                            self.gamma_list.append(float(line_list[4])/1000)
-
-                        elif line_list[5] == "eV":
-                            self.gamma_list.append(float(line_list[4]) / 1000000)
-                        else:
-                            print("Unit not recognized")
-                            break
-                        track_history.append(line_list[2])
-
-
-
-
-
-            except Exception as e:
-                print(e)
-
-        # print(self.INFOmatrix)
-        with open(self.gammafile, 'wb') as fp:
-            pickle.dump(self.gamma_list, fp)
-
     def read_Information(self):
         # df = pd.read_csv(self.fullInfoaddress)
         df = pd.read_csv(self.fullInfoaddress, nrows = 2200000)
@@ -144,53 +47,53 @@ class thermal_neutron_calibration():
         track_pointer = 1
         track_history = []
 
-        for idx in range(len(df.index)):
-        # for idx in range(1000):
-
-            try:
-                if event_pointer == df.iloc[idx]['Event']:
-                    pass
+        # for idx in range(len(df.index)):
+        # # for idx in range(1000):
         #
-                else:
-                    print(idx)
-                    event_pointer = df.iloc[idx]['Event']
-                    track_history = []
-                    pass
-
-
-                if event_pointer in self.INFOmatrix.keys():
-
-                    if df.iloc[idx]['particle name'] == "gamma" and df.iloc[idx]['Parent ID'] == 1:
-                        self.INFOmatrix[event_pointer][1] = False
-                        # make sure the gamma energy is the initial one with same Track ID and Parent ID.
-
-                        if df.iloc[idx]['Track ID'] in track_history:
-
-                            pass
-                        else:
-                            self.INFOmatrix[event_pointer][2] = self.INFOmatrix[event_pointer][2] + df.iloc[idx]['Kinetic E']
-                            track_history.append(df.iloc[idx]['Track ID'])
-
-                    if df.iloc[idx]['particle name'] == "neutron" and df.iloc[idx]['Physics Process'] == 'Outgoing':
-                        self.INFOmatrix[event_pointer][1] = True
-
-                else:
-                    if df.iloc[idx]['particle name'] == "neutron" and df.iloc[idx]['Physics Process'] == "Incident":
-
-                        self.INFOmatrix[event_pointer] = [df.iloc[idx]['Kinetic E'],False,0]
-
-                    else:
-                        print(df.iloc[idx])
-                        print("Error! First Step is not Neutron!")
-                        break
-            except Exception as e:
-                print(e)
+        #     try:
+        #         if event_pointer == df.iloc[idx]['Event']:
+        #             pass
+        # #
+        #         else:
+        #             print(idx)
+        #             event_pointer = df.iloc[idx]['Event']
+        #             track_history = []
+        #             pass
         #
+        #
+        #         if event_pointer in self.INFOmatrix.keys():
+        #
+        #             if df.iloc[idx]['particle name'] == "gamma" and df.iloc[idx]['Parent ID'] == 1:
+        #                 self.INFOmatrix[event_pointer][1] = False
+        #                 # make sure the gamma energy is the initial one with same Track ID and Parent ID.
+        #
+        #                 if df.iloc[idx]['Track ID'] in track_history:
+        #
+        #                     pass
+        #                 else:
+        #                     self.INFOmatrix[event_pointer][2] = self.INFOmatrix[event_pointer][2] + df.iloc[idx]['Kinetic E']
+        #                     track_history.append(df.iloc[idx]['Track ID'])
+        #
+        #             if df.iloc[idx]['particle name'] == "neutron" and df.iloc[idx]['Physics Process'] == 'Outgoing':
+        #                 self.INFOmatrix[event_pointer][1] = True
+        #
+        #         else:
+        #             if df.iloc[idx]['particle name'] == "neutron" and df.iloc[idx]['Physics Process'] == "Incident":
+        #
+        #                 self.INFOmatrix[event_pointer] = [df.iloc[idx]['Kinetic E'],False,0]
+        #
+        #             else:
+        #                 print(df.iloc[idx])
+        #                 print("Error! First Step is not Neutron!")
+        #                 break
+        #     except Exception as e:
+        #         print(e)
+        # #
+        # # print(self.INFOmatrix)
         # print(self.INFOmatrix)
-        print(self.INFOmatrix)
-        wdf = pd.DataFrame.from_dict(self.INFOmatrix, orient = 'index', columns=['IE', 'OG', 'Q'])
-        wdf.to_csv(self.outputfile, sep=',')
-
+        # wdf = pd.DataFrame.from_dict(self.INFOmatrix, orient = 'index', columns=['IE', 'OG', 'Q'])
+        # wdf.to_csv(self.outputfile, sep=',')
+        #
 
     def read_Information_alln(self):
         file = open(self.fullInfoaddress, 'r')
@@ -368,9 +271,9 @@ if __name__=="__main__":
     # get hits number and plot positions
 
     tnc= thermal_neutron_calibration()
-    # tnc.read_Information()
+    tnc.read_Information()
     # tnc.plot_Q(True)
-    tnc.plot_cross(read=True)
-    tnc.read_gamma_Information()
+    # tnc.plot_cross(read=True)
+    # tnc.read_gamma_Information()
     # tnc.plot_gamma(True)
     # tnc.plot_endf()
