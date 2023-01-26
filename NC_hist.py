@@ -87,14 +87,14 @@ class thermal_neutron_calibration():
             except Exception as e:
                 print(e)
 
-            df_capture=df[df["Event"].isin(Capture_event)]
+        df_capture=df[df["Event"].isin(Capture_event)]
 
-            print(df_capture.head(5))
+        print(df_capture.head(5))
         #
         # print(self.INFOmatrix)
-        print(self.INFOmatrix)
-        wdf = pd.DataFrame.from_dict(self.INFOmatrix, orient = 'index', columns=['IE', 'OG', 'Q'])
-        wdf.to_csv(self.outputfile, sep=',')
+        # print(self.INFOmatrix)
+        # wdf = pd.DataFrame.from_dict(self.INFOmatrix, orient = 'index', columns=['IE', 'OG', 'Q'])
+        # wdf.to_csv(self.outputfile, sep=',')
 
 
 
