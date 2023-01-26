@@ -14,7 +14,7 @@ class thermal_neutron_calibration():
         self.base = os.getcwd()
 
 
-        self.fullInfoaddress = "/data/runzezhang/data/Informacion_20220109.csv"
+        self.fullInfoaddress = "/data/runzezhang/result/Informacion_20220119.csv"
 
         # ONe entry like this event number : (incident energy(float, ev), outgoing(bool), Q Value (float) in MeV)
         self.INFOmatrix = {}
