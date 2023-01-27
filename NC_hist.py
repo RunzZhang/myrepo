@@ -38,7 +38,7 @@ class thermal_neutron_calibration():
 
     def read_Information(self):
         # df = pd.read_csv(self.fullInfoaddress)
-        df = pd.read_csv(self.fullInfoaddress, nrows= 22000)
+        df = pd.read_csv(self.fullInfoaddress)
         print(df.head(5))
         Capture_event=[]
 
