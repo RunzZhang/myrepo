@@ -38,7 +38,7 @@ class thermal_neutron_calibration():
 
     def read_Information(self):
         # df = pd.read_csv(self.fullInfoaddress)
-        df = pd.read_csv(self.fullInfoaddress)
+        df = pd.read_csv(self.fullInfoaddress, nrows= 22000)
         print(df.head(5))
         Capture_event=[]
 
@@ -155,6 +155,10 @@ class thermal_neutron_calibration():
         # wdf = pd.DataFrame.from_dict(self.INFOmatrix, orient = 'index', columns=['IE', 'OG', 'Q'])
         # wdf.to_csv(self.outputfile, sep=',')
         #
+
+    def read_Scheduled_info(self):
+        # still read
+        return True
 
     def read_Information_alln(self):
         file = open(self.fullInfoaddress, 'r')
