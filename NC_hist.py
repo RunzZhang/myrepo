@@ -159,7 +159,8 @@ class thermal_neutron_calibration():
 
     def read_Scheduled_info(self):
         # still read
-        df = pd.read_csv(self.captureoutaddress)
+        df = pd.read_csv(self.captureoutaddress, nrows= 20000)
+        # df = pd.read_csv(self.captureoutaddress)
         print(df.head(5))
         Event_list = df['Event'].unique()
         e_n = 0
@@ -177,6 +178,7 @@ class thermal_neutron_calibration():
 
         for idx in range(len(df.index)):
             if e_p< df.iloc[idx]['Event']:
+                print("start")
                 #new event and it should start with ar41
                 e_p = df.iloc[idx]['Event']
                 step_p = 0
