@@ -183,7 +183,7 @@ class thermal_neutron_calibration():
                 e_p = df.iloc[idx]['Event']
                 step_p = 0
                 if df.iloc[idx]['Particle'] == 'Ar41':
-                    print("output")
+                    # print("output")
                     p_n = df.iloc[idx]['TrackID']
                     #Ek| Edop
                     updated_dic[df.iloc[idx]['Event']]:{'Ar41':{step_p:[df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
@@ -203,7 +203,7 @@ class thermal_neutron_calibration():
             else:
                 print(df.iloc[idx]['Event'],"?")
 
-
+        print(updated_dic)
         with  open(self.data_dic, 'wb') as handle:
             pickle.dump(updated_dic, handle, protocol=pickle.HIGHEST_PROTOCOL)
             print("finished write!")
