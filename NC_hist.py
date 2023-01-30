@@ -178,11 +178,12 @@ class thermal_neutron_calibration():
 
         for idx in range(len(df.index)):
             if e_p< df.iloc[idx]['Event']:
-                print("start")
+                # print("start")
                 #new event and it should start with ar41
                 e_p = df.iloc[idx]['Event']
                 step_p = 0
                 if df.iloc[idx]['Particle'] == 'Ar41':
+                    print("output")
                     p_n = df.iloc[idx]['TrackID']
                     #Ek| Edop
                     updated_dic[df.iloc[idx]['Event']]:{'Ar41':{step_p:[df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
