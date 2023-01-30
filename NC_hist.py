@@ -186,8 +186,9 @@ class thermal_neutron_calibration():
                     # print("output")
                     p_n = df.iloc[idx]['TrackID']
                     #Ek| Edop
-                    updated_dic[df.iloc[idx]['Event']]:{'Ar41':{step_p:[df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
+                    updated_dic[df.iloc[idx]['Event']]={'Ar41':{step_p:[df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
                          df.iloc[idx]['Time']]}}
+
                     t_n = df.iloc[idx]['Time']
                     step_p = step_p + 1
 
@@ -198,7 +199,7 @@ class thermal_neutron_calibration():
                     if step_p>=1:
                         step_p=0
                         if df.iloc[idx]['ParentID'] == p_n:
-                            updated_dic[df.iloc[idx]['Event']]:{'gamma': {step_p: [df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
+                            updated_dic[df.iloc[idx]['Event']]={'gamma': {step_p: [df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
                                                   df.iloc[idx]['Time']-t_n]}}
             else:
                 print(df.iloc[idx]['Event'],"?")
