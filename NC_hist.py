@@ -16,6 +16,7 @@ class thermal_neutron_calibration():
 
         self.fullInfoaddress = "/data/runzezhang/result/Informacion_20220119.csv"
         self.captureoutaddress="/data/runzezhang/result/Informacion_20220119_ncout.csv"
+        self.data_dic="/data/runzezhang/result/Informacion_20220119_dic.pickle"
 
         # ONe entry like this event number : (incident energy(float, ev), outgoing(bool), Q Value (float) in MeV)
         self.INFOmatrix = {}
@@ -158,7 +159,58 @@ class thermal_neutron_calibration():
 
     def read_Scheduled_info(self):
         # still read
+        df = pd.read_csv(self.captureoutaddress)
+        print(df.head(5))
+        Event_list = df['Event'].unique()
+        e_n = 0
+        e_p = 0
+        p_n = 0
+        t_n = 0
+        time_list = []
+        time_modified = []
+        # Event|step number|edp|ek|trackID|Time
+        ar_info=[]
+        gamma_info =[]
+        step = 0
+        updated_dic={}
+        step_p=0
+
+        for idx in range(len(df.index)):
+            if e_p< df.iloc[idx]['Event']:
+                #new event and it should start with ar41
+                e_p = df.iloc[idx]['Event']
+                step_p = 0
+                if df.iloc[idx]['Particle'] == 'Ar41':
+                    p_n = df.iloc[idx]['TrackID']
+                    updated_dic[df.iloc[idx]['Event']:{'Ar41':{step_p:[df.iloc[idx]['Edep'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
+                         df.iloc[idx]['Time']]}}]
+                    t_n = df.iloc[idx]['Time']
+                    step_p = step_p + 1
+
+            elif e_p== df.iloc[idx]['Event']:
+                #first step record it
+                if df.iloc[idx]['Particle'] == 'gamma':
+                    # first step
+                    if step_p>=1:
+                        step_p=0
+                        if df.iloc[idx]['ParentID'] == p_n:
+                            updated_dic[df.iloc[idx]['Event']:{'gamma': {step_p: [df.iloc[idx]['Edep'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
+                                                  df.iloc[idx]['Time']-t_n]}}]
+            else:
+                print(df.iloc[idx]['Event'],"?")
+
+
+        with  open(self.data_dic, 'wb') as handle:
+            pickle.dump(updated_dic, handle, protocol=pickle.HIGHEST_PROTOCOL)
+            print("finished write!")
+
+
         return True
+
+    def read_dic(self):
+        with open(self.data_dic, 'rb') as handle:
+            b = pickle.load(handle)
+        print(b)
 
     def read_Information_alln(self):
         file = open(self.fullInfoaddress, 'r')
@@ -336,8 +388,10 @@ if __name__=="__main__":
     # get hits number and plot positions
 
     tnc= thermal_neutron_calibration()
-    tnc.read_Information()
+    # tnc.read_Information()
     # tnc.plot_Q(True)
+    tnc.read_Scheduled_info()
+    tnc.read_dic()
     # tnc.plot_cross(read=True)
     # tnc.read_gamma_Information()
     # tnc.plot_gamma(True)
