@@ -167,6 +167,7 @@ class thermal_neutron_calibration():
         e_p = 0
         p_n = 0
         t_n = 0
+        base_time= 0
         time_list = []
         time_modified = []
         # Event|step number|edp|ek|trackID|Time
@@ -184,12 +185,12 @@ class thermal_neutron_calibration():
                 step_p = 0
                 if df.iloc[idx]['Particle'] == 'Ar41':
                     # print("output")
-                    p_n = df.iloc[idx]['TrackID']
+                    p_n = df.iloc[idx]['ParentID']
                     #Ek| Edop
                     updated_dic[df.iloc[idx]['Event']]={'Ar41':{step_p:[df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
                          df.iloc[idx]['Time']]}}
 
-                    t_n = df.iloc[idx]['Time']
+                    base_time = df.iloc[idx]['Time']
                     step_p = step_p + 1
 
             elif e_p == df.iloc[idx]['Event']:
@@ -198,11 +199,11 @@ class thermal_neutron_calibration():
                 if df.iloc[idx]['Particle'] == 'gamma':
                     # first step
                     if step_p>=1:
-                        print("step gamma")
+                        # print("step gamma")
                         step_p=0
                         if df.iloc[idx]['ParentID'] == p_n:
                             updated_dic[df.iloc[idx]['Event']]={'gamma': {step_p: [df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
-                                                  df.iloc[idx]['Time']-t_n]}}
+                                                  df.iloc[idx]['Time']-base_time]}}
             else:
                 print(df.iloc[idx]['Event'],"?")
 
