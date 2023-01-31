@@ -259,6 +259,31 @@ class thermal_neutron_calibration():
         print(gamma_list)
 
 
+    def check_time_value(self):
+        with open(self.data_dic, 'rb') as handle:
+            b = pickle.load(handle)
+            time_list=[]
+            time = 0
+
+        for event in b:
+            time = 0
+            for key in b[event]['gamma']:
+                if key > 0:
+                    time_list.append(b[event]['gamma'][key][3])
+                    
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        ax.set_title('Time in G4 Calibration')
+        ax.set_xlabel('Time/ns')
+        ax.set_ylabel('entries/bin')
+        plt.hist(time_list, bins=70, range=(0 , 6.5 ), log=True)
+        plt.show()
+
+
+        print(time_list)
+
+
 
     def read_Information_alln(self):
         file = open(self.fullInfoaddress, 'r')
@@ -440,7 +465,8 @@ if __name__=="__main__":
     # tnc.plot_Q(True)
     # tnc.read_Scheduled_info()
     tnc.read_dic()
-    tnc.check_Q_value()
+    # tnc.check_Q_value()
+    tnc.check_time_value()
     # tnc.plot_cross(read=True)
     # tnc.read_gamma_Information()
     # tnc.plot_gamma(True)
