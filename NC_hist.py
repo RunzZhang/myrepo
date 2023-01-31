@@ -244,7 +244,7 @@ class thermal_neutron_calibration():
             gamma = 0
             for key in b[event]['gamma']:
                 if key > 0:
-                    gamma = b[event]['gamma'][key][1] + gamma
+                    gamma = b[event]['gamma'][key][0] + gamma
             gamma_list.append(gamma)
 
         print(gamma_list)
