@@ -159,8 +159,8 @@ class thermal_neutron_calibration():
 
     def read_Scheduled_info(self):
         # still read
-        df = pd.read_csv(self.captureoutaddress, nrows= 20000)
-        # df = pd.read_csv(self.captureoutaddress)
+        # df = pd.read_csv(self.captureoutaddress, nrows= 20000)
+        df = pd.read_csv(self.captureoutaddress)
         print(df.head(5))
         Event_list = df['Event'].unique()
         e_n = 0
