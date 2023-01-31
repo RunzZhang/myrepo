@@ -206,6 +206,7 @@ class thermal_neutron_calibration():
                             # updated_dic[df.iloc[idx]['Event']]={'gamma': {step_p: [df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
                             #                       df.iloc[idx]['Time']-base_time]}}
                            #  updated_dic[df.iloc[idx]['Event']]['gamma']= {step_p: [df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],df.iloc[idx]['Time']-base_time]}
+                            print(updated_dic)
                             updated_dic[df.iloc[idx]['Event']]['gamma'] = 0
                            # # print([df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],df.iloc[idx]['Time'] - base_time])
                             gamma_step = df.iloc[idx]['TrackID']
