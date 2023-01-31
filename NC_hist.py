@@ -191,7 +191,7 @@ class thermal_neutron_calibration():
                     # updated_dic[df.iloc[idx]['Event']]={'Ar41':{step_p:[df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
                     #      df.iloc[idx]['Time']]}}updated_dic[df.iloc[idx]['Event']]['Ar41'] =  {step_p: [df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
                     #                                           df.iloc[idx]['Time']]}
-                    updated_dic[df.iloc[idx]['Event']] = {'Ar41': None, "gamma": {0:None}}
+                    updated_dic[df.iloc[idx]['Event']] = {'Ar41': None, "gamma": {-1:None}}
                     updated_dic[df.iloc[idx]['Event']]['Ar41'] =  {step_p: [df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
                                           df.iloc[idx]['Time']]}
 
@@ -205,6 +205,7 @@ class thermal_neutron_calibration():
                         if df.iloc[idx]['ParentID'] == p_n and gamma_step != df.iloc[idx]['TrackID']:
                             # updated_dic[df.iloc[idx]['Event']]={'gamma': {step_p: [df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
                             #                       df.iloc[idx]['Time']-base_time]}}
+                            updated_dic[df.iloc[idx]['Event']]['gamma'][df.iloc[idx]['TrackID']]= [df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],df.iloc[idx]['Time'] - base_time]
                             gamma_step = df.iloc[idx]['TrackID']
                             try:
                                 updated_dic[df.iloc[idx]['Event']]['gamma'][gamma_step]=  [df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],df.iloc[idx]['Time']-base_time]
