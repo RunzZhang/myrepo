@@ -193,11 +193,12 @@ class thermal_neutron_calibration():
                     step_p = step_p + 1
 
             elif e_p == df.iloc[idx]['Event']:
-                print("same event")
+                # print("same event")
                 #first step record it
                 if df.iloc[idx]['Particle'] == 'gamma':
                     # first step
                     if step_p>=1:
+                        print("step gamma")
                         step_p=0
                         if df.iloc[idx]['ParentID'] == p_n:
                             updated_dic[df.iloc[idx]['Event']]={'gamma': {step_p: [df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
