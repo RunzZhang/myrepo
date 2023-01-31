@@ -176,6 +176,7 @@ class thermal_neutron_calibration():
         step = 0
         updated_dic={}
         step_p=0
+        gamma_step = 0
 
         for idx in range(len(df.index)):
             if e_p< df.iloc[idx]['Event']:
