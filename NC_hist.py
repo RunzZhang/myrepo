@@ -431,7 +431,7 @@ if __name__=="__main__":
     # tnc.plot_Q(True)
     # tnc.read_Scheduled_info()
     tnc.read_dic()
-    # tnc.check_Q_value()
+    tnc.check_Q_value()
     # tnc.plot_cross(read=True)
     # tnc.read_gamma_Information()
     # tnc.plot_gamma(True)
