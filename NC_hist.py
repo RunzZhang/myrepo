@@ -277,7 +277,7 @@ class thermal_neutron_calibration():
         ax.set_title('Time in G4 Calibration')
         ax.set_xlabel('Time/ns')
         ax.set_ylabel('entries/bin')
-        plt.hist(time_list, bins=70, range=(0 , 2 ), log=True)
+        plt.hist(time_list, bins=150, range=(0 , 1.75 ), log=True)
         plt.show()
 
 
