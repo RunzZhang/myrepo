@@ -247,6 +247,15 @@ class thermal_neutron_calibration():
                     gamma = b[event]['gamma'][key][0] + gamma
             gamma_list.append(gamma)
 
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        ax.set_title('Q Value in G4 Calibration')
+        ax.set_xlabel('Q Value/MeV')
+        ax.set_ylabel('entries/bin')
+        plt.hist(gamma_list, bins=70, range=(0 * 10 ** 6, 6.5 * 10 ** 6), log=True)
+        plt.show()
+
+
         print(gamma_list)
 
 
