@@ -159,8 +159,8 @@ class thermal_neutron_calibration():
 
     def read_Scheduled_info(self):
         # still read
-        # df = pd.read_csv(self.captureoutaddress, nrows= 20000)
-        df = pd.read_csv(self.captureoutaddress)
+        df = pd.read_csv(self.captureoutaddress, nrows= 20000)
+        # df = pd.read_csv(self.captureoutaddress)
         print(df.head(5))
         Event_list = df['Event'].unique()
         e_n = 0
@@ -176,6 +176,7 @@ class thermal_neutron_calibration():
         step = 0
         updated_dic={}
         step_p=0
+        gamma_step = 0
 
         for idx in range(len(df.index)):
             if e_p< df.iloc[idx]['Event']:
@@ -190,7 +191,7 @@ class thermal_neutron_calibration():
                     # updated_dic[df.iloc[idx]['Event']]={'Ar41':{step_p:[df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
                     #      df.iloc[idx]['Time']]}}updated_dic[df.iloc[idx]['Event']]['Ar41'] =  {step_p: [df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
                     #                                           df.iloc[idx]['Time']]}
-                    updated_dic[df.iloc[idx]['Event']] = {'Ar41': None, "gamma": None}
+                    updated_dic[df.iloc[idx]['Event']] = {'Ar41': None, "gamma": {0:None}}
                     updated_dic[df.iloc[idx]['Event']]['Ar41'] =  {step_p: [df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
                                           df.iloc[idx]['Time']]}
 
@@ -201,16 +202,12 @@ class thermal_neutron_calibration():
                 # print("same event")
                 #first step record it
                 if df.iloc[idx]['Particle'] == 'gamma':
-                    # first step
-                    if step_p>=1:
-                        # print("step gamma")
-                        step_p=0
-                        if df.iloc[idx]['ParentID'] == p_n:
+                        if df.iloc[idx]['ParentID'] == p_n and gamma_step != df.iloc[idx]['TrackID']:
                             # updated_dic[df.iloc[idx]['Event']]={'gamma': {step_p: [df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
                             #                       df.iloc[idx]['Time']-base_time]}}
-                            updated_dic[df.iloc[idx]['Event']]['gamma'] ={
-                                step_p: [df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
-                                         df.iloc[idx]['Time'] - base_time]}
+                            updated_dic[df.iloc[idx]['Event']]['gamma'] [step_p]= [df.iloc[idx]['Energy_Cinetica'], df.iloc[idx]['Ek'], df.iloc[idx]['TrackID'],
+                                         df.iloc[idx]['Time'] - base_time]
+                            gamma_step = df.iloc[idx]['TrackID']
             else:
                 print(df.iloc[idx]['Event'],"?")
 
@@ -226,6 +223,13 @@ class thermal_neutron_calibration():
         with open(self.data_dic, 'rb') as handle:
             b = pickle.load(handle)
         print(b)
+
+    def check_Q_value(self):
+        with open(self.data_dic, 'rb') as handle:
+            b = pickle.load(handle)
+            gamma_list=[]
+        for key in b:
+            gamma = b['gamma'][]
 
     def read_Information_alln(self):
         file = open(self.fullInfoaddress, 'r')
