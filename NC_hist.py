@@ -234,57 +234,12 @@ class thermal_neutron_calibration():
             b = pickle.load(handle)
         print(b)
 
-    def check_Q_value(self):
-        with open(self.data_dic, 'rb') as handle:
-            b = pickle.load(handle)
-            gamma_list=[]
-            gamma = 0
-
-        for event in b:
-            gamma = 0
-            for key in b[event]['gamma']:
-                if key > 0:
-                    gamma = b[event]['gamma'][key][0] + gamma
-            gamma_list.append(gamma)
-
-        fig = plt.figure()
-        ax = fig.add_subplot(111)
-        ax.set_title('Q Value in G4 Calibration')
-        ax.set_xlabel('Q Value/MeV')
-        ax.set_ylabel('entries/bin')
-        plt.hist(gamma_list, bins=70, range=(0 , 6.5 ), log=True)
-        plt.show()
-
-
-        print(gamma_list)
-
-
-    def check_time_value(self):
-        with open(self.data_dic, 'rb') as handle:
-            b = pickle.load(handle)
-            time_list=[]
-            time = 0
-
-        for event in b:
-            time = 0
-            for key in b[event]['gamma']:
-                if key > 0:
-                    time_list.append(b[event]['gamma'][key][3])
-
-
-        fig = plt.figure()
-        ax = fig.add_subplot(111)
-        ax.set_title('Time in G4 Calibration')
-        ax.set_xlabel('Time/ns')
-        ax.set_ylabel('entries/bin')
-        plt.hist(time_list, bins=150, range=(1*10**(-6) , 1.75 ), log=True)
-        ax.set_xscale('log')
-        plt.show()
-
-
-        print(time_list)
-
-
+    # def check_Q_value(self):
+    #     with open(self.data_dic, 'rb') as handle:
+    #         b = pickle.load(handle)
+    #         gamma_list=[]
+    #     for key in b:
+    #         gamma = b['gamma'][]
 
     def read_Information_alln(self):
         file = open(self.fullInfoaddress, 'r')
