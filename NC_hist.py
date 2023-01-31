@@ -224,12 +224,12 @@ class thermal_neutron_calibration():
             b = pickle.load(handle)
         print(b)
 
-    def check_Q_value(self):
-        with open(self.data_dic, 'rb') as handle:
-            b = pickle.load(handle)
-            gamma_list=[]
-        for key in b:
-            gamma = b['gamma'][]
+    # def check_Q_value(self):
+    #     with open(self.data_dic, 'rb') as handle:
+    #         b = pickle.load(handle)
+    #         gamma_list=[]
+    #     for key in b:
+    #         gamma = b['gamma'][]
 
     def read_Information_alln(self):
         file = open(self.fullInfoaddress, 'r')
