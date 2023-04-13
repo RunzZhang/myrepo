@@ -14,7 +14,7 @@ class thermal_neutron_calibration():
         self.base = os.getcwd()
 
 
-        self.fullInfoaddress = "/data/runzezhang/result/Informacion_20220119.csv"
+        self.fullInfoaddress = "/data/runzezhang/result/Q_sigma_Info_0416.csv"
         self.captureoutaddress="/data/runzezhang/result/Informacion_20220119_ncout.csv"
         self.data_dic="/data/runzezhang/result/Informacion_20220119_dic.pickle"
 
@@ -466,12 +466,12 @@ class thermal_neutron_calibration():
             print(idx)
         # for idx in range(1000):
 
-            if df.iloc[idx]['Particle'] == "gamma":
-                Capture_event.append(df.iloc[idx]['ek'])
+            if df.iloc[idx]['particle name'] == "gamma":
+                Capture_event.append(df.iloc[idx]['Kinetic E'])
         fig = plt.figure()
         ax = fig.add_subplot(111)
-        ax.set_title('Q Value in G4 Calibration')
-        ax.set_xlabel('Q Value/MeV')
+        ax.set_title('spectrum')
+        ax.set_xlabel('Energy/MeV')
         ax.set_ylabel('entries/bin')
         plt.hist(Capture_event, bins=1000, range=(0, 6.5), log=True)
         plt.show()
