@@ -483,12 +483,13 @@ if __name__=="__main__":
     # get hits number and plot positions
 
     tnc= thermal_neutron_calibration()
+    tnc.read_Information_spectrum()
     # tnc.read_Information()
     # tnc.plot_Q(True)
     # tnc.read_Scheduled_info()
-    tnc.read_dic()
+    # tnc.read_dic()
     # tnc.check_Q_value()
-    tnc.check_time_value()
+    # tnc.check_time_value()
     # tnc.plot_cross(read=True)
     # tnc.read_gamma_Information()
     # tnc.plot_gamma(True)
