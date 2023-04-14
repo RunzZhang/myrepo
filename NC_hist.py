@@ -34,7 +34,7 @@ class thermal_neutron_calibration():
             self.sigma_matrix.append((i,{"Total":0, "Out":0}))
 
         self.gamma_list=[]
-
+        self.outputfile="/data/runzezhang/result/spectrum"
 
 
     def read_Information(self):
@@ -468,6 +468,10 @@ class thermal_neutron_calibration():
 
             if df.iloc[idx]['particle name'] == "gamma":
                 Capture_event.append(df.iloc[idx]['Kinetic E'])
+        print(Capture_event)
+        # with open(self.outputfile, 'wb') as fp:
+        #     pickle.dump(Capture_event, fp)
+
         fig = plt.figure()
         ax = fig.add_subplot(111)
         ax.set_title('spectrum')
