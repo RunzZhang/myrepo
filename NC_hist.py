@@ -466,8 +466,8 @@ class thermal_neutron_calibration():
             print(idx)
         # for idx in range(1000):
 
-            if df.iloc[idx]['particle name'] == "gamma":
-                Capture_event.append(df.iloc[idx]['Kinetic E'])
+            if df.iloc[idx]['particle name'] == "gamma" and df.iloc[idx]['Kinetic E']>4000000:
+                Capture_event.append(df.iloc[idx]['Kinetic E']/1000000)
         print(Capture_event)
         # with open(self.outputfile, 'wb') as fp:
         #     pickle.dump(Capture_event, fp)
@@ -477,7 +477,7 @@ class thermal_neutron_calibration():
         ax.set_title('spectrum')
         ax.set_xlabel('Energy/MeV')
         ax.set_ylabel('entries/bin')
-        plt.hist(Capture_event, bins=1000, range=(0, 6.5), log=True)
+        plt.hist(Capture_event, bins=1000, range=(0, 6.5))
         plt.show()
 
 
