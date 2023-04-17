@@ -460,18 +460,46 @@ class thermal_neutron_calibration():
         # df = pd.read_csv(self.fullInfoaddress)
         df = pd.read_csv(self.fullInfoaddress)
         print(df.head(5))
+        index_process=[round(len(df.index)/10),round(len(df.index)/5),round(len(df.index)/2),round(len(df.index)*3/4)]
+        event_pointer=0
+        track_pointer =[0]
+        parent_pointer = [0]
         Capture_event=[]
 
         for idx in range(len(df.index)):
-            print(idx)
+            if idx in index_process:
+                print(idx*100/len(df.index),"%")
         # for idx in range(1000):
 
-            if df.iloc[idx]['particle name'] == "gamma" and df.iloc[idx]['Kinetic E']>4000000:
-                Capture_event.append(df.iloc[idx]['Kinetic E']/1000000)
-        print(Capture_event)
-        # with open(self.outputfile, 'wb') as fp:
-        #     pickle.dump(Capture_event, fp)
+            if df.iloc[idx]['particle name'] == "gamma":
+                if df.iloc[idx]['Event'] == event_pointer:
+                    #old event
+                    if df.iloc[idx]['Parent ID']==1:
+                        # ar41's gamma
+                        if df.iloc[idx]['Track ID'] not in track_pointer:
+                            track_pointer.append(df.iloc[idx]['Track ID'])
+                            Capture_event.append(df.iloc[idx]['Kinetic E']/1000000)
+                else:
+                    #new event
+                    event_pointer ==df.iloc[idx]['Event']
+                    track_pointer = [0]
+                    parent_pointer = [0]
+                    # same as old event
+                    if df.iloc[idx]['Parent ID']==1:
+                        # ar41's gamma
+                        if df.iloc[idx]['Track ID'] not in track_pointer:
+                            track_pointer.append(df.iloc[idx]['Track ID'])
+                            Capture_event.append(df.iloc[idx]['Kinetic E']/1000000)
 
+
+        with open(self.outputfile, 'wb') as f:
+            pickle.dump(Capture_event, f)
+        print("finished saving process")
+
+    def print_spectrum(self):
+        Capture_event=[]
+        with open(self.outputfile, 'rb') as f:
+            Capture_event = pickle.load(f)
         fig = plt.figure()
         ax = fig.add_subplot(111)
         ax.set_title('spectrum')
@@ -488,6 +516,7 @@ if __name__=="__main__":
 
     tnc= thermal_neutron_calibration()
     tnc.read_Information_spectrum()
+    tnc.print_spectrum()
     # tnc.read_Information()
     # tnc.plot_Q(True)
     # tnc.read_Scheduled_info()
