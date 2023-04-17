@@ -35,6 +35,7 @@ class thermal_neutron_calibration():
 
         self.gamma_list=[]
         self.outputfile="/data/runzezhang/result/spectrum.pickle"
+        self.Qoutputfile = "/data/runzezhang/result/Q.pickle"
 
 
     def read_Information(self):
@@ -465,6 +466,8 @@ class thermal_neutron_calibration():
         track_pointer =[0]
         parent_pointer = [0]
         Capture_event=[]
+        Q_pointer =[]
+        Q_list =[]
 
         for idx in range(len(df.index)):
             if idx in index_process:
@@ -479,11 +482,15 @@ class thermal_neutron_calibration():
                         if df.iloc[idx]['Track ID'] not in track_pointer:
                             track_pointer.append(df.iloc[idx]['Track ID'])
                             Capture_event.append(df.iloc[idx]['Kinetic E']/1000000)
+                            Q_pointer.append(df.iloc[idx]['Kinetic E']/1000000)
                 else:
                     #new event
                     event_pointer ==df.iloc[idx]['Event']
                     track_pointer = [0]
                     parent_pointer = [0]
+                    Q_list.append(sum(Q_pointer))
+                    Q_pointer=[]
+
                     # same as old event
                     if df.iloc[idx]['Parent ID']==1:
                         # ar41's gamma
@@ -494,18 +501,29 @@ class thermal_neutron_calibration():
 
         with open(self.outputfile, 'wb') as f:
             pickle.dump(Capture_event, f)
+        with open(self.Qoutputfile, 'wb') as f:
+            pickle.dump(Q_list, f)
         print("finished saving process")
 
     def print_spectrum(self):
         Capture_event=[]
+        Q_value=[]
         with open(self.outputfile, 'rb') as f:
             Capture_event = pickle.load(f)
+        with open(self.Qoutputfile, 'rb') as f:
+            Q_value = pickle.load(f)
         fig = plt.figure()
         ax = fig.add_subplot(111)
         ax.set_title('spectrum')
         ax.set_xlabel('Energy/MeV')
         ax.set_ylabel('entries/bin')
         plt.hist(Capture_event, bins=1000, range=(0, 6.5))
+        fig2 = plt.figure()
+        ax2 = fig.add_subplot(111)
+        ax2.set_title('spectrum')
+        ax2.set_xlabel('Energy/MeV')
+        ax2.set_ylabel('entries/bin')
+        plt.hist(Q_value, bins=1000, range=(0, 6.5))
         plt.show()
 
 
