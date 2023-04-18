@@ -571,6 +571,64 @@ class thermal_neutron_calibration():
         plt.hist(Recoil_value, bins=1000, range=(0, 1000))
         plt.show()
 
+    def check_recoil_interaction(self):
+        # df = pd.read_csv(self.fullInfoaddress)
+        df = pd.read_csv(self.fullInfoaddress)
+        print(df.head(5))
+        index_process=[round(len(df.index)/10),round(len(df.index)/5),round(len(df.index)/2),round(len(df.index)*3/4)]
+        event_pointer=0
+        track_pointer =[0]
+        parent_pointer = [0]
+        event_pointer_ar = 0
+        track_pointer_ar = [0]
+        parent_pointer_ar = [0]
+        Capture_event=[]
+        Q_pointer =[0]
+        Q_list =[]
+        Recoil_energy=[]
+        recoil_energy_instep=[0]
+        ar_action_length=[]
+
+        for idx in range(len(df.index)):
+        # # for idx in range(10):
+            if idx in index_process:
+                print(idx*100/len(df.index),"%")
+        # for idx in range(1000):
+
+
+            elif df.iloc[idx]['particle name'] == "Ar41":
+                # record the max the recoil energy? or first step?
+                if df.iloc[idx]['Event'] == event_pointer_ar:
+                    #old event
+                    if df.iloc[idx]['Parent ID'] == 1:
+                        recoil_energy_instep.append(df.iloc[idx]['Recoil E'])
+
+
+                else:
+                    #new event
+                    event_pointer_ar = df.iloc[idx]['Event']
+                    track_pointer_ar = [0]
+                    parent_pointer_ar = [0]
+
+                    Recoil_energy.append(abstract_recoil_des(recoil_energy_instep))
+                    ar_action_length.append(len(recoil_energy_instep))
+                    recoil_energy_instep = [0]
+
+
+                    # same as old event
+                    if df.iloc[idx]['Parent ID']==1:
+                        recoil_energy_instep.append(df.iloc[idx]['Recoil E'])
+
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        ax.set_title('spectrum')
+        ax.set_xlabel('Energy/MeV')
+        ax.set_ylabel('entries/bin')
+        plt.hist(ar_action_length, bins=1000, range=(0, 10))
+        plt.show()
+        print(ar_action_length)
+
+        print("finished saving process")
 
 def abstract_recoil(list):
     diff_list=[]
@@ -600,8 +658,9 @@ if __name__=="__main__":
     # get hits number and plot positions
     # print(abstract_recoil_des([1,3,5,4,7,6,5]))
     tnc= thermal_neutron_calibration()
-    tnc.read_Information_spectrum()
-    tnc.print_spectrum()
+    tnc.check_recoil_interaction()
+    # tnc.read_Information_spectrum()
+    # tnc.print_spectrum()
     # tnc.read_Information()
     # tnc.plot_Q(True)
     # tnc.read_Scheduled_info()
