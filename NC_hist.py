@@ -469,13 +469,14 @@ class thermal_neutron_calibration():
         Q_pointer =[0]
         Q_list =[]
 
-        for idx in range(round(len(df.index)/5)):
+        for idx in range(round(len(df.index)/100)):
             if idx in index_process:
                 print(idx*100/len(df.index),"%")
         # for idx in range(1000):
 
             if df.iloc[idx]['particle name'] == "gamma":
                 if df.iloc[idx]['Event'] == event_pointer:
+                    print("old")
                     #old event
                     if df.iloc[idx]['Parent ID']==1:
                         # ar41's gamma
@@ -484,6 +485,7 @@ class thermal_neutron_calibration():
                             Capture_event.append(df.iloc[idx]['Kinetic E']/1000000)
                             Q_pointer.append(df.iloc[idx]['Kinetic E']/1000000)
                 else:
+                    print("new")
                     #new event
                     event_pointer ==df.iloc[idx]['Event']
                     track_pointer = [0]
