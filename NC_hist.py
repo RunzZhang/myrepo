@@ -519,7 +519,7 @@ class thermal_neutron_calibration():
                     track_pointer_ar = [0]
                     parent_pointer_ar = [0]
 
-                    Recoil_energy.append(abstract_recoil(recoil_energy_instep))
+                    Recoil_energy.append(abstract_recoil_des(recoil_energy_instep))
                     recoil_energy_instep = [0]
 
 
@@ -583,10 +583,22 @@ def abstract_recoil(list):
     recoil=sum(diff_list)
     return recoil
 
+def abstract_recoil_des(list):
+    diff_list=[]
+    for i in range(len(list)):
+        if i<=len(list)-2:
+            if list[i+1]<list[i]:
+                diff_list.append(list[i]-list[i+1])
+            else:
+                diff_list.append(0)
+    diff_list.append(list[-1])
+    recoil=sum(diff_list)
+    return recoil
+
 
 if __name__=="__main__":
     # get hits number and plot positions
-    # print(abstract_recoil([1,3,5,4,7,6,5]))
+    # print(abstract_recoil_des([1,3,5,4,7,6,5]))
     tnc= thermal_neutron_calibration()
     tnc.read_Information_spectrum()
     tnc.print_spectrum()
