@@ -469,7 +469,7 @@ class thermal_neutron_calibration():
         Q_pointer =[0]
         Q_list =[]
 
-        for idx in range(len(df.index)):
+        for idx in range(len(df.index)/5):
             if idx in index_process:
                 print(idx*100/len(df.index),"%")
         # for idx in range(1000):
