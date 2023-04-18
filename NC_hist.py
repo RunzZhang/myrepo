@@ -469,12 +469,14 @@ class thermal_neutron_calibration():
         Q_pointer =[0]
         Q_list =[]
 
-        for idx in range(round(len(df.index)/100)):
+        # for idx in range(round(len(df.index)/100)):
+        for idx in range(10):
             if idx in index_process:
                 print(idx*100/len(df.index),"%")
         # for idx in range(1000):
 
             if df.iloc[idx]['particle name'] == "gamma":
+                print(event_pointer)
                 if df.iloc[idx]['Event'] == event_pointer:
                     print("old")
                     #old event
