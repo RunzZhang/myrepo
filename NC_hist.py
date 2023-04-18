@@ -475,11 +475,11 @@ class thermal_neutron_calibration():
         Recoil_energy=[]
         recoil_energy_instep=[0]
 
-        # for idx in range(len(df.index)):
+        for idx in range(len(df.index)):
         # # for idx in range(10):
-        #     if idx in index_process:
-        #         print(idx*100/len(df.index),"%")
-        for idx in range(1000):
+            if idx in index_process:
+                print(idx*100/len(df.index),"%")
+        # for idx in range(1000):
 
             if df.iloc[idx]['particle name'] == "gamma":
                 if df.iloc[idx]['Event'] == event_pointer:
