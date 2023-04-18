@@ -656,7 +656,7 @@ def abstract_recoil_des(list):
 
 if __name__=="__main__":
     # get hits number and plot positions
-    # print(abstract_recoil_des([1,3,5,4,7,6,5]))
+    print(abstract_recoil_des([1,3,5,4,7,6,5]))
     tnc= thermal_neutron_calibration()
     tnc.check_recoil_interaction()
     # tnc.read_Information_spectrum()
