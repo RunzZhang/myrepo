@@ -36,6 +36,7 @@ class thermal_neutron_calibration():
         self.gamma_list=[]
         self.outputfile="/data/runzezhang/result/spectrum.pickle"
         self.Qoutputfile = "/data/runzezhang/result/Q.pickle"
+        self.Routputfile = "/data/runzezhang/result/Recoil.pickle"
 
 
     def read_Information(self):
@@ -465,15 +466,20 @@ class thermal_neutron_calibration():
         event_pointer=0
         track_pointer =[0]
         parent_pointer = [0]
+        event_pointer_ar = 0
+        track_pointer_ar = [0]
+        parent_pointer_ar = [0]
         Capture_event=[]
         Q_pointer =[0]
         Q_list =[]
+        Recoil_energy=[]
+        recoil_energy_instep=[0]
 
-        for idx in range(len(df.index)):
-        # for idx in range(10):
-            if idx in index_process:
-                print(idx*100/len(df.index),"%")
-        # for idx in range(1000):
+        # for idx in range(len(df.index)):
+        # # for idx in range(10):
+        #     if idx in index_process:
+        #         print(idx*100/len(df.index),"%")
+        for idx in range(1000):
 
             if df.iloc[idx]['particle name'] == "gamma":
                 if df.iloc[idx]['Event'] == event_pointer:
@@ -499,23 +505,52 @@ class thermal_neutron_calibration():
                             track_pointer.append(df.iloc[idx]['Track ID'])
                             Capture_event.append(df.iloc[idx]['Kinetic E']/1000000)
                             Q_pointer.append(df.iloc[idx]['Kinetic E'] / 1000000)
+            elif df.iloc[idx]['particle name'] == "Ar41":
+                # record the max the recoil energy? or first step?
+                if df.iloc[idx]['Event'] == event_pointer_ar:
+                    #old event
+                    if df.iloc[idx]['Parent ID'] == 1:
+                        recoil_energy_instep.append(df.iloc[idx]['Recoil E'])
+
+
+                else:
+                    #new event
+                    event_pointer_ar = df.iloc[idx]['Event']
+                    track_pointer_ar = [0]
+                    parent_pointer_ar = [0]
+
+                    Recoil_energy.append(abstract_recoil(recoil_energy_instep))
+                    recoil_energy_instep = [0]
+
+
+                    # same as old event
+                    if df.iloc[idx]['Parent ID']==1:
+                        recoil_energy_instep.append(df.iloc[idx]['Recoil E'])
+
+
 
 
         with open(self.outputfile, 'wb') as f:
             pickle.dump(Capture_event, f)
         with open(self.Qoutputfile, 'wb') as f:
             pickle.dump(Q_list, f)
+        with open(self.Routputfile, 'wb') as f:
+            pickle.dump(Recoil_energy, f)
         print("finished saving process")
 
     def print_spectrum(self):
         Capture_event=[]
         Q_value=[]
+        Recoil_value=[]
         with open(self.outputfile, 'rb') as f:
             Capture_event = pickle.load(f)
         with open(self.Qoutputfile, 'rb') as f:
             Q_value = pickle.load(f)
+        with open(self.Routputfile, 'rb') as f:
+            Recoil_value = pickle.load(f)
         print(Capture_event[0:5])
         print(Q_value[0:5])
+        print(Recoil_value[0:5])
         fig = plt.figure()
         ax = fig.add_subplot(111)
         ax.set_title('spectrum')
@@ -528,14 +563,30 @@ class thermal_neutron_calibration():
         ax2.set_xlabel('Energy/MeV')
         ax2.set_ylabel('entries/bin')
         plt.hist(Q_value, bins=1000, range=(0, 6.5))
+        fig3 = plt.figure()
+        ax3 = fig3.add_subplot(111)
+        ax3.set_title('spectrum')
+        ax3.set_xlabel('Energy/MeV')
+        ax3.set_ylabel('entries/bin')
+        plt.hist(Recoil_value, bins=1000, range=(0, 1000))
         plt.show()
 
 
+def abstract_recoil(list):
+    diff_list=[]
+    for i in range(len(list)):
+        if i<=len(list)-2:
+            if list[i+1]>list[i]:
+                diff_list.append(list[i+1]-list[i])
+            else:
+                diff_list.append(0)
+    recoil=sum(diff_list)
+    return recoil
 
 
 if __name__=="__main__":
     # get hits number and plot positions
-
+    # print(abstract_recoil([1,3,5,4,7,6,5]))
     tnc= thermal_neutron_calibration()
     tnc.read_Information_spectrum()
     tnc.print_spectrum()
