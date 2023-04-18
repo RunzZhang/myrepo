@@ -497,6 +497,7 @@ class thermal_neutron_calibration():
                         if df.iloc[idx]['Track ID'] not in track_pointer:
                             track_pointer.append(df.iloc[idx]['Track ID'])
                             Capture_event.append(df.iloc[idx]['Kinetic E']/1000000)
+                            Q_pointer.append(df.iloc[idx]['Kinetic E'] / 1000000)
 
 
         with open(self.outputfile, 'wb') as f:
