@@ -513,6 +513,7 @@ class thermal_neutron_calibration():
         with open(self.Qoutputfile, 'rb') as f:
             Q_value = pickle.load(f)
         print(Capture_event[0:5])
+        print(Q_value[0:5])
         fig = plt.figure()
         ax = fig.add_subplot(111)
         ax.set_title('spectrum')
