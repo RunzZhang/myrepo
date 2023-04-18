@@ -489,7 +489,7 @@ class thermal_neutron_calibration():
                 else:
                     print("new")
                     #new event
-                    event_pointer == df.iloc[idx]['Event']
+                    event_pointer = df.iloc[idx]['Event']
                     print("e_p",event_pointer)
                     track_pointer = [0]
                     parent_pointer = [0]
