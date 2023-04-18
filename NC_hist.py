@@ -14,7 +14,7 @@ class thermal_neutron_calibration():
         self.base = os.getcwd()
 
 
-        self.fullInfoaddress = "/data/runzezhang/result/Q_sigma_Info_0417.csv"
+        self.fullInfoaddress = "/data/runzezhang/result/Q_sigma_Info_0418.csv"
         self.captureoutaddress="/data/runzezhang/result/Informacion_20220119_ncout.csv"
         self.data_dic="/data/runzezhang/result/Informacion_20220119_dic.pickle"
 
@@ -34,9 +34,9 @@ class thermal_neutron_calibration():
             self.sigma_matrix.append((i,{"Total":0, "Out":0}))
 
         self.gamma_list=[]
-        self.outputfile="/data/runzezhang/result/spectrum.pickle"
-        self.Qoutputfile = "/data/runzezhang/result/Q.pickle"
-        self.Routputfile = "/data/runzezhang/result/Recoil.pickle"
+        self.outputfile="/data/runzezhang/result/spectrum_418.pickle"
+        self.Qoutputfile = "/data/runzezhang/result/Q_418.pickle"
+        self.Routputfile = "/data/runzezhang/result/Recoil_418.pickle"
 
 
     def read_Information(self):
