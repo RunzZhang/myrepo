@@ -466,7 +466,7 @@ class thermal_neutron_calibration():
         track_pointer =[0]
         parent_pointer = [0]
         Capture_event=[]
-        Q_pointer =[]
+        Q_pointer =[0]
         Q_list =[]
 
         for idx in range(len(df.index)):
@@ -536,7 +536,7 @@ if __name__=="__main__":
     # get hits number and plot positions
 
     tnc= thermal_neutron_calibration()
-    # tnc.read_Information_spectrum()
+    tnc.read_Information_spectrum()
     tnc.print_spectrum()
     # tnc.read_Information()
     # tnc.plot_Q(True)
