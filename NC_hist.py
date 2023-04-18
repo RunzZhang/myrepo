@@ -512,6 +512,7 @@ class thermal_neutron_calibration():
             Capture_event = pickle.load(f)
         with open(self.Qoutputfile, 'rb') as f:
             Q_value = pickle.load(f)
+        print(Capture_event[0:5])
         fig = plt.figure()
         ax = fig.add_subplot(111)
         ax.set_title('spectrum')
@@ -533,7 +534,7 @@ if __name__=="__main__":
     # get hits number and plot positions
 
     tnc= thermal_neutron_calibration()
-    tnc.read_Information_spectrum()
+    # tnc.read_Information_spectrum()
     tnc.print_spectrum()
     # tnc.read_Information()
     # tnc.plot_Q(True)
