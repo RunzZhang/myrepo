@@ -520,7 +520,7 @@ class thermal_neutron_calibration():
         ax.set_ylabel('entries/bin')
         plt.hist(Capture_event, bins=1000, range=(0, 6.5))
         fig2 = plt.figure()
-        ax2 = fig.add_subplot(111)
+        ax2 = fig2.add_subplot(111)
         ax2.set_title('spectrum')
         ax2.set_xlabel('Energy/MeV')
         ax2.set_ylabel('entries/bin')
