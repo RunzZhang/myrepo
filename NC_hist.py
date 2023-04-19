@@ -624,7 +624,7 @@ class thermal_neutron_calibration():
         ax.set_title('spectrum')
         ax.set_xlabel('Energy/MeV')
         ax.set_ylabel('entries/bin')
-        plt.hist(ar_action_length, bins=1000, range=(0, 10))
+        plt.hist(ar_action_length, bins=10, range=(0, 10))
         plt.show()
         print(ar_action_length)
 
