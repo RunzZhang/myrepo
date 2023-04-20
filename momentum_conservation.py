@@ -49,7 +49,7 @@ class momentum_check():
         gamma_y_s = 0
         gamma_z_s = 0
 
-        for i in range(0,5):
+        for i in range(0,4):
             # gamma_x_s += self.gamma_list[i][0]*self.gamma_list[i][3]/(self.gamma_list[i][0]**2+self.gamma_list[i][1]**2+self.gamma_list[i][2]**2)**0.5
             #
             # gamma_y_s += self.gamma_list[i][1] * self.gamma_list[i][3] / (
