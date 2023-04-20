@@ -6,11 +6,11 @@ class momentum_check():
         self.base = os.getcwd()
         #gamma info, [[initialxyz],[second xyz], energy]
         #all in Mev
-        self.gamma1_Info=[[],[],]
-        self.gamma2_Info=[[],[],]
-        self.gamma3_Info = [[], [], ]
-        self.gamma4_Info = [[0,0,0], [0,0,0],0 ]
-        self.neutron_Info = [[0,0,0],[0,0,0],0]
+        self.gamma1_Info=[[0.296,-0.198,0],[-15,-25.2,-15.5],3.7]
+        self.gamma2_Info=[[0.296,-0.198,0],[0.588,3.96,2.09],1.04]
+        self.gamma3_Info = [[0.296,-0.198,0], [7.1,-6.88,24.3],1.19 ]
+        self.gamma4_Info = [[0.296,-0.198,0], [0.266,-2.22,-1.79],0.167 ]
+        self.neutron_Info = [[0.296,-0.198,0],[0.296,-0.198,2.45*10**(-6)],9.33*10**(-5)]
         self.gamma1_p = [0,0,0,0]
         self.gamma2_p = [0, 0, 0, 0]
         self.gamma3_p = [0, 0, 0, 0]
@@ -51,4 +51,7 @@ class momentum_check():
         print("z check", neutron_z_s, gamma_z_s)
 
 
-
+if __name__=="__main__":
+    mc=momentum_check()
+    mc.get_momentum()
+    mc.check_momentum()
