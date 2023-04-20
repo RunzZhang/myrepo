@@ -30,10 +30,10 @@ class momentum_check():
         self.gamma4_p[3] = self.gamma4_Info[2]
         self.neutron_p[3] = self.neutron_Info[2]
     def check_momentum(self):
-        neutron_x_s = (2*939*self.neutron_p[3])**0.5*self.neutron_p[0]/(self.neutron_p[0]**2+self.neutron_p[1]**2+self.neutron_p[2]**2)**0.5
-        neutron_y_s = (2 * 939 * self.neutron_p[3]) ** 0.5 * self.neutron_p[1] / (
+        neutron_x_s = (2*939*41*self.neutron_p[3])**0.5*self.neutron_p[0]/(self.neutron_p[0]**2+self.neutron_p[1]**2+self.neutron_p[2]**2)**0.5
+        neutron_y_s = (2 * 939 * 41*self.neutron_p[3]) ** 0.5 * self.neutron_p[1] / (
                     self.neutron_p[0] ** 2 + self.neutron_p[1] ** 2 + self.neutron_p[2] ** 2) ** 0.5
-        neutron_z_s = (2 * 939 * self.neutron_p[3]) ** 0.5 * self.neutron_p[2] / (
+        neutron_z_s = (2 * 939 * 41 *self.neutron_p[3]) ** 0.5 * self.neutron_p[2] / (
                     self.neutron_p[0] ** 2 + self.neutron_p[1] ** 2 + self.neutron_p[2] ** 2) ** 0.5
         gamma_x_s = 0
         gamma_y_s = 0
