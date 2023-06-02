@@ -618,16 +618,16 @@ class thermal_neutron_calibration():
                     parent_pointer = [0]
                     #check the line
                     for i in Q_pointer:
-                        if (i<5.592000 or i>5.572000):
+                        if (i<5.592000 and i>5.572000):
                             #put in line5582
                             Line5582=copy_list(Line5582,Q_pointer)
-                        elif (i<4.755000 or i>4.735000):
+                        elif (i<4.755000 and i>4.735000):
                             #put in line5582
                             Line4745=copy_list(Line4745,Q_pointer)
-                        elif (i<3.710000 or i>3.690000):
+                        elif (i<3.710000 and i>3.690000):
                             #put in line5582
                             Line3700=copy_list(Line3700,Q_pointer)
-                        elif (i<1.196000 or i>1.176000):
+                        elif (i<1.196000 and i>1.176000):
                             #put in line5582
                             Line1186=copy_list(Line1186,Q_pointer)
 
