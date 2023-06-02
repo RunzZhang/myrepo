@@ -618,16 +618,16 @@ class thermal_neutron_calibration():
                     parent_pointer = [0]
                     #check the line
                     for i in Q_pointer:
-                        if (i<5592000 or i>5572000):
+                        if (i<5.592000 or i>5.572000):
                             #put in line5582
                             Line5582=copy_list(Line5582,Q_pointer)
-                        elif (i<4755000 or i>4735000):
+                        elif (i<4.755000 or i>4.735000):
                             #put in line5582
                             Line4745=copy_list(Line4745,Q_pointer)
-                        elif (i<3710000 or i>3690000):
+                        elif (i<3.710000 or i>3.690000):
                             #put in line5582
                             Line3700=copy_list(Line3700,Q_pointer)
-                        elif (i<1196000 or i>1176000):
+                        elif (i<1.196000 or i>1.176000):
                             #put in line5582
                             Line1186=copy_list(Line1186,Q_pointer)
 
@@ -716,25 +716,25 @@ class thermal_neutron_calibration():
         ax.set_title('spectrum')
         ax.set_xlabel('Energy/MeV')
         ax.set_ylabel('entries/bin')
-        plt.hist(Line5582, bins=1000, range=(0, 6.5*10e6))
+        plt.hist(Line5582, bins=1000, range=(0, 6.5))
         fig2 = plt.figure()
         ax2 = fig2.add_subplot(111)
         ax2.set_title('spectrum')
         ax2.set_xlabel('Energy/MeV')
         ax2.set_ylabel('entries/bin')
-        plt.hist(Line4745, bins=1000, range=(0, 6.5*10e6))
+        plt.hist(Line4745, bins=1000, range=(0, 6.5))
         fig3 = plt.figure()
         ax3 = fig3.add_subplot(111)
         ax3.set_title('spectrum')
         ax3.set_xlabel('Energy/MeV')
         ax3.set_ylabel('entries/bin')
-        plt.hist(Line3700, bins=1000, range=(0, 6.5*10e6))
+        plt.hist(Line3700, bins=1000, range=(0, 6.5))
         fig4 = plt.figure()
         ax4 = fig4.add_subplot(111)
         ax4.set_title('spectrum')
         ax4.set_xlabel('Energy/MeV')
         ax4.set_ylabel('entries/bin')
-        plt.hist(Line1186, bins=1000, range=(0, 6.5*10e6))
+        plt.hist(Line1186, bins=1000, range=(0, 6.5))
 
         plt.show()
     def check_recoil_interaction(self):
