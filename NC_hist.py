@@ -17,6 +17,10 @@ class thermal_neutron_calibration():
         self.fullInfoaddress = "/data/runzezhang/result/Q_sigma_Info_0418.csv"
         self.captureoutaddress="/data/runzezhang/result/Informacion_20220119_ncout.csv"
         self.data_dic="/data/runzezhang/result/Informacion_20220119_dic.pickle"
+        self.Line5582_dic = "/data/runzezhang/5582_202200418_dic.pickle"
+        self.Line4745_dic = "/data/runzezhang/result/4745_202200418_dic.pickle"
+        self.Line3700_dic = "/data/runzezhang/result/3700_202200418_dic.pickle"
+        self.Line1186_dic = "/data/runzezhang/result/1186_202200418_dic.pickle"
 
         # ONe entry like this event number : (incident energy(float, ev), outgoing(bool), Q Value (float) in MeV)
         self.INFOmatrix = {}
@@ -571,6 +575,168 @@ class thermal_neutron_calibration():
         plt.hist(Recoil_value, bins=1000, range=(0, 1000))
         plt.show()
 
+    def read_Information_subspectrum(self):
+        # df = pd.read_csv(self.fullInfoaddress)
+        df = pd.read_csv(self.fullInfoaddress)
+        print(df.head(5))
+        index_process=[round(len(df.index)/10),round(len(df.index)/5),round(len(df.index)/2),round(len(df.index)*3/4)]
+        event_pointer=0
+        track_pointer =[0]
+        parent_pointer = [0]
+        event_pointer_ar = 0
+        track_pointer_ar = [0]
+        parent_pointer_ar = [0]
+        Capture_event=[]
+        Q_pointer =[0]
+        Line5582 =[]
+        Line4745 = []
+        Line3700=[]
+        Line1186 = []
+        Q_list =[]
+        Recoil_energy=[]
+        recoil_energy_instep=[0]
+
+        for idx in range(len(df.index)):
+        # # for idx in range(10):
+            if idx in index_process:
+                print(idx*100/len(df.index),"%")
+        # for idx in range(1000):
+
+            if df.iloc[idx]['particle name'] == "gamma":
+                if df.iloc[idx]['Event'] == event_pointer:
+                    #old event
+                    if df.iloc[idx]['Parent ID']==1:
+                        # ar41's gamma
+                        if df.iloc[idx]['Track ID'] not in track_pointer:
+                            track_pointer.append(df.iloc[idx]['Track ID'])
+                            Capture_event.append(df.iloc[idx]['Kinetic E']/1000000)
+                            Q_pointer.append(df.iloc[idx]['Kinetic E']/1000000)
+                else:
+                    #new event
+                    event_pointer = df.iloc[idx]['Event']
+                    track_pointer = [0]
+                    parent_pointer = [0]
+                    #check the line
+                    for i in Q_pointer:
+                        if (i<5592000 or i>5572000):
+                            #put in line5582
+                            Line5582=copy_list(Line5582,Q_pointer)
+                        elif (i<4755000 or i>4735000):
+                            #put in line5582
+                            Line4745=copy_list(Line4745,Q_pointer)
+                        elif (i<3710000 or i>3690000):
+                            #put in line5582
+                            Line3700=copy_list(Line3700,Q_pointer)
+                        elif (i<1196000 or i>1176000):
+                            #put in line5582
+                            Line1186=copy_list(Line1186,Q_pointer)
+
+                    Q_list.append(sum(Q_pointer))
+                    Q_pointer=[]
+
+                    # same as old event
+                    if df.iloc[idx]['Parent ID']==1:
+                        # ar41's gamma
+                        if df.iloc[idx]['Track ID'] not in track_pointer:
+                            track_pointer.append(df.iloc[idx]['Track ID'])
+                            Capture_event.append(df.iloc[idx]['Kinetic E']/1000000)
+                            Q_pointer.append(df.iloc[idx]['Kinetic E'] / 1000000)
+
+
+
+
+
+        with open(self.Line5582_dic, 'wb') as f:
+            pickle.dump(Line5582, f)
+        with open(self.Line4745_dic, 'wb') as f:
+            pickle.dump(Line4745, f)
+        with open(self.Line3700_dic, 'wb') as f:
+            pickle.dump(Line3700, f)
+        with open(self.Line1186_dic, 'wb') as f:
+            pickle.dump(Line1186, f)
+
+        print("finished saving process")
+
+    def print_spectrum(self):
+        Capture_event=[]
+        Q_value=[]
+        Recoil_value=[]
+        with open(self.outputfile, 'rb') as f:
+            Capture_event = pickle.load(f)
+        with open(self.Qoutputfile, 'rb') as f:
+            Q_value = pickle.load(f)
+        with open(self.Routputfile, 'rb') as f:
+            Recoil_value = pickle.load(f)
+
+
+        print(Capture_event[0:5])
+        print(Q_value[0:5])
+        print(Recoil_value[0:5])
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        ax.set_title('spectrum')
+        ax.set_xlabel('Energy/MeV')
+        ax.set_ylabel('entries/bin')
+        plt.hist(Capture_event, bins=1000, range=(0, 6.5))
+        fig2 = plt.figure()
+        ax2 = fig2.add_subplot(111)
+        ax2.set_title('spectrum')
+        ax2.set_xlabel('Energy/MeV')
+        ax2.set_ylabel('entries/bin')
+        plt.hist(Q_value, bins=1000, range=(0, 6.5))
+        fig3 = plt.figure()
+        ax3 = fig3.add_subplot(111)
+        ax3.set_title('spectrum')
+        ax3.set_xlabel('Energy/MeV')
+        ax3.set_ylabel('entries/bin')
+        plt.hist(Recoil_value, bins=1000, range=(0, 1000))
+
+        plt.show()
+
+    def print_subspectrum(self):
+        Line5582 = []
+        Line4745 =[]
+        Line3700 =[]
+        Line1186 = []
+        with open(self.Line5582_dic, 'rb') as f:
+            Line5582 = pickle.load(f)
+        with open(self.Line4745_dic, 'rb') as f:
+            Line4745 = pickle.load(f)
+        with open(self.Line3700_dic, 'rb') as f:
+            Line3700 = pickle.load(f)
+        with open(self.Line1186_dic, 'rb') as f:
+            Line1186 = pickle.load(f)
+
+        print(Line5582[0:5])
+        print(Line4745[0:5])
+        print(Line3700[0:5])
+        print(Line1186[0:5])
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        ax.set_title('spectrum')
+        ax.set_xlabel('Energy/MeV')
+        ax.set_ylabel('entries/bin')
+        plt.hist(Line5582, bins=1000, range=(0, 6.5*10e6))
+        fig2 = plt.figure()
+        ax2 = fig2.add_subplot(111)
+        ax2.set_title('spectrum')
+        ax2.set_xlabel('Energy/MeV')
+        ax2.set_ylabel('entries/bin')
+        plt.hist(Line4745, bins=1000, range=(0, 6.5*10e6))
+        fig3 = plt.figure()
+        ax3 = fig3.add_subplot(111)
+        ax3.set_title('spectrum')
+        ax3.set_xlabel('Energy/MeV')
+        ax3.set_ylabel('entries/bin')
+        plt.hist(Line3700, bins=1000, range=(0, 6.5*10e6))
+        fig4 = plt.figure()
+        ax4 = fig4.add_subplot(111)
+        ax4.set_title('spectrum')
+        ax4.set_xlabel('Energy/MeV')
+        ax4.set_ylabel('entries/bin')
+        plt.hist(Line1186, bins=1000, range=(0, 6.5*10e6))
+
+        plt.show()
     def check_recoil_interaction(self):
         # df = pd.read_csv(self.fullInfoaddress)
         df = pd.read_csv(self.fullInfoaddress)
@@ -653,12 +819,20 @@ def abstract_recoil_des(list):
     recoil=sum(diff_list)
     return recoil
 
+def copy_list(list1, list2):
+    for i in list2:
+        list1.append(i)
+    return list1
+
 
 if __name__=="__main__":
     # get hits number and plot positions
     # print(abstract_recoil_des([1,3,5,4,7,6,5]))
     tnc= thermal_neutron_calibration()
-    tnc.check_recoil_interaction()
+    tnc.read_Information_subspectrum()
+    tnc.print_subspectrum()
+    # tnc.check_recoil_interaction()
+    # print(copy_list([1],[123,321,343]))
     # tnc.read_Information_spectrum()
     # tnc.print_spectrum()
     # tnc.read_Information()
