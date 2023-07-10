@@ -21,9 +21,12 @@ class thermal_neutron_calibration():
         self.Line4745_dic = "/data/runzezhang/result/4745_202200418_dic.pickle"
         self.Line3700_dic = "/data/runzezhang/result/3700_202200418_dic.pickle"
         self.Line1186_dic = "/data/runzezhang/result/1186_202200418_dic.pickle"
-        self.G5n1_dic = "/data/runzezhang/result/multigamma/Informacion_20230706_5n1.csv"
-        self.G4n2_dic = "/data/runzezhang/result/multigamma/Informacion20230706_4n2.csv"
-        self.G3n2n1_dic = "/data/runzezhang/result/multigamma/Informacion20230706_3n2n1.csv"
+        self.G5n1_input = "/data/runzezhang/result/multigamma/Informacion_20230706_5n1.csv"
+        self.G4n2_input = "/data/runzezhang/result/multigamma/Informacion20230706_4n2.csv"
+        self.G3n2n1_input = "/data/runzezhang/result/multigamma/Informacion20230706_3n2n1.csv"
+        self.G5n1_output = "/data/runzezhang/result/multigamma/Informacion_20230706_5n1.pickle"
+        self.G4n2_output = "/data/runzezhang/result/multigamma/Informacion20230706_4n2.pickle"
+        self.G3n2n1_output = "/data/runzezhang/result/multigamma/Informacion20230706_3n2n1.pickle"
         self.Multi_G_dic = "/data/runzezhang/result/multigamma/multi_G_dic.pickle"
 
 
@@ -665,88 +668,176 @@ class thermal_neutron_calibration():
         print("finished saving process")
 
     def read_Information_multiG(self):
-        # df = pd.read_csv(self.fullInfoaddress)
-        df5n1 = pd.read_csv(self.G5n1_dic)
+        df5n1 = pd.read_csv(self.G5n1_input)
+        df4n2 = pd.read_csv(self.G4n2_input)
+        df3n2n1 = pd.read_csv(self.G3n2n1_input)
         print(df5n1.head(5))
-        index_process=[round(len(df.index)/10),round(len(df.index)/5),round(len(df.index)/2),round(len(df.index)*3/4)]
+        print(df4n2.head(5))
+        print(df3n2n1.head(5))
+        index5n1_process=[round(len(df5n1.index)/10),round(len(df5n1.index)/5),round(len(df5n1.index)/2),round(len(df5n1.index)*3/4)]
+        index4n2_process = [round(len(df4n2.index) / 10), round(len(df4n2.index) / 5), round(len(df4n2.index) / 2),
+                            round(len(df4n2.index) * 3 / 4)]
+        index3n2n1_process = [round(len(df3n2n1.index) / 10), round(len(df3n2n1.index) / 5), round(len(df3n2n1.index) / 2),
+                            round(len(df3n2n1.index) * 3 / 4)]
         event_pointer=0
         track_pointer =[0]
-        parent_pointer = [0]
-        event_pointer_ar = 0
-        track_pointer_ar = [0]
-        parent_pointer_ar = [0]
         Capture_event=[]
-        Q_pointer =[0]
-        Line5582 =[]
-        Line4745 = []
-        Line3700=[]
-        Line1186 = []
-        Q_list =[]
+        Q5n1_list =[]
+        Q4n2_list = []
+        Q3n2n1_list = []
         Recoil_energy=[]
         recoil_energy_instep=[0]
 
-        for idx in range(len(df.index)):
-        # # for idx in range(10):
-            if idx in index_process:
-                print(idx*100/len(df.index),"%")
+        for idx in range(len(df5n1.index)):
+            if idx in index5n1_process:
+                print("5n1",idx*100/len(df5n1.index),"%")
         # for idx in range(1000):
 
-            if df.iloc[idx]['particle name'] == "gamma":
-                if df.iloc[idx]['Event'] == event_pointer:
+            if df5n1.iloc[idx]['particle name'] == "e-":
+                if df5n1.iloc[idx]['Event'] == event_pointer:
                     #old event
-                    if df.iloc[idx]['Parent ID']==1:
-                        # ar41's gamma
-                        if df.iloc[idx]['Track ID'] not in track_pointer:
-                            track_pointer.append(df.iloc[idx]['Track ID'])
-                            Capture_event.append(df.iloc[idx]['Kinetic E']/1000000)
-                            Q_pointer.append(df.iloc[idx]['Kinetic E']/1000000)
+                    if df5n1.iloc[idx]['Track ID'] not in track_pointer:
+                            track_pointer.append(df5n1.iloc[idx]['Track ID'])
+                            Capture_event.append(df5n1.iloc[idx]['ek']/1000000)
+                            Q_pointer.append(df5n1.iloc[idx]['ek'] / 1000000)
+
                 else:
                     #new event
-                    event_pointer = df.iloc[idx]['Event']
+                    event_pointer = df5n1.iloc[idx]['Event']
                     track_pointer = [0]
                     parent_pointer = [0]
-                    #check the line
-                    for i in Q_pointer:
-                        if (i<5.592000 and i>5.572000):
-                            #put in line5582
-                            Line5582=copy_list(Line5582,Q_pointer)
-                        elif (i<4.755000 and i>4.735000):
-                            #put in line5582
-                            Line4745=copy_list(Line4745,Q_pointer)
-                        elif (i<3.710000 and i>3.690000):
-                            #put in line5582
-                            Line3700=copy_list(Line3700,Q_pointer)
-                        elif (i<1.196000 and i>1.176000):
-                            #put in line5582
-                            Line1186=copy_list(Line1186,Q_pointer)
 
-                    Q_list.append(sum(Q_pointer))
+                    Q5n1_list.append(sum(Q_pointer))
                     Q_pointer=[]
 
                     # same as old event
-                    if df.iloc[idx]['Parent ID']==1:
-                        # ar41's gamma
-                        if df.iloc[idx]['Track ID'] not in track_pointer:
-                            track_pointer.append(df.iloc[idx]['Track ID'])
-                            Capture_event.append(df.iloc[idx]['Kinetic E']/1000000)
-                            Q_pointer.append(df.iloc[idx]['Kinetic E'] / 1000000)
+                    if df5n1.iloc[idx]['Track ID'] not in track_pointer:
+                            track_pointer.append(df5n1.iloc[idx]['Track ID'])
+                            Capture_event.append(df5n1.iloc[idx]['ek']/1000000)
+                            Q_pointer.append(df5n1.iloc[idx]['ek'] / 1000000)
+        #4n1 gamma group
+        for idx in range(len(df4n2.index)):
+            if idx in index4n2_process:
+                print("4n2", idx * 100 / len(df4n2.index), "%")
+            # for idx in range(1000):
+
+            if df4n2.iloc[idx]['particle name'] == "e-":
+                if df4n2.iloc[idx]['Event'] == event_pointer:
+                    # old event
+                    if df4n2.iloc[idx]['Track ID'] not in track_pointer:
+                        track_pointer.append(df4n2.iloc[idx]['Track ID'])
+                        Capture_event.append(df4n2.iloc[idx]['ek'] / 1000000)
+                        Q_pointer.append(df4n2.iloc[idx]['ek'] / 1000000)
+
+                else:
+                    # new event
+                    event_pointer = df4n2.iloc[idx]['Event']
+                    track_pointer = [0]
+                    parent_pointer = [0]
+
+                    Q4n2_list.append(sum(Q_pointer))
+                    Q_pointer = []
+
+                    # same as old event
+                    if df4n2.iloc[idx]['Track ID'] not in track_pointer:
+                        track_pointer.append(df4n2.iloc[idx]['Track ID'])
+                        Capture_event.append(df4n2.iloc[idx]['ek'] / 1000000)
+                        Q_pointer.append(df4n2.iloc[idx]['ek'] / 1000000)
+        #3n2n1 group
+        for idx in range(len(df3n2n1.index)):
+            if idx in index3n2n1_process:
+                print("3n2n1", idx * 100 / len(df3n2n1.index), "%")
+            # for idx in range(1000):
+
+            if df3n2n1.iloc[idx]['particle name'] == "e-":
+                if df3n2n1.iloc[idx]['Event'] == event_pointer:
+                    # old event
+                    if df3n2n1.iloc[idx]['Track ID'] not in track_pointer:
+                        track_pointer.append(df3n2n1.iloc[idx]['Track ID'])
+                        Capture_event.append(df3n2n1.iloc[idx]['ek'] / 1000000)
+                        Q_pointer.append(df3n2n1.iloc[idx]['ek'] / 1000000)
+
+                else:
+                    # new event
+                    event_pointer = df3n2n1.iloc[idx]['Event']
+                    track_pointer = [0]
+                    parent_pointer = [0]
+
+                    Q3n2n1_list.append(sum(Q_pointer))
+                    Q_pointer = []
+
+                    # same as old event
+                    if df3n2n1.iloc[idx]['Track ID'] not in track_pointer:
+                        track_pointer.append(df3n2n1.iloc[idx]['Track ID'])
+                        Capture_event.append(df3n2n1.iloc[idx]['ek'] / 1000000)
+                        Q_pointer.append(df3n2n1.iloc[idx]['ek'] / 1000000)
 
 
 
 
+        with open(self.G5n1_output, 'wb') as f:
+            pickle.dump(Q5n1_list, f)
+        with open(self.G4n2_output, 'wb') as f:
+            pickle.dump(Q4n2_list, f)
+        with open(self.G3n2n1_output, 'wb') as f:
+            pickle.dump(Q3n2n1_list, f)
 
-        with open(self.Line5582_dic, 'wb') as f:
-            pickle.dump(Line5582, f)
-        with open(self.Line4745_dic, 'wb') as f:
-            pickle.dump(Line4745, f)
-        with open(self.Line3700_dic, 'wb') as f:
-            pickle.dump(Line3700, f)
-        with open(self.Line1186_dic, 'wb') as f:
-            pickle.dump(Line1186, f)
-        with open(self.Qoutputfile,"wb" ) as f:
-            pickle.dump(Q_list, f)
 
         print("finished saving process")
+
+    def print_MGspectrum(self):
+        lenth = 25
+        bin_n =300
+        Line5n1 = []
+        Line4n2 =[]
+        Line3n2n1 =[]
+
+        Q_list =[]
+        with open(self.G5n1_output, 'rb') as f:
+            Line5n1 = pickle.load(f)
+        with open(self.G4n2_output, 'rb') as f:
+            Line4n2 = pickle.load(f)
+        with open(self.G3n2n1_output, 'rb') as f:
+            Line3n2n1 = pickle.load(f)
+
+
+        print(Line5n1[0:lenth])
+        print(Line4n2[0:lenth])
+        print(Line3n2n1[0:lenth])
+        # print(Line1186[0:lenth])
+        # print(Q_list[0:lenth])
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        ax.set_title('spectrum')
+        ax.set_xlabel('Energy/MeV')
+        ax.set_ylabel('entries/bin')
+        plt.hist(Line5n1, bins=bin_n, range=(0, 6.5))
+        fig2 = plt.figure()
+        ax2 = fig2.add_subplot(111)
+        ax2.set_title('spectrum')
+        ax2.set_xlabel('Energy/MeV')
+        ax2.set_ylabel('entries/bin')
+        plt.hist(Line4n2, bins=bin_n, range=(0, 6.5))
+        fig3 = plt.figure()
+        ax3 = fig3.add_subplot(111)
+        ax3.set_title('spectrum')
+        ax3.set_xlabel('Energy/MeV')
+        ax3.set_ylabel('entries/bin')
+        plt.hist(Line3n2n1, bins=bin_n, range=(0, 6.5))
+        # fig4 = plt.figure()
+        # ax4 = fig4.add_subplot(111)
+        # ax4.set_title('spectrum')
+        # ax4.set_xlabel('Energy/MeV')
+        # ax4.set_ylabel('entries/bin')
+        # plt.hist(Line1186, bins=bin_n, range=(0, 6.5))
+        # fig5 = plt.figure()
+        # ax5 = fig4.add_subplot(111)
+        # ax5.set_title('spectrum')
+        # ax5.set_xlabel('Energy/MeV')
+        # ax5.set_ylabel('entries/bin')
+        # plt.hist(Q_list, bins=bin_n, range=(0, 6.5))
+
+        plt.show()
 
     def print_spectrum(self):
         Capture_event=[]
