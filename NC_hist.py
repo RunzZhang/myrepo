@@ -687,6 +687,8 @@ class thermal_neutron_calibration():
         Q3n2n1_list = []
         Recoil_energy=[]
         recoil_energy_instep=[0]
+        Q_pointer = []
+
 
         for idx in range(len(df5n1.index)):
             if idx in index5n1_process:
