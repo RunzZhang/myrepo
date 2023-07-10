@@ -693,7 +693,7 @@ class thermal_neutron_calibration():
                 print("5n1",idx*100/len(df5n1.index),"%")
         # for idx in range(1000):
 
-            if df5n1.iloc[idx]['particle name'] == "e-":
+            if df5n1.iloc[idx]['Particle'] == "e-":
                 if df5n1.iloc[idx]['Event'] == event_pointer:
                     #old event
                     if df5n1.iloc[idx]['Track ID'] not in track_pointer:
@@ -721,7 +721,7 @@ class thermal_neutron_calibration():
                 print("4n2", idx * 100 / len(df4n2.index), "%")
             # for idx in range(1000):
 
-            if df4n2.iloc[idx]['particle name'] == "e-":
+            if df4n2.iloc[idx]['Particle'] == "e-":
                 if df4n2.iloc[idx]['Event'] == event_pointer:
                     # old event
                     if df4n2.iloc[idx]['Track ID'] not in track_pointer:
@@ -749,7 +749,7 @@ class thermal_neutron_calibration():
                 print("3n2n1", idx * 100 / len(df3n2n1.index), "%")
             # for idx in range(1000):
 
-            if df3n2n1.iloc[idx]['particle name'] == "e-":
+            if df3n2n1.iloc[idx]['Particle'] == "e-":
                 if df3n2n1.iloc[idx]['Event'] == event_pointer:
                     # old event
                     if df3n2n1.iloc[idx]['Track ID'] not in track_pointer:
