@@ -698,8 +698,8 @@ class thermal_neutron_calibration():
                     #old event
                     if df5n1.iloc[idx]['Track ID'] not in track_pointer:
                             track_pointer.append(df5n1.iloc[idx]['Track ID'])
-                            Capture_event.append(df5n1.iloc[idx]['ek']/1000000)
-                            Q_pointer.append(df5n1.iloc[idx]['ek'] / 1000000)
+                            Capture_event.append(df5n1.iloc[idx]['Ek']*1000000)
+                            Q_pointer.append(df5n1.iloc[idx]['Ek'] * 1000000)
 
                 else:
                     #new event
@@ -713,8 +713,8 @@ class thermal_neutron_calibration():
                     # same as old event
                     if df5n1.iloc[idx]['Track ID'] not in track_pointer:
                             track_pointer.append(df5n1.iloc[idx]['Track ID'])
-                            Capture_event.append(df5n1.iloc[idx]['ek']/1000000)
-                            Q_pointer.append(df5n1.iloc[idx]['ek'] / 1000000)
+                            Capture_event.append(df5n1.iloc[idx]['Ek']*1000000)
+                            Q_pointer.append(df5n1.iloc[idx]['Ek'] * 1000000)
         #4n1 gamma group
         for idx in range(len(df4n2.index)):
             if idx in index4n2_process:
@@ -726,8 +726,8 @@ class thermal_neutron_calibration():
                     # old event
                     if df4n2.iloc[idx]['Track ID'] not in track_pointer:
                         track_pointer.append(df4n2.iloc[idx]['Track ID'])
-                        Capture_event.append(df4n2.iloc[idx]['ek'] / 1000000)
-                        Q_pointer.append(df4n2.iloc[idx]['ek'] / 1000000)
+                        Capture_event.append(df4n2.iloc[idx]['Ek'] * 1000000)
+                        Q_pointer.append(df4n2.iloc[idx]['Ek'] * 1000000)
 
                 else:
                     # new event
@@ -741,8 +741,8 @@ class thermal_neutron_calibration():
                     # same as old event
                     if df4n2.iloc[idx]['Track ID'] not in track_pointer:
                         track_pointer.append(df4n2.iloc[idx]['Track ID'])
-                        Capture_event.append(df4n2.iloc[idx]['ek'] / 1000000)
-                        Q_pointer.append(df4n2.iloc[idx]['ek'] / 1000000)
+                        Capture_event.append(df4n2.iloc[idx]['Ek'] * 1000000)
+                        Q_pointer.append(df4n2.iloc[idx]['Ek'] * 1000000)
         #3n2n1 group
         for idx in range(len(df3n2n1.index)):
             if idx in index3n2n1_process:
@@ -754,8 +754,8 @@ class thermal_neutron_calibration():
                     # old event
                     if df3n2n1.iloc[idx]['Track ID'] not in track_pointer:
                         track_pointer.append(df3n2n1.iloc[idx]['Track ID'])
-                        Capture_event.append(df3n2n1.iloc[idx]['ek'] / 1000000)
-                        Q_pointer.append(df3n2n1.iloc[idx]['ek'] / 1000000)
+                        Capture_event.append(df3n2n1.iloc[idx]['Ek'] * 1000000)
+                        Q_pointer.append(df3n2n1.iloc[idx]['Ek'] * 1000000)
 
                 else:
                     # new event
@@ -769,8 +769,8 @@ class thermal_neutron_calibration():
                     # same as old event
                     if df3n2n1.iloc[idx]['Track ID'] not in track_pointer:
                         track_pointer.append(df3n2n1.iloc[idx]['Track ID'])
-                        Capture_event.append(df3n2n1.iloc[idx]['ek'] / 1000000)
-                        Q_pointer.append(df3n2n1.iloc[idx]['ek'] / 1000000)
+                        Capture_event.append(df3n2n1.iloc[idx]['Ek'] * 1000000)
+                        Q_pointer.append(df3n2n1.iloc[idx]['Ek'] * 1000000)
 
 
 
@@ -811,19 +811,19 @@ class thermal_neutron_calibration():
         ax.set_title('spectrum')
         ax.set_xlabel('Energy/MeV')
         ax.set_ylabel('entries/bin')
-        plt.hist(Line5n1, bins=bin_n, range=(0, 6.5))
+        plt.hist(Line5n1, bins=bin_n, range=(0, 500))
         fig2 = plt.figure()
         ax2 = fig2.add_subplot(111)
         ax2.set_title('spectrum')
         ax2.set_xlabel('Energy/MeV')
         ax2.set_ylabel('entries/bin')
-        plt.hist(Line4n2, bins=bin_n, range=(0, 6.5))
+        plt.hist(Line4n2, bins=bin_n, range=(0, 500))
         fig3 = plt.figure()
         ax3 = fig3.add_subplot(111)
         ax3.set_title('spectrum')
         ax3.set_xlabel('Energy/MeV')
         ax3.set_ylabel('entries/bin')
-        plt.hist(Line3n2n1, bins=bin_n, range=(0, 6.5))
+        plt.hist(Line3n2n1, bins=bin_n, range=(0, 500))
         # fig4 = plt.figure()
         # ax4 = fig4.add_subplot(111)
         # ax4.set_title('spectrum')
