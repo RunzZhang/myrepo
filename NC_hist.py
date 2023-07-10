@@ -698,8 +698,8 @@ class thermal_neutron_calibration():
             if df5n1.iloc[idx]['Particle'] == "e-":
                 if df5n1.iloc[idx]['Event'] == event_pointer:
                     #old event
-                    if df5n1.iloc[idx]['Track ID'] not in track_pointer:
-                            track_pointer.append(df5n1.iloc[idx]['Track ID'])
+                    if df5n1.iloc[idx]['TrackID'] not in track_pointer:
+                            track_pointer.append(df5n1.iloc[idx]['TrackID'])
                             Capture_event.append(df5n1.iloc[idx]['Ek']*1000000)
                             Q_pointer.append(df5n1.iloc[idx]['Ek'] * 1000000)
 
@@ -713,8 +713,8 @@ class thermal_neutron_calibration():
                     Q_pointer=[]
 
                     # same as old event
-                    if df5n1.iloc[idx]['Track ID'] not in track_pointer:
-                            track_pointer.append(df5n1.iloc[idx]['Track ID'])
+                    if df5n1.iloc[idx]['TrackID'] not in track_pointer:
+                            track_pointer.append(df5n1.iloc[idx]['TrackID'])
                             Capture_event.append(df5n1.iloc[idx]['Ek']*1000000)
                             Q_pointer.append(df5n1.iloc[idx]['Ek'] * 1000000)
         #4n1 gamma group
@@ -726,8 +726,8 @@ class thermal_neutron_calibration():
             if df4n2.iloc[idx]['Particle'] == "e-":
                 if df4n2.iloc[idx]['Event'] == event_pointer:
                     # old event
-                    if df4n2.iloc[idx]['Track ID'] not in track_pointer:
-                        track_pointer.append(df4n2.iloc[idx]['Track ID'])
+                    if df4n2.iloc[idx]['TrackID'] not in track_pointer:
+                        track_pointer.append(df4n2.iloc[idx]['TrackID'])
                         Capture_event.append(df4n2.iloc[idx]['Ek'] * 1000000)
                         Q_pointer.append(df4n2.iloc[idx]['Ek'] * 1000000)
 
@@ -741,8 +741,8 @@ class thermal_neutron_calibration():
                     Q_pointer = []
 
                     # same as old event
-                    if df4n2.iloc[idx]['Track ID'] not in track_pointer:
-                        track_pointer.append(df4n2.iloc[idx]['Track ID'])
+                    if df4n2.iloc[idx]['TrackID'] not in track_pointer:
+                        track_pointer.append(df4n2.iloc[idx]['TrackID'])
                         Capture_event.append(df4n2.iloc[idx]['Ek'] * 1000000)
                         Q_pointer.append(df4n2.iloc[idx]['Ek'] * 1000000)
         #3n2n1 group
@@ -754,8 +754,8 @@ class thermal_neutron_calibration():
             if df3n2n1.iloc[idx]['Particle'] == "e-":
                 if df3n2n1.iloc[idx]['Event'] == event_pointer:
                     # old event
-                    if df3n2n1.iloc[idx]['Track ID'] not in track_pointer:
-                        track_pointer.append(df3n2n1.iloc[idx]['Track ID'])
+                    if df3n2n1.iloc[idx]['TrackID'] not in track_pointer:
+                        track_pointer.append(df3n2n1.iloc[idx]['TrackID'])
                         Capture_event.append(df3n2n1.iloc[idx]['Ek'] * 1000000)
                         Q_pointer.append(df3n2n1.iloc[idx]['Ek'] * 1000000)
 
@@ -769,8 +769,8 @@ class thermal_neutron_calibration():
                     Q_pointer = []
 
                     # same as old event
-                    if df3n2n1.iloc[idx]['Track ID'] not in track_pointer:
-                        track_pointer.append(df3n2n1.iloc[idx]['Track ID'])
+                    if df3n2n1.iloc[idx]['TrackID'] not in track_pointer:
+                        track_pointer.append(df3n2n1.iloc[idx]['TrackID'])
                         Capture_event.append(df3n2n1.iloc[idx]['Ek'] * 1000000)
                         Q_pointer.append(df3n2n1.iloc[idx]['Ek'] * 1000000)
 
