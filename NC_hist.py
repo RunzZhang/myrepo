@@ -21,6 +21,11 @@ class thermal_neutron_calibration():
         self.Line4745_dic = "/data/runzezhang/result/4745_202200418_dic.pickle"
         self.Line3700_dic = "/data/runzezhang/result/3700_202200418_dic.pickle"
         self.Line1186_dic = "/data/runzezhang/result/1186_202200418_dic.pickle"
+        self.G5n1_dic = "/data/runzezhang/result/multigamma/Informacion_20230706_5n1.csv"
+        self.G4n2_dic = "/data/runzezhang/result/multigamma/Informacion20230706_4n2.csv"
+        self.G3n2n1_dic = "/data/runzezhang/result/multigamma/Informacion20230706_3n2n1.csv"
+        self.Multi_G_dic = "/data/runzezhang/result/multigamma/multi_G_dic.pickle"
+
 
         # ONe entry like this event number : (incident energy(float, ev), outgoing(bool), Q Value (float) in MeV)
         self.INFOmatrix = {}
@@ -659,10 +664,10 @@ class thermal_neutron_calibration():
 
         print("finished saving process")
 
-    def read_Information_subspectrum(self):
+    def read_Information_multiG(self):
         # df = pd.read_csv(self.fullInfoaddress)
-        df = pd.read_csv(self.fullInfoaddress)
-        print(df.head(5))
+        df5n1 = pd.read_csv(self.G5n1_dic)
+        print(df5n1.head(5))
         index_process=[round(len(df.index)/10),round(len(df.index)/5),round(len(df.index)/2),round(len(df.index)*3/4)]
         event_pointer=0
         track_pointer =[0]
