@@ -654,6 +654,92 @@ class thermal_neutron_calibration():
             pickle.dump(Line3700, f)
         with open(self.Line1186_dic, 'wb') as f:
             pickle.dump(Line1186, f)
+        with open(self.Qoutputfile,"wb" ) as f:
+            pickle.dump(Q_list, f)
+
+        print("finished saving process")
+
+    def read_Information_subspectrum(self):
+        # df = pd.read_csv(self.fullInfoaddress)
+        df = pd.read_csv(self.fullInfoaddress)
+        print(df.head(5))
+        index_process=[round(len(df.index)/10),round(len(df.index)/5),round(len(df.index)/2),round(len(df.index)*3/4)]
+        event_pointer=0
+        track_pointer =[0]
+        parent_pointer = [0]
+        event_pointer_ar = 0
+        track_pointer_ar = [0]
+        parent_pointer_ar = [0]
+        Capture_event=[]
+        Q_pointer =[0]
+        Line5582 =[]
+        Line4745 = []
+        Line3700=[]
+        Line1186 = []
+        Q_list =[]
+        Recoil_energy=[]
+        recoil_energy_instep=[0]
+
+        for idx in range(len(df.index)):
+        # # for idx in range(10):
+            if idx in index_process:
+                print(idx*100/len(df.index),"%")
+        # for idx in range(1000):
+
+            if df.iloc[idx]['particle name'] == "gamma":
+                if df.iloc[idx]['Event'] == event_pointer:
+                    #old event
+                    if df.iloc[idx]['Parent ID']==1:
+                        # ar41's gamma
+                        if df.iloc[idx]['Track ID'] not in track_pointer:
+                            track_pointer.append(df.iloc[idx]['Track ID'])
+                            Capture_event.append(df.iloc[idx]['Kinetic E']/1000000)
+                            Q_pointer.append(df.iloc[idx]['Kinetic E']/1000000)
+                else:
+                    #new event
+                    event_pointer = df.iloc[idx]['Event']
+                    track_pointer = [0]
+                    parent_pointer = [0]
+                    #check the line
+                    for i in Q_pointer:
+                        if (i<5.592000 and i>5.572000):
+                            #put in line5582
+                            Line5582=copy_list(Line5582,Q_pointer)
+                        elif (i<4.755000 and i>4.735000):
+                            #put in line5582
+                            Line4745=copy_list(Line4745,Q_pointer)
+                        elif (i<3.710000 and i>3.690000):
+                            #put in line5582
+                            Line3700=copy_list(Line3700,Q_pointer)
+                        elif (i<1.196000 and i>1.176000):
+                            #put in line5582
+                            Line1186=copy_list(Line1186,Q_pointer)
+
+                    Q_list.append(sum(Q_pointer))
+                    Q_pointer=[]
+
+                    # same as old event
+                    if df.iloc[idx]['Parent ID']==1:
+                        # ar41's gamma
+                        if df.iloc[idx]['Track ID'] not in track_pointer:
+                            track_pointer.append(df.iloc[idx]['Track ID'])
+                            Capture_event.append(df.iloc[idx]['Kinetic E']/1000000)
+                            Q_pointer.append(df.iloc[idx]['Kinetic E'] / 1000000)
+
+
+
+
+
+        with open(self.Line5582_dic, 'wb') as f:
+            pickle.dump(Line5582, f)
+        with open(self.Line4745_dic, 'wb') as f:
+            pickle.dump(Line4745, f)
+        with open(self.Line3700_dic, 'wb') as f:
+            pickle.dump(Line3700, f)
+        with open(self.Line1186_dic, 'wb') as f:
+            pickle.dump(Line1186, f)
+        with open(self.Qoutputfile,"wb" ) as f:
+            pickle.dump(Q_list, f)
 
         print("finished saving process")
 
@@ -694,10 +780,13 @@ class thermal_neutron_calibration():
         plt.show()
 
     def print_subspectrum(self):
+        lenth = 25
+        bin_n =300
         Line5582 = []
         Line4745 =[]
         Line3700 =[]
         Line1186 = []
+        Q_list =[]
         with open(self.Line5582_dic, 'rb') as f:
             Line5582 = pickle.load(f)
         with open(self.Line4745_dic, 'rb') as f:
@@ -706,35 +795,44 @@ class thermal_neutron_calibration():
             Line3700 = pickle.load(f)
         with open(self.Line1186_dic, 'rb') as f:
             Line1186 = pickle.load(f)
+        with open(self.Qoutputfile, 'rb') as f:
+            Q_list= pickle.load(f)
 
-        print(Line5582[0:5])
-        print(Line4745[0:5])
-        print(Line3700[0:5])
-        print(Line1186[0:5])
+        print(Line5582[0:lenth])
+        print(Line4745[0:lenth])
+        print(Line3700[0:lenth])
+        print(Line1186[0:lenth])
+        print(Q_list[0:lenth])
         fig = plt.figure()
         ax = fig.add_subplot(111)
         ax.set_title('spectrum')
         ax.set_xlabel('Energy/MeV')
         ax.set_ylabel('entries/bin')
-        plt.hist(Line5582, bins=1000, range=(0, 6.5))
+        plt.hist(Line5582, bins=bin_n, range=(0, 6.5))
         fig2 = plt.figure()
         ax2 = fig2.add_subplot(111)
         ax2.set_title('spectrum')
         ax2.set_xlabel('Energy/MeV')
         ax2.set_ylabel('entries/bin')
-        plt.hist(Line4745, bins=1000, range=(0, 6.5))
+        plt.hist(Line4745, bins=bin_n, range=(0, 6.5))
         fig3 = plt.figure()
         ax3 = fig3.add_subplot(111)
         ax3.set_title('spectrum')
         ax3.set_xlabel('Energy/MeV')
         ax3.set_ylabel('entries/bin')
-        plt.hist(Line3700, bins=1000, range=(0, 6.5))
+        plt.hist(Line3700, bins=bin_n, range=(0, 6.5))
         fig4 = plt.figure()
         ax4 = fig4.add_subplot(111)
         ax4.set_title('spectrum')
         ax4.set_xlabel('Energy/MeV')
         ax4.set_ylabel('entries/bin')
-        plt.hist(Line1186, bins=1000, range=(0, 6.5))
+        plt.hist(Line1186, bins=bin_n, range=(0, 6.5))
+        fig5 = plt.figure()
+        ax5 = fig4.add_subplot(111)
+        ax5.set_title('spectrum')
+        ax5.set_xlabel('Energy/MeV')
+        ax5.set_ylabel('entries/bin')
+        plt.hist(Q_list, bins=bin_n, range=(0, 6.5))
 
         plt.show()
     def check_recoil_interaction(self):
