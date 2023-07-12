@@ -811,19 +811,80 @@ class thermal_neutron_calibration():
         fig = plt.figure()
         ax = fig.add_subplot(111)
         ax.set_title('spectrum')
-        ax.set_xlabel('Energy/MeV')
+        ax.set_xlabel('Energy/eV')
         ax.set_ylabel('entries/bin')
         plt.hist(Line5n1, bins=bin_n, range=(0, 40000))
         fig2 = plt.figure()
         ax2 = fig2.add_subplot(111)
         ax2.set_title('spectrum')
-        ax2.set_xlabel('Energy/MeV')
+        ax2.set_xlabel('Energy/eV')
         ax2.set_ylabel('entries/bin')
         plt.hist(Line4n2, bins=bin_n, range=(0, 40000))
         fig3 = plt.figure()
         ax3 = fig3.add_subplot(111)
         ax3.set_title('spectrum')
-        ax3.set_xlabel('Energy/MeV')
+        ax3.set_xlabel('Energy/eV')
+        ax3.set_ylabel('entries/bin')
+        plt.hist(Line3n2n1, bins=bin_n, range=(0, 40000))
+        # fig4 = plt.figure()
+        # ax4 = fig4.add_subplot(111)
+        # ax4.set_title('spectrum')
+        # ax4.set_xlabel('Energy/MeV')
+        # ax4.set_ylabel('entries/bin')
+        # plt.hist(Line1186, bins=bin_n, range=(0, 6.5))
+        # fig5 = plt.figure()
+        # ax5 = fig4.add_subplot(111)
+        # ax5.set_title('spectrum')
+        # ax5.set_xlabel('Energy/MeV')
+        # ax5.set_ylabel('entries/bin')
+        # plt.hist(Q_list, bins=bin_n, range=(0, 6.5))
+
+        plt.show()
+
+    def print_MGspectrum_LY(self):
+        lenth = 25
+        bin_n =300
+        Line5n1 = []
+        Line4n2 =[]
+        Line3n2n1 =[]
+
+        Q_list =[]
+        with open(self.G5n1_output, 'rb') as f:
+            Line5n1 = pickle.load(f)
+        with open(self.G4n2_output, 'rb') as f:
+            Line4n2 = pickle.load(f)
+        with open(self.G3n2n1_output, 'rb') as f:
+            Line3n2n1 = pickle.load(f)
+
+        for i in Line5n1:
+            i = i*40/1000
+        for i in Line4n2:
+            i = i*40/1000
+        for i in Line3n2n1:
+            i = i*40/1000
+
+
+        print(Line5n1[0:lenth])
+        print(Line4n2[0:lenth])
+        print(Line3n2n1[0:lenth])
+        # print(Line1186[0:lenth])
+        # print(Q_list[0:lenth])
+        fig = plt.figure()
+        ax = fig.add_subplot(111)
+        ax.set_title('spectrum')
+        ax.set_xlabel('photonN')
+        ax.set_ylabel('entries/bin')
+        plt.hist(Line5n1, bins=bin_n, range=(0, 40000))
+        fig2 = plt.figure()
+        ax2 = fig2.add_subplot(111)
+        ax2.set_title('spectrum')
+        ax2.set_xlabel('photonN')
+        ax2.set_ylabel('entries/bin')
+        plt.hist(Line4n2, bins=bin_n, range=(0, 40000))
+        fig3 = plt.figure()
+        ax3 = fig3.add_subplot(111)
+        ax3.set_title('spectrum')
+        ax3.set_xlabel('photonN')
         ax3.set_ylabel('entries/bin')
         plt.hist(Line3n2n1, bins=bin_n, range=(0, 40000))
         # fig4 = plt.figure()
@@ -1027,7 +1088,7 @@ if __name__=="__main__":
     tnc= thermal_neutron_calibration()
     # tnc.read_Information_subspectrum()
     # tnc.read_Information_multiG()
-    tnc.print_MGspectrum()
+    tnc.print_MGspectrum_LY()
     # tnc.print_subspectrum()
     # tnc.check_recoil_interaction()
     # print(copy_list([1],[123,321,343]))
