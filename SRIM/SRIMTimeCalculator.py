@@ -4,11 +4,12 @@ import os, pickle
 import sys
 import pandas as pd
 from statistics import stdev
+from scipy.optimize import curve_fit
 pd.options.display.max_seq_items = None
 #pd.set_option('display.max_rows', None)
 #pd.set_option('display.max_columns', None)
 
-file_name = 'EXYZArgon0.125keV.txt'
+file_name = 'EXYZArgon0.5keV.txt'
 file_name_edit = file_name[0:-4] + '_edit.txt'
 skip = 0
 Data = 0
@@ -18,6 +19,8 @@ KE = 0
 IonData = ''
 file_lines = []
 
+K_125= 1.5414423840161205e-05
+K_500 = 1.5414372244542094e-05
 with open(file_name, 'r') as file: # Searches for the row in which data starts and
     done = 0                       # looks for ion data in the file (we want the atomic mass)
     for num, line in enumerate(file, 1):
@@ -68,8 +71,12 @@ df.rename( columns={5 :'Electronic Stop (eV/A)'}, inplace=True )
 df.rename( columns={6 :'Energy Lost to Last Recoil (eV)'}, inplace=True )
 
 Posx = df['x (A)'].tolist()
+
 Posy = df['y (A)'].tolist()
 Posz = df['z (A)'].tolist()
+# print("posx",Posx)
+# print("posy",Posy)
+# print("posz",Posz)
 Energy = df['Energy (keV)'].tolist()
 #print(Energy)
 Energy = [1.60218e-16*x for x in Energy] # Writing all energy in Joules
@@ -90,6 +97,21 @@ for i in range(Events): # Calculate displacement and record it in a 2D array whi
             if Posx[j] !=0:
                 temp.append((1e-10)*(((Posx[j]-Posx[j-1])**2+(Posy[j]-Posy[j-1])**2+(Posz[j]-Posz[j-1])**2)**0.5))
     displacement.append(temp)
+
+E_lost = []
+for i in range(Events): # Calculate displacement and record it in a 2D array which is
+    temp = []           # indexed by the event number
+    for j in range(len(ElStop)):
+        if (IonNum[j] == i + 1):
+            if ElStop[j] != 0:
+                temp.append(ElStop[j])
+            # if ElStop[j] == 0:
+            #     finalpos.append([Posx[j], Posy[j], Posz[j]])
+    E_lost.append(temp)
+
+print("enery lost rate each step",E_lost)
+
+
      
 #print(displacement[slice(3)])
 #print(len(displacement[1]))
@@ -117,12 +139,14 @@ finaldisplacement = [(1e-10)*(((finalpos[i][0])**2+(finalpos[i][1])**2+(finalpos
 
 #for i in range(len(displacement)):
 #    print(len(displacement[i]), len(velocity[i]))
+print('vel',velocity[:10])
+print('disp',displacement[:10])
 print(len(velocity_temp))
 print(len(velocity))
 print(len(displacement))
 
 time = [[displacement[j][i]/velocity[j][i] for i in range(len(velocity[j]))] for j in range(len(velocity))] # Want to calculate total time for each event 
-#print(time[0])
+print("time", time[:10])
 
 timetot = [sum(time[i]) for i in range(len(time))] # Sums the times at each step for each event
 #print(timetot)
@@ -149,28 +173,91 @@ print('The average time is:', timeaverage, 's', 'with a stdev of:', stdev(timeto
 print('The average final distance is:', finaldisplacementaverage, 'm', 'with a stdev of:', stdev(finaldisplacement), 'm')
 print('The average total displacement is:', totaldisplacementaverage, 'm', 'with a stdev of:', stdev(totaldisplacement), 'm')
 
-fig, ax = plt.subplots(1,2)
 
-def scale(list1, x):
-    temp = [x*y for y in list1]
-    return temp
-    
-ax[0].hist(scale(timetot, 1e+15), 25, histtype = "step") 
-ax[1].hist(scale(finaldisplacement, 1e+9), 25, histtype = "step") 
-ax[0].set_title("Total Time Dist.")
-fig.text(0.45, 0.97, "E= "+str(KEInitial)+"keV")
-fig.text(0.30, 0.04, 'Total Time (fs)', ha='center', va='center')
-fig.text(0.72, 0.04, 'Final Position (nm)', ha='center', va='center')
-fig.text(0.06, 0.5, 'frequency', ha='center', va='center', rotation='vertical')
-ax[1].set_title("Final Pos. Dist.")
+
+# fig, ax = plt.subplots(1,2)
+#
+# def scale(list1, x):
+#     temp = [x*y for y in list1]
+#     return temp
+#
+# ax[0].hist(scale(timetot, 1e+15), 25, histtype = "step")
+# ax[1].hist(scale(finaldisplacement, 1e+9), 25, histtype = "step")
+# ax[0].set_title("Total Time Dist.")
+# fig.text(0.45, 0.97, "E= "+str(KEInitial)+"keV")
+# fig.text(0.30, 0.04, 'Total Time (fs)', ha='center', va='center')
+# fig.text(0.72, 0.04, 'Final Position (nm)', ha='center', va='center')
+# fig.text(0.06, 0.5, 'frequency', ha='center', va='center', rotation='vertical')
+# ax[1].set_title("Final Pos. Dist.")
+# plt.show()
+# print(max(timetot), np.argmax(timetot), max(finaldisplacement), finaldisplacement[np.argmax(finaldisplacement)])
+# #print(sorted(finaldisplacement))
+# print((1e-10)*(((finalpos[400][0])**2+(finalpos[i][1])**2+(finalpos[400][2])**2)**0.5))
+# print(finalpos[400][0], finalpos[400][1], finalpos[400][2])
+
+
+
+
+def plot_EvsX(E_list, v_list): #both 2D array
+    start= 0
+    end = 450
+    # plot part of the list
+    E_list =  E_list[start:end]
+    v_list = v_list[start:end]
+    for i in range(len(E_list)):
+        v_axis= v_list[i]
+        y_axis = E_list[i]
+        plt.plot(v_axis, y_axis)
+    # plt.show()
+# change 2d into 1d to linear fit
+plot_EvsX(E_lost, velocity)
+
+E_lost_dataset = []
+velocity_dataset = []
+for i in range(len(velocity)):
+    for j in range(len(velocity[i])):
+        velocity_dataset.append(velocity[i][j])
+
+
+for i in range(len(E_lost)-1):
+    for j in range(len(E_lost[i])):
+        E_lost_dataset.append(E_lost[i][j])
+
+print("v",len(velocity),len(velocity_dataset))
+print("E_lost",len(E_lost),len(E_lost_dataset))
+
+def li_func(x, k, b ):
+    return k * x+ b
+
+def li_func2(x, k):
+    return k * x
+
+# popt, pcov = curve_fit(li_func, velocity_dataset, E_lost_dataset)
+#
+# perr = np.sqrt(np.diag(pcov))
+# print("popt",popt,"\n","perr",perr)
+# print(popt[0], popt[1])
+# fit_data = []
+# for i in velocity_dataset:
+#     fit_data.append(li_func(i,popt[0],popt[1]))
+#
+# plt.plot(velocity_dataset, fit_data, 'r-', label = "linear fit")
+# plt.legend()
+
+
+popt, pcov = curve_fit(li_func2, velocity_dataset, E_lost_dataset)
+
+perr = np.sqrt(np.diag(pcov))
+print("popt",popt,"\n","perr",perr)
+print(popt[0])
+fit_data = []
+for i in velocity_dataset:
+    fit_data.append(li_func2(i,popt[0]))
+
+plt.plot(velocity_dataset, fit_data, 'r-', label = "linear fit")
+plt.legend()
+
+
 plt.show()
-print(max(timetot), np.argmax(timetot), max(finaldisplacement), finaldisplacement[np.argmax(finaldisplacement)])
-#print(sorted(finaldisplacement))
-print((1e-10)*(((finalpos[400][0])**2+(finalpos[i][1])**2+(finalpos[400][2])**2)**0.5))
-print(finalpos[400][0], finalpos[400][1], finalpos[400][2])
-
-
-
-
 
 
