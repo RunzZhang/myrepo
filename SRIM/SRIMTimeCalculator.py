@@ -9,7 +9,7 @@ pd.options.display.max_seq_items = None
 #pd.set_option('display.max_rows', None)
 #pd.set_option('display.max_columns', None)
 
-file_name = 'EXYZArgon0.5keV.txt'
+file_name = 'EXYZArgon1keV.txt'
 file_name_edit = file_name[0:-4] + '_edit.txt'
 skip = 0
 Data = 0
@@ -225,12 +225,15 @@ for i in range(len(E_lost)-1):
 
 print("v",len(velocity),len(velocity_dataset))
 print("E_lost",len(E_lost),len(E_lost_dataset))
+print(E_lost_dataset[:100])
 
 def li_func(x, k, b ):
     return k * x+ b
 
 def li_func2(x, k):
     return k * x
+
+
 
 # popt, pcov = curve_fit(li_func, velocity_dataset, E_lost_dataset)
 #
@@ -255,6 +258,8 @@ for i in velocity_dataset:
     fit_data.append(li_func2(i,popt[0]))
 
 plt.plot(velocity_dataset, fit_data, 'r-', label = "linear fit")
+plt.xlabel("velocity m/s")
+plt.ylabel("dE/dx eV/A")
 plt.legend()
 
 
