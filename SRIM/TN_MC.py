@@ -1,3 +1,4 @@
+# to run a new event, please check the event number, output file name, energy chain and time chain 
 import scipy,random, pickle
 import sympy
 from sympy import cos, sin, nsolve, Symbol
