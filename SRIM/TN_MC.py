@@ -26,7 +26,7 @@ PI = scipy.pi
 print(PI)
 # set seed
 random.seed(10)
-address ="/hep/home/result/MC_date"
+address ="/data/runzezhang/result/SRIM_MC/MC_20231018"
 
 def two_body_collision_xyz(theta, phi, v_xi, v_yi, v_zi, E):
     # theta phi are the gamma's vectors and v_xi, v_yi, v_zi are initial state of LAr
