@@ -93,6 +93,8 @@ def data_analysis():
     with open("test", "rb") as fp:  # Unpickling
         b = pickle.load(fp)
 
+    return  b
+
 
 
 if __name__ =="__main__":
