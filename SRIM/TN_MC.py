@@ -93,7 +93,7 @@ def run_generator(N):
 def data_analysis():
     with open(address, "rb") as fp:  # Unpickling
         b = pickle.load(fp)
-
+        
     return b
 
 
