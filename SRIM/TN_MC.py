@@ -93,7 +93,7 @@ def run_generator(N):
 def data_analysis():
     with open(address, "rb") as fp:  # Unpickling
         b = pickle.load(fp)
-        
+
     return b
 
 
@@ -103,7 +103,7 @@ if __name__ =="__main__":
     # two_body_collision_xyz(0, 0, 0, 0, 0, 0)
 
     # event_generator()
-    Number=1000000
+    Number=100000
     result = run_generator(Number)
     # if data_analysis() ==result:
     #     print("success!")
