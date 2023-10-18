@@ -103,5 +103,7 @@ if __name__ =="__main__":
     Number=60
     result = run_generator(Number)
     result2 = data_analysis()
+    print(result)
+    print(result2)
     if result == result2:
         print("save successfully!")
