@@ -11,9 +11,9 @@ e = 1.602*10**(-19)
 address1 ="/data/runzezhang/result/SRIM_MC/MC_20231018_5582"
 address2 ="/data/runzezhang/result/SRIM_MC/MC_20231018_4745"
 address3 ="/data/runzezhang/result/SRIM_MC/MC_20231018_3700"
-weight1 = 1
-weight2 = 1
-weight3 = 1
+weight1 = 10.8
+weight2 = 51.25
+weight3 = 9.11
 address_list = [address1,address2,address3]
 weight_list = [weight1, weight2, weight3]
 
