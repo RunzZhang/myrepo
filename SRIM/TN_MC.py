@@ -1,4 +1,4 @@
-# to run a new event, please check the event number, output file name, energy chain and time chain 
+# to run a new event, please check the event number, output file name, energy chain and time chain
 import scipy,random, pickle
 import sympy
 from sympy import cos, sin, nsolve, Symbol
@@ -85,16 +85,16 @@ def run_generator(N):
         print(i)
         E_deposit_list.append(event_generator())
     # print(E_deposit_list[:50])
-    with open("test", "wb") as fp:  # Pickling
+    with open(address, "wb") as fp:  # Pickling
         pickle.dump(E_deposit_list, fp)
 
     return E_deposit_list
 
 def data_analysis():
-    with open("test", "rb") as fp:  # Unpickling
+    with open(address, "rb") as fp:  # Unpickling
         b = pickle.load(fp)
 
-    return  b
+    return b
 
 
 
@@ -103,7 +103,9 @@ if __name__ =="__main__":
     # two_body_collision_xyz(0, 0, 0, 0, 0, 0)
 
     # event_generator()
-    Number=1000000
+    Number=100
     result = run_generator(Number)
+    if data_analysis() ==result:
+        print("success!")
 
     #data analysis
