@@ -12,14 +12,14 @@ m = 39.948*10**(-3)/(6.023*10**23) # Ar40 mass in kg
 tau = 2.6864*10**(-12) # time constant in s of LAr attenuation
 time_factor = 10**(-12) # time factor in ps
 # energy in Mev and change it into J
-E1 = 4.745 * Energy_factor
-E2 = 1.1868 * Energy_factor
-E3 = 0.1673 * Energy_factor
-E4 = 0 * Energy_factor
+E1 = 3.7 * Energy_factor
+E2 = 1.044 * Energy_factor
+E3 = 1.186 * Energy_factor
+E4 = 0.1673 * Energy_factor
 t1=  0* time_factor
-t2 = 0.40 * time_factor
-t3 = 315 * time_factor
-t4 = 0* time_factor
+t2 = 0.12 * time_factor
+t3 = 0.40 * time_factor
+t4 = 315* time_factor
 E_chain = [E1, E2, E3, E4]
 t_chain = [t1, t2, t3, t4]
 run_number = 1000
@@ -27,7 +27,7 @@ PI = scipy.pi
 print(PI)
 # set seed
 random.seed(10)
-address ="/data/runzezhang/result/SRIM_MC/MC_20231018_4745"
+address ="/data/runzezhang/result/SRIM_MC/MC_20231018_3700"
 
 def two_body_collision_xyz(theta, phi, v_xi, v_yi, v_zi, E):
     # theta phi are the gamma's vectors and v_xi, v_yi, v_zi are initial state of LAr
