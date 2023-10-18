@@ -56,7 +56,7 @@ def event_generator():
     vz_list = []
     E_deposit_list =[]
     for i in range(len(E_chain)):
-        E_deposit =0.5*m*(vx**2+vy**2+vz**2)*(1-np.exp(-t_chain[i]/tau))
+        E_deposit =0.5*m*(vx**2+vy**2+vz**2)*(1-np.exp(-2*t_chain[i]/tau))
         E_deposit_list.append(E_deposit)
         vx=vx * np.exp(-t_chain[i]/tau)
         vy=vy * np.exp(-t_chain[i]/tau)
