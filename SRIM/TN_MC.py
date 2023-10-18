@@ -11,14 +11,14 @@ m = 39.948*10**(-3)/(6.023*10**23) # Ar40 mass in kg
 tau = 2.6864*10**(-12) # time constant in s of LAr attenuation
 time_factor = 10**(-12) # time factor in fs
 # energy in Mev and change it into J
-E1 = 1 * Energy_factor
-E2 = 1 * Energy_factor
-E3 = 1 * Energy_factor
-E4 = 1 * Energy_factor
-t1=  1* time_factor
-t2 = 1* time_factor
-t3 = 1* time_factor
-t4 = 1* time_factor
+E1 = 5.582 * Energy_factor
+E2 = 0.516 * Energy_factor
+E3 = 0 * Energy_factor
+E4 = 0 * Energy_factor
+t1=  0* time_factor
+t2 = 0.26* 1000 * time_factor
+t3 = 0* time_factor
+t4 = 0* time_factor
 E_chain = [E1, E2, E3, E4]
 t_chain = [t1, t2, t3, t4]
 run_number = 1000
@@ -26,7 +26,7 @@ PI = scipy.pi
 print(PI)
 # set seed
 random.seed(10)
-address ="/data/runzezhang/result/SRIM_MC/MC_20231018"
+address ="/data/runzezhang/result/SRIM_MC/MC_20231018_5582"
 
 def two_body_collision_xyz(theta, phi, v_xi, v_yi, v_zi, E):
     # theta phi are the gamma's vectors and v_xi, v_yi, v_zi are initial state of LAr
@@ -102,10 +102,7 @@ if __name__ =="__main__":
     # two_body_collision_xyz(0, 0, 0, 0, 0, 0)
 
     # event_generator()
-    Number=60
+    Number=1000000
     result = run_generator(Number)
-    result2 = data_analysis()
-    print(result)
-    print(result2)
-    if result == result2:
-        print("save successfully!")
+
+    #data analysis
