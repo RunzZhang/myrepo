@@ -103,9 +103,9 @@ if __name__ =="__main__":
     # two_body_collision_xyz(0, 0, 0, 0, 0, 0)
 
     # event_generator()
-    Number=100
+    Number=1000000
     result = run_generator(Number)
-    if data_analysis() ==result:
-        print("success!")
+    # if data_analysis() ==result:
+    #     print("success!")
 
     #data analysis
