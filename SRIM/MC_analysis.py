@@ -28,6 +28,8 @@ def plot_chains():
     raw_data = []
     bin_n = 500
     raw_data_ev = []
+    start = 0
+    end = 600
 
     for address in address_list:
         raw_data.append(data_pick(address))
@@ -49,7 +51,7 @@ def plot_chains():
 
     for i in range(len(raw_data_ev)):
         print(len(raw_data_ev))
-        plt.hist(raw_data_ev[i],bins= bin_n,label=address_list[i][-5:])
+        plt.hist(raw_data_ev[i],bins= bin_n,range=(start, end),label=address_list[i][-5:])
     plt.legend()
     plt.xlabel("energy/eV")
     plt.ylabel("N/bin")
