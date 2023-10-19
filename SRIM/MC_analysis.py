@@ -35,7 +35,7 @@ def plot_chains():
     #change data value from J into eV
     for data in raw_data:
         for data_ele in data:
-            data_buffer.append(data_ele/e)
+            data_buffer.append(round(data_ele/e),3)
         raw_data_ev.append(data_buffer)
     print(raw_data_ev[0])
     print(address_list[0][-4:])
@@ -72,10 +72,9 @@ def plot_chain_sum():
     plt.show()
 
 if __name__ =="__main__":
-    plt.hist([1,23,343,23,544,232,565,23,454,67])
-    plt.show()
 
-    # plot_chains()
+
+    plot_chains()
     # plot_chain_sum()
 
 
