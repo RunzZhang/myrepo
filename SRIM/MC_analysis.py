@@ -9,7 +9,7 @@ from matplotlib.ticker import PercentFormatter
 from scipy.optimize import fsolve
 e = 1.602*10**(-19)
 address1 ="/data/runzezhang/result/SRIM_MC/MC_20231018_5582"
-address2 ="/data/runzezhang/result/SRIM_MC/MC_20231018_4745"
+address2 ="/data/runzezhang/result/SRIM_MC/MC_20231018_4745_2"
 address3 ="/data/runzezhang/result/SRIM_MC/MC_20231018_3700"
 weight1 = 10.8
 weight2 = 51.25
