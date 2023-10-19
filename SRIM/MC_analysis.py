@@ -17,7 +17,7 @@ weight3 = 9.11
 address_list = [address1,address2,address3]
 weight_list = [weight1, weight2, weight3]
 
-test_address ="/data/runzezhang/result/SRIM_MC/MC_20231018_4745_3"
+test_address ="/data/runzezhang/result/SRIM_MC/MC_20231018_4745_2"
 
 
 def data_pick(address):
