@@ -28,14 +28,15 @@ def plot_chains():
     raw_data = []
     bin_n = 500
     raw_data_ev = []
+    data_buffer = []
     for address in address_list:
         raw_data.append(data_pick(address))
     # raw data is a data list
     #change data value from J into eV
     for data in raw_data:
         for data_ele in data:
-            data_ele = data_ele/e
-        raw_data_ev.append(data)
+            data_buffer.append(data_ele/e)
+        raw_data_ev.append(data_buffer)
     print(raw_data_ev[0])
     print(address_list[0][-5:])
     plt.hist(raw_data_ev[0], bins=bin_n, label=address_list[0][-5:])
