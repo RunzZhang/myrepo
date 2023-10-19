@@ -71,7 +71,7 @@ def plot_chain_sum():
         for j in range(len(raw_data[i])):
             # add eV energy to a 1D list
             #together with its weights
-            consistant_data.append(raw_data[i][j]/e)
+            consistant_data.append(round(float(raw_data[i][j]/e),3))
             consistant_weight.append(weight_list[i])
     plt.hist(consistant_data,bins = bin_n, density = True, weight = consistant_weight)
     plt.xlabel("energy/eV")
