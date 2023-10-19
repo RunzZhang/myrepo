@@ -38,9 +38,10 @@ def plot_chains():
             data_buffer.append(data_ele/e)
         raw_data_ev.append(data_buffer)
     print(raw_data_ev[0])
-    print(address_list[0][-5:])
+    print(address_list[0][-4:])
     print("min and max", min(raw_data_ev[0]), max(raw_data_ev[0]))
-    plt.hist(raw_data_ev[0][:100], bins=50, range=(min(raw_data_ev[0]),max(raw_data_ev[0])),label=address_list[0][-5:])
+    plt.hist(raw_data_ev[0][:100], bins=50, range=(min(raw_data_ev[0]),max(raw_data_ev[0])),label=address_list[0][-4:])
+
     # for i in range(len(raw_data_ev)):
     #     print(len(raw_data_ev))
     #     plt.hist(raw_data_ev[i],bins= bin_n,label=address_list[i][-5:])
@@ -71,7 +72,9 @@ def plot_chain_sum():
     plt.show()
 
 if __name__ =="__main__":
-    plot_chains()
+    plt.hist([1,23,343,23,544,232,565,23,454,67])
+
+    # plot_chains()
     # plot_chain_sum()
 
 
