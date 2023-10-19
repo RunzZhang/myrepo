@@ -35,7 +35,7 @@ def plot_chains():
     #change data value from J into eV
     for data in raw_data:
         for data_ele in data:
-            data_buffer.append(round(data_ele/e),3)
+            data_buffer.append(round(data_ele/e,3))
         raw_data_ev.append(data_buffer)
     print(raw_data_ev[0])
     print(address_list[0][-4:])
