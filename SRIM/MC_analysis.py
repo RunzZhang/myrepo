@@ -16,6 +16,7 @@ weight2 = 51.25
 weight3 = 9.11
 address_list = [address1,address2,address3]
 weight_list = [weight1, weight2, weight3]
+PI = np.pi
 
 test_address ="/data/runzezhang/result/SRIM_MC/MC_20231018_4745_2"
 
@@ -104,9 +105,35 @@ def plot_chain_sum():
     plt.ylabel("P")
     plt.show()
 
+def two_body_E_spectrum_47_func(x):
+    a = 300
+    b = 50
+    deno = np.sqrt(1-(1/(2*a**2)+1/(2*b**2)-x/(a*b))**2)
+
+    f = 1/deno
+    return f
+
+def Energy_vs_theta_47(theta):
+    a = 300
+    b = 50
+    return a**2+b**2-2*a*b*np.cos(theta)
+
+def plot_two_body_E_spectrum_47():
+    angle = []
+    E_list = []
+    N = 100000
+    for i in range(N):
+        theta = random.uniform(0, 2 * PI)
+        E = Energy_vs_theta_47(theta)
+        angle.append(theta)
+        E_list.append(E)
+
+    plt.hist(E_list, bins = 500)
+    plt.show()
 if __name__ =="__main__":
 
-    plot_test()
+    plot_two_body_E_spectrum_47()
+    # plot_test()
     # plot_chains()
     # plot_chain_sum()
 
