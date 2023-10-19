@@ -37,9 +37,9 @@ def plot_chains():
     for data in raw_data:
         for data_ele in data[:500]:
             data_buffer.append(round(data_ele/e,3))
-            print(round(data_ele/e,3))
+            # print(round(data_ele/e,3))
         raw_data_ev.append(data_buffer)
-        print("finish one run")
+        # print("finish one run")
     print(raw_data_ev[0])
     print(address_list[0][-4:])
     print("min and max", min(raw_data_ev[0]), max(raw_data_ev[0]))
