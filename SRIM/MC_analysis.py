@@ -28,13 +28,14 @@ def plot_chains():
     raw_data = []
     bin_n = 500
     raw_data_ev = []
-    data_buffer = []
+
     for address in address_list:
         raw_data.append(data_pick(address))
     # print("type", type(raw_data[0][1]))
     # raw data is a data list
     #change data value from J into eV
     for data in raw_data:
+        data_buffer = []
         for data_ele in data:
             # change sympy float into float, otherwise the data cannot been plot by matplotlib
             data_buffer.append(float(round(data_ele/e,3)))
