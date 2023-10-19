@@ -48,10 +48,11 @@ def plot_chains():
     # print(address_list[0][-4:])
     # print("min and max", min(raw_data_ev[0]), max(raw_data_ev[0]))
     # plt.hist(np.array(raw_data_ev[0][:500]), bins=50, range=(min(raw_data_ev[0]),max(raw_data_ev[0])),label=address_list[0][-4:])
+    figure, axis = plt.subplots(3)
 
     for i in range(len(raw_data_ev)):
         print(len(raw_data_ev))
-        plt.hist(raw_data_ev[i],bins= bin_n,range=(start, end),label=address_list[i][-5:])
+        axis[i].hist(raw_data_ev[i],bins= bin_n,range=(start, end),label=address_list[i][-4:])
     plt.legend()
     plt.xlabel("energy/eV")
     plt.ylabel("N/bin")
