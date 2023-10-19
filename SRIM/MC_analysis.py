@@ -82,8 +82,8 @@ def plot_chain_sum():
 if __name__ =="__main__":
 
 
-    # plot_chains()
-    plot_chain_sum()
+    plot_chains()
+    # plot_chain_sum()
 
 
 
