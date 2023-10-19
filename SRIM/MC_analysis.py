@@ -36,6 +36,7 @@ def plot_chains():
     for data in raw_data:
         for data_ele in data:
             data_buffer.append(round(data_ele/e,3))
+            print(data_ele/e)
         raw_data_ev.append(data_buffer)
         print("finish one run")
     print(raw_data_ev[0])
