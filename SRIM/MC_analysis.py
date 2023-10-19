@@ -73,6 +73,7 @@ def plot_chain_sum():
 
 if __name__ =="__main__":
     plt.hist([1,23,343,23,544,232,565,23,454,67])
+    plt.show()
 
     # plot_chains()
     # plot_chain_sum()
