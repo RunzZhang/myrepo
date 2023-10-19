@@ -31,7 +31,7 @@ def plot_chains():
     data_buffer = []
     for address in address_list:
         raw_data.append(data_pick(address))
-    print("dtype", np.dtype(raw_data))
+    print("dtype", type(raw_data))
     # raw data is a data list
     #change data value from J into eV
     for data in raw_data:
