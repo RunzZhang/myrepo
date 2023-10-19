@@ -14,11 +14,11 @@ time_factor = 10**(-12) # time factor in ps
 # energy in Mev and change it into J
 E1 = 4.745 * Energy_factor
 E2 = 1.1868 * Energy_factor
-E3 = 0.167 * Energy_factor
+E3 = 0 * Energy_factor
 E4 = 0 * Energy_factor
 t1=  0* time_factor
 t2 = 0.4 * time_factor
-t3 = 315 * time_factor
+t3 = 0 * time_factor
 t4 = 0 * time_factor
 E_chain = [E1, E2, E3, E4]
 t_chain = [t1, t2, t3, t4]
@@ -103,7 +103,7 @@ if __name__ =="__main__":
     # two_body_collision_xyz(0, 0, 0, 0, 0, 0)
 
     # event_generator()
-    Number=100000
+    Number=10000
     result = run_generator(Number)
     # if data_analysis() ==result:
     #     print("success!")
