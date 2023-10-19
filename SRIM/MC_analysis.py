@@ -74,7 +74,7 @@ def plot_chain_sum():
             #together with its weights
             consistant_data.append(round(float(raw_data[i][j]/e),3))
             consistant_weight.append(weight_list[i])
-    plt.hist(consistant_data,bins = bin_n, density = True, weight = consistant_weight)
+    plt.hist(consistant_data,bins = bin_n, density = True, weights = consistant_weight)
     plt.xlabel("energy/eV")
     plt.ylabel("P")
     plt.show()
