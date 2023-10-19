@@ -9,13 +9,15 @@ from matplotlib.ticker import PercentFormatter
 from scipy.optimize import fsolve
 e = 1.602*10**(-19)
 address1 ="/data/runzezhang/result/SRIM_MC/MC_20231018_5582"
-address2 ="/data/runzezhang/result/SRIM_MC/MC_20231018_4745_2"
+address2 ="/data/runzezhang/result/SRIM_MC/MC_20231018_4745"
 address3 ="/data/runzezhang/result/SRIM_MC/MC_20231018_3700"
 weight1 = 10.8
 weight2 = 51.25
 weight3 = 9.11
 address_list = [address1,address2,address3]
 weight_list = [weight1, weight2, weight3]
+
+test_address ="/data/runzezhang/result/SRIM_MC/MC_20231018_4745_2"
 
 
 def data_pick(address):
@@ -24,6 +26,30 @@ def data_pick(address):
 
     return b
 
+def plot_test():
+    raw_data = []
+    bin_n = 500
+    raw_data_ev = []
+    start = 0
+    end = 600
+
+    raw_data.append(data_pick(test_address))
+    # print("type", type(raw_data[0][1]))
+    # raw data is a data list
+    #change data value from J into eV
+    data_buffer = []
+    for data_ele in raw_data:
+        # change sympy float into float, otherwise the data cannot been plot by matplotlib
+        data_buffer.append(float(round(data_ele/e,3)))
+        # print(round(data_ele/e,3))
+    print("finish one run")
+
+
+    plt.hist(data_buffer,bins= bin_n,range=(start, end),label="test_run")
+    plt.legend()
+    plt.xlabel("energy/eV")
+    plt.ylabel("N/bin")
+    plt.show()
 def plot_chains():
     raw_data = []
     bin_n = 500
@@ -81,8 +107,8 @@ def plot_chain_sum():
 
 if __name__ =="__main__":
 
-
-    plot_chains()
+    plot_test()
+    # plot_chains()
     # plot_chain_sum()
 
 
