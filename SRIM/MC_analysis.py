@@ -103,6 +103,7 @@ def plot_chain_sum():
     plt.hist(consistant_data,bins = bin_n, density = True, weights = consistant_weight)
     plt.xlabel("energy/eV")
     plt.ylabel("P")
+    plt.yscale("log")
     plt.show()
 
 def two_body_E_spectrum_47_func(x):
@@ -132,10 +133,10 @@ def plot_two_body_E_spectrum_47():
     plt.show()
 if __name__ =="__main__":
 
-    plot_two_body_E_spectrum_47()
+    # plot_two_body_E_spectrum_47()
     # plot_test()
     # plot_chains()
-    # plot_chain_sum()
+    plot_chain_sum()
 
 
 
