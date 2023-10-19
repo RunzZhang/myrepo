@@ -36,10 +36,12 @@ def plot_chains():
         for data_ele in data:
             data_ele = data_ele/e
         raw_data_ev.append(data)
-
-    for i in range(len(raw_data_ev)):
-        print(len(raw_data_ev))
-        plt.hist(raw_data_ev[i],bins= bin_n,label=address_list[i][-5:])
+    print(raw_data_ev[0])
+    print(address_list[0][-5:])
+    plt.hist(raw_data_ev[0], bins=bin_n, label=address_list[0][-5:])
+    # for i in range(len(raw_data_ev)):
+    #     print(len(raw_data_ev))
+    #     plt.hist(raw_data_ev[i],bins= bin_n,label=address_list[i][-5:])
     plt.legend()
     plt.xlabel("energy/eV")
     plt.ylabel("N/bin")
