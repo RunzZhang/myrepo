@@ -31,23 +31,24 @@ def plot_chains():
     data_buffer = []
     for address in address_list:
         raw_data.append(data_pick(address))
-    print("type", type(raw_data[0][1]))
+    # print("type", type(raw_data[0][1]))
     # raw data is a data list
     #change data value from J into eV
     for data in raw_data:
-        for data_ele in data[:500]:
+        for data_ele in data:
+            # change sympy float into float, otherwise the data cannot been plot by matplotlib
             data_buffer.append(float(round(data_ele/e,3)))
             # print(round(data_ele/e,3))
         raw_data_ev.append(data_buffer)
         # print("finish one run")
-    print(raw_data_ev[0])
-    print(address_list[0][-4:])
-    print("min and max", min(raw_data_ev[0]), max(raw_data_ev[0]))
-    plt.hist(np.array(raw_data_ev[0][:500]), bins=50, range=(min(raw_data_ev[0]),max(raw_data_ev[0])),label=address_list[0][-4:])
+    # print(raw_data_ev[0])
+    # print(address_list[0][-4:])
+    # print("min and max", min(raw_data_ev[0]), max(raw_data_ev[0]))
+    # plt.hist(np.array(raw_data_ev[0][:500]), bins=50, range=(min(raw_data_ev[0]),max(raw_data_ev[0])),label=address_list[0][-4:])
 
-    # for i in range(len(raw_data_ev)):
-    #     print(len(raw_data_ev))
-    #     plt.hist(raw_data_ev[i],bins= bin_n,label=address_list[i][-5:])
+    for i in range(len(raw_data_ev)):
+        print(len(raw_data_ev))
+        plt.hist(raw_data_ev[i],bins= bin_n,label=address_list[i][-5:])
     plt.legend()
     plt.xlabel("energy/eV")
     plt.ylabel("N/bin")
