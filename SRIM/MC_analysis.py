@@ -33,7 +33,10 @@ def plot_chains():
     # raw data is a data list
     #change data value from J into eV
     for data in raw_data:
-        raw_data_ev.append(data/e)
+        for data_ele in data:
+            data_ele = data_ele/e
+        raw_data_ev.append(data)
+
     for i in range(len(raw_data_ev)):
         plt.hist(raw_data_ev[i],bins= bin_n,label=address_list[i][-5:])
     plt.legend()
