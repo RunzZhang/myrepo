@@ -81,6 +81,7 @@ Energy = df['Energy (keV)'].tolist()
 #print(Energy)
 Energy = [1.60218e-16*x for x in Energy] # Writing all energy in Joules
 ElStop = df['Electronic Stop (eV/A)'].tolist()
+Elrecoil = df['Energy Lost to Last Recoil (eV)'].tolist()
 IonNum = df['Ion Number'].tolist()
 Events = max(IonNum)
 KEInitial = (df.iloc[0][1]) # Set kinetic energy variable (in keV)
@@ -109,7 +110,19 @@ for i in range(Events): # Calculate displacement and record it in a 2D array whi
             #     finalpos.append([Posx[j], Posy[j], Posz[j]])
     E_lost.append(temp)
 
+E_recoil = []
+for i in range(Events): # Calculate displacement and record it in a 2D array which is
+    temp = []           # indexed by the event number
+    for j in range(len(ElStop)):
+        if (IonNum[j] == i + 1):
+            if ElStop[j] != 0:
+                temp.append(Elrecoil[j])
+            # if ElStop[j] == 0:
+            #     finalpos.append([Posx[j], Posy[j], Posz[j]])
+    E_recoil.append(temp)
+
 print("enery lost rate each step",E_lost)
+print("energy recoil each step", E_recoil)
 
 
      
@@ -208,9 +221,9 @@ def plot_EvsX(E_list, v_list): #both 2D array
         v_axis= v_list[i]
         y_axis = E_list[i]
         plt.plot(v_axis, y_axis)
-    # plt.show()
+    plt.show()
 # change 2d into 1d to linear fit
-plot_EvsX(E_lost, velocity)
+
 
 E_lost_dataset = []
 velocity_dataset = []
@@ -246,23 +259,73 @@ def li_func2(x, k):
 #
 # plt.plot(velocity_dataset, fit_data, 'r-', label = "linear fit")
 # plt.legend()
+def plotEvX_fit():
+    popt, pcov = curve_fit(li_func2, velocity_dataset, E_lost_dataset)
+
+    perr = np.sqrt(np.diag(pcov))
+    print("popt", popt, "\n", "perr", perr)
+    print(popt[0])
+    fit_data = []
+    for i in velocity_dataset:
+        fit_data.append(li_func2(i, popt[0]))
+
+    plt.plot(velocity_dataset, fit_data, 'r-', label="linear fit")
+    plt.xlabel("velocity m/s")
+    plt.ylabel("dE/dx eV/A")
+    plt.legend()
+
+    plt.show()
+
+def time_displacement_hist(t,x,ER,velocity):
+    bin_n = 500
+    figure, axis = plt.subplots(4)
+    t_dataset = []
+    x_dataset = []
+    ER_dataset = []
+    velocity_dataset = []
+    for i in range(len(t)):
+        for j in range(len(t[i])):
+            t_dataset.append(t[i][j])
+
+    for i in range(len(x)):
+        for j in range(len(x[i])):
+            x_dataset.append(x[i][j])
+
+    for i in range(len(ER) - 1):
+        for j in range(len(ER[i])):
+            ER_dataset.append(ER[i][j])
+
+    for i in range(len(velocity) - 1):
+        for j in range(len(velocity[i])):
+            velocity_dataset.append(velocity[i][j])
+
+    axis[0].hist(t_dataset, bins=bin_n, label="time")
+    axis[1].hist(x_dataset, bins=bin_n, label="displacement")
+    axis[2].hist(ER_dataset, bins=bin_n, label="ER")
+    axis[3].hist(velocity_dataset, bins=bin_n, label="v")
+
+    plt.show()
+
+def ER_scatter(ER,velocity):
+    ER_dataset = []
+    velocity_dataset = []
+    for i in range(len(velocity)):
+        for j in range(len(velocity[i])):
+            velocity_dataset.append((0.5*mass*velocity[i][j])**2)
+
+    for i in range(len(ER) - 1):
+        for j in range(len(ER[i])):
+            ER_dataset.append(ER[i][j])
+
+    print(len(ER_dataset)==len(velocity_dataset))
+    plt.scatter(ER_dataset, velocity_dataset)
+    plt.xlabel("ER/eV")
+    plt.ylabel("Ek/j")
+    plt.show()
 
 
-popt, pcov = curve_fit(li_func2, velocity_dataset, E_lost_dataset)
-
-perr = np.sqrt(np.diag(pcov))
-print("popt",popt,"\n","perr",perr)
-print(popt[0])
-fit_data = []
-for i in velocity_dataset:
-    fit_data.append(li_func2(i,popt[0]))
-
-plt.plot(velocity_dataset, fit_data, 'r-', label = "linear fit")
-plt.xlabel("velocity m/s")
-plt.ylabel("dE/dx eV/A")
-plt.legend()
-
-
-plt.show()
+if __name__=="__main__":
+    time_displacement_hist(time,displacement,E_recoil,velocity)
+    # ER_scatter(E_recoil,velocity)
 
 
