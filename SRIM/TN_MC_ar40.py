@@ -73,7 +73,7 @@ def event_generator(E_chain, t_chain,m):
         vy=vy * np.exp(-t_chain[i]/tau)
         vz=vz * np.exp(-t_chain[i] / tau)
         random_angle = generate_gamma_vec()
-        result= two_body_collision_xyz(random_angle[0],random_angle[1],vx,vy,vz,E_chain[i])
+        result= two_body_collision_xyz(m,random_angle[0],random_angle[1],vx,vy,vz,E_chain[i])
         vx = result[0]
         vy = result[1]
         vz = result[2]
