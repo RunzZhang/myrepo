@@ -24,7 +24,7 @@ E_2771_chain = [2.771 * Energy_factor, 2.810 * Energy_factor,0.516 * Energy_fact
 t_2771_chain = [0* time_factor, 0.017 * time_factor, 260 * time_factor, 0.40 * time_factor]
 E_full_chain = [E_5582_chain, E_4745_chain, E_3700_chain, E_2771_chain]
 t_full_chain = [t_5582_chain, t_4745_chain, t_3700_chain, t_2771_chain]
-run_number = 100
+run_number = 100000
 PI = scipy.pi
 print(PI)
 # set seed
