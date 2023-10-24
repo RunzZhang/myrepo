@@ -30,10 +30,10 @@ print(PI)
 # set seed
 random.seed(10)
 
-address_5582="/data/runzezhang/result/SRIM_MC/MC_argon40_20231018_5582"
-address_4745="/data/runzezhang/result/SRIM_MC/MC_argon40_20231018_4745"
-address_3700="/data/runzezhang/result/SRIM_MC/MC_argon40_20231018_3700"
-address_2771="/data/runzezhang/result/SRIM_MC/MC_argon40_20231018_2771"
+address_5582="/data/runzezhang/result/SRIM_MC/MC_argon40_20231024_5582"
+address_4745="/data/runzezhang/result/SRIM_MC/MC_argon40_20231024_4745"
+address_3700="/data/runzezhang/result/SRIM_MC/MC_argon40_20231024_3700"
+address_2771="/data/runzezhang/result/SRIM_MC/MC_argon40_20231024_2771"
 
 address_full_list =[address_5582,address_4745,address_3700,address_2771]
 
@@ -94,7 +94,7 @@ def run_generator(N, address, E_chain, t_chain,m):
     #given the address of the file, number of events, E chain and t chain and mass
     E_deposit_list = []
     for i in range(N):
-        print(E_chain[0],"keV event:",i)
+        print(E_chain[0]/Energy_factor,"keV event:",i)
         E_deposit_list.append(event_generator(E_chain, t_chain,m))
     # print(E_deposit_list[:50])
     with open(address, "wb") as fp:  # Pickling
