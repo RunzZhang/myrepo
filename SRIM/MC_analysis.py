@@ -163,7 +163,6 @@ def plot_chain_separate():
             #together with its weights
             consistant_data1.append(round(float(raw_data1[i][j]/e),3))
             consistant_weight1.append(weight_list_40[i])
-    hist_result = plt.hist(consistant_data1,bins = bin_n, density = False, weights = consistant_weight1)
     for address in address_list_36:
         raw_data2.append(data_pick(address))
     # raw data is a data list
@@ -175,17 +174,17 @@ def plot_chain_separate():
             consistant_data2.append(round(float(raw_data2[i][j]/e),3))
             consistant_weight2.append(weight_list_36[i])
     hist_result1 = plt.hist(consistant_data1,bins = bin_n, density = False, weights = consistant_weight1)
-    hist_result2 = plt.hist(consistant_data2, bins=bin_n, density=False, weights=consistant_weight2)
+    # hist_result2 = plt.hist(consistant_data2, bins=bin_n, density=False, weights=consistant_weight2)
     plt.clf()
     # replot the hist as lineplot
     x_bins1= []
     for i in range(len(hist_result1[1])-1):
         x_bins1.append((hist_result1[1][i]+hist_result1[1][i+1])/2)
-    x_bins2 = []
-    for i in range(len(hist_result2[1]) - 1):
-        x_bins2.append((hist_result2[1][i] + hist_result2[1][i + 1]) / 2)
-    plt.plot(x_bins1,hist_result1[0])
-    plt.plot(x_bins2, hist_result2[0])
+    # x_bins2 = []
+    # for i in range(len(hist_result2[1]) - 1):
+    #     x_bins2.append((hist_result2[1][i] + hist_result2[1][i + 1]) / 2)
+    # plt.plot(x_bins1,hist_result1[0])
+    # plt.plot(x_bins2, hist_result2[0])
 
     plt.xlabel("energy/eV" , fontsize=18)
     plt.ylabel("P", fontsize=18)
