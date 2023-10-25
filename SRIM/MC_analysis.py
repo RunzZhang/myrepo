@@ -174,7 +174,7 @@ def plot_chain_separate():
             consistant_data2.append(round(float(raw_data2[i][j]/e),3))
             consistant_weight2.append(weight_list_36[i])
     hist_result1 = plt.hist(consistant_data1,bins = bin_n, density = False, weights = consistant_weight1)
-    hist_result2 = plt.hist(consistant_data2, bins=bin_n, density=False, weights=consistant_weight1)
+    hist_result2 = plt.hist(consistant_data2, bins=bin_n, density=False, weights=consistant_weight2)
     plt.clf()
     # replot the hist as lineplot
     x_bins1= []
