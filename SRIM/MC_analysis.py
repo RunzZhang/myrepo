@@ -37,10 +37,13 @@ weight_Ar36_3700 = ar_36_percent * 8/100
 
 address_list = [address_Ar40_3700,address_Ar40_2771,address_Ar36_8790,address_Ar36_5272,address_Ar36_3700]
 weight_list = [weight_Ar40_3700,weight_Ar40_2771,weight_Ar36_8790,weight_Ar36_5272,weight_Ar36_3700]
-
+address_list_40 =[address_Ar40_5582,address_Ar40_4745,address_Ar40_3700,address_Ar40_2771]
+weight_list_40 = [weight_Ar40_5582,weight_Ar40_4745,weight_Ar40_3700,weight_Ar40_2771]
+address_list_36 = [address_Ar36_8790,address_Ar36_6299,address_Ar36_5272,address_Ar36_3700]
+weight_list_36 = [weight_Ar36_8790,weight_Ar36_6299,weight_Ar36_5272,weight_Ar36_3700]
 PI = np.pi
 
-test_address ="//data/runzezhang/result/SRIM_MC/MC_argon36_20231024_8790"
+test_address ="/data/runzezhang/result/SRIM_MC/MC_argon36_20231024_8790"
 
 
 def data_pick(address):
@@ -139,6 +142,57 @@ def plot_chain_sum():
     plt.xlim([0,1200])
     plt.show()
 
+def plot_chain_separate():
+    raw_data1 = []
+    bin_n = 500
+    raw_data_ev1 = []
+    consistant_data1 = []
+    consistant_weight1 =[]
+    raw_data2 = []
+    raw_data_ev2 = []
+    consistant_data2 = []
+    consistant_weight2 = []
+    for address in address_list_40:
+        raw_data1.append(data_pick(address))
+    # raw data is a data list
+    # change data value from J into eV
+    for i in range(len(raw_data1)):
+        for j in range(len(raw_data1[i])):
+            # add eV energy to a 1D list
+            #together with its weights
+            consistant_data1.append(round(float(raw_data1[i][j]/e),3))
+            consistant_weight1.append(weight_list_40[i])
+    hist_result = plt.hist(consistant_data1,bins = bin_n, density = False, weights = consistant_weight1)
+    for address in address_list_36:
+        raw_data2.append(data_pick(address))
+    # raw data is a data list
+    # change data value from J into eV
+    for i in range(len(raw_data2)):
+        for j in range(len(raw_data2[i])):
+            # add eV energy to a 1D list
+            #together with its weights
+            consistant_data2.append(round(float(raw_data2[i][j]/e),3))
+            consistant_weight2.append(weight_list_36[i])
+    hist_result1 = plt.hist(consistant_data1,bins = bin_n, density = False, weights = consistant_weight1)
+    hist_result2 = plt.hist(consistant_data2, bins=bin_n, density=False, weights=consistant_weight1)
+    plt.clf()
+    # replot the hist as lineplot
+    x_bins1= []
+    for i in range(len(hist_result1[1])-1):
+        x_bins1.append((hist_result1[1][i]+hist_result1[1][i+1])/2)
+    x_bins2 = []
+    for i in range(len(hist_result2[1]) - 1):
+        x_bins2.append((hist_result2[1][i] + hist_result2[1][i + 1]) / 2)
+    plt.plot(x_bins1,hist_result1[0])
+    plt.plot(x_bins2, hist_result2[0])
+
+    plt.xlabel("energy/eV" , fontsize=18)
+    plt.ylabel("P", fontsize=18)
+    plt.yscale("log")
+    plt.ylim([10**(-6),0.1])
+    plt.xlim([0,1200])
+    plt.show()
+
 def two_body_E_spectrum_47_func(x):
     a = 300
     b = 50
@@ -169,8 +223,8 @@ if __name__ =="__main__":
     # plot_two_body_E_spectrum_47()
     # plot_test()
     # plot_chains()
-    plot_chain_sum()
-
+    # plot_chain_sum()
+    plot_chain_separate()
 
 
 
