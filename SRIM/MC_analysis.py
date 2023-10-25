@@ -180,6 +180,7 @@ def plot_chain_separate():
     x_bins1= []
     for i in range(len(hist_result1[1])-1):
         x_bins1.append((hist_result1[1][i]+hist_result1[1][i+1])/2)
+    print(hist_result1[0])
     print(x_bins1)
     # x_bins2 = []
     # for i in range(len(hist_result2[1]) - 1):
