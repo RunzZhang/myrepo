@@ -156,8 +156,8 @@ if __name__ =="__main__":
 
     # plot_two_body_E_spectrum_47()
     # plot_test()
-    plot_chains()
-    # plot_chain_sum()
+    # plot_chains()
+    plot_chain_sum()
 
 
 
