@@ -124,10 +124,11 @@ def plot_chain_sum():
             #together with its weights
             consistant_data.append(round(float(raw_data[i][j]/e),3))
             consistant_weight.append(weight_list[i])
-    plt.hist(consistant_data,bins = bin_n, density = True, weights = consistant_weight)
+    plt.hist(consistant_data,bins = bin_n, density = True, weights = consistant_weight, fill=False)
     plt.xlabel("energy/eV")
     plt.ylabel("P")
     plt.yscale("log")
+    plt.ylim([10**(-5),0.1])
     plt.show()
 
 def two_body_E_spectrum_47_func(x):
