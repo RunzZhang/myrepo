@@ -125,11 +125,13 @@ def plot_chain_sum():
             consistant_data.append(round(float(raw_data[i][j]/e),3))
             consistant_weight.append(weight_list[i])
     hist_result = plt.hist(consistant_data,bins = bin_n, density = True, weights = consistant_weight)
+    plt.clf()
     # replot the hist as lineplot
     x_bins= []
     for i in range(len(hist_result[1])-1):
         x_bins.append((hist_result[1][i]+hist_result[1][i+1])/2)
     plt.plot(x_bins,hist_result[0])
+
     plt.xlabel("energy/eV")
     plt.ylabel("P")
     plt.yscale("log")
