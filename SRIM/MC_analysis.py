@@ -8,17 +8,36 @@ from matplotlib.ticker import PercentFormatter
 
 from scipy.optimize import fsolve
 e = 1.602*10**(-19)
-address1 ="/data/runzezhang/result/SRIM_MC/MC_20231018_5582"
-address2 ="/data/runzezhang/result/SRIM_MC/MC_20231018_4745"
-address3 ="/data/runzezhang/result/SRIM_MC/MC_20231018_3700"
-weight1 = 10.8
-weight2 = 51.25
-weight3 = 9.11
-address_list = [address1,address2,address3]
-weight_list = [weight1, weight2, weight3]
+
+address_Ar40_5582="/data/runzezhang/result/SRIM_MC/MC_argon40_20231024_5582"
+address_Ar40_4745="/data/runzezhang/result/SRIM_MC/MC_argon40_20231024_4745"
+address_Ar40_3700="/data/runzezhang/result/SRIM_MC/MC_argon40_20231024_3700"
+address_Ar40_2771="/data/runzezhang/result/SRIM_MC/MC_argon40_20231024_2771"
+
+address_Ar36_8790="/data/runzezhang/result/SRIM_MC/MC_argon36_20231024_8790"
+address_Ar36_6299="/data/runzezhang/result/SRIM_MC/MC_argon36_20231024_6299"
+address_Ar36_5272="/data/runzezhang/result/SRIM_MC/MC_argon36_20231024_5272"
+address_Ar36_3700="/data/runzezhang/result/SRIM_MC/MC_argon36_20231024_3700"
+# 93 is norm factor of argon 40
+ar_40_percent =0.974
+ar_36_percent = 0.025
+weight_Ar40_5582 = ar_40_percent * 10.8/93
+weight_Ar40_4745 = ar_40_percent * 51.2/93
+weight_Ar40_3700 = ar_40_percent * 9.11/93
+weight_Ar40_2771 = ar_40_percent * 8/93
+
+weight_Ar36_8790 = ar_36_percent * 10.9/100
+weight_Ar36_6299 = ar_36_percent * 37.5/100
+weight_Ar36_5272 = ar_36_percent * 25/100
+weight_Ar36_3700 = ar_36_percent * 8/100
+
+
+address_list = [address_Ar40_5582,address_Ar40_4745,address_Ar40_3700,address_Ar40_2771,address_Ar36_8790,address_Ar36_6299,address_Ar36_5272,address_Ar36_3700]
+weight_list = [weight_Ar40_5582,weight_Ar40_4745,weight_Ar40_3700,weight_Ar40_2771,weight_Ar36_8790,weight_Ar36_6299,weight_Ar36_5272,weight_Ar36_3700]
+
 PI = np.pi
 
-test_address ="/data/runzezhang/result/SRIM_MC/MC_20231018_4745_2"
+test_address ="//data/runzezhang/result/SRIM_MC/MC_argon36_20231024_8790"
 
 
 def data_pick(address):
@@ -134,9 +153,9 @@ def plot_two_body_E_spectrum_47():
 if __name__ =="__main__":
 
     # plot_two_body_E_spectrum_47()
-    # plot_test()
+    plot_test()
     # plot_chains()
-    plot_chain_sum()
+    # plot_chain_sum()
 
 
 
