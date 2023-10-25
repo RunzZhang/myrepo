@@ -52,13 +52,14 @@ def plot_test():
     raw_data_ev = []
     start = 0
     end = 1200
+    test_N = 100
 
     raw_data.append(data_pick(test_address))
     # print("type", type(raw_data[0][1]))
     # raw data is a data list
     #change data value from J into eV
     data_buffer = []
-    for data_ele in raw_data[0][:100]:
+    for data_ele in raw_data[0][:test_N]:
         # change sympy float into float, otherwise the data cannot been plot by matplotlib
         data_buffer.append(float(round(data_ele/e,3)))
         print(data_ele)
@@ -84,7 +85,7 @@ def plot_chains():
     #change data value from J into eV
     for data in raw_data:
         data_buffer = []
-        for data_ele in data:
+        for data_ele in data[:100]:
             # change sympy float into float, otherwise the data cannot been plot by matplotlib
             data_buffer.append(float(round(data_ele/e,3)))
             # print(round(data_ele/e,3))
