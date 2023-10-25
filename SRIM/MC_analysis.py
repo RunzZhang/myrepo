@@ -154,6 +154,7 @@ def plot_chain_separate():
     consistant_weight2 = []
     for address in address_list_40:
         raw_data1.append(data_pick(address))
+    print(raw_data1)
     # raw data is a data list
     # change data value from J into eV
     for i in range(len(raw_data1)):
