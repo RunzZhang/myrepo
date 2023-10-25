@@ -136,6 +136,7 @@ def plot_chain_sum():
     plt.ylabel("P")
     plt.yscale("log")
     plt.ylim([10**(-6),0.1])
+    plt.xlim([0,1200])
     plt.show()
 
 def two_body_E_spectrum_47_func(x):
