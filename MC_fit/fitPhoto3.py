@@ -33,6 +33,7 @@ def NucleationEfficiencyTrue(r,T,sigLow,sigUp):
     if r<T:
         R=1/2*(1+math.erf((r-T)/(sigLow*2**(1/2))))
     else:
+        # 1-R?
         R=1/2*(1+math.erf((r-T)/(sigUp*2**(1/2))))
     return R
 
