@@ -181,12 +181,12 @@ def plot_chain_separate():
     for i in range(len(hist_result1[1])-1):
         x_bins1.append((hist_result1[1][i]+hist_result1[1][i+1])/2)
     # make plot look better, the last bin's value should be a zero
-    hist_result1[0] = np.append(hist_result1[0], 0)
+    hist_result1_modified = np.append(hist_result1[0], 0)
     x_bins1.append(hist_result1[1][-1])
     x_bins2 = []
     for i in range(len(hist_result2[1]) - 1):
         x_bins2.append((hist_result2[1][i] + hist_result2[1][i + 1]) / 2)
-    plt.plot(x_bins1,hist_result1[0],color = "blue")
+    plt.plot(x_bins1,hist_result1_modified,color = "blue")
     plt.plot(x_bins2, hist_result2[0], color = "orange")
 
     plt.xlabel("energy/eV" , fontsize=18)
