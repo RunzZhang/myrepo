@@ -51,7 +51,7 @@ def plot_test():
     bin_n = 500
     raw_data_ev = []
     start = 0
-    end = 600
+    end = 1200
 
     raw_data.append(data_pick(test_address))
     # print("type", type(raw_data[0][1]))
@@ -61,6 +61,7 @@ def plot_test():
     for data_ele in raw_data[0]:
         # change sympy float into float, otherwise the data cannot been plot by matplotlib
         data_buffer.append(float(round(data_ele/e,3)))
+        print(data_ele)
         # print(round(data_ele/e,3))
     print("finish one run")
 
