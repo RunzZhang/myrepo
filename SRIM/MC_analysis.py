@@ -74,7 +74,7 @@ def plot_chains():
     bin_n = 500
     raw_data_ev = []
     start = 0
-    end = 600
+    end = 1200
 
     for address in address_list:
         raw_data.append(data_pick(address))
@@ -93,7 +93,7 @@ def plot_chains():
     # print(address_list[0][-4:])
     # print("min and max", min(raw_data_ev[0]), max(raw_data_ev[0]))
     # plt.hist(np.array(raw_data_ev[0][:500]), bins=50, range=(min(raw_data_ev[0]),max(raw_data_ev[0])),label=address_list[0][-4:])
-    figure, axis = plt.subplots(3)
+    figure, axis = plt.subplots(len(raw_data_ev))
 
     for i in range(len(raw_data_ev)):
         print(len(raw_data_ev))
