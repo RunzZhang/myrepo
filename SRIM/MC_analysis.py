@@ -181,7 +181,7 @@ def plot_chain_separate():
     for i in range(len(hist_result1[1])-1):
         x_bins1.append((hist_result1[1][i]+hist_result1[1][i+1])/2)
     # make plot look better, the last bin's value should be a zero
-    hist_result1[0].append(0)
+    hist_result1[0] = np.append(hist_result1[0], 0)
     x_bins1.append(hist_result1[1][-1])
     x_bins2 = []
     for i in range(len(hist_result2[1]) - 1):
