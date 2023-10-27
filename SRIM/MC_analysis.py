@@ -41,6 +41,7 @@ address_list_40 =[address_Ar40_5582,address_Ar40_4745,address_Ar40_3700,address_
 weight_list_40 = [weight_Ar40_5582,weight_Ar40_4745,weight_Ar40_3700,weight_Ar40_2771]
 address_list_36 = [address_Ar36_8790,address_Ar36_6299,address_Ar36_5272,address_Ar36_3700]
 weight_list_36 = [weight_Ar36_8790,weight_Ar36_6299,weight_Ar36_5272,weight_Ar36_3700]
+color_list = ["red", "orange", "blue", "green"]
 PI = np.pi
 
 test_address ="/data/runzezhang/result/SRIM_MC/MC_argon36_20231024_8790"
@@ -106,6 +107,48 @@ def plot_chains():
     for i in range(len(raw_data_ev)):
         print(len(raw_data_ev))
         axis[i].hist(raw_data_ev[i],bins= bin_n,range=(start, end),label=address_list[i][-4:])
+    plt.legend()
+    plt.xlabel("energy/eV")
+    plt.ylabel("N/bin")
+    plt.show()
+def plot_chains_ingroup():
+    raw_data = []
+    bin_n = 500
+    raw_data_ev = []
+    start = 0
+    end = 1200
+    data_result = []
+    energy_x = []
+    for address in address_list:
+        raw_data.append(data_pick(address))
+    # print("type", type(raw_data[0][1]))
+    # raw data is a data list
+    #change data value from J into eV
+    for data in raw_data:
+        data_buffer = []
+        for data_ele in data:
+            # change sympy float into float, otherwise the data cannot been plot by matplotlib
+            data_buffer.append(float(round(data_ele/e,3)))
+            # print(round(data_ele/e,3))
+        raw_data_ev.append(data_buffer)
+        print("finish one run")
+    # print(raw_data_ev[0])
+    # print(address_list[0][-4:])
+    # print("min and max", min(raw_data_ev[0]), max(raw_data_ev[0]))
+    # plt.hist(np.array(raw_data_ev[0][:500]), bins=50, range=(min(raw_data_ev[0]),max(raw_data_ev[0])),label=address_list[0][-4:])
+    figure, axis = plt.subplots(len(raw_data_ev))
+
+    for i in range(len(raw_data_ev)):
+        print(len(raw_data_ev))
+        data_result.append(axis[i].hist(raw_data_ev[i],bins= bin_n,range=(start, end),label=address_list[i][-4:]))
+    plt.clf()
+
+    figure_sum, axis_sum = plt.subplots(2)
+    for i in range(len(address_list_40)):
+        axis_sum[0].plot(data_result[i][1][:-1],data_result[i][0],label = address_list_40[i][-4:], color = color_list[i])
+    for i in range(len(address_list_36)):
+        axis_sum[1].plot(data_result[i+4][1][:-1],data_result[i+4][0],label = address_list_36[i][-4:], color = color_list[i])
+        
     plt.legend()
     plt.xlabel("energy/eV")
     plt.ylabel("N/bin")
