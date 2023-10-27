@@ -148,7 +148,7 @@ def plot_chains_ingroup():
         axis_sum[0].plot(data_result[i][1][:-1],data_result[i][0],label = address_list_40[i][-4:], color = color_list[i])
     for i in range(len(address_list_36)):
         axis_sum[1].plot(data_result[i+4][1][:-1],data_result[i+4][0],label = address_list_36[i][-4:], color = color_list[i])
-        
+
     plt.legend()
     plt.xlabel("energy/eV")
     plt.ylabel("N/bin")
@@ -235,7 +235,9 @@ def plot_chain_separate():
     plt.xlabel("energy/eV" , fontsize=18)
     plt.ylabel("evnets", fontsize=18)
     plt.yscale("log")
-    plt.legend()
+    plt.legend(prop={'size': 10})
+    plt.yticks(fontsize = 18)
+    plt.xticks(fontsize=18)
     # plt.ylim([10**(-6),0.1])
     plt.xlim([0,1200])
     plt.show()
