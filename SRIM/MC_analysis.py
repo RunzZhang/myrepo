@@ -146,7 +146,7 @@ def plot_chains_ingroup():
         data_result.append(axis[i].hist(raw_data_ev[i],bins= bin_n,range=(start, end),label=address_list[i][-4:]))
     plt.clf()
     print(len(data_result))
-    figure_sum, axis_sum = plt.subplots(0,2)
+    figure_sum, axis_sum = plt.subplots(1,2)
     for i in range(len(address_list_40)):
         axis_sum[0].plot(data_result[i][1][:-1],data_result[i][0],label = address_list_40[i][-4:], color = color_list[i])
     axis_sum[0,0].set_xlabel("energy/eV", fontsize = 18)
