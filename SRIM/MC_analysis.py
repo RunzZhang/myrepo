@@ -122,8 +122,8 @@ def plot_chains_ingroup():
     data_result = []
     energy_x = []
     for address in address_list:
-        raw_data.append(data_pick(address)[:500])
-        # raw_data.append(data_pick(address))
+        # raw_data.append(data_pick(address)[:500])
+        raw_data.append(data_pick(address))
     # print("type", type(raw_data[0][1]))
     # raw data is a data list
     #change data value from J into eV
