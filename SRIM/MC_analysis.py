@@ -32,11 +32,11 @@ weight_Ar36_5272 = ar_36_percent * 25/100
 weight_Ar36_3700 = ar_36_percent * 8/100
 
 
-# address_list = [address_Ar40_5582,address_Ar40_4745,address_Ar40_3700,address_Ar40_2771,address_Ar36_8790,address_Ar36_6299,address_Ar36_5272,address_Ar36_3700]
-# weight_list = [weight_Ar40_5582,weight_Ar40_4745,weight_Ar40_3700,weight_Ar40_2771,weight_Ar36_8790,weight_Ar36_6299,weight_Ar36_5272,weight_Ar36_3700]
+address_list = [address_Ar40_5582,address_Ar40_4745,address_Ar40_3700,address_Ar40_2771,address_Ar36_8790,address_Ar36_6299,address_Ar36_5272,address_Ar36_3700]
+weight_list = [weight_Ar40_5582,weight_Ar40_4745,weight_Ar40_3700,weight_Ar40_2771,weight_Ar36_8790,weight_Ar36_6299,weight_Ar36_5272,weight_Ar36_3700]
 
-address_list = [address_Ar40_3700,address_Ar40_2771,address_Ar36_8790,address_Ar36_5272,address_Ar36_3700]
-weight_list = [weight_Ar40_3700,weight_Ar40_2771,weight_Ar36_8790,weight_Ar36_5272,weight_Ar36_3700]
+# address_list = [address_Ar40_3700,address_Ar40_2771,address_Ar36_8790,address_Ar36_5272,address_Ar36_3700]
+# weight_list = [weight_Ar40_3700,weight_Ar40_2771,weight_Ar36_8790,weight_Ar36_5272,weight_Ar36_3700]
 address_list_40 =[address_Ar40_5582,address_Ar40_4745,address_Ar40_3700,address_Ar40_2771]
 weight_list_40 = [weight_Ar40_5582,weight_Ar40_4745,weight_Ar40_3700,weight_Ar40_2771]
 address_list_36 = [address_Ar36_8790,address_Ar36_6299,address_Ar36_5272,address_Ar36_3700]
@@ -180,8 +180,10 @@ def plot_chain_sum():
         x_bins.append((hist_result[1][i]+hist_result[1][i+1])/2)
     plt.plot(x_bins,hist_result[0])
 
-    plt.xlabel("energy/eV")
-    plt.ylabel("P")
+    plt.yticks(fontsize=18)
+    plt.xticks(fontsize=18)
+    plt.xlabel("energy/eV", fontsize=18)
+    plt.ylabel("P", fontsize=18)
     plt.yscale("log")
     plt.ylim([10**(-6),0.1])
     plt.xlim([0,1200])
