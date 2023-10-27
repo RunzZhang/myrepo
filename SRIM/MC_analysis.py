@@ -128,7 +128,7 @@ def plot_chains_ingroup():
     #change data value from J into eV
     for data in raw_data:
         data_buffer = []
-        for data_ele in data[:500]:
+        for data_ele in data:
             # change sympy float into float, otherwise the data cannot been plot by matplotlib
             data_buffer.append(float(round(data_ele/e,3)))
             # print(round(data_ele/e,3))
