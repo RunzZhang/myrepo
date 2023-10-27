@@ -79,6 +79,7 @@ def plot_test():
     plt.ylabel("N/bin")
     plt.show()
 def plot_chains():
+    #plot individial  8 chains in 8 graphs
     raw_data = []
     bin_n = 500
     raw_data_ev = []
@@ -112,6 +113,7 @@ def plot_chains():
     plt.ylabel("N/bin")
     plt.show()
 def plot_chains_ingroup():
+    # plot 4 chains in one graph and the other 4 in the other graph
     raw_data = []
     bin_n = 500
     raw_data_ev = []
@@ -126,7 +128,7 @@ def plot_chains_ingroup():
     #change data value from J into eV
     for data in raw_data:
         data_buffer = []
-        for data_ele in data:
+        for data_ele in data[:500]:
             # change sympy float into float, otherwise the data cannot been plot by matplotlib
             data_buffer.append(float(round(data_ele/e,3)))
             # print(round(data_ele/e,3))
@@ -142,7 +144,7 @@ def plot_chains_ingroup():
         print(len(raw_data_ev))
         data_result.append(axis[i].hist(raw_data_ev[i],bins= bin_n,range=(start, end),label=address_list[i][-4:]))
     plt.clf()
-
+    print(len(data_result))
     figure_sum, axis_sum = plt.subplots(2)
     for i in range(len(address_list_40)):
         axis_sum[0].plot(data_result[i][1][:-1],data_result[i][0],label = address_list_40[i][-4:], color = color_list[i])
@@ -157,6 +159,7 @@ def plot_chains_ingroup():
     plt.show()
 
 def plot_chain_sum():
+    #plot the total recoil spectrum, one can remove some spectrum by modify the variable <address_list>
     raw_data = []
     bin_n = 500
     raw_data_ev = []
@@ -190,6 +193,7 @@ def plot_chain_sum():
     plt.show()
 
 def plot_chain_separate():
+    #plot sum of argon 40 chain in one graph and sum of argon 36 chain in the other
     raw_data1 = []
     bin_n = 500
     raw_data_ev1 = []
