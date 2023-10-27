@@ -154,6 +154,7 @@ def plot_chains_ingroup():
     axis_sum[0].tick_params(axis='both', which='major', labelsize=10)
     axis_sum[0].set_yscale("log")
     axis_sum[0].set_xlim(0, 600)
+    axis_sum[0].legend(prop={'size': 18})
         # axis_sum[0].set_ylim(0, 600)
     for i in range(len(address_list_36)):
         axis_sum[1].plot(data_result[i+4][1][:-1],data_result[i+4][0],label = address_list_36[i][-4:], color = color_list[i])
@@ -163,7 +164,7 @@ def plot_chains_ingroup():
     axis_sum[1].set_yscale("log")
     axis_sum[1].set_xlim(0, 1200)
 
-    plt.legend(prop={'size': 18})
+    axis_sum[1].legend(prop={'size': 18})
 
     plt.show()
 
