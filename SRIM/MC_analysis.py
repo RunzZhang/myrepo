@@ -198,7 +198,7 @@ def plot_chain_sum():
     plt.xlabel("energy/eV", fontsize=24)
     plt.ylabel("P", fontsize=24)
     plt.yscale("log")
-    plt.ylim([10**(-5),0.1])
+    plt.ylim([10**(-5),0.01])
     plt.xlim([0,1200])
     plt.show()
 
