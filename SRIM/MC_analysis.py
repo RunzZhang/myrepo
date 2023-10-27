@@ -151,7 +151,7 @@ def plot_chains_ingroup():
         axis_sum[0].plot(data_result[i][1][:-1],data_result[i][0],label = address_list_40[i][-4:], color = color_list[i])
     axis_sum[0].set_xlabel("energy/eV", fontsize = 18)
     axis_sum[0].set_ylabel("N/bin", fontsize=18)
-    axis_sum[0].tick_params(axis='both', which='major', labelsize=10)
+    axis_sum[0].tick_params(axis='both', which='major', labelsize=15)
     axis_sum[0].set_yscale("log")
     axis_sum[0].set_xlim(0, 600)
     axis_sum[0].legend(prop={'size': 18})
@@ -160,7 +160,7 @@ def plot_chains_ingroup():
         axis_sum[1].plot(data_result[i+4][1][:-1],data_result[i+4][0],label = address_list_36[i][-4:], color = color_list[i])
     axis_sum[1].set_xlabel("energy/eV", fontsize=18)
     axis_sum[1].set_ylabel("N/bin", fontsize=18)
-    axis_sum[1].tick_params(axis='both', which='major', labelsize=10)
+    axis_sum[1].tick_params(axis='both', which='major', labelsize=15)
     axis_sum[1].set_yscale("log")
     axis_sum[1].set_xlim(0, 1200)
 
@@ -290,9 +290,9 @@ if __name__ =="__main__":
     # plot_two_body_E_spectrum_47()
     # plot_test()
     # plot_chains()
-    # plot_chain_sum()
+    plot_chain_sum()
     # plot_chain_separate()
-    plot_chains_ingroup()
+    # plot_chains_ingroup()
 
 
 
