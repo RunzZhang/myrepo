@@ -139,23 +139,28 @@ def plot_chains_ingroup():
     # print("min and max", min(raw_data_ev[0]), max(raw_data_ev[0]))
     # plt.hist(np.array(raw_data_ev[0][:500]), bins=50, range=(min(raw_data_ev[0]),max(raw_data_ev[0])),label=address_list[0][-4:])
     figure, axis = plt.subplots(len(raw_data_ev))
-
+    print(len(raw_data_ev))
     for i in range(len(raw_data_ev)):
-        print(len(raw_data_ev))
+
         data_result.append(axis[i].hist(raw_data_ev[i],bins= bin_n,range=(start, end),label=address_list[i][-4:]))
     plt.clf()
     print(len(data_result))
-    figure_sum, axis_sum = plt.subplots(2)
+    figure_sum, axis_sum = plt.subplots(0,2)
     for i in range(len(address_list_40)):
         axis_sum[0].plot(data_result[i][1][:-1],data_result[i][0],label = address_list_40[i][-4:], color = color_list[i])
+        axis_sum[0].set_xlabel("energy/eV", fontsize = 18)
+        axis_sum[0].set_ylabel("N/bin", fontsize=18)
+        axis_sum[0].tick_params(axis='both', which='major', labelsize=10)
+        axis_sum[0].set_yscale("log")
     for i in range(len(address_list_36)):
         axis_sum[1].plot(data_result[i+4][1][:-1],data_result[i+4][0],label = address_list_36[i][-4:], color = color_list[i])
+        axis_sum[1].set_xlabel("energy/eV", fontsize=18)
+        axis_sum[1].set_ylabel("N/bin", fontsize=18)
+        axis_sum[1].tick_params(axis='both', which='major', labelsize=10)
+        axis_sum[1].set_yscale("log")
 
-    plt.yticks(fontsize=18)
-    plt.xticks(fontsize=18)
     plt.legend(prop={'size': 18})
-    plt.xlabel("energy/eV", fontsize = 18)
-    plt.ylabel("N/bin", fontsize = 18)
+
     plt.show()
 
 def plot_chain_sum():
