@@ -151,7 +151,7 @@ def plot_chains_ingroup():
 
     plt.yticks(fontsize=18)
     plt.xticks(fontsize=18)
-    plt.legend(prop={'size': 10})
+    plt.legend(prop={'size': 18})
     plt.xlabel("energy/eV", fontsize = 18)
     plt.ylabel("N/bin", fontsize = 18)
     plt.show()
@@ -275,7 +275,8 @@ if __name__ =="__main__":
     # plot_test()
     # plot_chains()
     # plot_chain_sum()
-    plot_chain_separate()
+    # plot_chain_separate()
+    plot_chains_ingroup()
 
 
 
