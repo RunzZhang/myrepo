@@ -186,12 +186,13 @@ def plot_chain_separate():
     x_bins2 = []
     for i in range(len(hist_result2[1]) - 1):
         x_bins2.append((hist_result2[1][i] + hist_result2[1][i + 1]) / 2)
-    plt.plot(x_bins1,hist_result1_modified,color = "blue")
-    plt.plot(x_bins2, hist_result2[0], color = "orange")
+    plt.plot(x_bins1,hist_result1_modified,color = "blue", label = "Argon40")
+    plt.plot(x_bins2, hist_result2[0], color = "orange",label = "Argon36")
 
     plt.xlabel("energy/eV" , fontsize=18)
     plt.ylabel("evnets", fontsize=18)
     plt.yscale("log")
+    plt.legend()
     # plt.ylim([10**(-6),0.1])
     plt.xlim([0,1200])
     plt.show()
