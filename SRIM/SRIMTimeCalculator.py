@@ -97,7 +97,27 @@ for i in range(Events): # Calculate displacement and record it in a 2D array whi
             #    temp.append(0)
             if Posx[j] !=0:
                 temp.append((1e-10)*(((Posx[j]-Posx[j-1])**2+(Posy[j]-Posy[j-1])**2+(Posz[j]-Posz[j-1])**2)**0.5))
+            else:
+                temp.append(0)
     displacement.append(temp)
+
+E_diff = []
+E_i =[]
+for i in range(Events): # Calculate displacement and record it in a 2D array which is
+    temp = []
+    temp2= []# indexed by the event number
+    for j in range(len(Energy)):
+        if (IonNum[j] == i + 1):
+            if Energy[j] != 0:
+                temp.append(Energy[j-1]-Energy[j])
+                temp2.append(Energy[j])
+            else:
+                temp.append(Energy[j - 1] - Energy[j])
+                temp2.append(Energy[j])
+            # if ElStop[j] == 0:
+            #     finalpos.append([Posx[j], Posy[j], Posz[j]])
+    E_diff.append(temp)
+    E_i.append(temp2)
 
 E_lost = []
 for i in range(Events): # Calculate displacement and record it in a 2D array which is
@@ -106,6 +126,8 @@ for i in range(Events): # Calculate displacement and record it in a 2D array whi
         if (IonNum[j] == i + 1):
             if ElStop[j] != 0:
                 temp.append(ElStop[j])
+            else:
+                temp.append(0)
             # if ElStop[j] == 0:
             #     finalpos.append([Posx[j], Posy[j], Posz[j]])
     E_lost.append(temp)
@@ -142,14 +164,21 @@ for i in range(Events): # Write velocity in a nicer 2D list indexed by the event
             if ElStop[j] != 0: 
                 temp.append(velocity_temp[j])
             if ElStop[j] == 0:
+                temp.append(0)
                 finalpos.append([Posx[j], Posy[j], Posz[j]])
     velocity.append(temp)
 
-del displacement[-1] #Last event sometimes is not complete so remove it
-del velocity[-1]
+# del displacement[-1] #Last event sometimes is not complete so remove it
+# del velocity[-1]
 
 finaldisplacement = [(1e-10)*(((finalpos[i][0])**2+(finalpos[i][1])**2+(finalpos[i][2])**2)**0.5) for i in range(len(finalpos))]
 
+EL_loss_energy_dataset = []
+print("displace",len(displacement))
+print("Elost",len(E_lost))
+for i in range(len(displacement)-1):
+    for j in range(len(displacement[i])):
+        EL_loss_energy_dataset.append(displacement[i][j]*E_lost[i][j])
 #for i in range(len(displacement)):
 #    print(len(displacement[i]), len(velocity[i]))
 print('vel',velocity[:10])
@@ -157,36 +186,36 @@ print('disp',displacement[:10])
 print(len(velocity_temp))
 print(len(velocity))
 print(len(displacement))
-
-time = [[displacement[j][i]/velocity[j][i] for i in range(len(velocity[j]))] for j in range(len(velocity))] # Want to calculate total time for each event 
-print("time", time[:10])
-
-timetot = [sum(time[i]) for i in range(len(time))] # Sums the times at each step for each event
-#print(timetot)
-
-timeaverage = 0 
-for i in range(len(timetot)): # Calculate average time over all events
-    timeaverage += timetot[i]
-timeaverage = timeaverage/Events
-
-finaldisplacementaverage = 0
-for i in range(len(finaldisplacement)): # Calculate average final displacement over all events
-    finaldisplacementaverage += finaldisplacement[i]
-finaldisplacementaverage = finaldisplacementaverage/Events
-
-totaldisplacement = [sum(displacement[i]) for i in range(len(displacement))]
-#print(totaldisplacement)
-
-totaldisplacementaverage = 0
-for i in range(len(totaldisplacement)): # Calculate average total displacement over all events
-    totaldisplacementaverage += totaldisplacement[i]
-totaldisplacementaverage = totaldisplacementaverage/Events
-
-print('The average time is:', timeaverage, 's', 'with a stdev of:', stdev(timetot), 's')
-print('The average final distance is:', finaldisplacementaverage, 'm', 'with a stdev of:', stdev(finaldisplacement), 'm')
-print('The average total displacement is:', totaldisplacementaverage, 'm', 'with a stdev of:', stdev(totaldisplacement), 'm')
-
-
+#
+# # time = [[displacement[j][i]/velocity[j][i] for i in range(len(velocity[j]))] for j in range(len(velocity))] # Want to calculate total time for each event
+# # print("time", time[:10])
+#
+# timetot = [sum(time[i]) for i in range(len(time))] # Sums the times at each step for each event
+# #print(timetot)
+#
+# timeaverage = 0
+# for i in range(len(timetot)): # Calculate average time over all events
+#     timeaverage += timetot[i]
+# timeaverage = timeaverage/Events
+#
+# finaldisplacementaverage = 0
+# for i in range(len(finaldisplacement)): # Calculate average final displacement over all events
+#     finaldisplacementaverage += finaldisplacement[i]
+# finaldisplacementaverage = finaldisplacementaverage/Events
+#
+# totaldisplacement = [sum(displacement[i]) for i in range(len(displacement))]
+# #print(totaldisplacement)
+#
+# totaldisplacementaverage = 0
+# for i in range(len(totaldisplacement)): # Calculate average total displacement over all events
+#     totaldisplacementaverage += totaldisplacement[i]
+# totaldisplacementaverage = totaldisplacementaverage/Events
+#
+# print('The average time is:', timeaverage, 's', 'with a stdev of:', stdev(timetot), 's')
+# print('The average final distance is:', finaldisplacementaverage, 'm', 'with a stdev of:', stdev(finaldisplacement), 'm')
+# print('The average total displacement is:', totaldisplacementaverage, 'm', 'with a stdev of:', stdev(totaldisplacement), 'm')
+#
+#
 
 # fig, ax = plt.subplots(1,2)
 #
@@ -223,11 +252,16 @@ def plot_EvsX(E_list, v_list): #both 2D array
         plt.plot(v_axis, y_axis)
     plt.show()
 # change 2d into 1d to linear fit
-
-
+E_i_dataset = []
+E_diff_dataset = []
 E_lost_dataset = []
 velocity_dataset = []
-for i in range(len(velocity)):
+
+for i in range(len(E_diff)-1):
+    for j in range(len(E_diff[i])):
+        E_diff_dataset.append(E_diff[i][j])
+
+for i in range(len(velocity)-1):
     for j in range(len(velocity[i])):
         velocity_dataset.append(velocity[i][j])
 
@@ -236,8 +270,15 @@ for i in range(len(E_lost)-1):
     for j in range(len(E_lost[i])):
         E_lost_dataset.append(E_lost[i][j])
 
+
+for i in range(len(E_i)-1):
+    for j in range(len(E_i[i])):
+        E_i_dataset.append(E_i[i][j])
+
 print("v",len(velocity),len(velocity_dataset))
 print("E_lost",len(E_lost),len(E_lost_dataset))
+print("Ediff",len(E_diff),len(E_diff_dataset))
+
 print(E_lost_dataset[:100])
 
 def li_func(x, k, b ):
@@ -324,8 +365,24 @@ def ER_scatter(ER,velocity):
     plt.show()
 
 
+def Eloss(Ediff,E_i,El):
+    print(len(Ediff))
+    print(len(E_i))
+    print(len(El))
+    Ek_diff = []
+    for i in range(len(El)):
+        Ek_diff.append( El[i])
+        # Ek_diff.append(Ediff[i]-El[i])
+        # Ek_diff.append(Ediff[i] - 0)
+    plt.scatter(E_i, Ek_diff)
+    plt.xlabel("Ei/eV")
+    plt.ylabel("E_kdiff/j")
+    plt.show()
+
+
 if __name__=="__main__":
-    time_displacement_hist(time,displacement,E_recoil,velocity)
-    # ER_scatter(E_recoil,velocity)
+    # time_displacement_hist(time,displacement,E_recoil,velocity)
+    ER_scatter(E_recoil,velocity)
+    # Eloss(E_diff_dataset, E_i_dataset ,EL_loss_energy_dataset)
 
 
