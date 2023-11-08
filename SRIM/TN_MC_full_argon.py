@@ -10,6 +10,8 @@ from scipy.optimize import fsolve
 
 random.seed(10)
 PI = scipy.pi
+import warnings
+warnings.filterwarnings("ignore")
 
 class MC_sim_full_argon():
     def __init__(self):
@@ -27,7 +29,7 @@ class MC_sim_full_argon():
         self.m_41 = 40.98 * 10 ** (-3) / (6.023 * 10 ** 23)  # Ar40 mass in kg
         self.m_40 = 39.98 * 10 ** (-3) / (6.023 * 10 ** 23)  # Ar40 mass in kg
         self.m_37 = 36.97 * 10 ** (-3) / (6.023 * 10 ** 23)  # Ar40 mass in kg
-        self.time_factor = 10 ** (-12)*10**(-3)  # time factor in ns
+        self.time_factor = 10**(-3)  # time factor from ps to ns
         self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231107"
 
         self.argon_init = [10000, 0*self.time_factor ,{6098.9:[93.57*self.argon40_weight,0],3732:[0.121*self.argon40_weight,0],3702.9:[0.474*self.argon40_weight,0],3573:[0.0744*self.argon40_weight,0],
@@ -84,7 +86,7 @@ class MC_sim_full_argon():
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
         self.MC_sim(self.runtime)
-        self.data_analysis(self.address)
+        # self.data_analysis(self.address)
 
 
     def data_preparation(self):
@@ -171,13 +173,15 @@ class MC_sim_full_argon():
                         if chance <= state[2][key][2] :
                             # success and go to next event
                             gamma_energy = state[2][key][1]
-                            print("gamma",gamma_energy)
+                            # print("gamma",gamma_energy)
                             temp_energy = 0.5 * self.mass * (vx ** 2 + vy ** 2 + vz ** 2) /self.ev # energy in ev
+                            # print("pre kenit", temp_energy, "t in ns", state[1])
                             E_final = solve_tool.E_loss_result(temp_energy,state[1])
+                            # print("post knit", E_final)
                             E_deposit = temp_energy- E_final
                             E_deposit_list.append(E_deposit)
                             if (vx**2+vy**2+vz**2) !=0:
-                                velocity = float(np.sqrt(2*E_final*self.ev*self.mass))
+                                velocity = float(np.sqrt(2*E_final*self.ev/self.mass))
                                 # print(velocity)
                                 # change sympy float to python float
                                 vx = float(vx)
@@ -201,6 +205,7 @@ class MC_sim_full_argon():
                             vx_list.append(vx)
                             vy_list.append(vy)
                             vz_list.append(vz)
+                            # print("v in m/s", vx, vy, vz)
                             for k in range(len(self.argon_list)): # search which level match the previous key and change to that state
                                 if self.argon_list[k][0] == key:
                                     state = self.argon_list[k]
@@ -210,15 +215,15 @@ class MC_sim_full_argon():
                             continue
 
                 elif state == self.level0: #if state is ground, jump to next event
-                    E_last = 0.5 * self.mass * (vx ** 2 + vy ** 2 + vz ** 2)
+                    E_last = 0.5 * self.mass * (vx ** 2 + vy ** 2 + vz ** 2)/self.ev
                     # print(vx_list)
                     # print(vy_list)
                     # print(vz_list)
                     # print(E_deposit_list)
-                    E_deposit_sum = E_last / self.ev + sum(E_deposit_list)  # in ev
+                    E_deposit_sum = E_last  + sum(E_deposit_list)  # in ev
                     self.E_deposit_1d.append(E_deposit_sum)
                     # print("depositlist", E_deposit_list)
-                    # print("deposit", E_last / self.ev, E_deposit_sum)
+                    # print("deposit", E_last , E_deposit_sum)
                     break
 
         # print(self.E_deposit_1d)

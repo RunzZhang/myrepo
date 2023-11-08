@@ -90,10 +90,10 @@ class E_loss_solve():
 
     def E_loss_result(self, init_E, t):
         #given t in ns and E in ev, return the final energy
-        self.last_t = t*10
+        self.last_t = t*2
         self.ini_E = init_E
         if t != 0:
-            solve = solve_ivp(self.E_loss_el_t_fun_ODE, [0, self.last_t], [self.ini_E], t_eval=[t]) # check one point's value
+            solve = solve_ivp(self.E_loss_t_fun_ODE, [0, self.last_t], [self.ini_E], t_eval=[t]) # check one point's value
 
             array = solve.y
             sol_y = array[0][0]
