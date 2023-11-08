@@ -191,6 +191,11 @@ def plot_chain_sum():
     x_bins= []
     for i in range(len(hist_result[1])-1):
         x_bins.append((hist_result[1][i]+hist_result[1][i+1])/2)
+    # save list info
+    total_spectrum_address = "/data/runzezhang/result/SRIM_MC/MC_argon_8cascades_20231107"
+    spectrum_info = [x_bins,hist_result[0]]
+    with open(total_spectrum_address, "wb") as fp:  # Pickling
+        pickle.dump(spectrum_info, fp)
     plt.plot(x_bins,hist_result[0])
 
     plt.yticks(fontsize=24)

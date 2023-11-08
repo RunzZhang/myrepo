@@ -271,15 +271,24 @@ class MC_sim_full_argon():
         end = 1200
         x_bins = []
         with open(self.address, "rb") as fp:  # Unpickling
-            b = pickle.load(fp)
-            print("read",b)
+            MC_full = pickle.load(fp)
+            print("read",MC_full)
         bin_n =500
 
-        hist_result = plt.hist(b, bins =bin_n, range=(start, end) ,density = True)
+        hist_result = plt.hist(MC_full, bins =bin_n, range=(start, end) ,density = True)
         plt.clf()
         for i in range(len(hist_result[1]) - 1):
             x_bins.append((hist_result[1][i] + hist_result[1][i + 1]) / 2)
-        plt.plot(x_bins, hist_result[0], color="blue")
+
+        #plot the previous
+        total_8spectrum_address = "/data/runzezhang/result/SRIM_MC/MC_argon_8cascades_20231107"
+        with open(total_8spectrum_address, "rb") as fp:  # Unpickling
+            MC_8 = pickle.load(fp)
+            # thedata is stored as [[xbins],[y value]]
+            print("read",MC_8)
+
+        plt.plot(x_bins, hist_result[0], color="blue",label= "full chains")
+        plt.plot(MC_8[0], MC_8[1], color="orange", label = "8 main chain")
         plt.xlabel("energy/eV")
         plt.ylabel("P")
         plt.yscale("log")
