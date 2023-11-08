@@ -269,7 +269,7 @@ class MC_sim_full_argon():
     def data_analysis(self, address):
         with open(self.address, "rb") as fp:  # Unpickling
             b = pickle.load(fp)
-            print(b)
+            print("read",b)
         return b
 
 
