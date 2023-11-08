@@ -18,7 +18,7 @@ class MC_sim_full_argon():
         #[level energy, lifetime ,{next level_i: [branch ratio, gamma energy, possibility boundary]}]
         # argon init first value is 7000 to be distinguishedfrom other lines
         # the list first value must be unique
-        self.runtime = 10
+        self.runtime = 100000
         self.argon40_weight =97.4/0.93
         self.argon36_weight = 2.5
         self.Energy_factor = 10 ** 3 * 1.602 * 10 ** (-19)
@@ -194,7 +194,7 @@ class MC_sim_full_argon():
                             random_angle = self.generate_gamma_vec()
                             result = self.two_body_collision_xyz(self.mass, random_angle[0], random_angle[1], vx, vy, vz, gamma_energy*self.Energy_factor)
 
-                            """" if mass statement """
+
                             vx = float(result[0])
                             vy = float(result[1])
                             vz = float(result[2])
@@ -217,20 +217,17 @@ class MC_sim_full_argon():
                     # print(E_deposit_list)
                     E_deposit_sum = E_last / self.ev + sum(E_deposit_list)  # in ev
                     self.E_deposit_1d.append(E_deposit_sum)
-                    print("depositlist", E_deposit_list)
-                    print("deposit", E_last / self.ev, E_deposit_sum)
+                    # print("depositlist", E_deposit_list)
+                    # print("deposit", E_last / self.ev, E_deposit_sum)
                     break
 
-        print(self.E_deposit_1d)
+        # print(self.E_deposit_1d)
         with open(self.address, "wb") as fp:  # Pickling
             pickle.dump(self.E_deposit_1d, fp)
 
 
 
 
-        # plt.hist(self.E_deposit_1d, bins= 500)
-        # plt.xlim(0,6000)
-        plt.show()
 
 
 
