@@ -90,22 +90,28 @@ class E_loss_solve():
 
     def E_loss_result(self, init_E, t):
         #given t in ns and E in ev, return the final energy
-        self.last_t = t*2
-        self.ini_E = init_E
-        if t != 0:
-            solve = solve_ivp(self.E_loss_t_fun_ODE, [0, self.last_t], [self.ini_E], t_eval=[t]) # check one point's value
-
-            array = solve.y
-            sol_y = array[0][0]
+        if t >7.2*10**(-4): # hard cut for ini E 2kev, t in ns, E threshold  = 1eV (t threshold = 0.72 ps)
+            # to reduce the waring and caculation speed
+            return 0
         else:
-            sol_y = init_E
-        return sol_y # return the E value after travels t
+            self.last_t = t * 2
+            self.ini_E = init_E
+            if t != 0:
+                solve = solve_ivp(self.E_loss_t_fun_ODE, [0, self.last_t], [self.ini_E],
+                                  t_eval=[t])  # check one point's value
+
+                array = solve.y
+                sol_y = array[0][0]
+            else:
+                sol_y = init_E
+            return sol_y  # return the E value after travels t
+
 
 
     def E_loss_total_t_fun_ODE_posttest(self):
 
         self.last_t = 0.005
-        self.ini_E = 500
+        self.ini_E = 1000
         self.threshold_v = 0.1
         self.t_crit = 1343 * 10 ** (-6) * np.log(self.ini_E / 0.1)
         print(self.t_crit)
@@ -209,3 +215,4 @@ class E_loss_solve():
 
 if __name__=="__main__":
     solve = E_loss_solve()
+    solve.E_loss_total_t_fun_ODE_posttest()
