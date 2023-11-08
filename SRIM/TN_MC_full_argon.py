@@ -85,8 +85,8 @@ class MC_sim_full_argon():
         self.gamma_emission_list_1d = []
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
-        self.MC_sim(self.runtime)
-        # self.data_analysis(self.address)
+        # self.MC_sim(self.runtime)
+        self.data_analysis(self.address)
 
 
     def data_preparation(self):
@@ -267,10 +267,16 @@ class MC_sim_full_argon():
         return E_deposit_list
 
     def data_analysis(self, address):
+        start = 0
+        end = 1200
         with open(self.address, "rb") as fp:  # Unpickling
             b = pickle.load(fp)
             print("read",b)
-        return b
+        bin_n =500
+        plt.hist(b, bins =bin_n, range=(start, end) )
+        plt.xlabel("energy/eV")
+        plt.ylabel("N/bin")
+        plt.show()
 
 
 
