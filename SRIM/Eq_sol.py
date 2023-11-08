@@ -93,15 +93,30 @@ class E_loss_solve():
         if t >7.2*10**(-4): # hard cut for ini E 2kev, t in ns, E threshold  = 1eV (t threshold = 0.72 ps)
             # to reduce the waring and caculation speed
             return 0
+        elif init_E<1:
+            if t>0 : # if E<1 eV cut
+                return 0 # t>0 assume all energy deposit
+            else:# t=0, no deposit energy
+                return init_E
         else:
             self.last_t = t * 2
+            self.t_list = []
+            bins = 20
+            middle_bins = int(bins/2)
+            for i in range(bins):
+                self.t_list.append(t*i/10)
             self.ini_E = init_E
             if t != 0:
                 solve = solve_ivp(self.E_loss_t_fun_ODE, [0, self.last_t], [self.ini_E],
-                                  t_eval=[t])  # check one point's value
+                                  t_eval=self.t_list)  # the list from 0 to 2t
+                # t_eval is the intergration interval so it cannot be a single value
 
                 array = solve.y
-                sol_y = array[0][0]
+                sol_y = array[0][middle_bins] #
+                # print(solve.t)
+                # print(sol_y)
+                # plt.plot(solve.t,array[0])
+                # plt.show()
             else:
                 sol_y = init_E
             return sol_y  # return the E value after travels t
@@ -111,15 +126,20 @@ class E_loss_solve():
     def E_loss_total_t_fun_ODE_posttest(self):
 
         self.last_t = 0.005
-        self.ini_E = 1000
+        self.ini_E = 2000
         self.threshold_v = 0.1
-        self.t_crit = 1343 * 10 ** (-6) * np.log(self.ini_E / 0.1)
+        # self.t_crit = 1343 * 10 ** (-6) * np.log(self.ini_E / 0.1)
+        self.t_crit = 7.24432998e-04
+        self.e_list =[]
+        self.bins = 20
+        for i in range(self.bins):
+            self.e_list.append(i*self.last_t/10)
         print(self.t_crit)
-        # solve = solve_ivp(self.E_loss_el_t_fun_ODE, [0, self.last_t], [self.ini_E], t_eval=[self.t_crit]) # check one point's value
-        solve = solve_ivp(self.E_loss_t_fun_ODE, [0, self.last_t], [self.ini_E])
+        solve = solve_ivp(self.E_loss_el_t_fun_ODE, [0, 2*self.last_t], [self.ini_E], t_eval=self.e_list) # check one point's value
+        # solve = solve_ivp(self.E_loss_t_fun_ODE, [0, self.last_t], [self.ini_E])
         array = solve.y
         sol_y = array[0]
-        print("y", sol_y)
+        print("y", array,sol_y)
         print("t", solve.t)
         # print("threshold t", np.interp(self.threshold_v, sol_y, solve.t))
         plt.plot(solve.t, sol_y)
@@ -215,4 +235,5 @@ class E_loss_solve():
 
 if __name__=="__main__":
     solve = E_loss_solve()
-    solve.E_loss_total_t_fun_ODE_posttest()
+    # solve.E_loss_total_t_fun_ODE_posttest()
+    print(solve.E_loss_result(1000,7.1E-4))
