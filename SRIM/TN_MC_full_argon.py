@@ -30,7 +30,7 @@ class MC_sim_full_argon():
         self.m_40 = 39.98 * 10 ** (-3) / (6.023 * 10 ** 23)  # Ar40 mass in kg
         self.m_37 = 36.97 * 10 ** (-3) / (6.023 * 10 ** 23)  # Ar40 mass in kg
         self.time_factor = 10**(-3)  # time factor from ps to ns
-        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231107"
+        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
 
         self.argon_init = [10000, 0*self.time_factor ,{6098.9:[93.57*self.argon40_weight,0],3732:[0.121*self.argon40_weight,0],3702.9:[0.474*self.argon40_weight,0],3573:[0.0744*self.argon40_weight,0],
                                       3564.9:[0.121*self.argon40_weight,0],3278.7:[0.372*self.argon40_weight,0],
@@ -85,8 +85,8 @@ class MC_sim_full_argon():
         self.gamma_emission_list_1d = []
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
-        # self.MC_sim(self.runtime)
-        self.data_analysis(self.address)
+        self.MC_sim(self.runtime)
+        # self.data_analysis(self.address)
 
 
     def data_preparation(self):
@@ -176,7 +176,7 @@ class MC_sim_full_argon():
                             # print("gamma",gamma_energy)
                             temp_energy = 0.5 * self.mass * (vx ** 2 + vy ** 2 + vz ** 2) /self.ev # energy in ev
                             # print("pre kenit", temp_energy, "t in ns", state[1])
-                            E_final = solve_tool.E_loss_result(temp_energy,state[1])
+                            E_final = solve_tool.E_el_loss_result(temp_energy,state[1])
                             # print("post knit", E_final)
                             E_deposit = temp_energy- E_final
                             E_deposit_list.append(E_deposit)

@@ -121,6 +121,39 @@ class E_loss_solve():
                 sol_y = init_E
             return sol_y  # return the E value after travels t
 
+    def E_el_loss_result(self, init_E, t):
+        #given t in ns and E in ev, return the final energy
+        if t >0.01: # hard cut for ini E 2kev, t in ns, E threshold  = 1eV (t threshold = 10 ps)
+            # to reduce the waring and caculation speed
+            return 0
+        # elif init_E<1:
+        #     if t>0 : # if E<1 eV cut
+        #         return 0 # t>0 assume all energy deposit
+        #     else:# t=0, no deposit energy
+        #         return init_E
+        else:
+            self.last_t = t * 2
+            self.t_list = []
+            bins = 20
+            middle_bins = int(bins/2)
+            for i in range(bins):
+                self.t_list.append(t*i/10)
+            self.ini_E = init_E
+            if t != 0:
+                solve = solve_ivp(self.E_loss_el_t_fun_ODE, [0, self.last_t], [self.ini_E],
+                                  t_eval=self.t_list)  # the list from 0 to 2t
+                # t_eval is the intergration interval so it cannot be a single value
+
+                array = solve.y
+                sol_y = array[0][middle_bins] #
+                # print(solve.t)
+                # print(array[0])
+                # print(sol_y)
+                # plt.plot(solve.t,array[0])
+                # plt.show()
+            else:
+                sol_y = init_E
+            return sol_y  # return the E value after travels t
 
 
     def E_loss_total_t_fun_ODE_posttest(self):
@@ -236,4 +269,5 @@ class E_loss_solve():
 if __name__=="__main__":
     solve = E_loss_solve()
     # solve.E_loss_total_t_fun_ODE_posttest()
-    print(solve.E_loss_result(1000,7.1E-4))
+    # print(solve.E_loss_result(1000,7.1E-4))
+    print(solve.E_el_loss_result(2, 0.005))
