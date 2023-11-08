@@ -273,9 +273,12 @@ class MC_sim_full_argon():
             b = pickle.load(fp)
             print("read",b)
         bin_n =500
-        plt.hist(b, bins =bin_n, range=(start, end) )
+        plt.hist(b, bins =bin_n, range=(start, end) ,density = True)
         plt.xlabel("energy/eV")
-        plt.ylabel("N/bin")
+        plt.ylabel("P")
+        plt.yscale("log")
+        plt.yticks(fontsize=18)
+        plt.xticks(fontsize=18)
         plt.show()
 
 
