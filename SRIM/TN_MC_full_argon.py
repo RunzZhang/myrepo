@@ -279,7 +279,7 @@ class MC_sim_full_argon():
         plt.clf()
         for i in range(len(hist_result[1]) - 1):
             x_bins.append((hist_result[1][i] + hist_result[1][i + 1]) / 2)
-        plt.plot(x_bins, hist_result[0], color="orange")
+        plt.plot(x_bins, hist_result[0], color="blue")
         plt.xlabel("energy/eV")
         plt.ylabel("P")
         plt.yscale("log")
