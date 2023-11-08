@@ -32,11 +32,11 @@ weight_Ar36_5272 = ar_36_percent * 25/100
 weight_Ar36_3700 = ar_36_percent * 8/100
 
 
-# address_list = [address_Ar40_5582,address_Ar40_4745,address_Ar40_3700,address_Ar40_2771,address_Ar36_8790,address_Ar36_6299,address_Ar36_5272,address_Ar36_3700]
-# weight_list = [weight_Ar40_5582,weight_Ar40_4745,weight_Ar40_3700,weight_Ar40_2771,weight_Ar36_8790,weight_Ar36_6299,weight_Ar36_5272,weight_Ar36_3700]
-
-address_list = [address_Ar40_3700,address_Ar40_2771,address_Ar36_8790,address_Ar36_5272,address_Ar36_3700]
-weight_list = [weight_Ar40_3700,weight_Ar40_2771,weight_Ar36_8790,weight_Ar36_5272,weight_Ar36_3700]
+address_list = [address_Ar40_5582,address_Ar40_4745,address_Ar40_3700,address_Ar40_2771,address_Ar36_8790,address_Ar36_6299,address_Ar36_5272,address_Ar36_3700]
+weight_list = [weight_Ar40_5582,weight_Ar40_4745,weight_Ar40_3700,weight_Ar40_2771,weight_Ar36_8790,weight_Ar36_6299,weight_Ar36_5272,weight_Ar36_3700]
+#
+# address_list = [address_Ar40_3700,address_Ar40_2771,address_Ar36_8790,address_Ar36_5272,address_Ar36_3700]
+# weight_list = [weight_Ar40_3700,weight_Ar40_2771,weight_Ar36_8790,weight_Ar36_5272,weight_Ar36_3700]
 address_list_40 =[address_Ar40_5582,address_Ar40_4745,address_Ar40_3700,address_Ar40_2771]
 weight_list_40 = [weight_Ar40_5582,weight_Ar40_4745,weight_Ar40_3700,weight_Ar40_2771]
 address_list_36 = [address_Ar36_8790,address_Ar36_6299,address_Ar36_5272,address_Ar36_3700]
