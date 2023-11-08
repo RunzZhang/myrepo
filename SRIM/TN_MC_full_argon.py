@@ -296,7 +296,7 @@ class MC_sim_full_argon():
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
-        plt.ylim([1E-5,0.1])
+        # plt.ylim([1E-5,0.1])
         plt.legend()
         plt.show()
 

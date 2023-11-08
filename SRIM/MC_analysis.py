@@ -266,16 +266,18 @@ def plot_chain_separate():
     plt.show()
 
 def two_body_E_spectrum_47_func(x):
-    a = 300
-    b = 50
+    a = 6299
+    b = 2490
     deno = np.sqrt(1-(1/(2*a**2)+1/(2*b**2)-x/(a*b))**2)
 
     f = 1/deno
     return f
 
 def Energy_vs_theta_47(theta):
-    a = 300
-    b = 50
+    a = 6299
+    b = 2490
+    # a = 8790
+    # b = 0
     return a**2+b**2-2*a*b*np.cos(theta)
 
 def plot_two_body_E_spectrum_47():
@@ -289,13 +291,14 @@ def plot_two_body_E_spectrum_47():
         E_list.append(E)
 
     plt.hist(E_list, bins = 500)
+    print(max(E_list))
     plt.show()
 if __name__ =="__main__":
 
-    # plot_two_body_E_spectrum_47()
+    plot_two_body_E_spectrum_47()
     # plot_test()
     # plot_chains()
-    plot_chain_sum()
+    # plot_chain_sum()
     # plot_chain_separate()
     # plot_chains_ingroup()
 
