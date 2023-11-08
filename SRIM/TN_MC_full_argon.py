@@ -32,47 +32,47 @@ class MC_sim_full_argon():
 
         self.argon_init = [10000, 0*self.time_factor ,{6098.9:[93.57*self.argon40_weight,0],3732:[0.121*self.argon40_weight,0],3702.9:[0.474*self.argon40_weight,0],3573:[0.0744*self.argon40_weight,0],
                                       3564.9:[0.121*self.argon40_weight,0],3278.7:[0.372*self.argon40_weight,0],
-                                      3111.4:[0.372*self.argon40_weight,0], 8791.2:[100.6*self.argon36_weight, 0]}]
+                                      3111.4:[0.372*self.argon40_weight,0], 8791.2:[100.6*self.argon36_weight, 0]},self.m_41]
         self.level60989 = [6098.9, 0*self.time_factor ,{516.1:[10.8,5582.0],1034.7:[0.242,5063.7],1353.9:[51.2,4745.0],2398.1:[9.11,3700.4],2733.4:[3.91,3365.5],2948.7:[3.72,3150.2],
-                                      3009.6:[1.02,3089.4],3326.8:[8,2771.8],3968.2:[4.09,2130.7],4170.0:[0.93,1828.8]}]
-        self.level42700 = [4270, 0.021*self.time_factor ,{167.3:[0.279,4102.5]}]
+                                      3009.6:[1.02,3089.4],3326.8:[8,2771.8],3968.2:[4.09,2130.7],4170.0:[0.93,1828.8]},self.m_41]
+        self.level42700 = [4270, 0.021*self.time_factor ,{167.3:[0.279,4102.5]},self.m_41]
         # no data of 42700
-        self.level39682 = [3968.2, 0.021*self.time_factor ,{516.1:[1.86,3451.8],1353.9:[2.7,2614.3]}]
-        self.level37320 = [3732.0, 0 *self.time_factor,{167.3:[0.121,3564.5]}]
-        self.level37029 = [3702.9, 0 *self.time_factor,{1034.7:[0.474, 2668.1]}]
-        self.level35730 = [3573.0, 0*self.time_factor, {167.3: [0.0744, 3405.5]}]
-        self.level35649 = [3564.9, 0*self.time_factor, {0: [0.121, 3564.7]}]
-        self.level33268 = [3326.8, 0.017*self.time_factor ,{516.1:[5.49,2810.5],1034.7:[0.186,2291.6],1353.9:[0.502,1972.6]}]
-        self.level32787 = [3278.7, 0*self.time_factor, {167.3: [0.372, 3111.3]}]
-        self.level31114 = [3111.4, 0*self.time_factor, {0: [0.372, 3111.3]}]
-        self.level30096 = [3009.6, 0.111*self.time_factor ,{167.3:[0.818,2842.5]}]
-        self.level29487 = [2948.7, 62*0.001*self.time_factor, {167.3: [1.58, 2781.8], 516.1:[0.781,2432.5]}]
-        self.level27334 = [2733.4, 31*0.001*self.time_factor, {167.3: [2.6, 2566.1]}]
-        self.level26930 = [2693, 0*self.time_factor, {0: [1, 0]}]
-        self.level23981 = [2398.1, 0.12*self.time_factor, {167.3: [0.27,2229.5], 516.1:[1.3,1881.5], 1353.9: [5.58, 1044.3]}]
-        self.level13539 = [1353.9, 0.40*self.time_factor, {0: [2.14,1354.0], 167.3:[48.5,1186.8], 516.1: [8.93, 837.7]}]
-        self.level10347 = [1034.7, 5*self.time_factor, {167.3 :[1.02,867.3]}]
-        self.level5161 = [516.1, 260*self.time_factor, {0 :[23.5,516], 167.3:[6.14,348.7]}]
-        self.level1673 = [167.3, 315*self.time_factor, {0 :[74, 167.3]}]
+        self.level39682 = [3968.2, 0.021*self.time_factor ,{516.1:[1.86,3451.8],1353.9:[2.7,2614.3]},self.m_41]
+        self.level37320 = [3732.0, 0 *self.time_factor,{167.3:[0.121,3564.5]},self.m_41]
+        self.level37029 = [3702.9, 0 *self.time_factor,{1034.7:[0.474, 2668.1]},self.m_41]
+        self.level35730 = [3573.0, 0*self.time_factor, {167.3: [0.0744, 3405.5]},self.m_41]
+        self.level35649 = [3564.9, 0*self.time_factor, {0: [0.121, 3564.7]},self.m_41]
+        self.level33268 = [3326.8, 0.017*self.time_factor ,{516.1:[5.49,2810.5],1034.7:[0.186,2291.6],1353.9:[0.502,1972.6]},self.m_41]
+        self.level32787 = [3278.7, 0*self.time_factor, {167.3: [0.372, 3111.3]},self.m_41]
+        self.level31114 = [3111.4, 0*self.time_factor, {0: [0.372, 3111.3]},self.m_41]
+        self.level30096 = [3009.6, 0.111*self.time_factor ,{167.3:[0.818,2842.5]},self.m_41]
+        self.level29487 = [2948.7, 62*0.001*self.time_factor, {167.3: [1.58, 2781.8], 516.1:[0.781,2432.5]},self.m_41]
+        self.level27334 = [2733.4, 31*0.001*self.time_factor, {167.3: [2.6, 2566.1]},self.m_41]
+        self.level26930 = [2693, 0*self.time_factor, {0: [1, 0]},self.m_41]
+        self.level23981 = [2398.1, 0.12*self.time_factor, {167.3: [0.27,2229.5], 516.1:[1.3,1881.5], 1353.9: [5.58, 1044.3]},self.m_41]
+        self.level13539 = [1353.9, 0.40*self.time_factor, {0: [2.14,1354.0], 167.3:[48.5,1186.8], 516.1: [8.93, 837.7]},self.m_41]
+        self.level10347 = [1034.7, 5*self.time_factor, {167.3 :[1.02,867.3]},self.m_41]
+        self.level5161 = [516.1, 260*self.time_factor, {0 :[23.5,516], 167.3:[6.14,348.7]},self.m_41]
+        self.level1673 = [167.3, 315*self.time_factor, {0 :[74, 167.3]},self.m_41]
         # argon 36
         self.level87912 = [8791.2, 0*self.time_factor ,{0:[10.9,8790.4],2490.9:[37.5,6299.7],3518.0:[25,5272.6],3938.5:[0.9,4851.8],3981.1:[1.7,4810.3],4448.6:[3.3,4342.3],
-                                      4578.7:[0.9,4211.6],4637.6:[1.9,4153],5090.5:[13.4,3700.2],6583.7:[2.7,2207.6], 6826.2:[2.4,1966.7]}]
-        self.level68262 = [6826.2, 0.001*self.time_factor, {4578.7 :[5, 2247.9]}]
+                                      4578.7:[0.9,4211.6],4637.6:[1.9,4153],5090.5:[13.4,3700.2],6583.7:[2.7,2207.6], 6826.2:[2.4,1966.7]},self.m_37]
+        self.level68262 = [6826.2, 0.001*self.time_factor, {4578.7 :[5, 2247.9]},self.m_37]
         # nodata 6826
-        self.level65837 = [6583.7, 0.001*self.time_factor, {4448.6: [0.2, 2135.3]}]
+        self.level65837 = [6583.7, 0.001*self.time_factor, {4448.6: [0.2, 2135.3]},self.m_37]
         # nodata 6583
-        self.level50905 = [5090.5, 0.01*self.time_factor, {1410.6: [7.9, 3679.3], 2490.9:[3.1,2599.6]}]
-        self.level46376 = [4637.6, 0.021*self.time_factor, {1410.6: [1, 3226.9],2490.9:[0.2,2145.2]}]
+        self.level50905 = [5090.5, 0.01*self.time_factor, {1410.6: [7.9, 3679.3], 2490.9:[3.1,2599.6]},self.m_37]
+        self.level46376 = [4637.6, 0.021*self.time_factor, {1410.6: [1, 3226.9],2490.9:[0.2,2145.2]},self.m_37]
         # only 4634
-        self.level45787 = [4578.7, 0.014*self.time_factor, {2490.9:[0.3,2087.3]} ]
+        self.level45787 = [4578.7, 0.014*self.time_factor, {2490.9:[0.3,2087.3]} ,self.m_37]
         # only4573
-        self.level44486 = [4578.7, 0.014*self.time_factor, {2490.9: [2, 1957.3]}]
-        self.level39811 = [3981.1, 0.028*self.time_factor, {0: [1, 3981.1]}]
-        self.level39385 = [3938.5, 0.017*self.time_factor, {0: [1, 3938]}]
-        self.level35180 = [3518.0, 0.041*self.time_factor, {1410.6:[23.7,2107.5],2490.9: [2.7, 1026.7]}]
-        self.level24909 = [2490.9, 0.462*self.time_factor, {0: [57, 2490.6],1611.9:[0.5, 878.5]}]
-        self.level16119 = [1611.9, 4.38*1000*self.time_factor, {0: [3.4, 1611.7]}]
-        self.level14106 = [1410.6, 0.59*self.time_factor, {0: [33, 1410.3]}]
+        self.level44486 = [4578.7, 0.014*self.time_factor, {2490.9: [2, 1957.3]},self.m_37]
+        self.level39811 = [3981.1, 0.028*self.time_factor, {0: [1, 3981.1]},self.m_37]
+        self.level39385 = [3938.5, 0.017*self.time_factor, {0: [1, 3938]},self.m_37]
+        self.level35180 = [3518.0, 0.041*self.time_factor, {1410.6:[23.7,2107.5],2490.9: [2.7, 1026.7]},self.m_37]
+        self.level24909 = [2490.9, 0.462*self.time_factor, {0: [57, 2490.6],1611.9:[0.5, 878.5]},self.m_37]
+        self.level16119 = [1611.9, 4.38*1000*self.time_factor, {0: [3.4, 1611.7]},self.m_37]
+        self.level14106 = [1410.6, 0.59*self.time_factor, {0: [33, 1410.3]},self.m_37]
 
         self.level0 = [0, 10**6, {0 :[1, 0]}]
         self.argon_list = [self.argon_init,self.level60989, self.level42700, self.level39682, self.level37320 , self.level37029, self.level35730,self.level35649 ,self.level33268 ,self.level32787 ,self.level31114,self.level30096,self.level29487,
@@ -166,16 +166,18 @@ class MC_sim_full_argon():
                 if state != self.level0:# otherwise continue the state
                     chance = random.uniform(0, 1)
                     for key in state[2]:
+                        # judge which mass it is
+                        self.mass = state[3]
                         if chance <= state[2][key][2] :
                             # success and go to next event
                             gamma_energy = state[2][key][1]
                             print("gamma",gamma_energy)
-                            temp_energy = 0.5 * self.m_41 * (vx ** 2 + vy ** 2 + vz ** 2) /self.ev # energy in ev
+                            temp_energy = 0.5 * self.mass * (vx ** 2 + vy ** 2 + vz ** 2) /self.ev # energy in ev
                             E_final = solve_tool.E_loss_result(temp_energy,state[1])
                             E_deposit = temp_energy- E_final
                             E_deposit_list.append(E_deposit)
                             if (vx**2+vy**2+vz**2) !=0:
-                                velocity = float(np.sqrt(2*E_final*self.ev*self.m_41))
+                                velocity = float(np.sqrt(2*E_final*self.ev*self.mass))
                                 # print(velocity)
                                 # change sympy float to python float
                                 vx = float(vx)
@@ -190,7 +192,7 @@ class MC_sim_full_argon():
                                 vy = 0
                                 vz = 0
                             random_angle = self.generate_gamma_vec()
-                            result = self.two_body_collision_xyz(self.m_41, random_angle[0], random_angle[1], vx, vy, vz, gamma_energy*self.Energy_factor)
+                            result = self.two_body_collision_xyz(self.mass, random_angle[0], random_angle[1], vx, vy, vz, gamma_energy*self.Energy_factor)
 
                             """" if mass statement """
                             vx = float(result[0])
@@ -208,7 +210,7 @@ class MC_sim_full_argon():
                             continue
 
                 elif state == self.level0: #if state is ground, jump to next event
-                    E_last = 0.5 * self.m_41 * (vx ** 2 + vy ** 2 + vz ** 2)
+                    E_last = 0.5 * self.mass * (vx ** 2 + vy ** 2 + vz ** 2)
                     # print(vx_list)
                     # print(vy_list)
                     # print(vz_list)
