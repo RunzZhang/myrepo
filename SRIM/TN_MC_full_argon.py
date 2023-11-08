@@ -269,16 +269,23 @@ class MC_sim_full_argon():
     def data_analysis(self, address):
         start = 0
         end = 1200
+        x_bins = []
         with open(self.address, "rb") as fp:  # Unpickling
             b = pickle.load(fp)
             print("read",b)
         bin_n =500
-        plt.hist(b, bins =bin_n, range=(start, end) ,density = True)
+
+        hist_result = plt.hist(b, bins =bin_n, range=(start, end) ,density = True)
+        plt.clf()
+        for i in range(len(hist_result[1]) - 1):
+            x_bins.append((hist_result[1][i] + hist_result[1][i + 1]) / 2)
+        plt.plot(x_bins, hist_result[0], color="orange")
         plt.xlabel("energy/eV")
         plt.ylabel("P")
         plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
+        plt.xlim([0, 1200])
         plt.show()
 
 
