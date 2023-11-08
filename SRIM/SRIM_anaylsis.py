@@ -21,6 +21,7 @@ file_lines = []
 e_v = 1.602*10**(-19)
 K_125 = 1.5414423840161205e-05
 K_500 = 1.5414372244542094e-05
+PI = np.pi
 
 def li_func(x, k, b):
     return k * x + b
@@ -31,7 +32,7 @@ def li_func2(x, k):
 
 
 
-class SRIM():
+class SRIM_EXY():
     def __init__(self):
         super().__init__()
         self.file_name = 'EXYZArgon0.5keV.txt'
@@ -53,6 +54,9 @@ class SRIM():
         self.data_ini()
         self.secondary_variable()
 
+        print("sqrt E",self.sqrt_E[:100])
+        self.plotEvX_fit( self.sqrt_E, self.ElStop)
+
 
 
         # self.scatterplot( self.ERs_1d, self.displacement_1d, "ER/eV", "x/A")
@@ -60,7 +64,7 @@ class SRIM():
         # self.scatterplot( self.ElStop, self.time_1d, "Eloss rate", "t/s")
         # self.time_displacement_hist(self.time_1d, self.displacement_1d, self.ERs_1d, self.vel_1d)
         self.scatterplot(self.Elrecoil, self.Energy, "Erecoil", "Energy")
-        # self.selected_hist(0.2,0.1)
+        # self.selected_hist(0.2,0.0)
 
 
 
@@ -97,7 +101,7 @@ class SRIM():
         self.mass = self.amu / avo * 0.001  # calculate mass of 1 atom in kg
         # masskev = amu/avo * 0.001 * 5.6095886e32 # mass in keV
         print(self.amu)
-        print(self.mass)
+        print("mass",self.mass)
 
         # with open(self.file_name_edit, 'w') as file: # Write the editied file for pandas to open
         #   file.writelines(file_lines)
@@ -113,6 +117,7 @@ class SRIM():
         self.daf.rename(columns={6: 'Energy Lost to Last Recoil (eV)'}, inplace=True)
 
         self.Posx = self.daf['x (A)'].tolist()
+        print(self.Posx)
 
         self.Posy = self.daf['y (A)'].tolist()
         self.Posz = self.daf['z (A)'].tolist()
@@ -124,6 +129,7 @@ class SRIM():
         self.Events = max(self.IonNum)
         self.KEInitial = (self.daf.iloc[0][1])  # Set kinetic energy variable (in keV)
         self.vi_1d = [np.sqrt(2*e_v*1000*self.Energy[i]/self.mass) for i in range(len(self.Energy))]
+        self.sqrt_E = [np.sqrt(1000*self.Energy[i]) for i in range(len(self.Energy))]
         # print(KE)
         print(len(self.Posx), len(self.Energy), len(self.ElStop), len(self.Elrecoil), len(self.IonNum))
         print(self.Events)
@@ -222,12 +228,13 @@ class SRIM():
         print("popt", popt, "\n", "perr", perr)
         print(popt[0])
         fit_data = []
-        for i in self.velocity_dataset:
+        for i in velocity_dataset:
             fit_data.append(li_func2(i, popt[0]))
 
-        plt.plot(self.velocity_dataset, fit_data, 'r-', label="linear fit")
+        plt.plot(velocity_dataset, fit_data, 'r-', label="linear fit")
         plt.xlabel("velocity m/s")
         plt.ylabel("dE/dx eV/A")
+        # plt.xlim(0,500)
         plt.legend()
 
         plt.show()
@@ -277,23 +284,216 @@ class SRIM():
         plt.show()
 
 
-class model_test():
+
+
+class SRIM_Table():
+    def __init__(self):
+        super().__init__()
+        # self.file_name = 'argon_140keV(gas).txt'
+        self.file_name = 'argon_tn(gas).txt'
+        # self.energy_startpoint = "10.00 keV"
+        self.energy_startpoint ="9.99999 eV"
+        self.file_name_edit = self.file_name[0:-4] + '_edit.txt'
+
+
+        self.step = 200  # in ev
+
+        self.Z_tp = 18
+        self.C_tf = (9 * PI ** 2 / (2 ** 7)) ** (1 / 3)
+        self.A_tp = 41
+        self.Z = (2 * self.Z_tp ** 0.23) ** 2
+        self.EB = 13.6  # in eV
+        self.a0 = 5.291 * 10 ** (-11)  # in m
+        # self.a0 = 0.5291  # in A
+        # self.energy = range(self.min, self.max, self.step)
+        self.F1 = self.C_tf * 0.5 * (0.5 / 13.6) / (self.Z_tp ** 2 * self.Z ** (0.5))
+
+        print("F1",self.F1)
+
+        self.au = 0.8853 * self.a0 / (2 * self.Z_tp ** 2) # in m
+        self.au = self.au*100 # in cm
+        print("au", self.au)
+        self.gam = 4 / 2 ** 2
+        self.ev = 1.60218e-19
+        self.Tar_Den = 2.1361E+22 # atoms/cm3
+        self.SN = [] # shouldbe ev/cm
+
+
+
+        self.data_ini()
+        self.fetch_data()
+        self.compare_theory()
+        self.plot_data()
+
+    def data_ini(self):
+
+        with open(self.file_name, 'r') as file:  # Searches for the row in which data starts and
+            done = 0  # looks for ion data in the file (we want the atomic mass)
+            for num, line in enumerate(file, 1):
+                if self.energy_startpoint in line and done == 0:
+                    # print('found at line:', num)
+                    skip = num - 1
+                    done = 1
+                if 'Ion Data' in line:
+                    Data = num
+
+        with open(self.file_name, 'r') as file:  # Adds a space after first column to allow
+            n = 0  # pandas to use double-space as separator
+            for line in file:
+                if n >= skip:
+                    file_lines.append(''.join([line.strip()[:10], ' ', line.strip()[10:], '\n']))
+                else:
+                    # file_lines.append(''.join([line.strip(), '\n']))
+                    file_lines.append(''.join([line]))
+                n += 1
+
+        # with open(self.file_name, 'r') as file:  # Adds the ion data string to a variable
+        #     n = 0
+        #     for line in file:
+        #         if n == Data:
+        #             IonData = line.rstrip()
+        #             IonData = (' '.join(IonData.split())).split()
+        #         n += 1
+        self.amu = 39.962  # Set the atomic mass variable
+        self.mass = self.amu / avo * 0.001  # calculate mass of 1 atom in kg
+        # masskev = amu/avo * 0.001 * 5.6095886e32 # mass in keV
+        # print(self.amu)
+        # print(self.mass)
+
+        # with open(self.file_name_edit, 'w') as file: # Write the editied file for pandas to open
+        #   file.writelines(file_lines)
+
+        self.daf = pd.read_csv(self.file_name, delim_whitespace=True, skiprows=skip, header=None, engine=('python'))
+        # print("ini",self.daf)
+
+        self.end_of_file = 0
+        for i in range(self.daf.index.size): # delete the aferwards info
+
+            try:
+                print(float(self.daf.iloc[i][0]))
+            except:
+                self.end_of_file = i
+                break
+        self.daf = self.daf.head(self.end_of_file)
+        # print("edit",self.daf)
+
+        # print(self.daf.head(5))
+        self.daf.rename(columns={0: 'Ion Energy'}, inplace=True)
+        self.daf.rename(columns={1: 'Energy Unit'}, inplace=True)
+        self.daf.rename(columns={2: 'dE/dx Elec.'}, inplace=True)
+        self.daf.rename(columns={3: 'dE/dx Nuclear'}, inplace=True)
+        self.daf.rename(columns={4: 'Projected Range'}, inplace=True)
+        self.daf.rename(columns={6: 'Longitudinal Straggling'}, inplace=True)
+        self.daf.rename(columns={8: 'Lateral Straggling'}, inplace=True)
+
+        self.Ion_ene = self.daf['Ion Energy'].tolist()
+        self.Units = self.daf['Energy Unit'].tolist()
+        self.E_loss = self.daf['dE/dx Elec.'].tolist()
+        self.N_loss = self.daf['dE/dx Nuclear'].tolist()
+        self.Projected_range = self.daf['Projected Range'].tolist()
+        self.Longitudinal_stra = self.daf['Longitudinal Straggling'].tolist()
+        self.Lateral_stra = self.daf['Lateral Straggling'].tolist()
+
+        print(self.Ion_ene)
+
+
+    def fetch_data(self):
+        self.vel = []
+        # prpotional to velocity
+        for i in range(len(self.Ion_ene)):
+            if self.Units[i]=="eV":
+                self.Ion_ene[i]=float(self.Ion_ene[i])
+            elif self.Units[i]=="keV":
+                self.Ion_ene[i]=float(self.Ion_ene[i])*1000
+
+            else:
+                self.Ion_ene[i] = float(self.Ion_ene[i])
+            self.vel.append(np.sqrt(self.Ion_ene[i]))
+            self.E_loss[i] = float(self.E_loss[i])
+
+            # self.N_loss[i] = float(self.N_loss[i])*7.0574E-02 # in Mev/(mg/cm2)
+            self.N_loss[i] = float(self.N_loss[i])
+            self.Projected_range[i] =float(self.Projected_range[i])
+            self.Longitudinal_stra[i] = float(self.Longitudinal_stra[i])
+            self.Lateral_stra[i] = float(self.Lateral_stra[i])
+
+    def compare_theory(self):
+        self.ep_list = []
+        self.ep2_list =[]
+        self.sn = []
+
+        for i in range(len(self.Ion_ene)):
+            energy = self.Ion_ene[i]
+            sn_value = self.sn_func(self.F1*energy)
+            self.ep_list.append(self.F1*energy)
+            self.ep2_list.append(self.au*0.5*self.Ion_ene[i]/(self.Z_tp**2*self.ev**2))
+            self.sn.append(sn_value)
+            if energy != 0:
+                # value = PI * self.au ** 2 * self.gam * energy * sn_value / (energy*self.F1) # in
+                # value = PI * self.au ** 2 * self.gam * energy * sn_value
+                value = 8.462*10**(-15)*self.Z_tp**2*0.5*sn_value/(2*self.Z_tp**2)
+            else:
+                value = 0
+            self.SN.append(value*self.Tar_Den*10**(-8)) # change ev/cm to eV/A
+            # self.SN.append(value)  # change ev/cm to eV/A
+        print("ep",self.ep_list)
+        print("ep2", self.ep2_list)
+        print("sn",self.sn)
+
+    def sn_func(self, ep):
+        return np.log(1+1.1383*ep)/(2*(ep+0.001321*ep**0.21226+0.19593*ep**0.5))
+
+    def plot_data(self):
+        print("theo before", self.SN)
+        # self.force_fit()
+        plt.plot(self.Ion_ene, self.N_loss, label="experimental data")
+        plt.plot(self.Ion_ene, self.SN, label="theoretical curve")
+        print("exp", self.N_loss)
+        print("theo afterwards", self.SN)
+
+        plt.legend()
+        plt.show()
+
+    def force_fit(self):
+        self.ratio = []
+        for i in range(len(self.N_loss)):
+            ratio = self.N_loss[i]/self.SN[i]
+            self.ratio.append(ratio)
+        self.mean_ratio = sum(self.ratio)/len(self.ratio)
+        for i in range(len(self.SN)):
+            self.SN[i]= self.mean_ratio*self.SN[i]
+        print("mean ratio", self.mean_ratio)
+        print("after edit theo", self.SN)
+
+
+
+
+
+
+
+class Model_Test():
     def __init__(self):
         self.Ek_uplim = 500
         self.ER_list = []
         self.Ek_list =[]
-        # self.Gaussian_sim(20000)
-        self.exp_sim(1000)
+        self.Gaussian_sim(20000)
+        # self.exp_sim(1000)
         # self.possion_sim(100000)
 
     def Gaussian_sim(self,N):
+        p_list = []
         for i in range(N):
             Ek = np.random.uniform()*self.Ek_uplim
-            ER = np.random.normal(0,(self.Ek_uplim-Ek)/5)
+            ER = np.random.normal(0,(self.Ek_uplim-Ek)/20)
+            p = np.random.normal(0,3)
+
             if ER >0:
                 self.ER_list.append(ER)
                 self.Ek_list.append(Ek)
+                # p_list.append(p)
+        print(self.ER_list)
         plt.scatter(self.Ek_list,self.ER_list)
+        # plt.scatter(self.Ek_list, p_list)
         plt.xlabel("Ek/eV")
         plt.ylabel("ER/eV")
         plt.show()
@@ -321,9 +521,47 @@ class model_test():
         plt.ylabel("ER/eV")
         plt.show()
 
+class SRIM_scatter():
+    def __init__(self):
+        # self.min  = 0
+        # self.max = 140*1000 # in ev
+        # self.step  = 20000 # in ev
+        self.min = 0
+        self.max = 140 * 10**5  # in ev
+        self.step = 200  # in ev
 
+        self.Z_tp= 18
+        self.C_tf = (9*PI**2/(2**7))**(1/3)
+        self.A_tp =41
+        self.Z = (2*self.Z_tp**0.23)**2
+        self.EB = 13.6 # in eV
+        self.a0 = 5.291*10**(-11) # in m
+        # self.a0 = 0.5291  # in A
+        self.energy = range(self.min, self.max, self.step)
+        self.F1 = self.C_tf*0.5* (0.5/13.6)/(self.Z_tp**2*self.Z**(0.5))
+        print(0.3/self.F1)
+        self.ep_list=[ self.C_tf*0.5* (i*0.5/13.6)/(self.Z_tp**2*self.Z**(0.5)) for i in range(self.min,self.max,self.step)]
+        self.sn = [np.log(1+1.1383*e)/(2*(e+0.001321*e**0.21226+0.19593*e**0.5)) for e in self.ep_list]
+        # self.sn = [np.log(e) / (2 * e) for e in self.ep_list]
+        self.au = 0.8853*self.a0/(2*self.Z_tp**2)
+        self.gam = 4/2**2
+        self.SN = []
+        for i in range(len(self.energy)):
+            if self.ep_list[i] != 0:
+                value  = PI* self.au**2 * self.gam * self.energy[i] *self.sn[i]/self.ep_list[i]
+                value = PI * self.au ** 2 * self.gam * self.energy[i] * self.sn[i]
+            else:
+                value = 0
+            self.SN.append(value)
+        # print(self.sn)
+        # plt.plot(self.energy, self.SN)
+        plt.plot(self.ep_list, self.sn)
+        plt.show()
+        print(self.ep_list)
 if __name__ == "__main__":
-    # SM =  SRIM()
-    test = model_test()
+    # srim_result  = SRIM_EXY()
+    srim_data = SRIM_Table()
+    # test = model_test()
+    # scatter = SRIM_scatter()
 
 

@@ -1,0 +1,69 @@
+ ==================================================================
+              Calculation using SRIM-2006 
+              SRIM version ---> SRIM-2008.04
+              Calc. date   ---> November 06, 2023 
+ ==================================================================
+
+ Disk File Name = SRIM Outputs\Argon in Argon (gas)
+
+ Ion = Argon [18] , Mass = 39.962 amu
+
+ Target Density =  1.4170E+00 g/cm3 = 2.1361E+22 atoms/cm3
+ Target is a GAS 
+ ======= Target  Composition ========
+    Atom   Atom   Atomic    Mass     
+    Name   Numb   Percent   Percent  
+    ----   ----   -------   -------  
+     Ar     18    100.00    100.00   
+ ====================================
+ Bragg Correction = 0.00%
+ Stopping Units =   eV / Angstrom 
+ See bottom of Table for other Stopping units 
+
+   Ion        dE/dx      dE/dx     Projected  Longitudinal   Lateral
+  Energy      Elec.      Nuclear     Range     Straggling   Straggling
+-----------  ---------- ---------- ----------  ----------  ----------
+  10.00 keV   2.908E+00  2.487E+01     308 A       168 A       122 A   
+  11.00 keV   3.050E+00  2.518E+01     331 A       179 A       130 A   
+  12.00 keV   3.186E+00  2.544E+01     354 A       190 A       138 A   
+  13.00 keV   3.316E+00  2.566E+01     377 A       201 A       145 A   
+  14.00 keV   3.441E+00  2.584E+01     400 A       212 A       153 A   
+  15.00 keV   3.562E+00  2.599E+01     423 A       222 A       160 A   
+  16.00 keV   3.679E+00  2.612E+01     446 A       233 A       168 A   
+  17.00 keV   3.792E+00  2.623E+01     468 A       243 A       175 A   
+  18.00 keV   3.902E+00  2.632E+01     491 A       254 A       182 A   
+  20.00 keV   4.113E+00  2.645E+01     536 A       274 A       196 A   
+  22.50 keV   4.362E+00  2.654E+01     592 A       299 A       214 A   
+  25.00 keV   4.598E+00  2.657E+01     648 A       324 A       231 A   
+  27.50 keV   4.823E+00  2.655E+01     704 A       348 A       248 A   
+  30.00 keV   5.037E+00  2.650E+01     760 A       372 A       264 A   
+  32.50 keV   5.243E+00  2.643E+01     816 A       396 A       281 A   
+  35.00 keV   5.441E+00  2.633E+01     872 A       420 A       297 A   
+  37.50 keV   5.632E+00  2.622E+01     928 A       444 A       313 A   
+  40.00 keV   5.817E+00  2.609E+01     985 A       467 A       329 A   
+  45.00 keV   6.169E+00  2.581E+01    1098 A       514 A       361 A   
+  50.00 keV   6.503E+00  2.551E+01    1212 A       560 A       393 A   
+  55.00 keV   6.821E+00  2.519E+01    1327 A       606 A       424 A   
+  60.00 keV   7.124E+00  2.486E+01    1443 A       652 A       456 A   
+  65.00 keV   7.415E+00  2.453E+01    1560 A       697 A       487 A   
+  70.00 keV   7.695E+00  2.420E+01    1677 A       742 A       518 A   
+  80.00 keV   8.231E+00  2.356E+01    1915 A       831 A       580 A   
+  90.00 keV   9.197E+00  2.293E+01    2153 A       917 A       642 A   
+ 100.00 keV   9.792E+00  2.233E+01    2393 A      1001 A       704 A   
+ 110.00 keV   1.019E+01  2.176E+01    2634 A      1084 A       766 A   
+ 120.00 keV   1.048E+01  2.122E+01    2880 A      1168 A       827 A   
+ 130.00 keV   1.073E+01  2.071E+01    3129 A      1251 A       888 A   
+ 140.00 keV   1.096E+01  2.022E+01    3381 A      1333 A       949 A   
+-----------------------------------------------------------
+ Multiply Stopping by        for Stopping Units
+ -------------------        ------------------
+  1.0000E+00                 eV / Angstrom 
+  1.0000E+01                keV / micron   
+  1.0000E+01                MeV / mm       
+  7.0574E-02                keV / (ug/cm2) 
+  7.0574E-02                MeV / (mg/cm2) 
+  7.0574E+01                keV / (mg/cm2) 
+  4.6815E+00                 eV / (1E15 atoms/cm2)
+  1.2656E-02                L.S.S. reduced units
+ ==================================================================
+ (C) 1984,1989,1992,1998,2008 by J.P. Biersack and J.F. Ziegler
