@@ -445,9 +445,11 @@ class SRIM_Table():
 
     def plot_data(self):
         print("theo before", self.SN)
-        # self.force_fit()
+        self.force_fit()
         plt.plot(self.Ion_ene, self.N_loss, label="experimental data")
         plt.plot(self.Ion_ene, self.SN, label="theoretical curve")
+        plt.xlabel("Recoiled energy/eV")
+        plt.ylabel("eV/A")
         print("exp", self.N_loss)
         print("theo afterwards", self.SN)
 

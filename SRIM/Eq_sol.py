@@ -158,8 +158,8 @@ class E_loss_solve():
 
     def E_loss_total_t_fun_ODE_posttest(self):
 
-        self.last_t = 0.005
-        self.ini_E = 2000
+        self.last_t = 0.001
+        self.ini_E = 125
         self.threshold_v = 0.1
         # self.t_crit = 1343 * 10 ** (-6) * np.log(self.ini_E / 0.1)
         self.t_crit = 7.24432998e-04
@@ -168,8 +168,8 @@ class E_loss_solve():
         for i in range(self.bins):
             self.e_list.append(i*self.last_t/10)
         print(self.t_crit)
-        solve = solve_ivp(self.E_loss_el_t_fun_ODE, [0, 2*self.last_t], [self.ini_E], t_eval=self.e_list) # check one point's value
-        # solve = solve_ivp(self.E_loss_t_fun_ODE, [0, self.last_t], [self.ini_E])
+        # solve = solve_ivp(self.E_loss_el_t_fun_ODE, [0, 2*self.last_t], [self.ini_E], t_eval=self.e_list) # check one point's value
+        solve = solve_ivp(self.E_loss_t_fun_ODE, [0, self.last_t], [self.ini_E])
         array = solve.y
         sol_y = array[0]
         print("y", array,sol_y)
@@ -182,6 +182,10 @@ class E_loss_solve():
             Dy_list.append(value)
         # plt.plot(sol_y[1:], Dy_list)
         # print("Dydt", Dy_list)
+        plt.xlabel("time/ns")
+        plt.ylabel("initial E/eV")
+        plt.xlim(0,0.001)
+        plt.ylim(0,2000)
         plt.show()
 
     def E_loss_N_x_fun_ODE_pretest(self):
@@ -268,6 +272,6 @@ class E_loss_solve():
 
 if __name__=="__main__":
     solve = E_loss_solve()
-    # solve.E_loss_total_t_fun_ODE_posttest()
+    solve.E_loss_total_t_fun_ODE_posttest()
     # print(solve.E_loss_result(1000,7.1E-4))
-    print(solve.E_el_loss_result(2, 0.005))
+    # print(solve.E_el_loss_result(2, 0.005))

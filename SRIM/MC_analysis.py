@@ -8,7 +8,8 @@ from matplotlib.ticker import PercentFormatter
 
 from scipy.optimize import fsolve
 e = 1.602*10**(-19)
-
+m = 40.98*10**(-3)/(6.023*10**23) # in kg
+M_ev =5.609*10*35 *m # mass in ev
 address_Ar40_5582="/data/runzezhang/result/SRIM_MC/MC_argon40_20231024_5582"
 address_Ar40_4745="/data/runzezhang/result/SRIM_MC/MC_argon40_20231024_4745"
 address_Ar40_3700="/data/runzezhang/result/SRIM_MC/MC_argon40_20231024_3700"
@@ -274,12 +275,91 @@ def two_body_E_spectrum_47_func(x):
     return f
 
 def Energy_vs_theta_47(theta):
-    a = 6299
-    b = 2490
-    # a = 8790
-    # b = 0
-    return a**2+b**2-2*a*b*np.cos(theta)
+    c_v = 3*10**8
+    # a = 6299*1000*e/c_v # a momentum
+    # b = 2490*1000*e/c_v # b momentum
+    # 1010
 
+    # a = 8790*1000*e/c_v
+    # b = 0*1000*e/c_v
+
+    a = 6299*1000*e/c_v # a momentum
+    b = 2490*1000*e/c_v # b momentum
+    delta_v = 1
+    a = 6299*(1-delta_v)*1000*e/c_v
+    ER_loss = ((1/(2*m))*(e*1000*6299/c_v)**2*(1-(1-delta_v)**2))/e
+    #1241
+
+    # a = 6299 *1000* e / c_v  # a momentum
+    # b = 0 * 1000 * e / c_v  # b momentum
+    # print(ER_loss)
+    value =  (a**2+b**2-2*a*b*np.cos(theta))/(2*m*e) +ER_loss
+    return value
+
+
+def Energy_vs_theta_47_(theta, energy_indef):
+    c_v = 3*10**8
+    # a = 6299*1000*e/c_v # a momentum
+    # b = 2490*1000*e/c_v # b momentum
+    # 1010
+
+    # a = 8790*1000*e/c_v
+    # b = 0*1000*e/c_v
+
+    a = 6299*1000*e/c_v # a momentum
+    b = 2490*1000*e/c_v # b momentum
+    delta_v = energy_indef
+    a = 6299*(1-delta_v)*1000*e/c_v
+    ER_loss = ((1/(2*m))*(e*1000*6299/c_v)**2*(1-(1-delta_v)**2))/e
+    #1241
+
+    # a = 6299 *1000* e / c_v  # a momentum
+    # b = 0 * 1000 * e / c_v  # b momentum
+    # print(ER_loss)
+    value =  (a**2+b**2-2*a*b*np.cos(theta))/(2*m*e) +ER_loss
+    return value
+
+def Energy_PDE_plot():
+    c_v = 3*10**8
+    # a = 6299*1000*e/c_v # a momentum
+    # b = 2490*1000*e/c_v # b momentum
+    # 1010
+
+    # a = 8790*1000*e/c_v
+    # b = 0*1000*e/c_v
+
+    a = 6299*1000*e/c_v # a momentum
+    b = 2490*1000*e/c_v # b momentum
+    delta_v = 1
+    a = 6299*(1-delta_v)*1000*e/c_v
+    ER_loss = ((1/(2*m))*(e*1000*6299/c_v)**2*(1-(1-delta_v)**2))/e
+    #1241
+
+    Ea = 6299
+    Eb = 2490
+    P = []
+    energy_list = []
+    for ev in range(0,1200,1):
+        energy_list.append(ev)
+        P.append(E_PDE(Ea,Eb,ev)[0])
+        # print(E_PDE(Ea,Eb,ev)[1],E_PDE(Ea,Eb,ev)[2])
+    print("PDE",P)
+    print("energy",energy_list)
+    plt.plot(energy_list, P)
+    plt.show()
+
+def E_PDE(E1, E2, E, mass = 40.98*10**(-3)/(6.023*10**23)):
+    c_v = 3*10**8
+    p1 = E1*1000*e/c_v
+    p2 = E2*e*1000/c_v
+    E = E*e
+    if -(p1**2-p2**2)**2-4*mass**2*E**2+4*mass*E*(p1**2+p2**2)>= 0 :
+        function = mass/(PI)*(1/np.sqrt(-(p1**2-p2**2)**2-4*mass**2*E**2+4*mass*E*(p1**2+p2**2)))
+    else:
+        function = 0
+    E_start = (p1-p2)**2/(2*mass*e)
+    E_end = (p1+p2)**2/(2*mass*e)
+    return (function, E_start, E_end)
 def plot_two_body_E_spectrum_47():
     angle = []
     E_list = []
@@ -296,6 +376,7 @@ def plot_two_body_E_spectrum_47():
 if __name__ =="__main__":
 
     plot_two_body_E_spectrum_47()
+    # Energy_PDE_plot()
     # plot_test()
     # plot_chains()
     # plot_chain_sum()
