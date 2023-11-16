@@ -33,11 +33,26 @@ class MC_sim_full_argon():
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
         self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231107"
 
-        self.argon_init = [10000, 0*self.time_factor ,{6098.9:[93.57*self.argon40_weight,0],3732:[0.121*self.argon40_weight,0],3702.9:[0.474*self.argon40_weight,0],3573:[0.0744*self.argon40_weight,0],
-                                      3564.9:[0.121*self.argon40_weight,0],3278.7:[0.372*self.argon40_weight,0],
-                                      3111.4:[0.372*self.argon40_weight,0], 8791.2:[100.6*self.argon36_weight, 0]},self.m_41]
-        self.level60989 = [6098.9, 0*self.time_factor ,{516.1:[10.8,5582.0],1034.7:[0.242,5063.7],1353.9:[51.2,4745.0],2398.1:[9.11,3700.4],2693:[0.0744,3405.3],2733.4:[3.91,3365.5],2948.7:[3.72,3150.2],
-                                      3009.6:[1.02,3089.4],3326.8:[8,2771.8],3430.7:[0.474,2668.1],3968.2:[4.09,2130.7],4170.0:[0.93,1828.8]},self.m_41]
+        # self.argon_init = [10000, 0*self.time_factor ,{6098.9:[93.57*self.argon40_weight,0],3732:[0.121*self.argon40_weight,0],3702.9:[0.474*self.argon40_weight,0],3573:[0.0744*self.argon40_weight,0],
+        #                               3564.9:[0.121*self.argon40_weight,0],3278.7:[0.372*self.argon40_weight,0],
+        #                               3111.4:[0.372*self.argon40_weight,0], 8791.2:[100.6*self.argon36_weight, 0]},self.m_41]
+        self.argon_init = [10000, 0 * self.time_factor,
+                           {6098.9: [93.57 * self.argon40_weight, 0], 3732: [0.121 * self.argon40_weight, 0],
+                            3702.9: [0.474 * self.argon40_weight, 0], 3573: [0.0744 * self.argon40_weight, 0],
+                             3278.7: [0.372 * self.argon40_weight, 0], 8791.2: [100.6 * self.argon36_weight, 0]},
+                           self.m_41]
+        # self.level60989 = [6098.9, 0 * self.time_factor,
+        #                    {516.1: [10.8, 5582.0], 1034.7: [0.242, 5063.7], 1353.9: [51.2, 4745.0],
+        #                     2398.1: [9.11, 3700.4], 2693: [0.0744, 3405.3], 2733.4: [3.91, 3365.5],
+        #                     2948.7: [3.72, 3150.2],
+        #                     3009.6: [1.02, 3089.4], 3326.8: [8, 2771.8], 3430.7: [0.474, 2668.1],
+        #                     3968.2: [4.09, 2130.7], 4170.0: [0.93, 1828.8]}, self.m_41]
+        self.level60989 = [6098.9, 0 * self.time_factor,
+                           {516.1: [10.8, 5582.0], 1034.7: [0.242, 5063.7], 1353.9: [51.2, 4745.0],
+                            2398.1: [9.11, 3700.4], 2733.4: [3.91, 3365.5],
+                            2948.7: [3.72, 3150.2],
+                            3009.6: [1.02, 3089.4], 3326.8: [8, 2771.8], 3430.7: [0.474, 2668.1],
+                            3968.2: [4.09, 2130.7], 4170.0: [0.93, 1828.8]}, self.m_41]
         self.level42700 = [4270, 0.021*self.time_factor ,{167.3:[0.279,4102.5]},self.m_41]
         # no data of 42700
         self.level39682 = [3968.2, 0.021*self.time_factor ,{516.1:[1.86,3451.8],1353.9:[2.7,2614.3]},self.m_41]
