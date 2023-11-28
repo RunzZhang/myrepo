@@ -35,7 +35,7 @@ def li_func2(x, k):
 class SRIM_EXY():
     def __init__(self):
         super().__init__()
-        self.file_name = 'EXYZArgon0.5keV.txt'
+        self.file_name = 'EXYZArgon1keV.txt'
         self.file_name_edit = self.file_name[0:-4] + '_edit.txt'
         self.displacement = []  # Want to record the displacement in each step (in meters)
         self.displacement_1d = []
@@ -52,10 +52,11 @@ class SRIM_EXY():
         self.ERs_1d = []
 
         self.data_ini()
+        self.table = SRIM_Table()
         self.secondary_variable()
-
+        self.scatterplot(self.E_compare_diff_1d, self.Energy,  "E_diff/eV", "Ek/keV")
         print("sqrt E",self.sqrt_E[:100])
-        self.plotEvX_fit( self.sqrt_E, self.ElStop)
+        # self.plotEvX_fit( self.sqrt_E, self.ElStop)
 
 
 
@@ -63,8 +64,9 @@ class SRIM_EXY():
         # self.scatterplot(self.ERs_1d, self.time_1d, "ER/eV", "t/s")
         # self.scatterplot( self.ElStop, self.time_1d, "Eloss rate", "t/s")
         # self.time_displacement_hist(self.time_1d, self.displacement_1d, self.ERs_1d, self.vel_1d)
-        self.scatterplot(self.Elrecoil, self.Energy, "Erecoil", "Energy")
+        # self.scatterplot(self.Elrecoil, self.Energy, "Erecoil", "Energy")
         # self.selected_hist(0.2,0.0)
+
 
 
 
@@ -133,6 +135,11 @@ class SRIM_EXY():
         # print(KE)
         print(len(self.Posx), len(self.Energy), len(self.ElStop), len(self.Elrecoil), len(self.IonNum))
         print(self.Events)
+        min_value = 5
+        for value in self.Energy:
+            if value <min_value and value != 0:
+                min_value = value
+        print("min energy kev",min_value)
     def secondary_variable(self):
 
 
@@ -143,6 +150,7 @@ class SRIM_EXY():
         (self.vel_1d, self.vel)= self.fetch_data(len(self.Posx), 3)
         (self.time_1d, self.time)= self.fetch_data(len(self.Posx), 4)
         (self.ERs_1d ,self.ERs) = self.fetch_data(len(self.Posx), 5)
+        (self.E_compare_diff_1d, self.E_compare_diff) = self.fetch_data(len(self.Posx), 6)
 
     def fetch_data(self, length, mode):
         # print(self.Posx[:20])
@@ -160,7 +168,7 @@ class SRIM_EXY():
                     list_1d.append(0)
                 else:  # add data
                     # mode0 displacement(m), mode1 kinetic energy loss(eV), mode2 electronic energy loss(eV), mode 3 average velocity(m/s)
-                    # mode 4 time(s), # mode 5 energy loss by recoiled collision
+                    # mode 4 time(s), # mode 5 energy loss by recoiled collision # mode 6 kinetic energy loss difference between experimental and theory
                     if mode ==0:
                         value = (1e-10) * (
                             np.sqrt((self.Posx[j] - self.Posx[j - 1]) ** 2 + (self.Posy[j] - self.Posy[j - 1]) ** 2 + (
@@ -186,6 +194,10 @@ class SRIM_EXY():
                         value = distance/vel
                     elif mode ==5:
                         value  = -(self.Energy[j] - self.Energy[j - 1]) * 1000-self.ElStop[j] * (
+                            np.sqrt((self.Posx[j] - self.Posx[j - 1]) ** 2 + (self.Posy[j] - self.Posy[j - 1]) ** 2 + (
+                                    self.Posz[j] - self.Posz[j - 1]) ** 2))
+                    elif mode ==6:
+                        value  = -(self.Energy[j] - self.Energy[j - 1]) * 1000-(self.ElStop[j]+self.table.output(self.Energy[j]*1000) )* (
                             np.sqrt((self.Posx[j] - self.Posx[j - 1]) ** 2 + (self.Posy[j] - self.Posy[j - 1]) ** 2 + (
                                     self.Posz[j] - self.Posz[j - 1]) ** 2))
 
@@ -317,6 +329,7 @@ class SRIM_Table():
         self.ev = 1.60218e-19
         self.Tar_Den = 2.1361E+22 # atoms/cm3
         self.SN = [] # shouldbe ev/cm
+        self.LSS_factor = 1.2656 * (10 ** (-2))
 
 
 
@@ -412,7 +425,7 @@ class SRIM_Table():
             self.E_loss[i] = float(self.E_loss[i])
 
             # self.N_loss[i] = float(self.N_loss[i])*7.0574E-02 # in Mev/(mg/cm2)
-            self.N_loss[i] = float(self.N_loss[i])
+            self.N_loss[i] = float(self.N_loss[i] )*(1.2656*10**(-2))# in LSS
             self.Projected_range[i] =float(self.Projected_range[i])
             self.Longitudinal_stra[i] = float(self.Longitudinal_stra[i])
             self.Lateral_stra[i] = float(self.Lateral_stra[i])
@@ -432,6 +445,7 @@ class SRIM_Table():
                 # value = PI * self.au ** 2 * self.gam * energy * sn_value / (energy*self.F1) # in
                 # value = PI * self.au ** 2 * self.gam * energy * sn_value
                 value = 8.462*10**(-15)*self.Z_tp**2*0.5*sn_value/(2*self.Z_tp**2)
+
             else:
                 value = 0
             self.SN.append(value*self.Tar_Den*10**(-8)) # change ev/cm to eV/A
@@ -444,28 +458,54 @@ class SRIM_Table():
         return np.log(1+1.1383*ep)/(2*(ep+0.001321*ep**0.21226+0.19593*ep**0.5))
 
     def plot_data(self):
-        print("theo before", self.SN)
-        self.force_fit()
+        print("theo before", self.sn)
+        # self.force_fit()
+        self.force_fit_LSS()
         plt.plot(self.Ion_ene, self.N_loss, label="experimental data")
-        plt.plot(self.Ion_ene, self.SN, label="theoretical curve")
+        plt.plot(self.Ion_ene, self.sn, label="theoretical curve")
         plt.xlabel("Recoiled energy/eV")
-        plt.ylabel("eV/A")
+        plt.ylabel("LSS")
         print("exp", self.N_loss)
-        print("theo afterwards", self.SN)
+        print("theo afterwards", self.sn)
 
         plt.legend()
         plt.show()
 
     def force_fit(self):
+        self.alpha = 137
         self.ratio = []
         for i in range(len(self.N_loss)):
             ratio = self.N_loss[i]/self.SN[i]
             self.ratio.append(ratio)
         self.mean_ratio = sum(self.ratio)/len(self.ratio)
         for i in range(len(self.SN)):
-            self.SN[i]= self.mean_ratio*self.SN[i]
+            self.SN[i]= self.alpha*self.SN[i]
         print("mean ratio", self.mean_ratio)
+        # I think the lost factor is 1/alpha, which is 137, the mean ration is 127
         print("after edit theo", self.SN)
+
+    def force_fit_LSS(self):
+        self.ratio = []
+        for i in range(len(self.N_loss)):
+            ratio = self.N_loss[i]/self.sn[i]
+            self.ratio.append(ratio)
+        self.mean_ratio = sum(self.ratio)/len(self.ratio)
+        for i in range(len(self.sn)):
+            self.sn[i]= self.mean_ratio*self.sn[i]
+        print("mean ratio", self.mean_ratio)
+        # I think the lost factor is 1/alpha, which is 137, the mean ration is 127
+        print("after edit theo", self.sn)
+
+    def output(self, E):
+        # E in eV
+        sn_value = self.sn_func(self.F1*E)
+        # inter_v1 = 8.462*10**(-15)*self.Z_tp**2*0.5*sn_value/(2*self.Z_tp**2)
+        inter_v1 = (1/self.LSS_factor) * sn_value
+        dedx = inter_v1
+        # 137 is atomic fine factor
+        return dedx
+    # in eV/A
+    #
 
 
 
@@ -561,8 +601,8 @@ class SRIM_scatter():
         plt.show()
         print(self.ep_list)
 if __name__ == "__main__":
-    # srim_result  = SRIM_EXY()
-    srim_data = SRIM_Table()
+    srim_result  = SRIM_EXY()
+    # srim_data = SRIM_Table()
     # test = model_test()
     # scatter = SRIM_scatter()
 

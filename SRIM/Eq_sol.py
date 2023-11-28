@@ -45,6 +45,10 @@ class E_loss_solve():
         self.mass = 6.63551406835257e-26 # argon 40 in kg
         self.T_factor = 0.1 # change m/s to A/ns
         self.Tar_Den = 2.1361E+22 # atoms/cm3
+        self.alpha_inv = 137
+        self.LSS_factor = 1.2656*(10**(-2))# LSS variable transformation by SRIM table
+        print("factor",self.factor*self.Tar_Den*10**8)
+        print("LSS factor inverse", 1/self.LSS_factor)
 
         # self.main_fun()
         # self.test()
@@ -56,6 +60,16 @@ class E_loss_solve():
         #             2 * (ep + self.b * (ep) ** self.c) + self.d * (ep) ** 0.5) * self.factor * self.Tar_Den * 10 ** 8
         part_b = - (y) ** 0.5 * self.total_k
         part_c = (y) ** 0.5 * np.sqrt(2 * self.ev / self.mass) * (1/self.T_factor) # change dE/dx to dE/dt
+        return (part_b+part_a)*part_c
+
+    def E_loss_t_fun_ODE_v2(self, t, y):
+        ep = self.C_tf*0.5* (y*0.5/13.6)/(self.Z_tp**2*self.Z**(0.5))
+        part_a = - np.log(1+self.a * ep) / (2 * (ep + self.b * (ep) ** self.c) + self.d * (ep) ** 0.5)/self.LSS_factor
+        # para a and b are in eV/A
+        # part_a = - self.a * ep/ (
+        #             2 * (ep + self.b * (ep) ** self.c) + self.d * (ep) ** 0.5) * self.factor * self.Tar_Den * 10 ** 8
+        part_b = - (y) ** 0.5 * self.total_k
+        part_c = (y) ** 0.5 * np.sqrt(2 * self.ev / self.mass) * (1/self.T_factor) # change dE/dx to dE/dt eV/A to eV/ns
         return (part_b+part_a)*part_c
 
     def E_loss_N_x_fun_ODE(self, t, y):
@@ -107,7 +121,7 @@ class E_loss_solve():
                 self.t_list.append(t*i/10)
             self.ini_E = init_E
             if t != 0:
-                solve = solve_ivp(self.E_loss_t_fun_ODE, [0, self.last_t], [self.ini_E],
+                solve = solve_ivp(self.E_loss_t_fun_ODE_v2, [0, self.last_t], [self.ini_E],
                                   t_eval=self.t_list)  # the list from 0 to 2t
                 # t_eval is the intergration interval so it cannot be a single value
 
@@ -120,6 +134,39 @@ class E_loss_solve():
             else:
                 sol_y = init_E
             return sol_y  # return the E value after travels t
+
+    def E_loss_find_t_stop(self, init_E):
+        #find stoppint time for E threshold 1eV
+        # t should be 300fs to 1ps range
+        # try del_t = 10 fs
+
+        self.t_list_fs = range(0,1000,1)
+        self.t_list_ns = []
+        for value in self.t_list_fs:
+            self.t_list_ns.append(value*10**(-6))
+        self.last_t = self.t_list_ns[-1]
+
+
+        self.ini_E = init_E
+
+        solve = solve_ivp(self.E_loss_t_fun_ODE_v2, [0, self.last_t], [self.ini_E],
+                          t_eval=self.t_list_ns)
+        array = solve.y
+        sol_y = array[0]
+        # find the closest value to E = 1eV
+        abs_dis= 2000
+        i_pointer = 0
+        for i in range(len(sol_y)):
+            abs_dis_temp = np.sqrt((sol_y[i]-1)**2)
+            if abs_dis_temp< abs_dis:
+                abs_dis = abs_dis_temp
+                i_pointer = i
+        print("t",solve.t[i_pointer],"E",sol_y[i_pointer])
+        # print(solve.t)
+        # print(sol_y)
+        plt.plot(solve.t,array[0])
+        plt.show()
+
 
     def E_el_loss_result(self, init_E, t):
         #given t in ns and E in ev, return the final energy
@@ -169,7 +216,7 @@ class E_loss_solve():
             self.e_list.append(i*self.last_t/10)
         print(self.t_crit)
         # solve = solve_ivp(self.E_loss_el_t_fun_ODE, [0, 2*self.last_t], [self.ini_E], t_eval=self.e_list) # check one point's value
-        solve = solve_ivp(self.E_loss_t_fun_ODE, [0, self.last_t], [self.ini_E])
+        solve = solve_ivp(self.E_loss_t_fun_ODE_v2, [0, self.last_t], [self.ini_E])
         array = solve.y
         sol_y = array[0]
         print("y", array,sol_y)
@@ -272,6 +319,7 @@ class E_loss_solve():
 
 if __name__=="__main__":
     solve = E_loss_solve()
-    solve.E_loss_total_t_fun_ODE_posttest()
+    solve.E_loss_find_t_stop(1000)
+    # solve.E_loss_total_t_fun_ODE_posttest()
     # print(solve.E_loss_result(1000,7.1E-4))
     # print(solve.E_el_loss_result(2, 0.005))
