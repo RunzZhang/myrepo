@@ -32,7 +32,7 @@ class MC_sim_full_argon():
         self.time_factor = 10**(-3)  # time factor from ps to ns
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_0"
-        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231107"
+        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_01"
 
 
         # self.argon_init = [10000, 0*self.time_factor ,{6098.9:[93.57*self.argon40_weight,0],3732:[0.121*self.argon40_weight,0],3702.9:[0.474*self.argon40_weight,0],3573:[0.0744*self.argon40_weight,0],
@@ -102,7 +102,8 @@ class MC_sim_full_argon():
         self.level39811 = [3981.1, 0.028*self.time_factor, {0: [1, 3981.1]},self.m_37]
         self.level39385 = [3938.5, 0.017*self.time_factor, {0: [1, 3938]},self.m_37]
         self.level35180 = [3518.0, 0.041*self.time_factor, {1410.6:[23.7,2107.5],2490.9: [2.7, 1026.7]},self.m_37]
-        self.level24909 = [2490.9, 0.462*self.time_factor, {0: [57, 2490.6],1611.9:[0.5, 878.5]},self.m_37]
+        # self.level24909 = [2490.9, 0.462*self.time_factor, {0: [57, 2490.6],1611.9:[0.5, 878.5]},self.m_37]
+        self.level24909 = [2490.9, 0.1*0.462 * self.time_factor, {0: [57, 2490.6], 1611.9: [0.5, 878.5]}, self.m_37]
         self.level16119 = [1611.9, 4.38*1000*self.time_factor, {0: [3.4, 1611.7]},self.m_37]
         self.level14106 = [1410.6, 0.59*self.time_factor, {0: [33, 1410.3]},self.m_37]
 
@@ -115,7 +116,7 @@ class MC_sim_full_argon():
         self.gamma_emission_list_1d = []
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
-        # self.MC_sim(self.runtime)
+        self.MC_sim(self.runtime)
         self.data_analysis(self.address)
 
 

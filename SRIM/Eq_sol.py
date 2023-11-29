@@ -81,6 +81,16 @@ class E_loss_solve():
 
         return part_a
 
+    def E_loss_N_x_fun_ODE_v2(self, t, y):
+        #test part a
+        ep = self.C_tf*0.5* (y*0.5/13.6)/(self.Z_tp**2*self.Z**(0.5))
+        part_a = - np.log(1+self.a * ep) / (2 * (ep + self.b * (ep) ** self.c) + self.d * (ep) ** 0.5)/self.LSS_factor
+        # part_a = - self.a * ep/ (
+        #             2 * (ep + self.b * (ep) ** self.c) + self.d * (ep) ** 0.5) * self.factor * self.Tar_Den * 10 ** 8
+
+        return part_a
+
+
     def E_loss_el_t_fun_ODE(self, t, y):
         # test part c
 
@@ -240,14 +250,14 @@ class E_loss_solve():
         E_list = range(0, 500)
         DEDX_list = []
         for i in range(len(E_list)):
-            DEDX_list.append(-self.E_loss_N_x_fun_ODE(0,E_list[i]))
+            DEDX_list.append(-self.E_loss_N_x_fun_ODE_v2(0,E_list[i]))
         plt.plot(E_list, DEDX_list)
         plt.show()
 
     def E_loss_N_x_fun_ODE_posttest(self):
         self.last_t = 4000
         self.ini_E = 500
-        solve = solve_ivp(self.E_loss_N_x_fun_ODE, [0, self.last_t], [self.ini_E], t_eval=range(0, self.last_t))
+        solve = solve_ivp(self.E_loss_N_x_fun_ODE_v2, [0, self.last_t], [self.ini_E], t_eval=range(0, self.last_t))
         array = solve.y
         sol_y = array[0]
         print("y", sol_y)
@@ -256,7 +266,7 @@ class E_loss_solve():
         Dy_list = []
         for i in range(1, len(sol_y)):  # double check with solution result
             value = (sol_y[i] - sol_y[i - 1]) / (solve.t[i] - solve.t[i - 1])
-            Dy_list.append(value)
+            Dy_list.append(-value)
         plt.plot(sol_y[1:], Dy_list)
         print("Dydt", Dy_list)
         plt.show()
@@ -319,7 +329,9 @@ class E_loss_solve():
 
 if __name__=="__main__":
     solve = E_loss_solve()
-    solve.E_loss_find_t_stop(1000)
+    solve.E_loss_find_t_stop(2000)
+    # solve.E_loss_N_x_fun_ODE_pretest()
+    # solve.E_loss_N_x_fun_ODE_posttest()
     # solve.E_loss_total_t_fun_ODE_posttest()
     # print(solve.E_loss_result(1000,7.1E-4))
     # print(solve.E_el_loss_result(2, 0.005))
