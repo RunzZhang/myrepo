@@ -41,7 +41,8 @@ class E_loss_solve():
         self.mean_ratio =  2.1246181979237e-12 # adjust the formula unit to ev/A
         self.factor = PI * self.au ** 2 * self.gam * self.mean_ratio /(self.F1)
         self.k = 1.541e-05
-        self.total_k = 0.0338721
+        self.total_k = 0.0365*(10**(-3))
+        # DE/DX(eV/A)/sqrt(E in eV)
         self.mass = 6.63551406835257e-26 # argon 40 in kg
         self.T_factor = 0.1 # change m/s to A/ns
         self.Tar_Den = 2.6833E+19 # atoms/cm3
@@ -114,7 +115,7 @@ class E_loss_solve():
 
     def E_loss_result(self, init_E, t):
         #given t in ns and E in ev, return the final energy
-        if t >9.99*10**(-3): # hard cut for ini E 2kev, t in ns, E threshold  = 1eV (t threshold = 0.72 ps)
+        if t >0.048: # hard cut for ini E 2kev, t in ns, E threshold  = 1eV (t threshold = 0.72 ps)
             # to reduce the waring and caculation speed
             return 0
         elif init_E<1:
@@ -153,7 +154,7 @@ class E_loss_solve():
         self.t_list_fs = range(0,1000,1)
         self.t_list_ns = []
         for value in self.t_list_fs:
-            self.t_list_ns.append(value*10**(-5))
+            self.t_list_ns.append(value*10**(-3))
         self.last_t = self.t_list_ns[-1]
 
 
