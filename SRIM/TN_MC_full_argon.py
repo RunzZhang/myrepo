@@ -353,17 +353,17 @@ class MC_sim_full_argon():
             print("read", pile3)
         bin_n = 500
 
-        hist_result1 = plt.hist(address1, bins=bin_n, range=(start, end), density=True)
+        hist_result1 = plt.hist(pile1, bins=bin_n, range=(start, end), density=True)
         plt.clf()
         for i in range(len(hist_result1[1]) - 1):
             x1_bins.append((hist_result1[1][i] + hist_result1[1][i + 1]) / 2)
 
-        hist_result2 = plt.hist(address2, bins=bin_n, range=(start, end), density=True)
+        hist_result2 = plt.hist(pile2, bins=bin_n, range=(start, end), density=True)
         plt.clf()
         for i in range(len(hist_result2[1]) - 1):
             x2_bins.append((hist_result2[1][i] + hist_result2[1][i + 1]) / 2)
 
-        hist_result3 = plt.hist(address3, bins=bin_n, range=(start, end), density=True)
+        hist_result3 = plt.hist(pile3, bins=bin_n, range=(start, end), density=True)
         plt.clf()
         for i in range(len(hist_result3[1]) - 1):
             x3_bins.append((hist_result3[1][i] + hist_result3[1][i + 1]) / 2)
