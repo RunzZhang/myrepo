@@ -366,7 +366,7 @@ class MC_sim_full_argon():
         hist_result3 = plt.hist(address3, bins=bin_n, range=(start, end), density=True)
         plt.clf()
         for i in range(len(hist_result3[1]) - 1):
-            x2_bins.append((hist_result3[1][i] + hist_result3[1][i + 1]) / 2)
+            x3_bins.append((hist_result3[1][i] + hist_result3[1][i + 1]) / 2)
 
         plt.plot(x1_bins, hist_result1[0], color="blue", label="0.1 lifetime")
         plt.plot(x2_bins, hist_result2[0], color="orange", label="0.5 lifetime ")
