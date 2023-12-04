@@ -116,9 +116,9 @@ class MC_sim_full_argon():
         self.gamma_emission_list_1d = []
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
-        self.MC_sim(self.runtime)
-        self.data_analysis(self.address)
-
+        # self.MC_sim(self.runtime)
+        # self.data_analysis(self.address)
+        self.plot_pile_up()
 
     def data_preparation(self):
         for i in range(len(self.argon_list)):# for each chain
@@ -333,7 +333,51 @@ class MC_sim_full_argon():
 
 
 
+    def plot_pile_up(self):
+        address1 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_-01"
+        address2 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_-05"
+        address3 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_00"
+        start = 0
+        end = 1200
+        x_bins = []
+        with open(address1, "rb") as fp:  # Unpickling
+            pile1 = pickle.load(fp)
+            print("read", pile1)
+        with open(address2, "rb") as fp:  # Unpickling
+            pile2 = pickle.load(fp)
+            print("read", pile2)
+        with open(address3, "rb") as fp:  # Unpickling
+            pile3 = pickle.load(fp)
+            print("read", pile3)
+        bin_n = 500
 
+        hist_result1 = plt.hist(address1, bins=bin_n, range=(start, end), density=True)
+        plt.clf()
+        for i in range(len(hist_result1[1]) - 1):
+            x_bins.append((hist_result1[1][i] + hist_result1[1][i + 1]) / 2)
+
+        hist_result2 = plt.hist(address2, bins=bin_n, range=(start, end), density=True)
+        plt.clf()
+        for i in range(len(hist_result2[1]) - 1):
+            x_bins.append((hist_result2[1][i] + hist_result2[1][i + 1]) / 2)
+
+        hist_result3 = plt.hist(address3, bins=bin_n, range=(start, end), density=True)
+        plt.clf()
+        for i in range(len(hist_result3[1]) - 1):
+            x_bins.append((hist_result3[1][i] + hist_result3[1][i + 1]) / 2)
+
+        plt.plot(x_bins, hist_result1[0], color="blue", label="0.1 lifetime")
+        plt.plot(x_bins, hist_result2[0], color="orange", label="0.5 lifetime ")
+        plt.plot(x_bins, hist_result3[0], color="red", label="origin lifetime")
+        plt.xlabel("energy/eV")
+        plt.ylabel("P")
+        plt.yscale("log")
+        plt.yticks(fontsize=18)
+        plt.xticks(fontsize=18)
+        plt.xlim([0, 1200])
+        # plt.ylim([1E-5,0.1])
+        plt.legend()
+        plt.show()
 
 
 
