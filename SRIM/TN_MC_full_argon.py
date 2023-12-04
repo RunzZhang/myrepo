@@ -339,7 +339,9 @@ class MC_sim_full_argon():
         address3 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_00"
         start = 0
         end = 1200
-        x_bins = []
+        x1_bins = []
+        x2_bins = []
+        x3_bins = []
         with open(address1, "rb") as fp:  # Unpickling
             pile1 = pickle.load(fp)
             print("read", pile1)
@@ -354,21 +356,21 @@ class MC_sim_full_argon():
         hist_result1 = plt.hist(address1, bins=bin_n, range=(start, end), density=True)
         plt.clf()
         for i in range(len(hist_result1[1]) - 1):
-            x_bins.append((hist_result1[1][i] + hist_result1[1][i + 1]) / 2)
+            x1_bins.append((hist_result1[1][i] + hist_result1[1][i + 1]) / 2)
 
         hist_result2 = plt.hist(address2, bins=bin_n, range=(start, end), density=True)
         plt.clf()
         for i in range(len(hist_result2[1]) - 1):
-            x_bins.append((hist_result2[1][i] + hist_result2[1][i + 1]) / 2)
+            x2_bins.append((hist_result2[1][i] + hist_result2[1][i + 1]) / 2)
 
         hist_result3 = plt.hist(address3, bins=bin_n, range=(start, end), density=True)
         plt.clf()
         for i in range(len(hist_result3[1]) - 1):
-            x_bins.append((hist_result3[1][i] + hist_result3[1][i + 1]) / 2)
+            x2_bins.append((hist_result3[1][i] + hist_result3[1][i + 1]) / 2)
 
-        plt.plot(x_bins, hist_result1[0], color="blue", label="0.1 lifetime")
-        plt.plot(x_bins, hist_result2[0], color="orange", label="0.5 lifetime ")
-        plt.plot(x_bins, hist_result3[0], color="red", label="origin lifetime")
+        plt.plot(x1_bins, hist_result1[0], color="blue", label="0.1 lifetime")
+        plt.plot(x2_bins, hist_result2[0], color="orange", label="0.5 lifetime ")
+        plt.plot(x3_bins, hist_result3[0], color="red", label="origin lifetime")
         plt.xlabel("energy/eV")
         plt.ylabel("P")
         plt.yscale("log")
