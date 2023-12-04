@@ -197,7 +197,7 @@ class SRIM_EXY():
                             np.sqrt((self.Posx[j] - self.Posx[j - 1]) ** 2 + (self.Posy[j] - self.Posy[j - 1]) ** 2 + (
                                     self.Posz[j] - self.Posz[j - 1]) ** 2))
                     elif mode ==6:
-                        value  = -(self.Energy[j] - self.Energy[j - 1]) * 1000-(self.ElStop[j]+self.table.output(self.Energy[j]*1000) )* (
+                        value  = (self.Energy[j] - self.Energy[j - 1]) * 1000-(self.ElStop[j]+self.table.output(self.Energy[j]*1000) )* (
                             np.sqrt((self.Posx[j] - self.Posx[j - 1]) ** 2 + (self.Posy[j] - self.Posy[j - 1]) ** 2 + (
                                     self.Posz[j] - self.Posz[j - 1]) ** 2))
 
