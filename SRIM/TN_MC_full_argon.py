@@ -20,7 +20,7 @@ class MC_sim_full_argon():
         #[level energy, lifetime ,{next level_i: [branch ratio, gamma energy, possibility boundary]}]
         # argon init first value is 7000 to be distinguishedfrom other lines
         # the list first value must be unique
-        self.runtime = 100000
+        self.runtime = 30000
         self.argon40_weight =97.4/0.93
         self.argon36_weight = 2.5
         self.Energy_factor = 10 ** 3 * 1.602 * 10 ** (-19)
@@ -32,7 +32,7 @@ class MC_sim_full_argon():
         self.time_factor = 10**(-3)  # time factor from ps to ns
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_0"
-        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231204_full_00"
+        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231204_full"
 
 
         # self.argon_init = [10000, 0*self.time_factor ,{6098.9:[93.57*self.argon40_weight,0],3732:[0.121*self.argon40_weight,0],3702.9:[0.474*self.argon40_weight,0],3573:[0.0744*self.argon40_weight,0],
