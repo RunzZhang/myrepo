@@ -31,23 +31,23 @@ class MC_sim_full_argon():
         self.m_37 = 36.97 * 10 ** (-3) / (6.023 * 10 ** 23)  # Ar40 mass in kg
         self.time_factor = 10**(-3)  # time factor from ps to ns
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
-        # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_0"
-        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231204_full"
+        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_00"
+        # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231204_full"
 
 
         # self.argon_init = [10000, 0*self.time_factor ,{6098.9:[93.57*self.argon40_weight,0],3732:[0.121*self.argon40_weight,0],3702.9:[0.474*self.argon40_weight,0],3573:[0.0744*self.argon40_weight,0],
         #                               3564.9:[0.121*self.argon40_weight,0],3278.7:[0.372*self.argon40_weight,0],
         # #                               3111.4:[0.372*self.argon40_weight,0], 8791.2:[100.6*self.argon36_weight, 0]},self.m_41]
-        self.argon_init = [10000, 0 * self.time_factor,
-                           {6098.9: [93.57 * self.argon40_weight, 0], 3732: [0.121 * self.argon40_weight, 0],
-                            3702.9: [0.474 * self.argon40_weight, 0], 3573: [0.0744 * self.argon40_weight, 0],
-                             3278.7: [0.372 * self.argon40_weight, 0], 8791.2: [100.6 * self.argon36_weight, 0]},
-                           self.m_41]
         # self.argon_init = [10000, 0 * self.time_factor,
         #                    {6098.9: [93.57 * self.argon40_weight, 0], 3732: [0.121 * self.argon40_weight, 0],
         #                     3702.9: [0.474 * self.argon40_weight, 0], 3573: [0.0744 * self.argon40_weight, 0],
-        #                      3278.7: [0.372 * self.argon40_weight, 0], 8791.2: [100000000.6 * self.argon36_weight, 0]},
+        #                      3278.7: [0.372 * self.argon40_weight, 0], 8791.2: [100.6 * self.argon36_weight, 0]},
         #                    self.m_41]
+        self.argon_init = [10000, 0 * self.time_factor,
+                           {6098.9: [93.57 * self.argon40_weight, 0], 3732: [0.121 * self.argon40_weight, 0],
+                            3702.9: [0.474 * self.argon40_weight, 0], 3573: [0.0744 * self.argon40_weight, 0],
+                             3278.7: [0.372 * self.argon40_weight, 0], 8791.2: [100000000.6 * self.argon36_weight, 0]},
+                           self.m_41]
         # self.level60989 = [6098.9, 0 * self.time_factor,
         #                    {516.1: [10.8, 5582.0], 1034.7: [0.242, 5063.7], 1353.9: [51.2, 4745.0],
         #                     2398.1: [9.11, 3700.4], 2693: [0.0744, 3405.3], 2733.4: [3.91, 3365.5],
@@ -80,14 +80,14 @@ class MC_sim_full_argon():
         self.level5161 = [516.1, 260*self.time_factor, {0 :[23.5,516], 167.3:[6.14,348.7]},self.m_41]
         self.level1673 = [167.3, 315*self.time_factor, {0 :[74, 167.3]},self.m_41]
         # argon 36
-        self.level87912 = [8791.2, 0*self.time_factor ,{0:[10.9,8790.4],2490.9:[37.5,6299.7],3518.0:[25,5272.6],3938.5:[0.9,4851.8],3981.1:[1.7,4810.3],4448.6:[3.3,4342.3],
-                                      4578.7:[0.9,4211.6],4637.6:[1.9,4153],5090.5:[13.4,3700.2],6583.7:[2.7,2207.6], 6826.2:[2.4,1966.7]},self.m_37]
+        # self.level87912 = [8791.2, 0*self.time_factor ,{0:[10.9,8790.4],2490.9:[37.5,6299.7],3518.0:[25,5272.6],3938.5:[0.9,4851.8],3981.1:[1.7,4810.3],4448.6:[3.3,4342.3],
+        #                               4578.7:[0.9,4211.6],4637.6:[1.9,4153],5090.5:[13.4,3700.2],6583.7:[2.7,2207.6], 6826.2:[2.4,1966.7]},self.m_37]
 
-        # self.level87912 = [8791.2, 0 * self.time_factor,
-        #                    {0: [10.9, 8790.4], 2490.9: [1000000, 6299.7], 3518.0: [25, 5272.6], 3938.5: [0.9, 4851.8],
-        #                     3981.1: [1.7, 4810.3], 4448.6: [3.3, 4342.3],
-        #                     4578.7: [0.9, 4211.6], 4637.6: [1.9, 4153], 5090.5: [13.4, 3700.2], 6583.7: [2.7, 2207.6],
-        #                     6826.2: [2.4, 1966.7]}, self.m_37]
+        self.level87912 = [8791.2, 0 * self.time_factor,
+                           {0: [10.9, 8790.4], 2490.9: [1000000, 6299.7], 3518.0: [25, 5272.6], 3938.5: [0.9, 4851.8],
+                            3981.1: [1.7, 4810.3], 4448.6: [3.3, 4342.3],
+                            4578.7: [0.9, 4211.6], 4637.6: [1.9, 4153], 5090.5: [13.4, 3700.2], 6583.7: [2.7, 2207.6],
+                            6826.2: [2.4, 1966.7]}, self.m_37]
 
         self.level68262 = [6826.2, 0.001*self.time_factor, {4578.7 :[5, 2247.9]},self.m_37]
         # nodata 6826
@@ -102,8 +102,8 @@ class MC_sim_full_argon():
         self.level39811 = [3981.1, 0.028*self.time_factor, {0: [1, 3981.1]},self.m_37]
         self.level39385 = [3938.5, 0.017*self.time_factor, {0: [1, 3938]},self.m_37]
         self.level35180 = [3518.0, 0.041*self.time_factor, {1410.6:[23.7,2107.5],2490.9: [2.7, 1026.7]},self.m_37]
-        self.level24909 = [2490.9, 0.462*self.time_factor, {0: [57, 2490.6],1611.9:[0.5, 878.5]},self.m_37]
-        # self.level24909 = [2490.9, 0.462 * self.time_factor, {0: [57, 2490.6], 1611.9: [0.5, 878.5]}, self.m_37]
+        # self.level24909 = [2490.9, 0.462*self.time_factor, {0: [57, 2490.6],1611.9:[0.5, 878.5]},self.m_37]
+        self.level24909 = [2490.9, 1*0.462 * self.time_factor, {0: [57, 2490.6], 1611.9: [0.5, 878.5]}, self.m_37]
         self.level16119 = [1611.9, 4.38*1000*self.time_factor, {0: [3.4, 1611.7]},self.m_37]
         self.level14106 = [1410.6, 0.59*self.time_factor, {0: [33, 1410.3]},self.m_37]
 
