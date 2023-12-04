@@ -20,7 +20,7 @@ class MC_sim_full_argon():
         #[level energy, lifetime ,{next level_i: [branch ratio, gamma energy, possibility boundary]}]
         # argon init first value is 7000 to be distinguishedfrom other lines
         # the list first value must be unique
-        self.runtime = 30000
+        self.runtime = 100000
         self.argon40_weight =97.4/0.93
         self.argon36_weight = 2.5
         self.Energy_factor = 10 ** 3 * 1.602 * 10 ** (-19)
