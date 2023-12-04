@@ -54,7 +54,7 @@ class SRIM_EXY():
         self.data_ini()
         self.table = SRIM_Table()
         self.secondary_variable()
-        self.scatterplot(self.E_compare_diff_1d, self.Energy,  "E_diff/eV", "Ek/keV")
+        self.scatterplot(self.E_compare_diff_1d, self.E_eV,  "E_diff/eV", "Ek/keV")
         print("sqrt E",self.sqrt_E[:100])
         # self.plotEvX_fit( self.sqrt_E, self.ElStop)
 
@@ -132,6 +132,7 @@ class SRIM_EXY():
         self.KEInitial = (self.daf.iloc[0][1])  # Set kinetic energy variable (in keV)
         self.vi_1d = [np.sqrt(2*e_v*1000*self.Energy[i]/self.mass) for i in range(len(self.Energy))]
         self.sqrt_E = [np.sqrt(1000*self.Energy[i]) for i in range(len(self.Energy))]
+        self.E_eV = [1000*self.Energy[i] for i in range(len(self.Energy))]
         # print(KE)
         print(len(self.Posx), len(self.Energy), len(self.ElStop), len(self.Elrecoil), len(self.IonNum))
         print(self.Events)
@@ -200,7 +201,7 @@ class SRIM_EXY():
                             np.sqrt((self.Posx[j] - self.Posx[j - 1]) ** 2 + (self.Posy[j] - self.Posy[j - 1]) ** 2 + (
                                     self.Posz[j] - self.Posz[j - 1]) ** 2))
                     elif mode ==6:
-                        value  = (self.Energy[j] - self.Energy[j - 1]) * 1000-((self.ElStop[j]+self.ElStop[j-1])/2+self.table.output((self.Energy[j]+self.Energy[j-1])*1000/2) )* (
+                        value  = (self.Energy[j-1] - self.Energy[j]) * 1000-((self.ElStop[j]+self.ElStop[j-1])/2+self.table.output((self.Energy[j]+self.Energy[j-1])*1000/2) )* (
                             np.sqrt((self.Posx[j] - self.Posx[j - 1]) ** 2 + (self.Posy[j] - self.Posy[j - 1]) ** 2 + (
                                     self.Posz[j] - self.Posz[j - 1]) ** 2))
                         if value < -990:
