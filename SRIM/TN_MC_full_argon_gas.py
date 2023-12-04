@@ -117,7 +117,7 @@ class MC_sim_full_argon():
         self.gamma_emission_list_1d = []
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
-        self.MC_sim(self.runtime)
+        # self.MC_sim(self.runtime)
         self.data_analysis(self.address)
 
 
@@ -321,7 +321,7 @@ class MC_sim_full_argon():
             print("read",MC_8)
 
         plt.plot(x_bins, hist_result[0], color="blue",label= "full chains")
-        plt.plot(MC_8[0], MC_8[1], color="orange", label = "8 main chain")
+        # plt.plot(MC_8[0], MC_8[1], color="orange", label = "8 main chain")
         plt.xlabel("energy/eV")
         plt.ylabel("P")
         plt.yscale("log")
