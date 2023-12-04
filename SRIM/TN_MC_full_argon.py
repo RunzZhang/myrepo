@@ -32,7 +32,7 @@ class MC_sim_full_argon():
         self.time_factor = 10**(-3)  # time factor from ps to ns
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_0"
-        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_full_v1"
+        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231204_full_00"
 
 
         # self.argon_init = [10000, 0*self.time_factor ,{6098.9:[93.57*self.argon40_weight,0],3732:[0.121*self.argon40_weight,0],3702.9:[0.474*self.argon40_weight,0],3573:[0.0744*self.argon40_weight,0],
@@ -207,7 +207,8 @@ class MC_sim_full_argon():
                             # print("gamma",gamma_energy)
                             temp_energy = 0.5 * self.mass * (vx ** 2 + vy ** 2 + vz ** 2) /self.ev # energy in ev
                             # print("pre kenit", temp_energy, "t in ns", state[1])
-                            E_final = solve_tool.E_el_loss_result(temp_energy,state[1])
+                            # E_final = solve_tool.E_el_loss_result(temp_energy,state[1])
+                            E_final = solve_tool.E_loss_result(temp_energy, state[1])
                             # print("post knit", E_final)
                             E_deposit = temp_energy- E_final
                             E_deposit_list.append(E_deposit)

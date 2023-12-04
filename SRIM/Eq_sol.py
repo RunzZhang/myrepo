@@ -131,7 +131,7 @@ class E_loss_solve():
                 self.t_list.append(t*i/10)
             self.ini_E = init_E
             if t != 0:
-                solve = solve_ivp(self.E_loss_t_fun_ODE, [0, self.last_t], [self.ini_E],
+                solve = solve_ivp(self.E_loss_t_fun_ODE_v2, [0, self.last_t], [self.ini_E],
                                   t_eval=self.t_list)  # the list from 0 to 2t
                 # t_eval is the intergration interval so it cannot be a single value
 
