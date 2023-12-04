@@ -37,16 +37,16 @@ class E_loss_solve():
         print("au", self.au)
         self.gam = 4 / 2 ** 2
         self.ev = 1.60218e-19
-        self.Tar_Den = 2.1361E+22  # atoms/cm3
+        self.Tar_Den = 2.6833E+19  # atoms/cm3
         self.mean_ratio =  2.1246181979237e-12 # adjust the formula unit to ev/A
         self.factor = PI * self.au ** 2 * self.gam * self.mean_ratio /(self.F1)
         self.k = 1.541e-05
         self.total_k = 0.0338721
         self.mass = 6.63551406835257e-26 # argon 40 in kg
         self.T_factor = 0.1 # change m/s to A/ns
-        self.Tar_Den = 2.1361E+22 # atoms/cm3
+        self.Tar_Den = 2.6833E+19 # atoms/cm3
         self.alpha_inv = 137
-        self.LSS_factor = 1.2656*(10**(-2))# LSS variable transformation by SRIM table
+        self.LSS_factor = 1.0075E+01# LSS variable transformation by SRIM table
         print("factor",self.factor*self.Tar_Den*10**8)
         print("LSS factor inverse", 1/self.LSS_factor)
 
