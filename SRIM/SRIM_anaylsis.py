@@ -160,6 +160,9 @@ class SRIM_EXY():
         event_pointer = 1
         temp = []
         step_pointer = 0
+        Ed_limit_pointer = []
+        Ek_limit_pointer = []
+        Num_limit_pointer = []
         for j in range(length):  # all length should be same
             # for j in range(16):
             if self.IonNum[j] == event_pointer:
@@ -197,9 +200,15 @@ class SRIM_EXY():
                             np.sqrt((self.Posx[j] - self.Posx[j - 1]) ** 2 + (self.Posy[j] - self.Posy[j - 1]) ** 2 + (
                                     self.Posz[j] - self.Posz[j - 1]) ** 2))
                     elif mode ==6:
-                        value  = (self.Energy[j] - self.Energy[j - 1]) * 1000-(self.ElStop[j]+self.table.output(self.Energy[j]*1000) )* (
+                        value  = (self.Energy[j] - self.Energy[j - 1]) * 1000-((self.ElStop[j]+self.ElStop[j-1])/2+self.table.output((self.Energy[j]+self.Energy[j-1])*1000/2) )* (
                             np.sqrt((self.Posx[j] - self.Posx[j - 1]) ** 2 + (self.Posy[j] - self.Posy[j - 1]) ** 2 + (
                                     self.Posz[j] - self.Posz[j - 1]) ** 2))
+                        if value < -990:
+                            # rule out bc step distance is too small
+                            Ek_limit_pointer.append(self.Energy[j])
+                            Num_limit_pointer.append(self.IonNum[j])
+                            # find the row number of -990
+                            Ed_limit_pointer.append(j)
 
                     temp.append(value)
                     list_1d.append(value)
@@ -220,6 +229,8 @@ class SRIM_EXY():
         list_2d.append(temp)
 
         print("mode",mode, len(list_1d), "\n ",list_1d[:30], list_2d[:3])
+        if mode ==6:
+            print("lower limit 990", Ed_limit_pointer, '\n', Ek_limit_pointer,"\n", Num_limit_pointer)
         return (list_1d, list_2d)
 
 
@@ -335,8 +346,8 @@ class SRIM_Table():
 
         self.data_ini()
         self.fetch_data()
-        self.compare_theory()
-        self.plot_data()
+        # self.compare_theory()
+        # self.plot_data()
 
     def data_ini(self):
 
