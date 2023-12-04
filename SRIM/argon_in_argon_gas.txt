@@ -1,0 +1,66 @@
+=================================================================
+              Calculation using SRIM-2006
+              SRIM version ---> SRIM-2008.04
+              Calc. date   ---> December 04, 2023
+ ==================================================================
+
+ Disk File Name = SRIM Outputs\Argon in Argon gas (gas)
+
+ Ion = Argon [18] , Mass = 39.962 amu
+
+ Target Density =  1.7800E-03 g/cm3 = 2.6833E+19 atoms/cm3
+ Target is a GAS
+ ======= Target  Composition ========
+    Atom   Atom   Atomic    Mass
+    Name   Numb   Percent   Percent
+    ----   ----   -------   -------
+     Ar     18    100.00    100.00
+ ====================================
+ Bragg Correction = 0.00%
+ Stopping Units =   eV / Angstrom
+ See bottom of Table for other Stopping units
+
+   Ion        dE/dx      dE/dx     Projected  Longitudinal   Lateral
+  Energy      Elec.      Nuclear     Range     Straggling   Straggling
+-----------  ---------- ---------- ----------  ----------  ----------
+999.999 eV    1.155E-03  1.711E-02    5.35 um     3.60 um     2.57 um
+   1.10 keV   1.212E-03  1.772E-02    5.65 um     3.77 um     2.70 um
+   1.20 keV   1.266E-03  1.828E-02    5.94 um     3.94 um     2.82 um
+   1.30 keV   1.317E-03  1.880E-02    6.23 um     4.10 um     2.94 um
+   1.40 keV   1.367E-03  1.929E-02    6.51 um     4.26 um     3.05 um
+   1.50 keV   1.415E-03  1.974E-02    6.78 um     4.41 um     3.16 um
+   1.60 keV   1.461E-03  2.017E-02    7.05 um     4.56 um     3.27 um
+   1.70 keV   1.506E-03  2.058E-02    7.31 um     4.71 um     3.38 um
+   1.80 keV   1.550E-03  2.096E-02    7.57 um     4.85 um     3.48 um
+   2.00 keV   1.634E-03  2.166E-02    8.08 um     5.13 um     3.69 um
+   2.25 keV   1.733E-03  2.245E-02    8.70 um     5.47 um     3.94 um
+   2.50 keV   1.827E-03  2.316E-02    9.30 um     5.79 um     4.17 um
+   2.75 keV   1.916E-03  2.380E-02    9.89 um     6.10 um     4.40 um
+   3.00 keV   2.001E-03  2.437E-02   10.46 um     6.41 um     4.62 um
+   3.25 keV   2.083E-03  2.490E-02   11.03 um     6.70 um     4.84 um
+   3.50 keV   2.161E-03  2.538E-02   11.58 um     6.99 um     5.05 um
+   3.75 keV   2.237E-03  2.582E-02   12.13 um     7.28 um     5.26 um
+   4.00 keV   2.311E-03  2.624E-02   12.67 um     7.56 um     5.46 um
+   4.50 keV   2.451E-03  2.697E-02   13.73 um     8.10 um     5.86 um
+   5.00 keV   2.583E-03  2.761E-02   14.77 um     8.63 um     6.25 um
+   5.50 keV   2.709E-03  2.818E-02   15.80 um     9.14 um     6.62 um
+   6.00 keV   2.830E-03  2.868E-02   16.80 um     9.65 um     6.99 um
+   6.50 keV   2.945E-03  2.913E-02   17.80 um    10.14 um     7.35 um
+   7.00 keV   3.057E-03  2.953E-02   18.78 um    10.63 um     7.70 um
+   8.00 keV   3.268E-03  3.021E-02   20.72 um    11.57 um     8.39 um
+   9.00 keV   3.466E-03  3.077E-02   22.63 um    12.49 um     9.05 um
+  10.00 keV   3.653E-03  3.124E-02   24.51 um    13.40 um     9.70 um
+  11.00 keV   3.832E-03  3.163E-02   26.37 um    14.28 um    10.33 um
+-----------------------------------------------------------
+ Multiply Stopping by        for Stopping Units
+ -------------------        ------------------
+  1.0000E+00                 eV / Angstrom
+  1.0000E+01                keV / micron
+  1.0000E+01                MeV / mm
+  5.6182E+01                keV / (ug/cm2)
+  5.6182E+01                MeV / (mg/cm2)
+  5.6182E+04                keV / (mg/cm2)
+  3.7268E+03                 eV / (1E15 atoms/cm2)
+  1.0075E+01                L.S.S. reduced units
+ ==================================================================
+ (C) 1984,1989,1992,1998,2008 by J.P. Biersack and J.F. Ziegler
