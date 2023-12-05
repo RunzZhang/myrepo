@@ -116,7 +116,7 @@ class MC_sim_full_argon():
         self.gamma_emission_list_1d = []
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
-        self.MC_sim(self.runtime)
+        # self.MC_sim(self.runtime)
         self.data_analysis(self.address)
         # self.plot_pile_up()
 
@@ -327,7 +327,7 @@ class MC_sim_full_argon():
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
-        # plt.ylim([1E-5,0.1])
+        plt.ylim([1E-5,0.1])
         plt.legend()
         plt.show()
 
