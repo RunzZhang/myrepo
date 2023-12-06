@@ -114,7 +114,7 @@ class E_loss_solve():
 
     def E_loss_result(self, init_E, t):
         #given t in ns and E in ev, return the final energy
-        if t >7.2*10**(-4): # hard cut for ini E 2kev, t in ns, E threshold  = 1eV (t threshold = 0.72 ps)
+        if t >5.58*10**(-4): # hard cut for ini E 2kev, t in ns, E threshold  = 1eV (t threshold = 0.72 ps)
             # to reduce the waring and caculation speed
             return 0
         elif init_E<1:
