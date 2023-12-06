@@ -177,7 +177,7 @@ class E_loss_solve():
         time = []
         for t_ns in solve.t:
             time.append(t_ns*1000)
-        plt.plot(solve.t,array[0])
+        plt.plot(time,array[0])
         plt.xlabel("t/ps")
         plt.ylabel("E/eV")
         plt.show()
