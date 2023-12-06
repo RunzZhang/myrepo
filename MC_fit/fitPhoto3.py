@@ -6,7 +6,7 @@ import scipy.optimize
 import random
 
 ################################################
-flist=["./Sb124/JAEA.txt","./Co60/JAEA.txt","./Th228/JAEA.txt"]
+flist=["./Sb124JAEA.txt","./Co60JAEA.txt","./Th228JAEA.txt"]
 ################################################
 pnlist=["./Sb","./Bi"]
 ################################################
@@ -17,7 +17,7 @@ aplist=[1,8] #this is not yet implimented
 try:
     fileprefix=sys.argv[1]
 except:
-    fileprefix="Test_Dump/test2"
+    fileprefix="./Test_Dump/test2"
 """ 
 def NucleationEfficiency(r,T,sigma):
     #A=1/2
@@ -474,6 +474,8 @@ def photoJitter(photoSourceTrue,photoBackMean,sourceError,time=100):
 def phototestTrue(pnc_filepath,livetime,T,sigLow,sigUp):
     #data1=np.loadtxt("../photoNC/Informacion_Sb124_high1.txt",skiprows=1,dtype="str")
     data=np.loadtxt(pnc_filepath,skiprows=1,dtype="str")
+    # return a 1-d array with at i'th position, record number of events of multiplicity of i
+    print(pnc_filepath, data[:10])
     #data=data[0:2000]
     #print("Neutron output shape: ",np.shape(data))
     m=0
@@ -739,25 +741,28 @@ def main(flist,alist,pnlist,aplist):
         print ("")
         print ("")
         photoArrayTrue[p,:]=phototestTrue(pnlist[p]+"_fast.txt",500,T,sigLow,sigUp)
+        print("before",photoArrayTrue)
         pn_sourceError[p]=np.random.normal(1,sourceErr,1)
         photoArrayTrue[p,:]=photoJitter(photoArrayTrue[p,:],photoBackMean,pn_sourceError[p],time=time)
         #print ("M:",M)
+        print("after",photoArrayTrue)
         print(photoBackMean)
-        spec11,spec21,spec22,spec31,spec32,spec33,specn1,specn2,specn3,specnn=load_photN2(pnlist[p])
-        B1,B2,B3,Bn=multiplicer2(spec11,spec21,spec22,spec31,spec32,spec33,specn1,specn2,specn3,specnn,T,sigLow,sigUp,1)
-        Mspec=np.array([B1,B2,B3,Bn])
-        print ("Multiplicity: ",Mspec)
-        Bsum=np.sum(Mspec)
-        print ("Mult Percent: ",Mspec/Bsum)
-        Bav=B1/Bsum+B2/Bsum*2+B3/Bsum*3+Bn/Bsum*4
-        print ("Mult Average: ", Bav)
-        rate=neutron_rates(spec11,T,sigLow,sigUp,1)
-        Count=rate*time
-        rate,count,background,nuisanceT[p]= rateJitter(rate,Count, time=time, sourceErr=sourceErr,background=background)
-        pnrateList+=[rate]
-        pnrecoilList+=[spec11[:,0]]
-        pnweightList+=[spec11[:,1]]
-        print (p,pnlist[p],rate)
+        # comment spec1
+        # spec11,spec21,spec22,spec31,spec32,spec33,specn1,specn2,specn3,specnn=load_photN2(pnlist[p])
+        # B1,B2,B3,Bn=multiplicer2(spec11,spec21,spec22,spec31,spec32,spec33,specn1,specn2,specn3,specnn,T,sigLow,sigUp,1)
+        # Mspec=np.array([B1,B2,B3,Bn])
+        # print ("Multiplicity: ",Mspec)
+        # Bsum=np.sum(Mspec)
+        # print ("Mult Percent: ",Mspec/Bsum)
+        # Bav=B1/Bsum+B2/Bsum*2+B3/Bsum*3+Bn/Bsum*4
+        # print ("Mult Average: ", Bav)
+        # rate=neutron_rates(spec11,T,sigLow,sigUp,1)
+        # Count=rate*time
+        # rate,count,background,nuisanceT[p]= rateJitter(rate,Count, time=time, sourceErr=sourceErr,background=background)
+        # pnrateList+=[rate]
+        # pnrecoilList+=[spec11[:,0]]
+        # pnweightList+=[spec11[:,1]]
+        # print (p,pnlist[p],rate)
     Mspecx=[1,2,3,4]
     Mx=np.arange(1,11,1)
     #n4plus=1-(M[1]+M[2]+M[3])/np.sum(M)
@@ -797,7 +802,7 @@ def main(flist,alist,pnlist,aplist):
         print (InArray[:,i])
     np.savetxt(fileprefix+"start.txt",InArray)
     print ("THIS HERE")
-    print(p,len(pnweightList[p]),len(pnrecoilList),len(pnweightList))
+    print("p",len(pnweightList),len(pnrecoilList),len(pnweightList))
     NitersRough = 25000
     Niters = 100000
     Nwalkers = 4
