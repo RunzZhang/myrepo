@@ -32,7 +32,7 @@ class MC_sim_full_argon():
         self.time_factor = 10**(-3)  # time factor from ps to ns
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_-01"
-        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231204_full"
+        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
 
 
         # self.argon_init = [10000, 0*self.time_factor ,{6098.9:[93.57*self.argon40_weight,0],3732:[0.121*self.argon40_weight,0],3702.9:[0.474*self.argon40_weight,0],3573:[0.0744*self.argon40_weight,0],
@@ -116,7 +116,7 @@ class MC_sim_full_argon():
         self.gamma_emission_list_1d = []
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
-        # self.MC_sim(self.runtime)
+        self.MC_sim(self.runtime)
         self.data_analysis(self.address)
         # self.plot_pile_up()
 
