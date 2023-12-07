@@ -38,6 +38,7 @@ def NucleationEfficiencyTrue(r,T,sigLow,sigUp):
     return R
 
 def NucleationEfficiency(r,energies,efficiencies="auto"):
+    # unknow energy efficiency 2-d array, get r's efficiency value by interception
     n=len(energies)
     if efficiencies=="auto":
         print ("Automation")
@@ -71,6 +72,7 @@ def rateFinder(recoil,energies,efficiencies,t,weight):
     return sum(W)
 
 def specrafy(recoils,weights,binsize=1):
+    # print("specrafy")
     minr=np.floor(np.min(recoils))
     maxr=np.ceil(np.max(recoils))
     #if maxr>600:
@@ -85,8 +87,9 @@ def specrafy(recoils,weights,binsize=1):
         for j in range(lenS):
             if recoils[i]>recoilS[j]-binsize/2 and recoils[i]<=recoilS[j]+binsize/2:
                 weightS[j]+=weights[i]
-    #print (recoilS,weightS)
+    print (recoilS,weightS)
     return recoilS,weightS
+# weightS is finally recoils counts by a factor of its weights
     
 def load_photN(name):
     spec1=np.loadtxt(name+"_spec1.txt")
@@ -325,7 +328,11 @@ T=105
 sigma=15
 
 def analyze(file,T,sigLow,sigUp, N=2*10**9, Activity=100,time=100):
+    # N is number of events
+    # time is calibration time
+    # t is the simulated life time
     Data=np.loadtxt(file)
+    # print("analysing...", Data[:10])
     SourceRate=(3.7*10**6)*Activity/100
     Energy=Data[:,2]
     Recoils=Data[:,4]
@@ -792,14 +799,20 @@ def main(flist,alist,pnlist,aplist):
         print (nuisanceT[i])
         #rate=Rate
         #count=Count
+        # InArray is jittered data
         InArray[0,i]=rate
         InArray[1,i]=count
         InArray[2,i]=t
         InArray[3,i]=background
+        # original data
         RecoilList+=[Recoils]
         WeightList+=[Weights]
+
         print (TrueArray[:,i])
         print (InArray[:,i])
+    print("recoillist", RecoilList)
+    print("Weightlist", WeightList)
+    # recoil and weight is modified spectrum
     np.savetxt(fileprefix+"start.txt",InArray)
     print ("THIS HERE")
     print("p",len(pnweightList),len(pnrecoilList),len(pnweightList))
@@ -847,6 +860,7 @@ def main(flist,alist,pnlist,aplist):
         print ("Initial Guess: ",energies0)
         np.savetxt(fileprefix+"guess_"+str(nw+1)+".txt",energies0)
         for i in range(n):
+            # n is for flist index
             chi[i]=test(RecoilList[i],InArray[0,i],energies0,efficiencies0,nuisance0[i],InArray[2,i],WeightList[i],background=background,time=time)
         chipn=photoEval2(pn,photoneutrondata,pnlivetime,energies0,efficiencies0,photoArrayTrue,photoBackMean,loud=True,pnuisance=nuisance0[i+1:])
         """
