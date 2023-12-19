@@ -18,7 +18,7 @@ try:
     fileprefix=sys.argv[1]
 except:
     fileprefix="./Test_Dump/test2"
-save_path = "/data/runzezhang/result/chi2_test"
+save_path = "/data/runzezhang/result/chi2_test/"
 """ 
 def NucleationEfficiency(r,T,sigma):
     #A=1/2
