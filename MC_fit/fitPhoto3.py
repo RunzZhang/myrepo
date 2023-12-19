@@ -18,6 +18,7 @@ try:
     fileprefix=sys.argv[1]
 except:
     fileprefix="./Test_Dump/test2"
+save_path = "/data/runzezhang/result/chi2_test"
 """ 
 def NucleationEfficiency(r,T,sigma):
     #A=1/2
@@ -813,7 +814,7 @@ def main(flist,alist,pnlist,aplist):
     print("recoillist", RecoilList)
     print("Weightlist", WeightList)
     # recoil and weight is modified spectrum
-    np.savetxt(fileprefix+"start.txt",InArray)
+    np.savetxt(save_path+"start.txt",InArray)
     print ("THIS HERE")
     print("p",len(pnweightList),len(pnrecoilList),len(pnweightList))
     NitersRough = 25000
@@ -858,7 +859,7 @@ def main(flist,alist,pnlist,aplist):
                 energies0[j]=energies0[j-1]+bound*np.random.rand()+buffer
         #energies0=[180,210,270,300] #fixed intial guess
         print ("Initial Guess: ",energies0)
-        np.savetxt(fileprefix+"guess_"+str(nw+1)+".txt",energies0)
+        np.savetxt(save_path+"guess_"+str(nw+1)+".txt",energies0)
         for i in range(n):
             # n is for flist index
             chi[i]=test(RecoilList[i],InArray[0,i],energies0,efficiencies0,nuisance0[i],InArray[2,i],WeightList[i],background=background,time=time)
@@ -1156,7 +1157,7 @@ def main(flist,alist,pnlist,aplist):
         print ("")
         print ("")
         #postfitplot(Tb,sigmab,zero,twenty,fifty,eighty,onehundred,start=zero-10,end=onehundred+10)
-        np.savetxt(fileprefix+"fit.txt",OutArray)
+        np.savetxt(save_path+"fit.txt",OutArray)
     print (OutArray)
         
     
