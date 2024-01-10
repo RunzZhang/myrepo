@@ -1,9 +1,33 @@
 import matplotlib.pyplot as plt
+
+
 import sys
 import numpy as np
 import math
 import scipy.optimize
 import random
+
+"""comment from Noah:
+
+I’m thinking about the data stream for this. You could either do a joint photoneutron + thermal neutron calibration run, where you could replace Thomson scattering with your thermal neutron data. You can either replace the Thomson scattering entirely and write your own code to read in your file and turn it into an event rate, or you can convert your output into a similar format as my Thomson scattering outputs. Maybe with blank columns if there’s information I don’t read in. Here’s what the JAEA.txt file format looks like:
+Index - Event ID - Kinetic Energy (eV) - Scattering Angle (rad) - Recoil Energy (eV) - Weight - z (cm)
+10:58
+It looks like only the Recoil Energy (column #5 index 4) and the Weight (column #6 index 5) are used. Make the Weight 1 unless you apply some kind of weight factor to your events, or want to feed in a histogram instead of a output file. All the other columns can be 0's or anything. It doesn’t even need a 6th column at all or it could have 12 columns.
+11:02
+The analyze function is the one that handles the reading in of the Thomson scattering. I’d probably tweak the analyze function or tweak your output so it can read it. And from there, all you’d have to do is change some other parameters in analyze so the rate makes sense. Just adjusting the “activity” which assumes a radioactive source in micro-Curies (100 by default) and capital N, which is the total number of decays as a proxy for simulated live time.
+
+
+Noah Lamb
+  11:07 AM
+Here’s my user manual
+If it doesn’t run, contact me
+If it runs, also contact me, and I’ll explain what the calibration output looks like
+If the output file shows the calibration looks bad, then try turning off all sources of error and seeing if the model runs a good fit with no uncertainty or randomness
+If disabling one source off error fixes it, there may be an issue with the implementation of that source of error - or the calibration simply can’t handle that
+If the fit is still bad with perfect information, make a good initial guess and see if the model actively runs away from the good fit.
+If not, you could try running it longer and seeing if it could find the good fit by itself.
+If so, then something is definitely wrong, and you should contact me and/or debug
+If you reach a step in the manual that you do not know how to do, or have another question, contact me!"""
 
 
 
@@ -38,7 +62,9 @@ class multi_MC():
             return R
         """
         # self.main(self.flist, self.alist, self.pnlist, self.aplist)
-        self.multirun(self.runN)
+        # self.multirun(self.runN)
+        
+        self.analyze(self.runN)
 
             
         
@@ -82,12 +108,6 @@ class multi_MC():
             mean_node.append(total_node[j]/trueN)
 
         print(mean_node)
-
-
-
-
-
-
 
 
     def NucleationEfficiencyTrue(self, r, T, sigLow, sigUp):
