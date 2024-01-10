@@ -45,7 +45,7 @@ class multi_MC():
     def multirun(self,runN):
         N_digit = len(str(runN))
         for i in range(runN):
-            formatstr = '{0:0' + N_digit + '}'
+            formatstr = '{0:0' + str(N_digit) + '}'
             runstr = formatstr.format(i)
             print(runstr)
             self.main(self.flist, self.alist, self.pnlist, self.aplist,runstr)
