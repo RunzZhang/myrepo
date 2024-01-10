@@ -16,7 +16,9 @@ class regen_txt():
     def rewrite(self):
         for i in range(len(self.recoil_list)):
             self.txt += str(i)+" "+str(i)+ " 100 0 "+ str(self.recoil_list[i])+" 1 0\n"
-        np.savetxt(self.outputMCaddress, self.txt)
+        f = open(self.outputMCaddress, "a")
+        f.write(self.txt)
+        f.close()
 
 
 if __name__ =="__main__":
