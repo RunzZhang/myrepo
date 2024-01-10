@@ -50,6 +50,14 @@ class multi_MC():
             print(runstr)
             self.main(self.flist, self.alist, self.pnlist, self.aplist,runstr)
 
+    def analysis_results(self, runN):
+        N_digit = len(str(runN))
+        for i in range(runN):
+            formatstr = '{0:0' + str(N_digit) + '}'
+            runstr = formatstr.format(i)
+            path  = self.save_path + runstr+"fit.txt"
+            file = np.loadtxt(path)
+
     def NucleationEfficiencyTrue(self, r, T, sigLow, sigUp):
         if r < T:
             R = 1 / 2 * (1 + math.erf((r - T) / (sigLow * 2 ** (1 / 2))))
@@ -1212,6 +1220,7 @@ class multi_MC():
             print("")
             # postfitplot(Tb,sigmab,zero,twenty,fifty,eighty,onehundred,start=zero-10,end=onehundred+10)
             np.savetxt(self.save_path + runNstr+"fit.txt", OutArray)
+            np.savetxt(self.save_path + runNstr + "node.txt", energiesb)
         print(OutArray)
 
     # self.flist = ["NewRuns/Eu152JAEA.txt","NewRuns/Bi207JAEA.txt","NewRuns/Y88JAEA.txt","NewRuns/Th228JAEA.txt"]
@@ -1224,7 +1233,6 @@ class multi_MC():
     # self.flist=["../Th228/JAEA.txt","../Bi207/JAEA.txt"]
 
     # self.phototest()
-
 
 if __name__ =="__main__":
     mcmc = multi_MC()
