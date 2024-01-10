@@ -466,7 +466,7 @@ class multi_MC():
         print("crosscheck: ", len(data), m)
         return pnc_array
 
-    def photoEval(self,pn, self.pnlist, photoArray, photoArrayTrue):
+    def photoEval(self,pn, pnlist, photoArray, photoArrayTrue):
         for p in range(pn):
             photoArray[p, :] = self.phototestmean(self.pnlist[p] + "_fast.txt", 500, energies0, efficiencies0)
             for mb in range(len(photoArray)):
