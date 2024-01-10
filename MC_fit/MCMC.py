@@ -64,7 +64,7 @@ class multi_MC():
         # self.main(self.flist, self.alist, self.pnlist, self.aplist)
         self.multirun(self.runN)
 
-        # self.analyze(self.runN)
+        # self.analysis_results(self.runN)
 
             
         
