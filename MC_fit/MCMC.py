@@ -51,12 +51,42 @@ class multi_MC():
             self.main(self.flist, self.alist, self.pnlist, self.aplist,runstr)
 
     def analysis_results(self, runN):
+        nodes_2D = []
+        mean_node = []
+        total_node = [0,0,0,0]
         N_digit = len(str(runN))
+        trueN = 0
         for i in range(runN):
             formatstr = '{0:0' + str(N_digit) + '}'
             runstr = formatstr.format(i)
-            path  = self.save_path + runstr+"fit.txt"
+            path  = self.save_path + runstr+"node.txt"
             file = np.loadtxt(path)
+            print(file)
+            # if node1< node2<node3<node4:
+            if file[0]<file[1] and file[1]<file[2] and file[2]<file[3]:
+                nodes_2D.append(file)
+                trueN += 1
+            else:
+                break
+        # now we has a 2D list
+        # sum the each nodes' value
+        for i in range(trueN):
+            for j in range(len(total_node)):
+                total_node[j] += nodes_2D[i][j]
+        print(total_node)
+
+        # totalvalue/runN is the mean value of each nodes
+        for j in range(len(total_node)):
+            mean_node.append(total_node[j]/trueN)
+
+        print(mean_node)
+
+
+
+
+
+
+
 
     def NucleationEfficiencyTrue(self, r, T, sigLow, sigUp):
         if r < T:
