@@ -19,7 +19,7 @@ class multi_MC():
         ################################################
         self.aplist = [1, 8]  # this is not yet implimented
 
-        self.runN = 100
+        self.runN = 2
         self.runlist =[]
 
         try:
@@ -38,7 +38,7 @@ class multi_MC():
             return R
         """
         # self.main(self.flist, self.alist, self.pnlist, self.aplist)
-        self.multirun(1)
+        self.multirun(self.runN)
 
             
         
@@ -1226,3 +1226,5 @@ class multi_MC():
     # self.phototest()
 
 
+if __name__ =="__main__":
+    mcmc = multi_MC()
