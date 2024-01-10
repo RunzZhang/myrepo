@@ -48,8 +48,10 @@ class multi_MC():
             formatstr = '{0:0' + str(N_digit) + '}'
             runstr = formatstr.format(i)
             print(runstr)
-            self.main(self.flist, self.alist, self.pnlist, self.aplist,runstr)
-
+            try:
+                self.main(self.flist, self.alist, self.pnlist, self.aplist,runstr)
+            except:
+                print("something going wrong")
     def analysis_results(self, runN):
         nodes_2D = []
         mean_node = []
