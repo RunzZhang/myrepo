@@ -43,7 +43,7 @@ class multi_MC():
         ################################################
         self.aplist = [1, 8]  # this is not yet implimented
 
-        self.runN = 2
+        self.runN = 8
         self.runlist =[]
 
         try:
@@ -63,7 +63,7 @@ class multi_MC():
         """
         # self.main(self.flist, self.alist, self.pnlist, self.aplist)
         # self.multirun(self.runN)
-        
+
         self.analyze(self.runN)
 
             
