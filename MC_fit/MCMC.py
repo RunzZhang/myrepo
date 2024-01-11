@@ -118,6 +118,8 @@ class multi_MC():
         print("min", min_node)
 
 
+
+
     def NucleationEfficiencyTrue(self, r, T, sigLow, sigUp):
         if r < T:
             R = 1 / 2 * (1 + math.erf((r - T) / (sigLow * 2 ** (1 / 2))))
@@ -808,9 +810,9 @@ class multi_MC():
         Photoneutron = False
         Nuisance = True
 
-        T = 400
-        sigLow = 30
-        sigUp = 30
+        T = 80
+        sigLow = 10
+        sigUp = 10
         binsize = .5
         sourceErr = .05
         background = 500
