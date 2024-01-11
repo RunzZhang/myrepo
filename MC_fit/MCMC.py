@@ -107,13 +107,15 @@ class multi_MC():
                     max_node[j]=nodes_2D[i][j]
                 if nodes_2D[i][j]< min_node[j]:
                     min_node[j]=nodes_2D[i][j]
-        print(total_node)
+        print("sum node",total_node)
 
         # totalvalue/runN is the mean value of each nodes
         for j in range(len(total_node)):
             mean_node.append(total_node[j]/trueN)
 
-        print(mean_node)
+        print("mean",mean_node)
+        print("max", max_node)
+        print("min", min_node)
 
 
     def NucleationEfficiencyTrue(self, r, T, sigLow, sigUp):
