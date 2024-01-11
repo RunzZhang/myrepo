@@ -204,7 +204,9 @@ class SRIM_EXY():
                         value  = (self.Energy[j-1] - self.Energy[j]) * 1000-((self.ElStop[j]+self.ElStop[j-1])/2+self.table.output((self.Energy[j]+self.Energy[j-1])*1000/2) )* (
                             np.sqrt((self.Posx[j] - self.Posx[j - 1]) ** 2 + (self.Posy[j] - self.Posy[j - 1]) ** 2 + (
                                     self.Posz[j] - self.Posz[j - 1]) ** 2))
-                        if value < -990:
+
+                        # filter the abnormal value and return the event number
+                        if value <-180:
                             # rule out bc step distance is too small
                             Ek_limit_pointer.append(self.Energy[j])
                             Num_limit_pointer.append(self.IonNum[j])
@@ -314,7 +316,7 @@ class SRIM_Table():
     def __init__(self):
         super().__init__()
         # self.file_name = 'argon_140keV(gas).txt'
-        self.file_name = 'argon_tn(gas).txt'
+        self.file_name = 'argon_tn(liquid).txt'
         # self.energy_startpoint = "10.00 keV"
         self.energy_startpoint ="9.99999 eV"
         self.file_name_edit = self.file_name[0:-4] + '_edit.txt'

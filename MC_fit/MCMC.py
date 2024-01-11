@@ -972,8 +972,8 @@ class multi_MC():
                 # n is for self.flist index
                 chi[i] = self.test(RecoilList[i], InArray[0, i], energies0, efficiencies0, nuisance0[i], InArray[2, i],
                               WeightList[i], background=background, time=time)
-            chipn = self.photoEval2(pn, photoneutrondata, pnlivetime, energies0, efficiencies0, photoArrayTrue,
-                               photoBackMean, loud=True, pnuisance=nuisance0[i + 1:])
+            # chipn = self.photoEval2(pn, photoneutrondata, pnlivetime, energies0, efficiencies0, photoArrayTrue,
+            #                    photoBackMean, loud=True, pnuisance=nuisance0[i + 1:])
             """
             for p in range(pn):
                 #test(recoil,rate,energies,efficiencies,r_nuis,t,weight,background=500,time=100)
@@ -1057,8 +1057,8 @@ class multi_MC():
                     pnverb = True
                 else:
                     pnverb = False
-                chipn = self.photoEval2(pn, photoneutrondata, pnlivetime, energiesi, efficiencies0, photoArrayTrue,
-                                   photoBackMean, loud=pnverb, pnuisance=nuisancei[i + 1:])
+                # chipn = self.photoEval2(pn, photoneutrondata, pnlivetime, energiesi, efficiencies0, photoArrayTrue,
+                #                    photoBackMean, loud=pnverb, pnuisance=nuisancei[i + 1:])
                 """
                 for p in range(pn):
                     #test(recoil,rate,energies,efficiencies,r_nuis,t,weight,background=500,time=100)
@@ -1165,8 +1165,8 @@ class multi_MC():
                     pnverb = True
                 else:
                     pnverb = False
-                chipn = self.photoEval2(pn, photoneutrondata, pnlivetime, energiesi, efficiencies0, photoArrayTrue,
-                                   photoBackMean, loud=pnverb, pnuisance=nuisancei[i + 1:])
+                # chipn = self.photoEval2(pn, photoneutrondata, pnlivetime, energiesi, efficiencies0, photoArrayTrue,
+                #                    photoBackMean, loud=pnverb, pnuisance=nuisancei[i + 1:])
                 # for p in range(pn):
                 # chiNuisPN[p]=(pnuisancei[p]/sourceErr)**2
                 """
