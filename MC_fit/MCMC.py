@@ -81,6 +81,8 @@ class multi_MC():
     def analysis_results(self, runN):
         nodes_2D = []
         mean_node = []
+        max_node = [0,0,0,0]
+        min_node = [2000,2000,2000,2000]
         total_node = [0,0,0,0]
         N_digit = len(str(runN))
         trueN = 0
@@ -101,6 +103,10 @@ class multi_MC():
         for i in range(trueN):
             for j in range(len(total_node)):
                 total_node[j] += nodes_2D[i][j]
+                if nodes_2D[i][j]> max_node[j]:
+                    max_node[j]=nodes_2D[i][j]
+                if nodes_2D[i][j]< min_node[j]:
+                    min_node[j]=nodes_2D[i][j]
         print(total_node)
 
         # totalvalue/runN is the mean value of each nodes
