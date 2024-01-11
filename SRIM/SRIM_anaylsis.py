@@ -56,7 +56,7 @@ class SRIM_EXY():
         self.table = SRIM_Table()
         self.secondary_variable()
         self.scatterplot(self.E_compare_diff_1d, self.E_eV,  "E_diff/eV", "Ek/keV")
-        print("sqrt E",self.sqrt_E[:100])
+        # print("sqrt E",self.sqrt_E[:100])
         # self.plotEvX_fit( self.sqrt_E, self.ElStop)
 
 
@@ -119,16 +119,25 @@ class SRIM_EXY():
         self.daf.rename(columns={5: 'Electronic Stop (eV/A)'}, inplace=True)
         self.daf.rename(columns={6: 'Energy Lost to Last Recoil (eV)'}, inplace=True)
 
-        self.Posx = self.daf['x (A)'].tolist()
-        print(self.Posx)
+        self.Posx_raw = self.daf['x (A)'].tolist()
+        print(self.Posx_raw)
 
-        self.Posy = self.daf['y (A)'].tolist()
-        self.Posz = self.daf['z (A)'].tolist()
-        self.Energy = self.daf['Energy (keV)'].tolist()
+        self.Posy_raw = self.daf['y (A)'].tolist()
+        self.Posz_raw = self.daf['z (A)'].tolist()
+        self.Energy_raw = self.daf['Energy (keV)'].tolist()
         # self.Energy = [1.60218e-16 * x for x in self.Energy]  # Writing all energy in Joules
-        self.ElStop = self.daf['Electronic Stop (eV/A)'].tolist()
-        self.Elrecoil = self.daf['Energy Lost to Last Recoil (eV)'].tolist()
-        self.IonNum = self.daf['Ion Number'].tolist()
+        self.ElStop_raw = self.daf['Electronic Stop (eV/A)'].tolist()
+        self.Elrecoil_raw = self.daf['Energy Lost to Last Recoil (eV)'].tolist()
+        self.IonNum_raw = self.daf['Ion Number'].tolist()
+
+        self.Posx = [float(self.Posx_raw[i]) for i in range(len(self.Posx_raw))]
+        self.Posy = [float(self.Posy_raw[i]) for i in range(len(self.Posy_raw))]
+        self.Posz = [float(self.Posz_raw[i]) for i in range(len(self.Posz_raw))]
+        self.Energy = [float(self.Energy_raw[i]) for i in range(len(self.Energy_raw))]
+        self.ElStop = [float(self.ElStop_raw[i]) for i in range(len(self.ElStop_raw))]
+        self.Elrecoil = [float(self.Elrecoil_raw[i]) for i in range(len(self.Elrecoil_raw))]
+        self.IonNum = [float(self.IonNum_raw[i]) for i in range(len(self.IonNum_raw))]
+
         self.Events = max(self.IonNum)
         self.KEInitial = (self.daf.iloc[0][1])  # Set kinetic energy variable (in keV)
         self.vi_1d = [np.sqrt(2*e_v*1000*self.Energy[i]/self.mass) for i in range(len(self.Energy))]
@@ -281,6 +290,7 @@ class SRIM_EXY():
         plt.scatter(x, y)
         plt.xlabel(xlabel)
         plt.ylabel(ylabel)
+        plt.ylim(-400,1000)
         plt.show()
 
     def Eloss(self, Ediff, E_i, El):
