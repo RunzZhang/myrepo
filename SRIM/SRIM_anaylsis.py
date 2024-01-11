@@ -35,7 +35,8 @@ def li_func2(x, k):
 class SRIM_EXY():
     def __init__(self):
         super().__init__()
-        self.file_name = 'EXYZArgon1keV.txt'
+        # self.file_name = 'EXYZArgon1keV.txt'
+        self.file_name = 'EXYZ_Argon1keVTrueDensity.txt'
         self.file_name_edit = self.file_name[0:-4] + '_edit.txt'
         self.displacement = []  # Want to record the displacement in each step (in meters)
         self.displacement_1d = []
