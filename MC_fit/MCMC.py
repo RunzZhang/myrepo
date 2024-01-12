@@ -35,7 +35,8 @@ class multi_MC():
     def __init__(self):
 
         ################################################
-        self.flist = ["./Sb124JAEA.txt", "./Co60JAEA.txt", "./Th228JAEA.txt"]
+        # self.flist = ["./Sb124JAEA.txt", "./Co60JAEA.txt", "./Th228JAEA.txt"]
+        self.flist = ["/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_Noahformat.txt"]
         ################################################
         self.pnlist = ["./Sb", "./Bi"]
         ################################################
@@ -43,14 +44,19 @@ class multi_MC():
         ################################################
         self.aplist = [1, 8]  # this is not yet implimented
 
-        self.runN = 8
+        self.runN = 4
         self.runlist =[]
+        self.threshold = 760
+        self.sig_high = 40
+        self.sig_low = 40
+        self.ceil =1000
+        self.floor = 600
 
         try:
             self.fileprefix = sys.argv[1]
         except:
             self.fileprefix = "./Test_Dump/test2"
-        self.save_path = "/data/runzezhang/result/chi2_test2/"
+        self.save_path = "/data/runzezhang/result/chi2_test_TN760/"
         """ 
         def NucleationEfficiency(r,T,sigma):
             #A=1/2
@@ -62,9 +68,9 @@ class multi_MC():
             return R
         """
         # self.main(self.flist, self.alist, self.pnlist, self.aplist)
-        # self.multirun(self.runN)
+        self.multirun(self.runN)
 
-        self.analysis_results(self.runN)
+        # self.analysis_results(self.runN)
 
             
         
@@ -812,9 +818,9 @@ class multi_MC():
         Photoneutron = False
         Nuisance = True
 
-        T = 80
-        sigLow = 10
-        sigUp = 10
+        T = self.threshold
+        sigLow = self.sig_low
+        sigUp = self.sig_high
         binsize = .5
         sourceErr = .05
         background = 500
@@ -949,8 +955,10 @@ class multi_MC():
         paracount = len(efficiencies0)
         energies0 = np.zeros(paracount)
         buffer = 5
-        guessfloor = 50
-        guessceil = 160
+        # guessfloor = 50
+        guessfloor = self.floor
+        # guessceil = 160
+        guessceil = self.ceil
         bound = (guessceil - (paracount - 1) * buffer - guessfloor) / (paracount + 2)
         # print (paracount)
         print("Random Threshold Step: ", bound)
