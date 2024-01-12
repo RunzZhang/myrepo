@@ -90,6 +90,7 @@ class multi_MC():
             formatstr = '{0:0' + str(N_digit) + '}'
             runstr = formatstr.format(i)
             path  = self.save_path + runstr+"node.txt"
+            print(path)
             file = np.loadtxt(path)
             print(file)
             # if node1< node2<node3<node4:
