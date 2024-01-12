@@ -98,6 +98,7 @@ class multi_MC():
                 trueN += 1
             else:
                 break
+        print("2d nodes", nodes_2D)
         # now we has a 2D list
         # sum the each nodes' value
         for i in range(trueN):
