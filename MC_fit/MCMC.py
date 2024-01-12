@@ -98,7 +98,7 @@ class multi_MC():
                 nodes_2D.append(file)
                 trueN += 1
             else:
-                break
+                continue
         print("2d nodes", nodes_2D)
         # now we has a 2D list
         # sum the each nodes' value
