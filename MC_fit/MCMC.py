@@ -948,7 +948,7 @@ class multi_MC():
         energies0 = np.zeros(paracount)
         buffer = 5
         guessfloor = 50
-        guessceil = 230
+        guessceil = 160
         bound = (guessceil - (paracount - 1) * buffer - guessfloor) / (paracount + 2)
         # print (paracount)
         print("Random Threshold Step: ", bound)
