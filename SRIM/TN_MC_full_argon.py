@@ -320,7 +320,7 @@ class MC_sim_full_argon():
             print("read",MC_8)
 
         plt.plot(x_bins, hist_result[0], color="blue",label= "full chains")
-        plt.plot(MC_8[0], MC_8[1], color="orange", label = "8 main chain")
+        # plt.plot(MC_8[0], MC_8[1], color="orange", label = "8 main chain")
         plt.xlabel("energy/eV")
         plt.ylabel("P")
         plt.yscale("log")
