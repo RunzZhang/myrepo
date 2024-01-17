@@ -197,7 +197,7 @@ def plot_chain_sum():
     spectrum_info = [x_bins,hist_result[0]]
     with open(total_spectrum_address, "wb") as fp:  # Pickling
         pickle.dump(spectrum_info, fp)
-    plt.plot(x_bins,hist_result[0])
+    # plt.plot(x_bins,hist_result[0])
 
     plt.yticks(fontsize=24)
     plt.xticks(fontsize=24)
@@ -375,11 +375,11 @@ def plot_two_body_E_spectrum_47():
     plt.show()
 if __name__ =="__main__":
 
-    plot_two_body_E_spectrum_47()
+    # plot_two_body_E_spectrum_47()
     # Energy_PDE_plot()
     # plot_test()
     # plot_chains()
-    # plot_chain_sum()
+    plot_chain_sum()
     # plot_chain_separate()
     # plot_chains_ingroup()
 
