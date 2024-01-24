@@ -27,7 +27,51 @@ If disabling one source off error fixes it, there may be an issue with the imple
 If the fit is still bad with perfect information, make a good initial guess and see if the model actively runs away from the good fit.
 If not, you could try running it longer and seeing if it could find the good fit by itself.
 If so, then something is definitely wrong, and you should contact me and/or debug
-If you reach a step in the manual that you do not know how to do, or have another question, contact me!"""
+If you reach a step in the manual that you do not know how to do, or have another question, contact me!
+Simulated Calibration Code ReadMe
+Project goal - take geant4 simulation results from calibration sources and assess how effective a real calibration with those sources would be
+DocDB ##### for project tech note, with more detailed information on methodology. Includes graphs of the Monte Carlo true and model nucleation efficiency functions and explanations for decisions made.
+Project Structure Overview
+-fitPhoto3.py - takes in simulation results, runs a single hypothetical calibration and outputs best fit parameters. The hypothetical calibration includes a random background, source rate and systematic uncertainty in source rate.
+-hatch.sh - bash script to submit array of jobs to the cluster. This will run a number of (50 by default) hypothetical calibrations in order to see the spread of expected calibrations
+-job_fitnest.py - the script that gets submitted by hatch.sh
+-readpretty.py - takes in best fit results from an array job and evaluates it. Prints mean and standard deviation from the Monte Carlo true efficiency as well as integrated difference between the functions. Generates graphs of the best fit function alongside the Monte Carlo truth
+fitPhoto3.py
+Input Files
+-Thomson scattering simulations - text file with the following columns including only nuclear recoils
+Line Number - Event Index - Kinetic Energy (keV) - Scattering Angle (radians) - Recoil Energy (eV) - weight factor - z coordinate (cm)
+Line number is arbitrary, weight factor is one by default unless you applied a bias to the Thomson scattering cross section in which case it is an inverse of the bias factor
+-Photo-neutron simulations - text file with the following columns
+Event ID - kinetic energy - unit - energy deposited - unit - target - x coordinate - unit - y coordinate - unit - z coordinate - unit
+Notable variables/run conditions
+Calibration parameters
+-Source List - file addresses and names for the calibration source simulated data
+-background - number of expected background events in a 100 hour calibration run
+-sourceErr- 1 sigma uncertainty in source activity
+-modeErr - 1 sigma uncertainty in common mode uncertainty
+Monte Carlo true parameters
+-Threshold - 50% efficiency point, center of the normal cumulative distribution
+-sigLow/sigUp - the gaussian width of the normal cumulative distribution function
+Simulated Calibration parameters
+-Initial guess - if you want to use a fixed initial guess, random initial guess is the default
+-Niters/NitersRough - number of iterations used
+-nwalkers - how many times to start with a new random initial guess for each hypothetical calibration
+-Whether to turn photo-neutron, Thomson scattering or nuisance parameter fitting on
+hatch.sh
+The directory name you want the output files to go to
+job_fitnest.py
+-the runtime and whether or not you want to delete the slurm-####### output file the cluster leaves. Useful for debugging, but produces a lot of clutter
+readpretty.py
+Run this with the following arguments: <Directory name> <Threshold> <sigLow> <sigUp> <number of toy runs> (optional, default 50)
+For example:
+>python readpretty.py ThSbCo 160 30 30
+Or
+For example:
+>python readpretty.py ThSbCo 240 40 40 25
+Where there is a directory named ThSbCo with the output of the hatch.sh run with 50 or 25 numbered subdirectories with best fit parameters inside
+"""
+
+
 
 
 
