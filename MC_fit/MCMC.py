@@ -81,14 +81,15 @@ class multi_MC():
         ################################################
         # self.flist = ["./Sb124JAEA.txt", "./Co60JAEA.txt", "./Th228JAEA.txt"]
         self.flist = ["/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_Noahformat.txt"]
+
         ################################################
         self.pnlist = ["./Sb", "./Bi"]
         ################################################
-        self.alist = [20, 100, 10]
+        self.alist = [100, 100, 10]
         ################################################
         self.aplist = [1, 8]  # this is not yet implimented
 
-        self.runN = 4
+        self.runN = 20
         self.runlist =[]
         self.threshold = 760
         self.sig_high = 40
@@ -494,18 +495,22 @@ class multi_MC():
 
     def analyze(self,file, T, sigLow, sigUp, N=2 * 10 ** 9, Activity=100, time=100):
         # N is number of events
+
         # time is calibration time
         # t is the simulated life time
         Data = np.loadtxt(file)
         # print("analysing...", Data[:10])
         SourceRate = (3.7 * 10 ** 6) * Activity / 100
+        # SourceRate =
         Energy = Data[:, 2]
         Recoils = Data[:, 4]
         Weights = Data[:, 5]
 
         t = N / SourceRate  # live time in seconds
         t /= 3600  # live time in hours
-
+        t = 10 ** 5 / (1000)
+        # t =100 for thermal neutron only, 10^5 events per file and the thermal neutron rate is 1000 per hour
+        # this might be optimistic but let's use this first
         Rate = self.rateFinderTrue(Recoils, T, sigLow, sigUp, t, Weights)
 
         Count = Rate * time
