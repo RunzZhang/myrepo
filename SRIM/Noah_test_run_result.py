@@ -35,7 +35,7 @@ def NucleationEfficiencyTrue(r, T, sigLow, sigUp):
     return R
 
 def plot_error():
-    x = range(0, 200, 1)
+    x = range(0, 1000, 1)
     y = []
     for i in x:
         y.append(NucleationEfficiencyTrue(i,T=600, sigLow= 40, sigUp=40))
