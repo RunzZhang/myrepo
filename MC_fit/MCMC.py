@@ -94,14 +94,14 @@ class multi_MC():
         self.threshold = 600
         self.sig_high = 40
         self.sig_low = 40
-        self.ceil =1000
-        self.floor = 600
+        self.ceil =400
+        self.floor = 800
 
         try:
             self.fileprefix = sys.argv[1]
         except:
             self.fileprefix = "./Test_Dump/test2"
-        self.save_path = "/data/runzezhang/result/chi2_test_TN760/"
+        self.save_path = "/data/runzezhang/result/chi2_test_TN600/"
         """ 
         def NucleationEfficiency(r,T,sigma):
             #A=1/2
@@ -113,9 +113,9 @@ class multi_MC():
             return R
         """
         # self.main(self.flist, self.alist, self.pnlist, self.aplist)
-        # self.multirun(self.runN)
+        self.multirun(self.runN)
 
-        self.analysis_results(self.runN)
+        # self.analysis_results(self.runN)
 
             
         
