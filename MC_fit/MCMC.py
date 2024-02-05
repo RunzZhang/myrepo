@@ -151,10 +151,10 @@ class multi_MC():
                 trueN += 1
             else:
                 continue
-        print("2d nodes", nodes_2D)
+        # print("2d nodes", nodes_2D)
         node_2d_array = np.array(nodes_2D)
-        print("array", node_2d_array)
-        print("index test",node_2d_array[:,0])
+        # print("array", node_2d_array)
+        # print("index test",node_2d_array[:,0])
         for i in range(len(nodes_2D[0])):
             print(i)
             mean_node[i] = (np.mean(node_2d_array[:,i]))
@@ -175,11 +175,11 @@ class multi_MC():
         plt.plot(data_x, data_y, color='blue', label="data")
         max_y = [0, 0.3, 0.7, 1]
         max_x = high
-        plt.plot(max_x, max_y, color='red', label='max')
+        # plt.plot(max_x, max_y, color='red', label='max')
         min_y = [0, 0.3, 0.7, 1]
         min_x = low
         plt.fill_betweenx(min_y, low, high, alpha=.5)
-        plt.plot(min_x, min_y, color='red', label='min')
+        # plt.plot(min_x, min_y, color='red', label='min')
         plt.legend()
 
         plt.show()
