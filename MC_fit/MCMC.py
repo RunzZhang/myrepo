@@ -131,8 +131,8 @@ class multi_MC():
                 print("something going wrong")
     def analysis_results(self, runN):
         nodes_2D = []
-        mean_node = []
-        sigma_node =[]
+        mean_node = [0,0,0,0]
+        sigma_node =[0,0,0,0]
         max_node = [0,0,0,0]
         min_node = [2000,2000,2000,2000]
         total_node = [0,0,0,0]
