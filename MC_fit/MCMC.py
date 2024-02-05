@@ -132,6 +132,7 @@ class multi_MC():
     def analysis_results(self, runN):
         nodes_2D = []
         mean_node = []
+        sigma_node =[]
         max_node = [0,0,0,0]
         min_node = [2000,2000,2000,2000]
         total_node = [0,0,0,0]
@@ -151,24 +152,34 @@ class multi_MC():
             else:
                 continue
         print("2d nodes", nodes_2D)
-        # now we has a 2D list
-        # sum the each nodes' value
-        for i in range(trueN):
-            for j in range(len(total_node)):
-                total_node[j] += nodes_2D[i][j]
-                if nodes_2D[i][j]> max_node[j]:
-                    max_node[j]=nodes_2D[i][j]
-                if nodes_2D[i][j]< min_node[j]:
-                    min_node[j]=nodes_2D[i][j]
-        print("sum node",total_node)
+        node_2d_array = np.array(nodes_2D)
+        for i in range(4):
+            mean_node[i] = (np.mean(node_2d_array[i,:]))
+            sigma_node[i] = (np.std(node_2d_array[i, :]))
+            max_node[i] = mean_node[i]+sigma_node[i]
+            min_node[i] = mean_node[i] - sigma_node[i]
+        print("mean node", mean_node, "\n sigma node", sigma_node, "\nmax_node",max_node, "\n min_node", min_node)
+        self.plot_error(mean_node,max_node,min_node,self.threshold, self.sig_low, self.sig_high)
 
-        # totalvalue/runN is the mean value of each nodes
-        for j in range(len(total_node)):
-            mean_node.append(total_node[j]/trueN)
+    def plot_error(self, mean, high, low, th, siglow, sighi):
+        x = range(0, 1000, 1)
+        y = []
+        for i in x:
+            y.append(self.NucleationEfficiencyTrue(i, T=th, sigLow=siglow, sigUp=sighi))
+        plt.plot(x, y, color='green', label='erf curve')
+        data_y = [0, 0.3, 0.7, 1]
+        data_x = mean
+        plt.plot(data_x, data_y, color='blue', label="data")
+        max_y = [0, 0.3, 0.7, 1]
+        max_x = high
+        plt.plot(max_x, max_y, color='red', label='max')
+        min_y = [0, 0.3, 0.7, 1]
+        min_x = low
+        plt.fill_betweenx(min_y, low, high, alpha=.5)
+        plt.plot(min_x, min_y, color='red', label='min')
+        plt.legend()
 
-        print("mean",mean_node)
-        print("max", max_node)
-        print("min", min_node)
+        plt.show()
 
 
 
