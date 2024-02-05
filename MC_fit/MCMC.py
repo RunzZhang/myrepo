@@ -154,7 +154,7 @@ class multi_MC():
         print("2d nodes", nodes_2D)
         node_2d_array = np.array(nodes_2D)
         print("array", node_2d_array)
-        # print("index test",node_2d_array[1,:])
+        print("index test",node_2d_array[:,i])
         for i in range(len(nodes_2D[0])):
             print(i)
             mean_node[i] = (np.mean(node_2d_array[:,i]))
