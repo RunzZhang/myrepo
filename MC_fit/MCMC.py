@@ -153,7 +153,7 @@ class multi_MC():
                 continue
         print("2d nodes", nodes_2D)
         node_2d_array = np.array(nodes_2D)
-        for i in range(4):
+        for i in range(len(nodes_2D[0])):
             mean_node[i] = (np.mean(node_2d_array[i,:]))
             sigma_node[i] = (np.std(node_2d_array[i, :]))
             max_node[i] = mean_node[i]+sigma_node[i]
