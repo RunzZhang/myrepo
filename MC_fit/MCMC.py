@@ -147,7 +147,7 @@ class multi_MC():
             print(file)
             # if node1< node2<node3<node4:
             if file[0]<file[1] and file[1]<file[2] and file[2]<file[3]:
-                nodes_2D.append(file)
+                nodes_2D.append(list(file))
                 trueN += 1
             else:
                 continue
