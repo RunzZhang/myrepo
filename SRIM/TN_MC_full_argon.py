@@ -117,7 +117,8 @@ class MC_sim_full_argon():
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
         # self.MC_sim(self.runtime)
-        self.data_analysis(self.address)
+        # self.data_analysis(self.address)
+        self.plot_spectrum(self.address)
         # self.plot_pile_up()
 
     def data_preparation(self):
@@ -323,14 +324,40 @@ class MC_sim_full_argon():
         # plt.plot(MC_8[0], MC_8[1], color="orange", label = "8 main chain")
         plt.grid(True, which='both', linestyle='--', linewidth=0.5)
         plt.minorticks_on()
-        plt.xlabel("energy/eV")
-        plt.ylabel("Possibility")
+        plt.xlabel("energy/eV",fontsize=18)
+        plt.ylabel("Possibility",fontsize=18)
         plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
         plt.legend()
+        plt.show()
+
+    def plot_spectrum(self, address):
+        start = 0
+        end = 1200
+        x_bins = []
+        with open(self.address, "rb") as fp:  # Unpickling
+            MC_full = pickle.load(fp)
+            print("read",MC_full)
+        bin_n =500
+
+        hist_result = plt.hist(MC_full, bins =bin_n, range=(start, end) ,density = True)
+        plt.clf()
+        for i in range(len(hist_result[1]) - 1):
+            x_bins.append((hist_result[1][i] + hist_result[1][i + 1]) / 2)
+
+        plt.plot(x_bins, hist_result[0], color="blue")
+        plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+        plt.minorticks_on()
+        plt.xlabel("energy/eV",fontsize=18)
+        plt.ylabel("Possibility",fontsize=18)
+        plt.yscale("log")
+        plt.yticks(fontsize=18)
+        plt.xticks(fontsize=18)
+        plt.xlim([0, 1200])
+        plt.ylim([1E-5,0.1])
         plt.show()
 
 
