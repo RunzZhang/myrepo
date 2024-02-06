@@ -113,7 +113,7 @@ class multi_MC():
             return R
         """
         # self.main(self.flist, self.alist, self.pnlist, self.aplist)
-        # self.multirun(self.runN)
+        self.multirun(self.runN)
         self.analysis_results(self.runN)
 
             
