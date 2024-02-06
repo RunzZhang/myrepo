@@ -349,7 +349,7 @@ class MC_sim_full_argon():
             x_bins.append((hist_result[1][i] + hist_result[1][i + 1]) / 2)
 
         plt.plot(x_bins, hist_result[0], color="blue")
-        plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+        plt.grid(True, which='both', linestyle='-', linewidth=1.5)
         plt.minorticks_on()
         plt.xlabel("energy/eV",fontsize=18)
         plt.ylabel("Possibility",fontsize=18)
