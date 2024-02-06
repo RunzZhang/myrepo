@@ -321,8 +321,10 @@ class MC_sim_full_argon():
 
         plt.plot(x_bins, hist_result[0], color="blue",label= "full chains")
         # plt.plot(MC_8[0], MC_8[1], color="orange", label = "8 main chain")
+        plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+        plt.minorticks_on()
         plt.xlabel("energy/eV")
-        plt.ylabel("P")
+        plt.ylabel("Possibility")
         plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
