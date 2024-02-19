@@ -115,12 +115,12 @@ class multi_MC():
         # self.main(self.flist, self.alist, self.pnlist, self.aplist)
 
         # get neutron events
-        self.analyze(self.flist[0], self.threshold, self.sig_low, self.sig_high, Activity=self.alist[0])
+        # self.analyze(self.flist[0], self.threshold, self.sig_low, self.sig_high, Activity=self.alist[0])
 
 
         # # run and analyze
-        # self.multirun(self.runN)
-        # self.analysis_results(self.runN)
+        self.multirun(self.runN)
+        self.analysis_results(self.runN)
 
             
         
