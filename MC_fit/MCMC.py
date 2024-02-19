@@ -464,19 +464,23 @@ class multi_MC():
 
     def rateJitter(self,rate, count, time=100, sourceErr=.03, background=500, s_err="False"):
         print("Jitter")
-        if s_err == "False":
-            s_err = np.random.normal(1, sourceErr, 1)
-        # s_err=1+random.uniform(-1,1)*sourceErr
-        count = count * s_err
-        count = np.random.poisson(count)
-        backgroundexcess = np.random.poisson(background)
-        count += backgroundexcess
-        rate = count / time
-        b_err = backgroundexcess / background - 1
-        print("Background: ", backgroundexcess, background)
-        print("Source Error: ", s_err)
-        return rate, count, background, s_err
-        # (T,sigLow,sigUp,energiesb,efficiencies0,start=T-4*sigLow,end=T-4*sigUp)
+        try:
+            if s_err == "False":
+                s_err = np.random.normal(1, sourceErr, 1)
+            # s_err=1+random.uniform(-1,1)*sourceErr
+            count = count * s_err
+            count = np.random.poisson(count)
+            backgroundexcess = np.random.poisson(background)
+            count += backgroundexcess
+            rate = count / time
+            b_err = backgroundexcess / background - 1
+            print("Background: ", backgroundexcess, background)
+            print("Source Error: ", s_err)
+            return rate, count, background, s_err
+            # (T,sigLow,sigUp,energiesb,efficiencies0,start=T-4*sigLow,end=T-4*sigUp)
+        except Exception as e:
+            print("Error",e)
+
 
     def fittest(self,T, sigLow, sigUp, energiesM, efficienciesM, M=10000, start=40, end=200):
         rt = 0
@@ -533,6 +537,35 @@ class multi_MC():
         # t =100 for thermal neutron only, 10^5 events per file and the thermal neutron rate is 1000 per hour
         # this might be optimistic but let's use this first
         # event = 2552
+        Rate = self.rateFinderTrue(Recoils, T, sigLow, sigUp, t, Weights)
+
+        Count = Rate * time
+        print("Count",Count)
+
+        return Recoils, Weights, Rate, Count, t, time
+
+    def analyze2(self,file, T, sigLow, sigUp, N=2 * 10 ** 9, Activity=100, time=100):
+        # N is number of events
+
+        # time is calibration time
+        # t is the simulated life time
+        Data = np.loadtxt(file)
+        # print("analysing...", Data[:10])
+        SourceRate = (3.7 * 10 ** 6) * Activity / 100
+        # SourceRate =
+        Energy = Data[:, 2]
+        Recoils = Data[:, 4]
+        Weights = Data[:, 5]
+
+        t = N / SourceRate  # live time in seconds
+        t /= 3600  # live time in hours
+        # t = 10 ** 5 / (1000)
+        t = 10**4/4
+        # t =100 for thermal neutron only, 10^5 events per file and the thermal neutron rate is 1000 per hour
+        # this might be optimistic but let's use this first
+        # event = 2552
+
+        Count2 = 0
         Rate = self.rateFinderTrue(Recoils, T, sigLow, sigUp, t, Weights)
 
         Count = Rate * time
