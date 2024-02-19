@@ -132,7 +132,8 @@ class multi_MC():
             print(runstr)
             try:
                 self.main(self.flist, self.alist, self.pnlist, self.aplist,runstr)
-            except:
+            except Exception as e:
+                print("Error", e)
                 print("something going wrong")
     def analysis_results(self, runN):
         nodes_2D = []
@@ -464,22 +465,25 @@ class multi_MC():
 
     def rateJitter(self,rate, count, time=100, sourceErr=.03, background=500, s_err="False"):
         print("Jitter", rate, count, time, sourceErr, background)
-        try:
-            if s_err == "False":
-                s_err = np.random.normal(1, sourceErr, 1)
-            # s_err=1+random.uniform(-1,1)*sourceErr
-            count = count * s_err
-            count = np.random.poisson(count)
-            backgroundexcess = np.random.poisson(background)
-            count += backgroundexcess
-            rate = count / time
+
+        if s_err == "False":
+            s_err = np.random.normal(1, sourceErr, 1)
+        # s_err=1+random.uniform(-1,1)*sourceErr
+        count = count * s_err
+        count = np.random.poisson(count)
+        backgroundexcess = np.random.poisson(background)
+        count += backgroundexcess
+        rate = count / time
+        if background != 0:
+
             b_err = backgroundexcess / background - 1
-            print("Background: ", backgroundexcess, background)
-            print("Source Error: ", s_err)
-            return rate, count, background, s_err
-            # (T,sigLow,sigUp,energiesb,efficiencies0,start=T-4*sigLow,end=T-4*sigUp)
-        except Exception as e:
-            print("Error",e)
+        else:
+            b_err = 0
+        print("Background: ", backgroundexcess, background)
+        print("Source Error: ", s_err)
+        return rate, count, background, s_err
+        # (T,sigLow,sigUp,energiesb,efficiencies0,start=T-4*sigLow,end=T-4*sigUp)
+
 
 
     def fittest(self,T, sigLow, sigUp, energiesM, efficienciesM, M=10000, start=40, end=200):
@@ -572,6 +576,33 @@ class multi_MC():
         print("Count",Count)
 
         return Recoils, Weights, Rate, Count, t, time
+    def generate_CDF(self, recoils):
+        # get the x and y of the histgram:
+        x = [0]
+        y = [0]
+        y_CDF = [0]
+        for i in range(len(y)):
+            y_CDF[i]= np.sum(y[:i])
+
+    def find_E_recoiled(self, value):
+        # generate a random value
+        ran = 0.1
+        x = [0]
+        y = [0]
+        for i in range(len(y)):
+            if ran>= y[i-1] and ran<y[i]:
+                E_r = (y[i-1]+y[i])/2
+    def find_bubble(self, E_r):
+        # genrate a random value
+        ran = 0.2
+        # put E_r into efficiency curve to generate value
+        value  = 0.4
+        if ran < value:
+            return True
+        else:
+            return False
+
+
 
     def stepper(self,energies, nuisance, step, n_step, min=20, max=2000):
         energiesMem = np.zeros(len(energies))
