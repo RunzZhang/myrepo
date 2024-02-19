@@ -463,7 +463,7 @@ class multi_MC():
         return chi
 
     def rateJitter(self,rate, count, time=100, sourceErr=.03, background=500, s_err="False"):
-        print("Jitter")
+        print("Jitter", rate, count, time, sourceErr, background)
         try:
             if s_err == "False":
                 s_err = np.random.normal(1, sourceErr, 1)
