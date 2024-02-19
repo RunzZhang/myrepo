@@ -91,7 +91,7 @@ class multi_MC():
 
         self.runN = 20
         self.runlist =[]
-        self.threshold = 413
+        self.threshold = 500
         self.sig_high = 50
         self.sig_low = 50
         self.ceil =1.5* self.threshold
@@ -101,7 +101,7 @@ class multi_MC():
             self.fileprefix = sys.argv[1]
         except:
             self.fileprefix = "./Test_Dump/test2"
-        self.save_path = "/data/runzezhang/result/chi2_test_TN413/"
+        self.save_path = "/data/runzezhang/result/chi2_test_TN500_NB/"
         """ 
         def NucleationEfficiency(r,T,sigma):
             #A=1/2
@@ -113,8 +113,14 @@ class multi_MC():
             return R
         """
         # self.main(self.flist, self.alist, self.pnlist, self.aplist)
-        self.multirun(self.runN)
-        self.analysis_results(self.runN)
+
+        # get neutron events
+        self.analyze(self.flist[0], self.threshold, self.sig_low, self.sig_high, Activity=self.alist[0])
+
+
+        # # run and analyze
+        # self.multirun(self.runN)
+        # self.analysis_results(self.runN)
 
             
         
@@ -521,12 +527,14 @@ class multi_MC():
 
         t = N / SourceRate  # live time in seconds
         t /= 3600  # live time in hours
-        t = 10 ** 5 / (1000)
+        # t = 10 ** 5 / (1000)
+        t =10**5
         # t =100 for thermal neutron only, 10^5 events per file and the thermal neutron rate is 1000 per hour
         # this might be optimistic but let's use this first
         Rate = self.rateFinderTrue(Recoils, T, sigLow, sigUp, t, Weights)
 
         Count = Rate * time
+        print("Count",Count)
 
         return Recoils, Weights, Rate, Count, t, time
 
@@ -885,7 +893,7 @@ class multi_MC():
         sigUp = self.sig_high
         binsize = .5
         sourceErr = .05
-        background = 500
+        background = 0
         backErr = np.round(background ** (1 / 2))
         # energies=[75,100,115,120,140]
         # efficiencies=[0,.2,.50,.8,1]
