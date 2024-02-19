@@ -988,7 +988,8 @@ class multi_MC():
             TrueArray[0, i] = Rate
             TrueArray[1, i] = Count
             TrueArray[2, i] = t
-            if i in UsePhotoError:
+            # if i in UsePhotoError:
+            if False:
                 rate, count, background, nuisanceT[i] = self.rateJitter(Rate, Count, time=time, sourceErr=sourceErr,
                                                                    background=background, s_err=pn_sourceError[i])
             else:
