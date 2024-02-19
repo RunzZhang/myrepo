@@ -528,7 +528,7 @@ class multi_MC():
         t = N / SourceRate  # live time in seconds
         t /= 3600  # live time in hours
         # t = 10 ** 5 / (1000)
-        t = 10**4
+        t = 10**4/4
         # t =100 for thermal neutron only, 10^5 events per file and the thermal neutron rate is 1000 per hour
         # this might be optimistic but let's use this first
         # event = 2552
