@@ -425,7 +425,7 @@ class MC_sim_full_argon():
         # plt.xlim([0, 1200])
         # plt.legend()
         # plt.ylim([1E-5,0.1])
-        plt.legend()
+        # plt.legend()
         plt.show()
 
     def NucleationEfficiencyTrue(self, r, T, sigLow, sigUp):
