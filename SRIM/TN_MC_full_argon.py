@@ -394,7 +394,7 @@ class MC_sim_full_argon():
         fig, ax1 = plt.subplots()
         ax1.set_xlabel("energy/eV",fontsize=18)
         ax1.set_ylabel("Possibility/bin",fontsize=18)
-        ax1.plot(x_bins, hist_result[0], color="red")
+        ax1.plot(x_bins, hist_result[0], color="red", label = 'Ar spectrum')
         ax1.grid(True, which='both', linestyle='-', linewidth=1)
         ax1.set_yscale("log")
         ax1.minorticks_on()
@@ -403,7 +403,7 @@ class MC_sim_full_argon():
         ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
 
         ax2.set_ylabel('Bubble Number',fontsize=18)  # we already handled the x-label with ax1
-        ax2.plot(x_bins, bubble_event, color="blue")
+        ax2.plot(x_bins, bubble_event, color="blue", label= 'bubble number vs E threshold')
         ax2.tick_params(axis='y')
         ax2.set_yscale("log")
         fig.tight_layout()
@@ -421,6 +421,7 @@ class MC_sim_full_argon():
         # plt.xlim([0, 1200])
         # plt.legend()
         # plt.ylim([1E-5,0.1])
+        plt.legend()
         plt.show()
 
     def NucleationEfficiencyTrue(self, r, T, sigLow, sigUp):
