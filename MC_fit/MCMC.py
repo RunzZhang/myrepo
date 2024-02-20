@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 
 
-import sys
+import sys,pickle
 import numpy as np
 import math
 import scipy.optimize
@@ -570,6 +570,20 @@ class multi_MC():
         # this might be optimistic but let's use this first
         # event = 2552
 
+
+        energy, CDF = self.generate_CDF()
+        capture = N*time/t
+        bubble_number = 0
+        for i in capture:
+            Er_temp = self.find_E_recoiled(energy, CDF)
+            bubble_result = self.find_bubble(Er_temp,T,sigLow,sigUp)
+            if bubble_result:
+                bubble_number += 1
+        Count2 = bubble_number
+        Rate = Count2/time
+
+
+
         Count2 = 0
         Rate = self.rateFinderTrue(Recoils, T, sigLow, sigUp, t, Weights)
 
@@ -577,27 +591,48 @@ class multi_MC():
         print("Count",Count)
 
         return Recoils, Weights, Rate, Count, t, time
-    def generate_CDF(self, recoils):
+    def generate_CDF(self):
         # get the x and y of the histgram:
-        x = [0]
-        y = [0]
+        start = 0
+        end = 1200
+        sig = 50
+        Event_N = 10 ** 3
+        x_bins = []
+        address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
+        with open(self.address, "rb") as fp:  # Unpickling
+            MC_full = pickle.load(fp)
+            print("read", MC_full)
+        bin_n = 500
+
+        hist_result = plt.hist(MC_full, bins=bin_n, range=(start, end), density=True)
+        plt.clf()
+        for i in range(len(hist_result[1]) - 1):
+            x_bins.append((hist_result[1][i] + hist_result[1][i + 1]) / 2)
+        bin_width = x_bins[1] - x_bins[0]
+        x = x_bins
+        y = hist_result[0]
         y_CDF = [0]
         for i in range(len(y)):
-            y_CDF[i]= np.sum(y[:i])
+            y_CDF[i]= np.sum(y[:i])*bin_width
+        return x_bins, y_CDF
 
-    def find_E_recoiled(self, value):
+    def find_E_recoiled(self, x_bins, y_CDF):
         # generate a random value up to 5 digits
-        ran = 0.1
-        x = [0]
-        y = [0]
+        ran = np.random.uniform(0,1)
+        x = x_bins
+        y = y_CDF
         for i in range(len(y)):
-            if ran>= y[i-1] and ran<y[i]:
-                E_r = (y[i-1]+y[i])/2
-    def find_bubble(self, E_r):
+            if i <= len(y):
+                if ran>= y[i] and ran<y[i+1]:
+                    E_r = x[i]
+            else:
+                E_r = x[i]
+        return E_r
+    def find_bubble(self, E_r, T, sigLow, sigUp):
         # genrate a random value
-        ran = 0.2
+        ran = np.random.uniform(0,1)
         # put E_r into efficiency curve to generate value
-        value  = 0.4
+        value  = self.NucleationEfficiencyTrue(E_r, T, sigLow, sigUp)
         if ran < value:
             return True
         else:
