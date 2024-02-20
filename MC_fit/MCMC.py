@@ -187,7 +187,7 @@ class multi_MC():
         plt.fill_betweenx(min_y, low, high, alpha=.5)
         # plt.plot(min_x, min_y, color='red', label='min')
         plt.legend()
-        plt.xlim(th-2*siglow, th+2*sighi)
+        plt.xlim(th-3*siglow, th+3*sighi)
 
         plt.show()
 
