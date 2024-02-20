@@ -391,16 +391,35 @@ class MC_sim_full_argon():
                 integral += Event_N*efficiency_2d[k][l]*hist_result[0][l]*bin_width
             bubble_event.append(integral)
 
+        fig, ax1 = plt.subplots()
+        ax1.set_xlabel("energy/eV",fontsize=18)
+        ax1.set_ylabel("Possibility/bin",fontsize=18)
+        ax1.plot(x_bins, hist_result[0], color="red")
+        ax1.grid(True, which='both', linestyle='-', linewidth=1)
+        ax1.yscale("log")
+        ax1.minorticks_on()
+        ax1.tick_params(axis='y')
 
-        plt.plot(x_bins, bubble_event, color="blue")
-        plt.grid(True, which='both', linestyle='-', linewidth=1)
-        plt.minorticks_on()
-        plt.xlabel("energy/eV",fontsize=18)
-        plt.ylabel("Bubble Event Number",fontsize=18)
-        plt.yscale("log")
-        plt.yticks(fontsize=18)
-        plt.xticks(fontsize=18)
-        plt.xlim([0, 1200])
+        ax2 = ax1.twinx()  # instantiate a second axes that shares the same x-axis
+
+        ax2.set_ylabel('Bubble Number',fontsize=18)  # we already handled the x-label with ax1
+        ax2.plot(x_bins, bubble_event, color="blue")
+        ax2.tick_params(axis='y')
+        ax2.yscale("log")
+        fig.tight_layout()
+
+
+        # plt.plot(x_bins, bubble_event, color="blue", label = 'bubble number vs E threshold')
+        # plt.plot(x_bins,hist_result[0],color = "red", label = 'Ar spectrum')
+        # plt.grid(True, which='both', linestyle='-', linewidth=1)
+        # plt.minorticks_on()
+        # plt.xlabel("energy/eV",fontsize=18)
+        # plt.ylabel("Bubble Event Number",fontsize=18)
+        # plt.yscale("log")
+        # plt.yticks(fontsize=18)
+        # plt.xticks(fontsize=18)
+        # plt.xlim([0, 1200])
+        # plt.legend()
         # plt.ylim([1E-5,0.1])
         plt.show()
 
