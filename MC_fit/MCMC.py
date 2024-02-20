@@ -119,7 +119,7 @@ class multi_MC():
 
 
         # # run and analyze
-        self.multirun(self.runN)
+        # self.multirun(self.runN)
         self.analysis_results(self.runN)
 
             
@@ -187,6 +187,7 @@ class multi_MC():
         plt.fill_betweenx(min_y, low, high, alpha=.5)
         # plt.plot(min_x, min_y, color='red', label='min')
         plt.legend()
+        plt.xlim(th-2*siglow, th+2*sighi)
 
         plt.show()
 
@@ -585,7 +586,7 @@ class multi_MC():
             y_CDF[i]= np.sum(y[:i])
 
     def find_E_recoiled(self, value):
-        # generate a random value
+        # generate a random value up to 5 digits
         ran = 0.1
         x = [0]
         y = [0]
