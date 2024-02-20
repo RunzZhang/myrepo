@@ -1,6 +1,6 @@
 # to run a new event, please check the event number, output file name, energy chain and time chain
 import matplotlib.pyplot as plt
-import scipy,random, pickle, Eq_sol
+import scipy,random, pickle, Eq_sol, math
 import sympy
 from sympy import cos, sin, nsolve, Symbol
 import numpy as np
@@ -118,8 +118,9 @@ class MC_sim_full_argon():
         # self.gamma_sim(10000)
         # self.MC_sim(self.runtime)
         # self.data_analysis(self.address)
-        self.plot_spectrum(self.address)
+        # self.plot_spectrum(self.address)
         # self.plot_pile_up()
+        self.predicted_bubble_events(self.address)
 
     def data_preparation(self):
         for i in range(len(self.argon_list)):# for each chain
@@ -359,8 +360,57 @@ class MC_sim_full_argon():
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
         plt.show()
+    def predicted_bubble_events(self, address):
+        start = 0
+        end = 1200
+        sig =50
+        Event_N = 10**5
+        x_bins = []
+        with open(self.address, "rb") as fp:  # Unpickling
+            MC_full = pickle.load(fp)
+            print("read",MC_full)
+        bin_n =500
+
+        hist_result = plt.hist(MC_full, bins =bin_n, range=(start, end) ,density = True)
+        plt.clf()
+        for i in range(len(hist_result[1]) - 1):
+            x_bins.append((hist_result[1][i] + hist_result[1][i + 1]) / 2)
+        bin_width = x_bins[1]-x_bins[0]
+        bubble_event= []
+        efficiency_2d = [[None for _ in range(len(x_bins))] for _ in range(len(x_bins))]
+        efficiency = []
+        # generate 2d matrix that nucleation effic at energy E1 with energy threshold E2
+        for i in range(len(x_bins)):
+            for j in range(len(x_bins)):
+                efficiency_2d[i][j] = self.NucleationEfficiencyTrue(x_bins[j],x_bins[i],sigLow=sig,sigUp=sig)
+        # convolution of efficiency and spectrum
+        # k is the energy threshold and l is the integral parameter dE
+        for k in range(len(x_bins)):
+            integral = 0
+            for l in range(len(x_bins)):
+                integral += Event_N*efficiency_2d[k][l]*hist_result[0][l]*bin_width
+            bubble_event.append(integral)
 
 
+        plt.plot(x_bins, bubble_event, color="blue")
+        plt.grid(True, which='both', linestyle='-', linewidth=1)
+        plt.minorticks_on()
+        plt.xlabel("energy/eV",fontsize=18)
+        plt.ylabel("Bubble Event Number",fontsize=18)
+        plt.yscale("log")
+        plt.yticks(fontsize=18)
+        plt.xticks(fontsize=18)
+        plt.xlim([0, 1200])
+        # plt.ylim([1E-5,0.1])
+        plt.show()
+
+    def NucleationEfficiencyTrue(self, r, T, sigLow, sigUp):
+        if r < T:
+            R = 1 / 2 * (1 + math.erf((r - T) / (sigLow * 2 ** (1 / 2))))
+        else:
+            # 1-R?
+            R = 1 / 2 * (1 + math.erf((r - T) / (sigUp * 2 ** (1 / 2))))
+        return R
 
     def plot_pile_up(self):
         address1 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_-01"
