@@ -364,7 +364,7 @@ class MC_sim_full_argon():
         start = 0
         end = 1200
         sig =50
-        Event_N = 10**5
+        Event_N = 10**4
         x_bins = []
         with open(self.address, "rb") as fp:  # Unpickling
             MC_full = pickle.load(fp)
