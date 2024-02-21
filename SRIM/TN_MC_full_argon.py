@@ -446,21 +446,19 @@ class MC_sim_full_argon():
                 # if no intersects, value is higher than the max or lower than the min
                 # bc CDF is desending, the max is 0 and min is -1
                 # then the uncertainty is infinity - we set as event_N
-                if y_bins_low[i] > y_bins[j] and j ==0 :
-                    x_bins_low.append(0)
-                elif y_bins_low[i] < y_bins[j] and j ==len(y_bins_low)-1:
-                    x_bins_low.append(2*x_bins[i])
-                elif y_bins_low[i]<= y_bins[j] and y_bins[i] > y_bins[j+1]:
+
+                if y_bins_low[i]<= y_bins[j] and y_bins[i] > y_bins[j+1]:
                     x_bins_low.append(x_bins[j])
+                elif y_bins_low[i]<= y_bins[j+1] and j == len(y_bins_low)-2:
+                    x_bins_low.append(2*x_bins[j])
+
             for k in range(len(y_bins_high)-1):
 
-                if y_bins_high[i] > y_bins[k] and k == 0 :
-                    x_bins_high.append(0)
-                elif y_bins_high[i] < y_bins[k+1] and k == len(y_bins_high)-1:
-                    print(i,k)
-                    x_bins_high.append(2*x_bins[i])
-                elif y_bins_high[i]<= y_bins[k] and y_bins_high[i] > y_bins[k+1]:
+                if y_bins_high[i]<= y_bins[k] and y_bins_high[i] > y_bins[k+1]:
                     x_bins_high.append(x_bins[k])
+                elif y_bins_high[i]> y_bins[k] and k ==0:
+                    x_bins_high.append(0)
+                
 
 
 
