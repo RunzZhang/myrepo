@@ -121,7 +121,8 @@ class MC_sim_full_argon():
         # self.plot_spectrum(self.address)
         # self.plot_pile_up()
         # self.predicted_bubble_events(self.address)
-        self.source_uncertainty(0.3)
+        # self.source_uncertainty(0.3)
+        self.bubble_event_with_sigma(0.3)
     def data_preparation(self):
         for i in range(len(self.argon_list)):# for each chain
             total_BR = 0
@@ -432,6 +433,29 @@ class MC_sim_full_argon():
         # plt.ylim([1E-5,0.1])
         # plt.legend()
         plt.show()
+
+    def bubble_event_with_sigma(self, uncertainty):
+        x_bins, hist_result, bubble_event  = self.generate_hist_and_CDF()
+
+        bubble_event_low = [i*(1-uncertainty) for i in bubble_event]
+        bubble_event_high = [i * (1 + uncertainty) for i in bubble_event]
+
+        plt.plot(x_bins, bubble_event, color="blue", label = 'bubble number vs E threshold')
+        plt.plot(x_bins, bubble_event_low, color="red", label='bubble number with -' + str(uncertainty) +' uncertainty')
+        plt.plot(x_bins, bubble_event_high, color="orange", label='bubble number with +' + str(uncertainty) +' uncertainty')
+        plt.grid(True, which='both', linestyle='-', linewidth=1)
+        plt.minorticks_on()
+        plt.xlabel("energy/eV",fontsize=18)
+        plt.ylabel("Bubble Event Number",fontsize=18)
+        plt.yscale("log")
+        plt.yticks(fontsize=18)
+        plt.xticks(fontsize=18)
+        plt.xlim([0, 1200])
+        plt.legend()
+        # plt.ylim([1E-5,0.1])
+        # plt.legend()
+        plt.show()
+
     def source_uncertainty(self, uncertainty):
         x_bins, histgram, y_bins = self.generate_hist_and_CDF()
         print(np.shape(x_bins))
