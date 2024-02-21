@@ -434,6 +434,7 @@ class MC_sim_full_argon():
         plt.show()
     def source_uncertainty(self, uncertainty):
         x_bins, histgram, y_bins = self.generate_hist_and_CDF()
+        print(np.shape(y_bins))
 
         y_bins_low = [i*(1-uncertainty) for i in y_bins]
         y_bins_high =[i*(1+uncertainty) for i in y_bins]
@@ -458,8 +459,7 @@ class MC_sim_full_argon():
                     x_bins_high.append(2*x_bins[i])
                 elif y_bins[i]<= y_bins_high[k] and y_bins[i] > y_bins_high[k+1]:
                     x_bins_high.append(x_bins[k])
-                else:
-                    print("skipped", k)
+                
 
         plt.plot(x_bins, x_bins, color="blue", label='ideal reconsctruct E threshold')
         plt.plot(x_bins,x_bins_low,color = "red", label = 'reconstruct low limit with uncertainty '+ str(uncertainty))
