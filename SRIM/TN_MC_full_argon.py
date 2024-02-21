@@ -452,16 +452,16 @@ class MC_sim_full_argon():
                 elif y_bins[i]<= y_bins_low[j] and y_bins[i] > y_bins_low[j+1]:
                     x_bins_low.append(x_bins[j])
             for k in range(len(y_bins_high)-1):
-                if y_bins[i] > y_bins_high[j] and k == 0 :
+                if y_bins[i] > y_bins_high[k] and k == 0 :
                     x_bins_high.append(0)
-                elif y_bins[i] < y_bins_high[j] and k == len(y_bins_high)-1:
+                elif y_bins[i] < y_bins_high[k] and k == len(y_bins_high)-1:
                     x_bins_high.append(2*x_bins[i])
                 elif y_bins[i]<= y_bins_high[k] and y_bins[i] > y_bins_high[k+1]:
                     x_bins_high.append(x_bins[k])
 
         plt.plot(x_bins, x_bins, color="blue", label='ideal reconsctruct E threshold')
         plt.plot(x_bins,x_bins_low,color = "red", label = 'reconstruct low limit with uncertainty '+ str(uncertainty))
-        # plt.plot(x_bins, x_bins_high, color="orange", label='reconstruct high limit with uncertainty'+ str(uncertainty))
+        plt.plot(x_bins, x_bins_high, color="orange", label='reconstruct high limit with uncertainty'+ str(uncertainty))
         plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
         plt.xlabel("energy/eV",fontsize=18)
