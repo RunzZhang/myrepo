@@ -476,7 +476,7 @@ class MC_sim_full_argon():
         plt.minorticks_on()
         plt.xlabel("energy/eV",fontsize=18)
         plt.ylabel("reconstruct energy/eV",fontsize=18)
-        plt.yscale("log")
+        # plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
