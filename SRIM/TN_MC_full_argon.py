@@ -448,19 +448,18 @@ class MC_sim_full_argon():
                 # then the uncertainty is infinity - we set as event_N
                 if y_bins[i] > y_bins_low[j] and j ==0 :
                     x_bins_low.append(0)
-                elif y_bins[i] < y_bins_low[j] and j ==len(y_bins_low):
+                elif y_bins[i] < y_bins_low[j] and j ==len(y_bins_low)-1:
                     x_bins_low.append(2*x_bins[i])
                 elif y_bins[i]<= y_bins_low[j] and y_bins[i] > y_bins_low[j+1]:
                     x_bins_low.append(x_bins[j])
             for k in range(len(y_bins_high)-1):
                 if y_bins[i] > y_bins_high[k] and k == 0 :
                     x_bins_high.append(0)
-                elif y_bins[i] < y_bins_high[k] and k == len(y_bins_high):
+                elif y_bins[i] < y_bins_high[k] and k == len(y_bins_high)-1:
                     x_bins_high.append(2*x_bins[i])
                 elif y_bins[i]<= y_bins_high[k] and y_bins[i] > y_bins_high[k+1]:
                     x_bins_high.append(x_bins[k])
-                else:
-                    print("skipped",k)
+
 
 
         plt.plot(x_bins, x_bins, color="blue", label='ideal reconsctruct E threshold')
