@@ -369,7 +369,7 @@ class MC_sim_full_argon():
         x_bins = []
         with open(self.address, "rb") as fp:  # Unpickling
             MC_full = pickle.load(fp)
-            print("read", MC_full)
+            # print("read", MC_full)
         bin_n = 500
 
         hist_result = plt.hist(MC_full, bins=bin_n, range=(start, end), density=True)
@@ -456,6 +456,7 @@ class MC_sim_full_argon():
                 if y_bins[i] > y_bins_high[k] and k == 0 :
                     x_bins_high.append(0)
                 elif y_bins[i] < y_bins_high[k] and k == len(y_bins_high)-1:
+                    print(i,k)
                     x_bins_high.append(2*x_bins[i])
                 elif y_bins[i]<= y_bins_high[k] and y_bins[i] > y_bins_high[k+1]:
                     x_bins_high.append(x_bins[k])
