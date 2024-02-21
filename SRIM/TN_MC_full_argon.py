@@ -121,8 +121,8 @@ class MC_sim_full_argon():
         # self.plot_spectrum(self.address)
         # self.plot_pile_up()
         # self.predicted_bubble_events(self.address)
-        # self.source_uncertainty(0.3)
-        self.bubble_event_with_sigma(0.3)
+        self.source_uncertainty(0.3)
+        # self.bubble_event_with_sigma(0.3)
     def data_preparation(self):
         for i in range(len(self.argon_list)):# for each chain
             total_BR = 0
@@ -505,7 +505,7 @@ class MC_sim_full_argon():
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.legend()
-        # plt.ylim([1E-5,0.1])
+        plt.ylim([0,1500])
         plt.show()
 
 
