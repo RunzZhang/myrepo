@@ -120,8 +120,8 @@ class MC_sim_full_argon():
         # self.data_analysis(self.address)
         # self.plot_spectrum(self.address)
         # self.plot_pile_up()
-        self.predicted_bubble_events(self.address)
-
+        # self.predicted_bubble_events(self.address)
+        self.source_uncertainty(0.3)
     def data_preparation(self):
         for i in range(len(self.argon_list)):# for each chain
             total_BR = 0
@@ -360,41 +360,46 @@ class MC_sim_full_argon():
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
         plt.show()
-    def predicted_bubble_events(self, address):
+
+    def generate_hist_and_CDF(self):
         start = 0
         end = 1200
-        sig =50
-        Event_N = 10**3
+        sig = 50
+        Event_N = 10 ** 3
         x_bins = []
         with open(self.address, "rb") as fp:  # Unpickling
             MC_full = pickle.load(fp)
-            print("read",MC_full)
-        bin_n =500
+            print("read", MC_full)
+        bin_n = 500
 
-        hist_result = plt.hist(MC_full, bins =bin_n, range=(start, end) ,density = True)
+        hist_result = plt.hist(MC_full, bins=bin_n, range=(start, end), density=True)
         plt.clf()
         for i in range(len(hist_result[1]) - 1):
             x_bins.append((hist_result[1][i] + hist_result[1][i + 1]) / 2)
-        bin_width = x_bins[1]-x_bins[0]
-        bubble_event= []
+        bin_width = x_bins[1] - x_bins[0]
+        bubble_event = []
         efficiency_2d = [[None for _ in range(len(x_bins))] for _ in range(len(x_bins))]
         efficiency = []
         # generate 2d matrix that nucleation effic at energy E1 with energy threshold E2
         for i in range(len(x_bins)):
             for j in range(len(x_bins)):
-                efficiency_2d[i][j] = self.NucleationEfficiencyTrue(x_bins[j],x_bins[i],sigLow=sig,sigUp=sig)
+                efficiency_2d[i][j] = self.NucleationEfficiencyTrue(x_bins[j], x_bins[i], sigLow=sig, sigUp=sig)
         # convolution of efficiency and spectrum
         # k is the energy threshold and l is the integral parameter dE
         for k in range(len(x_bins)):
             integral = 0
             for l in range(len(x_bins)):
-                integral += Event_N*efficiency_2d[k][l]*hist_result[0][l]*bin_width
+                integral += Event_N * efficiency_2d[k][l] * hist_result[0][l] * bin_width
             bubble_event.append(integral)
+        return x_bins, hist_result[0], bubble_event
+    def predicted_bubble_events(self, address):
+        x_bins, hist_result, bubble_event  = self.generate_hist_and_CDF()
+
 
         fig, ax1 = plt.subplots()
         ax1.set_xlabel("energy/eV",fontsize=18)
         ax1.set_ylabel("Possibility/bin",fontsize=18)
-        l1 = ax1.plot(x_bins, hist_result[0], color="red", label = 'Ar spectrum')
+        l1 = ax1.plot(x_bins, hist_result, color="red", label = 'Ar spectrum')
         ax1.grid(True, which='both', linestyle='-', linewidth=1)
         ax1.set_yscale("log")
         ax1.minorticks_on()
@@ -427,6 +432,50 @@ class MC_sim_full_argon():
         # plt.ylim([1E-5,0.1])
         # plt.legend()
         plt.show()
+    def source_uncertainty(self, uncertainty):
+        x_bins, histgram, y_bins = self.generate_hist_and_CDF()
+
+        y_bins_low = [i*(1-uncertainty) for i in y_bins]
+        y_bins_high =[i*(1+uncertainty) for i in y_bins]
+        x_bins_low = []
+        x_bins_high = []
+        for i in range(len(x_bins)):
+            #find ybins[i] value and index on ybins_low and high
+            for j in range(len(y_bins_low)-1):
+                # if no intersects, value is higher than the max or lower than the min
+                # bc CDF is desending, the max is 0 and min is -1
+                # then the uncertainty is infinity - we set as event_N
+                if y_bins[i] > y_bins_low[0]:
+                    x_bins_low.append(0)
+                if y_bins[i] < y_bins_low[-1]:
+                    x_bins_low.append(2*x_bins[i])
+                elif y_bins[i]>= y_bins_low[j] and y_bins[i] < y_bins_low[j+1]:
+                    x_bins_low.append(x_bins[j])
+            for k in range(len(y_bins_high)-1):
+                if y_bins[i] > y_bins_high[0]:
+                    x_bins_high.append(0)
+                if y_bins[i] < y_bins_high[-1]:
+                    x_bins_high.append(2*x_bins[i])
+                if y_bins[i]>= y_bins_high[k] and y_bins[i] < y_bins_high[k+1]:
+                    x_bins_high.append(x_bins[k])
+
+        plt.plot(x_bins, x_bins, color="blue", label='ideal reconsctruct E threshold')
+        plt.plot(x_bins,x_bins_low,color = "red", label = 'reconstruct low limit with uncertainty '+ str(uncertainty))
+        plt.plot(x_bins, x_bins_high, color="orange", label='reconstruct high limit with uncertainty'+ str(uncertainty))
+        plt.grid(True, which='both', linestyle='-', linewidth=1)
+        plt.minorticks_on()
+        plt.xlabel("energy/eV",fontsize=18)
+        plt.ylabel("reconstruct energy/eV",fontsize=18)
+        plt.yscale("log")
+        plt.yticks(fontsize=18)
+        plt.xticks(fontsize=18)
+        plt.xlim([0, 1200])
+        plt.legend()
+        # plt.ylim([1E-5,0.1])
+        plt.show()
+
+
+
 
     def NucleationEfficiencyTrue(self, r, T, sigLow, sigUp):
         if r < T:
