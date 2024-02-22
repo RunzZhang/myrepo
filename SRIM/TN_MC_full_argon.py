@@ -121,7 +121,8 @@ class MC_sim_full_argon():
         # self.plot_spectrum(self.address)
         # self.plot_pile_up()
         # self.predicted_bubble_events(self.address)
-        self.source_uncertainty(0.3)
+        # self.source_uncertainty(0.3)
+        self.source_uncertainty(0.3, 500)
         # self.bubble_event_with_sigma(0.3)
     def data_preparation(self):
         for i in range(len(self.argon_list)):# for each chain
@@ -362,11 +363,12 @@ class MC_sim_full_argon():
         plt.ylim([1E-5,0.1])
         plt.show()
 
-    def generate_hist_and_CDF(self):
+    def generate_hist_and_CDF(self,event_N= 10**3):
+        # event_N is neutron capture event numbers in argon per 100 hours
         start = 0
         end = 1200
         sig = 50
-        Event_N = 10 ** 3
+        Event_N = event_N
         x_bins = []
         with open(self.address, "rb") as fp:  # Unpickling
             MC_full = pickle.load(fp)
@@ -490,9 +492,6 @@ class MC_sim_full_argon():
                 elif y_bins_high[i] <= y_bins[k] and y_bins_high[i] > y_bins[k + 1]:
                     x_bins_high.append(x_bins[k])
 
-
-
-
         plt.plot(x_bins, x_bins, color="blue", label='ideal reconsctruct E threshold')
         plt.plot(x_bins,x_bins_low,color = "red", label = 'reconstruct limit with source uncertainty -'+ str(uncertainty))
         plt.plot(x_bins, x_bins_high, color="orange", label='reconstruct limit with source uncertainty +'+ str(uncertainty))
@@ -508,6 +507,54 @@ class MC_sim_full_argon():
         plt.ylim([0,1500])
         plt.show()
 
+    def source_uncertainty_w_background(self, uncertainty,background):
+        x_bins, histgram, y_bins = self.generate_hist_and_CDF(10**3)
+        print(np.shape(x_bins))
+
+        y_bins_low = [i*(1-uncertainty)+background for i in y_bins]
+        y_bins_high =[i*(1+uncertainty)+background for i in y_bins]
+        x_bins_low = []
+        x_bins_high = []
+        for i in range(len(x_bins)):
+            #find ybins[i] value and index on ybins_low and high
+            for j in range(len(y_bins_low)):
+                # if no intersects, value is higher than the max or lower than the min
+                # bc CDF is desending, the max is 0 and min is -1
+                # then the uncertainty is infinity - we set as event_N
+                if  y_bins_low[i]<= y_bins[-1]:
+                    x_bins_low.append(2*x_bins[i])
+                    break
+                elif y_bins_low[i] > y_bins[0]:
+                    x_bins_low.append(0)
+                    break
+                elif y_bins_low[i] <= y_bins[j] and y_bins_low[i] > y_bins[j + 1]:
+                    x_bins_low.append(x_bins[j])
+
+            for k in range(len(y_bins_high)):
+
+                if y_bins_high[i] <= y_bins[-1]:
+                    x_bins_high.append(2 * x_bins[i])
+                    break
+                elif y_bins_high[i] > y_bins[0]:
+                    x_bins_high.append(0)
+                    break
+                elif y_bins_high[i] <= y_bins[k] and y_bins_high[i] > y_bins[k + 1]:
+                    x_bins_high.append(x_bins[k])
+
+        plt.plot(x_bins, x_bins, color="blue", label='ideal reconsctruct E threshold')
+        plt.plot(x_bins,x_bins_low,color = "red", label = 'reconstruct limit with source uncertainty -'+ str(uncertainty))
+        plt.plot(x_bins, x_bins_high, color="orange", label='reconstruct limit with source uncertainty +'+ str(uncertainty))
+        plt.grid(True, which='both', linestyle='-', linewidth=1)
+        plt.minorticks_on()
+        plt.xlabel("energy/eV",fontsize=18)
+        plt.ylabel("reconstruct energy/eV",fontsize=18)
+        # plt.yscale("log")
+        plt.yticks(fontsize=18)
+        plt.xticks(fontsize=18)
+        plt.xlim([0, 1200])
+        plt.legend()
+        plt.ylim([0,1500])
+        plt.show()
 
 
 
