@@ -508,7 +508,7 @@ class MC_sim_full_argon():
         plt.show()
 
     def source_uncertainty_w_background(self, uncertainty,background):
-        x_bins, histgram, y_bins = self.generate_hist_and_CDF(10**3)
+        x_bins, histgram, y_bins = self.generate_hist_and_CDF(10**4)
         print(np.shape(x_bins))
 
         y_bins_low = [i*(1-uncertainty)+background for i in y_bins]
