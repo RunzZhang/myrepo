@@ -125,7 +125,10 @@ class multi_MC():
         # test new method
         Recoils2, Weights2, Rate2, Count2, t2, time2 = self.analyze2(self.flist[0], self.threshold, self.sig_low, self.sig_high,
                                                                      Activity=self.alist[0])
-        print("Recoils",Recoils2, Weights2, Rate2, Count2, t2, time2)
+        Recoils, Weights, Rate, Count, t, time = self.analyze(self.flist[0], self.threshold, self.sig_low,
+                                                                     self.sig_high,
+                                                                     Activity=self.alist[0])
+        print("Recoils",Recoils, Weights, Rate, Count, t, time,"\n",Recoils2, Weights2, Rate2, Count2, t2, time2)
 
             
         
