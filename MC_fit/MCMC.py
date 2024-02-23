@@ -119,8 +119,13 @@ class multi_MC():
 
 
         # # run and analyze
-        self.multirun(self.runN)
+        # self.multirun(self.runN)
         # self.analysis_results(self.runN)
+
+        # test new method
+        Recoils2, Weights2, Rate2, Count2, t2, time2 = self.analyze2(self.flist[0], self.threshold, self.sig_low, self.sig_high,
+                                                                     Activity=self.alist[0])
+        print("Recoils",Recoils2, Weights2, Rate2, Count2, t2, time2)
 
             
         
@@ -596,7 +601,7 @@ class multi_MC():
         address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
         with open(address, "rb") as fp:  # Unpickling
             MC_full = pickle.load(fp)
-            print("read", MC_full)
+            # print("read", MC_full)
         bin_n = 500
 
         hist_result = plt.hist(MC_full, bins=bin_n, range=(start, end), density=True)
@@ -1076,10 +1081,6 @@ class multi_MC():
         for i in range(n):
             print(i, self.flist[i])
             Recoils, Weights, Rate, Count, t, time = self.analyze(self.flist[i], T, sigLow, sigUp, Activity=self.alist[i])
-            Recoils2, Weights2, Rate2, Count2, t2, time2 = self.analyze2(self.flist[i], T, sigLow, sigUp,
-                                                                  Activity=self.alist[i])
-            print("Recoils",Recoils, Weights, Rate, Count, t, time,"\n",Recoils2, Weights2, Rate2, Count2, t2, time2)
-            sys.exit()
             Recoils, Weights = self.specrafy(Recoils, Weights, binsize=binsize)
             Rate2 = self.rateFinderTrue(Recoils, T, sigLow, sigUp, t, Weights)
             print("Recoils: ", Rate, Rate2, Rate - Rate2)
