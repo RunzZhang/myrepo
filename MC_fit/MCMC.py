@@ -565,16 +565,17 @@ class multi_MC():
         t = N / SourceRate  # live time in seconds
         t /= 3600  # live time in hours
         # t = 10 ** 5 / (1000)
-        t = 10**4/4
-        # t =100 for thermal neutron only, 10^5 events per file and the thermal neutron rate is 1000 per hour
+        t = 10**4
+        # t =10000 for thermal neutron only, 10^5 events per file and the thermal neutron rate is 10 per hour
         # this might be optimistic but let's use this first
         # event = 2552
 
 
         energy, CDF = self.generate_CDF()
-        capture = N*time/t
+        N = 10**5
+        capture = math.floor(N*time/t)
         bubble_number = 0
-        for i in capture:
+        for i in range(capture):
             Er_temp = self.find_E_recoiled(energy, CDF)
             bubble_result = self.find_bubble(Er_temp,T,sigLow,sigUp)
             if bubble_result:
@@ -582,15 +583,9 @@ class multi_MC():
         Count2 = bubble_number
         Rate = Count2/time
 
+        print("Count2",Count2)
 
-
-        Count2 = 0
-        Rate = self.rateFinderTrue(Recoils, T, sigLow, sigUp, t, Weights)
-
-        Count = Rate * time
-        print("Count",Count)
-
-        return Recoils, Weights, Rate, Count, t, time
+        return Recoils, Weights, Rate, Count2, t, time
     def generate_CDF(self):
         # get the x and y of the histgram:
         start = 0
@@ -1081,6 +1076,10 @@ class multi_MC():
         for i in range(n):
             print(i, self.flist[i])
             Recoils, Weights, Rate, Count, t, time = self.analyze(self.flist[i], T, sigLow, sigUp, Activity=self.alist[i])
+            Recoils2, Weights2, Rate2, Count2, t2, time2 = self.analyze2(self.flist[i], T, sigLow, sigUp,
+                                                                  Activity=self.alist[i])
+            print(Recoils, Weights, Rate, Count, t, time,"\n",Recoils2, Weights2, Rate2, Count2, t2, time2)
+            sys.exit()
             Recoils, Weights = self.specrafy(Recoils, Weights, binsize=binsize)
             Rate2 = self.rateFinderTrue(Recoils, T, sigLow, sigUp, t, Weights)
             print("Recoils: ", Rate, Rate2, Rate - Rate2)
