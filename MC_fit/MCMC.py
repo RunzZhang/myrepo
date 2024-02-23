@@ -120,7 +120,7 @@ class multi_MC():
 
         # # run and analyze
         self.multirun(self.runN)
-        self.analysis_results(self.runN)
+        # self.analysis_results(self.runN)
 
             
         
@@ -1078,7 +1078,7 @@ class multi_MC():
             Recoils, Weights, Rate, Count, t, time = self.analyze(self.flist[i], T, sigLow, sigUp, Activity=self.alist[i])
             Recoils2, Weights2, Rate2, Count2, t2, time2 = self.analyze2(self.flist[i], T, sigLow, sigUp,
                                                                   Activity=self.alist[i])
-            print(Recoils, Weights, Rate, Count, t, time,"\n",Recoils2, Weights2, Rate2, Count2, t2, time2)
+            print("Recoils",Recoils, Weights, Rate, Count, t, time,"\n",Recoils2, Weights2, Rate2, Count2, t2, time2)
             sys.exit()
             Recoils, Weights = self.specrafy(Recoils, Weights, binsize=binsize)
             Rate2 = self.rateFinderTrue(Recoils, T, sigLow, sigUp, t, Weights)
