@@ -101,7 +101,7 @@ class multi_MC():
             self.fileprefix = sys.argv[1]
         except:
             self.fileprefix = "./Test_Dump/test2"
-        self.save_path = "/data/runzezhang/result/chi2_test_TN500_NB/"
+        self.save_path = "/data/runzezhang/result/chi2_test_fixedNCrate_TN500/"
         """ 
         def NucleationEfficiency(r,T,sigma):
             #A=1/2
@@ -119,7 +119,7 @@ class multi_MC():
 
 
         # # run and analyze
-        # self.multirun(self.runN)
+        self.multirun(self.runN)
         self.analysis_results(self.runN)
 
             
@@ -538,10 +538,10 @@ class multi_MC():
         t = N / SourceRate  # live time in seconds
         t /= 3600  # live time in hours
         # t = 10 ** 5 / (1000)
-        t = 10**4/4
-        # t =100 for thermal neutron only, 10^5 events per file and the thermal neutron rate is 1000 per hour
+        t = 10**4
+        # t =10000 for thermal neutron only, 10^5 events per file and the thermal neutron rate is 10 per hour
         # this might be optimistic but let's use this first
-        # event = 2552
+
         Rate = self.rateFinderTrue(Recoils, T, sigLow, sigUp, t, Weights)
 
         Count = Rate * time
@@ -622,7 +622,7 @@ class multi_MC():
         x = x_bins
         y = y_CDF
         for i in range(len(y)):
-            if i <= len(y):
+            if i < len(y):
                 if ran>= y[i] and ran<y[i+1]:
                     E_r = x[i]
             else:
@@ -995,7 +995,7 @@ class multi_MC():
         sigUp = self.sig_high
         binsize = .5
         sourceErr = .05
-        background = 0
+        background = 500
         backErr = np.round(background ** (1 / 2))
         # energies=[75,100,115,120,140]
         # efficiencies=[0,.2,.50,.8,1]
