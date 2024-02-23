@@ -594,7 +594,7 @@ class multi_MC():
         Event_N = 10 ** 3
         x_bins = []
         address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
-        with open(self.address, "rb") as fp:  # Unpickling
+        with open(address, "rb") as fp:  # Unpickling
             MC_full = pickle.load(fp)
             print("read", MC_full)
         bin_n = 500
