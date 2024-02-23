@@ -119,16 +119,17 @@ class multi_MC():
 
 
         # # run and analyze
-        # self.multirun(self.runN)
-        # self.analysis_results(self.runN)
+        self.multirun(self.runN)
+        self.analysis_results(self.runN)
 
         # test new method
-        Recoils2, Weights2, Rate2, Count2, t2, time2 = self.analyze2(self.flist[0], self.threshold, self.sig_low, self.sig_high,
-                                                                     Activity=self.alist[0])
-        Recoils, Weights, Rate, Count, t, time = self.analyze(self.flist[0], self.threshold, self.sig_low,
-                                                                     self.sig_high,
-                                                                     Activity=self.alist[0])
-        print("Recoils",Recoils, Weights, Rate, Count, t, time,"\n",Recoils2, Weights2, Rate2, Count2, t2, time2)
+        # generate bubbles event by event instead of normalization
+        # Recoils2, Weights2, Rate2, Count2, t2, time2 = self.analyze2(self.flist[0], self.threshold, self.sig_low, self.sig_high,
+        #                                                              Activity=self.alist[0])
+        # Recoils, Weights, Rate, Count, t, time = self.analyze(self.flist[0], self.threshold, self.sig_low,
+        #                                                              self.sig_high,
+        #                                                              Activity=self.alist[0])
+        # print("Recoils",Recoils, Weights, Rate, Count, t, time,"\n",Recoils2, Weights2, Rate2, Count2, t2, time2)
 
             
         
