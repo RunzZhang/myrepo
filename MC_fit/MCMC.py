@@ -611,7 +611,7 @@ class multi_MC():
         bin_width = x_bins[1] - x_bins[0]
         x = x_bins
         y = hist_result[0]
-        y_CDF = [0]
+        y_CDF = np.zeros(len(y))
         for i in range(len(y)):
             y_CDF[i]= np.sum(y[:i])*bin_width
         return x_bins, y_CDF
