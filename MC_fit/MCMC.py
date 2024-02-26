@@ -101,7 +101,7 @@ class multi_MC():
             self.fileprefix = sys.argv[1]
         except:
             self.fileprefix = "./Test_Dump/test2"
-        self.save_path = "/data/runzezhang/result/chi2_test_fixedNCrate_TN500/"
+        self.save_path = "/data/runzezhang/result/chi2_test_fixedNCrate_TN500_v2/"
         """ 
         def NucleationEfficiency(r,T,sigma):
             #A=1/2
@@ -999,7 +999,7 @@ class multi_MC():
         sigUp = self.sig_high
         binsize = .5
         sourceErr = .05
-        background = 500
+        background = 0
         backErr = np.round(background ** (1 / 2))
         # energies=[75,100,115,120,140]
         # efficiencies=[0,.2,.50,.8,1]
@@ -1084,7 +1084,7 @@ class multi_MC():
         # plt.clf()
         for i in range(n):
             print(i, self.flist[i])
-            Recoils, Weights, Rate, Count, t, time = self.analyze(self.flist[i], T, sigLow, sigUp, Activity=self.alist[i])
+            Recoils, Weights, Rate, Count, t, time = self.analyze2(self.flist[i], T, sigLow, sigUp, Activity=self.alist[i])
             Recoils, Weights = self.specrafy(Recoils, Weights, binsize=binsize)
             Rate2 = self.rateFinderTrue(Recoils, T, sigLow, sigUp, t, Weights)
             print("Recoils: ", Rate, Rate2, Rate - Rate2)
