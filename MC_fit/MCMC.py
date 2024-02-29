@@ -91,7 +91,7 @@ class multi_MC():
 
         self.runN = 20
         self.runlist =[]
-        self.threshold = 400
+        self.threshold = 700
         self.sig_high = 50
         self.sig_low = 50
         self.ceil =1.5* self.threshold
