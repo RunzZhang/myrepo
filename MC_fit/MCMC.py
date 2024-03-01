@@ -87,7 +87,7 @@ class multi_MC():
 
         self.runN = 20
         self.runlist =[]
-        self.threshold = 400
+        self.threshold = 1125
         self.sig_high = 50
         self.sig_low = 50
         self.ceil =1.5* self.threshold
@@ -97,7 +97,7 @@ class multi_MC():
             self.fileprefix = sys.argv[1]
         except:
             self.fileprefix = "./Test_Dump/test2"
-        self.save_path = "/data/runzezhang/result/chi2_test_fixedNCrate_TN400_v2/"
+        self.save_path = "/data/runzezhang/result/chi2_test_fixedNCrate_TN1125_v2/"
         """ 
         def NucleationEfficiency(r,T,sigma):
             #A=1/2
@@ -115,7 +115,7 @@ class multi_MC():
 
 
         # # run and analyze
-        # self.multirun(self.runN)
+        self.multirun(self.runN)
         self.analysis_results(self.runN)
 
         # test new method
@@ -570,7 +570,7 @@ class multi_MC():
         t = N / SourceRate  # live time in seconds
         t /= 3600  # live time in hours
         # t = 10 ** 5 / (1000)
-        t = 10**4
+        t = 10**3
         # t =10000 for thermal neutron only, 10^5 events per file and the thermal neutron rate is 10 per hour
         # this might be optimistic but let's use this first
         # event = 2552
