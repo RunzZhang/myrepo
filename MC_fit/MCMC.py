@@ -71,10 +71,6 @@ For example:
 Where there is a directory named ThSbCo with the output of the hatch.sh run with 50 or 25 numbered subdirectories with best fit parameters inside
 """
 
-
-
-
-
 class multi_MC():
     def __init__(self):
 
