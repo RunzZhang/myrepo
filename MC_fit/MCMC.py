@@ -115,7 +115,7 @@ class multi_MC():
 
 
         # # run and analyze
-        self.multirun(self.runN)
+        # self.multirun(self.runN)
         self.analysis_results(self.runN)
 
         # test new method
