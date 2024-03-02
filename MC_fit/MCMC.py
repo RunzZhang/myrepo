@@ -176,7 +176,7 @@ class multi_MC():
         self.plot_error(mean_node,max_node,min_node,self.threshold, self.sig_low, self.sig_high)
 
     def plot_error(self, mean, high, low, th, siglow, sighi):
-        x = range(0, max(1200,np.ceil(th+3*sighi)), 1)
+        x = range(0, max([1200,np.ceil(th+3*sighi)]), 1)
         y = []
         for i in x:
             y.append(self.NucleationEfficiencyTrue(i, T=th, sigLow=siglow, sigUp=sighi))
