@@ -97,7 +97,7 @@ class multi_MC():
             self.fileprefix = sys.argv[1]
         except:
             self.fileprefix = "./Test_Dump/test2"
-        self.save_path = "/data/runzezhang/result/chi2_test_TN1125/"
+        self.save_path = "/data/runzezhang/result/chi2_test_TN1125_t1E4"
         """ 
         def NucleationEfficiency(r,T,sigma):
             #A=1/2
