@@ -34,6 +34,7 @@ class MC_sim_full_argon():
         # orginal time factor is 10E-3 and we modify it from 0.5 to 2
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_-01"
+        # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
         self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_2time_0offset"
 
 
@@ -118,7 +119,7 @@ class MC_sim_full_argon():
         self.gamma_emission_list_1d = []
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
-        self.MC_sim(self.runtime)
+        # self.MC_sim(self.runtime)
         # self.data_analysis(self.address)
         self.plot_spectrum(self.address)
 
@@ -367,14 +368,14 @@ class MC_sim_full_argon():
         plt.ylim([1E-5,0.1])
         plt.show()
 
-    def generate_hist_and_CDF(self,event_N= 10**3):
+    def generate_hist_and_CDF(self,event_N= 10**3 , address = self.address):
         # event_N is neutron capture event numbers in argon per 100 hours
         start = 0
         end = 1200
         sig = 50
         Event_N = event_N
         x_bins = []
-        with open(self.address, "rb") as fp:  # Unpickling
+        with open(address, "rb") as fp:  # Unpickling
             MC_full = pickle.load(fp)
             # print("read", MC_full)
         bin_n = 500
@@ -451,8 +452,30 @@ class MC_sim_full_argon():
         plt.plot(x_bins, bubble_event_high, color="orange", label='bubble number with +' + str(uncertainty) +' uncertainty')
         plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
-        plt.xlabel("energy/eV",fontsize=18)
-        plt.ylabel("Bubble Event Number",fontsize=18)
+        plt.xlabel("$E_{th}$/eV",fontsize=18)
+        plt.ylabel("Observed Bubble Event Number $R_B$ at $E_{th}$",fontsize=18)
+        plt.yscale("log")
+        plt.yticks(fontsize=18)
+        plt.xticks(fontsize=18)
+        plt.xlim([0, 1200])
+        plt.legend()
+        # plt.ylim([1E-5,0.1])
+        # plt.legend()
+        plt.show()
+
+    def bubble_event_with_spectrum_sigma(self):
+        x_bins, hist_result, bubble_event  = self.generate_hist_and_CDF()
+
+        bubble_event_low = self.generate_hist_and_CDF(address="MC_argon_full_20231206_full_0.5time_0offset")[2]
+        bubble_event_high = self.generate_hist_and_CDF(address="MC_argon_full_20231206_full_2time_0offset")[2]
+
+        plt.plot(x_bins, bubble_event, color="blue", label = 'bubble number vs E threshold')
+        plt.plot(x_bins, bubble_event_low, color="red", label='bubble number with 0.5 gamma level decay time')
+        plt.plot(x_bins, bubble_event_high, color="orange", label='bubble number with 2 gamma level decay time')
+        plt.grid(True, which='both', linestyle='-', linewidth=1)
+        plt.minorticks_on()
+        plt.xlabel("$E_{th}$/eV",fontsize=18)
+        plt.ylabel("Observed Bubble Event Number $R_B$ at $E_{th}$",fontsize=18)
         plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
@@ -501,8 +524,57 @@ class MC_sim_full_argon():
         plt.plot(x_bins, x_bins_high, color="orange", label='reconstruct limit with source uncertainty +'+ str(uncertainty))
         plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
-        plt.xlabel("energy/eV",fontsize=18)
-        plt.ylabel("reconstruct energy/eV",fontsize=18)
+        plt.xlabel("$E_{th}$/eV",fontsize=18)
+        plt.ylabel("Reconstruct Energy threshold $E_{th}$",fontsize=18)
+        # plt.yscale("log")
+        plt.yticks(fontsize=18)
+        plt.xticks(fontsize=18)
+        plt.xlim([0, 1200])
+        plt.legend()
+        plt.ylim([0,1500])
+        plt.show()
+
+    def spectrum_uncertainty(self, uncertainty):
+        x_bins, histgram, y_bins = self.generate_hist_and_CDF()
+        print(np.shape(x_bins))
+
+        y_bins_low = [i*(1-uncertainty) for i in y_bins]
+        y_bins_high =[i*(1+uncertainty) for i in y_bins]
+        x_bins_low = []
+        x_bins_high = []
+        for i in range(len(x_bins)):
+            #find ybins[i] value and index on ybins_low and high
+            for j in range(len(y_bins_low)):
+                # if no intersects, value is higher than the max or lower than the min
+                # bc CDF is desending, the max is 0 and min is -1
+                # then the uncertainty is infinity - we set as event_N
+                if  y_bins_low[i]<= y_bins[-1]:
+                    x_bins_low.append(2*x_bins[i])
+                    break
+                elif y_bins_low[i] > y_bins[0]:
+                    x_bins_low.append(0)
+                    break
+                elif y_bins_low[i] <= y_bins[j] and y_bins_low[i] > y_bins[j + 1]:
+                    x_bins_low.append(x_bins[j])
+
+            for k in range(len(y_bins_high)):
+
+                if y_bins_high[i] <= y_bins[-1]:
+                    x_bins_high.append(2 * x_bins[i])
+                    break
+                elif y_bins_high[i] > y_bins[0]:
+                    x_bins_high.append(0)
+                    break
+                elif y_bins_high[i] <= y_bins[k] and y_bins_high[i] > y_bins[k + 1]:
+                    x_bins_high.append(x_bins[k])
+
+        plt.plot(x_bins, x_bins, color="blue", label='ideal reconsctruct E threshold')
+        plt.plot(x_bins,x_bins_low,color = "red", label = 'reconstruct limit with source uncertainty -'+ str(uncertainty))
+        plt.plot(x_bins, x_bins_high, color="orange", label='reconstruct limit with source uncertainty +'+ str(uncertainty))
+        plt.grid(True, which='both', linestyle='-', linewidth=1)
+        plt.minorticks_on()
+        plt.xlabel("$E_{th}$/eV",fontsize=18)
+        plt.ylabel("reconstruct $E_{th}$ energy/eV",fontsize=18)
         # plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
