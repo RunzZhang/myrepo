@@ -87,7 +87,7 @@ class multi_MC():
 
         self.runN = 20
         self.runlist =[]
-        self.threshold = 700
+        self.threshold = 400
         self.sig_high = 50
         self.sig_low = 50
         self.ceil =1.5* self.threshold
@@ -97,7 +97,7 @@ class multi_MC():
             self.fileprefix = sys.argv[1]
         except:
             self.fileprefix = "./Test_Dump/test2"
-        self.save_path = "/data/runzezhang/result/chi2_test_TN700_t1E4"
+        self.save_path = "/data/runzezhang/result/chi2_test_TN400_t1E4"
         """ 
         def NucleationEfficiency(r,T,sigma):
             #A=1/2
