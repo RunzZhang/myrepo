@@ -397,7 +397,7 @@ class MC_sim_full_argon():
         plt.clf()
 
         plt.plot(x_bins, hist_result[0], color="blue", label='original spectrum')
-        plt.plot(x_bins, hist_result_low[0], color="red", label="0.5x decay time spectrum")
+        plt.plot(x_bins, hist_result_low[0], color="green", label="0.5x decay time spectrum")
         plt.plot(x_bins, hist_result_high[0], color="orange", label='2x decay time spectrum')
         plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
