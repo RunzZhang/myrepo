@@ -393,10 +393,8 @@ class MC_sim_full_argon():
             x_bins.append((hist_result[1][i] + hist_result[1][i + 1]) / 2)
         hist_result_low = plt.hist(MC_full_low, bins=bin_n, range=(start, end), density=True)
         plt.clf()
-        for i in range(len(hist_result_low[1]) - 1):
         hist_result_high = plt.hist(MC_full_high, bins=bin_n, range=(start, end), density=True)
         plt.clf()
-        for i in range(len(hist_result_high[1]) - 1):
 
         plt.plot(x_bins, hist_result[0], color="blue", label='original spectrum')
         plt.plot(x_bins, hist_result_low[0], color="red", label="0.5x decay time spectrum")
