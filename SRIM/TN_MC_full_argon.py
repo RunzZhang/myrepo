@@ -34,7 +34,7 @@ class MC_sim_full_argon():
         # orginal time factor is 10E-3 and we modify it from 0.5 to 2
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_-01"
-        # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206"
+        # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
         self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_2time_0offset"
 
 
@@ -369,7 +369,7 @@ class MC_sim_full_argon():
         plt.ylim([1E-5,0.1])
         plt.show()
 
-    def generate_hist_and_CDF(self,event_N= 10**3 , address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206"):
+    def generate_hist_and_CDF(self,event_N= 10**3 , address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"):
         # event_N is neutron capture event numbers in argon per 100 hours
         start = 0
         end = 1200
