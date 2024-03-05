@@ -467,8 +467,8 @@ class MC_sim_full_argon():
     def bubble_event_with_spectrum_sigma(self):
         x_bins, hist_result, bubble_event  = self.generate_hist_and_CDF()
 
-        bubble_event_low = self.generate_hist_and_CDF(address="MC_argon_full_20231206_full_0.5time_0offset")[2]
-        bubble_event_high = self.generate_hist_and_CDF(address="MC_argon_full_20231206_full_2time_0offset")[2]
+        bubble_event_low = self.generate_hist_and_CDF(address="/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_0.5time_0offset")[2]
+        bubble_event_high = self.generate_hist_and_CDF(address="/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_2time_0offset")[2]
 
         plt.plot(x_bins, bubble_event, color="blue", label = 'bubble number vs E threshold')
         plt.plot(x_bins, bubble_event_low, color="red", label='bubble number with 0.5 gamma level decay time')
