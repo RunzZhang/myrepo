@@ -127,8 +127,9 @@ class MC_sim_full_argon():
         # self.predicted_bubble_events(self.address)
         # self.source_uncertainty(0.3)
         # self.source_uncertainty_w_background(0.3, 500)
-        self.bubble_event_with_sigma(0.3)
+        # self.bubble_event_with_sigma(0.3)
         # self.bubble_event_with_spectrum_sigma()
+        self.spectrum_uncertainty()
     def data_preparation(self):
         for i in range(len(self.argon_list)):# for each chain
             total_BR = 0
@@ -539,8 +540,8 @@ class MC_sim_full_argon():
         x_bins, histgram, y_bins = self.generate_hist_and_CDF()
         print(np.shape(x_bins))
 
-        y_bins_low = [i*(1-uncertainty) for i in y_bins]
-        y_bins_high =[i*(1+uncertainty) for i in y_bins]
+        y_bins_low = self.generate_hist_and_CDF(address="/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_0.5time_0offset")[2]
+        y_bins_high = self.generate_hist_and_CDF(address="/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_2time_0offset")[2]
         x_bins_low = []
         x_bins_high = []
         for i in range(len(x_bins)):
@@ -570,8 +571,8 @@ class MC_sim_full_argon():
                     x_bins_high.append(x_bins[k])
 
         plt.plot(x_bins, x_bins, color="blue", label='ideal reconsctruct E threshold')
-        plt.plot(x_bins,x_bins_low,color = "red", label = 'reconstruct limit with source uncertainty -'+ str(uncertainty))
-        plt.plot(x_bins, x_bins_high, color="orange", label='reconstruct limit with source uncertainty +'+ str(uncertainty))
+        plt.plot(x_bins,x_bins_low,color = "red", label = 'reconstruct limit with 0.5x decay time')
+        plt.plot(x_bins, x_bins_high, color="orange", label='reconstruct limit with 2x decay time')
         plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
         plt.xlabel("$E_{th}$/eV",fontsize=18)
