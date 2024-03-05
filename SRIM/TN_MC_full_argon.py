@@ -536,7 +536,7 @@ class MC_sim_full_argon():
         plt.ylim([0,1500])
         plt.show()
 
-    def spectrum_uncertainty(self, uncertainty):
+    def spectrum_uncertainty(self):
         x_bins, histgram, y_bins = self.generate_hist_and_CDF()
         print(np.shape(x_bins))
 
