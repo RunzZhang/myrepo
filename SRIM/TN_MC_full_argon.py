@@ -127,8 +127,8 @@ class MC_sim_full_argon():
         # self.predicted_bubble_events(self.address)
         # self.source_uncertainty(0.3)
         # self.source_uncertainty_w_background(0.3, 500)
-        # self.bubble_event_with_sigma(0.3)
-        self.bubble_event_with_spectrum_sigma()
+        self.bubble_event_with_sigma(0.3)
+        # self.bubble_event_with_spectrum_sigma()
     def data_preparation(self):
         for i in range(len(self.argon_list)):# for each chain
             total_BR = 0
