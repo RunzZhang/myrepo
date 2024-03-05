@@ -394,15 +394,13 @@ class MC_sim_full_argon():
         hist_result_low = plt.hist(MC_full_low, bins=bin_n, range=(start, end), density=True)
         plt.clf()
         for i in range(len(hist_result_low[1]) - 1):
-            x_bins.append((hist_result_low[1][i] + hist_result_low[1][i + 1]) / 2)
         hist_result_high = plt.hist(MC_full_high, bins=bin_n, range=(start, end), density=True)
         plt.clf()
         for i in range(len(hist_result_high[1]) - 1):
-            x_bins.append((hist_result_high[1][i] + hist_result_high[1][i + 1]) / 2)
 
-        plt.plot(x_bins, hist_result[0], color="blue")
-        plt.plot(x_bins, hist_result_low[0], color="red")
-        plt.plot(x_bins, hist_result_high[0], color="orange")
+        plt.plot(x_bins, hist_result[0], color="blue", label='original spectrum')
+        plt.plot(x_bins, hist_result_low[0], color="red", label="0.5x decay time spectrum")
+        plt.plot(x_bins, hist_result_high[0], color="orange", label='2x decay time spectrum')
         plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
         plt.xlabel("energy/eV",fontsize=18)
@@ -412,6 +410,7 @@ class MC_sim_full_argon():
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
+        plt.legend()
         plt.show()
 
     def generate_hist_and_CDF(self,event_N= 10**3 , address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"):
