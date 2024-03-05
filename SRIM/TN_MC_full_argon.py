@@ -402,7 +402,7 @@ class MC_sim_full_argon():
 
         plt.plot(x_bins, hist_result[0], color="blue")
         plt.plot(x_bins, hist_result_low[0], color="red")
-        plt.plot(x_bins, hist_result[0], color="orange")
+        plt.plot(x_bins, hist_result_high[0], color="orange")
         plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
         plt.xlabel("energy/eV",fontsize=18)
