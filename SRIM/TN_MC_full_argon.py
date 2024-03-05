@@ -129,8 +129,10 @@ class MC_sim_full_argon():
         # self.source_uncertainty_w_background(0.3, 500)
         # self.bubble_event_with_sigma(0.3)
         # self.bubble_event_with_spectrum_sigma()
-        self.spectrum_uncertainty()
+        # self.spectrum_uncertainty()
+        self.plot_spectrums_sigma()
     def data_preparation(self):
+
         for i in range(len(self.argon_list)):# for each chain
             total_BR = 0
             for key in self.argon_list[i][2]:
@@ -359,6 +361,48 @@ class MC_sim_full_argon():
             x_bins.append((hist_result[1][i] + hist_result[1][i + 1]) / 2)
 
         plt.plot(x_bins, hist_result[0], color="blue")
+        plt.grid(True, which='both', linestyle='-', linewidth=1)
+        plt.minorticks_on()
+        plt.xlabel("energy/eV",fontsize=18)
+        plt.ylabel("Possibility",fontsize=18)
+        plt.yscale("log")
+        plt.yticks(fontsize=18)
+        plt.xticks(fontsize=18)
+        plt.xlim([0, 1200])
+        plt.ylim([1E-5,0.1])
+        plt.show()
+
+    def plot_spectrums_sigma(self):
+        start = 0
+        end = 1200
+        x_bins = []
+        with open("/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full", "rb") as fp:  # Unpickling
+            MC_full0= pickle.load(fp)
+            print("read",MC_full0)
+        bin_n =500
+        with open("/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_0.5time_0offset", "rb") as fp:  # Unpickling
+            MC_full_low= pickle.load(fp)
+            print("read",MC_full_low)
+        with open("/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_2time_0offset", "rb") as fp:  # Unpickling
+            MC_full_high= pickle.load(fp)
+            print("read",MC_full_high)
+
+        hist_result = plt.hist(MC_full0, bins =bin_n, range=(start, end) ,density = True)
+        plt.clf()
+        for i in range(len(hist_result[1]) - 1):
+            x_bins.append((hist_result[1][i] + hist_result[1][i + 1]) / 2)
+        hist_result_low = plt.hist(MC_full_low, bins=bin_n, range=(start, end), density=True)
+        plt.clf()
+        for i in range(len(hist_result_low[1]) - 1):
+            x_bins.append((hist_result_low[1][i] + hist_result_low[1][i + 1]) / 2)
+        hist_result_high = plt.hist(MC_full_high, bins=bin_n, range=(start, end), density=True)
+        plt.clf()
+        for i in range(len(hist_result_high[1]) - 1):
+            x_bins.append((hist_result_high[1][i] + hist_result_high[1][i + 1]) / 2)
+
+        plt.plot(x_bins, hist_result[0], color="blue")
+        plt.plot(x_bins, hist_result_low[0], color="red")
+        plt.plot(x_bins, hist_result[0], color="orange")
         plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
         plt.xlabel("energy/eV",fontsize=18)
