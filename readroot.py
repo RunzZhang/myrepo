@@ -1,5 +1,5 @@
 import uproot
-filename = "Sap5cmx7.5cm3cmPad10cm25cmAmLi.root"
+filename = "/data/runzezhang/Geant4Simulaions/g411_TN/dmx.root"
 file = uproot.open(filename)["tree"]
 print(file.keys())
 df = file.arrays(["Hit", "x"], library="pd")
