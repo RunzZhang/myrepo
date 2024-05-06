@@ -1,5 +1,6 @@
 import uproot
-filename = "/data/runzezhang/Geant4Simulaions/g411_TN/dmx.root"
+# filename = "/data/runzezhang/Geant4Simulaions/g411_TN/dmx.root"
+filename = "/data/runzezhang/result/TN_sims/dmx.root"
 file = uproot.open(filename)["tree"]
 print(file)
 print(file.keys())
