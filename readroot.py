@@ -19,7 +19,7 @@ class ReadRoot():
     def process_summary(self):
         process=[]
         df_process = self.df[:]["Process"].to_list()
-        print df_process
+        print(df_process)
 
 
 
