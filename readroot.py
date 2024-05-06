@@ -37,6 +37,7 @@ class RestructureRoot():
 
         # put the updated event_number back to data frame
         self.df.update(pd.DataFrame({'Event':event_number}))
+        print(self.df[53:60])
 
 class ReadRoot():
     def __init__(self):
