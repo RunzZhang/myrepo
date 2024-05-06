@@ -14,7 +14,7 @@ class ReadRoot():
         self.rows = 1000
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         self.df = self.file.arrays(self.selected_columns, library="pd")
-        print(self.df)
+        # print(self.df)
         self.process_summary()
 
     def process_summary(self):
@@ -22,7 +22,7 @@ class ReadRoot():
         df_process = self.df[:]["Process"].to_list()
         for element in df_process:
             if element not in process_clean:
-                process_clean.append()
+                process_clean.append(element)
         print(process_clean)
 
 
