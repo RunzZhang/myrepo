@@ -19,7 +19,7 @@ class RestructureRoot():
 
     def reconstruct(self):
         event_number = self.df[:]["Event"].to_list()
-        print(event_number[:20])
+        print(event_number[:100])
         started_point = 0
         temp_point = 1
         # find event number 1's index
@@ -33,7 +33,7 @@ class RestructureRoot():
                 temp_point = event_number
             else:
                 event_number[i] = temp_point
-        print("end",event_number[:20])
+        print("end",event_number[:100])
 
 class ReadRoot():
     def __init__(self):
