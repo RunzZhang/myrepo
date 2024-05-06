@@ -39,6 +39,8 @@ class RestructureRoot():
         self.df.update(pd.DataFrame({'Event':event_number}))
         print(self.df[53:60])
 
+        uproot.writing._dask_write.dask_write(self.df, self.reconstruct_filepath)
+
 class ReadRoot():
     def __init__(self):
         self.filepath = "/data/runzezhang/result/TN_sims/dmx.root"
