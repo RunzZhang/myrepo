@@ -1,5 +1,5 @@
 """This file is for analyze the root files"""
-
+import pandas as pd
 import uproot
 # filename = "/data/runzezhang/Geant4Simulaions/g411_TN/dmx.root"
 
@@ -34,6 +34,9 @@ class RestructureRoot():
             else:
                 event_number[i] = temp_point
         print("end",event_number[:100])
+
+        # put the updated event_number back to data frame
+        self.df.update(pd.DataFrame({'Event':event_number}))
 
 class ReadRoot():
     def __init__(self):
