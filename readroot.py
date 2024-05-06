@@ -17,9 +17,12 @@ class ReadRoot():
         self.process_summary()
 
     def process_summary(self):
-        process=[]
+        process_clean=[]
         df_process = self.df[:]["Process"].to_list()
-        print(df_process)
+        for element in df_process:
+            if element not in process_clean:
+                process_clean.append()
+        print(process_clean)
 
 
 
