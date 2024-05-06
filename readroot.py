@@ -30,7 +30,7 @@ class RestructureRoot():
          # then if there is 0 in the event number, replace it with last none-zero event number
         for i in range(started_point, len(event_number)):
             if event_number[i]!=0:
-                temp_point = event_number
+                temp_point = event_number[i]
             else:
                 event_number[i] = temp_point
         print("end",event_number[:100])
