@@ -1,17 +1,8 @@
 """This file is for analyze the root files"""
 
 import uproot
-# # filename = "/data/runzezhang/Geant4Simulaions/g411_TN/dmx.root"
-# filename = "/data/runzezhang/result/TN_sims/dmx.root"
-# file = uproot.open(filename)["tree"]
-# print(file)
-# print(file.keys())
-#
-# df = file.arrays(["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV","Volume","Process"], library="pd")
-# df = df.head(1000)
-# # df = file.arrays(["Event", "x"], library="pd")
-# Capture = df['Event'].tolist()
-# print(df)
+# filename = "/data/runzezhang/Geant4Simulaions/g411_TN/dmx.root"
+
 
 class ReadRoot():
     def __init__(self):
@@ -23,6 +14,12 @@ class ReadRoot():
         self.rows = 1000
         self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         print(self.df)
+        self.process_summary()
+
+    def process_summary(self):
+        process=[]
+        df_process = self.df[:]["Process"].to_list()
+        print df_process
 
 
 
