@@ -18,7 +18,7 @@ class RestructureRoot():
         self.reconstruct()
 
     def reconstruct(self):
-        event_number = self.df[:]["Event"]
+        event_number = self.df[:]["Event"].to_list()
         print(event_number[:20])
         started_point = 0
         temp_point = 1
