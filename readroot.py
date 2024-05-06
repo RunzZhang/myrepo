@@ -17,6 +17,7 @@ print(file.keys())
 #   man->CreateNtupleDColumn("Volume");
 #   man->CreateNtupleDColumn("Process")
 df = file.arrays(["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV","Volume","Process"], library="pd")
+df = df.head(1000)
 # df = file.arrays(["Event", "x"], library="pd")
 Capture = df['Event'].tolist()
 print(df)
