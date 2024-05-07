@@ -164,7 +164,7 @@ class ReadRoot():
             temp_df = self.df[
                 (self.df['name'] == 'gamma') ][
                 ["name", "Kinetic/keV", "Volume"]]
-
+            print(temp_df)
             # temp_df = self.df[(self.df['name']=='gamma')&(self.df['Event']==self.df_Ncapture.loc[index,'Event'])&(self.df['Parent ID']==self.df_Ncapture.loc[index,'Track ID'])][["name","Kinetic/keV","Volume"]]
             self.df_Gamma = self.df_Gamma.append(temp_df,ignore_index=True)
         print(self.df_Gamma.head(5))
