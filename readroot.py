@@ -153,6 +153,9 @@ class ReadRoot():
         print(volume_clean)
     def Capture_spectrum(self):
         print(self.df.dtypes)
+        self.df['name'] = self.df['name'].astype(str)
+        self.df['Volume'] = self.df['Volume'].astype(str)
+        self.df['Process'] = self.df['Process'].astype(str)
         self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')][['Event','Track ID']]
         # self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')]
         # ["Event", 'Track ID']
