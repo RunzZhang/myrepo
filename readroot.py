@@ -6,7 +6,7 @@ import uproot
 class RestructureRoot():
     def __init__(self):
         self.filepath = "/data/runzezhang/result/TN_sims/dmx.root"
-        self.reconstruct_filepath = "/data/runzezhang/result/TN_sims/dmx_rc.root"
+        self.reconstruct_filepath = "/data/runzezhang/result/TN_sims/dmx_rc.csv"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
@@ -38,8 +38,8 @@ class RestructureRoot():
         # put the updated event_number back to data frame
         self.df.update(pd.DataFrame({'Event':event_number}))
         print(self.df[53:60])
-
-        uproot.writing._dask_write.dask_write(self.df, self.reconstruct_filepath)
+        self.df.to_csv(self.reconstruct_filepath, sep=',', index=False, encoding='utf-8')
+        # uproot.writing._dask_write.dask_write(self.df, self.reconstruct_filepath/)
 
 class ReadRoot():
     def __init__(self):
