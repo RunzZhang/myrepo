@@ -157,13 +157,13 @@ class ReadRoot():
         self.df['Volume'] = self.df['Volume'].astype(str)
         self.df['Process'] = self.df['Process'].astype(str)
         self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')][['Event','Track ID']]
-        # self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')]
-        # ["Event", 'Track ID']
+
         print(self.df_Ncapture.head(10))
-
-
-
-
+        self.df_Gamma = pd.DataFrame
+        for index in range(len(self.df_Ncapture.index)):
+            temp_df = self.df[(self.df['name']=='gamma')&(self.df['Event']==self.df_Ncapture[index]['Event'])&(self.df['Parent ID']==self.df_Ncapture[index]['Track ID'])][["name","Kinetic/keV","Volume"]]
+            self.df_Gamma = self.df_Gamma.append(temp_df,ignore_index=True)
+        print(self.df_Gamma)
 
 
 if __name__ =="__main__":
