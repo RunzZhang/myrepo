@@ -165,7 +165,7 @@ class ReadRoot():
             print(self.df_Ncapture.iloc[index]['Event'])
             temp_df = self.df[
                 (self.df['name'] == 'gamma') &(self.df['Event']==self.df_Ncapture.iloc[index]['Event'])&(self.df['Parent ID']==self.df_Ncapture.iloc[index]['Track ID'])][
-                ["name", "Track ID","Kinetic/keV", "Volume"]]
+                ["name","Parent ID", "Track ID","Kinetic/keV", "Volume"]]
             self.df_Gamma = pd.concat([self.df_Gamma, temp_df], axis=0,ignore_index=True)
         print(self.df_Gamma.head(20))
         self.df_Gamma.to_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv", index=True)
