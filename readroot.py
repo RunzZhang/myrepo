@@ -52,9 +52,31 @@ class ReadRoot():
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         self.df = self.file.arrays(self.selected_columns, library="pd")
         # print(self.df)
-        self.process_summary()
+        self.reidx_event()
+        self.string_summary()
+    # there was some 0 in event columns, set them to corresponding value
+    # for example 001002003 will be 001112223
+    def reidx_event(self):
+        event_number = self.df[:]["Event"].to_list()
+        print(event_number[:100])
+        started_point = 0
+        temp_point = 1
+        # find event number 1's index
+        for i in range(0, len(event_number)):
+            if event_number[i] == 1:
+                started_point = i
+        print("start", started_point)
+        # then if there is 0 in the event number, replace it with last none-zero event number
+        for i in range(started_point, len(event_number)):
+            if event_number[i] != 0:
+                temp_point = event_number[i]
+            else:
+                event_number[i] = temp_point
+        print("end", event_number[:100])
 
-    def process_summary(self):
+        # put the updated event_number back to data frame
+        self.df.update(pd.DataFrame({'Event': event_number}))
+    def string_summary(self):
         process_clean=[]
         df_process = self.df[:]["Process"].to_list()
         for element in df_process:
@@ -62,10 +84,24 @@ class ReadRoot():
                 process_clean.append(element)
         print(process_clean)
 
+        particle_clean = []
+        df_particle = self.df[:]["particle"].to_list()
+        for element in df_particle:
+            if element not in particle_clean:
+                particle_clean.append(element)
+        print(particle_clean)
+
+        volume_clean = []
+        df_volume = self.df[:]["volume"].to_list()
+        for element in df_volume:
+            if element not in volume_clean:
+                volume_clean.append(element)
+        print(volume_clean)
+
 
 
 
 
 if __name__ =="__main__":
-    ReR = RestructureRoot()
-    # RR = ReadRoot()
+    # ReR = RestructureRoot()
+    RR = ReadRoot()
