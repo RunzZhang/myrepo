@@ -159,7 +159,7 @@ class ReadRoot():
         self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')][['Event','Track ID']]
 
         print(self.df_Ncapture.head(10))
-        self.df_Gamma = pd.DataFrame
+        self.df_Gamma = pd.DataFrame()
         for index in range(len(self.df_Ncapture.index)):
             temp_df = self.df[
                 (self.df['name'] == 'gamma') ][
