@@ -161,7 +161,7 @@ class ReadRoot():
         print(self.df_Ncapture.head(10))
         self.df_Gamma = pd.DataFrame()
         for index in range(len(self.df_Ncapture.index)):
-            print(self.df_Ncapture.loc[index, 'Event'])
+            print(self.df_Ncapture.iloc[index, 'Event'])
             temp_df = self.df[
                 (self.df['name'] == 'gamma') &(self.df['Event']==self.df_Ncapture.loc[index,'Event'])][
                 ["name", "Kinetic/keV", "Volume"]]
