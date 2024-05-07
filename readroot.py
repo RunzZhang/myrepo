@@ -85,14 +85,14 @@ class ReadRoot():
         print(process_clean)
 
         particle_clean = []
-        df_particle = self.df[:]["particle"].to_list()
+        df_particle = self.df[:]["Particle"].to_list()
         for element in df_particle:
             if element not in particle_clean:
                 particle_clean.append(element)
         print(particle_clean)
 
         volume_clean = []
-        df_volume = self.df[:]["volume"].to_list()
+        df_volume = self.df[:]["Volume"].to_list()
         for element in df_volume:
             if element not in volume_clean:
                 volume_clean.append(element)
