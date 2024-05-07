@@ -164,11 +164,11 @@ class ReadRoot():
             print(index)
             print(self.df_Ncapture.iloc[index]['Event'])
             temp_df = self.df[
-                (self.df['name'] == 'gamma') &(self.df['Event']==self.df_Ncapture.iloc[index]['Event'])][
+                (self.df['name'] == 'gamma') &(self.df['Event']==self.df_Ncapture.iloc[index]['Event'])&(self.df['Parent ID']==self.df_Ncapture.iloc[index]['Track ID'])][
                 ["name", "Kinetic/keV", "Volume"]]
-            # temp_df = self.df[(self.df['name']=='gamma')&(self.df['Event']==self.df_Ncapture.loc[index,'Event'])&(self.df['Parent ID']==self.df_Ncapture.loc[index,'Track ID'])][["name","Kinetic/keV","Volume"]]
-            # self.df_Gamma = pd.concat([self.df_Gamma, temp_df], axis=0,ignore_index=True)
-        print(self.df_Gamma.head(5))
+            self.df_Gamma = pd.concat([self.df_Gamma, temp_df], axis=0,ignore_index=True)
+        print(self.df_Gamma.head(20))
+        self.df_Gamma.to_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv", index=True)
 
 
 if __name__ =="__main__":
