@@ -152,7 +152,9 @@ class ReadRoot():
                 volume_clean.append(element)
         print(volume_clean)
     def Capture_spectrum(self):
-        self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')]
+        self.df_Ncapture = self.df[
+            (self.df["name"] == 'neutron')]
+        # self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')]
         # ["Event", 'Track ID']
         print(self.df_Ncapture.head(10))
 
