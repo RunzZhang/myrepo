@@ -85,7 +85,7 @@ class ReadRoot():
         print(process_clean)
 
         particle_clean = []
-        df_particle = self.df[:]["Particle"].to_list()
+        df_particle = self.df[:]["name"].to_list()
         for element in df_particle:
             if element not in particle_clean:
                 particle_clean.append(element)
