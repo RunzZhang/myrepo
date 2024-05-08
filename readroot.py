@@ -160,16 +160,22 @@ class ReadRoot():
         self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')][['Event','Track ID']]
 
         print(self.df_Ncapture.head(10))
-        self.df_Gamma = pd.DataFrame()
+        # self.df_Gamma = pd.DataFrame('Event','Track ID')
         print("len",len(self.df_Ncapture.index))
         # only record gamma event, whose event id same as ncap and parent id is ncap's track id.
-        for index in range(len(self.df_Ncapture.index)):
-            print(index)
-            print(self.df_Ncapture.iloc[index]['Event'])
-            temp_df = self.df[
-                (self.df['name'] == 'gamma') &(self.df['Event']==self.df_Ncapture.iloc[index]['Event'])&(self.df['Parent ID']==self.df_Ncapture.iloc[index]['Track ID'])][
-                ["name","Parent ID", "Track ID","Kinetic/keV", "Volume"]]
-            self.df_Gamma = pd.concat([self.df_Gamma, temp_df], axis=0,ignore_index=True)
+        # change Track ID name into Parent ID so that ready for merge
+        self.df_Ncapture.columns = ['Event','Parent ID']
+        # select all gamma events
+        self.df_Gamma = self.df[self.df['name'] == 'gamma' ]
+        # select gamma events whose Event number is same as neutron event and parent id is neutron's track ID
+        self.df_Gamma = pd.merge(self.df_Ncapture, self.df_Gamma,on=['Event','Parent ID'], how='inner')
+        # for index in range(len(self.df_Ncapture.index)):
+        #     print(index)
+        #     print(self.df_Ncapture.iloc[index]['Event'])
+        #     temp_df = self.df[
+        #         (self.df['name'] == 'gamma') &(self.df['Event']==self.df_Ncapture.iloc[index]['Event'])&(self.df['Parent ID']==self.df_Ncapture.iloc[index]['Track ID'])][
+        #         ["name","Parent ID", "Track ID","Kinetic/keV", "Volume"]]
+        #     self.df_Gamma = pd.concat([self.df_Gamma, temp_df], axis=0,ignore_index=True)
         print(self.df_Gamma.head(20))
         # save these gamma event
         self.df_Gamma.to_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv", index=True)
