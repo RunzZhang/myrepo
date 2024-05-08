@@ -240,7 +240,7 @@ class ReadRoot():
                     energy += self.gamma.iloc[index]["Kinetic/keV"]*1000 # to ev
 
         print("energy", energy_p[:10])
-        plt.hist(energy_p)
+        plt.hist(energy_p, bins=20)
         plt.show()
 
 
