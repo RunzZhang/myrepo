@@ -244,7 +244,7 @@ class ReadRoot():
         observed_photon = []
         for i in energy_p:
             observed_photon.append(i*0.03*0.2/100)
-        plt.hist(observed_photon, bins=20)
+        plt.hist(observed_photon, bins=100)
         plt.show()
 
 
