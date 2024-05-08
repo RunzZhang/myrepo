@@ -194,7 +194,7 @@ class ReadRoot():
         event_p =0
         track_p=[]
         parent_p = []
-        self.gamma_Scint.drop(6,axis = 0)
+        self.gamma_Scint.drop(self.gamma_Scint.index[6])
         print("dropped")
         for index in range(len(self.gamma_Scint.index)):
             print(index)
