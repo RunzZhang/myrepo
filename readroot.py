@@ -186,7 +186,7 @@ class ReadRoot():
 
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv")
-        print(self.df_gamma_rw.head(20))
+        print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
