@@ -160,6 +160,8 @@ class ReadRoot():
 
         print(self.df_Ncapture.head(10))
         self.df_Gamma = pd.DataFrame()
+        print("len",len(self.df_Ncapture.index))
+        # only record gamma event, whose event id same as ncap and parent id is ncap's track id.
         for index in range(len(self.df_Ncapture.index)):
             print(index)
             print(self.df_Ncapture.iloc[index]['Event'])
@@ -168,7 +170,36 @@ class ReadRoot():
                 ["name","Parent ID", "Track ID","Kinetic/keV", "Volume"]]
             self.df_Gamma = pd.concat([self.df_Gamma, temp_df], axis=0,ignore_index=True)
         print(self.df_Gamma.head(20))
+        # save these gamma event
         self.df_Gamma.to_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv", index=True)
+
+    def Gamma_spectrum(self):
+        self.df_gamma_rw = pd.read_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv")
+        print(self.df_gamma_rw.head(20))
+        # we need to do severalthings:
+        # gamma only in LAr or CF4
+        # in 1 event number, only the first series of gammas, avoiding over-countting
+        self.gamma_Scint  =  self.df_gamma_rw[(self.df_gamma_rw['Volume']=='LAr_phys') or (self.df_gamma_rw['Volume']=='hydraulic_fluid_phys')]
+        event_p =0
+        track_p=[]
+        parent_p = []
+        for index in range(len(self.gamma_Scint.index)):
+            if self.gamma_Scint.iloc[index]['Event']> event_p:
+                event_p = self.gamma_Scint.iloc[index]['Event']
+                track_p = []
+                parent_p = []
+            # same event
+            # if parent ID appears in previous Track ID, then drop the row
+            # else record the track ID
+            else:
+                if self.gamma_Scint.iloc[index]['Parent ID']  in track_p:
+                    self.gamma_Scint.drop([index])
+                else:
+                    if self.gamma_Scint.iloc[index]['Track ID'] not in track_p:
+                        track_p.append(self.gamma_Scint.iloc[index]['Track ID'] )
+
+        print(self.gamma_Scint.head(20))
+
 
 
 if __name__ =="__main__":
