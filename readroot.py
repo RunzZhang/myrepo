@@ -207,7 +207,7 @@ class ReadRoot():
                 else:
                     if self.gamma_Scint.iloc[index]['Track ID'] not in track_p:
                         track_p.append(self.gamma_Scint.iloc[index]['Track ID'] )
-                    else:
+                    elif self.gamma_Scint.iloc[index]['Track ID'] in track_p:
                         self.gamma_Scint.drop([index])
 
         print(self.gamma_Scint.head(20))
