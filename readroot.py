@@ -103,12 +103,12 @@ class ReadRoot():
         self.selected_columns = ["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV","Volume","Process"]
         self.rows = 1000
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
-        self.df = self.file.arrays(self.selected_columns, library="pd")
+        # # process data so that it is easier to read
+        # self.df = self.file.arrays(self.selected_columns, library="pd")
         # print(self.df)
-        self.reidx_event()
+        # self.reidx_event()
         # self.string_summary()
-        # self.test_merge()
-        self.Capture_spectrum()
+        # self.Capture_spectrum()
         self.Gamma_spectrum()
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
@@ -209,6 +209,7 @@ class ReadRoot():
                         track_p.append(self.gamma_Scint.iloc[index]['Track ID'] )
 
         print(self.gamma_Scint.head(20))
+        self.gamma_Scint.to_csv("/data/runzezhang/result/TN_sims/gamma_scint.csv", index=False)
 
 
 
