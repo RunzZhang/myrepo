@@ -194,7 +194,7 @@ class ReadRoot():
         event_p =0
         track_p=[]
         parent_p = []
-        self.gamma_Scint.drop([6])
+        self.gamma_Scint.drop(6,axis = 0)
         print("dropped")
         for index in range(len(self.gamma_Scint.index)):
             print(index)
@@ -207,7 +207,7 @@ class ReadRoot():
             # else record the 1st track ID in same trajactory
             else:
                 if self.gamma_Scint.iloc[index]['Parent ID']  in track_p:
-                    self.gamma_Scint.drop([index])
+                    self.gamma_Scint.drop(index, axis = 0)
                 else:
                     if self.gamma_Scint.iloc[index]['Track ID'] not in track_p:
                         track_p.append(self.gamma_Scint.iloc[index]['Track ID'] )
