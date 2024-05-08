@@ -194,10 +194,9 @@ class ReadRoot():
         event_p =0
         track_p=[]
         parent_p = []
-        self.gamma_Scint.drop(self.gamma_Scint.index[6])
-        print("dropped")
+
         for index in range(len(self.gamma_Scint.index)):
-            print(index)
+
             if self.gamma_Scint.iloc[index]['Event']> event_p:
                 event_p = self.gamma_Scint.iloc[index]['Event']
                 track_p = []
@@ -206,13 +205,13 @@ class ReadRoot():
             # if parent ID appears in previous Track ID, then drop the row
             # else record the 1st track ID in same trajactory
             else:
-                if self.gamma_Scint.iloc[index]['Parent ID']  in track_p:
-                    self.gamma_Scint.drop(index, axis = 0)
+                if self.gamma_Scint.iloc[index]['Parent ID'] in track_p:
+                    self.gamma_Scint.drop(self.gamma_Scint.index[index])
                 else:
                     if self.gamma_Scint.iloc[index]['Track ID'] not in track_p:
                         track_p.append(self.gamma_Scint.iloc[index]['Track ID'] )
                     elif self.gamma_Scint.iloc[index]['Track ID'] in track_p:
-                        self.gamma_Scint.drop([index])
+                        self.gamma_Scint.drop(self.gamma_Scint.index[index])
 
         print(self.gamma_Scint.head(20))
         self.gamma_Scint.to_csv("/data/runzezhang/result/TN_sims/gamma_scint2.csv", index=False)
