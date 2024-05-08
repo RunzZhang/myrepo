@@ -189,7 +189,7 @@ class ReadRoot():
         # we need to do severalthings:
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
-        self.gamma_Scint  =  self.df_gamma_rw[(self.df_gamma_rw['Volume']=='LAr_phys') or (self.df_gamma_rw['Volume']=='hydraulic_fluid_phys')]
+        self.gamma_Scint  =  self.df_gamma_rw[(self.df_gamma_rw['Volume']=='LAr_phys') | (self.df_gamma_rw['Volume']=='hydraulic_fluid_phys')]
         event_p =0
         track_p=[]
         parent_p = []
