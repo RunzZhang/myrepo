@@ -107,8 +107,8 @@ class ReadRoot():
         # print(self.df)
         self.reidx_event()
         # self.string_summary()
-        self.test_merge()
-        # self.Capture_spectrum()
+        # self.test_merge()
+        self.Capture_spectrum()
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
     def reidx_event(self):
