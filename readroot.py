@@ -237,7 +237,7 @@ class ReadRoot():
             else:
                 if self.gamma.iloc[index]['Track ID'] not in track_p:
                     track_p.append(self.gamma.iloc[index]['Track ID'])
-                    energy += self.gamma.iloc[index]["Kinetic/keV"]*1000 # to ev
+                    energy += self.gamma.iloc[index]["Kinetic/keV"]*1000000 # to ev Actullay it is Kinetic/MeV
 
         print("energy", energy_p[:10])
         plt.hist(energy_p, bins=20)
