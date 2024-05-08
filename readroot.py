@@ -104,8 +104,8 @@ class ReadRoot():
         self.rows = 1000
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # # process data so that it is easier to read
-        # self.df = self.file.arrays(self.selected_columns, library="pd")
-        print(self.df)
+        self.df = self.file.arrays(self.selected_columns, library="pd")
+        # print(self.df)
         self.reidx_event()
         # self.string_summary()
         self.Capture_spectrum()
