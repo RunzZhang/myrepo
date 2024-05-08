@@ -105,7 +105,7 @@ class ReadRoot():
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # # process data so that it is easier to read
         self.df = self.file.arrays(self.selected_columns, library="pd")
-        print(self.df["Kinetic/keV"].head(20))
+        print(self.df["Kinetic/keV","X/mm"].head(20))
         # self.reidx_event()
         # self.string_summary()
         # self.Capture_spectrum()
