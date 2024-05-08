@@ -176,7 +176,9 @@ class ReadRoot():
 
     def test_merge(self):
         df_a = pd.DataFrame({'A': [2], 'B':[3],'C':[5], 'D':[8]})
-        print(df_a)
+        df_b = pd.DataFrame({'B': [2,3,6,3], 'C': [3,5,9,5], 'F': [5,9,10,6], 'G': [8,10,7,9]})
+        merged_df = pd.merge(df_b, df_a, on=['B','C'], how='inner')
+        print(merged_df)
 
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv")
