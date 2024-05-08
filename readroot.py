@@ -104,11 +104,11 @@ class ReadRoot():
         self.rows = 1000
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # # process data so that it is easier to read
-        # self.df = self.file.arrays(self.selected_columns, library="pd")
+        self.df = self.file.arrays(self.selected_columns, library="pd")
         # print(self.df)
-        # self.reidx_event()
+        self.reidx_event()
         # self.string_summary()
-        # self.Capture_spectrum()
+        self.Capture_spectrum()
         self.Gamma_spectrum()
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
@@ -172,7 +172,7 @@ class ReadRoot():
         self.df_Gamma = pd.merge(self.df_Ncapture, self.df_Gamma,on=['Event','Parent ID'], how='inner')
         print(self.df_Gamma.head(20))
         # save these gamma event
-        self.df_Gamma.to_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv", index=True)
+        self.df_Gamma.to_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv", index=False)
 
     def test_merge(self):
         df_a = pd.DataFrame({ 'B':[3,5],'C':[5,7]})
