@@ -54,6 +54,7 @@
                            'Screw2_phys']"""
 import pandas as pd
 import uproot
+import matplotlib.pyplot as plt
 # filename = "/data/runzezhang/Geant4Simulaions/g411_TN/dmx.root"
 
 class RestructureRoot():
@@ -109,7 +110,8 @@ class ReadRoot():
         # self.reidx_event()
         # self.string_summary()
         # self.Capture_spectrum()
-        self.Gamma_spectrum()
+        # self.Gamma_spectrum()
+        self.plot_gamma()
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
     def reidx_event(self):
@@ -215,6 +217,32 @@ class ReadRoot():
 
         print(self.gamma_Scint.head(20))
         self.gamma_Scint.to_csv("/data/runzezhang/result/TN_sims/gamma_scint2.csv", index=False)
+
+    def plot_gamma(self):
+        self.gamma = pd.read_csv("/data/runzezhang/result/TN_sims/gamma_scint2.csv")
+        # add gamma energy together for same event
+        event_p =0
+        energy = 0
+        energy_p = []
+        track_p = []
+        for index in range(len(self.gamma.index)):
+            print(index)
+            # new event, put energy to energy_list and initialize
+            if self.gamma.iloc[index]['Event']> event_p:
+                event_p = self.gamma.iloc[index]['Event']
+                track_p = []
+                energy_p.append(energy)
+                energy = 0
+           # same event,
+            else:
+                if self.gamma.iloc[index]['Track ID'] not in track_p:
+                    track_p.append(self.gamma.iloc[index]['Track ID'])
+                    energy += self.gamma.iloc[index]["Kinetic/keV"]*1000 # to ev
+
+        print("energy", energy_p[:10])
+        plt.hist(energy_p)
+        plt.show()
+
 
 
 
