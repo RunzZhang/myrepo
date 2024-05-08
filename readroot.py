@@ -194,6 +194,8 @@ class ReadRoot():
         event_p =0
         track_p=[]
         parent_p = []
+        self.self.gamma_Scint.drop([7])
+        print("dropped")
         for index in range(len(self.gamma_Scint.index)):
             print(index)
             if self.gamma_Scint.iloc[index]['Event']> event_p:
