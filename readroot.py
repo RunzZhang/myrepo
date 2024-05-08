@@ -179,7 +179,7 @@ class ReadRoot():
         df_b = pd.DataFrame({'B': [2,3,6,3], 'C': [3,5,9,5], 'F': [5,9,10,6], 'G': [8,10,7,9]})
         print('a\n',df_a)
         print('b\n',df_b)
-        merged_df = pd.merge(df_b, df_a, on=['B','C'], how='inner')
+        merged_df = pd.merge(df_b, df_a, on=['B','C'], how='left')
         print(merged_df)
 
     def Gamma_spectrum(self):
