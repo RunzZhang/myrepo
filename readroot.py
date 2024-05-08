@@ -107,7 +107,8 @@ class ReadRoot():
         # print(self.df)
         self.reidx_event()
         # self.string_summary()
-        self.Capture_spectrum()
+        self.test_merge()
+        # self.Capture_spectrum()
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
     def reidx_event(self):
@@ -172,6 +173,10 @@ class ReadRoot():
         print(self.df_Gamma.head(20))
         # save these gamma event
         self.df_Gamma.to_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv", index=True)
+
+    def test_merge(self):
+        df_a = pd.DataFrame({'A': 2, 'B':3,'C':5, 'D':8})
+        print(df_a)
 
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv")
