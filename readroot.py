@@ -240,7 +240,11 @@ class ReadRoot():
                     energy += self.gamma.iloc[index]["Kinetic/keV"]*1000000 # to ev Actullay it is Kinetic/MeV
 
         print("energy", energy_p[:10])
-        plt.hist(energy_p, bins=20)
+
+        observed_photon = []
+        for i in energy_p:
+            observed_photon.append(i*0.03*0.2/100)
+        plt.hist(observed_photon, bins=20)
         plt.show()
 
 
