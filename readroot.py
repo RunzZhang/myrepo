@@ -105,10 +105,10 @@ class ReadRoot():
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # # process data so that it is easier to read
         # self.df = self.file.arrays(self.selected_columns, library="pd")
-        # print(self.df)
-        # self.reidx_event()
+        print(self.df)
+        self.reidx_event()
         # self.string_summary()
-        # self.Capture_spectrum()
+        self.Capture_spectrum()
         self.Gamma_spectrum()
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
@@ -157,6 +157,7 @@ class ReadRoot():
         print(self.df.dtypes)
         self.df['name'] = self.df['name'].astype(str)
         self.df['Volume'] = self.df['Volume'].astype(str)
+        self.df['"Kinetic/keV"'] = self.df['Process'].astype(str)
         self.df['Process'] = self.df['Process'].astype(str)
         self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')][['Event','Track ID']]
 
