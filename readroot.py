@@ -251,6 +251,29 @@ class ReadRoot():
         print("photon observed number ", num)
         plt.hist(observed_photon, bins=100)
         plt.show()
+        """14664 number has photon observation >1 """
+
+    def FN_spectrum(self):
+        print(self.df.dtypes)
+        self.df['name'] = self.df['name'].astype(str)
+        self.df['Volume'] = self.df['Volume'].astype(str)
+        self.df['"Kinetic/keV"'] = self.df['Process'].astype(str)
+        self.df['Process'] = self.df['Process'].astype(str)
+        self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')][['Event','Track ID']]
+
+        print(self.df_Ncapture.head(10))
+        # self.df_Gamma = pd.DataFrame('Event','Track ID')
+        print("len",len(self.df_Ncapture.index))
+        # only record gamma event, whose event id same as ncap and parent id is ncap's track id.
+        # change Track ID name into Parent ID so that ready for merge
+        self.df_Ncapture.columns = ['Event','Parent ID']
+        # select all gamma events
+        self.df_Gamma = self.df[self.df['name'] == 'gamma' ]
+        # select gamma events whose Event number is same as neutron event and parent id is neutron's track ID
+        self.df_Gamma = pd.merge(self.df_Ncapture, self.df_Gamma,on=['Event','Parent ID'], how='inner')
+        print(self.df_Gamma.head(20))
+        # save these gamma event
+        self.df_Gamma.to_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv", index=False)
 
 
 
