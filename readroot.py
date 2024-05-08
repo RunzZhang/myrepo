@@ -109,6 +109,7 @@ class ReadRoot():
         # self.string_summary()
         # self.test_merge()
         self.Capture_spectrum()
+        self.Gamma_spectrum()
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
     def reidx_event(self):
@@ -169,13 +170,6 @@ class ReadRoot():
         self.df_Gamma = self.df[self.df['name'] == 'gamma' ]
         # select gamma events whose Event number is same as neutron event and parent id is neutron's track ID
         self.df_Gamma = pd.merge(self.df_Ncapture, self.df_Gamma,on=['Event','Parent ID'], how='inner')
-        # for index in range(len(self.df_Ncapture.index)):
-        #     print(index)
-        #     print(self.df_Ncapture.iloc[index]['Event'])
-        #     temp_df = self.df[
-        #         (self.df['name'] == 'gamma') &(self.df['Event']==self.df_Ncapture.iloc[index]['Event'])&(self.df['Parent ID']==self.df_Ncapture.iloc[index]['Track ID'])][
-        #         ["name","Parent ID", "Track ID","Kinetic/keV", "Volume"]]
-        #     self.df_Gamma = pd.concat([self.df_Gamma, temp_df], axis=0,ignore_index=True)
         print(self.df_Gamma.head(20))
         # save these gamma event
         self.df_Gamma.to_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv", index=True)
