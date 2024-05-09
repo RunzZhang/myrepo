@@ -379,7 +379,7 @@ class ReadRoot():
         energy_list  = self.df["Recoiled/keV"].to_list()
         energy_ev = []
         for i in energy_list:
-            energy_ev.append(i*1000000)# actually Recoiled/MeV
+            energy_ev.append(i*1000)# actually Recoiled/MeV
         plt.hist(energy_ev, bins=100)
         print("len", len(energy_ev))
         plt.show()
