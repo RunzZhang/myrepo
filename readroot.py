@@ -379,7 +379,7 @@ class ReadRoot():
         self.df_event168.to_csv("/data/runzezhang/result/TN_sims/event168.csv")
     def keep_1st(self, df, columns):
         # Assuming df is your DataFrame and column1, column2 are the column names
-        df['combined_tuple'] = list(zip(df[columns[0]], df[columns[1]]))
+        df['combined_tuple'] = list(zip(df.iloc[:][columns[0]], df.iloc[:][columns[1]]))
         first_appearance_mask = ~df['combined_tuple'].duplicated(keep='first')
         filtered_df = df[first_appearance_mask]
         filtered_df = filtered_df.drop(columns=['combined_tuple'])
