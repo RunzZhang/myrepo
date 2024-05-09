@@ -103,15 +103,13 @@ class ReadRoot():
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
         self.selected_columns = ["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV", "Volume","Process"]
         self.rows = 1000
+
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # # process data so that it is easier to read
         # self.df = self.file.arrays(self.selected_columns, library="pd")
-        # print(self.df[["name","Kinetic/keV","X/mm"]].head(20))
-        # self.reidx_event()
-        # self.string_summary()
-        # self.Capture_spectrum()
-        # self.Gamma_spectrum()
-        self.plot_gamma()
+        # self.gamma_event()
+        self.FN_spectrum()
+
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
     def reidx_event(self):
@@ -185,7 +183,12 @@ class ReadRoot():
         merged_df = pd.merge(df_b, df_a, on=['B','C'], how='inner')
 
         print(merged_df)
-
+    def gamma_event(self):
+        # if already run 1st 2 steps and obtained output csv file, one can directly run 3rd function
+        self.reidx_event()
+        self.Capture_spectrum()
+        self.Gamma_spectrum()
+        self.plot_gamma()
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv")
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
@@ -259,21 +262,21 @@ class ReadRoot():
         self.df['Volume'] = self.df['Volume'].astype(str)
         self.df['"Kinetic/keV"'] = self.df['Process'].astype(str)
         self.df['Process'] = self.df['Process'].astype(str)
-        self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')][['Event','Track ID']]
+        self.df_Arrecoil = self.df[(self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')][['Event','Track ID']]
 
-        print(self.df_Ncapture.head(10))
+        print(self.df_Arrecoil.head(10))
         # self.df_Gamma = pd.DataFrame('Event','Track ID')
-        print("len",len(self.df_Ncapture.index))
+        print("len",len(self.df_Arrecoil.index))
         # only record gamma event, whose event id same as ncap and parent id is ncap's track id.
         # change Track ID name into Parent ID so that ready for merge
-        self.df_Ncapture.columns = ['Event','Parent ID']
+        self.df_Arrecoil.columns = ['Event','Parent ID']
         # select all gamma events
-        self.df_Gamma = self.df[self.df['name'] == 'gamma' ]
+        # self.df_Gamma = self.df[self.df['name'] == 'gamma' ]
         # select gamma events whose Event number is same as neutron event and parent id is neutron's track ID
-        self.df_Gamma = pd.merge(self.df_Ncapture, self.df_Gamma,on=['Event','Parent ID'], how='inner')
-        print(self.df_Gamma.head(20))
+        # self.df_Gamma = pd.merge(self.df_Arrecoil, self.df_Gamma,on=['Event','Parent ID'], how='inner')
+        # print(self.df_Gamma.head(20))
         # save these gamma event
-        self.df_Gamma.to_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv", index=False)
+        # self.df_Gamma.to_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv", index=False)
 
 
 
