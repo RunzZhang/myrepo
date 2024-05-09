@@ -267,7 +267,7 @@ class ReadRoot():
 
     def FN_spectrum(self):
 
-        self.df_Arrecoil = self.df[(self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')][['Event','name','Track ID','Process']]
+        self.df_Arrecoil = self.df[(self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')][['Event','name','Parent ID','Track ID','Process']]
 
         print(self.df_Arrecoil.head(10))
         # self.df_Gamma = pd.DataFrame('Event','Track ID')
@@ -275,12 +275,14 @@ class ReadRoot():
         print("unique",self.df_Arrecoil['Process'].unique())
         # only record gamma event, whose event id same as ncap and parent id is ncap's track id.
         # change Track ID name into Parent ID so that ready for merge
-        # self.df_Arrecoil.columns = ['Event','Parent ID']
-        # select all gamma events
-        # self.df_Gamma = self.df[self.df['name'] == 'gamma' ]
-        # select gamma events whose Event number is same as neutron event and parent id is neutron's track ID
-        # self.df_Gamma = pd.merge(self.df_Arrecoil, self.df_Gamma,on=['Event','Parent ID'], how='inner')
-        # print(self.df_Gamma.head(20))
+        self.df_Ar_recoil_merge = self.df_Arrecoil[['Event','Parent ID']]
+        self.df_Ar_recoil_merge.columns = ['Event','Track ID']
+        # select all neutron events
+        self.df_neutron = self.df[self.df['name'] == 'neutron' ]
+        # select neutron events whose Event number is same as argon event and track id is argon's parent ID
+        self.df_neutron_mom = pd.merge(self.df_neutron, self.df_Ar_recoil_merge,on=['Event','Track ID'], how='inner')
+        print(self.df_neutron_mom.head(20))
+        print("neutron unique", self.df_neutron_mom['Process'].unique())
         # save these gamma event
         # self.df_Gamma.to_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv", index=False)
 
