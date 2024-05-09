@@ -384,7 +384,7 @@ class ReadRoot():
             energy_ev.append(i*1000000)# actually Recoiled/MeV
             if i*1E6> 1000:
                 energy_1kev.append(i*1E6)
-        plt.hist(energy_ev, np.logspace(np.log10(min(energy_ev)), np.log10(max(energy_ev)), 30))
+        plt.hist(energy_ev, np.logspace(np.log10(min(energy_ev)), np.log10(max(energy_ev)), 50))
         plt.yscale("log")
         plt.xscale("log")
         print("len", len(energy_ev))
