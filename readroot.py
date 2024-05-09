@@ -111,7 +111,7 @@ class ReadRoot():
 
 
         # self.gamma_event()
-        self.FN_spectrum()
+        self.FN_spectrum_v2()
         # self.Check_inelastic()
 
     # there was some 0 in event columns, set them to corresponding value
