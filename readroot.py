@@ -278,7 +278,8 @@ class ReadRoot():
         self.df_Ar_recoil_merge = self.df_Arrecoil[['Event','Parent ID']]
         self.df_Ar_recoil_merge.columns = ['Event','Track ID']
         # select all neutron events
-        self.df_neutron = self.df[self.df['name'] == 'neutron' ]
+        self.df_neutron = self.df[self.df['name'] == 'neutron']
+        print(self.df_neutron.head(10))
         # select neutron events whose Event number is same as argon event and track id is argon's parent ID
         self.df_neutron_mom = pd.merge(self.df_neutron, self.df_Ar_recoil_merge,on=['Event','Track ID'], how='inner')
         print(self.df_neutron_mom.head(20))
