@@ -287,6 +287,9 @@ class ReadRoot():
         self.df_neutron_ncap = self.df_neutron_mom[self.df_neutron_mom['Process']=='nCapture']
         self.df_neutron_ela = self.df_neutron_mom[self.df_neutron_mom['Process'] == 'hadElastic']
         # find unique event, track ID for elastic( neutron capture only once)
+        event_p = 0
+        track_p = []
+        parent_p = []
         for index in range(len(self.df_neutron_ela.index)):
             print(index)
             if self.df_neutron_ela.iloc[index]['Event']> event_p:
@@ -308,6 +311,9 @@ class ReadRoot():
         # merge back to find the elastic Argon recoiled energy
         self.df_argon_ela_merged = pd.merge(self.df_neutron_ela_tomerge, self.df_Arrecoil,on=['Event','Parent ID'], how='inner')
         # find the first argon recoiled
+        event_p = 0
+        track_p = []
+        parent_p = []
         for index in range(len(self.df_argon_ela_merged.index)):
             print(index)
             if self.df_argon_ela_merged.iloc[index]['Event']> event_p:
