@@ -55,6 +55,7 @@
 import pandas as pd
 import uproot
 import matplotlib.pyplot as plt
+import numpy as np
 # filename = "/data/runzezhang/Geant4Simulaions/g411_TN/dmx.root"
 
 class RestructureRoot():
@@ -383,7 +384,7 @@ class ReadRoot():
             energy_ev.append(i*1000000)# actually Recoiled/MeV
             if i*1E6> 1000:
                 energy_1kev.append(i*1E6)
-        plt.hist(energy_ev, bins=100)
+        plt.hist(energy_ev, np.logspace(np.log10(min(data)), np.log10(max(data)), 30))
         plt.yscale("log")
         plt.xscale("log")
         print("len", len(energy_ev))
