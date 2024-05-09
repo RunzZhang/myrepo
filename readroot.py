@@ -338,7 +338,7 @@ class ReadRoot():
 
     def FN_spectrum_v2(self):
 
-        self.df_Arrecoil = self.df[(self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')][['Event','name','Parent ID','Track ID','Process']]
+        self.df_Arrecoil = self.df[(self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')][['Event','name','Parent ID','Track ID',"Recoiled/keV",'Process']]
 
         print(self.df_Arrecoil.head(10))
         # self.df_Gamma = pd.DataFrame('Event','Track ID')
@@ -362,6 +362,7 @@ class ReadRoot():
 
         self.df_neutron_ela_tomerge = self.df_neutron_ela[["Event", "Track ID"]]
         self.df_neutron_ela_tomerge.columns = ["Event", "Parent ID"]
+        print( "\nlen", len(self.df_neutron_ela_tomerge.index))
         # merge back to find the elastic Argon recoiled energy
         self.df_argon_ela_merged = pd.merge(self.df_neutron_ela_tomerge, self.df_Arrecoil,on=['Event','Parent ID'], how='inner')
         # find the first argon recoiled
