@@ -108,7 +108,7 @@ class ReadRoot():
         # # process data so that it is easier to read
         self.df = self.file.arrays(self.selected_columns, library="pd")
         self.modify_df()
-        
+
         # self.gamma_event()
 
 
@@ -381,7 +381,7 @@ class ReadRoot():
         for i in energy_list:
             energy_ev.append(i*1000000)# actually Recoiled/MeV
         plt.hist(energy_ev, bins=100)
-        print("len", energy_ev)
+        print("len", len(energy_ev))
         plt.show()
 
     def Check_inelastic(self):
