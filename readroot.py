@@ -161,7 +161,6 @@ class ReadRoot():
         print(self.df.dtypes)
         self.df['name'] = self.df['name'].astype(str)
         self.df['Volume'] = self.df['Volume'].astype(str)
-        self.df['"Kinetic/keV"'] = self.df['Process'].astype(str)
         self.df['Process'] = self.df['Process'].astype(str)
         # this make event number correct
         self.reidx_event()
