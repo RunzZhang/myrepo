@@ -287,6 +287,7 @@ class ReadRoot():
         self.df_neutron_ncap = self.df_neutron_mom[self.df_neutron_mom['Process']=='nCapture']
         self.df_neutron_ela = self.df_neutron_mom[self.df_neutron_mom['Process'] == 'hadElastic']
         # find unique event, track ID for elastic( neutron capture only once)
+
         event_p = 0
         track_p = []
         parent_p = []
@@ -333,12 +334,56 @@ class ReadRoot():
         # save these gamma event
         self.df_argon_ela_merged.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_elastic.csv", index=False)
 
+
+
+    def FN_spectrum_v2(self):
+
+        self.df_Arrecoil = self.df[(self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')][['Event','name','Parent ID','Track ID','Process']]
+
+        print(self.df_Arrecoil.head(10))
+        # self.df_Gamma = pd.DataFrame('Event','Track ID')
+        print("len",len(self.df_Arrecoil.index))
+        print("unique",self.df_Arrecoil['Process'].unique())
+        # only record gamma event, whose event id same as ncap and parent id is ncap's track id.
+        # change Track ID name into Parent ID so that ready for merge
+        self.df_Ar_recoil_merge = self.df_Arrecoil[['Event','Parent ID']]
+        self.df_Ar_recoil_merge.columns = ['Event','Track ID']
+        # select all neutron events
+        self.df_neutron = self.df[self.df['name'] == 'neutron']
+        print(self.df_neutron.head(10))
+        # select neutron events whose Event number is same as argon event and track id is argon's parent ID
+        self.df_neutron_mom = pd.merge(self.df_neutron, self.df_Ar_recoil_merge,on=['Event','Track ID'], how='inner')
+        print(self.df_neutron_mom.head(20))
+        print("neutron unique", self.df_neutron_mom['Process'].unique())
+        self.df_neutron_ncap = self.df_neutron_mom[self.df_neutron_mom['Process']=='nCapture']
+        self.df_neutron_ela = self.df_neutron_mom[self.df_neutron_mom['Process'] == 'hadElastic']
+
+        self.df_neutron_ela = self.keep_1st(self.df_neutron_ela,["Event", "Track ID"])
+
+        self.df_neutron_ela_tomerge = self.df_neutron_ela[["Event", "Track ID"]]
+        self.df_neutron_ela_tomerge.columns = ["Event", "Parent ID"]
+        # merge back to find the elastic Argon recoiled energy
+        self.df_argon_ela_merged = pd.merge(self.df_neutron_ela_tomerge, self.df_Arrecoil,on=['Event','Parent ID'], how='inner')
+        # find the first argon recoiled
+
+        self.df_argon_ela_merged = self.keep_1st(self.df_argon_ela_merged,["Event", "Track ID"])
+
+        print(self.df_argon_ela_merged.head(20))
+        # save these gamma event
+        self.df_argon_ela_merged.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_elastic.csv", index=False)
     def Check_inelastic(self):
         # self.df_event168 =  self.df[self.df["Process"]=="neutronInelastic"]
         self.df_event168 =  self.df[self.df["Event"]==168]
         print(self.df_event168)
         # print(self.df_event168.head(20))
         self.df_event168.to_csv("/data/runzezhang/result/TN_sims/event168.csv")
+    def keep_1st(self, df, columns):
+        # Assuming df is your DataFrame and column1, column2 are the column names
+        df['combined_tuple'] = list(zip(df[columns[0]], df[columns[1]]))
+        first_appearance_mask = ~df['combined_tuple'].duplicated(keep='first')
+        filtered_df = df[first_appearance_mask]
+        filtered_df = filtered_df.drop(columns=['combined_tuple'])
+        return filtered_df
 
 
 if __name__ =="__main__":
