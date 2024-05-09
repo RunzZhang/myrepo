@@ -106,7 +106,10 @@ class ReadRoot():
 
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # # process data so that it is easier to read
-        # self.df = self.file.arrays(self.selected_columns, library="pd")
+        self.df = self.file.arrays(self.selected_columns, library="pd")
+        self.modify_df()
+
+
         # self.gamma_event()
         self.FN_spectrum()
 
@@ -153,12 +156,18 @@ class ReadRoot():
             if element not in volume_clean:
                 volume_clean.append(element)
         print(volume_clean)
-    def Capture_spectrum(self):
+    def modify_df(self):
+        # change column property. Mainly this change awkuard into str
         print(self.df.dtypes)
         self.df['name'] = self.df['name'].astype(str)
         self.df['Volume'] = self.df['Volume'].astype(str)
         self.df['"Kinetic/keV"'] = self.df['Process'].astype(str)
         self.df['Process'] = self.df['Process'].astype(str)
+        # this make event number correct
+        self.reidx_event()
+
+    def Capture_spectrum(self):
+
         self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')][['Event','Track ID']]
 
         print(self.df_Ncapture.head(10))
@@ -185,7 +194,7 @@ class ReadRoot():
         print(merged_df)
     def gamma_event(self):
         # if already run 1st 2 steps and obtained output csv file, one can directly run 3rd function
-        self.reidx_event()
+
         self.Capture_spectrum()
         self.Gamma_spectrum()
         self.plot_gamma()
@@ -257,11 +266,7 @@ class ReadRoot():
         """14664 number has photon observation >1 """
 
     def FN_spectrum(self):
-        print(self.df.dtypes)
-        self.df['name'] = self.df['name'].astype(str)
-        self.df['Volume'] = self.df['Volume'].astype(str)
-        self.df['"Kinetic/keV"'] = self.df['Process'].astype(str)
-        self.df['Process'] = self.df['Process'].astype(str)
+
         self.df_Arrecoil = self.df[(self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')][['Event','Track ID']]
 
         print(self.df_Arrecoil.head(10))
