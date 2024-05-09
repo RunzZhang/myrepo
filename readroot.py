@@ -378,10 +378,14 @@ class ReadRoot():
         self.df = pd.read_csv("/data/runzezhang/result/TN_sims/dmx_argon_elastic.csv")
         energy_list  = self.df["Recoiled/keV"].to_list()
         energy_ev = []
+        energy_1kev = []
         for i in energy_list:
-            energy_ev.append(i*1000)# actually Recoiled/MeV
+            energy_ev.append(i*1000000)# actually Recoiled/MeV
+            if i*1E6> 1000:
+                energy_1kev.append(i*1E6)
         plt.hist(energy_ev, bins=100)
         print("len", len(energy_ev))
+        print("1kev",len(energy_1kev))
         plt.show()
 
     def Check_inelastic(self):
