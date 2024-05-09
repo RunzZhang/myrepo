@@ -274,7 +274,7 @@ class ReadRoot():
         print("len",len(self.df_Arrecoil.index))
         # only record gamma event, whose event id same as ncap and parent id is ncap's track id.
         # change Track ID name into Parent ID so that ready for merge
-        self.df_Arrecoil.columns = ['Event','Parent ID']
+        # self.df_Arrecoil.columns = ['Event','Parent ID']
         # select all gamma events
         # self.df_Gamma = self.df[self.df['name'] == 'gamma' ]
         # select gamma events whose Event number is same as neutron event and parent id is neutron's track ID
