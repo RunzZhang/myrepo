@@ -331,7 +331,7 @@ class ReadRoot():
 
         print(self.df_argon_ela_merged.head(20))
         # save these gamma event
-        # self.df_Gamma.to_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv", index=False)
+        self.df_argon_ela_merged.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_elastic.csv", index=False)
 
     def Check_inelastic(self):
         # self.df_event168 =  self.df[self.df["Process"]=="neutronInelastic"]
