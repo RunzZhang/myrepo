@@ -108,10 +108,12 @@ class ReadRoot():
         # # process data so that it is easier to read
         self.df = self.file.arrays(self.selected_columns, library="pd")
         self.modify_df()
-
-
+        
         # self.gamma_event()
-        self.FN_spectrum_v2()
+
+
+        # self.FN_spectrum_v2()
+        self.plot_elastic()
         # self.Check_inelastic()
 
     # there was some 0 in event columns, set them to corresponding value
@@ -372,6 +374,16 @@ class ReadRoot():
         print(self.df_argon_ela_merged.head(20), "\nlen",len(self.df_argon_ela_merged.index))
         # save these gamma event
         self.df_argon_ela_merged.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_elastic.csv", index=False)
+    def plot_elastic(self):
+        self.df = pd.read_csv("/data/runzezhang/result/TN_sims/dmx_argon_elastic.csv")
+        energy_list  = self.df["Recoiled/keV"].to_list()
+        energy_ev = []
+        for i in energy_list:
+            energy_ev.append(i*1000000)# actually Recoiled/MeV
+        plt.hist(energy_ev, bins=100)
+        print("len", energy_ev)
+        plt.show()
+
     def Check_inelastic(self):
         # self.df_event168 =  self.df[self.df["Process"]=="neutronInelastic"]
         self.df_event168 =  self.df[self.df["Event"]==168]
