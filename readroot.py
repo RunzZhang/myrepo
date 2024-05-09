@@ -267,7 +267,7 @@ class ReadRoot():
 
     def FN_spectrum(self):
 
-        self.df_Arrecoil = self.df[(self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')][['Event','name','Track ID']]
+        self.df_Arrecoil = self.df[(self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')][['Event','name','Track ID','Process']]
 
         print(self.df_Arrecoil.head(10))
         # self.df_Gamma = pd.DataFrame('Event','Track ID')
