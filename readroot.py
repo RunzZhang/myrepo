@@ -288,8 +288,10 @@ class ReadRoot():
         # self.df_Gamma.to_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv", index=False)
 
     def Check_inelastic(self):
-        self.df_event168 =  self.df[self.df["Process"]=="neutronInelastic"]
-        print(self.df_event168.head(20))
+        # self.df_event168 =  self.df[self.df["Process"]=="neutronInelastic"]
+        self.df_event168 =  self.df[self.df["Event"]==168]
+        print(self.df_event168)
+        # print(self.df_event168.head(20))
 
 
 if __name__ =="__main__":
