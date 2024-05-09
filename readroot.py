@@ -368,7 +368,7 @@ class ReadRoot():
 
         self.df_argon_ela_merged = self.keep_1st(self.df_argon_ela_merged,["Event", "Track ID"])
 
-        print(self.df_argon_ela_merged.head(20), "len",self.df_argon_ela_merged.index)
+        print(self.df_argon_ela_merged.head(20), "\nlen",len(self.df_argon_ela_merged.index))
         # save these gamma event
         self.df_argon_ela_merged.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_elastic.csv", index=False)
     def Check_inelastic(self):
