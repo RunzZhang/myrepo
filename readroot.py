@@ -272,6 +272,7 @@ class ReadRoot():
         print(self.df_Arrecoil.head(10))
         # self.df_Gamma = pd.DataFrame('Event','Track ID')
         print("len",len(self.df_Arrecoil.index))
+        print("unique",self.df_Arrecoil['Process'].unique())
         # only record gamma event, whose event id same as ncap and parent id is ncap's track id.
         # change Track ID name into Parent ID so that ready for merge
         # self.df_Arrecoil.columns = ['Event','Parent ID']
