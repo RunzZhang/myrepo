@@ -292,6 +292,7 @@ class ReadRoot():
         self.df_event168 =  self.df[self.df["Event"]==168]
         print(self.df_event168)
         # print(self.df_event168.head(20))
+        self.df_event168.to_csv("/data/runzezhang/result/TN_sims/event168.csv")
 
 
 if __name__ =="__main__":
