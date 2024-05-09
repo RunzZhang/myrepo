@@ -111,7 +111,8 @@ class ReadRoot():
 
 
         # self.gamma_event()
-        self.FN_spectrum()
+        # self.FN_spectrum()
+        self.Check_inelastic()
 
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
@@ -286,7 +287,9 @@ class ReadRoot():
         # save these gamma event
         # self.df_Gamma.to_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv", index=False)
 
-
+    def Check_inelastic(self):
+        self.df_event168 =  self.df[["Process"]=="neutronInelastic"]
+        print(self.df_event168.head(20))
 
 
 if __name__ =="__main__":
