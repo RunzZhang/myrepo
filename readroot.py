@@ -111,8 +111,8 @@ class ReadRoot():
 
 
         # self.gamma_event()
-        # self.FN_spectrum()
-        self.Check_inelastic()
+        self.FN_spectrum()
+        # self.Check_inelastic()
 
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
@@ -204,7 +204,7 @@ class ReadRoot():
         # we need to do severalthings:
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
-        self.gamma_Scint  =  self.df_gamma_rw[(self.df_gamma_rw['Volume']=='LAr_phys') | (self.df_gamma_rw['Volume']=='hydraulic_fluid_phys')]
+        self.gamma_Scint = self.df_gamma_rw[(self.df_gamma_rw['Volume']=='LAr_phys') | (self.df_gamma_rw['Volume']=='hydraulic_fluid_phys')]
         event_p =0
         track_p=[]
         parent_p = []
@@ -284,6 +284,46 @@ class ReadRoot():
         self.df_neutron_mom = pd.merge(self.df_neutron, self.df_Ar_recoil_merge,on=['Event','Track ID'], how='inner')
         print(self.df_neutron_mom.head(20))
         print("neutron unique", self.df_neutron_mom['Process'].unique())
+        self.df_neutron_ncap = self.df_neutron_mom[self.df_neutron_mom['Process']=='nCapture']
+        self.df_neutron_ela = self.df_neutron_mom[self.df_neutron_mom['Process'] == 'hadElastic']
+        # find unique event, track ID for elastic( neutron capture only once)
+        for index in range(len(self.df_neutron_ela.index)):
+            print(index)
+            if self.df_neutron_ela.iloc[index]['Event']> event_p:
+                event_p = self.df_neutron_ela.iloc[index]['Event']
+                track_p = []
+                parent_p = []
+            # same event
+
+            # record the 1st track ID in same trajactory
+            else:
+                if self.df_neutron_ela.iloc[index]['Track ID'] not in track_p:
+                    track_p.append(self.df_neutron_ela.iloc[index]['Track ID'])
+                elif self.df_neutron_ela.iloc[index]['Track ID'] in track_p:
+                    self.df_neutron_ela.drop(self.df_neutron_ela.index[index])
+
+
+        self.df_neutron_ela_tomerge = self.df_neutron_ela[["Event", "Track ID"]]
+        self.df_neutron_ela_tomerge.columns = ["Event", "Parent ID"]
+        # merge back to find the elastic Argon recoiled energy
+        self.df_argon_ela_merged = pd.merge(self.df_neutron_ela_tomerge, self.df_Arrecoil,on=['Event','Parent ID'], how='inner')
+        # find the first argon recoiled
+        for index in range(len(self.df_argon_ela_merged.index)):
+            print(index)
+            if self.df_argon_ela_merged.iloc[index]['Event']> event_p:
+                event_p = self.df_argon_ela_merged.iloc[index]['Event']
+                track_p = []
+                parent_p = []
+            # same event
+
+            # record the 1st track ID in same trajactory
+            else:
+                if self.df_argon_ela_merged.iloc[index]['Track ID'] not in track_p:
+                    track_p.append(self.df_argon_ela_merged.iloc[index]['Track ID'])
+                elif self.df_argon_ela_merged.iloc[index]['Track ID'] in track_p:
+                    self.df_argon_ela_merged.drop(self.df_neutron_ela_tomerge.index[index])
+
+        print(self.df_argon_ela_merged.head(20))
         # save these gamma event
         # self.df_Gamma.to_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv", index=False)
 
