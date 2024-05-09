@@ -112,7 +112,7 @@ class ReadRoot():
         # self.gamma_event()
 
 
-        # self.FN_spectrum_v2()
+        self.FN_spectrum_v2()
         self.plot_elastic()
         # self.Check_inelastic()
 
@@ -384,6 +384,8 @@ class ReadRoot():
             if i*1E6> 1000:
                 energy_1kev.append(i*1E6)
         plt.hist(energy_ev, bins=100)
+        plt.yscale("log")
+        plt.xscale("log")
         print("len", len(energy_ev))
         print("1kev",len(energy_1kev))
         plt.show()
