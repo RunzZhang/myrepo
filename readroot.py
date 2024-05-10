@@ -110,11 +110,11 @@ class ReadRoot():
         self.df = self.file.arrays(self.selected_columns, library="pd")
         self.modify_df()
 
-        # self.gamma_event()
+        self.gamma_event()
 
 
-        self.FN_spectrum_v2()
-        self.plot_elastic()
+        # self.FN_spectrum_v2()
+        # self.plot_elastic()
         # self.Check_inelastic()
 
     # there was some 0 in event columns, set them to corresponding value
@@ -198,8 +198,8 @@ class ReadRoot():
     def gamma_event(self):
         # if already run 1st 2 steps and obtained output csv file, one can directly run 3rd function
 
-        self.Capture_spectrum()
-        self.Gamma_spectrum()
+        # self.Capture_spectrum()
+        # self.Gamma_spectrum()
         self.plot_gamma()
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv")
