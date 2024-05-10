@@ -264,7 +264,9 @@ class ReadRoot():
             if i>1:
                 num +=1
         print("photon observed number ", num)
+        print("max",max(observed_photon),"\n","min", min(observed_photon))
         plt.hist(observed_photon, bins=100)
+        plt.xlabel("Obeserved Photon per Event")
         plt.show()
         """14664 number has photon observation >1 """
 
