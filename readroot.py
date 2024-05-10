@@ -240,25 +240,26 @@ class ReadRoot():
         energy = 0
         energy_p = []
         track_p = []
-        for index in range(len(self.gamma.index)):
-            print(index)
-            # new event, put energy to energy_list and initialize
-            if self.gamma.iloc[index]['Event']> event_p:
-                event_p = self.gamma.iloc[index]['Event']
-                track_p = []
-                energy_p.append(energy)
-                energy = 0
-           # same event,
-            else:
-                if self.gamma.iloc[index]['Track ID'] not in track_p:
-                    track_p.append(self.gamma.iloc[index]['Track ID'])
-                    energy += self.gamma.iloc[index]["Kinetic/keV"]*1000000 # to ev Actullay it is Kinetic/MeV
-
+        #
+        # for index in range(len(self.gamma.index)):
+        #     print(index)
+        #     # new event, put energy to energy_list and initialize
+        #     if self.gamma.iloc[index]['Event']> event_p:
+        #         event_p = self.gamma.iloc[index]['Event']
+        #         track_p = []
+        #         energy_p.append(energy)
+        #         energy = 0
+        #    # same event,
+        #     else:
+        #         if self.gamma.iloc[index]['Track ID'] not in track_p:
+        #             track_p.append(self.gamma.iloc[index]['Track ID'])
+        #             energy += self.gamma.iloc[index]["Kinetic/keV"]*1000000 # to ev Actullay it is Kinetic/MeV
+        energy_p= self.keep_1st(self.gamma,['Event', 'Track ID'])
         print("energy", energy_p[:10])
 
         observed_photon = []
         for i in energy_p:
-            observed_photon.append(i*0.03*0.2/100)
+            observed_photon.append(i*0.03*0.2*1000000/100)
         num = 0
         for i in observed_photon:
             if i>1:
