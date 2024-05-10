@@ -113,7 +113,7 @@ class ReadRoot():
         # self.gamma_event()
 
 
-        # self.FN_spectrum_v2()
+        self.FN_spectrum_v2()
         self.plot_elastic()
         # self.Check_inelastic()
 
@@ -361,6 +361,7 @@ class ReadRoot():
         print(self.df_neutron_mom.head(20))
         print("neutron unique", self.df_neutron_mom['Process'].unique())
         self.df_neutron_ncap = self.df_neutron_mom[self.df_neutron_mom['Process']=='nCapture']
+        print("neutron cap", len(self.df_neutron_ncap.index))
         self.df_neutron_ela = self.df_neutron_mom[self.df_neutron_mom['Process'] == 'hadElastic']
 
         self.df_neutron_ela = self.keep_1st(self.df_neutron_ela,["Event", "Track ID"])
