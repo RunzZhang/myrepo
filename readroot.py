@@ -110,11 +110,11 @@ class ReadRoot():
         self.df = self.file.arrays(self.selected_columns, library="pd")
         self.modify_df()
 
-        self.gamma_event()
+        # self.gamma_event()
 
 
         # self.FN_spectrum_v2()
-        # self.plot_elastic()
+        self.plot_elastic()
         # self.Check_inelastic()
 
     # there was some 0 in event columns, set them to corresponding value
@@ -382,15 +382,19 @@ class ReadRoot():
         energy_list  = self.df["Recoiled/keV"].to_list()
         energy_ev = []
         energy_1kev = []
+        energy_10kev = []
         for i in energy_list:
             energy_ev.append(i*1000000)# actually Recoiled/MeV
             if i*1E6> 1000:
                 energy_1kev.append(i*1E6)
+                if i*1E6> 10000:
+                    energy_10kev.append(i*1E6)
         plt.hist(energy_ev, np.logspace(np.log10(min(energy_ev)), np.log10(max(energy_ev)), 50))
         plt.yscale("log")
         plt.xscale("log")
         print("len", len(energy_ev))
         print("1kev",len(energy_1kev))
+        print("10kev", len(energy_10kev))
         plt.show()
 
     def Check_inelastic(self):
