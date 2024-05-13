@@ -344,7 +344,7 @@ class ReadRoot():
     def FN_spectrum_v2(self):
 
         self.df_Arrecoil = self.df[(self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')][['Event','name','Parent ID','Track ID',"Recoiled/keV",'Process']]
-
+        self.find_single_n_multi(self.df_Arrecoil,"Event", "Parent ID")
         print(self.df_Arrecoil.head(10))
         # self.df_Gamma = pd.DataFrame('Event','Track ID')
         print("len",len(self.df_Arrecoil.index))
@@ -366,20 +366,22 @@ class ReadRoot():
         self.df_neutron_ncap.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_ncap.csv")
         print("neutron cap", len(self.df_neutron_ncap.index))
         self.df_neutron_ela = self.df_neutron_mom[(self.df_neutron_mom['Process'] == 'hadElastic')&(self.df_neutron_mom['Volume']=='LAr_phys')]
+        # multiple scattering
+        # keep first ? no, depend on how much Ar nucleus are recoiled
 
         self.df_neutron_ela = self.keep_1st(self.df_neutron_ela,["Event", "Track ID"])
 
         self.df_neutron_ela_tomerge = self.df_neutron_ela[["Event", "Track ID"]]
         self.df_neutron_ela_tomerge.columns = ["Event", "Parent ID"]
-        print( "\nlen", len(self.df_neutron_ela_tomerge.index))
+        print( "\nlen single + multiple bubble", len(self.df_neutron_ela_tomerge.index))
         # merge back to find the elastic Argon recoiled energy
         self.df_argon_ela_merged = pd.merge(self.df_neutron_ela_tomerge, self.df_Arrecoil,on=['Event','Parent ID'], how='inner')
         # find the first argon recoiled
 
         self.df_argon_ela_merged = self.keep_1st(self.df_argon_ela_merged,["Event", "Track ID"])
         # 168 first elastic scatter and recoil argon and then capture by other volume
-        self.df_test_merge = self.df[(self.df["Event"]==168)&((self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')|(self.df["name"]=='neutron'))]
-        self.df_test_merge.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_ncap_test.csv")
+        # self.df_test_merge = self.df[(self.df["Event"]==168)&((self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')|(self.df["name"]=='neutron'))]
+        # self.df_test_merge.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_ncap_test.csv")
         print(self.df_argon_ela_merged.head(20), "\nlen",len(self.df_argon_ela_merged.index))
         # save these gamma event
         self.df_argon_ela_merged.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_elastic.csv", index=False)
@@ -403,6 +405,21 @@ class ReadRoot():
         print("10kev", len(energy_10kev))
         plt.show()
 
+    def find_single_n_multi(self, df,Event, Parent):
+        # in same event and parent ID but has different Track ID
+        df = self.keep_1st(df, ['Event', 'Track ID'])
+
+        df['combined_tuple'] = list(zip(df.iloc[:][Event], df.iloc[:][Parent]))
+        multi_appearance_mask = df['combined_tuple'].duplicated(keep=False)
+        sing_appearance_mask = ~df['combined_tuple'].duplicated(keep=False)
+        # find the duplicated
+        filtered_df_sing = df[sing_appearance_mask]
+        filtered_df_multi = df[multi_appearance_mask]
+        filtered_df_sing = filtered_df_sing.drop(columns=['combined_tuple'])
+        filtered_df_multi = filtered_df_multi.drop(columns=['combined_tuple'])
+        print("multi", filtered_df_multi.head(10))
+        print("sing", filtered_df_sing.head(10))
+        return (filtered_df_sing,filtered_df_multi)
     def Check_inelastic(self):
         # self.df_event168 =  self.df[self.df["Process"]=="neutronInelastic"]
         self.df_event168 =  self.df[self.df["Event"]==168]
