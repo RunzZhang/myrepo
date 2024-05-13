@@ -367,7 +367,7 @@ class ReadRoot():
         self.df_neutron_ncap = self.keep_1st(self.df_neutron_ncap, ["Event", "Track ID"])
         self.df_neutron_ncap.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_ncap.csv")
         print("neutron cap", len(self.df_neutron_ncap.index))
-        self.df_neutron_ela = self.df_neutron_mom[self.df_neutron_mom['Process'] == 'hadElastic']
+        self.df_neutron_ela = self.df_neutron_mom[(self.df_neutron_mom['Process'] == 'hadElastic')&(self.df_neutron_mom['Volume']=='LAr_phys')]
 
         self.df_neutron_ela = self.keep_1st(self.df_neutron_ela,["Event", "Track ID"])
 
