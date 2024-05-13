@@ -346,8 +346,9 @@ class ReadRoot():
         self.df_Arrecoil = self.df[(self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')][['Event','name','Parent ID','Track ID',"Recoiled/keV",'Process']]
         self.find_single_n_multi(self.df_Arrecoil,"Event", "Parent ID")
         print(self.df_Arrecoil.head(10))
+        # capture ar41 and then radiactive decay
         # 279 first elastic scatter and recoil argon and then capture by other volume
-        self.df_test_merge = self.df[(self.df["Event"]==279)&((self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')|(self.df["name"]=='neutron'))]
+        self.df_test_merge = self.df[(self.df["Event"]==2694)&((self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')|(self.df["name"]=='neutron'))]
         self.df_test_merge.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_multi.csv")
         # self.df_Gamma = pd.DataFrame('Event','Track ID')
         print("len",len(self.df_Arrecoil.index))
