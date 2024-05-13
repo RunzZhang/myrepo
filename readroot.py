@@ -346,6 +346,9 @@ class ReadRoot():
         self.df_Arrecoil = self.df[(self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')][['Event','name','Parent ID','Track ID',"Recoiled/keV",'Process']]
         self.find_single_n_multi(self.df_Arrecoil,"Event", "Parent ID")
         print(self.df_Arrecoil.head(10))
+        # 279 first elastic scatter and recoil argon and then capture by other volume
+        self.df_test_merge = self.df[(self.df["Event"]==279)&((self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')|(self.df["name"]=='neutron'))]
+        self.df_test_merge.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_multi.csv")
         # self.df_Gamma = pd.DataFrame('Event','Track ID')
         print("len",len(self.df_Arrecoil.index))
         print("unique",self.df_Arrecoil['Process'].unique())
@@ -379,9 +382,7 @@ class ReadRoot():
         # find the first argon recoiled
 
         self.df_argon_ela_merged = self.keep_1st(self.df_argon_ela_merged,["Event", "Track ID"])
-        # 168 first elastic scatter and recoil argon and then capture by other volume
-        # self.df_test_merge = self.df[(self.df["Event"]==168)&((self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')|(self.df["name"]=='neutron'))]
-        # self.df_test_merge.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_ncap_test.csv")
+
         print(self.df_argon_ela_merged.head(20), "\nlen",len(self.df_argon_ela_merged.index))
         # save these gamma event
         self.df_argon_ela_merged.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_elastic.csv", index=False)
