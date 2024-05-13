@@ -356,12 +356,15 @@ class ReadRoot():
         # select all neutron events
         self.df_neutron = self.df[self.df['name'] == 'neutron']
         print(self.df_neutron.head(10))
+        # 191
+        self.df_test_merge = self.df[(self.df["Event"]==191)&((self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')|(self.df["name"]=='neutron'))]
+        self.df_test_merge.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_ncap_test.csv")
         # select neutron events whose Event number is same as argon event and track id is argon's parent ID
         self.df_neutron_mom = pd.merge(self.df_neutron, self.df_Ar_recoil_merge,on=['Event','Track ID'], how='inner')
         print(self.df_neutron_mom.head(20))
         print("neutron unique", self.df_neutron_mom['Process'].unique())
         self.df_neutron_ncap = self.df_neutron_mom[self.df_neutron_mom['Process']=='nCapture']
-        # self.df_neutron_ncap = self.keep_1st(self.df_neutron_ncap, ["Event", "Track ID"])
+        self.df_neutron_ncap = self.keep_1st(self.df_neutron_ncap, ["Event", "Track ID"])
         self.df_neutron_ncap.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_ncap.csv")
         print("neutron cap", len(self.df_neutron_ncap.index))
         self.df_neutron_ela = self.df_neutron_mom[self.df_neutron_mom['Process'] == 'hadElastic']
