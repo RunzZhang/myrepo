@@ -204,7 +204,7 @@ class ReadRoot():
         self.Capture_spectrum()
         # self.Gamma_spectrum()
         self.find_gamma_e()
-        self.plot_gamma()
+        # self.plot_gamma()
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv(self.base_path +"dmx_gamma.csv")
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
@@ -247,6 +247,7 @@ class ReadRoot():
         self.gamma_Scint = self.keep_1st(self.gamma_Scint)
         print("scint",self.gamma_Scint)
         print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]!=1])
+        self.test_event(event=2694, name='test2694')
     def plot_gamma(self):
         self.gamma = pd.read_csv(self.base_path +"gamma_scint2.csv")
         # add gamma energy together for same event
@@ -430,6 +431,11 @@ class ReadRoot():
         filtered_df = df[first_appearance_mask]
         filtered_df = filtered_df.drop(columns=['combined_tuple'])
         return filtered_df
+    def test_event(self,event, name="dmx_argon_multi"):
+
+        self.df_test_merge = self.df[(self.df["Event"]==event)&((self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')|(self.df["name"]=='neutron'))]
+
+        self.df_test_merge.to_csv(self.base_path +name+".csv")
 
 
 if __name__ =="__main__":
