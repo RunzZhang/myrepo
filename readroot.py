@@ -441,11 +441,11 @@ class ReadRoot():
         self.df_Arrecoil = self.df[
             (self.df["name"] == 'Ar36') | (self.df["name"] == 'Ar37') | (self.df["name"] == 'Ar40') | (
                         self.df["name"] == 'Ar41')][
-            ['Event', 'name', 'Parent ID', 'Track ID', "Recoiled/keV", 'Process']]
+            ['Event', 'name', 'Parent ID', 'Track ID', "Recoiled/keV", 'Volume','Process']]
 
-        self.df_neutron = self.df[(self.df['name'] == 'neutron')|(self.df['Volume'] == 'LAr_phys')]
-        self.df_n_cap = self.df_neutron[self.df_neutron["Process"=='nCapture']]
-        self.df_n_ela = self.df_neutron[self.df_neutron["Process" == 'hadElastic']]
+        self.df_neutron = self.df[(self.df['name'] == 'neutron')&(self.df['Volume'] == 'LAr_phys')]
+        self.df_n_cap = self.df_neutron[self.df_neutron["Process"]=='nCapture']
+        self.df_n_ela = self.df_neutron[self.df_neutron["Process"] == 'hadElastic']
 
         self.df_n_cap = self.keep_1st(self.df_n_cap,["Event", "Track ID"])
         self.ncap_columns = self.df_n_cap[["Event", "Track ID"]]
