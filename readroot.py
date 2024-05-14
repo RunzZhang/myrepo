@@ -454,7 +454,7 @@ class ReadRoot():
         # possibly contain event like elastic + capture-> only Ar41 or 37
         self.ar_ncap = self.ar_ncap[(self.ar_ncap["name"] == 'Ar37') | (self.ar_ncap["name"] == 'Ar41')]
         self.ar_ncap = self.keep_1st(self.ar_ncap,["Event", "Track ID"])
-        print("cap event", len(self.ar_ncap.index))
+        print("cap event", len(self.ar_ncap.index), '\n', self.ar_ncap.head(10))
 
 
 
@@ -467,8 +467,8 @@ class ReadRoot():
 
         # count multiplicity
         (self.sig_df,self.multi_df) = self.find_single_n_multi(self.ar_nela)
-        print("sig", len(self.sig_df.index))
-        print("multi", len(self.multi_df.index))
+        print("sig", len(self.sig_df.index),'\n', self.sig_df.head(10))
+        print("multi", len(self.multi_df.index),'\n', self.sig_df.head(10))
 
 
 
