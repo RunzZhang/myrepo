@@ -453,7 +453,7 @@ class ReadRoot():
         self.ar_ncap = pd.merge(self.ncap_columns, self.df_Arrecoil,on=['Event','Parent ID'], how='inner')
         # possibly contain event like elastic + capture-> only Ar41 or 37
         self.ar_ncap = self.ar_ncap[(self.ar_ncap["name"] == 'Ar37') | (self.ar_ncap["name"] == 'Ar41')]
-        self.ar_ncap = self.keep_1st(self.ar_cap,["Event", "Track ID"])
+        self.ar_ncap = self.keep_1st(self.ar_ncap,["Event", "Track ID"])
         print("cap event", len(self.ar_ncap.index))
 
 
