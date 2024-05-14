@@ -472,6 +472,9 @@ class ReadRoot():
         self.multi_clean_df = self.keep_1st(self.multi_df,["Event","Parent ID"])
         print("multi_clean", len(self.multi_clean_df.index),'\n', self.multi_clean_df.head(10))
 
+        self.ela_sig_300 = self.sig_df[self.sig_df["Kinetic/keV"]>1E-3]
+        print("300", len(self.ela_sig_300.index),'\n', self.ela_sig_300.head(10))
+
 
 
 
