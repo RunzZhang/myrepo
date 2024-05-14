@@ -98,7 +98,8 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.filepath = "/data/runzezhang/result/TN_sims/dmx.root"
+        self.base_path = "/data/runzezhang/result/TN_sims/"
+        self.filepath = self.base_path +"dmx.root"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
@@ -187,7 +188,7 @@ class ReadRoot():
         self.df_Gamma = pd.merge(self.df_Ncapture, self.df_Gamma,on=['Event','Parent ID'], how='inner')
         print(self.df_Gamma.head(20))
         # save these gamma event
-        self.df_Gamma.to_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv", index=False)
+        self.df_Gamma.to_csv(self.base_path +"dmx_gamma.csv", index=False)
 
     def test_merge(self):
         df_a = pd.DataFrame({ 'B':[3,5],'C':[5,7]})
@@ -204,7 +205,7 @@ class ReadRoot():
         # self.Gamma_spectrum()
         self.plot_gamma()
     def Gamma_spectrum(self):
-        self.df_gamma_rw = pd.read_csv("/data/runzezhang/result/TN_sims/dmx_gamma.csv")
+        self.df_gamma_rw = pd.read_csv(self.base_path +"dmx_gamma.csv")
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
@@ -233,10 +234,10 @@ class ReadRoot():
                         self.gamma_Scint.drop(self.gamma_Scint.index[index])
 
         print(self.gamma_Scint.head(20))
-        self.gamma_Scint.to_csv("/data/runzezhang/result/TN_sims/gamma_scint2.csv", index=False)
+        self.gamma_Scint.to_csv(self.base_path +"gamma_scint2.csv", index=False)
 
     def plot_gamma(self):
-        self.gamma = pd.read_csv("/data/runzezhang/result/TN_sims/gamma_scint2.csv")
+        self.gamma = pd.read_csv(self.base_path +"gamma_scint2.csv")
         # add gamma energy together for same event
         event_p =0
         energy = 0
@@ -339,7 +340,7 @@ class ReadRoot():
 
         print(self.df_argon_ela_merged.head(20))
         # save these gamma event
-        self.df_argon_ela_merged.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_elastic.csv", index=False)
+        self.df_argon_ela_merged.to_csv(self.base_path +"dmx_argon_elastic.csv", index=False)
 
 
     def FN_spectrum_v2(self):
@@ -350,7 +351,7 @@ class ReadRoot():
         # capture ar41 and then radiactive decay
         # 279 first elastic scatter and recoil argon and then capture by other volume
         # self.df_test_merge = self.df[(self.df["Event"]==2694)&((self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')|(self.df["name"]=='neutron'))]
-        # self.df_test_merge.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_multi.csv")
+        # self.df_test_merge.to_csv(self.base_path +"dmx_argon_multi.csv")
         # self.df_Gamma = pd.DataFrame('Event','Track ID')
         print("len",len(self.df_Arrecoil.index))
         print("unique",self.df_Arrecoil['Process'].unique())
@@ -368,7 +369,7 @@ class ReadRoot():
         print("neutron unique", self.df_neutron_mom['Process'].unique())
         self.df_neutron_ncap = self.df_neutron_mom[(self.df_neutron_mom['Process']=='nCapture')&(self.df_neutron_mom['Volume']=='LAr_phys')]
         self.df_neutron_ncap = self.keep_1st(self.df_neutron_ncap, ["Event", "Track ID"])
-        self.df_neutron_ncap.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_ncap.csv")
+        self.df_neutron_ncap.to_csv(self.base_path +"dmx_argon_ncap.csv")
         print("neutron cap", len(self.df_neutron_ncap.index))
         self.df_neutron_ela = self.df_neutron_mom[(self.df_neutron_mom['Process'] == 'hadElastic')&(self.df_neutron_mom['Volume']=='LAr_phys')]
         # multiple scattering
@@ -387,7 +388,7 @@ class ReadRoot():
 
         print(self.df_argon_ela_merged.head(20), "\nlen",len(self.df_argon_ela_merged.index))
         # save these gamma event
-        self.df_argon_ela_merged.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_elastic.csv", index=False)
+        self.df_argon_ela_merged.to_csv(self.base_path +"dmx_argon_elastic.csv", index=False)
     def FN_spectrum_multi_v2(self):
 
         self.df_Arrecoil = self.df[(self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')][['Event','name','Parent ID','Track ID',"Recoiled/keV",'Process']]
@@ -417,7 +418,7 @@ class ReadRoot():
         print("neutron unique", self.df_neutron_mom['Process'].unique())
         self.df_neutron_ncap = self.df_neutron_mom[(self.df_neutron_mom['Process']=='nCapture')&(self.df_neutron_mom['Volume']=='LAr_phys')]
         self.df_neutron_ncap = self.keep_1st(self.df_neutron_ncap, ["Event", "Track ID"])
-        self.df_neutron_ncap.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_ncap.csv")
+        self.df_neutron_ncap.to_csv(self.base_path +"dmx_argon_ncap.csv")
         print("neutron cap", len(self.df_neutron_ncap.index))
         self.df_neutron_ela = self.df_neutron_mom[(self.df_neutron_mom['Process'] == 'hadElastic')&(self.df_neutron_mom['Volume']=='LAr_phys')]
         # multiple scattering
@@ -436,7 +437,7 @@ class ReadRoot():
 
         print(self.df_argon_ela_merged.head(20), "\nlen",len(self.df_argon_ela_merged.index))
         # save these gamma event
-        self.df_argon_ela_merged.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_elastic.csv", index=False)
+        self.df_argon_ela_merged.to_csv(self.base_path +"dmx_argon_elastic.csv", index=False)
     def find_multiplicity(self):
         self.df_Arrecoil = self.df[
             (self.df["name"] == 'Ar36') | (self.df["name"] == 'Ar37') | (self.df["name"] == 'Ar40') | (
@@ -488,7 +489,7 @@ class ReadRoot():
 
 
     def plot_elastic(self):
-        self.df = pd.read_csv("/data/runzezhang/result/TN_sims/dmx_argon_elastic.csv")
+        self.df = pd.read_csv(self.base_path +"dmx_argon_elastic.csv")
         energy_list  = self.df["Recoiled/keV"].to_list()
         energy_ev = []
         energy_1kev = []
@@ -528,7 +529,7 @@ class ReadRoot():
         self.df_event168 =  self.df[self.df["Event"]==168]
         print(self.df_event168)
         # print(self.df_event168.head(20))
-        self.df_event168.to_csv("/data/runzezhang/result/TN_sims/event168.csv")
+        self.df_event168.to_csv(self.base_path +"event168.csv")
     def keep_1st(self, df, columns):
         # Assuming df is your DataFrame and column1, column2 are the column names
         df['combined_tuple'] = list(zip(df.iloc[:][columns[0]], df.iloc[:][columns[1]]))
