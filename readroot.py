@@ -468,7 +468,7 @@ class ReadRoot():
         # count multiplicity
         (self.sig_df,self.multi_df) = self.find_single_n_multi(self.ar_nela)
         print("sig", len(self.sig_df.index),'\n', self.sig_df.head(10))
-        print("multi", len(self.multi_df.index),'\n', self.sig_df.head(10))
+        print("multi", len(self.multi_df.index),'\n', self.multi_df.head(10))
 
 
 
