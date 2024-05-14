@@ -203,7 +203,7 @@ class ReadRoot():
 
         self.Capture_spectrum()
         # self.Gamma_spectrum()
-        self.find_gamma_e
+        self.find_gamma_e()
         self.plot_gamma()
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv(self.base_path +"dmx_gamma.csv")
@@ -245,8 +245,8 @@ class ReadRoot():
         self.gamma_Scint = self.df_gamma_rw[
             (self.df_gamma_rw['Volume'] == 'LAr_phys') | (self.df_gamma_rw['Volume'] == 'hydraulic_fluid_phys')]
         self.gamma_Scint = self.keep_1st(self.gamma_Scint)
-        print(self.gamma_Scint)
-        print(self.gamma_Scint[self.gamma_Scint["Parent ID"]==1])
+        print("scint",self.gamma_Scint)
+        print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]==1])
     def plot_gamma(self):
         self.gamma = pd.read_csv(self.base_path +"gamma_scint2.csv")
         # add gamma energy together for same event
