@@ -98,7 +98,7 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims/"
+        self.base_path = "/data/runzezhang/result/TN_e_sims/"
         self.filepath = self.base_path +"dmx.root"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
