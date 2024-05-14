@@ -469,7 +469,7 @@ class ReadRoot():
         (self.sig_df,self.multi_df) = self.find_single_n_multi(self.ar_nela)
         print("sig", len(self.sig_df.index),'\n', self.sig_df.head(10))
         print("multi", len(self.multi_df.index),'\n', self.multi_df.head(10))
-        self.multi_clean_df = self.keep_1st(self.multi_df,["Event","Parent"])
+        self.multi_clean_df = self.keep_1st(self.multi_df,["Event","Parent ID"])
         print("multi_clean", len(self.multi_clean_df.index),'\n', self.multi_clean_df.head(10))
 
 
