@@ -113,8 +113,10 @@ class ReadRoot():
         # self.gamma_event()
 
 
-        self.FN_spectrum_v2()
-        self.plot_elastic()
+        # self.FN_spectrum_v2()
+        # self.plot_elastic()
+
+        self.find_multiplicity()
         # self.Check_inelastic()
 
     # there was some 0 in event columns, set them to corresponding value
@@ -340,16 +342,15 @@ class ReadRoot():
         self.df_argon_ela_merged.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_elastic.csv", index=False)
 
 
-
     def FN_spectrum_v2(self):
 
         self.df_Arrecoil = self.df[(self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')][['Event','name','Parent ID','Track ID',"Recoiled/keV",'Process']]
-        self.find_single_n_multi(self.df_Arrecoil,"Event", "Parent ID")
+
         print(self.df_Arrecoil.head(10))
         # capture ar41 and then radiactive decay
         # 279 first elastic scatter and recoil argon and then capture by other volume
-        self.df_test_merge = self.df[(self.df["Event"]==2694)&((self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')|(self.df["name"]=='neutron'))]
-        self.df_test_merge.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_multi.csv")
+        # self.df_test_merge = self.df[(self.df["Event"]==2694)&((self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')|(self.df["name"]=='neutron'))]
+        # self.df_test_merge.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_multi.csv")
         # self.df_Gamma = pd.DataFrame('Event','Track ID')
         print("len",len(self.df_Arrecoil.index))
         print("unique",self.df_Arrecoil['Process'].unique())
@@ -387,6 +388,92 @@ class ReadRoot():
         print(self.df_argon_ela_merged.head(20), "\nlen",len(self.df_argon_ela_merged.index))
         # save these gamma event
         self.df_argon_ela_merged.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_elastic.csv", index=False)
+    def FN_spectrum_multi_v2(self):
+
+        self.df_Arrecoil = self.df[(self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')][['Event','name','Parent ID','Track ID',"Recoiled/keV",'Process']]
+
+        # single must be single, either cap or elastic
+        # multi -> cap+ radioacitve (still "single event" signal), elastic + elastic(multi), elastic + cap(rare/signal),
+        # only curious about 2 elastic events
+        # simply elastic is from sig_df and multi elastic is from self.multi_df
+        # find elastic -> duplicate
+        self.sig_df = self.find_single_n_multi(self.df_Arrecoil, "Event", "Parent ID")[0]
+        self.sig_df = self.keep_1st(self.sig_df, ["Event", "Track ID"])
+
+        self.multi_df = self.find_single_n_multi(self.df_ela_Arrecoil,"Event", "Parent ID")[1]
+        self.multi_df = self.keep_1st(self.multi_df, ["Event", "Track ID"])
+
+        # only record gamma event, whose event id same as ncap and parent id is ncap's track id.
+        # change Track ID name into Parent ID so that ready for merge
+        self.df_Ar_recoil_merge = self.df_Arrecoil[['Event','Parent ID']]
+        self.df_Ar_recoil_merge.columns = ['Event','Track ID']
+        # select all neutron events
+        self.df_neutron = self.df[self.df['name'] == 'neutron']
+        print(self.df_neutron.head(10))
+
+        # select neutron events whose Event number is same as argon event and track id is argon's parent ID
+        self.df_neutron_mom = pd.merge(self.df_neutron, self.df_Ar_recoil_merge,on=['Event','Track ID'], how='inner')
+        print(self.df_neutron_mom.head(20))
+        print("neutron unique", self.df_neutron_mom['Process'].unique())
+        self.df_neutron_ncap = self.df_neutron_mom[(self.df_neutron_mom['Process']=='nCapture')&(self.df_neutron_mom['Volume']=='LAr_phys')]
+        self.df_neutron_ncap = self.keep_1st(self.df_neutron_ncap, ["Event", "Track ID"])
+        self.df_neutron_ncap.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_ncap.csv")
+        print("neutron cap", len(self.df_neutron_ncap.index))
+        self.df_neutron_ela = self.df_neutron_mom[(self.df_neutron_mom['Process'] == 'hadElastic')&(self.df_neutron_mom['Volume']=='LAr_phys')]
+        # multiple scattering
+        # keep first ? no, depend on how much Ar nucleus are recoiled
+
+        self.df_neutron_ela = self.keep_1st(self.df_neutron_ela,["Event", "Track ID"])
+
+        self.df_neutron_ela_tomerge = self.df_neutron_ela[["Event", "Track ID"]]
+        self.df_neutron_ela_tomerge.columns = ["Event", "Parent ID"]
+        print( "\nlen single + multiple bubble", len(self.df_neutron_ela_tomerge.index))
+        # merge back to find the elastic Argon recoiled energy
+        self.df_argon_ela_merged = pd.merge(self.df_neutron_ela_tomerge, self.df_Arrecoil,on=['Event','Parent ID'], how='inner')
+        # find the first argon recoiled
+
+        self.df_argon_ela_merged = self.keep_1st(self.df_argon_ela_merged,["Event", "Track ID"])
+
+        print(self.df_argon_ela_merged.head(20), "\nlen",len(self.df_argon_ela_merged.index))
+        # save these gamma event
+        self.df_argon_ela_merged.to_csv("/data/runzezhang/result/TN_sims/dmx_argon_elastic.csv", index=False)
+    def find_multiplicity(self):
+        self.df_Arrecoil = self.df[
+            (self.df["name"] == 'Ar36') | (self.df["name"] == 'Ar37') | (self.df["name"] == 'Ar40') | (
+                        self.df["name"] == 'Ar41')][
+            ['Event', 'name', 'Parent ID', 'Track ID', "Recoiled/keV", 'Process']]
+
+        self.df_neutron = self.df[(self.df['name'] == 'neutron')|(self.df['Volume'] == 'LAr_phys')]
+        self.df_n_cap = self.df_neutron[self.df_neutron["Process"=='nCapture']]
+        self.df_n_ela = self.df_neutron[self.df_neutron["Process" == 'hadElastic']]
+
+        self.df_n_cap = self.keep_1st(self.df_n_cap,["Event", "Track ID"])
+        self.ncap_columns = self.df_n_cap[["Event", "Track ID"]]
+        self.ncap_columns.columns = ["Event", "Parent ID"]
+        self.ar_ncap = pd.merge(self.ncap_columns, self.df_Arrecoil,on=['Event','Parent ID'], how='inner')
+        # possibly contain event like elastic + capture-> only Ar41 or 37
+        self.ar_ncap = self.ar_ncap[(self.ar_ncap["name"] == 'Ar37') | (self.ar_ncap["name"] == 'Ar41')]
+        self.ar_ncap = self.keep_1st(self.ar_cap,["Event", "Track ID"])
+        print("cap event", len(self.ar_ncap.index))
+
+
+
+        self.df_n_ela = self.keep_1st(self.df_n_ela, ["Event", "Track ID"])
+        self.nela_columns = self.df_n_ela[["Event", "Track ID"]]
+        self.nela_columns.columns = ["Event", "Parent ID"]
+        self.ar_nela = pd.merge(self.nela_columns, self.df_Arrecoil, on=['Event', 'Parent ID'], how='inner')
+        self.ar_nela = self.ar_nela[(self.ar_nela["name"] == 'Ar36') | (self.ar_nela["name"] == 'Ar40')]
+        self.ar_nela = self.keep_1st(self.ar_nela, ["Event", "Track ID"])
+
+        # count multiplicity
+        (self.sig_df,self.multi_df) = self.find_single_n_multi(self.ar_nela)
+        print("sig", len(self.sig_df.index))
+        print("multi", len(self.multi_df.index))
+
+
+
+
+
     def plot_elastic(self):
         self.df = pd.read_csv("/data/runzezhang/result/TN_sims/dmx_argon_elastic.csv")
         energy_list  = self.df["Recoiled/keV"].to_list()
@@ -407,8 +494,9 @@ class ReadRoot():
         print("10kev", len(energy_10kev))
         plt.show()
 
-    def find_single_n_multi(self, df,Event, Parent):
-        # in same event and parent ID but has different Track ID
+    def find_single_n_multi(self, df,Event="Event", Parent="Parent ID"):
+
+        # if an entry has same event and parent ID but has different Track ID
         df = self.keep_1st(df, ['Event', 'Track ID'])
 
         df['combined_tuple'] = list(zip(df.iloc[:][Event], df.iloc[:][Parent]))
