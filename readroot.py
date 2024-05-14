@@ -111,13 +111,13 @@ class ReadRoot():
         self.df = self.file.arrays(self.selected_columns, library="pd")
         self.modify_df()
 
-        # self.gamma_event()
+        self.gamma_event()
 
 
         # self.FN_spectrum_v2()
         # self.plot_elastic()
 
-        self.find_multiplicity()
+        # self.find_multiplicity()
         # self.Check_inelastic()
 
     # there was some 0 in event columns, set them to corresponding value
