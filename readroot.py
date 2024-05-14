@@ -246,7 +246,7 @@ class ReadRoot():
             (self.df_gamma_rw['Volume'] == 'LAr_phys') | (self.df_gamma_rw['Volume'] == 'hydraulic_fluid_phys')]
         self.gamma_Scint = self.keep_1st(self.gamma_Scint)
         print("scint",self.gamma_Scint)
-        print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]==1])
+        print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]!=1])
     def plot_gamma(self):
         self.gamma = pd.read_csv(self.base_path +"gamma_scint2.csv")
         # add gamma energy together for same event
