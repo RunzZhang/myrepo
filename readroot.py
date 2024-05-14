@@ -472,8 +472,14 @@ class ReadRoot():
         self.multi_clean_df = self.keep_1st(self.multi_df,["Event","Parent ID"])
         print("multi_clean", len(self.multi_clean_df.index),'\n', self.multi_clean_df.head(10))
 
-        self.ela_sig_300 = self.sig_df[self.sig_df["Recoiled/keV"]>1E-3]
-        print("300", len(self.ela_sig_300.index),'\n', self.ela_sig_300.head(10))
+
+        # energy after applying threshold
+        (self.sig_df_t, self.multi_df_t) = self.find_single_n_multi(self.ar_nela[self.ar_nela["Recoiled/keV"]>1E-3])
+        print("sig", len(self.sig_df_t.index), '\n', self.sig_df_t.head(10))
+        print("multi", len(self.multi_df_t.index), '\n', self.multi_df_t.head(10))
+        self.multi_clean_df_t = self.keep_1st(self.multi_df_t, ["Event", "Parent ID"])
+        print("multi_clean", len(self.multi_clean_df_t.index), '\n', self.multi_clean_df_t.head(10))
+
 
 
 
