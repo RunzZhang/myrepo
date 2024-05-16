@@ -249,7 +249,7 @@ class ReadRoot():
         # print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]!=1])
         self.gamma_Scint_column = self.gamma_Scint[['Event',"Track ID"]]
         self.gamma_Scint_column.columns = ['Event',"Parent ID"]
-        self.df_electron = self.df[self.df['name']=='e-']
+        self.df_electron = self.df[(self.df['name']=='e-')&(self.df['Volume']=='LAr_phys')]
         self.df_electron = self.keep_1st(self.df_electron)
         self.df_electron_gamma = pd.merge(self.df_electron,self.gamma_Scint_column,on=['Event','Parent ID'], how='inner')
         print(self.df_electron_gamma.head(10))
