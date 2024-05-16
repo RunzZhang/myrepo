@@ -254,8 +254,14 @@ class ReadRoot():
         self.df_electron_gamma = pd.merge(self.df_electron,self.gamma_Scint_column,on=['Event','Parent ID'], how='inner')
         print(self.df_electron_gamma.head(10))
         # double check gamma
+
+        summed_values = self.df_electron_gamma.groupby(['Event', 'Parent ID'])["Recoiled/keV"].sum().reset_index()
+        print(summed_values.head(20))
+        # Convert the result to a list of tuples containing (column1, column2, summed_values)
+        # result_list = list(summed_values.itertuples(index=False, name=None))
+
         # add gamma up
-        self.electron_recoiled_list  = self.df_electron_gamma["Recoiled/keV"].to_list
+        # self.electron_recoiled_list  = self.df_electron_gamma["Recoiled/keV"].to_list
     def plot_gamma(self):
         self.gamma = pd.read_csv(self.base_path +"gamma_scint2.csv")
         # add gamma energy together for same event
