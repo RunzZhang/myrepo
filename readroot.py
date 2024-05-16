@@ -246,8 +246,16 @@ class ReadRoot():
             (self.df_gamma_rw['Volume'] == 'LAr_phys') | (self.df_gamma_rw['Volume'] == 'hydraulic_fluid_phys')]
         self.gamma_Scint = self.keep_1st(self.gamma_Scint)
         print("scint",self.gamma_Scint)
-        print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]!=1])
-        self.test_event(event=2694, name='test2694')
+        # print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]!=1])
+        self.gamma_Scint_column = self.gamma_Scint[['Event',"Track ID"]]
+        self.gamma_Scint_column.columns = ['Event',"Parent ID"]
+        self.df_electron = self.df[self.df['name']=='e-']
+        self.df_electron = self.keep_1st(self.df_electron)
+        self.df_electron_gamma = pd.merge(self.df_electron,self.gamma_Scint_column,on=['Event','Parent ID'], how='inner')
+        print(self.df_electron_gamma.head(10))
+        # double check gamma
+        # add gamma up
+        self.electron_recoiled_list  = self.df_electron_gamma["Recoiled/keV"].to_list
     def plot_gamma(self):
         self.gamma = pd.read_csv(self.base_path +"gamma_scint2.csv")
         # add gamma energy together for same event
