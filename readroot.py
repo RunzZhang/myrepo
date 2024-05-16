@@ -257,11 +257,22 @@ class ReadRoot():
 
         summed_values = self.df_electron_gamma.groupby(['Event', 'Parent ID'])["Recoiled/keV"].sum().reset_index()
         print(summed_values.head(20))
-        # Convert the result to a list of tuples containing (column1, column2, summed_values)
-        # result_list = list(summed_values.itertuples(index=False, name=None))
 
         # add gamma up
-        # self.electron_recoiled_list  = self.df_electron_gamma["Recoiled/keV"].to_list
+        self.electron_recoiled_list  = summed_values["Recoiled/keV"].to_list()
+        p_observed = []
+        for i in range(len(self.electron_recoiled_list)):
+            p_observed.append(i**1E6*40*0.03*0.2/(100*1000))
+
+        num = 0
+        for i in p_observed:
+            if i > 1:
+                num += 1
+        print("photon observed number ", num)
+        print("max", max(p_observed), "\n", "min", min(p_observed))
+        plt.hist(p_observed, bins=100)
+        plt.xlabel("Obeserved Photon per Event")
+        plt.show()
     def plot_gamma(self):
         self.gamma = pd.read_csv(self.base_path +"gamma_scint2.csv")
         # add gamma energy together for same event
