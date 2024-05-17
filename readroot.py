@@ -266,7 +266,7 @@ class ReadRoot():
 
         num = 0
         for i in p_observed:
-            if i > 1:
+            if i >= 1:
                 num += 1
         print("photon observed number ", num)
         print("max", max(p_observed), "\n", "min", min(p_observed))
