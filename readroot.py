@@ -179,6 +179,7 @@ class ReadRoot():
         print(self.df_Ncapture.head(10))
         # self.df_cap_gamma = pd.DataFrame('Event','Track ID')
         print("len",len(self.df_Ncapture.index))
+        print(self.df_Ncapture['Volume'].unique())
         # only record gamma event, whose event id same as ncap and parent id is ncap's track id.
         # change Track ID name into Parent ID so that ready for merge
         self.df_Ncapture.columns = ['Event','Parent ID']
@@ -278,7 +279,6 @@ class ReadRoot():
         plt.show()
     def check_capture(self):
         self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_gamma.csv")
-        print(self.df_gamma_rw["Volume"].unique())
 
     def plot_gamma(self):
         self.gamma = pd.read_csv(self.base_path +"gamma_scint2.csv")
