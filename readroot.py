@@ -181,8 +181,8 @@ class ReadRoot():
 
         print(self.df_Ncapture.head(10))
         # self.df_cap_gamma = pd.DataFrame('Event','Track ID')
-        print("len",len(self.df_Ncapture_check.index))
-        print(self.df_Ncapture['Volume'].unique())
+        print("len",len(self.df_Ncapture.index))
+        print(self.df_Ncapture_check['Volume'].unique())
         # only record gamma event, whose event id same as ncap and parent id is ncap's track id.
         # change Track ID name into Parent ID so that ready for merge
         self.df_Ncapture.columns = ['Event','Parent ID']
