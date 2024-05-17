@@ -203,7 +203,8 @@ class ReadRoot():
 
         self.Capture_spectrum()
         # self.Gamma_spectrum()
-        self.find_gamma_e()
+        # self.find_gamma_e()
+        self.check_capture()
         # self.plot_gamma()
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv(self.base_path +"dmx_gamma.csv")
@@ -275,6 +276,10 @@ class ReadRoot():
         plt.hist(p_observed, bins=100)
         plt.xlabel("Obeserved Photon per Event")
         plt.show()
+    def check_capture(self):
+        self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_gamma.csv")
+        print(self.df_gamma_rw["Volume"].unique())
+
     def plot_gamma(self):
         self.gamma = pd.read_csv(self.base_path +"gamma_scint2.csv")
         # add gamma energy together for same event
