@@ -262,7 +262,7 @@ class ReadRoot():
         self.electron_recoiled_list  = summed_values["Recoiled/keV"].to_list()
         p_observed = []
         for i in range(len(self.electron_recoiled_list)):
-            p_observed.append(i*1E6*40*0.03*0.2/(100*1000))
+            p_observed.append(self.electron_recoiled_list[i]*1E6*40*0.03*0.2/(100*1000))
 
         num = 0
         for i in p_observed:
@@ -270,8 +270,8 @@ class ReadRoot():
                 num += 1
         print("photon observed number ", num)
         print("max", max(p_observed), "\n", "min", min(p_observed))
-        plt.hist(self.electron_recoiled_list, bins=100)
-        # plt.hist(p_observed, bins=100)
+        # plt.hist(self.electron_recoiled_list, bins=100)
+        plt.hist(p_observed, bins=100)
         plt.xlabel("Obeserved Photon per Event")
         plt.show()
     def plot_gamma(self):
