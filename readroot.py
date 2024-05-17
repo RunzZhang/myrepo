@@ -270,7 +270,8 @@ class ReadRoot():
                 num += 1
         print("photon observed number ", num)
         print("max", max(p_observed), "\n", "min", min(p_observed))
-        plt.hist(p_observed, bins=100)
+        plt.hist(self.electron_recoiled_list, bins=100)
+        # plt.hist(p_observed, bins=100)
         plt.xlabel("Obeserved Photon per Event")
         plt.show()
     def plot_gamma(self):
