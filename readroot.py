@@ -262,7 +262,8 @@ class ReadRoot():
         self.electron_recoiled_list  = summed_values["Recoiled/keV"].to_list()
         p_observed = []
         for i in range(len(self.electron_recoiled_list)):
-            p_observed.append(self.electron_recoiled_list[i]*1E6*40*0.03*0.2/(100*1000))
+            # 40 /keV 0.03 and 0.2 PCE and PDE
+            p_observed.append(self.electron_recoiled_list[i]*1E6*40*0.03*0.2/(1000))
 
         num = 0
         for i in p_observed:
