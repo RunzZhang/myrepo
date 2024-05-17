@@ -202,7 +202,7 @@ class ReadRoot():
     def gamma_event(self):
         # if already run 1st 2 steps and obtained output csv file, one can directly run 3rd function
 
-        # self.Capture_spectrum()
+        self.Capture_spectrum()
         # self.Gamma_spectrum()
         # self.find_gamma_e()
         self.check_capture()
