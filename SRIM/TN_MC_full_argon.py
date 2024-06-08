@@ -124,7 +124,7 @@ class MC_sim_full_argon():
         # self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
-        # self.predicted_bubble_events(self.address)
+        self.predicted_bubble_events(self.address)
         # self.source_uncertainty(0.3)
         # self.source_uncertainty_w_background(0.3, 500)
         # self.bubble_event_with_sigma(0.3)
@@ -442,6 +442,15 @@ class MC_sim_full_argon():
             for l in range(len(x_bins)):
                 integral += Event_N * efficiency_2d[k][l] * hist_result[0][l] * bin_width
             bubble_event.append(integral)
+        # add to find the ratio of 400 ev and 1125eV event number
+        first_bin = 0
+        second_bin = 0
+        for i in range(len(x_bins)):
+            if x_bins[i]>400 and first_bin==0:
+                first_bin=i
+            if x_bins[i]>1125 and second_bin==0:
+                second_bin = i
+        print('first',bubble_event[first_bin],'second',bubble_event[second_bin])
         return x_bins, hist_result[0], bubble_event
     def predicted_bubble_events(self, address):
         x_bins, hist_result, bubble_event  = self.generate_hist_and_CDF()
