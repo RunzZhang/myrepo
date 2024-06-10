@@ -348,6 +348,7 @@ class ReadRoot():
         print("max", max(p_observed), "\n", "min", min(p_observed))
         # plt.hist(self.electron_recoiled_list, bins=100)
         plt.hist(p_observed, bins=100)
+        p_observed.to_csv(self.base_path + "captured_photon.csv", index=False)
         plt.xlabel("Obeserved Photon per Event")
         plt.show()
     def check_capture(self):
