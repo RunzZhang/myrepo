@@ -354,7 +354,7 @@ class ReadRoot():
         self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_gamma.csv")
 
     def plot_gamma(self):
-        self.gamma = pd.read_csv(self.base_path +"gamma_scint2.csv")
+        self.gamma = pd.read_csv(self.base_path +"dmx_gamma_LAr.csv")
         # add gamma energy together for same event
         event_p =0
         energy = 0
