@@ -3,7 +3,7 @@ import numpy as np
 import os, pickle
 import sys
 import pandas as pd
-import uproot
+import uproot,csv
 import math
 #from matplotlib.ticker import (LogLocator, MultipleLocator, AutoMinorLocator)
 import matplotlib.ticker as ticker
@@ -124,7 +124,10 @@ print(max(SingleScatterList))
 fig2, ax2 = plt.subplots()
 #ax1.hist(KEe, bins1, histtype = "step", label = "Escape")
 ax2.hist(SingleScatterList, binsOver, histtype = "step", label = "Single Scatters >16.7keV")
-SingleScatterList.to_csv("/data/runzezhang/scatter_spectrum.csvg",index=False)
+with open("/data/runzezhang/scatter_spectrum.csv", 'w', newline='') as myfile:
+    wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+    wr.writerow(SingleScatterList)
+SingleScatterList.to_csv("/data/runzezhang/scatter_spectrum.csv",index=False)
 ax2.set_xscale('log')
 ax2.set_yscale('log')
 ax2.set_xlabel('Deposition Energy (eV)', fontsize = 16)

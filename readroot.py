@@ -56,6 +56,7 @@ import pandas as pd
 import uproot
 import matplotlib.pyplot as plt
 import numpy as np
+import csv
 # filename = "/data/runzezhang/Geant4Simulaions/g411_TN/dmx.root"
 
 class RestructureRoot():
@@ -348,7 +349,9 @@ class ReadRoot():
         print("max", max(p_observed), "\n", "min", min(p_observed))
         # plt.hist(self.electron_recoiled_list, bins=100)
         plt.hist(p_observed, bins=100)
-        p_observed.to_csv(self.base_path + "captured_photon.csv", index=False)
+        with open("/data/runzezhang/Ar_photon.csv", 'w', newline='') as myfile:
+            wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+            wr.writerow(p_observed)
         plt.xlabel("Obeserved Photon per Event")
         plt.show()
     def check_capture(self):
