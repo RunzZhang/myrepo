@@ -111,8 +111,8 @@ class ReadRoot():
         self.df = self.file.arrays(self.selected_columns, library="pd")
         self.modify_df()
 
-        # self.gamma_event()
-        self.LAr_gamma_event()
+        self.gamma_event()
+        # self.LAr_gamma_event()
 
         # self.FN_spectrum_v2()
         # self.plot_elastic()
@@ -231,7 +231,7 @@ class ReadRoot():
 
         self.Capture_spectrum()
         # self.Gamma_spectrum()
-        # self.find_gamma_e()
+        self.find_gamma_e()
         self.check_capture()
         # self.plot_gamma()
 
