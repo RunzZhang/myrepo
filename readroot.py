@@ -313,7 +313,7 @@ class ReadRoot():
         plt.xlabel("Obeserved Photon per Event")
         plt.show()
     def LAr_find_gamma_e(self):
-        self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_gamma.csv")
+        self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_gamma_LAr.csv")
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
@@ -354,7 +354,7 @@ class ReadRoot():
         self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_gamma.csv")
 
     def plot_gamma(self):
-        self.gamma = pd.read_csv(self.base_path +"dmx_gamma_LAr.csv")
+        self.gamma = pd.read_csv(self.base_path +"dmx_gamma.csv")
         # add gamma energy together for same event
         event_p =0
         energy = 0
