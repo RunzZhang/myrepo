@@ -113,7 +113,7 @@ class SN():
         # print(signal_number_list[:200])
         plt.plot(photon_n_list,signal_number_list,color='red',label='signal')
         plt.plot(photon_n_list,noise_number_list,color='blue',label='noise')
-        # plt.plot(threshold_list,SN_ratio,color='green',label='ratio')
+        plt.plot(photon_n_list,SN_ratio,color='green',label='ratio')
         plt.legend()
         plt.show()
 
