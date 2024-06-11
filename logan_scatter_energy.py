@@ -124,10 +124,9 @@ print(max(SingleScatterList))
 fig2, ax2 = plt.subplots()
 #ax1.hist(KEe, bins1, histtype = "step", label = "Escape")
 ax2.hist(SingleScatterList, binsOver, histtype = "step", label = "Single Scatters >16.7keV")
-with open("/data/runzezhang/scatter_spectrum.csv", 'w', newline='') as myfile:
+with open("/data/runzezhang/result/scatter_spectrum_CF.csv", 'w', newline='') as myfile:
     wr = csv.writer(myfile)
     wr.writerow(SingleScatterList)
-SingleScatterList.to_csv("/data/runzezhang/scatter_spectrum.csv",index=False)
 ax2.set_xscale('log')
 ax2.set_yscale('log')
 ax2.set_xlabel('Deposition Energy (eV)', fontsize = 16)
