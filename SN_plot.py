@@ -70,7 +70,6 @@ class SN():
         plt.hist(self.noise_raw_list,color='blue',label='noise')
         plt.xlabel("photon detected by SiPM #", fontsize=16)
         plt.ylabel("signal/noise rate #/s", fontsize=16)
-        plt.xscale('log')
         plt.yscale('log')
         plt.legend()
         plt.show()
