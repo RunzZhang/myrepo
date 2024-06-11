@@ -21,7 +21,7 @@ class SN():
 
         print( len(self.sig_raw_list))
 
-        with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'r') as file:
+        with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_AmLi.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
