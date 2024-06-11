@@ -9,25 +9,28 @@ class SN():
 
 
     def old_read_files(self):
+        self.rate = 1
+        self.G4_events= 1E6
+        self.G4_sig_time=(self.G4_events / self.rate)
         with open("/data/runzezhang/result/TN_e_sims/Ar_photon_CF.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
             # Convert the strings to floats
-            self.sig_raw_list = [float(value) for value in number_list]
+            self.sig_raw_list = [float(value)/self.G4_sig_time for value in number_list]
         # self.sig_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\Ar_photon.csv', quoting=csv.QUOTE_ALL)
         # self.sig_raw_list = self.sig_raw_df.columns.to_list()
         #
         # self.sig_raw_list = list(map(float, self.sig_raw_list))
 
         print( len(self.sig_raw_list))
-
+        self.G4_noise_time = 1
         with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
             # Convert the strings to floats
-            self.noise_raw_list = [float(value) * 10 * 0.03 * 0.2 / 1000 for value in number_list]
+            self.noise_raw_list = [float(value) * 10 * 0.03 * 0.2 / (1000*self.G4_noise_time) for value in number_list]
 
         # self.noise_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\scatter_spectrum.csv', quoting=csv.QUOTE_ALL)
         # self.noise_raw_list = self.noise_raw_df.columns.to_list()
@@ -65,6 +68,10 @@ class SN():
     def hist_info(self):
         plt.hist(self.sig_raw_list,color="red",label='sig')
         plt.hist(self.noise_raw_list,color='blue',label='noise')
+        plt.xlabel("photon detected by SiPM #", fontsize=16)
+        plt.ylabel("signal/noise rate #/s", fontsize=16)
+        plt.xscale('log')
+        plt.yscale('log')
         plt.legend()
         plt.show()
     def prepare(self, threshold):
