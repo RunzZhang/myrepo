@@ -74,7 +74,7 @@ class SN():
         noise_counts, noise_bin_edges = np.histogram(self.noise_raw_list, bins=100)
         noise_normalized_counts = noise_counts / self.G4_noise_time
         noise_bin_centers = (noise_bin_edges[:-1] + noise_bin_edges[1:]) / 2
-        plt.bar(noise_bin_centers, noise_normalized_counts, width=noise_bin_edges[1] - noise_bin_edges[0], color='red',label='noise')
+        plt.bar(noise_bin_centers, noise_normalized_counts, width=noise_bin_edges[1] - noise_bin_edges[0], color='blue',label='noise')
 
         # Set x-label and y-label with font size
         # plt.xlabel('Value', fontsize=14)
