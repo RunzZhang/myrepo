@@ -79,5 +79,5 @@ class test_csv():
         print(number_list)
 
 if __name__=="__main__":
-    sn = SN()
-    # test = test_csv()
+    # sn = SN()
+    test = test_csv()
