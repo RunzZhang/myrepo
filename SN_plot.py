@@ -66,9 +66,9 @@ class SN():
     #         wr.writerow(self.noise_p_raw_list)
     #     print("len",len(self.noise_p_raw_list))
     def hist_info(self):
-
-        plt.hist(self.noise_raw_list,color='blue',label='noise')
         plt.hist(self.sig_raw_list, color="red", label='signal')
+        plt.hist(self.noise_raw_list,color='blue',label='noise')
+
         plt.xlabel("photon detected by SiPM #", fontsize=16)
         plt.ylabel("signal/noise rate #/s", fontsize=16)
         plt.yscale('log')
