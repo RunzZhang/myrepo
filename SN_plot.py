@@ -32,32 +32,32 @@ class SN():
         # self.noise_raw_list = self.noise_raw_df.columns.to_list()
         # self.noise_raw_list = list(map(float, self.noise_raw_list))
         print(len(self.noise_raw_list))
+        self.hist_info()
 
 
-        # self.noise_p_raw_list = []
-        # for i in self.noise_raw_list:
-        #     self.noise_p_raw_list.append(i * 10 * 0.03 * 0.2 / 1000)
-        # print(self.noise_p_raw_list)
-        # self.supress()
-    def new_read_files(self):
-        self.sig_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\Ar_photon.csv', quoting=csv.QUOTE_ALL)
-        self.sig_raw_list = self.sig_raw_df.columns.to_list()
 
-        self.sig_raw_list = list(map(float, self.sig_raw_list))
-
-        self.noise_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\scatter_spectrum_zip.csv', quoting=csv.QUOTE_ALL)
-        self.noise_raw_list = self.noise_raw_df.columns.to_list()
-
-        self.noise_raw_list = list(map(float, self.noise_raw_list))
-
-        # self.plot()
-    def supress(self):
-        self.noise_p_raw_list = self.noise_p_raw_list[:10*len(self.sig_raw_list)]
-        with open("C:\\Users\\24230\\Downloads\\scatter_spectrum_zip.csv", 'w', newline='') as myfile:
-            wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-            wr.writerow(self.noise_p_raw_list)
-        print("len",len(self.noise_p_raw_list))
-
+    # def new_read_files(self):
+    #     self.sig_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\Ar_photon.csv', quoting=csv.QUOTE_ALL)
+    #     self.sig_raw_list = self.sig_raw_df.columns.to_list()
+    #
+    #     self.sig_raw_list = list(map(float, self.sig_raw_list))
+    #
+    #     self.noise_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\scatter_spectrum_zip.csv', quoting=csv.QUOTE_ALL)
+    #     self.noise_raw_list = self.noise_raw_df.columns.to_list()
+    #
+    #     self.noise_raw_list = list(map(float, self.noise_raw_list))
+    #
+    #     # self.plot()
+    # def supress(self):
+    #     self.noise_p_raw_list = self.noise_p_raw_list[:10*len(self.sig_raw_list)]
+    #     with open("C:\\Users\\24230\\Downloads\\scatter_spectrum_zip.csv", 'w', newline='') as myfile:
+    #         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+    #         wr.writerow(self.noise_p_raw_list)
+    #     print("len",len(self.noise_p_raw_list))
+    def hist_info(self):
+        plt.hist(self.sig_raw_list)
+        plt.hist(self.noise_raw_list)
+        plt.show()
     def prepare(self, threshold):
         self.sig = [value for value in self.sig_raw_list if value >= threshold]
         self.noise = [value for value in self.noise_p_raw_list if value >= threshold]
