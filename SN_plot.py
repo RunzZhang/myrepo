@@ -100,6 +100,7 @@ class SN():
         noise_number_list =[]
         SN_ratio = []
         photon_n_list = []
+        print("cut",max(self.noise_raw_list))
         length = round(max(self.sig_raw_list))
         for i in range(length):
             photon_n_list.append(i)
