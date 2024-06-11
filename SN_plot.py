@@ -69,12 +69,12 @@ class SN():
         sig_counts, sig_bin_edges = np.histogram(self.sig_raw_list, bins=100)
         sig_normalized_counts = sig_counts/self.G4_sig_time
         sig_bin_centers = (sig_bin_edges[:-1] + sig_bin_edges[1:]) / 2
-        plt.bar(sig_bin_centers, sig_normalized_counts, width=sig_bin_edges[1] - sig_bin_edges[0], edgecolor='black',color='red',label='signal')
+        plt.bar(sig_bin_centers, sig_normalized_counts, width=sig_bin_edges[1] - sig_bin_edges[0], color='red',label='signal')
 
         noise_counts, noise_bin_edges = np.histogram(self.noise_raw_list, bins=100)
         noise_normalized_counts = noise_counts / self.G4_noise_time
         noise_bin_centers = (noise_bin_edges[:-1] + noise_bin_edges[1:]) / 2
-        plt.bar(noise_bin_centers, noise_normalized_counts, width=noise_bin_edges[1] - noise_bin_edges[0], edgecolor='black',color='red',label='noise')
+        plt.bar(noise_bin_centers, noise_normalized_counts, width=noise_bin_edges[1] - noise_bin_edges[0], color='red',label='noise')
 
         # Set x-label and y-label with font size
         # plt.xlabel('Value', fontsize=14)
