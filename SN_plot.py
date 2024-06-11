@@ -66,8 +66,21 @@ class SN():
     #         wr.writerow(self.noise_p_raw_list)
     #     print("len",len(self.noise_p_raw_list))
     def hist_info(self):
-        plt.hist(self.sig_raw_list, color="red", label='signal')
-        plt.hist(self.noise_raw_list,color='blue',label='noise')
+        sig_counts, sig_bin_edges = np.histogram(self.sig_raw_list, bins=100)
+        sig_normalized_counts = sig_counts/self.G4_sig_time
+        sig_bin_centers = (sig_bin_edges[:-1] + sig_bin_edges[1:]) / 2
+        plt.bar(sig_bin_centers, sig_normalized_counts, width=sig_bin_edges[1] - sig_bin_edges[0], edgecolor='black',color='red',label='signal')
+
+        noise_counts, noise_bin_edges = np.histogram(self.noise_raw_list, bins=100)
+        noise_normalized_counts = noise_counts / self.G4_noise_time
+        noise_bin_centers = (noise_bin_edges[:-1] + noise_bin_edges[1:]) / 2
+        plt.bar(noise_bin_centers, noise_normalized_counts, width=noise_bin_edges[1] - noise_bin_edges[0], edgecolor='black',color='red',label='noise')
+
+        # Set x-label and y-label with font size
+        # plt.xlabel('Value', fontsize=14)
+        # plt.ylabel('Frequency (normalized)', fontsize=14)
+        # plt.hist(self.sig_raw_list, color="red", label='signal')
+        # plt.hist(self.noise_raw_list,color='blue',label='noise')
 
         plt.xlabel("photon detected by SiPM #", fontsize=16)
         plt.ylabel("signal/noise rate #/s", fontsize=16)
