@@ -116,8 +116,8 @@ class SN():
         fig, ax1 = plt.subplots()
 
         # Plot dataset 1 and dataset 2 on the left y-axis
-        line1 = ax1.plot(photon_n_list, signal_number_list, 'g-', label='signal')
-        line2 = ax1.plot(photon_n_list, noise_number_list, 'b-', label='noise')
+        line1, = ax1.plot(photon_n_list, signal_number_list, 'g-', label='signal')
+        line2, = ax1.plot(photon_n_list, noise_number_list, 'b-', label='noise')
 
         # Set the labels and title
         ax1.set_xlabel('photon number threshold')
@@ -127,7 +127,7 @@ class SN():
         ax2 = ax1.twinx()
 
         # Plot dataset 3 on the right y-axis
-        line3 = ax2.plot(photon_n_list, SN_ratio, 'r-', label='signal to noise ratio')
+        line3, = ax2.plot(photon_n_list, SN_ratio, 'r-', label='signal to noise ratio')
 
         # Set the label for the second y-axis
         ax2.set_ylabel('signal to noise ratio', color='black',fontsize = 16)
