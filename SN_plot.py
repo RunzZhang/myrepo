@@ -3,11 +3,12 @@ import matplotlib.pyplot as plt
 import csv
 class SN():
     def __init__(self):
-        self.new_read_files()
+        self.old_read_files()
+        # self.new_read_files()
 
 
     def old_read_files(self):
-        with open('C:\\Users\\24230\\Downloads\\Ar_photon.csv', 'r') as file:
+        with open("/data/runzezhang/result/TN_e_sims/Ar_photon_CF.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
@@ -18,9 +19,9 @@ class SN():
         #
         # self.sig_raw_list = list(map(float, self.sig_raw_list))
 
-        print(self.sig_raw_list, len(self.sig_raw_list))
+        print( len(self.sig_raw_list))
 
-        with open('C:\\Users\\24230\\Downloads\\scatter_spectrum.csv', 'r') as file:
+        with open("/data/runzezhang/result/scatter_spectrum_CF.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
@@ -31,6 +32,7 @@ class SN():
         # self.noise_raw_list = self.noise_raw_df.columns.to_list()
         # self.noise_raw_list = list(map(float, self.noise_raw_list))
         print(len(self.noise_raw_list))
+
 
         # self.noise_p_raw_list = []
         # for i in self.noise_raw_list:

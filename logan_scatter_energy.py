@@ -125,7 +125,7 @@ print(max(SingleScatterList))
 fig2, ax2 = plt.subplots()
 #ax1.hist(KEe, bins1, histtype = "step", label = "Escape")
 ax2.hist(SingleScatterList, binsOver, histtype = "step", label = "Single Scatters >16.7keV")
-with open("/data/runzezhang/result/scatter_spectrum_CF.csv", 'w', newline='') as myfile:
+with open("/data/runzezhang/result/scatter_spectrum_AmLi.csv", 'w', newline='') as myfile:
     wr = csv.writer(myfile)
     wr.writerow(SingleScatterList)
 ax2.set_xscale('log')
