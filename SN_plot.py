@@ -1,6 +1,7 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import csv
+import numpy as np
 class SN():
     def __init__(self):
         self.old_read_files()
@@ -32,7 +33,13 @@ class SN():
         # self.noise_raw_list = self.noise_raw_df.columns.to_list()
         # self.noise_raw_list = list(map(float, self.noise_raw_list))
         print(len(self.noise_raw_list))
-        self.hist_info()
+        max_noise_photon = round(max(self.noise_raw_list))
+        # form the threshold function
+        threshold_list  = []
+        for i in range(0,max_noise_photon):
+            threshold_list.append(i)
+        self.plot_sn(threshold_list)
+        # self.hist_info()
 
 
 
@@ -65,7 +72,7 @@ class SN():
         sig_len = len(self.sig)
         noise_len = len(self.noise)
         return (sig_len,noise_len)
-    def plot(self, threshold_list):
+    def plot_sn(self, threshold_list):
         signal_number_list = []
         noise_number_list =[]
         SN_ratio = []
@@ -73,7 +80,10 @@ class SN():
             (sig_num,noise_num)= self.prepare(i)
             signal_number_list.append(sig_num)
             noise_number_list.append(noise_num)
-            SN_ratio.append(sig_num/noise_num)
+            if noise_num !=0:
+                SN_ratio.append(sig_num/noise_num)
+            else:
+                SN_ratio.append(0)
         plt.plot(threshold_list,signal_number_list,color='red',legend='signal')
         plt.plot(threshold_list,noise_number_list,color='blue',legend='noise')
         plt.plot(threshold_list,SN_ratio,color='green',legend='ratio')
