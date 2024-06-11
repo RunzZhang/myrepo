@@ -134,7 +134,7 @@ class SN():
 
         lines = [line1, line2, line3]
         labels = [line.get_label() for line in lines]
-        fig.legend(lines, labels, loc='upper right', bbox_to_anchor=(0.75, 0.75))
+        fig.legend(lines, labels, loc='upper right', bbox_to_anchor=(0.9, 0.75))
         # Show the plot
         plt.show()
 
