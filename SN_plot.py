@@ -69,7 +69,15 @@ class test_csv():
         with open("/data/runzezhang/test.csv", 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(list1)
+        with open("/data/runzezhang/test.csv", 'r') as file:
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            number_list = [float(value) for value in number_list]
+
+        print(number_list)
 
 if __name__=="__main__":
-    # sn = SN()
-    test = test_csv()
+    sn = SN()
+    # test = test_csv()
