@@ -34,6 +34,7 @@ class SN():
         # self.noise_raw_list = list(map(float, self.noise_raw_list))
         print(len(self.noise_raw_list))
         max_noise_photon = round(max(self.noise_raw_list))
+        print("max",max_noise_photon)
         # form the threshold function
         threshold_list  = []
         for i in range(0,max_noise_photon):
