@@ -9,6 +9,7 @@ class SN():
 
 
     def old_read_files(self):
+        self.capture_ratio = 1
         self.rate = 435.6 #/s
         self.G4_events= 1E6
         self.G4_sig_time=(self.G4_events / self.rate)
@@ -67,7 +68,7 @@ class SN():
     #     print("len",len(self.noise_p_raw_list))
     def hist_info(self):
         sig_counts, sig_bin_edges = np.histogram(self.sig_raw_list, bins=100)
-        sig_normalized_counts = sig_counts/self.G4_sig_time
+        sig_normalized_counts = sig_counts*self.capture_ratio/self.G4_sig_time
         sig_bin_centers = (sig_bin_edges[:-1] + sig_bin_edges[1:]) / 2
         plt.bar(sig_bin_centers, sig_normalized_counts, width=sig_bin_edges[1] - sig_bin_edges[0], color='red',label='signal')
 
@@ -97,14 +98,15 @@ class SN():
         signal_number_list = []
         noise_number_list =[]
         SN_ratio = []
-        for i in range(len(threshold_list)):
+        for i in range(len(self.sig_raw_list)):
             (sig_num,noise_num)= self.prepare(i)
-            signal_number_list.append(sig_num/self.G4_sig_time)
+            signal_number_list.append(sig_num*self.capture_ratioself.G4_sig_time)
             noise_number_list.append(noise_num/self.G4_noise_time)
             if noise_num !=0:
-                SN_ratio.append((sig_num/self.G4_sig_time)/(noise_num/self.G4_noise_time))
+                SN_ratio.append((sig_num*self.capture_ratio/self.G4_sig_time)/(noise_num/self.G4_noise_time))
             else:
                 SN_ratio.append(0)
+
         # print(signal_number_list[:200])
         plt.plot(threshold_list,signal_number_list,color='red',label='signal')
         plt.plot(threshold_list,noise_number_list,color='blue',label='noise')
