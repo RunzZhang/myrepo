@@ -9,11 +9,12 @@ class SN():
 
 
     def old_read_files(self):
-        self.capture_ratio = 1.164E-3
+        # self.capture_ratio = 1.164E-3
+        self.capture_ratio = 0.121
         self.rate = 435.6 #/s
         self.G4_events= 1E6
         self.G4_sig_time=(self.G4_events / self.rate)
-        with open("/data/runzezhang/result/TN_e_sims/Ar_photon_CF.csv", 'r') as file:
+        with open("/data/runzezhang/result/TN_e_sims/Ar_photon_AmLi.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
@@ -26,7 +27,7 @@ class SN():
 
         print( len(self.sig_raw_list))
         self.G4_noise_time = 1E7/self.rate
-        with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'r') as file:
+        with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_AmLi.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
@@ -43,8 +44,8 @@ class SN():
         threshold_list  = []
         for i in range(0,max_noise_photon):
             threshold_list.append(i)
-        self.plot_sn(threshold_list)
-        # self.hist_info()
+        # self.plot_sn(threshold_list)
+        self.hist_info()
 
 
 
