@@ -108,7 +108,7 @@ class SN():
             if noise_num !=0:
                 SN_ratio.append((sig_num*self.capture_ratio/self.G4_sig_time)/(noise_num/self.G4_noise_time))
             else:
-                SN_ratio.append(0)
+                SN_ratio.append(max(SN_ratio))
 
         # plt.plot(photon_n_list,signal_number_list,color='red',label='signal')
         # plt.plot(photon_n_list,noise_number_list,color='blue',label='noise')
