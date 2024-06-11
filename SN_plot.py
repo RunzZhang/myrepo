@@ -105,10 +105,10 @@ class SN():
                 SN_ratio.append((sig_num/self.G4_sig_time)/(noise_num/self.G4_noise_time))
             else:
                 SN_ratio.append(0)
-        print(signal_number_list[:200])
+        # print(signal_number_list[:200])
         plt.plot(threshold_list,signal_number_list,color='red',label='signal')
         plt.plot(threshold_list,noise_number_list,color='blue',label='noise')
-        plt.plot(threshold_list,SN_ratio,color='green',label='ratio')
+        # plt.plot(threshold_list,SN_ratio,color='green',label='ratio')
         plt.legend()
         plt.show()
 
