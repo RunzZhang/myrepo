@@ -17,7 +17,7 @@ class SN():
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
             # Convert the strings to floats
-            self.sig_raw_list = [float(value)/self.G4_sig_time for value in number_list]
+            self.sig_raw_list = [float(value) for value in number_list]
         # self.sig_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\Ar_photon.csv', quoting=csv.QUOTE_ALL)
         # self.sig_raw_list = self.sig_raw_df.columns.to_list()
         #
@@ -30,7 +30,7 @@ class SN():
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
             # Convert the strings to floats
-            self.noise_raw_list = [float(value) * 10 * 0.03 * 0.2 / (1000*self.G4_noise_time) for value in number_list]
+            self.noise_raw_list = [float(value) * 10 * 0.03 * 0.2 / (1000) for value in number_list]
 
         # self.noise_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\scatter_spectrum.csv', quoting=csv.QUOTE_ALL)
         # self.noise_raw_list = self.noise_raw_df.columns.to_list()
@@ -67,11 +67,11 @@ class SN():
     #     print("len",len(self.noise_p_raw_list))
     def hist_info(self):
 
-        # plt.hist(self.noise_raw_list,color='blue',label='noise')
+        plt.hist(self.noise_raw_list,color='blue',label='noise')
         plt.hist(self.sig_raw_list, color="red", label='signal')
         plt.xlabel("photon detected by SiPM #", fontsize=16)
         plt.ylabel("signal/noise rate #/s", fontsize=16)
-        # plt.yscale('log')
+        plt.yscale('log')
         plt.legend()
         plt.show()
     def prepare(self, threshold):
@@ -86,10 +86,10 @@ class SN():
         SN_ratio = []
         for i in range(len(threshold_list)):
             (sig_num,noise_num)= self.prepare(i)
-            signal_number_list.append(sig_num)
-            noise_number_list.append(noise_num)
+            signal_number_list.append(sig_num/self.G4_sig_time)
+            noise_number_list.append(noise_num/self.G4_noise_time)
             if noise_num !=0:
-                SN_ratio.append(sig_num/noise_num)
+                SN_ratio.append((sig_num/self.G4_sig_time)/(noise_num/self.G4_noise_time))
             else:
                 SN_ratio.append(0)
         plt.plot(threshold_list,signal_number_list,color='red',label='signal')
