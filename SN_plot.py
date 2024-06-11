@@ -9,7 +9,7 @@ class SN():
 
 
     def old_read_files(self):
-        self.capture_ratio = 1
+        self.capture_ratio = 0.121
         self.rate = 435.6 #/s
         self.G4_events= 1E6
         self.G4_sig_time=(self.G4_events / self.rate)
