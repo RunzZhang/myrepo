@@ -84,10 +84,10 @@ class SN():
                 SN_ratio.append(sig_num/noise_num)
             else:
                 SN_ratio.append(0)
-        plt.plot(threshold_list,signal_number_list,color='red',legend='signal')
-        plt.plot(threshold_list,noise_number_list,color='blue',legend='noise')
-        plt.plot(threshold_list,SN_ratio,color='green',legend='ratio')
-
+        plt.plot(threshold_list,signal_number_list,color='red',label='signal')
+        plt.plot(threshold_list,noise_number_list,color='blue',label='noise')
+        plt.plot(threshold_list,SN_ratio,color='green',label='ratio')
+        plt.legend()
         plt.show()
 
 class test_csv():
