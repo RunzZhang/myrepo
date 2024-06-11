@@ -120,7 +120,7 @@ class SN():
         line2, = ax1.plot(photon_n_list, noise_number_list, 'b-', label='noise')
 
         # Set the labels and title
-        ax1.set_xlabel('photon number threshold')
+        ax1.set_xlabel('photon number threshold',fontsize = 16)
         ax1.set_ylabel('detected event number', color='black',fontsize = 16)
 
         # Create another y-axis that shares the same x-axis
