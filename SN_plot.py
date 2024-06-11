@@ -124,7 +124,7 @@ class SN():
         ax1.set_ylabel('detected event number', color='black',fontsize = 16)
 
         # Add a legend for the first y-axis
-        ax1.legend(loc='upper left')
+        ax1.legend(loc='upper right')
 
         # Create another y-axis that shares the same x-axis
         ax2 = ax1.twinx()
