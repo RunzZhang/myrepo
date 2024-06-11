@@ -1,0 +1,75 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+import csv
+class SN():
+    def __init__(self):
+        self.new_read_files()
+
+
+    def old_read_files(self):
+        self.sig_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\Ar_photon.csv', quoting=csv.QUOTE_ALL)
+        self.sig_raw_list = self.sig_raw_df.columns.to_list()
+
+        self.sig_raw_list = list(map(float, self.sig_raw_list))
+
+        print(self.sig_raw_list, len(self.sig_raw_list))
+        self.noise_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\scatter_spectrum.csv', quoting=csv.QUOTE_ALL)
+        self.noise_raw_list = self.noise_raw_df.columns.to_list()
+        self.noise_raw_list = list(map(float, self.noise_raw_list))
+        print(len(self.noise_raw_list))
+
+        self.noise_p_raw_list = []
+        for i in self.noise_raw_list:
+            self.noise_p_raw_list.append(i * 10 * 0.03 * 0.2 / 1000)
+        print(self.noise_p_raw_list)
+        self.supress()
+    def new_read_files(self):
+        self.sig_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\Ar_photon.csv', quoting=csv.QUOTE_ALL)
+        self.sig_raw_list = self.sig_raw_df.columns.to_list()
+
+        self.sig_raw_list = list(map(float, self.sig_raw_list))
+
+        self.noise_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\scatter_spectrum_zip.csv', quoting=csv.QUOTE_ALL)
+        self.noise_raw_list = self.noise_raw_df.columns.to_list()
+
+        self.noise_raw_list = list(map(float, self.noise_raw_list))
+
+        # self.plot()
+    def supress(self):
+        self.noise_p_raw_list = self.noise_p_raw_list[:10*len(self.sig_raw_list)]
+        with open("C:\\Users\\24230\\Downloads\\scatter_spectrum_zip.csv", 'w', newline='') as myfile:
+            wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+            wr.writerow(self.noise_p_raw_list)
+        print("len",len(self.noise_p_raw_list))
+
+    def prepare(self, threshold):
+        self.sig = [value for value in self.sig_raw_list if value >= threshold]
+        self.noise = [value for value in self.noise_p_raw_list if value >= threshold]
+        sig_len = len(self.sig)
+        noise_len = len(self.noise)
+        return (sig_len,noise_len)
+    def plot(self, threshold_list):
+        signal_number_list = []
+        noise_number_list =[]
+        SN_ratio = []
+        for i in range(len(threshold_list)):
+            (sig_num,noise_num)= self.prepare(i)
+            signal_number_list.append(sig_num)
+            noise_number_list.append(noise_num)
+            SN_ratio.append(sig_num/noise_num)
+        plt.plot(threshold_list,signal_number_list,color='red',legend='signal')
+        plt.plot(threshold_list,noise_number_list,color='blue',legend='noise')
+        plt.plot(threshold_list,SN_ratio,color='green',legend='ratio')
+
+        plt.show()
+
+class test_csv():
+    def __init__(self):
+        list1 = [1,3,4.5,6.7,8.9]
+        with open("/data/runzezhang/test.csv", 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(list1)
+
+if __name__=="__main__":
+    # sn = SN()
+    test = test_csv()

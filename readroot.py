@@ -350,7 +350,7 @@ class ReadRoot():
         # plt.hist(self.electron_recoiled_list, bins=100)
         plt.hist(p_observed, bins=100)
         with open("/data/runzezhang/Ar_photon.csv", 'w', newline='') as myfile:
-            wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+            wr = csv.writer(myfile)
             wr.writerow(p_observed)
         plt.xlabel("Obeserved Photon per Event")
         plt.show()
