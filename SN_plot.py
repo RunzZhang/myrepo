@@ -98,8 +98,10 @@ class SN():
         signal_number_list = []
         noise_number_list =[]
         SN_ratio = []
+        photon_n_list = []
         length = round(max(self.sig_raw_list))
         for i in range(length):
+            photon_n_list.append(i)
             (sig_num,noise_num)= self.prepare(i)
             signal_number_list.append(sig_num*self.capture_ratio/self.G4_sig_time)
             noise_number_list.append(noise_num/self.G4_noise_time)
@@ -109,8 +111,8 @@ class SN():
                 SN_ratio.append(0)
 
         # print(signal_number_list[:200])
-        plt.plot(threshold_list,signal_number_list,color='red',label='signal')
-        plt.plot(threshold_list,noise_number_list,color='blue',label='noise')
+        plt.plot(photon_n_list,signal_number_list,color='red',label='signal')
+        plt.plot(photon_n_list,noise_number_list,color='blue',label='noise')
         # plt.plot(threshold_list,SN_ratio,color='green',label='ratio')
         plt.legend()
         plt.show()
