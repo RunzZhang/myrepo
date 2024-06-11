@@ -98,7 +98,8 @@ class SN():
         signal_number_list = []
         noise_number_list =[]
         SN_ratio = []
-        for i in range(len(self.sig_raw_list)):
+        length = round(max(self.sig_raw_list))
+        for i in range(length):
             (sig_num,noise_num)= self.prepare(i)
             signal_number_list.append(sig_num*self.capture_ratio/self.G4_sig_time)
             noise_number_list.append(noise_num/self.G4_noise_time)
