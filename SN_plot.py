@@ -116,28 +116,25 @@ class SN():
         fig, ax1 = plt.subplots()
 
         # Plot dataset 1 and dataset 2 on the left y-axis
-        ax1.plot(photon_n_list, signal_number_list, 'g-', label='signal')
-        ax1.plot(photon_n_list, noise_number_list, 'b-', label='noise')
+        line1 = ax1.plot(photon_n_list, signal_number_list, 'g-', label='signal')
+        line2 = ax1.plot(photon_n_list, noise_number_list, 'b-', label='noise')
 
         # Set the labels and title
         ax1.set_xlabel('photon number threshold')
         ax1.set_ylabel('detected event number', color='black',fontsize = 16)
 
-        # Add a legend for the first y-axis
-        # ax1.legend(loc='upper right')
-
         # Create another y-axis that shares the same x-axis
         ax2 = ax1.twinx()
 
         # Plot dataset 3 on the right y-axis
-        ax2.plot(photon_n_list, SN_ratio, 'r-', label='signal to noise ratio')
+        line3 = ax2.plot(photon_n_list, SN_ratio, 'r-', label='signal to noise ratio')
 
         # Set the label for the second y-axis
         ax2.set_ylabel('signal to noise ratio', color='black',fontsize = 16)
 
-        # Add a legend for the second y-axis
-        # ax2.legend(loc='upper right')
-
+        lines = [line1, line2, line3]
+        labels = [line.get_label() for line in lines]
+        fig.legend(lines, labels, loc='upper right')
         # Show the plot
         plt.legend()
         plt.show()
