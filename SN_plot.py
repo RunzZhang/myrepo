@@ -68,7 +68,7 @@ class SN():
         plt.show()
     def prepare(self, threshold):
         self.sig = [value for value in self.sig_raw_list if value >= threshold]
-        self.noise = [value for value in self.noise_p_raw_list if value >= threshold]
+        self.noise = [value for value in self.noise_raw_list if value >= threshold]
         sig_len = len(self.sig)
         noise_len = len(self.noise)
         return (sig_len,noise_len)
