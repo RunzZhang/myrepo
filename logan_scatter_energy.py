@@ -7,8 +7,9 @@ import uproot,csv
 import math
 #from matplotlib.ticker import (LogLocator, MultipleLocator, AutoMinorLocator)
 import matplotlib.ticker as ticker
-# filename = "/data/runzezhang/result/CF252BigEl6,10.root" #EdepSap5cmx7.5cm3cmPad10cm25cmAmLi.root, BigEl.root
-filename = "/data/runzezhang/result/EdepSap5cmx7.5cm3cmPad10cm25cmAmLi.root"
+
+filename = "/data/runzezhang/result/CF252BigEl6,10.root" #EdepSap5cmx7.5cm3cmPad10cm25cmAmLi.root, BigEl.root
+# filename = "/data/runzezhang/result/EdepSap5cmx7.5cm3cmPad10cm25cmAmLi.root"
 file = uproot.open(filename)["tree1"]
 print(file.keys())
 df = file.arrays(["EDep", "EventNo"], library="pd")
@@ -125,7 +126,7 @@ print(max(SingleScatterList))
 fig2, ax2 = plt.subplots()
 #ax1.hist(KEe, bins1, histtype = "step", label = "Escape")
 ax2.hist(SingleScatterList, binsOver, histtype = "step", label = "Single Scatters >16.7keV")
-with open("/data/runzezhang/result/scatter_spectrum_AmLi.csv", 'w', newline='') as myfile:
+with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'w', newline='') as myfile:
     wr = csv.writer(myfile)
     wr.writerow(SingleScatterList)
 ax2.set_xscale('log')
