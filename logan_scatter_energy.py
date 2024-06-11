@@ -7,7 +7,8 @@ import uproot,csv
 import math
 #from matplotlib.ticker import (LogLocator, MultipleLocator, AutoMinorLocator)
 import matplotlib.ticker as ticker
-filename = "/data/runzezhang/result/CF252BigEl6,10.root" #EdepSap5cmx7.5cm3cmPad10cm25cmAmLi.root, BigEl.root
+# filename = "/data/runzezhang/result/CF252BigEl6,10.root" #EdepSap5cmx7.5cm3cmPad10cm25cmAmLi.root, BigEl.root
+filename = "EdepSap5cmx7.5cm3cmPad10cm25cmAmLi.root"
 file = uproot.open(filename)["tree1"]
 print(file.keys())
 df = file.arrays(["EDep", "EventNo"], library="pd")
