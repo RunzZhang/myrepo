@@ -7,22 +7,36 @@ class SN():
 
 
     def old_read_files(self):
-        self.sig_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\Ar_photon.csv', quoting=csv.QUOTE_ALL)
-        self.sig_raw_list = self.sig_raw_df.columns.to_list()
-
-        self.sig_raw_list = list(map(float, self.sig_raw_list))
+        with open('C:\\Users\\24230\\Downloads\\Ar_photon.csv', 'r') as file:
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            self.sig_raw_list = [float(value) for value in number_list]
+        # self.sig_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\Ar_photon.csv', quoting=csv.QUOTE_ALL)
+        # self.sig_raw_list = self.sig_raw_df.columns.to_list()
+        #
+        # self.sig_raw_list = list(map(float, self.sig_raw_list))
 
         print(self.sig_raw_list, len(self.sig_raw_list))
-        self.noise_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\scatter_spectrum.csv', quoting=csv.QUOTE_ALL)
-        self.noise_raw_list = self.noise_raw_df.columns.to_list()
-        self.noise_raw_list = list(map(float, self.noise_raw_list))
+
+        with open('C:\\Users\\24230\\Downloads\\scatter_spectrum.csv', 'r') as file:
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            self.noise_raw_list = [float(value) * 10 * 0.03 * 0.2 / 1000 for value in number_list]
+
+        # self.noise_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\scatter_spectrum.csv', quoting=csv.QUOTE_ALL)
+        # self.noise_raw_list = self.noise_raw_df.columns.to_list()
+        # self.noise_raw_list = list(map(float, self.noise_raw_list))
         print(len(self.noise_raw_list))
 
-        self.noise_p_raw_list = []
-        for i in self.noise_raw_list:
-            self.noise_p_raw_list.append(i * 10 * 0.03 * 0.2 / 1000)
-        print(self.noise_p_raw_list)
-        self.supress()
+        # self.noise_p_raw_list = []
+        # for i in self.noise_raw_list:
+        #     self.noise_p_raw_list.append(i * 10 * 0.03 * 0.2 / 1000)
+        # print(self.noise_p_raw_list)
+        # self.supress()
     def new_read_files(self):
         self.sig_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\Ar_photon.csv', quoting=csv.QUOTE_ALL)
         self.sig_raw_list = self.sig_raw_df.columns.to_list()
@@ -79,5 +93,5 @@ class test_csv():
         print(number_list)
 
 if __name__=="__main__":
-    # sn = SN()
-    test = test_csv()
+    sn = SN()
+    # test = test_csv()
