@@ -55,8 +55,9 @@ class SN():
     #         wr.writerow(self.noise_p_raw_list)
     #     print("len",len(self.noise_p_raw_list))
     def hist_info(self):
-        plt.hist(self.sig_raw_list)
-        plt.hist(self.noise_raw_list)
+        plt.hist(self.sig_raw_list,color="red",label='sig')
+        plt.hist(self.noise_raw_list,color='blue',label='noise')
+        plt.legend()
         plt.show()
     def prepare(self, threshold):
         self.sig = [value for value in self.sig_raw_list if value >= threshold]
