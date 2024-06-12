@@ -9,8 +9,8 @@ class SN():
 
 
     def old_read_files(self):
-        self.capture_ratio = 1.164E-3
-        # self.capture_ratio = 0.121
+        # self.capture_ratio = 1.164E-3
+        self.capture_ratio = 0.121
         self.rate = 435.6 #/s
         self.G4_events= 1E6
         self.G4_sig_time=(self.G4_events / self.rate)
@@ -111,6 +111,8 @@ class SN():
                 SN_ratio.append((sig_num*self.capture_ratio/self.G4_sig_time)/(noise_num/self.G4_noise_time))
             else:
                 SN_ratio.append(max(SN_ratio))
+        print("sig rate",max(signal_number_list))
+        print("noise stat N", len(self.noise_raw_list))
 
         # plt.plot(photon_n_list,signal_number_list,color='red',label='signal')
         # plt.plot(photon_n_list,noise_number_list,color='blue',label='noise')
