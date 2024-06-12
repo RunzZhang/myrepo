@@ -9,9 +9,10 @@ class SN():
 
 
     def old_read_files(self):
-        # self.capture_ratio = 1.164E-3
-        self.capture_ratio = 0.121
+        self.capture_ratio = 1.164E-3
+        # self.capture_ratio = 0.121
         self.rate = 435.6 #/s
+        # self.rate = 0.56
         self.G4_events= 1E6
         self.G4_sig_time=(self.G4_events / self.rate)
         with open("/data/runzezhang/result/TN_e_sims/Ar_photon_CF.csv", 'r') as file:
