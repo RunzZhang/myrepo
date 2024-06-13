@@ -205,7 +205,7 @@ class ReadRoot():
 
         print(self.df_Ncapture.head(10))
         # self.df_cap_gamma = pd.DataFrame('Event','Track ID')
-        print("len",len(self.df_Ncapture.index))
+        print("le1n",len(self.df_Ncapture.index))
         value_counts = self.df_Ncapture_check['Volume'].value_counts()
         print("occurrance",value_counts)
         # only record gamma event, whose event id same as ncap and parent id is ncap's track id.
@@ -216,8 +216,9 @@ class ReadRoot():
         # select gamma events whose Event number is same as neutron event and parent id is neutron's track ID
         self.df_cap_gamma = pd.merge(self.df_Ncapture, self.df_cap_gamma,on=['Event','Parent ID'], how='inner')
         print(self.df_cap_gamma.head(20))
+        print("len2",self.df_cap_gamma.index)
         # save these gamma event
-        self.df_cap_gamma.to_csv(self.base_path +"dmx_gamma_LAr_AmLi.csv", index=False)
+        self.df_cap_gamma.to_csv(self.base_path +"dmx_gamma_LAr_CF2.csv", index=False)
 
     def test_merge(self):
         df_a = pd.DataFrame({ 'B':[3,5],'C':[5,7]})
@@ -314,7 +315,7 @@ class ReadRoot():
         plt.xlabel("Obeserved Photon per Event")
         plt.show()
     def LAr_find_gamma_e(self):
-        self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_gamma_LAr_AmLi.csv")
+        self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_gamma_LAr_CF2.csv")
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
@@ -349,7 +350,7 @@ class ReadRoot():
         print("max", max(p_observed), "\n", "min", min(p_observed))
         # plt.hist(self.electron_recoiled_list, bins=100)
         plt.hist(p_observed, bins=100)
-        with open("/data/runzezhang/result/TN_e_sims/Ar_photon_AmLi.csv", 'w', newline='') as myfile:
+        with open("/data/runzezhang/result/TN_e_sims/Ar_photon_CF2.csv", 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(p_observed)
         plt.xlabel("Obeserved Photon per Event")
