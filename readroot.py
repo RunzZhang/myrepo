@@ -205,7 +205,6 @@ class ReadRoot():
 
         print(self.df_Ncapture.head(10),self.df_Ncapture["Event"].unique()[:50])
         # self.df_cap_gamma = pd.DataFrame('Event','Track ID')
-        print("le1n",len(self.df_Ncapture.index))
         value_counts = self.df_Ncapture_check['Volume'].value_counts()
         print("occurrance",value_counts)
         # only record gamma event, whose event id same as ncap and parent id is ncap's track id.
@@ -213,16 +212,11 @@ class ReadRoot():
         self.df_Ncapture.columns = ['Event','Parent ID']
         # select all gamma events
         self.df_cap_gamma = self.df[self.df['name'] == 'gamma' ]
-        print("gamma len0",len(self.df_cap_gamma["Event"].unique()),self.df_cap_gamma["Event"].unique()[:10])
         # select gamma events whose Event number is same as neutron event and parent id is neutron's track ID
-        self.df_cap_gamma = pd.merge(self.df_Ncapture, self.df_cap_gamma,on=['Event','Parent ID'], how='inner')
-        print(self.df_cap_gamma.head(20))
-        print("gamma len1",len(self.df_cap_gamma["Event"].unique()),self.df_cap_gamma["Event"].unique()[:10])
-        lost_event = list(set(self.df_Ncapture["Event"].unique()) - set(self.df_cap_gamma["Event"].unique()))
-        print("lost", lost_event)
-        print("len2",len(self.df_cap_gamma.index))
+        self.df_cap_gamma_merged = pd.merge(self.df_Ncapture, self.df_cap_gamma,on=['Event','Parent ID'], how='inner')
+
         # save these gamma event
-        self.df_cap_gamma.to_csv(self.base_path +"dmx_gamma_LAr_CF2.csv", index=False)
+        self.df_cap_gamma_merged.to_csv(self.base_path +"dmx_gamma_LAr_CF2.csv", index=False)
 
     def LAr_compare(self):
         self.df_Ncapture = self.df[
@@ -266,9 +260,9 @@ class ReadRoot():
     def LAr_gamma_event(self):
         # for liquid argon capture
         # if already run 1st 2 steps and obtained output csv file, one can directly run 3rd function
-        self.LAr_compare()
-        # self.LAr_Capture_spectrum()
-        # self.LAr_find_gamma_e()
+        # self.LAr_compare()
+        self.LAr_Capture_spectrum()
+        self.LAr_find_gamma_e()
 
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv(self.base_path +"dmx_gamma.csv")
@@ -354,11 +348,11 @@ class ReadRoot():
         self.gamma_Scint_column.columns = ['Event',"Parent ID"]
         self.df_electron = self.df[(self.df['name']=='e-')&(self.df['Volume']=='LAr_phys')]
         self.df_electron = self.keep_1st(self.df_electron)
-        self.df_electron_gamma = pd.merge(self.df_electron,self.gamma_Scint_column,on=['Event','Parent ID'], how='inner')
-        print(self.df_electron_gamma.head(10))
+        self.df_electron_gamma_merged = pd.merge(self.df_electron,self.gamma_Scint_column,on=['Event','Parent ID'], how='inner')
+        print(self.df_electron_gamma_merged.head(10))
         # double check gamma
 
-        summed_values = self.df_electron_gamma.groupby(['Event', 'Parent ID'])["Recoiled/keV"].sum().reset_index()
+        summed_values = self.df_electron_gamma_merged.groupby(['Event', 'Parent ID'])["Recoiled/keV"].sum().reset_index()
         print(summed_values.head(20))
 
         # add gamma up
