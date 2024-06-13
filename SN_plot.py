@@ -150,7 +150,7 @@ class SN():
         labels = [line.get_label() for line in lines]
         fig.legend(lines, labels, loc='upper right', bbox_to_anchor=(0.9, 0.85))
         # Show the plot
-        plt.title("AmLi Signal/Noise 400 eV")
+        plt.title("AmLi Signal/Noise 400 eV", fontsize = 16)
         plt.show()
 
 
