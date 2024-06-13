@@ -9,13 +9,13 @@ class SN():
 
 
     def old_read_files(self):
-        self.capture_ratio = 1.164E-3 # 1125eV
-        # self.capture_ratio = 0.121 # 400 eV
-        self.rate = 435.6 #/s # CF neutron rate
-        # self.rate = 0.56 #AmLi neutron rate
+        # self.capture_ratio = 1.164E-3 # 1125eV
+        self.capture_ratio = 0.121 # 400 eV
+        # self.rate = 435.6 #/s # CF neutron rate
+        self.rate = 0.56 #AmLi neutron rate
         self.G4_events= 1E6
         self.G4_sig_time=(self.G4_events / self.rate)
-        with open("/data/runzezhang/result/TN_e_sims/Ar_photon_CF2.csv", 'r') as file:
+        with open("/data/runzezhang/result/TN_e_sims/Ar_photon_AmLi2.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
@@ -28,7 +28,7 @@ class SN():
 
         print("capture event number", len(self.sig_raw_list))
         self.G4_noise_time = 1E7/self.rate
-        with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'r') as file:
+        with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_AmLi.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
