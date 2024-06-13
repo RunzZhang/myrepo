@@ -103,6 +103,7 @@ class SN():
         photon_n_list = []
         print("cut",max(self.noise_raw_list))
         length = round(max(self.sig_raw_list))
+        point = []
         for i in range(length):
             photon_n_list.append(i)
             (sig_num,noise_num)= self.prepare(i)
@@ -111,8 +112,10 @@ class SN():
             if noise_num !=0:
                 SN_ratio.append((sig_num*self.capture_ratio/self.G4_sig_time)/(noise_num/self.G4_noise_time))
             else:
+                point.append(i)
                 SN_ratio.append(max(SN_ratio))
         print("sig rate",max(signal_number_list))
+        print("sig rate after cut", signal_number_list[point[0]])
         print("noise stat N", len(self.noise_raw_list))
         print("noise rate",max(noise_number_list))
         print("SN",max(SN_ratio))
