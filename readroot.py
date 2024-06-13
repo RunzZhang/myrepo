@@ -217,7 +217,9 @@ class ReadRoot():
         # select gamma events whose Event number is same as neutron event and parent id is neutron's track ID
         self.df_cap_gamma = pd.merge(self.df_Ncapture, self.df_cap_gamma,on=['Event','Parent ID'], how='inner')
         print(self.df_cap_gamma.head(20))
-        print("gamma len",len(self.df_cap_gamma["Event"].unique()),self.df_cap_gamma["Event"].unique()[:10])
+        print("gamma len1",len(self.df_cap_gamma["Event"].unique()),self.df_cap_gamma["Event"].unique()[:10])
+        lost_event = list(set(self.df_Ncapture["Event"].unique()) - set(self.df_cap_gamma["Event"].unique()))
+        print("lost", lost_event)
         print("len2",len(self.df_cap_gamma.index))
         # save these gamma event
         self.df_cap_gamma.to_csv(self.base_path +"dmx_gamma_LAr_CF2.csv", index=False)
