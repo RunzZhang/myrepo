@@ -140,7 +140,8 @@ class SN():
         # Set the label for the second y-axis
         ax2.set_ylabel('signal to noise ratio', color='black',fontsize = 16)
 
-        lines = [line1, line2, line3]
+        # lines = [line1, line2, line3]
+        lines = [line1,  line3]
         labels = [line.get_label() for line in lines]
         fig.legend(lines, labels, loc='upper right', bbox_to_anchor=(0.9, 0.85))
         # Show the plot
