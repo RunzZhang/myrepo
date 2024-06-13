@@ -224,6 +224,28 @@ class ReadRoot():
         # save these gamma event
         self.df_cap_gamma.to_csv(self.base_path +"dmx_gamma_LAr_CF2.csv", index=False)
 
+    def LAr_compare(self):
+        self.df_Ncapture = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Track ID']]
+
+
+
+        print("N capture events", len(self.df_Ncapture["Event"].unique()),self.df_Ncapture["Event"].unique()[:50])
+
+        # only record gamma event, whose event id same as ncap and parent id is ncap's track id.
+        # change Track ID name into Parent ID so that ready for merge
+        self.df_Ncapture.columns = ['Event', 'Parent ID']
+        # select all gamma events
+        self.df_cap_gamma = self.df[self.df['name'] == 'gamma']
+        print("gamma events", len(self.df_cap_gamma["Event"].unique()), self.df_cap_gamma["Event"].unique()[:20])
+        # select gamma events whose Event number is same as neutron event and parent id is neutron's track ID
+        self.df_cap_gamma = pd.merge(self.df_Ncapture, self.df_cap_gamma, on=['Event', 'Parent ID'], how='inner')
+        # print(self.df_cap_gamma.head(20))
+        print("gamma merged", len(self.df_cap_gamma["Event"].unique()), self.df_cap_gamma["Event"].unique()[:20])
+        lost_event = list(set(self.df_Ncapture["Event"].unique()) - set(self.df_cap_gamma["Event"].unique()))
+        print("lost", lost_event)
+        print("len2", len(self.df_cap_gamma.index))
     def test_merge(self):
         df_a = pd.DataFrame({ 'B':[3,5],'C':[5,7]})
         df_b = pd.DataFrame({'B': [2,3,5,3], 'C': [3,5,7,5], 'F': [5,9,10,6], 'G': [8,10,7,9]})
@@ -244,9 +266,9 @@ class ReadRoot():
     def LAr_gamma_event(self):
         # for liquid argon capture
         # if already run 1st 2 steps and obtained output csv file, one can directly run 3rd function
-
-        self.LAr_Capture_spectrum()
-        self.LAr_find_gamma_e()
+        self.LAr_compare()
+        # self.LAr_Capture_spectrum()
+        # self.LAr_find_gamma_e()
 
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv(self.base_path +"dmx_gamma.csv")
