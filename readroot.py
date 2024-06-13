@@ -341,7 +341,10 @@ class ReadRoot():
         # we need to do severalthings:
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
+
         self.gamma_Scint = self.df_gamma_rw[self.df_gamma_rw['Volume'] == 'LAr_phys']
+        print("gamma scint overcount", len(self.gamma_Scint["Event"].unique()),
+              self.gamma_Scint["Event"].unique()[:20])
         self.gamma_Scint = self.keep_1st(self.gamma_Scint)
         print("gamma scint", len(self.gamma_Scint["Event"].unique()),
               self.gamma_Scint["Event"].unique()[:20])
@@ -350,9 +353,13 @@ class ReadRoot():
         self.gamma_Scint_column = self.gamma_Scint[['Event',"Track ID"]]
         self.gamma_Scint_column.columns = ['Event',"Parent ID"]
         self.df_electron = self.df[(self.df['name']=='e-')&(self.df['Volume']=='LAr_phys')]
+        print("electron first", len(self.df_electron["Event"].unique()),
+              self.df_electron["Event"].unique()[:20])
         self.df_electron = self.keep_1st(self.df_electron)
+        print("electron afterward", len(self.df_electron["Event"].unique()),
+              self.df_electron["Event"].unique()[:20])
         self.df_electron_gamma_merged = pd.merge(self.df_electron,self.gamma_Scint_column,on=['Event','Parent ID'], how='inner')
-        print("gamma scint", len(self.df_electron_gamma_merged["Event"].unique()),
+        print("gamma scint merged", len(self.df_electron_gamma_merged["Event"].unique()),
               self.df_electron_gamma_merged["Event"].unique()[:20])
         print(self.df_electron_gamma_merged.head(10))
         # double check gamma
