@@ -214,7 +214,8 @@ class ReadRoot():
         self.df_cap_gamma = self.df[self.df['name'] == 'gamma' ]
         # select gamma events whose Event number is same as neutron event and parent id is neutron's track ID
         self.df_cap_gamma_merged = pd.merge(self.df_Ncapture, self.df_cap_gamma,on=['Event','Parent ID'], how='inner')
-
+        print("gamma merged", len(self.df_cap_gamma_merged["Event"].unique()),
+              self.df_cap_gamma_merged["Event"].unique()[:20])
         # save these gamma event
         self.df_cap_gamma_merged.to_csv(self.base_path +"dmx_gamma_LAr_CF2.csv", index=False)
 
@@ -342,6 +343,8 @@ class ReadRoot():
         # in 1 event number, only the first series of gammas, avoiding over-countting
         self.gamma_Scint = self.df_gamma_rw[self.df_gamma_rw['Volume'] == 'LAr_phys']
         self.gamma_Scint = self.keep_1st(self.gamma_Scint)
+        print("gamma scint", len(self.gamma_Scint["Event"].unique()),
+              self.gamma_Scint["Event"].unique()[:20])
         print("scint",self.gamma_Scint)
         # print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]!=1])
         self.gamma_Scint_column = self.gamma_Scint[['Event',"Track ID"]]
@@ -349,6 +352,8 @@ class ReadRoot():
         self.df_electron = self.df[(self.df['name']=='e-')&(self.df['Volume']=='LAr_phys')]
         self.df_electron = self.keep_1st(self.df_electron)
         self.df_electron_gamma_merged = pd.merge(self.df_electron,self.gamma_Scint_column,on=['Event','Parent ID'], how='inner')
+        print("gamma scint", len(self.df_electron_gamma_merged["Event"].unique()),
+              self.df_electron_gamma_merged["Event"].unique()[:20])
         print(self.df_electron_gamma_merged.head(10))
         # double check gamma
 
@@ -370,6 +375,7 @@ class ReadRoot():
         print("max", max(p_observed), "\n", "min", min(p_observed))
         # plt.hist(self.electron_recoiled_list, bins=100)
         plt.hist(p_observed, bins=100)
+        print("output len",len(p_observed))
         with open("/data/runzezhang/result/TN_e_sims/Ar_photon_CF2.csv", 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(p_observed)
