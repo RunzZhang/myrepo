@@ -130,6 +130,7 @@ class SN():
         # Set the labels and title
         ax1.set_xlabel('photon number threshold',fontsize = 16)
         ax1.set_ylabel('detected event rate #/s', color='black',fontsize = 16)
+        ax1.set_yscale('log')
 
         # Create another y-axis that shares the same x-axis
         ax2 = ax1.twinx()
