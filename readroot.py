@@ -366,7 +366,9 @@ class ReadRoot():
         print(self.df_electron_gamma_merged.head(10))
         # double check gamma
 
-        summed_values = self.df_electron_gamma_merged.groupby(['Event', 'Parent ID'])["Recoiled/keV"].sum().reset_index()
+        # summed_values = self.df_electron_gamma_merged.groupby(['Event', 'Parent ID'])["Recoiled/keV"].sum().reset_index()
+        summed_values = self.df_electron_gamma_merged.groupby(['Event'])[
+            "Recoiled/keV"].sum().reset_index()
         print("summed values", len(summed_values["Event"].unique()),
               summed_values["Event"].unique()[:20])
         print(summed_values.head(20))
