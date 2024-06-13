@@ -9,10 +9,10 @@ class SN():
 
 
     def old_read_files(self):
-        # self.capture_ratio = 1.164E-3 # 1125eV
-        self.capture_ratio = 0.121 # 400 eV
-        # self.rate = 435.6 #/s # CF neutron rate
-        self.rate = 0.56 #AmLi neutron rate
+        self.capture_ratio = 1.164E-3 # 1125eV
+        # self.capture_ratio = 0.121 # 400 eV
+        self.rate = 435.6 #/s # CF neutron rate
+        # self.rate = 0.56 #AmLi neutron rate
         self.G4_events= 1E6
         self.G4_sig_time=(self.G4_events / self.rate)
         with open("/data/runzezhang/result/TN_e_sims/Ar_photon_CF2.csv", 'r') as file:
@@ -150,7 +150,7 @@ class SN():
         labels = [line.get_label() for line in lines]
         fig.legend(lines, labels, loc='upper right', bbox_to_anchor=(0.9, 0.85))
         # Show the plot
-        plt.title("CF252 Signal/Noise 400 eV", fontsize = 16)
+        plt.title("CF252 Signal/Noise 1125 eV", fontsize = 16)
         plt.show()
 
 
