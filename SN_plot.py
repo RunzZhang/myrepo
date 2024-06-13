@@ -150,7 +150,7 @@ class SN():
         labels = [line.get_label() for line in lines]
         fig.legend(lines, labels, loc='upper right', bbox_to_anchor=(0.9, 0.85))
         # Show the plot
-        plt.title("CF252 Signal/Noise 1125 eV", fontsize = 16)
+        plt.title("CF252 Signal/Noise 400 eV", fontsize = 16)
         plt.show()
 
 
