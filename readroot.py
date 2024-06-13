@@ -361,10 +361,14 @@ class ReadRoot():
         self.df_electron_gamma_merged = pd.merge(self.df_electron,self.gamma_Scint_column,on=['Event','Parent ID'], how='inner')
         print("gamma scint merged", len(self.df_electron_gamma_merged["Event"].unique()),
               self.df_electron_gamma_merged["Event"].unique()[:20])
+        lost_event = list(set(self.gamma_Scint["Event"].unique()) - set(self.df_electron_gamma_merged["Event"].unique()))
+        print("lost", lost_event)
         print(self.df_electron_gamma_merged.head(10))
         # double check gamma
 
         summed_values = self.df_electron_gamma_merged.groupby(['Event', 'Parent ID'])["Recoiled/keV"].sum().reset_index()
+        print("summed values", len(summed_values["Event"].unique()),
+              summed_values["Event"].unique()[:20])
         print(summed_values.head(20))
 
         # add gamma up
