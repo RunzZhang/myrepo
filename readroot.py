@@ -100,7 +100,7 @@ class RestructureRoot():
 class ReadRoot():
     def __init__(self):
         self.base_path = "/data/runzezhang/result/TN_e_sims/"
-        self.filepath = self.base_path +"dmx_CF.root"
+        self.filepath = self.base_path +"dmx_AmLi.root"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
@@ -217,7 +217,7 @@ class ReadRoot():
         print("gamma merged", len(self.df_cap_gamma_merged["Event"].unique()),
               self.df_cap_gamma_merged["Event"].unique()[:20])
         # save these gamma event
-        self.df_cap_gamma_merged.to_csv(self.base_path +"dmx_gamma_LAr_CF2.csv", index=False)
+        self.df_cap_gamma_merged.to_csv(self.base_path +"dmx_gamma_LAr_AmLi2.csv", index=False)
 
     def LAr_compare(self):
         self.df_Ncapture = self.df[
@@ -336,7 +336,7 @@ class ReadRoot():
         plt.xlabel("Obeserved Photon per Event")
         plt.show()
     def LAr_find_gamma_e(self):
-        self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_gamma_LAr_CF2.csv")
+        self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_gamma_LAr_AmLi2.csv")
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
@@ -391,7 +391,7 @@ class ReadRoot():
         # plt.hist(self.electron_recoiled_list, bins=100)
         plt.hist(p_observed, bins=100)
         print("output len",len(p_observed))
-        with open("/data/runzezhang/result/TN_e_sims/Ar_photon_CF2.csv", 'w', newline='') as myfile:
+        with open("/data/runzezhang/result/TN_e_sims/Ar_photon_AmLi2.csv", 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(p_observed)
         plt.xlabel("Obeserved Photon per Event")
