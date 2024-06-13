@@ -240,12 +240,12 @@ class ReadRoot():
         self.df_cap_gamma = self.df[self.df['name'] == 'gamma']
         print("gamma events", len(self.df_cap_gamma["Event"].unique()), self.df_cap_gamma["Event"].unique()[:20])
         # select gamma events whose Event number is same as neutron event and parent id is neutron's track ID
-        self.df_cap_gamma = pd.merge(self.df_Ncapture, self.df_cap_gamma, on=['Event', 'Parent ID'], how='inner')
+        self.df_cap_gamma_merged = pd.merge(self.df_Ncapture, self.df_cap_gamma, on=['Event', 'Parent ID'], how='inner')
         # print(self.df_cap_gamma.head(20))
-        print("gamma merged", len(self.df_cap_gamma["Event"].unique()), self.df_cap_gamma["Event"].unique()[:20])
-        lost_event = list(set(self.df_Ncapture["Event"].unique()) - set(self.df_cap_gamma["Event"].unique()))
+        print("gamma merged", len(self.df_cap_gamma_merged["Event"].unique()), self.df_cap_gamma_merged["Event"].unique()[:20])
+        lost_event = list(set(self.df_Ncapture["Event"].unique()) - set(self.df_cap_gamma_merged["Event"].unique()))
         print("lost", lost_event)
-        print("len2", len(self.df_cap_gamma.index))
+        print("len2", len(self.df_cap_gamma_merged.index))
     def test_merge(self):
         df_a = pd.DataFrame({ 'B':[3,5],'C':[5,7]})
         df_b = pd.DataFrame({'B': [2,3,5,3], 'C': [3,5,7,5], 'F': [5,9,10,6], 'G': [8,10,7,9]})
