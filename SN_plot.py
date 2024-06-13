@@ -9,8 +9,8 @@ class SN():
 
 
     def old_read_files(self):
-        self.capture_ratio = 1.164E-3 # 1125eV
-        # self.capture_ratio = 0.121 # 400 eV
+        # self.capture_ratio = 1.164E-3 # 1125eV
+        self.capture_ratio = 0.121 # 400 eV
         # self.rate = 435.6 #/s # CF neutron rate
         self.rate = 0.56 #AmLi neutron rate
         self.G4_events= 1E6
@@ -129,6 +129,7 @@ class SN():
         # Plot dataset 1 and dataset 2 on the left y-axis
         line1, = ax1.plot(photon_n_list, signal_number_list, 'g-', label='signal')
         line2, = ax1.plot(photon_n_list, noise_number_list, 'b-', label='noise')
+        ax1.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
 
         # Set the labels and title
         ax1.set_xlabel('photon number threshold',fontsize = 16)
@@ -149,6 +150,7 @@ class SN():
         labels = [line.get_label() for line in lines]
         fig.legend(lines, labels, loc='upper right', bbox_to_anchor=(0.9, 0.85))
         # Show the plot
+        plt.title("AmLi Signal/Noise 400 eV")
         plt.show()
 
 
