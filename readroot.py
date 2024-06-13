@@ -100,7 +100,7 @@ class RestructureRoot():
 class ReadRoot():
     def __init__(self):
         self.base_path = "/data/runzezhang/result/TN_e_sims/"
-        self.filepath = self.base_path +"dmx_AmLi.root"
+        self.filepath = self.base_path +"dmx_CF.root"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
@@ -216,7 +216,7 @@ class ReadRoot():
         # select gamma events whose Event number is same as neutron event and parent id is neutron's track ID
         self.df_cap_gamma = pd.merge(self.df_Ncapture, self.df_cap_gamma,on=['Event','Parent ID'], how='inner')
         print(self.df_cap_gamma.head(20))
-        print("len2",self.df_cap_gamma.index)
+        print("len2",len(self.df_cap_gamma.index))
         # save these gamma event
         self.df_cap_gamma.to_csv(self.base_path +"dmx_gamma_LAr_CF2.csv", index=False)
 
