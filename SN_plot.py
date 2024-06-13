@@ -125,7 +125,7 @@ class SN():
 
         # Plot dataset 1 and dataset 2 on the left y-axis
         line1, = ax1.plot(photon_n_list, signal_number_list, 'g-', label='signal')
-        line2, = ax1.plot(photon_n_list, noise_number_list, 'b-', label='noise')
+        # line2, = ax1.plot(photon_n_list, noise_number_list, 'b-', label='noise')
 
         # Set the labels and title
         ax1.set_xlabel('photon number threshold',fontsize = 16)
