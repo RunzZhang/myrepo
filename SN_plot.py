@@ -116,7 +116,7 @@ class SN():
         print("noise stat N", len(self.noise_raw_list))
         print("noise rate",max(noise_number_list))
         print("SN",max(SN_ratio))
-        print("noise uncetainty", 1.29*max(noise_number_list)/1E7)
+        print("noise uncetainty", 1.29*max(noise_number_list)/len(self.noise_raw_list))
 
         # plt.plot(photon_n_list,signal_number_list,color='red',label='signal')
         # plt.plot(photon_n_list,noise_number_list,color='blue',label='noise')
