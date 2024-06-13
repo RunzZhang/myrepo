@@ -46,7 +46,7 @@ class SN():
         for i in range(0,max_noise_photon):
             threshold_list.append(i)
         self.plot_sn(threshold_list)
-        # self.hist_info()
+        self.hist_info()
 
 
 
