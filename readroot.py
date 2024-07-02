@@ -100,7 +100,7 @@ class RestructureRoot():
 class ReadRoot():
     def __init__(self):
         self.base_path = "/data/runzezhang/result/TN_e_sims/"
-        self.filepath = self.base_path +"dmx_AmLi.root"
+        self.filepath = self.base_path +"dmx_CF.root"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
@@ -218,7 +218,29 @@ class ReadRoot():
               self.df_cap_gamma_merged["Event"].unique()[:20])
         # save these gamma event
         self.df_cap_gamma_merged.to_csv(self.base_path +"dmx_gamma_LAr_AmLi2.csv", index=False)
+    def Capture_n_scatter_spectrum(self):
 
+        self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')][['Event','Track ID']]
+        self.df_Nscatter = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Volume','Track ID', 'Parent ID']]
+        (self.df_sing_Nscatter, self.df_multi_Nscatter) = self.find_single_n_multi(self.df_Nscatter,"Event", "Parent ID")
+
+        print("sing", self.df_sing_Nscatter)
+        print("multi", self.df_multi_Nscatter)
+        # self.df_cap_gamma = pd.DataFrame('Event','Track ID')
+        print("len",len(self.df_Ncapture.index))
+        self.df_n = pd.merge(self.df_sing_Nscatter, self.df_Ncapture,on=['Event','Track ID'], how='inner')
+        # only record gamma event, whose event id same as ncap and parent id is ncap's track id.
+        # change Track ID name into Parent ID so that ready for merge
+        self.df_n.columns = ['Event','Parent ID']
+        # select all gamma events
+        self.df_cap_gamma = self.df[self.df['name'] == 'gamma' ]
+        # select gamma events whose Event number is same as neutron event and parent id is neutron's track ID
+        self.df_single_n_gamma = pd.merge(self.df_n, self.df_cap_gamma,on=['Event','Parent ID'], how='inner')
+        print(self.df_single_n_gamma.head(20))
+        # save these gamma event
+        self.df_single_n_gamma.to_csv(self.base_path +"dmx_single_n_gamma.csv", index=False)
     def LAr_compare(self):
         self.df_Ncapture = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
@@ -265,6 +287,10 @@ class ReadRoot():
         self.LAr_Capture_spectrum()
         self.LAr_find_gamma_e()
 
+    def single_e_n_capture_event(self):
+
+        self.Capture_n_scatter_spectrum()
+        self.single_n_find_gamma_e()
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv(self.base_path +"dmx_gamma.csv")
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
@@ -315,7 +341,7 @@ class ReadRoot():
         print(self.df_electron_gamma.head(10))
         # double check gamma
 
-        summed_values = self.df_electron_gamma.groupby(['Event', 'Parent ID'])["Recoiled/keV"].sum().reset_index()
+        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/keV"].sum().reset_index()
         print(summed_values.head(20))
 
         # add gamma up
@@ -332,6 +358,52 @@ class ReadRoot():
         print("photon observed number ", num)
         print("max", max(p_observed), "\n", "min", min(p_observed))
         # plt.hist(self.electron_recoiled_list, bins=100)
+        with open("/data/runzezhang/result/TN_e_sims/photon_captureout.csv", 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(p_observed)
+        plt.hist(p_observed, bins=100)
+        plt.xlabel("Obeserved Photon per Event")
+        plt.show()
+
+    def single_n_find_gamma_e(self):
+        self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_single_n_gamma.csv")
+        print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
+        # we need to do severalthings:
+        # gamma only in LAr or CF4
+        # in 1 event number, only the first series of gammas, avoiding over-countting
+        self.gamma_Scint = self.df_gamma_rw[
+            (self.df_gamma_rw['Volume'] == 'LAr_phys') | (self.df_gamma_rw['Volume'] == 'hydraulic_fluid_phys')]
+        self.gamma_Scint = self.keep_1st(self.gamma_Scint)
+        print("scint",self.gamma_Scint)
+        # print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]!=1])
+        self.gamma_Scint_column = self.gamma_Scint[['Event',"Track ID"]]
+        self.gamma_Scint_column.columns = ['Event',"Parent ID"]
+        self.df_electron = self.df[(self.df['name']=='e-')&(self.df['Volume']=='LAr_phys')]
+        self.df_electron = self.keep_1st(self.df_electron)
+        self.df_electron_gamma = pd.merge(self.df_electron,self.gamma_Scint_column,on=['Event','Parent ID'], how='inner')
+        print(self.df_electron_gamma.head(10))
+        # double check gamma
+
+        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/keV"].sum().reset_index()
+        print(summed_values.head(20))
+
+        # add gamma up
+        self.electron_recoiled_list  = summed_values["Recoiled/keV"].to_list()
+        p_observed = []
+        for i in range(len(self.electron_recoiled_list)):
+            # 40 /keV 0.03 and 0.2 PCE and PDE
+            p_observed.append(self.electron_recoiled_list[i]*1E6*40*0.03*0.2/(1000))
+
+        num = 0
+        for i in p_observed:
+            if i >= 1:
+                num += 1
+        print("photon observed number ", num)
+        print("max", max(p_observed), "\n", "min", min(p_observed))
+        # plt.hist(self.electron_recoiled_list, bins=100)
+        with open("/data/runzezhang/result/TN_e_sims/photon_capture_n_sing_scatterg.csv", 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(p_observed)
         plt.hist(p_observed, bins=100)
         plt.xlabel("Obeserved Photon per Event")
         plt.show()
