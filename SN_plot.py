@@ -55,7 +55,7 @@ class SN():
         # self.rate = 0.56 #AmLi neutron rate
         self.G4_events= 1E6
         self.G4_sig_time=(self.G4_events / self.rate)
-        with open("/data/runzezhang/result/TN_e_sims/Ar_photon_AmLi2.csv", 'r') as file:
+        with open("/data/runzezhang/result/TN_e_sims/Ar_photon_CF2.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
@@ -67,7 +67,7 @@ class SN():
         # self.sig_raw_list = list(map(float, self.sig_raw_list))
 
         print("capture event number", len(self.sig_raw_list))
-        with open("/data/runzezhang/result/TN_e_sims/photon_capture_n_sing_scatterg_AmLi.csv", 'r') as file:
+        with open("/data/runzezhang/result/TN_e_sims/photon_capture_n_sing_scatterg.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
@@ -78,7 +78,8 @@ class SN():
         #
         # self.sig_raw_list = list(map(float, self.sig_raw_list))
 
-        print("capture event number", len(self.noise1))
+        print("background event number", len(self.noise1))
+        print("capture number", len(self.sig_raw_list))
         # self.noise_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\scatter_spectrum.csv', quoting=csv.QUOTE_ALL)
         # self.noise_raw_list = self.noise_raw_df.columns.to_list()
         # self.noise_raw_list = list(map(float, self.noise_raw_list))
