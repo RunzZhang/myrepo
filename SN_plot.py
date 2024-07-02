@@ -81,7 +81,7 @@ class SN():
         # self.noise_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\scatter_spectrum.csv', quoting=csv.QUOTE_ALL)
         # self.noise_raw_list = self.noise_raw_df.columns.to_list()
         # self.noise_raw_list = list(map(float, self.noise_raw_list))
-        print(len(self.self.noise1))
+        print(len(self.noise1))
         # form the threshold function
         self.hist_noise1_info()
 
