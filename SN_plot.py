@@ -4,8 +4,8 @@ import csv
 import numpy as np
 class SN():
     def __init__(self):
-        self.old_read_files()
-        # self.new_read_files()
+        # self.old_read_files()
+        self.read_files_s_to_N1()
 
 
     def old_read_files(self):
