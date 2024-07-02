@@ -233,11 +233,12 @@ class ReadRoot():
         self.df_n = pd.merge(self.df_sing_Nscatter, self.df_Ncapture,on=['Event','Track ID'], how='inner')
         # only record gamma event, whose event id same as ncap and parent id is ncap's track id.
         # change Track ID name into Parent ID so that ready for merge
-        self.df_n.columns = ['Event','Parent ID']
+        self.df_n_slice = self.df_n[['Event','Track ID']]
+        self.df_n_slice.columns = ['Event','Parent ID']
         # select all gamma events
         self.df_cap_gamma = self.df[self.df['name'] == 'gamma' ]
         # select gamma events whose Event number is same as neutron event and parent id is neutron's track ID
-        self.df_single_n_gamma = pd.merge(self.df_n, self.df_cap_gamma,on=['Event','Parent ID'], how='inner')
+        self.df_single_n_gamma = pd.merge(self.df_n_slice, self.df_cap_gamma,on=['Event','Parent ID'], how='inner')
         print(self.df_single_n_gamma.head(20))
         # save these gamma event
         self.df_single_n_gamma.to_csv(self.base_path +"dmx_single_n_gamma.csv", index=False)
