@@ -399,7 +399,7 @@ class ReadRoot():
         for i in p_observed:
             if i >= 1:
                 num += 1
-        print("photon observed number ", num)
+        print("photon observed number ", num, len(num))
         print("max", max(p_observed), "\n", "min", min(p_observed))
         # plt.hist(self.electron_recoiled_list, bins=100)
         with open("/data/runzezhang/result/TN_e_sims/photon_capture_n_sing_scatterg.csv", 'w', newline='') as myfile:
