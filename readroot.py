@@ -100,7 +100,7 @@ class RestructureRoot():
 class ReadRoot():
     def __init__(self):
         self.base_path = "/data/runzezhang/result/TN_e_sims/"
-        self.filepath = self.base_path +"dmx_CF.root"
+        self.filepath = self.base_path +"dmx_AmLi.root"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
@@ -113,8 +113,8 @@ class ReadRoot():
         self.modify_df()
 
         # self.gamma_event()
-        self.LAr_gamma_event()
-        # self.single_e_n_capture_event()
+        # self.LAr_gamma_event()
+        self.single_e_n_capture_event()
         # self.FN_spectrum_v2()
         # self.plot_elastic()
 
@@ -241,7 +241,7 @@ class ReadRoot():
         self.df_single_n_gamma = pd.merge(self.df_n_slice, self.df_cap_gamma,on=['Event','Parent ID'], how='inner')
         print(self.df_single_n_gamma.head(20))
         # save these gamma event
-        self.df_single_n_gamma.to_csv(self.base_path +"dmx_single_n_gamma.csv", index=False)
+        self.df_single_n_gamma.to_csv(self.base_path +"dmx_single_n_gamma_AmLi.csv", index=False)
     def LAr_compare(self):
         self.df_Ncapture = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
@@ -402,7 +402,7 @@ class ReadRoot():
         print("photon observed number ", num, len(p_observed))
         print("max", max(p_observed), "\n", "min", min(p_observed))
         # plt.hist(self.electron_recoiled_list, bins=100)
-        with open("/data/runzezhang/result/TN_e_sims/photon_capture_n_sing_scatterg.csv", 'w', newline='') as myfile:
+        with open("/data/runzezhang/result/TN_e_sims/photon_capture_n_sing_scatterg_AmLi.csv", 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(p_observed)
         plt.hist(p_observed, bins=100)
