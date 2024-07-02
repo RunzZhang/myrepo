@@ -134,7 +134,7 @@ class SN():
         plt.bar(sig_bin_centers, sig_normalized_counts, width=sig_bin_edges[1] - sig_bin_edges[0], color='red',label='signal')
 
         noise_counts, noise_bin_edges = np.histogram(self.noise1, bins=100)
-        noise_normalized_counts = noise_counts / self.G4_noise_time
+        noise_normalized_counts = noise_counts /self.G4_sig_time
         noise_bin_centers = (noise_bin_edges[:-1] + noise_bin_edges[1:]) / 2
         plt.bar(noise_bin_centers, noise_normalized_counts, width=noise_bin_edges[1] - noise_bin_edges[0], color='blue',label='background')
 
