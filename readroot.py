@@ -231,6 +231,7 @@ class ReadRoot():
         # self.df_cap_gamma = pd.DataFrame('Event','Track ID')
         print("len",len(self.df_Ncapture.index))
         self.df_n = pd.merge(self.df_sing_Nscatter, self.df_Ncapture,on=['Event','Track ID'], how='inner')
+        print("simutanous", len(self.df_n))
         # only record gamma event, whose event id same as ncap and parent id is ncap's track id.
         # change Track ID name into Parent ID so that ready for merge
         self.df_n_slice = self.df_n[['Event','Track ID']]
