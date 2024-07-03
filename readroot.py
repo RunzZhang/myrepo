@@ -630,7 +630,7 @@ class ReadRoot():
     def find_single_n_multi(self, df,Event="Event", Parent="Parent ID"):
 
         # if an entry has same event and parent ID but has different Track ID
-        df = self.keep_1st(df, ['Event', 'Track ID'])
+        # df = self.keep_1st(df, ['Event', 'Track ID'])
 
         df['combined_tuple'] = list(zip(df.iloc[:][Event], df.iloc[:][Parent]))
         multi_appearance_mask = df['combined_tuple'].duplicated(keep=False)
@@ -643,6 +643,8 @@ class ReadRoot():
         print("multi", filtered_df_multi.head(10))
         print("sing", filtered_df_sing.head(10))
         return (filtered_df_sing,filtered_df_multi)
+
+
     def Check_inelastic(self):
         # self.df_event168 =  self.df[self.df["Process"]=="neutronInelastic"]
         self.df_event168 =  self.df[self.df["Event"]==168]
