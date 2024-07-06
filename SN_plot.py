@@ -149,8 +149,8 @@ class SN():
         plt.xlabel("photon detected by SiPM #", fontsize=16)
         plt.ylabel("signal/background rate #/s", fontsize=16)
         plt.yscale('log')
-        print("sig total rate", len(sig_normalized_counts)*self.capture_ratio/self.G4_sig_time)
-        print("back", len(noise_counts) /self.G4_sig_time)
+        print("sig total rate", len(self.sig_raw_list)*self.capture_ratio/self.G4_sig_time)
+        print("back", len(self.noise1) /self.G4_sig_time)
         plt.legend()
         plt.show()
     def prepare(self, threshold):
