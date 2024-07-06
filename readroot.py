@@ -369,7 +369,7 @@ class ReadRoot():
         plt.show()
 
     def single_n_find_gamma_e(self):
-        self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_single_n_gamma.csv")
+        self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_single_n_gamma_CF.csv")
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
