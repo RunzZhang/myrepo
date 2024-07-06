@@ -67,7 +67,7 @@ class SN():
         # self.sig_raw_list = list(map(float, self.sig_raw_list))
 
         print("capture event number", len(self.sig_raw_list))
-        with open("/data/runzezhang/result/TN_e_sims/photon_capture_n_sing_scatterg.csv", 'r') as file:
+        with open("/data/runzezhang/result/TN_e_sims/photon_capture_n_sing_scatterg_CF.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
