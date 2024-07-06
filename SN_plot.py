@@ -150,7 +150,7 @@ class SN():
         plt.ylabel("signal/background rate #/s", fontsize=16)
         plt.yscale('log')
         print("sig total rate", len(sig_normalized_counts)*self.capture_ratio/self.G4_sig_time)
-        print("back", len(noise_normalized_counts)*noise_counts /self.G4_sig_time)
+        print("back", len(noise_counts /self.G4_sig_time))
         plt.legend()
         plt.show()
     def prepare(self, threshold):
