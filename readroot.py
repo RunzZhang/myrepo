@@ -231,17 +231,22 @@ class ReadRoot():
         # self.df_cap_gamma = pd.DataFrame('Event','Track ID')
         print("len",len(self.df_Ncapture.index))
         self.df_n = pd.merge(self.df_sing_Nscatter, self.df_Ncapture,on=['Event','Track ID'], how='inner')
-        print("simutanous", len(self.df_n.index))
-        n_list = self.df_n["Event"].to_list()
-        self.LAr_recoiled = self.df[((self.df["name"]=='Ar40') | (self.df["name"]=='Ar36') )&(self.df["Recoiled/keV"]>1E-3)][['Event','Track ID',"Recoiled/keV"]]
-        print("LAr recoiled",self.LAr_recoiled)
 
+
+        # self.LAr_recoiled = self.df[((self.df["name"]=='Ar40') | (self.df["name"]=='Ar36') )&(self.df["Recoiled/keV"]>1E-3)][['Event','Track ID',"Recoiled/keV"]]
+        self.LAr_recoiled = \
+        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/keV"] > 1E-3)][
+            ['Event']]
+        # print("LAr recoiled",self.LAr_recoiled)
+        self.LAr_n_merged = pd.merge(self.df_n,self.LAr_recoiled,on=['Event'], how='inner')
+        n_list = self.LAr_n_merged["Event"].to_list()
         self.N_check = self.df[self.df["Event"].isin(n_list) & (self.df["name"]=='neutron')]
         self.N_check.to_csv(self.base_path +"dmx_single_n_gamma_CF_neutron_list.csv", index=False)
-        print(self.df_n)
+        print(self.LAr_n_merged)
+        print("simutanous", len(self.LAr_n_merged.index))
         # only record gamma event, whose event id same as ncap and parent id is ncap's track id.
         # change Track ID name into Parent ID so that ready for merge
-        self.df_n_slice = self.df_n[['Event','Track ID']]
+        self.df_n_slice = self.LAr_n_merged[['Event','Track ID']]
         self.df_n_slice.columns = ['Event','Parent ID']
         # select all gamma events
         self.df_cap_gamma = self.df[self.df['name'] == 'gamma' ]
