@@ -232,8 +232,10 @@ class ReadRoot():
         print("len",len(self.df_Ncapture.index))
         self.df_n = pd.merge(self.df_sing_Nscatter, self.df_Ncapture,on=['Event','Track ID'], how='inner')
         print("simutanous", len(self.df_n.index))
-        print(self.df[((self.df["name"]=='neutron'))&(self.df["Event"]==179)])
         n_list = self.df_n["Event"].to_list()
+        self.LAr_recoiled = self.df[((self.df["name"]=='Ar40') | (self.df["name"]=='Ar36') )&(self.df["Recoiled/keV"]>1E-3)][['Event','Track ID',"Recoiled/keV"]]
+        print("LAr recoiled",self.LAr_recoiled)
+
         self.N_check = self.df[self.df["Event"].isin(n_list) & (self.df["name"]=='neutron')]
         self.N_check.to_csv(self.base_path +"dmx_single_n_gamma_CF_neutron_list.csv", index=False)
         print(self.df_n)
