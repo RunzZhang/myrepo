@@ -224,7 +224,7 @@ class ReadRoot():
         self.df_Nscatter = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Volume','Track ID', 'Parent ID']]
-        (self.df_sing_Nscatter, self.df_multi_Nscatter) = self.find_single_n_multi(self.df_Nscatter,"Event", "Parent ID")
+        (self.df_sing_Nscatter, self.df_multi_Nscatter) = self.find_single_n_multi(self.df_Nscatter,"Event", "Volume")
 
         print("sing", self.df_sing_Nscatter)
         print("multi", self.df_multi_Nscatter)
