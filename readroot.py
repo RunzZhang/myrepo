@@ -239,7 +239,8 @@ class ReadRoot():
         print("merged_xor,\n", merged_df.head(10))
 
         # Filter the merged DataFrame to keep only rows that are in df1 but not in df2
-        result_df = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge'])
+        result_df = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge','Track ID_y'])
+        result_df.columns = ['Event', 'Volume','Track ID', 'Parent ID']
         print("xor", result_df.head(20))
 
         self.df_n = pd.merge(result_df, self.df_Ncapture, on=['Event', 'Track ID'], how='inner')
