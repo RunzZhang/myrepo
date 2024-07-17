@@ -236,6 +236,7 @@ class ReadRoot():
         # self.df_cap_gamma = pd.DataFrame('Event','Track ID')
         print("len",len(self.df_Ncapture.index))
         merged_df = pd.merge(self.df_sing_Nscatter, self.df_Ninelastic, on=['Event', 'Track ID'], how='left', indicator=True)
+        print("merged_xor,\n", merged_df.head(10))
 
         # Filter the merged DataFrame to keep only rows that are in df1 but not in df2
         result_df = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge'])
