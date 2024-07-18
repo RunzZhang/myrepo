@@ -274,9 +274,9 @@ class ReadRoot():
         self.df["Kinetic diff/MeV"] = self.df["Kinetic/keV"].diff()
         self.df["Kinetic diff/MeV"] = self.df["Kinetic diff/MeV"].fillna(0)
 
-        self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')&(self.df["Kinetic diff/MeV"]<-0.001)][['Event','Track ID']]
+        self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')][['Event','Track ID']]
         self.df_Nscatter = self.df[
-            (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')][
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')&(self.df["Kinetic diff/MeV"]<-0.001)][
             ['Event', 'Volume','Track ID', 'Parent ID']]
         self.df_Ninelastic = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (self.df["Volume"] == 'LAr_phys')][
