@@ -371,9 +371,9 @@ class ReadRoot():
 
     def single_e_n_capture_event(self):
         # self.LAr_n_single_test()
-        self.Capture_n_scatter_spectrum()
+        # self.Capture_n_scatter_spectrum()
         # self.Capture_n_scatter_spectrum_loop()
-        self.single_n_find_gamma_e()
+        self.single_n_find_gamma_e_loop()
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv(self.base_path +"dmx_gamma.csv")
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
@@ -503,7 +503,7 @@ class ReadRoot():
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
         self.gamma_Scint = self.df_gamma_rw[
-            (self.df_gamma_rw['Volume'] == 'LAr_phys') | (self.df_gamma_rw['Volume'] == 'hydraulic_fluid_phys')]
+            ((self.df_gamma_rw['Volume'] == 'LAr_phys') | (self.df_gamma_rw['Volume'] == 'hydraulic_fluid_phys'))&(self.df_gamma_rw['Process']=="compt")]
         gamma_list = self.gamma_Scint["Event"].unique()
         print("gamma filter", len(gamma_list))
         self.gamma_Scint = self.keep_1st(self.gamma_Scint)
