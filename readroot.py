@@ -454,6 +454,54 @@ class ReadRoot():
         # we need to do severalthings:
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
+        # self.gamma_Scint = self.df_gamma_rw[
+        #     (self.df_gamma_rw['Volume'] == 'LAr_phys') | (self.df_gamma_rw['Volume'] == 'hydraulic_fluid_phys')]
+        self.gamma_Scint = self.df_gamma_rw[
+            (self.df_gamma_rw['Volume'] == 'LAr_phys') ]
+        gamma_list = self.gamma_Scint["Event"].unique()
+        print("gamma filter", len(gamma_list))
+        self.gamma_Scint = self.keep_1st(self.gamma_Scint)
+        print("scint",self.gamma_Scint)
+        # print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]!=1])
+        self.gamma_Scint_column = self.gamma_Scint[['Event',"Track ID"]]
+        self.gamma_Scint_column.columns = ['Event',"Parent ID"]
+        self.df_electron = self.df[(self.df['name']=='e-')&(self.df['Volume']=='LAr_phys')]
+        self.df_electron = self.keep_1st(self.df_electron)
+        self.df_electron_gamma = pd.merge(self.df_electron,self.gamma_Scint_column,on=['Event','Parent ID'], how='inner')
+        print("gamma filter 2",len(self.df_electron_gamma["Event"].unique()))
+        print(self.df_electron_gamma.head(10))
+        # double check gamma
+
+        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/keV"].sum().reset_index()
+        print(summed_values.head(20))
+
+        # add gamma up
+        self.electron_recoiled_list  = summed_values["Recoiled/keV"].to_list()
+        p_observed = []
+        for i in range(len(self.electron_recoiled_list)):
+            # 40 /keV 0.03 and 0.2 PCE and PDE
+            if i> 1E-6:
+                p_observed.append(self.electron_recoiled_list[i]*1E6*40*0.03*0.2/(1000))
+
+        num = 0
+        for i in p_observed:
+            if i >= 1:
+                num += 1
+        print("photon observed number ", num, len(p_observed))
+        print("max", max(p_observed), "\n", "min", min(p_observed))
+        # plt.hist(self.electron_recoiled_list, bins=100)
+        with open("/data/runzezhang/result/TN_e_sims/photon_capture_n_sing_scatterg_CF.csv", 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(p_observed)
+        plt.hist(p_observed, bins=100)
+        plt.xlabel("Obeserved Photon per Event")
+        plt.show()
+    def single_n_find_gamma_e_loop(self):
+        self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_single_n_gamma_CF.csv")
+        print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
+        # we need to do severalthings:
+        # gamma only in LAr or CF4
+        # in 1 event number, only the first series of gammas, avoiding over-countting
         self.gamma_Scint = self.df_gamma_rw[
             (self.df_gamma_rw['Volume'] == 'LAr_phys') | (self.df_gamma_rw['Volume'] == 'hydraulic_fluid_phys')]
         gamma_list = self.gamma_Scint["Event"].unique()
