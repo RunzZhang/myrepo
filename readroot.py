@@ -300,6 +300,7 @@ class ReadRoot():
         energy_matrix = []
         n_list = self.df_n["Event"].to_list()
         self.N_check = self.df[self.df["Event"].isin(n_list) & (self.df["name"]=='neutron')]
+        self.N_check = self.N_check.reset_index(drop=True)
         for id in self.N_check.index:
             if id - 1 in self.N_check.index:
                 if self.N_check.iloc[id]["Process"]=="hadElastic":
