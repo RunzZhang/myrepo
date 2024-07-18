@@ -274,34 +274,47 @@ class ReadRoot():
         self.df["Kinetic diff/MeV"] = self.df["Kinetic/keV"].diff()
         self.df["Kinetic diff/MeV"] = self.df["Kinetic diff/MeV"].fillna(0)
 
-        self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')][['Event','Track ID']]
+        self.df_Ncapture = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] != 'LAr_phys')][
+            ['Event', 'Track ID']]
         self.df_Nscatter = self.df[
-            (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')&(self.df["Kinetic diff/MeV"]<-0.001)][
-            ['Event', 'Volume','Track ID', 'Parent ID']]
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')& (self.df["Kinetic diff/MeV"] >0.001)][
+            ['Event', 'Volume', 'Track ID', 'Parent ID']]
         self.df_Ninelastic = self.df[
-            (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (self.df["Volume"] == 'LAr_phys')][
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
+                        self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Track ID']]
         print("inelastic", self.df_Ninelastic.head(10))
 
-        (self.df_sing_Nscatter, self.df_multi_Nscatter) = self.find_single_n_multi(self.df_Nscatter,"Event", "Volume")
+        (self.df_sing_Nscatter, self.df_multi_Nscatter) = self.find_single_n_multi(self.df_Nscatter, "Event", "Volume")
 
         print("sing", self.df_sing_Nscatter)
         print("multi", self.df_multi_Nscatter)
         # self.df_cap_gamma = pd.DataFrame('Event','Track ID')
-        print("len",len(self.df_Ncapture.index))
+        print("len", len(self.df_Ncapture.index))
         merged_df = pd.merge(self.df_sing_Nscatter, self.df_Ninelastic, on=['Event'], how='left', indicator=True)
         print("merged_xor,\n", merged_df.head(10))
 
         # Filter the merged DataFrame to keep only rows that are in df1 but not in df2
-        result_df = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge','Track ID_y'])
-        result_df.columns = ['Event', 'Volume','Track ID', 'Parent ID']
+        result_df = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge', 'Track ID_y'])
+        result_df.columns = ['Event', 'Volume', 'Track ID', 'Parent ID']
         print("xor", result_df.head(20))
 
         self.df_n = pd.merge(result_df, self.df_Ncapture, on=['Event', 'Track ID'], how='inner')
-        n_list = self.df_n["Event"].to_list()
+        # self.df_n = pd.merge(self.df_sing_Nscatter, self.df_Ncapture,on=['Event','Track ID'], how='inner')
+
+        # self.LAr_recoiled = self.df[((self.df["name"]=='Ar40') | (self.df["name"]=='Ar36') )&(self.df["Recoiled/keV"]>1E-3)][['Event','Track ID',"Recoiled/keV"]]
+        self.LAr_recoiled = \
+            self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) ][
+                ['Event']]
+        # print("LAr recoiled",self.LAr_recoiled)
+        self.LAr_n_merged = pd.merge(self.df_n, self.LAr_recoiled, on=['Event'], how='inner')
+        n_list = self.LAr_n_merged["Event"].to_list()
         self.N_check = self.df[self.df["Event"].isin(n_list) & (
                     (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))]
         self.N_check.to_csv(self.base_path + "dmx_single_n_gamma_CF_neutron_list_loop.csv", index=False)
+        print(self.LAr_n_merged)
+        print("simutanous", len(self.LAr_n_merged["Event"].unique()))
         event_list  =  self.N_check["Event"].unique()
         print("event", len(event_list),event_list[:10])
 
@@ -358,8 +371,8 @@ class ReadRoot():
 
     def single_e_n_capture_event(self):
         # self.LAr_n_single_test()
-        self.Capture_n_scatter_spectrum()
-        # self.Capture_n_scatter_spectrum_loop()
+        # self.Capture_n_scatter_spectrum()
+        self.Capture_n_scatter_spectrum_loop()
         # self.single_n_find_gamma_e()
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv(self.base_path +"dmx_gamma.csv")
