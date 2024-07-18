@@ -456,7 +456,7 @@ class ReadRoot():
         # in 1 event number, only the first series of gammas, avoiding over-countting
         self.gamma_Scint = self.df_gamma_rw[
             (self.df_gamma_rw['Volume'] == 'LAr_phys') | (self.df_gamma_rw['Volume'] == 'hydraulic_fluid_phys')]
-        gamma_list = self.gamma_Scint.unique()
+        gamma_list = self.gamma_Scint["Event"].unique()
         print("gamma filter", len(gamma_list))
         self.gamma_Scint = self.keep_1st(self.gamma_Scint)
         print("scint",self.gamma_Scint)
