@@ -270,6 +270,51 @@ class ReadRoot():
         # save these gamma event
         self.df_single_n_gamma.to_csv(self.base_path +"dmx_single_n_gamma_CF.csv", index=False)
 
+    def Capture_n_scatter_spectrum_loop(self):
+
+        self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')][['Event','Track ID']]
+        self.df_Nscatter = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Volume','Track ID', 'Parent ID']]
+        self.df_Ninelastic = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Track ID']]
+        print("inelastic", self.df_Ninelastic.head(10))
+
+        (self.df_sing_Nscatter, self.df_multi_Nscatter) = self.find_single_n_multi(self.df_Nscatter,"Event", "Volume")
+
+        print("sing", self.df_sing_Nscatter)
+        print("multi", self.df_multi_Nscatter)
+        # self.df_cap_gamma = pd.DataFrame('Event','Track ID')
+        print("len",len(self.df_Ncapture.index))
+        merged_df = pd.merge(self.df_sing_Nscatter, self.df_Ninelastic, on=['Event'], how='left', indicator=True)
+        print("merged_xor,\n", merged_df.head(10))
+
+        # Filter the merged DataFrame to keep only rows that are in df1 but not in df2
+        result_df = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge','Track ID_y'])
+        result_df.columns = ['Event', 'Volume','Track ID', 'Parent ID']
+        print("xor", result_df.head(20))
+
+        self.df_n = pd.merge(result_df, self.df_Ncapture, on=['Event', 'Track ID'], how='inner')
+        event_matrix = []
+        energy_matrix = []
+        n_list = self.df_n["Event"].to_list()
+        self.N_check = self.df[self.df["Event"].isin(n_list) & (self.df["name"]=='neutron')]
+        for id in self.N_check.index:
+            if self.N_check[id]["Process"]=="hadElastic":
+                ef = self.N_check[id]["Kinetic/keV"]
+                ei = self.N_check[id-1]["Kinetic/keV"]
+                ek = (ei - ef)*1E6
+                if ek > 1E3:
+                    event_matrix.append(self.N_check[id]["Event"])
+                    energy_matrix.append(ek)
+
+        print("energy matrix", len(energy_matrix))
+        with open(self.base_path +"dmx_single_n_gamma_CF_neutron_list_loop.txt", 'w') as file:
+            file.write(','.join(map(str, energy_matrix)))
+
+
+
     def LAr_n_single_test(self):
         self.df_20575 = self.df[self.df["Event"]==20575]
         self.df_20575.to_csv(self.base_path + "dmx_single_n_gamma_CF_20575.csv", index=False)
@@ -321,8 +366,9 @@ class ReadRoot():
 
     def single_e_n_capture_event(self):
         # self.LAr_n_single_test()
-        self.Capture_n_scatter_spectrum()
-        self.single_n_find_gamma_e()
+        # self.Capture_n_scatter_spectrum()
+        self.Capture_n_scatter_spectrum_loop()
+        # self.single_n_find_gamma_e()
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv(self.base_path +"dmx_gamma.csv")
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
