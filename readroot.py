@@ -301,13 +301,14 @@ class ReadRoot():
         n_list = self.df_n["Event"].to_list()
         self.N_check = self.df[self.df["Event"].isin(n_list) & (self.df["name"]=='neutron')]
         for id in self.N_check.index:
-            if self.N_check.iloc[id]["Process"]=="hadElastic":
-                ef = self.N_check.iloc[id]["Kinetic/keV"]
-                ei = self.N_check.iloc[id-1]["Kinetic/keV"]
-                ek = (ei - ef)*1E6
-                if ek > 1E3:
-                    event_matrix.append(self.N_check.iloc[id]["Event"])
-                    energy_matrix.append(ek)
+            if id - 1 in self.N_check.index:
+                if self.N_check.iloc[id]["Process"]=="hadElastic":
+                    ef = self.N_check.iloc[id]["Kinetic/keV"]
+                    ei = self.N_check.iloc[id-1]["Kinetic/keV"]
+                    ek = (ei - ef)*1E6
+                    if ek > 1E3:
+                        event_matrix.append(self.N_check.iloc[id]["Event"])
+                        energy_matrix.append(ek)
 
         print("energy matrix", len(energy_matrix))
         with open(self.base_path +"dmx_single_n_gamma_CF_neutron_list_loop.txt", 'w') as file:
