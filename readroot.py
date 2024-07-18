@@ -466,7 +466,7 @@ class ReadRoot():
         self.df_electron = self.df[(self.df['name']=='e-')&(self.df['Volume']=='LAr_phys')]
         self.df_electron = self.keep_1st(self.df_electron)
         self.df_electron_gamma = pd.merge(self.df_electron,self.gamma_Scint_column,on=['Event','Parent ID'], how='inner')
-        print("gamma filter 2",self.df_electron_gamma["Event"].unique())
+        print("gamma filter 2",len(self.df_electron_gamma["Event"].unique()))
         print(self.df_electron_gamma.head(10))
         # double check gamma
 
