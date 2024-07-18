@@ -302,6 +302,8 @@ class ReadRoot():
         self.N_check = self.df[self.df["Event"].isin(n_list) & (
                     (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))]
         self.N_check.to_csv(self.base_path + "dmx_single_n_gamma_CF_neutron_list_loop.csv", index=False)
+        event_list  =  self.N_check["Event"].unique()
+        print("event", len(event_list))
 
 
 
