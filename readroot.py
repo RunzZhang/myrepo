@@ -271,8 +271,10 @@ class ReadRoot():
         self.df_single_n_gamma.to_csv(self.base_path +"dmx_single_n_gamma_CF.csv", index=False)
 
     def Capture_n_scatter_spectrum_loop(self):
+        self.df["Kinetic diff/MeV"] = self.df["Kinetic/keV"].diff()
+        self.df["Kinetic diff/MeV"] = self.df["Kinetic diff/MeV"].fillna(0)
 
-        self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')][['Event','Track ID']]
+        self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')&(self.df["Kinetic diff/MeV"]<-0.001)][['Event','Track ID']]
         self.df_Nscatter = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Volume','Track ID', 'Parent ID']]
@@ -296,24 +298,10 @@ class ReadRoot():
         print("xor", result_df.head(20))
 
         self.df_n = pd.merge(result_df, self.df_Ncapture, on=['Event', 'Track ID'], how='inner')
-        event_matrix = []
-        energy_matrix = []
         n_list = self.df_n["Event"].to_list()
-        self.N_check = self.df[self.df["Event"].isin(n_list) & (self.df["name"]=='neutron')]
-        self.N_check = self.N_check.reset_index(drop=True)
-        for id in self.N_check.index:
-            if id - 1 in self.N_check.index:
-                if self.N_check.iloc[id]["Process"]=="hadElastic":
-                    ef = self.N_check.iloc[id]["Kinetic/keV"]
-                    ei = self.N_check.iloc[id-1]["Kinetic/keV"]
-                    ek = (ei - ef)*1E6
-                    if ek > 1E3:
-                        event_matrix.append(self.N_check.iloc[id]["Event"])
-                        energy_matrix.append(ek)
-
-        print("energy matrix", len(energy_matrix))
-        with open(self.base_path +"dmx_single_n_gamma_CF_neutron_list_loop.txt", 'w') as file:
-            file.write(','.join(map(str, energy_matrix)))
+        self.N_check = self.df[self.df["Event"].isin(n_list) & (
+                    (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))]
+        self.N_check.to_csv(self.base_path + "dmx_single_n_gamma_CF_neutron_list_loop.csv", index=False)
 
 
 
