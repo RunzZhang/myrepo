@@ -257,7 +257,7 @@ class ReadRoot():
         self.N_check = self.df[self.df["Event"].isin(n_list) & ((self.df["name"]=='neutron')|(self.df["name"]=='Ar40')| (self.df["name"] == 'Ar36'))]
         self.N_check.to_csv(self.base_path +"dmx_single_n_gamma_CF_neutron_list.csv", index=False)
         print(self.LAr_n_merged)
-        print("simutanous", len(self.LAr_n_merged.index))
+        print("simutanous", len(self.LAr_n_merged["Event"].unique()))
         # only record gamma event, whose event id same as ncap and parent id is ncap's track id.
         # change Track ID name into Parent ID so that ready for merge
         self.df_n_slice = self.LAr_n_merged[['Event','Track ID']]
@@ -303,7 +303,7 @@ class ReadRoot():
                     (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))]
         self.N_check.to_csv(self.base_path + "dmx_single_n_gamma_CF_neutron_list_loop.csv", index=False)
         event_list  =  self.N_check["Event"].unique()
-        print("event", len(event_list))
+        print("event", len(event_list),event_list[:10])
 
 
 
@@ -358,8 +358,8 @@ class ReadRoot():
 
     def single_e_n_capture_event(self):
         # self.LAr_n_single_test()
-        # self.Capture_n_scatter_spectrum()
-        self.Capture_n_scatter_spectrum_loop()
+        self.Capture_n_scatter_spectrum()
+        # self.Capture_n_scatter_spectrum_loop()
         # self.single_n_find_gamma_e()
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv(self.base_path +"dmx_gamma.csv")
