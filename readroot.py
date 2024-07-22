@@ -248,10 +248,10 @@ class ReadRoot():
 
 
         # self.LAr_recoiled = self.df[((self.df["name"]=='Ar40') | (self.df["name"]=='Ar36') )&(self.df["Recoiled/keV"]>1E-3)][['Event','Track ID',"Recoiled/keV"]]
-        self.LAr_recoiled = \
+        # self.LAr_recoiled = \
         # self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/keV"] > 0.001)][
         #     ['Event']]
-        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) ][
+        self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) ][
             ['Event']]
         # print("LAr recoiled",self.LAr_recoiled)
         self.LAr_n_merged = pd.merge(self.df_n,self.LAr_recoiled,on=['Event'], how='inner')
