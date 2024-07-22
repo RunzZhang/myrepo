@@ -287,7 +287,7 @@ class ReadRoot():
                         self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Track ID']]
 
-        self.compt_scatter = self.df[(self.df["Process"] == 'compt') & (
+        self.compt_scatter = self.df[(self.df["name"] == 'gamma')&(self.df["Process"] == 'compt') & (
                         self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Track ID']]
         print("compt", len(self.compt_scatter["Event"].unique()))
