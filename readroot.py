@@ -284,6 +284,11 @@ class ReadRoot():
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
                         self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Track ID']]
+
+        self.compt_scatter = self.df[(self.df["Process"] == 'compt') & (
+                        self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Track ID']]
+        print("compt", self.compt_scatter["Event"].unique())
         print("inelastic", self.df_Ninelastic.head(10))
 
         (self.df_sing_Nscatter, self.df_multi_Nscatter) = self.find_single_n_multi(self.df_Nscatter, "Event", "Volume")
