@@ -279,8 +279,12 @@ class ReadRoot():
         self.df_Ncapture = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] != 'LAr_phys')][
             ['Event', 'Track ID']]
+        # self.df_Nscatter = self.df[
+        #     (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')& (self.df["Kinetic diff/MeV"] <-0.125)][
+        #     ['Event', 'Volume', 'Track ID', 'Parent ID']]
         self.df_Nscatter = self.df[
-            (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')& (self.df["Kinetic diff/MeV"] <-0.0125)][
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (
+                        self.df["Volume"] == 'LAr_phys') ][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
         self.df_Ninelastic = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
