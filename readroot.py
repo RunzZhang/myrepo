@@ -249,7 +249,9 @@ class ReadRoot():
 
         # self.LAr_recoiled = self.df[((self.df["name"]=='Ar40') | (self.df["name"]=='Ar36') )&(self.df["Recoiled/keV"]>1E-3)][['Event','Track ID',"Recoiled/keV"]]
         self.LAr_recoiled = \
-        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/keV"] > 0.001)][
+        # self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/keV"] > 0.001)][
+        #     ['Event']]
+        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) ][
             ['Event']]
         # print("LAr recoiled",self.LAr_recoiled)
         self.LAr_n_merged = pd.merge(self.df_n,self.LAr_recoiled,on=['Event'], how='inner')
@@ -376,9 +378,10 @@ class ReadRoot():
 
     def single_e_n_capture_event(self):
         # self.LAr_n_single_test()
-        # self.Capture_n_scatter_spectrum()
-        self.Capture_n_scatter_spectrum_loop()
-        self.single_n_find_gamma_e_loop()
+        self.Capture_n_scatter_spectrum()
+        self.single_n_find_gamma_e()
+        # self.Capture_n_scatter_spectrum_loop()
+        # self.single_n_find_gamma_e_loop()
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv(self.base_path +"dmx_gamma.csv")
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
