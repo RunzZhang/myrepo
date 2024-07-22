@@ -295,7 +295,7 @@ class ReadRoot():
 
         (self.df_sing_Nscatter, self.df_multi_Nscatter) = self.find_single_n_multi(self.df_Nscatter, "Event", "Volume")
 
-        print("sing", self.df_sing_Nscatter)
+        print("sing", self.df_sing_Nscatter, len(self.df_sing_Nscatter["Event"].unique()))
         print("multi", self.df_multi_Nscatter)
         # self.df_cap_gamma = pd.DataFrame('Event','Track ID')
         print("len", len(self.df_Ncapture.index))
