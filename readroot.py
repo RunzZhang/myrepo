@@ -309,7 +309,7 @@ class ReadRoot():
 
         self.df_n = pd.merge(result_df, self.df_Ncapture, on=['Event', 'Track ID'], how='inner')
         # self.df_n = pd.merge(self.df_sing_Nscatter, self.df_Ncapture,on=['Event','Track ID'], how='inner')
-        self.x3_n = pd.merge(self.df_n, self.compt_scatter, on=['Event', 'Track ID'], how='inner')
+        self.x3_n = pd.merge(self.df_n, self.compt_scatter, on=['Event'], how='inner')
         print("cross 3 check", len(self.x3_n["Event"].unique()), self.x3_n.head(10))
 
         # # self.LAr_recoiled = self.df[((self.df["name"]=='Ar40') | (self.df["name"]=='Ar36') )&(self.df["Recoiled/keV"]>1E-3)][['Event','Track ID',"Recoiled/keV"]]
