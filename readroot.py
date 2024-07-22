@@ -309,21 +309,23 @@ class ReadRoot():
 
         self.df_n = pd.merge(result_df, self.df_Ncapture, on=['Event', 'Track ID'], how='inner')
         # self.df_n = pd.merge(self.df_sing_Nscatter, self.df_Ncapture,on=['Event','Track ID'], how='inner')
+        self.x3_n = pd.merge(self.df_n, self.compt_scatter, on=['Event', 'Track ID'], how='inner')
+        print("cross 3 check", len(self.x3_n["Event"].unique()), self.x3_n.head(10))
 
-        # self.LAr_recoiled = self.df[((self.df["name"]=='Ar40') | (self.df["name"]=='Ar36') )&(self.df["Recoiled/keV"]>1E-3)][['Event','Track ID',"Recoiled/keV"]]
-        self.LAr_recoiled = \
-            self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) ][
-                ['Event']]
-        # print("LAr recoiled",self.LAr_recoiled)
-        self.LAr_n_merged = pd.merge(self.df_n, self.LAr_recoiled, on=['Event'], how='inner')
-        n_list = self.LAr_n_merged["Event"].to_list()
-        self.N_check = self.df[self.df["Event"].isin(n_list) & (
-                    (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))]
-        self.N_check.to_csv(self.base_path + "dmx_single_n_gamma_CF_neutron_list_loop.csv", index=False)
-        print(self.LAr_n_merged)
-        print("simutanous", len(self.LAr_n_merged["Event"].unique()))
-        event_list  =  self.N_check["Event"].unique()
-        print("event", len(event_list),event_list[:10])
+        # # self.LAr_recoiled = self.df[((self.df["name"]=='Ar40') | (self.df["name"]=='Ar36') )&(self.df["Recoiled/keV"]>1E-3)][['Event','Track ID',"Recoiled/keV"]]
+        # self.LAr_recoiled = \
+        #     self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) ][
+        #         ['Event']]
+        # # print("LAr recoiled",self.LAr_recoiled)
+        # self.LAr_n_merged = pd.merge(self.df_n, self.LAr_recoiled, on=['Event'], how='inner')
+        # n_list = self.LAr_n_merged["Event"].to_list()
+        # self.N_check = self.df[self.df["Event"].isin(n_list) & (
+        #             (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))]
+        # self.N_check.to_csv(self.base_path + "dmx_single_n_gamma_CF_neutron_list_loop.csv", index=False)
+        # print(self.LAr_n_merged)
+        # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
+        # event_list  =  self.N_check["Event"].unique()
+        # print("event", len(event_list),event_list[:10])
 
 
 
