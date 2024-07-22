@@ -377,7 +377,7 @@ class ReadRoot():
     def single_e_n_capture_event(self):
         # self.LAr_n_single_test()
         # self.Capture_n_scatter_spectrum()
-        # self.Capture_n_scatter_spectrum_loop()
+        self.Capture_n_scatter_spectrum_loop()
         self.single_n_find_gamma_e_loop()
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv(self.base_path +"dmx_gamma.csv")
