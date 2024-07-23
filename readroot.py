@@ -328,7 +328,7 @@ class ReadRoot():
         # # print("LAr recoiled",self.LAr_recoiled)
         # self.LAr_n_merged = pd.merge(self.df_n, self.LAr_recoiled, on=['Event'], how='inner')
         n_list = self.last_cross["Event"].to_list()
-        self.N_check = self.df[self.df["Event"].isin(n_list) & (
+        self.N_check = self.df[self.df["Event"].isin(self.last_cross_list) & (
                     (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))]
         self.N_check.to_csv(self.base_path + "dmx_single_n_gamma_CF_neutron_list_loop.csv", index=False)
         # n_list = self.LAr_n_merged["Event"].to_list()
