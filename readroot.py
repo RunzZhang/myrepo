@@ -319,7 +319,8 @@ class ReadRoot():
         print("cross 3 check", len(self.x3_n2["Event"].unique()), self.x3_n2.head(10))
 
         self.last_cross = pd.merge(self.x3_n2, self.df_sing_Nscatter, on=['Event'], how='inner')
-        print("last cross check", len(self.last_cross["Event"].unique()), self.last_cross.head(10))
+        self.last_cross_list = self.intersection(self.x3_n2["Event"].unique(),self.df_sing_Nscatter["Event"].unique())
+        print("last cross check", len(self.last_cross_list), self.last_cross_list[:10])
         # # self.LAr_recoiled = self.df[((self.df["name"]=='Ar40') | (self.df["name"]=='Ar36') )&(self.df["Recoiled/keV"]>1E-3)][['Event','Track ID',"Recoiled/keV"]]
         # self.LAr_recoiled = \
         #     self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) ][
@@ -339,7 +340,9 @@ class ReadRoot():
         # event_list  =  self.N_check["Event"].unique()
         # print("event", len(event_list),event_list[:10])
 
-
+    def intersection(self, lst1, lst2):
+        lst3 = [value for value in lst1 if value in lst2]
+        return lst3
 
     def LAr_n_single_test(self):
         self.df_20575 = self.df[self.df["Event"]==20575]
