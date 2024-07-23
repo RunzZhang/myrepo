@@ -279,10 +279,10 @@ class ReadRoot():
         self.df_Ncapture = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] != 'LAr_phys')][
             ['Event', 'Track ID']]
-        # self.df_Nscatter = self.df[
-        #     (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')& (self.df["Kinetic diff/MeV"] <-0.125)][
-        #     ['Event', 'Volume', 'Track ID', 'Parent ID']]
         self.df_Nscatter = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')& (self.df["Kinetic diff/MeV"] <-0.00125)][
+            ['Event', 'Volume', 'Track ID', 'Parent ID']]
+        self.df_Nscatter_wo = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (
                         self.df["Volume"] == 'LAr_phys') ][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
@@ -315,9 +315,11 @@ class ReadRoot():
         # self.df_n = pd.merge(self.df_sing_Nscatter, self.df_Ncapture,on=['Event','Track ID'], how='inner')
 
         self.x3_n = pd.merge(self.df_Ncapture, self.compt_scatter, on=['Event'], how='inner')
-        self.x3_n2 = pd.merge(self.x3_n, self.df_Nscatter, on=['Event'], how='inner')
+        self.x3_n2 = pd.merge(self.x3_n, self.df_Nscatter_wo, on=['Event'], how='inner')
         print("cross 3 check", len(self.x3_n2["Event"].unique()), self.x3_n2.head(10))
 
+        self.last_cross = pd.merge(self.x3_n2, self.df_sing_Nscatter, on=['Event'], how='inner')
+        print("last cross check", len(self.last_cross["Event"].unique()), self.last_cross.head(10))
         # # self.LAr_recoiled = self.df[((self.df["name"]=='Ar40') | (self.df["name"]=='Ar36') )&(self.df["Recoiled/keV"]>1E-3)][['Event','Track ID',"Recoiled/keV"]]
         # self.LAr_recoiled = \
         #     self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) ][
