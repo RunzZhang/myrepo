@@ -307,6 +307,7 @@ class ReadRoot():
         print("cap wo", len(self.df_Ncapture["Event"].unique()))
         print("Ela",len(self.df_Nscatter_wo["Event"].unique()))
         print("Elcap", len(self.elcap["Event"].unique()))
+        print("Elcap step", len(self.elcap_stepfilter["Event"].unique()))
         print("compt", len(self.compt_scatter["Event"].unique()))
         print("inelastic", self.df_Ninelastic.head(10))
 
