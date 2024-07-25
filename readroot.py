@@ -286,6 +286,14 @@ class ReadRoot():
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (
                         self.df["Volume"] == 'LAr_phys') ][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
+        self.df_Ncapture_step = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] != 'LAr_phys')][
+            ['Event', 'Track ID','Step ID']]
+        self.df_Nscatter_wo_step = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (
+                    self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Volume', 'Track ID', 'Parent ID','Step ID']]
+
         self.df_Ninelastic = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
                         self.df["Volume"] == 'LAr_phys')][
@@ -294,7 +302,8 @@ class ReadRoot():
         self.compt_scatter = self.df[(self.df["name"] == 'gamma')&(self.df["Process"] == 'compt') & (
                         self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Track ID']]
-        self.elcap = pd.merge(self.df_Ncapture, self.df_Nscatter_wo, on=['Event'], how='left', indicator=True)
+        self.elcap = pd.merge(self.df_Ncapture_step, self.df_Nscatter_wo_step, on=['Event'], how='left', indicator=True)
+        self.elcap_stepfilter = self.elcap[self.elcap['Step ID_x'] > self.elcap['Step ID_y']]
         print("cap wo", len(self.df_Ncapture["Event"].unique()))
         print("Ela",len(self.df_Nscatter_wo["Event"].unique()))
         print("Elcap", len(self.elcap["Event"].unique()))
