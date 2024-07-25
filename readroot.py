@@ -287,7 +287,7 @@ class ReadRoot():
                         self.df["Volume"] == 'LAr_phys') ][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
         self.df_Ncapture_step = self.df[
-            (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') ][
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] != 'LAr_phys')][
             ['Event', 'Track ID','Step ID']]
         self.df_Nscatter_wo_step = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (
