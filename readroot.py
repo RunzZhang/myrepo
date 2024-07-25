@@ -295,6 +295,8 @@ class ReadRoot():
                         self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Track ID']]
         self.elcap = pd.merge(self.df_Ncapture, self.df_Nscatter_wo, on=['Event'], how='left', indicator=True)
+        print("cap wo", len(self.df_Ncapture["Event"].unique()))
+        print("Ela",len(self.df_Nscatter_wo["Event"].unique()))
         print("Elcap", len(self.elcap["Event"].unique()))
         print("compt", len(self.compt_scatter["Event"].unique()))
         print("inelastic", self.df_Ninelastic.head(10))
