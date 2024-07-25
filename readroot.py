@@ -302,7 +302,7 @@ class ReadRoot():
         self.compt_scatter = self.df[(self.df["name"] == 'gamma')&(self.df["Process"] == 'compt') & (
                         self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Track ID']]
-        self.elcap = pd.merge(self.df_Ncapture_step, self.df_Nscatter_wo_step, on=['Event'], how='left', indicator=True)
+        self.elcap = pd.merge(self.df_Ncapture_step, self.df_Nscatter_wo_step, on=['Event'], how='inner', indicator=True)
         self.elcap_stepfilter = self.elcap[self.elcap['Step ID_x'] > self.elcap['Step ID_y']]
         print("cap wo", len(self.df_Ncapture["Event"].unique()))
         print("Ela",len(self.df_Nscatter_wo["Event"].unique()))
