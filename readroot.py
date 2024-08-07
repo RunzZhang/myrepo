@@ -538,7 +538,7 @@ class ReadRoot():
         plt.xlabel("Obeserved Photon per Event")
         plt.show()
     def single_n_find_gamma_e_loop(self):
-        self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_single_n_gamma_CF.csv")
+        self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_single_n_gamma_CF_neutron_list_loop.csv")
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
