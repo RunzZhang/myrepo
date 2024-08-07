@@ -61,8 +61,8 @@ import csv
 
 class RestructureRoot():
     def __init__(self):
-        self.filepath = "/data/runzezhang/result/TN_sims/dmx.root"
-        self.reconstruct_filepath = "/data/runzezhang/result/TN_sims/dmx_rc.csv"
+        self.filepath = "/data/runzezhang/result/TN_sims2/dmx.root"
+        self.reconstruct_filepath = "/data/runzezhang/result/TN_sims2/dmx_rc.csv"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
@@ -99,7 +99,7 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_e_sims/"
+        self.base_path = "/data/runzezhang/result/TN_sims2/"
         self.filepath = self.base_path +"dmx_CF.root"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
