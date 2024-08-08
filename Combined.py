@@ -10,7 +10,7 @@ import matplotlib.ticker as ticker
 
 filename = "/data/runzezhang/result/TN_sims2/CF252BigCap6,10Compt.root" #Sap5cmx7.5cm3cmPad10cm25cmAmLi
 
-threshold = 1250
+threshold = 1125
 highethreshold = 16700
 
 file = uproot.open(filename)["tree"] #From NCaptureCount
