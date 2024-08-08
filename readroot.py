@@ -361,7 +361,7 @@ class ReadRoot():
         return lst3
 
     def LAr_n_single_test(self):
-        self.df_20575 = self.df[self.df["Event"]==20575]
+        self.df_20575 = self.df[(self.df["Event"]==581)|(self.df["Event"]==2906)|(self.df["Event"]==329)|(self.df["Event"]==568)]
         self.df_20575.to_csv(self.base_path + "dmx_single_n_gamma_CF_20575.csv", index=False)
     def LAr_compare(self):
         self.df_Ncapture = self.df[
@@ -410,11 +410,11 @@ class ReadRoot():
         self.LAr_find_gamma_e()
 
     def single_e_n_capture_event(self):
-        # self.LAr_n_single_test()
+        self.LAr_n_single_test()
         # self.Capture_n_scatter_spectrum()
         # self.single_n_find_gamma_e()
-        self.Capture_n_scatter_spectrum_loop()
-        self.single_n_find_gamma_e_loop()
+        # self.Capture_n_scatter_spectrum_loop()
+        # self.single_n_find_gamma_e_loop()
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv(self.base_path +"dmx_gamma.csv")
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
