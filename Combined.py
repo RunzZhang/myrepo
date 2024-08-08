@@ -8,8 +8,8 @@ import math
 #from matplotlib.ticker import (LogLocator, MultipleLocator, AutoMinorLocator)
 import matplotlib.ticker as ticker
 
-filename = "/data/runzezhang/result/TN_sims2/CF252BigCap6,10Compt.root" #Sap5cmx7.5cm3cmPad10cm25cmAmLi
-
+filename1 = "/data/runzezhang/result/TN_sims2/CF252BigCap6,10Compt.root" #Sap5cmx7.5cm3cmPad10cm25cmAmLi
+filename = "/data/runzezhang/result/TN_sims2/CF252BigEl6,10Compt.root" #EdepSap5cmx7.5cm3cmPad10cm25cmAmLi
 threshold = 1125
 highethreshold = 16700
 
@@ -32,7 +32,7 @@ EDepCompt = [i*10**6 for i in EDepCompt]
 
 #-------------------------------------------------------------------------------------------
 
-filename1 = "/data/runzezhang/result/TN_sims2/CF252BigEl6,10Compt.root" #EdepSap5cmx7.5cm3cmPad10cm25cmAmLi
+
 file1 = uproot.open(filename1)["tree1"] #From SBCEdepTest
 print(file1.keys())
 df1 = file1.arrays(["EDep", "EventNo"], library="pd")
