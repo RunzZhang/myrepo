@@ -100,7 +100,7 @@ class RestructureRoot():
 class ReadRoot():
     def __init__(self):
         self.base_path = "/data/runzezhang/result/TN_sims2/"
-        self.filepath = self.base_path +"dmx_CF.root"
+        self.filepath = self.base_path +"dmx_lr.root"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
@@ -410,11 +410,11 @@ class ReadRoot():
         self.LAr_find_gamma_e()
 
     def single_e_n_capture_event(self):
-        self.LAr_n_single_test()
+        # self.LAr_n_single_test()
         # self.Capture_n_scatter_spectrum()
         # self.single_n_find_gamma_e()
-        # self.Capture_n_scatter_spectrum_loop()
-        # self.single_n_find_gamma_e_loop()
+        self.Capture_n_scatter_spectrum_loop()
+        self.single_n_find_gamma_e_loop()
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv(self.base_path +"dmx_gamma.csv")
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
