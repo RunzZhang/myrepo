@@ -143,7 +143,6 @@ class ReadRoot():
 
         # put the updated event_number back to data frame
         self.df.update(pd.DataFrame({'Event': event_number}))
-        print(self.df.head(100))
     def string_summary(self):
         process_clean=[]
         df_process = self.df[:]["Process"].to_list()
@@ -225,6 +224,7 @@ class ReadRoot():
         self.df_Nscatter = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Volume','Track ID', 'Parent ID']]
+        self.df_Nscatter.to_csv(self.base_path + "dmx_single_n_gamma_CF_scatter_list.csv", index=False)
         self.df_Ninelastic = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Track ID']]
@@ -411,9 +411,9 @@ class ReadRoot():
         self.LAr_find_gamma_e()
 
     def single_e_n_capture_event(self):
-        self.LAr_n_single_test()
-        # self.Capture_n_scatter_spectrum()
-        # self.single_n_find_gamma_e()
+        # self.LAr_n_single_test()
+        self.Capture_n_scatter_spectrum()
+        self.single_n_find_gamma_e()
         # self.Capture_n_scatter_spectrum_loop()
         # self.single_n_find_gamma_e_loop()
     def Gamma_spectrum(self):
