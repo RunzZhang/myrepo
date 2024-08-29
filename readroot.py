@@ -143,6 +143,7 @@ class ReadRoot():
 
         # put the updated event_number back to data frame
         self.df.update(pd.DataFrame({'Event': event_number}))
+        print(self.df.head(100))
     def string_summary(self):
         process_clean=[]
         df_process = self.df[:]["Process"].to_list()
