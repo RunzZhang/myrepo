@@ -221,7 +221,7 @@ class ReadRoot():
     def Capture_n_scatter_spectrum(self):
 
         self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')][['Event','Track ID']]
-        self.df_head = self.df.head(1000)
+        self.df_head = self.df.head(10000)
         self.df_Nscatter = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Volume','Track ID', 'Parent ID']]
