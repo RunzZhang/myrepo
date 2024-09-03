@@ -221,10 +221,11 @@ class ReadRoot():
     def Capture_n_scatter_spectrum(self):
 
         self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')][['Event','Track ID']]
+        self.df_head = self.df.head(1000)
         self.df_Nscatter = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Volume','Track ID', 'Parent ID']]
-        self.df_Nscatter.to_csv(self.base_path + "dmx_single_n_gamma_CF_scatter_list.csv", index=False)
+        self.df_head.to_csv(self.base_path + "dmx_single_n_gamma_CF_head_list.csv", index=False)
         self.df_Ninelastic = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Track ID']]
