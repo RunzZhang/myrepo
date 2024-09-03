@@ -8,8 +8,8 @@ import math
 #from matplotlib.ticker import (LogLocator, MultipleLocator, AutoMinorLocator)
 import matplotlib.ticker as ticker
 
-filename = "/data/runzezhang/result/TN_sims2/CF252BigCap6,10Compt_3.root" #Sap5cmx7.5cm3cmPad10cm25cmAmLi
-filename1 = "/data/runzezhang/result/TN_sims2/CF252BigEl6,10Compt_3.root" #EdepSap5cmx7.5cm3cmPad10cm25cmAmLi
+filename = "/data/runzezhang/result/TN_sims2/CF252BigCap6,10Compt_4.root" #Sap5cmx7.5cm3cmPad10cm25cmAmLi
+filename1 = "/data/runzezhang/result/TN_sims2/CF252BigEl6,10Compt_4.root" #EdepSap5cmx7.5cm3cmPad10cm25cmAmLi
 threshold = 1125
 highethreshold = 16700
 
