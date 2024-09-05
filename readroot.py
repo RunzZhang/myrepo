@@ -221,11 +221,11 @@ class ReadRoot():
     def Capture_n_scatter_spectrum(self):
 
         self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')][['Event','Track ID']]
-        self.df_head = self.df[(self.df["Event"]==580)|(self.df["Event"]==581)|(self.df["Event"]==581)][["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV", "Volume","Process"]]
+        self.df_head = self.df[(self.df["Event"]==2905)|(self.df["Event"]==2906)|(self.df["Event"]==2907)][["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV", "Volume","Process"]]
         self.df_Nscatter = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Volume','Track ID', 'Parent ID']]
-        self.df_head.to_csv(self.base_path + "dmx_single_n_gamma_581.csv", index=False)
+        self.df_head.to_csv(self.base_path + "dmx_single_n_gamma_2906.csv", index=False)
         self.df_Ninelastic = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Track ID']]
