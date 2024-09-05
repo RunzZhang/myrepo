@@ -291,6 +291,17 @@ class ReadRoot():
         self.df_Ncapture_step = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] != 'LAr_phys')][
             ['Event', 'Track ID','Step ID']]
+        list_scatter =self.df_Nscatter["Event"].unique()
+        list_capture = self.df_Ncapture_step["Event"].unique()
+        print("Scaterr unique", self.df_Nscatter["Event"].unique())
+        print("capture unique", self.df_Ncapture_step["Event"].unique())
+        offset_list = []
+        # check if there is +-1 relationship
+        for i in range(len(list_scatter)):
+            for j in range(len(list_capture)):
+                if abs(int(list_scatter[i])-int(list_capture[j]))<=1:
+                    offset_list.append(int(list_scatter[i]))
+        print("offsetlist", offset_list)
         self.df_Nscatter_wo_step = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (
                     self.df["Volume"] == 'LAr_phys')][
@@ -413,10 +424,10 @@ class ReadRoot():
 
     def single_e_n_capture_event(self):
         # self.LAr_n_single_test()
-        self.Capture_n_scatter_spectrum()
-        self.single_n_find_gamma_e()
-        # self.Capture_n_scatter_spectrum_loop()
-        # self.single_n_find_gamma_e_loop()
+        # self.Capture_n_scatter_spectrum()
+        # self.single_n_find_gamma_e()
+        self.Capture_n_scatter_spectrum_loop()
+        self.single_n_find_gamma_e_loop()
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv(self.base_path +"dmx_gamma.csv")
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
