@@ -299,7 +299,7 @@ class ReadRoot():
         # check if there is +-1 relationship
         for i in range(len(list_scatter)):
             for j in range(len(list_capture)):
-                if abs(int(list_scatter[i])-int(list_capture[j]))<=1:
+                if int(list_scatter[i])-int(list_capture[j])==-1:
                     offset_list.append(int(list_scatter[i]))
         print("offsetlist", offset_list)
         self.df_Nscatter_wo_step = self.df[
