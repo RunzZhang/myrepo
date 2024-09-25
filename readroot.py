@@ -114,8 +114,8 @@ class ReadRoot():
         self.modify_df()
 
         # self.gamma_event()
-        # self.LAr_gamma_event()
-        self.single_e_n_capture_event()
+        self.LAr_gamma_event()
+        # self.single_e_n_capture_event()
         # self.FN_spectrum_v2()
         # self.plot_elastic()
 
@@ -653,7 +653,7 @@ class ReadRoot():
         # plt.hist(self.electron_recoiled_list, bins=100)
         plt.hist(p_observed, bins=100)
         print("output len",len(p_observed))
-        with open("/data/runzezhang/result/TN_e_sims/Ar_photon_AmLi2.csv", 'w', newline='') as myfile:
+        with open(self.base_path2+"Ar_photon_AmLi2.csv", 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(p_observed)
         plt.xlabel("Obeserved Photon per Event")
