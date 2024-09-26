@@ -4,8 +4,9 @@ import csv
 import numpy as np
 class SN():
     def __init__(self):
-        # self.old_read_files()
-        self.read_files_s_to_N1()
+        self.base_path = '/data/runzezhang/result/TN_sims3/'
+        self.old_read_files()
+        # self.read_files_s_to_N1()
 
 
     def old_read_files(self):
@@ -15,7 +16,7 @@ class SN():
         # self.rate = 0.56 #AmLi neutron rate
         self.G4_events= 1E6
         self.G4_sig_time=(self.G4_events / self.rate)
-        with open("/data/runzezhang/result/TN_e_sims/Ar_photon_CF2.csv", 'r') as file:
+        with open(self.base_path+"Ar_photon_CF2.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
@@ -28,7 +29,8 @@ class SN():
 
         print("capture event number", len(self.sig_raw_list))
         self.G4_noise_time = 1E7/self.rate
-        with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'r') as file:
+        # with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'r') as file:
+        with open(self.base_path + "photon_capture_n_sing_scatterg_CF.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
@@ -48,7 +50,7 @@ class SN():
         self.plot_sn(threshold_list)
         self.hist_info()
     def read_files_s_to_N1(self):
-        self.base_path = '/data/runzezhang/result/TN_sims3/'
+
         # self.capture_ratio = 1.164E-3 # 1125eV
         # self.capture_ratio = 0.121 # 400 eV
         self.capture_ratio = 1 # no cut
