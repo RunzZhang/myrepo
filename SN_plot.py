@@ -48,7 +48,7 @@ class SN():
         self.plot_sn(threshold_list)
         self.hist_info()
     def read_files_s_to_N1(self):
-        self.base_path = '/data/runzezhang/result/TN_sims3'
+        self.base_path = '/data/runzezhang/result/TN_sims3/'
         # self.capture_ratio = 1.164E-3 # 1125eV
         # self.capture_ratio = 0.121 # 400 eV
         self.capture_ratio = 1 # no cut
