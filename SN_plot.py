@@ -5,8 +5,8 @@ import numpy as np
 class SN():
     def __init__(self):
         self.base_path = '/data/runzezhang/result/TN_sims3/'
-        self.old_read_files()
-        # self.read_files_s_to_N1()
+        # self.old_read_files()
+        self.read_files_s_to_N1()
 
 
     def old_read_files(self):
