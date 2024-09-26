@@ -101,7 +101,7 @@ class ReadRoot():
     def __init__(self):
         self.base_path = "/data/runzezhang/result/TN_sims2/"
         self.base_path2 = "/data/runzezhang/result/TN_sims3/"
-        self.filepath = self.base_path +"dmx_lr.root"
+        self.filepath = self.base_path +"dmx_AmLi.root"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
@@ -114,8 +114,8 @@ class ReadRoot():
         self.modify_df()
 
         # self.gamma_event()
-        self.LAr_gamma_event()
-        # self.single_e_n_capture_event()
+        # self.LAr_gamma_event()
+        self.single_e_n_capture_event()
         # self.FN_spectrum_v2()
         # self.plot_elastic()
 
@@ -364,7 +364,7 @@ class ReadRoot():
         # n_list = self.LAr_n_merged["Event"].to_list()
         self.N_check = self.df[self.df["Event"].isin(n_list) & (
                 (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')| (self.df["name"] == 'gamma'))]
-        self.N_check.to_csv(self.base_path2 + "dmx_single_n_gamma_CF_neutron_list_loop.csv", index=False)
+        self.N_check.to_csv(self.base_path2 + "dmx_single_n_gamma_AmLi_neutron_list_loop.csv", index=False)
         # print(self.LAr_n_merged)
         # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
         # event_list  =  self.N_check["Event"].unique()
@@ -552,7 +552,7 @@ class ReadRoot():
         plt.xlabel("Obeserved Photon per Event")
         plt.show()
     def single_n_find_gamma_e_loop(self):
-        self.df_gamma_rw = pd.read_csv(self.base_path2 + "dmx_single_n_gamma_CF_neutron_list_loop.csv")
+        self.df_gamma_rw = pd.read_csv(self.base_path2 + "dmx_single_n_gamma_AmLi_neutron_list_loop.csv")
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
@@ -591,7 +591,7 @@ class ReadRoot():
         print("photon observed number ", num, len(p_observed))
         print("max", max(p_observed), "\n", "min", min(p_observed))
         # plt.hist(self.electron_recoiled_list, bins=100)
-        with open(self.base_path2+"/photon_capture_n_sing_scatterg_CF.csv", 'w', newline='') as myfile:
+        with open(self.base_path2+"/photon_capture_n_sing_scatterg_AmLi.csv", 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(p_observed)
         plt.hist(p_observed, bins=100)
