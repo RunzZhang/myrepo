@@ -5,8 +5,8 @@ import numpy as np
 class SN():
     def __init__(self):
         self.base_path = '/data/runzezhang/result/TN_sims3/'
-        # self.old_read_files()
-        self.read_files_s_to_N1()
+        self.old_read_files()
+        # self.read_files_s_to_N1()
 
 
     def old_read_files(self):
@@ -35,7 +35,8 @@ class SN():
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
             # Convert the strings to floats
-            self.noise_raw_list = [float(value) * 10 * 0.03 * 0.2 / (1000) for value in number_list]
+            # self.noise_raw_list = [float(value) * 10 * 0.03 * 0.2 / (1000) for value in number_list]
+            self.noise_raw_list = [float(value)  for value in number_list]
 
         # self.noise_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\scatter_spectrum.csv', quoting=csv.QUOTE_ALL)
         # self.noise_raw_list = self.noise_raw_df.columns.to_list()
