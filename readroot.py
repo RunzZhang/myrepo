@@ -252,7 +252,7 @@ class ReadRoot():
         # print(self.LAr_n_merged)
         # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
 
-        max_values = self.N_check[( (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])["Recoiled/keV"].idmax().reset_index()
+        max_values = self.N_check[( (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])["Recoiled/keV"].idxmax().reset_index()
         print(max_values.head(20))
 
         # add gamma up
