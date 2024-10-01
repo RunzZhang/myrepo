@@ -101,7 +101,7 @@ class ReadRoot():
     def __init__(self):
         self.base_path = "/data/runzezhang/result/TN_sims3/"
         self.base_path2 = "/data/runzezhang/result/TN_sims3/"
-        self.filepath = self.base_path +"dmx_AmLi.root"
+        self.filepath = self.base_path +"dmx_CF2.root"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
@@ -114,8 +114,8 @@ class ReadRoot():
         self.modify_df()
 
         # self.gamma_event()
-        # self.Huge_scatter_event()
-        self.LAr_gamma_event()
+        self.Huge_scatter_event()
+        # self.LAr_gamma_event()
         # self.single_e_n_capture_event()
         # self.FN_spectrum_v2()
         # self.plot_elastic()
