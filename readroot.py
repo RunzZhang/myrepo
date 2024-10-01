@@ -114,6 +114,7 @@ class ReadRoot():
         self.modify_df()
 
         # self.gamma_event()
+        # self.Huge_scatter_event()
         self.LAr_gamma_event()
         # self.single_e_n_capture_event()
         # self.FN_spectrum_v2()
@@ -219,6 +220,66 @@ class ReadRoot():
               self.df_cap_gamma_merged["Event"].unique()[:20])
         # save these gamma event
         self.df_cap_gamma_merged.to_csv(self.base_path +"dmx_gamma_LAr_AmLi2.csv", index=False)
+
+
+    def Huge_scatter_spectrum(self):
+
+        self.df_Nscatter = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Volume', 'Track ID', 'Parent ID']]
+        self.df_Ninelastic = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
+                        self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Track ID']]
+        print("inelastic", self.df_Ninelastic.head(10))
+
+        (self.df_sing_Nscatter, self.df_multi_Nscatter) = self.find_single_n_multi(self.df_Nscatter, "Event", "Volume")
+
+        print("sing", self.df_sing_Nscatter)
+        print("multi", self.df_multi_Nscatter)
+        # self.df_cap_gamma = pd.DataFrame('Event','Track ID')
+        print("len", len(self.df_Ncapture.index))
+        merged_df = pd.merge(self.df_sing_Nscatter, self.df_Ninelastic, on=['Event'], how='left', indicator=True)
+        print("merged_xor,\n", merged_df.head(10))
+
+        self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) ][
+            ['Event']]
+        # print("LAr recoiled",self.LAr_recoiled)
+        self.LAr_n_merged = pd.merge(self.df_sing_Nscatter, self.LAr_recoiled, on=['Event'], how='inner')
+        n_list = self.LAr_n_merged["Event"].to_list()
+        self.N_check = self.df[self.df["Event"].isin(n_list) & (
+                    (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))]
+        self.N_check.to_csv(self.base_path2 + "dmx_single_n_largescatter_CF_neutron_list.csv", index=False)
+        # print(self.LAr_n_merged)
+        # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
+
+        max_values = self.N_check[( (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])["Recoiled/keV"].idmax().reset_index()
+        print(max_values.head(20))
+
+        # add gamma up
+        self.Ar_recoiled_list = max_values["Recoiled/keV"].to_list()
+        p_observed = []
+        for i in range(len(self.Ar_recoiled_list)):
+            # 40 /keV 0.03 and 0.2 PCE and PDE
+            if i > 1E-6:
+                pho_num = self.Ar_recoiled_list[i] * 1E6 * 10 * 0.03 * 0.2 / (1000)
+                if pho_num > 1:
+                    p_observed.append(pho_num)
+
+        num = 0
+        for i in p_observed:
+            if i >= 1:
+                num += 1
+        print("photon observed number ", num, len(p_observed))
+        print("max", max(p_observed), "\n", "min", min(p_observed))
+        # plt.hist(self.Ar_recoiled_list, bins=100)
+        with open("/data/runzezhang/result/TN_sims3/n_huge_scatterg_CF.csv", 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(p_observed)
+        plt.hist(p_observed, bins=100)
+        plt.xlabel("Obeserved Photon per Event")
+        plt.show()
+
     def Capture_n_scatter_spectrum(self):
 
         self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')][['Event','Track ID']]
@@ -415,6 +476,10 @@ class ReadRoot():
         self.find_gamma_e()
         self.check_capture()
         # self.plot_gamma()
+
+    def Huge_scatter_event(self):
+        # single scatter spectrum
+        self.Huge_scatter_spectrum()
 
     def LAr_gamma_event(self):
         # for liquid argon capture
