@@ -238,7 +238,6 @@ class ReadRoot():
         print("sing", self.df_sing_Nscatter)
         print("multi", self.df_multi_Nscatter)
         # self.df_cap_gamma = pd.DataFrame('Event','Track ID')
-        print("len", len(self.df_Ncapture.index))
         merged_df = pd.merge(self.df_sing_Nscatter, self.df_Ninelastic, on=['Event'], how='left', indicator=True)
         print("merged_xor,\n", merged_df.head(10))
 
