@@ -101,7 +101,8 @@ class ReadRoot():
     def __init__(self):
         self.base_path = "/data/runzezhang/result/TN_sims3/"
         self.base_path2 = "/data/runzezhang/result/TN_sims3/"
-        self.filepath = self.base_path +"dmx_lr.root"
+        # self.filepath = self.base_path +"dmx_lr.root"
+        self.filepath = self.base_path + "dmx_AmLi.root"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
@@ -248,7 +249,7 @@ class ReadRoot():
         n_list = self.LAr_n_merged["Event"].to_list()
         self.N_check = self.df[self.df["Event"].isin(n_list) & (
                     (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))]
-        self.N_check.to_csv(self.base_path2 + "dmx_single_n_largescatter_CF_neutron_list.csv", index=False)
+        self.N_check.to_csv(self.base_path2 + "dmx_single_n_largescatter_AmLi_neutron_list.csv", index=False)
         # print(self.LAr_n_merged)
         # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
 
@@ -272,7 +273,7 @@ class ReadRoot():
         print("photon observed number ", num, len(p_observed))
         print("max", max(p_observed), "\n", "min", min(p_observed))
         # plt.hist(self.Ar_recoiled_list, bins=100)
-        with open("/data/runzezhang/result/TN_sims3/n_huge_scatterg_CF.csv", 'w', newline='') as myfile:
+        with open("/data/runzezhang/result/TN_sims3/n_huge_scatterg_AmLi.csv", 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(p_observed)
         plt.hist(p_observed, bins=100)
