@@ -16,7 +16,7 @@ class SN():
         self.rate = 0.56 #AmLi neutron rate
         self.G4_events= 1E6
         self.G4_sig_time=(self.G4_events / self.rate)
-        with open(self.base_path+"Ar_photon_AmLi2.csv", 'r') as file:
+        with open(self.base_path+"Ar_photon_CF2.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
