@@ -101,7 +101,7 @@ class ReadRoot():
     def __init__(self):
         self.base_path = "/data/runzezhang/result/TN_sims3/"
         self.base_path2 = "/data/runzezhang/result/TN_sims3/"
-        self.filepath = self.base_path +"dmx_CF2.root"
+        self.filepath = self.base_path +"dmx_lr.root"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
