@@ -5,6 +5,7 @@ import numpy as np
 class SN():
     def __init__(self):
         self.base_path = '/data/runzezhang/result/TN_sims3/'
+        self.plot_path=  '/data/runzezhang/result/TN_sims3/plot/'
         self.old_read_files()
         # self.read_files_s_to_N1()
 
@@ -135,7 +136,9 @@ class SN():
         plt.ylabel("signal/noise rate #/s", fontsize=16)
         plt.yscale('log')
         plt.legend()
-        plt.show()
+        plot_name = "sn1"
+        plt.savefig(self.plot_path+plot_name)
+        # plt.show()
     def hist_noise1_info(self):
         sig_counts, sig_bin_edges = np.histogram(self.sig_raw_list, bins=100)
         sig_normalized_counts = sig_counts*self.capture_ratio/self.G4_sig_time
