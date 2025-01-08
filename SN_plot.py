@@ -162,7 +162,9 @@ class SN():
         print("sig total rate", len(self.sig_raw_list)*self.capture_ratio/self.G4_sig_time)
         print("back", len(self.noise1) /self.G4_sig_time)
         plt.legend()
-        plt.show()
+        plot_name = "hist_noise1"
+        plt.savefig(self.plot_path + plot_name)
+        # plt.show()
     def prepare(self, threshold):
         self.sig = [value for value in self.sig_raw_list if value >= threshold]
         self.noise = [value for value in self.noise_raw_list if value >= threshold]
@@ -224,7 +226,9 @@ class SN():
         fig.legend(lines, labels, loc='upper right', bbox_to_anchor=(0.9, 0.85))
         # Show the plot
         plt.title("CF252 Signal/Noise 1125 eV", fontsize = 16)
-        plt.show()
+        plot_name = "CF252 Signal/Noise 1125 eV"
+        plt.savefig(self.plot_path + plot_name)
+        # plt.show()
 
 
 
