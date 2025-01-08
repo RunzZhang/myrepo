@@ -175,7 +175,7 @@ class SN():
         plot_name = "hist_noise1"
         plt.savefig(self.plot_path + plot_name)
         # plt.show()
-    def prepare(self, threshold):
+    def prepare(self, threshold): # filter the value above the threshold
         self.sig = [value for value in self.sig_raw_list if value >= threshold]
         self.noise = [value for value in self.noise_raw_list if value >= threshold]
         sig_len = len(self.sig)
@@ -198,10 +198,11 @@ class SN():
                 SN_ratio.append((sig_num*self.capture_ratio/self.G4_sig_time)/(noise_num/self.G4_noise_time))
             else:
                 point.append(i)
-                print("point", point)
+                # print("point", point)
                 SN_ratio.append(max(SN_ratio))
         print("sig rate",max(signal_number_list))
-        print("sig rate after cut", signal_number_list[point[0]])
+        if point != []:
+            print("sig rate after cut", signal_number_list[point[0]])
         print("noise stat N", len(self.noise_raw_list))
         print("noise rate",max(noise_number_list))
         print("SN",max(SN_ratio))
