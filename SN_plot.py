@@ -50,8 +50,9 @@ class SN():
         print("max",max_noise_photon)
         # form the threshold function
         threshold_list  = []
-        bin_size = round(max_noise_photon/10)
-        for i in range(0,max_noise_photon):
+        bin_size = round(max_noise_photon/10)# if the max noise photon is too large, then we need to modity this bc of RAM
+        # for i in range(0,max_noise_photon):
+        for i in range(0,round(max_noise_photon*0.1)):
             if i%bin_size==0:
                 percentage = (i / max_noise_photon) * 100
                 print(f"Progress: {percentage:.0f}%")
