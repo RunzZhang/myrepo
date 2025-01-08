@@ -50,8 +50,11 @@ class SN():
         print("max",max_noise_photon)
         # form the threshold function
         threshold_list  = []
+        bin_size = round(max_noise_photon/10)
         for i in range(0,max_noise_photon):
-                            # print(i)
+            if i%bin_size==0:
+                percentage = (i / max_noise_photon) * 100
+                print(f"Progress: {percentage:.0f}%")
             threshold_list.append(i)
         print("ready to generate graph")
         self.plot_sn(threshold_list)
