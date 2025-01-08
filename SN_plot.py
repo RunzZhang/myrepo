@@ -51,7 +51,7 @@ class SN():
         # form the threshold function
         threshold_list  = []
         for i in range(0,max_noise_photon):
-            print(i)
+                            # print(i)
             threshold_list.append(i)
         print("ready to generate graph")
         self.plot_sn(threshold_list)
