@@ -198,6 +198,7 @@ class SN():
                 SN_ratio.append((sig_num*self.capture_ratio/self.G4_sig_time)/(noise_num/self.G4_noise_time))
             else:
                 point.append(i)
+                print("point", point)
                 SN_ratio.append(max(SN_ratio))
         print("sig rate",max(signal_number_list))
         print("sig rate after cut", signal_number_list[point[0]])
