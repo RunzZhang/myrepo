@@ -233,7 +233,7 @@ class ReadRoot():
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
                         self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Track ID']]
-
+        
         self.df_capture = self.df[(["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][['Event', 'Volume', 'Track ID', 'Parent ID']]
         print("inelastic", self.df_Ninelastic.head(10))
 
@@ -243,12 +243,13 @@ class ReadRoot():
         print("multi", self.df_multi_Nscatter)
         # self.df_cap_gamma = pd.DataFrame('Event','Track ID')
         merged_df = pd.merge(self.df_sing_Nscatter, self.df_Ninelastic, on=['Event'], how='left', indicator=True)
-        print("merged_xor,\n", merged_df.head(10))
         filtered_df = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge'])
+        print("merged_xor,\n", filtered_df.head(10))
         #2nd filter filter out ncapture recoiled energy
         merged_df2 = pd.merge(filtered_df, self.df_capture, on=['Event'], how='left', indicator=True)
-        print("merged_xor,\n", merged_df2.head(10))
+
         filtered_df2 = merged_df2[merged_df2['_merge'] == 'left_only'].drop(columns=['_merge'])
+        print("merged_xor,\n", filtered_df.head(10))
 
         self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) ][
             ['Event']]
