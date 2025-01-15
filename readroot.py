@@ -276,10 +276,8 @@ class ReadRoot():
         # plt.hist(self.Ar_recoiled_list, bins=100)
         # check event 1256
         self.df_event_1256 = self.df[
-            (self.df["Event"] == 1256)][['Event', 'name','Volume', "Recoiled/keV",'Track ID', 'Parent ID']]
-        with open("/data/runzezhang/result/TN_sims3/event1256.csv", 'w', newline='') as myfile0:
-            wr = csv.writer(myfile0)
-            wr.writerow(self.df_event_1256)
+            self.df["Event"] == 1256][["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV", "Volume","Process"]]
+        self.df_event_1256.to_csv("/data/runzezhang/result/TN_sims3/event1256.csv", index=False)
         with open("/data/runzezhang/result/TN_sims3/n_huge_scatterg_AmLi2.csv", 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(p_observed)
