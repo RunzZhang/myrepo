@@ -101,6 +101,7 @@ class ReadRoot():
     def __init__(self):
         self.base_path = "/data/runzezhang/result/TN_sims3/"
         self.base_path2 = "/data/runzezhang/result/TN_sims3/"
+        self.plot_path = '/data/runzezhang/result/TN_sims3/plot/'
         # self.filepath = self.base_path +"dmx_lr.root"
         self.filepath = self.base_path + "dmx_AmLi.root"
         self.file = uproot.open(self.filepath)["tree"]
@@ -273,12 +274,13 @@ class ReadRoot():
         print("photon observed number ", num, len(p_observed))
         print("max", max(p_observed), "\n", "min", min(p_observed))
         # plt.hist(self.Ar_recoiled_list, bins=100)
-        with open("/data/runzezhang/result/TN_sims3/n_huge_scatterg_AmLi.csv", 'w', newline='') as myfile:
+        with open("/data/runzezhang/result/TN_sims3/n_huge_scatterg_AmLi2.csv", 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(p_observed)
         plt.hist(p_observed, bins=100)
         plt.xlabel("Obeserved Photon per Event")
-        plt.show()
+        # plt.show()
+        plt.savefig(self.plot_path+"n_huge_scatter_AmLi2.png")
 
     def Capture_n_scatter_spectrum(self):
 
