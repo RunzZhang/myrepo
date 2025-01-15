@@ -249,7 +249,7 @@ class ReadRoot():
         merged_df2 = pd.merge(filtered_df, self.df_capture, on=['Event'], how='left', indicator=True)
 
         filtered_df2 = merged_df2[merged_df2['_merge'] == 'left_only'].drop(columns=['_merge'])
-        print("merged_xor,\n", filtered_df.head(10))
+        print("merged_xor,\n", filtered_df2.head(10))
 
         self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) ][
             ['Event']]
