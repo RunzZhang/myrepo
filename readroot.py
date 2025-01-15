@@ -234,7 +234,9 @@ class ReadRoot():
                         self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Track ID']]
         
-        self.df_capture = self.df[(["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][['Event', 'Volume', 'Track ID', 'Parent ID']]
+        self.df_capture = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Volume','Track ID']]
         self.df_capture[["Event"]].to_csv(self.base_path2 + "capture_event_list.csv", index=False)
         print("capture",self.df_capture.head(10))
         print("inelastic", self.df_Ninelastic.head(10))
