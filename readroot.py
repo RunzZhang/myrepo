@@ -291,7 +291,7 @@ class ReadRoot():
         # check event 1256
         self.df_event_1542 = self.df[
             self.df["Event"] == 1542][["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV", "Volume","Process"]]
-        self.df_event_1256.to_csv("/data/runzezhang/result/TN_sims3/event1256.csv", index=False)
+        self.df_event_1542.to_csv("/data/runzezhang/result/TN_sims3/event1542.csv", index=False)
         with open("/data/runzezhang/result/TN_sims3/n_huge_scatterg_AmLi2.csv", 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(p_observed)
