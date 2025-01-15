@@ -255,7 +255,7 @@ class ReadRoot():
         filtered_df2 = merged_df2[merged_df2['_merge'] == 'left_only'].drop(columns=['_merge'])
         print("merged_xor,\n", filtered_df2.head(10))
 
-        self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))&(self.df["Recoiled/keV"]>0.00001) ][
+        self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))&(self.df["Recoiled/keV"]>0) ][
             ['Event']]
         # print("LAr recoiled",self.LAr_recoiled)
         # filtered df to remove nCapture event
@@ -289,8 +289,8 @@ class ReadRoot():
         print("max", max(p_observed), "\n", "min", min(p_observed))
         # plt.hist(self.Ar_recoiled_list, bins=100)
         # check event 1256
-        self.df_event_1256 = self.df[
-            self.df["Event"] == 1256][["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV", "Volume","Process"]]
+        self.df_event_1542 = self.df[
+            self.df["Event"] == 1542][["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV", "Volume","Process"]]
         self.df_event_1256.to_csv("/data/runzezhang/result/TN_sims3/event1256.csv", index=False)
         with open("/data/runzezhang/result/TN_sims3/n_huge_scatterg_AmLi2.csv", 'w', newline='') as myfile:
             wr = csv.writer(myfile)
