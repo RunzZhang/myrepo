@@ -17,7 +17,8 @@ class SN():
         # self.rate = 0.56 #AmLi neutron rate
         self.G4_events= 1E6
         self.G4_sig_time=(self.G4_events / self.rate)
-        with open(self.base_path+"Ar_photon_CF2.csv", 'r') as file:
+        with open(self.base_path + "Ar_photon_AmLi2.csv", 'r') as file:
+        # with open(self.base_path+"Ar_photon_CF2.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
@@ -32,9 +33,9 @@ class SN():
         self.G4_noise_time = 1E7/self.rate
         # with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'r') as file:
         # Noise 1
-        # with open(self.base_path + "photon_capture_n_sing_scatterg_AmLi.csv", 'r') as file:
+        with open(self.base_path + "photon_capture_n_sing_scatterg_AmLi.csv", 'r') as file:
         # Noise 2
-        with open(self.base_path + "n_huge_scatterg_CF2.csv", 'r') as file:
+        # with open(self.base_path + "n_huge_scatterg_CF2.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
