@@ -45,6 +45,7 @@ class SN():
         # self.noise_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\scatter_spectrum.csv', quoting=csv.QUOTE_ALL)
         # self.noise_raw_list = self.noise_raw_df.columns.to_list()
         # self.noise_raw_list = list(map(float, self.noise_raw_list))
+
         plt.hist(self.noise_raw_list, bins= 1000)
         plt.xlabel("photon number")
         plt.ylabel("frequency")

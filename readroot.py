@@ -332,7 +332,7 @@ class ReadRoot():
         print("merged_xor,\n", filtered_df2.head(10))
 
         self.LAr_recoiled = \
-        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/keV"] > 0)][
+        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/keV"] > 1E-6)][
             ['Event']]
         # print("LAr recoiled",self.LAr_recoiled)
         # filtered df to remove nCapture event
