@@ -34,12 +34,12 @@ class SN():
         # Noise 1
         # with open(self.base_path + "photon_capture_n_sing_scatterg_AmLi.csv", 'r') as file:
         # Noise 2
-        with open(self.base_path + "n_huge_scatterg_CF.csv", 'r') as file:
+        with open(self.base_path + "n_huge_scatterg_CF2.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
             # Convert the strings to floats
-            self.noise_raw_list = [float(value) * 10 * 0.03 * 0.2 / (1000) for value in number_list]
+            self.noise_raw_list = [float(value) for value in number_list]
             # self.noise_raw_list = [float(value)  for value in number_list]
 
         # self.noise_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\scatter_spectrum.csv', quoting=csv.QUOTE_ALL)
