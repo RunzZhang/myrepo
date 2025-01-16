@@ -367,11 +367,11 @@ class ReadRoot():
         print("max", max(p_observed), "\n", "min", min(p_observed))
         # plt.hist(self.Ar_recoiled_list, bins=100)
         # check event 1256
-        self.df_event_1542 = self.df[
-            self.df["Event"] == 1542][
+        self.df_event_110 = self.df[
+            self.df["Event"] == 110][
             ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "Kinetic/keV", "Recoiled/keV", "Volume",
              "Process"]]
-        self.df_event_1542.to_csv("/data/runzezhang/result/TN_sims3/event1542.csv", index=False)
+        self.df_event_110.to_csv("/data/runzezhang/result/TN_sims3/event110.csv", index=False)
         with open("/data/runzezhang/result/TN_sims3/n_huge_scatterg_CF2.csv", 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(p_observed)
