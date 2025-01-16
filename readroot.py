@@ -102,8 +102,8 @@ class ReadRoot():
         self.base_path = "/data/runzezhang/result/TN_sims3/"
         self.base_path2 = "/data/runzezhang/result/TN_sims3/"
         self.plot_path = '/data/runzezhang/result/TN_sims3/plot/'
-        self.filepath = self.base_path +"dmx_lr.root"
-        # self.filepath = self.base_path + "dmx_AmLi.root"
+        # self.filepath = self.base_path +"dmx_lr.root"
+        self.filepath = self.base_path + "dmx_AmLi.root"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
@@ -579,8 +579,8 @@ class ReadRoot():
 
     def Huge_scatter_event(self):
         # single scatter spectrum
-        # self.Huge_scatter_spectrum()
-        self.Huge_scatter_spectrum_CF()
+        self.Huge_scatter_spectrum()
+        # self.Huge_scatter_spectrum_CF()
 
     def LAr_gamma_event(self):
         # for liquid argon capture
