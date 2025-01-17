@@ -542,7 +542,7 @@ class ReadRoot():
             ['Event', 'Track ID','Step ID']]
         list_scatter =self.df_Nscatter["Event"].unique()
         list_capture = self.df_Ncapture_step["Event"].unique()
-        print("Scaterr unique", self.df_Nscatter["Event"].unique())
+        print("Scaterr unique", self.df_Nscatter["Event"].unique(),len(self.df_Nscatter["Event"].unique()))
         print("capture unique", self.df_Ncapture_step["Event"].unique())
         offset_list = []
         # check if there is +-1 relationship
