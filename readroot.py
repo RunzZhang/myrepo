@@ -116,9 +116,9 @@ class ReadRoot():
         self.modify_df()
 
         # self.gamma_event()
-        # self.Huge_scatter_event()
+        self.Huge_scatter_event()
         # self.LAr_gamma_event()
-        self.single_e_n_capture_event()
+        # self.single_e_n_capture_event()
         # self.FN_spectrum_v2()
         # self.plot_elastic()
 
@@ -238,6 +238,7 @@ class ReadRoot():
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Volume','Track ID']]
         self.df_capture[["Event"]].to_csv(self.base_path2 + "capture_event_list.csv", index=False)
+        print("Ela",len(self.df_Nscatter["Event"].unique()))
         print("capture",self.df_capture.head(10))
         print("inelastic", self.df_Ninelastic.head(10))
 
