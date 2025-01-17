@@ -17,8 +17,8 @@ class SN():
         # self.rate = 0.56 #AmLi neutron rate
         self.G4_events= 1E6
         self.G4_sig_time=(self.G4_events / self.rate)
-        with open(self.base_path + "Ar_photon_AmLi2.csv", 'r') as file:
-        # with open(self.base_path+"Ar_photon_CF2.csv", 'r') as file:
+        # with open(self.base_path + "Ar_photon_AmLi2.csv", 'r') as file:
+        with open(self.base_path+"Ar_photon_CF2.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
@@ -34,8 +34,9 @@ class SN():
         # with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'r') as file:
         # Noise 1
         # with open(self.base_path + "photon_capture_n_sing_scatterg_AmLi.csv", 'r') as file:
+        with open(self.base_path + "photon_capture_n_sing_scatterg_CF.csv", 'r') as file:
         # Noise 2
-        with open(self.base_path + "n_huge_scatterg_AmLi2.csv", 'r') as file:
+        # with open(self.base_path + "n_huge_scatterg_AmLi2.csv", 'r') as file:
         # with open(self.base_path + "n_huge_scatterg_CF2.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
@@ -240,9 +241,9 @@ class SN():
         labels = [line.get_label() for line in lines]
         fig.legend(lines, labels, loc='upper right', bbox_to_anchor=(0.9, 0.85))
         # Show the plot
-        plt.title("CF252 Signal/Noise 1125 eV", fontsize = 16)
-        plot_name = "CF252 Signal-Noise 1125 eV"
-        plt.savefig(self.plot_path + plot_name)
+        name = "CF252 Signal/Noise 400 eV"
+        plt.title(name, fontsize = 16)
+        plt.savefig(self.plot_path + name)
         # plt.show()
 
 
