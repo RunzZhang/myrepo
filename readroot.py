@@ -129,7 +129,6 @@ class ReadRoot():
     # for example 001002003 will be 001112223
     def reidx_event(self):
         event_number = self.df[:]["Event"].to_list()
-        print(event_number[-1])
         print(event_number[:100])
         started_point = 0
         temp_point = 1
@@ -144,7 +143,7 @@ class ReadRoot():
                 temp_point = event_number[i]
             else:
                 event_number[i] = temp_point
-        print("end", event_number[:100])
+        print("end", event_number[:100], event_number[-1])
 
         # put the updated event_number back to data frame
         self.df.update(pd.DataFrame({'Event': event_number}))
