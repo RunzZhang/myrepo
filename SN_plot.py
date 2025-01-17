@@ -11,8 +11,8 @@ class SN():
 
 # main funtion we use
     def old_read_files(self):
-        # self.capture_ratio = 1.164E-3 # 1125eV
-        self.capture_ratio = 0.121 # 400 eV
+        self.capture_ratio = 1.164E-3 # 1125eV
+        # self.capture_ratio = 0.121 # 400 eV
         self.rate = 435.6 #/s # CF neutron rate
         # self.rate = 0.56 #AmLi neutron rate
         self.G4_events= 1E6
@@ -223,7 +223,7 @@ class SN():
         labels = [line.get_label() for line in lines]
         fig.legend(lines, labels, loc='upper right', bbox_to_anchor=(0.9, 0.85))
         # Show the plot
-        name = "CF Signal Noise #2 400 eV"
+        name = "CF Signal Noise #2 1125 eV"
         plt.title(name, fontsize = 16)
         plt.savefig(self.plot_path + name)
         # plt.show()
