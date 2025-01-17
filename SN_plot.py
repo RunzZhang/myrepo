@@ -30,8 +30,8 @@ class SN():
         # self.sig_raw_list = list(map(float, self.sig_raw_list))
 
         print("capture event number", len(self.sig_raw_list))
-        self.G4_noise_time = 1E7/self.rate
-        # self.G4_noise_time = 1E6 / self.rate
+        # self.G4_noise_time = 1E7/self.rate
+        self.G4_noise_time = 1E6 / self.rate
         # with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'r') as file:
         # Noise 1
         with open(self.base_path + "photon_capture_n_sing_scatterg_AmLi.csv", 'r') as file:
