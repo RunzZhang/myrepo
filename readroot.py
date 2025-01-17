@@ -297,10 +297,14 @@ class ReadRoot():
         with open("/data/runzezhang/result/TN_sims3/n_huge_scatterg_AmLi2.csv", 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(p_observed)
+        # print photon number
         # plt.hist(p_observed, bins=100)
         # plt.xlabel("Obeserved Photon per Event")
-
+        
+        # print scatter scatter
         plt.hist(scatter_ene, bins=100)
+        plt.xscale("log")
+        plt.yscale("Log")
         print("scatter number", len(scatter_ene))
         plt.xlabel("scatter energy per Event")
         # plt.show()
