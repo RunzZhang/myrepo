@@ -656,8 +656,8 @@ class ReadRoot():
     def Huge_scatter_event(self):
         # single scatter spectrum
         # self.Huge_scatter_spectrum()
-        # self.Huge_scatter_spectrum_CF()
-        self.Huge_scatter_spectrum_CF_fake()
+        self.Huge_scatter_spectrum_CF()
+        # self.Huge_scatter_spectrum_CF_fake()
 
     def LAr_gamma_event(self):
         # for liquid argon capture
