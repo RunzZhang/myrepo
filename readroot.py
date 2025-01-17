@@ -129,6 +129,7 @@ class ReadRoot():
     # for example 001002003 will be 001112223
     def reidx_event(self):
         event_number = self.df[:]["Event"].to_list()
+        print(event_number[-1])
         print(event_number[:100])
         started_point = 0
         temp_point = 1
