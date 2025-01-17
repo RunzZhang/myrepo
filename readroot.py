@@ -116,9 +116,9 @@ class ReadRoot():
         self.modify_df()
 
         # self.gamma_event()
-        # self.Huge_scatter_event()
+        self.Huge_scatter_event()
         # self.LAr_gamma_event()
-        self.single_e_n_capture_event()
+        # self.single_e_n_capture_event()
         # self.FN_spectrum_v2()
         # self.plot_elastic()
 
