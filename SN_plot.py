@@ -241,7 +241,7 @@ class SN():
         labels = [line.get_label() for line in lines]
         fig.legend(lines, labels, loc='upper right', bbox_to_anchor=(0.9, 0.85))
         # Show the plot
-        name = "CF252 Signal/Noise 400 eV"
+        name = "CF252 Signal Noise 400 eV"
         plt.title(name, fontsize = 16)
         plt.savefig(self.plot_path + name)
         # plt.show()
