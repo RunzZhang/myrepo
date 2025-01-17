@@ -116,9 +116,9 @@ class ReadRoot():
         self.modify_df()
 
         # self.gamma_event()
-        self.Huge_scatter_event()
+        # self.Huge_scatter_event()
         # self.LAr_gamma_event()
-        # self.single_e_n_capture_event()
+        self.single_e_n_capture_event()
         # self.FN_spectrum_v2()
         # self.plot_elastic()
 
@@ -462,7 +462,7 @@ class ReadRoot():
         plt.xlabel("Obeserved Photon per Event")
         # plt.show()
         plt.savefig(self.plot_path + "n_huge_scatter_CF2_fake.png")
-    def Capture_n_scatter_spectrum(self):
+    def Capture_n_scatter_spectrum(self): # somehow logan made the cross where the id difference is 1 like compare 4 scatter with 5 photon generation
 
         self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')][['Event','Track ID']]
         self.df_head = self.df[(self.df["Event"]==5837)|(self.df["Event"]==2906)|(self.df["Event"]==2907)][["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV", "Volume","Process"]]
