@@ -11,8 +11,8 @@ class SN():
 
 
     def old_read_files(self):
-        self.capture_ratio = 1.164E-3 # 1125eV
-        # self.capture_ratio = 0.121 # 400 eV
+        # self.capture_ratio = 1.164E-3 # 1125eV
+        self.capture_ratio = 0.121 # 400 eV
         # self.rate = 435.6 #/s # CF neutron rate
         self.rate = 0.56 #AmLi neutron rate
         self.G4_events= 1E6
@@ -33,10 +33,10 @@ class SN():
         self.G4_noise_time = 1E7/self.rate
         # with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'r') as file:
         # Noise 1
-        # with open(self.base_path + "photon_capture_n_sing_scatterg_AmLi.csv", 'r') as file:
+        with open(self.base_path + "photon_capture_n_sing_scatterg_AmLi.csv", 'r') as file:
         # with open(self.base_path + "photon_capture_n_sing_scatterg_CF.csv", 'r') as file:
         # Noise 2
-        with open(self.base_path + "n_huge_scatterg_AmLi2.csv", 'r') as file:
+        # with open(self.base_path + "n_huge_scatterg_AmLi2.csv", 'r') as file:
         # with open(self.base_path + "n_huge_scatterg_CF2.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
