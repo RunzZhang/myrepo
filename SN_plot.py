@@ -15,7 +15,7 @@ class SN():
         self.capture_ratio = 0.121 # 400 eV
         self.rate = 435.6 #/s # CF neutron rate
         # self.rate = 0.56 #AmLi neutron rate
-        self.G4_events= 1E6
+        self.G4_events= 1E7
         self.G4_sig_time=(self.G4_events / self.rate)
         # with open(self.base_path + "Ar_photon_AmLi2.csv", 'r') as file:
         with open(self.base_path+"Ar_photon_CF2.csv", 'r') as file:
