@@ -11,8 +11,8 @@ class SN():
 
 # main funtion we use
     def old_read_files(self):
-        self.capture_ratio = 1.164E-3 # 1125eV
-        # self.capture_ratio = 0.121 # 400 eV
+        # self.capture_ratio = 1.164E-3 # 1125eV
+        self.capture_ratio = 0.121 # 400 eV
         self.rate = 435.6 #/s # CF neutron rate
         # self.rate = 0.56 #AmLi neutron rate
         self.G4_events= 1E6
@@ -35,10 +35,10 @@ class SN():
         # with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'r') as file:
         # Noise 1
         # with open(self.base_path + "photon_capture_n_sing_scatterg_AmLi.csv", 'r') as file:
-        with open(self.base_path + "photon_capture_n_sing_scatterg_CF.csv", 'r') as file:
+        # with open(self.base_path + "photon_capture_n_sing_scatterg_CF.csv", 'r') as file:
         # Noise 2
         # with open(self.base_path + "n_huge_scatterg_AmLi2.csv", 'r') as file:
-        # with open(self.base_path + "n_huge_scatterg_CF2.csv", 'r') as file:
+        with open(self.base_path + "n_huge_scatterg_CF2.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
@@ -69,67 +69,48 @@ class SN():
         print("ready to generate graph")
         self.plot_sn(threshold_list)
         self.hist_info()
-    def read_files_s_to_N1(self):
-
-        self.capture_ratio = 1.164E-3 # 1125eV
-        # self.capture_ratio = 0.121 # 400 eV
-        # self.capture_ratio = 1 # no cut
-        self.rate = 435.6 #/s # CF neutron rate
-        # self.rate = 0.56 #AmLi neutron rate
-        self.G4_events= 1E6
-        self.G4_sig_time=(self.G4_events / self.rate)
-        with open(self.base_path+"Ar_photon_CF2.csv", 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.sig_raw_list = [float(value) for value in number_list]
-        # self.sig_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\Ar_photon.csv', quoting=csv.QUOTE_ALL)
-        # self.sig_raw_list = self.sig_raw_df.columns.to_list()
-        #
-        # self.sig_raw_list = list(map(float, self.sig_raw_list))
-
-        print("capture event number", len(self.sig_raw_list))
-        with open(self.base_path +"photon_capture_n_sing_scatterg_CF.csv", 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.noise1 = [float(value) for value in number_list]
-        # self.sig_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\Ar_photon.csv', quoting=csv.QUOTE_ALL)
-        # self.sig_raw_list = self.sig_raw_df.columns.to_list()
-        #
-        # self.sig_raw_list = list(map(float, self.sig_raw_list))
-
-        print("background event number", len(self.noise1))
-        print("capture number", len(self.sig_raw_list))
-        # self.noise_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\scatter_spectrum.csv', quoting=csv.QUOTE_ALL)
-        # self.noise_raw_list = self.noise_raw_df.columns.to_list()
-        # self.noise_raw_list = list(map(float, self.noise_raw_list))
-        print(len(self.noise1))
-        # form the threshold function
-        self.hist_noise1_info()
-
-
-
-    # def new_read_files(self):
-    #     self.sig_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\Ar_photon.csv', quoting=csv.QUOTE_ALL)
-    #     self.sig_raw_list = self.sig_raw_df.columns.to_list()
+    # def read_files_s_to_N1(self):
     #
-    #     self.sig_raw_list = list(map(float, self.sig_raw_list))
+    #     self.capture_ratio = 1.164E-3 # 1125eV
+    #     # self.capture_ratio = 0.121 # 400 eV
+    #     # self.capture_ratio = 1 # no cut
+    #     self.rate = 435.6 #/s # CF neutron rate
+    #     # self.rate = 0.56 #AmLi neutron rate
+    #     self.G4_events= 1E6
+    #     self.G4_sig_time=(self.G4_events / self.rate)
+    #     with open(self.base_path+"Ar_photon_CF2.csv", 'r') as file:
+    #         reader = csv.reader(file)
+    #         # Read the first row (assuming single row for simplicity)
+    #         number_list = next(reader)
+    #         # Convert the strings to floats
+    #         self.sig_raw_list = [float(value) for value in number_list]
+    #     # self.sig_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\Ar_photon.csv', quoting=csv.QUOTE_ALL)
+    #     # self.sig_raw_list = self.sig_raw_df.columns.to_list()
+    #     #
+    #     # self.sig_raw_list = list(map(float, self.sig_raw_list))
     #
-    #     self.noise_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\scatter_spectrum_zip.csv', quoting=csv.QUOTE_ALL)
-    #     self.noise_raw_list = self.noise_raw_df.columns.to_list()
+    #     print("capture event number", len(self.sig_raw_list))
+    #     with open(self.base_path +"photon_capture_n_sing_scatterg_CF.csv", 'r') as file:
+    #         reader = csv.reader(file)
+    #         # Read the first row (assuming single row for simplicity)
+    #         number_list = next(reader)
+    #         # Convert the strings to floats
+    #         self.noise1 = [float(value) for value in number_list]
+    #     # self.sig_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\Ar_photon.csv', quoting=csv.QUOTE_ALL)
+    #     # self.sig_raw_list = self.sig_raw_df.columns.to_list()
+    #     #
+    #     # self.sig_raw_list = list(map(float, self.sig_raw_list))
     #
-    #     self.noise_raw_list = list(map(float, self.noise_raw_list))
-    #
-    #     # self.plot()
-    # def supress(self):
-    #     self.noise_p_raw_list = self.noise_p_raw_list[:10*len(self.sig_raw_list)]
-    #     with open("C:\\Users\\24230\\Downloads\\scatter_spectrum_zip.csv", 'w', newline='') as myfile:
-    #         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-    #         wr.writerow(self.noise_p_raw_list)
-    #     print("len",len(self.noise_p_raw_list))
+    #     print("background event number", len(self.noise1))
+    #     print("capture number", len(self.sig_raw_list))
+    #     # self.noise_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\scatter_spectrum.csv', quoting=csv.QUOTE_ALL)
+    #     # self.noise_raw_list = self.noise_raw_df.columns.to_list()
+    #     # self.noise_raw_list = list(map(float, self.noise_raw_list))
+    #     print(len(self.noise1))
+    #     # form the threshold function
+    #     self.hist_noise1_info()
+
+
     def hist_info(self):
         sig_counts, sig_bin_edges = np.histogram(self.sig_raw_list, bins=100)
         sig_normalized_counts = sig_counts*self.capture_ratio/self.G4_sig_time
@@ -242,7 +223,7 @@ class SN():
         labels = [line.get_label() for line in lines]
         fig.legend(lines, labels, loc='upper right', bbox_to_anchor=(0.9, 0.85))
         # Show the plot
-        name = "CF Signal Noise #1 1125 eV"
+        name = "CF Signal Noise #2 400 eV"
         plt.title(name, fontsize = 16)
         plt.savefig(self.plot_path + name)
         # plt.show()
