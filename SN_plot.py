@@ -30,8 +30,8 @@ class SN():
         # self.sig_raw_list = list(map(float, self.sig_raw_list))
 
         print("capture event number", len(self.sig_raw_list))
-        self.G4_noise_time = 1E7/self.rate
-        # self.G4_noise_time = 1E6 / self.rate
+        # self.G4_noise_time = 1E7/self.rate
+        self.G4_noise_time = 1E6 / self.rate
         # with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'r') as file:
         # Noise 1
         with open(self.base_path + "photon_capture_n_sing_scatterg_AmLi.csv", 'r') as file:
@@ -242,7 +242,7 @@ class SN():
         labels = [line.get_label() for line in lines]
         fig.legend(lines, labels, loc='upper right', bbox_to_anchor=(0.9, 0.85))
         # Show the plot
-        name = "AmLi Signal Noise #2 1125 eV"
+        name = "AmLi Signal Noise #1 400 eV"
         plt.title(name, fontsize = 16)
         plt.savefig(self.plot_path + name)
         # plt.show()
