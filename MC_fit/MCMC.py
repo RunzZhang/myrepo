@@ -1006,7 +1006,7 @@ class multi_MC():
         sigUp = self.sig_high
         binsize = .5
         sourceErr = .05
-        background = 0
+        background = 100
         backErr = np.round(background ** (1 / 2))
         # energies=[75,100,115,120,140]
         # efficiencies=[0,.2,.50,.8,1]
