@@ -71,6 +71,14 @@ For example:
 Where there is a directory named ThSbCo with the output of the hatch.sh run with 50 or 25 numbered subdirectories with best fit parameters inside
 """
 
+
+"""Ryan's comment
+For TN simulations the parameters to adjust: flist if the recoiled spectrum changed
+runN how many loop, threshold energy, threshold witdth, ceil and floor energy range to search for the fitting
+in def analyze, change the t parameter, which is the time for the flist to generate, the precise explanation is in the function
+time usually set as 100 hours, which is the real calibrationexperiment run time"""
+
+
 class multi_MC():
     def __init__(self):
 
@@ -193,8 +201,8 @@ class multi_MC():
         # plt.plot(min_x, min_y, color='red', label='min')
         plt.legend()
         plt.xlim(th-3*siglow, th+3*sighi)
-
-        plt.show()
+        plt.savefig("/data/runzezhang/result/SRIM_MC/Cf252_refit.png")
+        # plt.show()
 
 
 
@@ -531,7 +539,7 @@ class multi_MC():
         # N is number of events
 
         # time is calibration time
-        # t is the simulated life time
+        # t is the simulated life time for the flist in hours. i.e for 1E5 thermal neutrons captures(length of the flist), how long it takes to generate
         Data = np.loadtxt(file)
         # print("analysing...", Data[:10])
         SourceRate = (3.7 * 10 ** 6) * Activity / 100
@@ -543,9 +551,12 @@ class multi_MC():
         t = N / SourceRate  # live time in seconds
         t /= 3600  # live time in hours
         # t = 10 ** 5 / (1000)
-        t = 10**4
-        # t =10000 for thermal neutron only, 10^5 events per file and the thermal neutron rate is 10 per hour
+        # t = 10**4
+        # t =10000 for thermal neutron only, 10^5 events per file and the thermal neutron rate AmLi is 10 per hour
         # this might be optimistic but let's use this first
+        t =2000
+        # for Cf 252
+        # t= 100000/ thermal neutron rate Cf252 =1E5/50=2000
 
         Rate = self.rateFinderTrue(Recoils, T, sigLow, sigUp, t, Weights)
 
