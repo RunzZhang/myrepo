@@ -188,7 +188,7 @@ class SN():
                 # print("point", point)
                 SN_ratio.append(max(SN_ratio))
         for j in range(len(signal_number_list)):
-            if photon_n_list[j]>200:
+            if photon_n_list[j]>400:
                 print("output",j,signal_number_list[j],noise_number_list[j])
                 break
         print("sig rate",max(signal_number_list))
