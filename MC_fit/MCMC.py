@@ -123,7 +123,7 @@ class multi_MC():
 
 
         # # run and analyze
-        # self.multirun(self.runN)
+        self.multirun(self.runN)
         self.analysis_results(self.runN)
 
         # test new method
@@ -201,7 +201,7 @@ class multi_MC():
         # plt.plot(min_x, min_y, color='red', label='min')
         plt.legend()
         plt.xlim(th-3*siglow, th+3*sighi)
-        plt.savefig("/data/runzezhang/result/SRIM_MC/Cf252_refit.png")
+        plt.savefig("/data/runzezhang/result/SRIM_MC/Cf252_refit_300.png")
         # plt.show()
 
 
