@@ -123,7 +123,7 @@ class multi_MC():
 
 
         # # run and analyze
-        self.multirun(self.runN)
+        # self.multirun(self.runN)
         self.analysis_results(self.runN)
 
         # test new method
@@ -158,6 +158,7 @@ class multi_MC():
         N_digit = len(str(runN))
         trueN = 0
         for i in range(runN):
+            print("round",i)
             formatstr = '{0:0' + str(N_digit) + '}'
             runstr = formatstr.format(i)
             path  = self.save_path + runstr+"node.txt"
