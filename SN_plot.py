@@ -179,8 +179,8 @@ class SN():
             photon_n_list.append(i)
             (sig_num,noise_num)= self.prepare(i)
             # change signal_number form /s to /h
-            signal_number_list.append(3600*sig_num*self.capture_ratio/self.G4_sig_time)
-            noise_number_list.append(3600*noise_num/self.G4_noise_time)
+            signal_number_list.append(0.0358*3600*sig_num*self.capture_ratio/(9*self.G4_sig_time))
+            noise_number_list.append(3600*0.0358*noise_num/(9*self.G4_noise_time))
             if noise_num !=0:
                 SN_ratio.append((sig_num*self.capture_ratio/self.G4_sig_time)/(noise_num/self.G4_noise_time))
             else:
