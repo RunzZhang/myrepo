@@ -11,8 +11,8 @@ class SN():
 
 # main funtion we use
     def old_read_files(self):
-        self.capture_ratio = 1.164E-3 # 1125eV
-        # self.capture_ratio = 0.121 # 400 eV
+        # self.capture_ratio = 1.164E-3 # 1125eV
+        self.capture_ratio = 0.121 # 400 eV
         self.rate = 435.6 #/s # CF neutron rate
         # self.rate = 0.56 #AmLi neutron rate
         self.G4_events= 1E6
@@ -35,10 +35,10 @@ class SN():
         # with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'r') as file:
         # Noise 1
         # with open(self.base_path + "photon_capture_n_sing_scatterg_AmLi.csv", 'r') as file:
-        # with open(self.base_path + "photon_capture_n_sing_scatterg_CF.csv", 'r') as file:
+        with open(self.base_path + "photon_capture_n_sing_scatterg_CF.csv", 'r') as file:
         # Noise 2
         # with open(self.base_path + "n_huge_scatterg_AmLi2.csv", 'r') as file:
-        with open(self.base_path + "n_huge_scatterg_CF2.csv", 'r') as file:
+        # with open(self.base_path + "n_huge_scatterg_CF2.csv", 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
@@ -178,8 +178,9 @@ class SN():
         for i in range(length):
             photon_n_list.append(i)
             (sig_num,noise_num)= self.prepare(i)
-            signal_number_list.append(sig_num*self.capture_ratio/self.G4_sig_time)
-            noise_number_list.append(noise_num/self.G4_noise_time)
+            # change signal_number form /s to /h
+            signal_number_list.append(3600*sig_num*self.capture_ratio/self.G4_sig_time)
+            noise_number_list.append(3600*noise_num/self.G4_noise_time)
             if noise_num !=0:
                 SN_ratio.append((sig_num*self.capture_ratio/self.G4_sig_time)/(noise_num/self.G4_noise_time))
             else:
@@ -206,7 +207,7 @@ class SN():
 
         # Set the labels and title
         ax1.set_xlabel('photon number threshold',fontsize = 16)
-        ax1.set_ylabel('detected event rate #/s', color='black',fontsize = 16)
+        ax1.set_ylabel('detected event rate #/h', color='black',fontsize = 16)
         ax1.set_yscale('log')
 
         # Create another y-axis that shares the same x-axis
@@ -223,7 +224,7 @@ class SN():
         labels = [line.get_label() for line in lines]
         fig.legend(lines, labels, loc='upper right', bbox_to_anchor=(0.9, 0.85))
         # Show the plot
-        name = "CF Signal Noise #2 1125 eV"
+        name = "CF Signal Noise #1 400 eV"
         plt.title(name, fontsize = 16)
         plt.savefig(self.plot_path + name)
         # plt.show()
