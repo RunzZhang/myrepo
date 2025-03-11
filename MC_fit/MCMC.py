@@ -555,9 +555,12 @@ class multi_MC():
         # t = 10**4
         # t =10000 for thermal neutron only, 10^5 events per file and the thermal neutron rate AmLi is 10 per hour
         # this might be optimistic but let's use this first
-        t =2000
+        # 1E5/((1517.76*0.0358)/(9*0.12))
+        t =1987
         # for Cf 252
         # t= 100000/ thermal neutron rate Cf252 =1E5/50=2000
+        # for Cf 252 0.0358microC
+
 
         Rate = self.rateFinderTrue(Recoils, T, sigLow, sigUp, t, Weights)
 
