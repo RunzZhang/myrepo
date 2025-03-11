@@ -146,7 +146,6 @@ class multi_MC():
             try:
                 self.main(self.flist, self.alist, self.pnlist, self.aplist,runstr)
             except Exception as e:
-                continue
                 print("Error", e)
                 print("something going wrong")
     def analysis_results(self, runN):
@@ -159,19 +158,23 @@ class multi_MC():
         N_digit = len(str(runN))
         trueN = 0
         for i in range(runN):
-            print("round",i)
-            formatstr = '{0:0' + str(N_digit) + '}'
-            runstr = formatstr.format(i)
-            path  = self.save_path + runstr+"node.txt"
-            print(path)
-            file = np.loadtxt(path)
-            print(file)
-            # if node1< node2<node3<node4:
-            if file[0]<file[1] and file[1]<file[2] and file[2]<file[3]:
-                nodes_2D.append(list(file))
-                trueN += 1
-            else:
+            try:
+                print("round", i)
+                formatstr = '{0:0' + str(N_digit) + '}'
+                runstr = formatstr.format(i)
+                path = self.save_path + runstr + "node.txt"
+                print(path)
+                file = np.loadtxt(path)
+                print(file)
+                # if node1< node2<node3<node4:
+                if file[0] < file[1] and file[1] < file[2] and file[2] < file[3]:
+                    nodes_2D.append(list(file))
+                    trueN += 1
+                else:
+                    continue
+            except:
                 continue
+
         # print("2d nodes", nodes_2D)
         node_2d_array = np.array(nodes_2D)
         # print("array", node_2d_array)
