@@ -93,7 +93,7 @@ class multi_MC():
         ################################################
         self.aplist = [1, 8]  # this is not yet implimented
 
-        self.runN = 10
+        self.runN = 15
         self.runlist =[]
         self.threshold = 400
         self.sig_high = 50
