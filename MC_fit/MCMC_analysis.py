@@ -93,7 +93,7 @@ class multi_MC():
         ################################################
         self.aplist = [1, 8]  # this is not yet implimented
 
-        self.runN = 6
+        self.runN = 10
         self.runlist =[]
         self.threshold = 400
         self.sig_high = 50
@@ -146,6 +146,7 @@ class multi_MC():
             try:
                 self.main(self.flist, self.alist, self.pnlist, self.aplist,runstr)
             except Exception as e:
+                continue
                 print("Error", e)
                 print("something going wrong")
     def analysis_results(self, runN):
