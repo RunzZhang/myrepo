@@ -352,7 +352,8 @@ class SRIM_Table():
         print("au", self.au)
         self.gam = 4 / 2 ** 2
         self.ev = 1.60218e-19
-        self.Tar_Den = 2.1361E+22 # atoms/cm3
+        # self.Tar_Den = 2.1361E+22 # atoms/cm3
+        self.Tar_Den = 1.597E+22  # atoms/cm3 1.06 g/cm3
         self.SN = [] # shouldbe ev/cm
         self.LSS_factor = 1.2656 * (10 ** (-2))
 

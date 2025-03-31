@@ -35,7 +35,8 @@ class MC_sim_full_argon():
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_-01"
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
-        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_2time_0offset"
+        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250401_full_2time_0offset"
+        self.plot_address = "/data/runzezhang/result/New_density_MC/"
 
 
         # self.argon_init = [10000, 0*self.time_factor ,{6098.9:[93.57*self.argon40_weight,0],3732:[0.121*self.argon40_weight,0],3702.9:[0.474*self.argon40_weight,0],3573:[0.0744*self.argon40_weight,0],
@@ -119,12 +120,12 @@ class MC_sim_full_argon():
         self.gamma_emission_list_1d = []
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
-        # self.MC_sim(self.runtime)
-        # self.data_analysis(self.address)
+        self.MC_sim(self.runtime)
+        self.data_analysis(self.address)
         # self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
-        self.predicted_bubble_events(self.address)
+        # self.predicted_bubble_events(self.address)
         # self.source_uncertainty(0.3)
         # self.source_uncertainty_w_background(0.3, 500)
         # self.bubble_event_with_sigma(0.3)
@@ -343,8 +344,10 @@ class MC_sim_full_argon():
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
+        plot_name = 'compare_with_old.png'
         plt.legend()
-        plt.show()
+        plt.savefig(self.plot_address+plot_name)
+        # plt.show()
 
     def plot_spectrum(self, address):
         start = 0
