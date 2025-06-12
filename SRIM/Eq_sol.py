@@ -46,7 +46,7 @@ class E_loss_solve():
         self.T_factor = 0.1 # change m/s to A/ns
         self.Tar_Den = 1.597E+22 # atoms/cm3 = 1.06g/cm3
         self.alpha_inv = 137
-        self.LSS_factor = 1.2656*(10**(-2))# LSS variable transformation by SRIM table
+        self.LSS_factor = 1.6918*(10**(-2))# LSS variable transformation by SRIM table from 1.06 density
         print("factor",self.factor*self.Tar_Den*10**8)
         print("LSS factor inverse", 1/self.LSS_factor)
 
