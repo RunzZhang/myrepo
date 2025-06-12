@@ -121,8 +121,8 @@ class MC_sim_full_argon():
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
         self.MC_sim(self.runtime)
-        self.data_analysis(self.address)
-        # self.plot_spectrum(self.address)
+        # self.data_analysis(self.address)
+        self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
         # self.predicted_bubble_events(self.address)
@@ -131,7 +131,7 @@ class MC_sim_full_argon():
         # self.bubble_event_with_sigma(0.3)
         # self.bubble_event_with_spectrum_sigma()
         # self.spectrum_uncertainty()
-        self.plot_spectrums_sigma()
+        # self.plot_spectrums_sigma()
     def data_preparation(self):
 
         for i in range(len(self.argon_list)):# for each chain
@@ -196,6 +196,7 @@ class MC_sim_full_argon():
 
             print(i)
             state = self.argon_init
+            # initialization of argon state, can change mass to ar36
             # state = self.level60989
             temp_gamma_list = []
             vx = 0
@@ -373,7 +374,7 @@ class MC_sim_full_argon():
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
-        plt.show()
+        plt.savefig(self.plot_address+"New_D_L_spectrum.png")
 
     def plot_spectrums_sigma(self):
         start = 0
