@@ -22,7 +22,7 @@ address_Ar36_3700="/data/runzezhang/result/SRIM_MC/MC_argon36_20231024_3700"
 # 93 is norm factor of argon 40
 ar_40_percent =0.974
 ar_36_percent = 0.025
-weight_Ar40_5582 = ar_40_percent * 10.8/93
+weight_Ar40_5582 = ar_40_percent * 10.8/93*100
 weight_Ar40_4745 = ar_40_percent * 51.2/93
 weight_Ar40_3700 = ar_40_percent * 9.11/93
 weight_Ar40_2771 = ar_40_percent * 8/93
