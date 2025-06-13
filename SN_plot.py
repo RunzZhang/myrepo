@@ -4,8 +4,8 @@ import csv
 import numpy as np
 class SN():
     def __init__(self):
-        self.base_path = '/data/runzezhang/result/TN_sims3/'
-        self.plot_path=  '/data/runzezhang/result/TN_sims3/plot/'
+        self.base_path = "/data/runzezhang/result/TN_sims_D/"
+        self.plot_path=  "/data/runzezhang/result/TN_sims_D/plot/"
         self.old_read_files()
         # self.read_files_s_to_N1()
 
@@ -13,10 +13,10 @@ class SN():
     def old_read_files(self):
         # self.capture_ratio = 1.164E-3 # 1125eV 1.4g/cm Ar
         # self.capture_ratio = 0.121 # 400 eV 1.4g/cm3 Ar
-        self.capture_ratio = 0.116  # 350 eV
-        self.capture_ratio = 0.116  # 400 eV
-        self.capture_ratio = 0.116  # 700 eV
-        self.capture_ratio = 1.158E-3  # 400 eV
+        self.capture_ratio = 0.267  # 350 eV
+        # self.capture_ratio = 0.116  # 400 eV
+        # self.capture_ratio = 6.52E-3  # 700 eV
+        # self.capture_ratio = 1.158E-3  # 1125 eV
         self.rate = 435.6 #/s # CF neutron rate
         # self.rate = 0.56 #AmLi neutron rate
         self.G4_events= 1E6
