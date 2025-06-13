@@ -122,7 +122,7 @@ class MC_sim_full_argon():
         # self.gamma_sim(10000)
         # self.MC_sim(self.runtime)
         self.data_analysis_v2(self.address)
-        # self.plot_spectrum(self.address)
+        self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
         # self.predicted_bubble_events(self.address)
@@ -388,7 +388,7 @@ class MC_sim_full_argon():
         plt.ylim([1E-5,0.1])
         plot_name = 'compare_with_old.png'
         plt.legend()
-        plt.savefig(self.plot_address+plot_name)
+        plt.savefig(self.plot_address+plot_name, bbox_inches='tight')
         # plt.show()
 
     def plot_spectrum(self, address):
@@ -415,7 +415,7 @@ class MC_sim_full_argon():
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
-        plt.savefig(self.plot_address+"New_D_L_spectrum.png")
+        plt.savefig(self.plot_address+"New_D_L_spectrum.png", bbox_inches='tight')
 
     def plot_spectrums_sigma(self):
         start = 0
