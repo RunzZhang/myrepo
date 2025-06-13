@@ -122,7 +122,7 @@ class MC_sim_full_argon():
         # self.gamma_sim(10000)
         # self.MC_sim(self.runtime)
         self.data_analysis_v2(self.address)
-        # self.plot_spectrum(self.address)
+        self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
         # self.predicted_bubble_events(self.address)
