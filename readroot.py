@@ -123,11 +123,11 @@ class ReadRoot():
 
         # self.gamma_event()
         # false noise 2, need to relocate directory
-        # self.Huge_scatter_event()
+        self.Huge_scatter_event()
         # signal rate, caputre in liquid argon
         # self.LAr_gamma_event()
         # single elastic scatter and capture false signal 1
-        self.single_e_n_capture_event()
+        # self.single_e_n_capture_event()
         # self.FN_spectrum_v2()
         # self.plot_elastic()
 
@@ -684,7 +684,7 @@ class ReadRoot():
         # if already run 1st 2 steps and obtained output csv file, one can directly run 3rd function
         self.LAr_compare()
         self.LAr_Capture_spectrum()
-        self.LAr_find_gamma_e()
+        # self.LAr_find_gamma_e()
 
     def single_e_n_capture_event(self):
         # loop and without loop is just to test the algrorithms, the result should be same
