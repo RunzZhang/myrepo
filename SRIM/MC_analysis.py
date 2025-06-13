@@ -194,6 +194,7 @@ def plot_chain_sum():
         x_bins.append((hist_result[1][i]+hist_result[1][i+1])/2)
     # save list info
     total_spectrum_address = "/data/runzezhang/result/SRIM_MC/MC_argon_8cascades_20231107"
+
     spectrum_info = [x_bins,hist_result[0]]
     with open(total_spectrum_address, "wb") as fp:  # Pickling
         pickle.dump(spectrum_info, fp)
@@ -206,7 +207,7 @@ def plot_chain_sum():
     plt.yscale("log")
     plt.ylim([10**(-5),0.01])
     plt.xlim([0,1200])
-    plt.show()
+    plt.savefig("/data/runzezhang/result/New_density_MC/MC_argon_8cascades_2025.png")
 
 def plot_chain_separate():
     #plot sum of argon 40 chain in one graph and sum of argon 36 chain in the other
