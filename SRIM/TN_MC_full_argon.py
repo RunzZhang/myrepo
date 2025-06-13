@@ -121,11 +121,13 @@ class MC_sim_full_argon():
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
         # self.MC_sim(self.runtime)
-        self.data_analysis_v2(self.address)
-        self.plot_spectrum(self.address)
+        # self.data_analysis_v2(self.address)
+        # self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
-        # self.predicted_bubble_events(self.address)
+        # predict bubble events ratio with different energy threshold
+        # also plot how it changes with threshold
+        self.predicted_bubble_events(self.address)
         # self.source_uncertainty(0.3)
         # self.source_uncertainty_w_background(0.3, 500)
         # self.bubble_event_with_sigma(0.3)
@@ -490,15 +492,22 @@ class MC_sim_full_argon():
         # add to find the ratio of 400 ev and 1125eV event number
         first_bin = 0
         second_bin = 0
+        third_bin =0
+        fourth_bin = 0
         for i in range(len(x_bins)):
+            if x_bins[i]>350 and first_bin==0:
+                third_bin=i
             if x_bins[i]>400 and first_bin==0:
                 first_bin=i
+            if x_bins[i]>700 and first_bin==0:
+                fourth_bin=i
             if x_bins[i]>1125 and second_bin==0:
                 second_bin = i
-        print('first',bubble_event[first_bin],'second',bubble_event[second_bin])
+        print('first',bubble_event[first_bin],'second',bubble_event[second_bin], 'third',bubble_event[third_bin], '4th',bubble_event[fourth_bin])
         return x_bins, hist_result[0], bubble_event
     def predicted_bubble_events(self, address):
-        x_bins, hist_result, bubble_event  = self.generate_hist_and_CDF()
+        # given energy threshold in function generate_hist_and_CDF, plot the bubble numbers
+        x_bins, hist_result, bubble_event  = self.generate_hist_and_CDF(address=address)
 
 
         fig, ax1 = plt.subplots()
@@ -536,7 +545,7 @@ class MC_sim_full_argon():
         # plt.legend()
         # plt.ylim([1E-5,0.1])
         # plt.legend()
-        plt.show()
+        plt.savefig(self.plot_address+"bubble_number.png")
 
     def bubble_event_with_sigma(self, uncertainty):
         x_bins, hist_result, bubble_event  = self.generate_hist_and_CDF()
