@@ -298,7 +298,7 @@ def Energy_vs_theta_47(theta):
     return value
 
 
-def Energy_vs_theta_47_(theta, energy_indef):
+def Energy_vs_theta_47_E(theta, energy_indef):
     c_v = 3*10**8
     # a = 6299*1000*e/c_v # a momentum
     # b = 2490*1000*e/c_v # b momentum
