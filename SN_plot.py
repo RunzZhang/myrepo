@@ -11,8 +11,12 @@ class SN():
 
 # main funtion we use
     def old_read_files(self):
-        # self.capture_ratio = 1.164E-3 # 1125eV
-        self.capture_ratio = 0.121 # 400 eV
+        # self.capture_ratio = 1.164E-3 # 1125eV 1.4g/cm Ar
+        # self.capture_ratio = 0.121 # 400 eV 1.4g/cm3 Ar
+        self.capture_ratio = 0.116  # 350 eV
+        self.capture_ratio = 0.116  # 400 eV
+        self.capture_ratio = 0.116  # 700 eV
+        self.capture_ratio = 1.158E-3  # 400 eV
         self.rate = 435.6 #/s # CF neutron rate
         # self.rate = 0.56 #AmLi neutron rate
         self.G4_events= 1E6

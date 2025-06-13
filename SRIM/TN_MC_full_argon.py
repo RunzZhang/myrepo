@@ -495,11 +495,11 @@ class MC_sim_full_argon():
         third_bin =0
         fourth_bin = 0
         for i in range(len(x_bins)):
-            if x_bins[i]>350 and first_bin==0:
+            if x_bins[i]>350 and third_bin==0:
                 third_bin=i
             if x_bins[i]>400 and first_bin==0:
                 first_bin=i
-            if x_bins[i]>700 and first_bin==0:
+            if x_bins[i]>700 and fourth_bin==0:
                 fourth_bin=i
             if x_bins[i]>1125 and second_bin==0:
                 second_bin = i
