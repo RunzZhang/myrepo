@@ -34,8 +34,8 @@ class MC_sim_full_argon():
         # orginal time factor is 10E-3 and we modify it from 0.5 to 2
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_-01"
-        # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
-        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250401_full_2time_0offset"
+        self.old_address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
+        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250601_D"
         self.plot_address = "/data/runzezhang/result/New_density_MC/"
 
 
@@ -120,9 +120,9 @@ class MC_sim_full_argon():
         self.gamma_emission_list_1d = []
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
-        self.MC_sim(self.runtime)
-        # self.data_analysis(self.address)
-        self.plot_spectrum(self.address)
+        # self.MC_sim(self.runtime)
+        self.data_analysis_v2(self.address)
+        # self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
         # self.predicted_bubble_events(self.address)
@@ -336,6 +336,47 @@ class MC_sim_full_argon():
 
         plt.plot(x_bins, hist_result[0], color="blue",label= "full chains")
         # plt.plot(MC_8[0], MC_8[1], color="orange", label = "8 main chain")
+        plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+        plt.minorticks_on()
+        plt.xlabel("energy/eV",fontsize=18)
+        plt.ylabel("Possibility",fontsize=18)
+        plt.yscale("log")
+        plt.yticks(fontsize=18)
+        plt.xticks(fontsize=18)
+        plt.xlim([0, 1200])
+        plt.ylim([1E-5,0.1])
+        plot_name = 'compare_with_old.png'
+        plt.legend()
+        plt.savefig(self.plot_address+plot_name)
+        # plt.show()
+    def data_analysis_v2(self, address):
+        # try to compare the new density 1.06 to previous density 1.46 graph
+        start = 0
+        end = 1200
+        x_bins = []
+        with open(self.address, "rb") as fp:  # Unpickling
+            MC_full = pickle.load(fp)
+            print("read",MC_full)
+        bin_n =500
+
+        hist_result = plt.hist(MC_full, bins =bin_n, range=(start, end) ,density = True)
+        plt.clf()
+        for i in range(len(hist_result[1]) - 1):
+            x_bins.append((hist_result[1][i] + hist_result[1][i + 1]) / 2)
+
+        #plot the previous
+
+        with open(self.old_address, "rb") as fp:  # Unpickling
+            MC_full_old = pickle.load(fp)
+            print("read_old", MC_full_old)
+
+        hist_result_old = plt.hist(MC_full_old, bins=bin_n, range=(start, end), density=True)
+        plt.clf()
+        for i in range(len(hist_result_old[1]) - 1):
+            x_bins.append((hist_result_old[1][i] + hist_result_old[1][i + 1]) / 2)
+
+        plt.plot(x_bins, hist_result[0], color="blue",label= "1.06g/cm3")
+        plt.plot(x_bins, hist_result_old[0], color="orange", label="1.4g/cm3")
         plt.grid(True, which='both', linestyle='--', linewidth=0.5)
         plt.minorticks_on()
         plt.xlabel("energy/eV",fontsize=18)
