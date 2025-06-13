@@ -365,7 +365,7 @@ class MC_sim_full_argon():
             x_bins.append((hist_result[1][i] + hist_result[1][i + 1]) / 2)
 
         #plot the previous
-
+        x_bins_old = []
         with open(self.old_address, "rb") as fp:  # Unpickling
             MC_full_old = pickle.load(fp)
             print("read_old", MC_full_old)
@@ -373,10 +373,10 @@ class MC_sim_full_argon():
         hist_result_old = plt.hist(MC_full_old, bins=bin_n, range=(start, end), density=True)
         plt.clf()
         for i in range(len(hist_result_old[1]) - 1):
-            x_bins.append((hist_result_old[1][i] + hist_result_old[1][i + 1]) / 2)
+            x_bins_old.append((hist_result_old[1][i] + hist_result_old[1][i + 1]) / 2)
 
         plt.plot(x_bins, hist_result[0], color="blue",label= "1.06g/cm3")
-        plt.plot(x_bins, hist_result_old[0], color="orange", label="1.4g/cm3")
+        plt.plot(x_bins_old, hist_result_old[0], color="orange", label="1.4g/cm3")
         plt.grid(True, which='both', linestyle='--', linewidth=0.5)
         plt.minorticks_on()
         plt.xlabel("energy/eV",fontsize=18)
