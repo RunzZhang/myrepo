@@ -29,8 +29,8 @@ weight_Ar40_2771 = ar_40_percent * 8/93
 
 weight_Ar36_8790 = ar_36_percent * 10.9/100
 weight_Ar36_6299 = ar_36_percent * 37.5/100
-weight_Ar36_5272 = ar_36_percent * 25/100*100
-weight_Ar36_3700 = ar_36_percent * 8/100
+weight_Ar36_5272 = ar_36_percent * 25/100
+weight_Ar36_3700 = ar_36_percent * 8/100*100
 
 
 address_list = [address_Ar40_5582,address_Ar40_4745,address_Ar40_3700,address_Ar40_2771,address_Ar36_8790,address_Ar36_6299,address_Ar36_5272,address_Ar36_3700]
@@ -207,7 +207,7 @@ def plot_chain_sum():
     plt.yscale("log")
     plt.ylim([10**(-5),0.01])
     plt.xlim([0,1200])
-    plt.savefig("/data/runzezhang/result/New_density_MC/MC_argon_8cascades_2025_5272.png",bbox_inches='tight')
+    plt.savefig("/data/runzezhang/result/New_density_MC/MC_argon_8cascades_2025_36_3700.png",bbox_inches='tight')
 
 def plot_chain_separate():
     #plot sum of argon 40 chain in one graph and sum of argon 36 chain in the other
