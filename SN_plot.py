@@ -6,6 +6,13 @@ class SN():
     def __init__(self):
         self.base_path = "/data/runzezhang/result/TN_sims_D/"
         self.plot_path=  "/data/runzezhang/result/TN_sims_D/plot/"
+        self.false_1 = "Cf_false1.csv"
+        self.false_2 = "Cf_false2.csv"
+        self.signal = "Cf_sig.csv"
+        self.false_1_path = self.base_path + self.false_1
+        self.false_2_path = self.base_path + self.false_2
+        self.signal_path = self.base_path + self.signal
+        self.name = "CF Signal Noise #1 400 eV"
         self.old_read_files()
         # self.read_files_s_to_N1()
 
@@ -13,8 +20,8 @@ class SN():
     def old_read_files(self):
         # self.capture_ratio = 1.164E-3 # 1125eV 1.4g/cm Ar
         # self.capture_ratio = 0.121 # 400 eV 1.4g/cm3 Ar
-        self.capture_ratio = 0.267  # 350 eV
-        # self.capture_ratio = 0.116  # 400 eV
+        # self.capture_ratio = 0.267  # 350 eV
+        self.capture_ratio = 0.116  # 400 eV
         # self.capture_ratio = 6.52E-3  # 700 eV
         # self.capture_ratio = 1.158E-3  # 1125 eV
         self.rate = 435.6 #/s # CF neutron rate
@@ -22,7 +29,8 @@ class SN():
         self.G4_events= 1E6
         self.G4_sig_time=(self.G4_events / self.rate)
         # with open(self.base_path + "Ar_photon_AmLi2.csv", 'r') as file:
-        with open(self.base_path+"Ar_photon_CF2.csv", 'r') as file:
+        # with open(self.base_path + "Ar_photon_Cf.csv", 'r') as file:
+        with open(self.signal_path, 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
@@ -39,7 +47,8 @@ class SN():
         # with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'r') as file:
         # Noise 1
         # with open(self.base_path + "photon_capture_n_sing_scatterg_AmLi.csv", 'r') as file:
-        with open(self.base_path + "photon_capture_n_sing_scatterg_CF.csv", 'r') as file:
+        # with open(self.base_path + "photon_capture_n_sing_scatterg_CF.csv", 'r') as file:
+        with open(self.false_1_path, 'r') as file:
         # Noise 2
         # with open(self.base_path + "n_huge_scatterg_AmLi2.csv", 'r') as file:
         # with open(self.base_path + "n_huge_scatterg_CF2.csv", 'r') as file:
@@ -71,6 +80,7 @@ class SN():
                 print(f"Progress: {percentage:.0f}%")
             threshold_list.append(i)
         print("ready to generate graph")
+        # plot the S/N ratio picture
         self.plot_sn(threshold_list)
         self.hist_info()
     # def read_files_s_to_N1(self):
@@ -232,9 +242,9 @@ class SN():
         labels = [line.get_label() for line in lines]
         fig.legend(lines, labels, loc='upper right', bbox_to_anchor=(0.9, 0.85))
         # Show the plot
-        name = "CF Signal Noise #2 400 eV"
-        plt.title(name, fontsize = 16)
-        plt.savefig(self.plot_path + name)
+
+        plt.title(self.name, fontsize = 16)
+        plt.savefig(self.plot_path + self.name)
         # plt.show()
 
 
