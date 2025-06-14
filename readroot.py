@@ -105,9 +105,13 @@ class ReadRoot():
         self.false_1 = "Cf_false1.csv"
         self.false_2 = "Cf_false2.csv"
         self.signal = "Cf_sig.csv"
+        self.false_1_mid = "Cf_false1_mid.csv"
+        self.false_2_mid = "Cf_false2_mid.csv"
         self.signal_mid = "Cf_sig_mid.csv"
         self.false_1_path = self.base_path+self.false_1
         self.false_2_path = self.base_path+self.false_2
+        self.false_1_path_mid = self.base_path + self.false_1_mid
+        self.false_2_path_mid = self.base_path + self.false_2_mid
         self.signal_path_mid = self.base_path+self.signal_mid
         self.signal_path = self.base_path + self.signal
         # self.filepath = self.base_path +"dmx_lr.root"
@@ -127,9 +131,9 @@ class ReadRoot():
         # false noise 2, need to relocate directory
         # self.Huge_scatter_event()
         # signal rate, caputre in liquid argon
-        self.LAr_gamma_event()
+        # self.LAr_gamma_event()
         # single elastic scatter and capture false signal 1
-        # self.single_e_n_capture_event()
+        self.single_e_n_capture_event()
         # self.FN_spectrum_v2()
         # self.plot_elastic()
 
@@ -623,7 +627,7 @@ class ReadRoot():
         # n_list = self.LAr_n_merged["Event"].to_list()
         self.N_check = self.df[self.df["Event"].isin(n_list) & (
                 (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')| (self.df["name"] == 'gamma'))]
-        self.N_check.to_csv(self.false_1_path, index=False)
+        self.N_check.to_csv(self.false_1_path_mid, index=False)
         # print(self.LAr_n_merged)
         # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
         # event_list  =  self.N_check["Event"].unique()
@@ -692,9 +696,11 @@ class ReadRoot():
         # loop and without loop is just to test the algrorithms, the result should be same
         # self.LAr_n_single_test()
         # self.Capture_n_scatter_spectrum()
-        # self.single_n_find_gamma_e()
+
         self.Capture_n_scatter_spectrum_loop()
         # self.single_n_find_gamma_e_loop()
+        # get the photon number per event
+        self.single_n_find_gamma_e()
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv(self.base_path +"dmx_gamma.csv")
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
@@ -770,7 +776,7 @@ class ReadRoot():
         plt.show()
 
     def single_n_find_gamma_e(self):
-        self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_single_n_gamma_CF.csv")
+        self.df_gamma_rw = pd.read_csv(self.false_1_path_mid)
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
@@ -811,7 +817,7 @@ class ReadRoot():
         print("photon observed number ", num, len(p_observed))
         print("max", max(p_observed), "\n", "min", min(p_observed))
         # plt.hist(self.electron_recoiled_list, bins=100)
-        with open("/data/runzezhang/result/TN_e_sims/photon_capture_n_sing_scatterg_CF.csv", 'w', newline='') as myfile:
+        with open(self.false_1_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(p_observed)
         plt.hist(p_observed, bins=100)
