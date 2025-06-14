@@ -684,8 +684,8 @@ class ReadRoot():
     def LAr_gamma_event(self):
         # for liquid argon capture
         # if already run 1st 2 steps and obtained output csv file, one can directly run 3rd function
-        self.LAr_compare()
-        self.LAr_Capture_spectrum()
+        # self.LAr_compare()
+        # self.LAr_Capture_spectrum()
         self.LAr_find_gamma_e()
 
     def single_e_n_capture_event(self):
@@ -864,7 +864,7 @@ class ReadRoot():
         plt.xlabel("Obeserved Photon per Event")
         plt.show()
     def LAr_find_gamma_e(self):
-        self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_gamma_LAr_AmLi2.csv")
+        self.df_gamma_rw = pd.read_csv(self.signal_path_mid)
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
