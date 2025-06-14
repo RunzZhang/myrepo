@@ -129,11 +129,11 @@ class ReadRoot():
 
         # self.gamma_event()
         # false noise 2, need to relocate directory
-        # self.Huge_scatter_event()
+        self.Huge_scatter_event()
         # signal rate, caputre in liquid argon
         # self.LAr_gamma_event()
         # single elastic scatter and capture false signal 1
-        self.single_e_n_capture_event()
+        # self.single_e_n_capture_event()
         # self.FN_spectrum_v2()
         # self.plot_elastic()
 
@@ -280,7 +280,7 @@ class ReadRoot():
         n_list = self.LAr_n_merged["Event"].to_list()
         self.N_check = self.df[self.df["Event"].isin(n_list) & (
                     (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))]
-        self.N_check.to_csv(self.base_path2 + "dmx_single_n_largescatter_AmLi_neutron_list.csv", index=False)
+        self.N_check.to_csv(self.false_2_path_mid, index=False)
         # print(self.LAr_n_merged)
         # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
 
