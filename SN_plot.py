@@ -24,7 +24,7 @@ class SN():
         self.capture_ratio = 0.116  # 400 eV
         # self.capture_ratio = 6.52E-3  # 700 eV
         # self.capture_ratio = 1.158E-3  # 1125 eV
-        self.rate = 435.6 #/s # CF neutron rate
+        self.rate = 435.6 #/s # CF neutron rate 9 mucurie
         # self.rate = 0.56 #AmLi neutron rate
         self.G4_events= 1E6
         self.G4_sig_time=(self.G4_events / self.rate)
@@ -48,11 +48,11 @@ class SN():
         # Noise 1
         # with open(self.base_path + "photon_capture_n_sing_scatterg_AmLi.csv", 'r') as file:
         # with open(self.base_path + "photon_capture_n_sing_scatterg_CF.csv", 'r') as file:
-        # with open(self.false_1_path, 'r') as file:
+        with open(self.false_1_path, 'r') as file:
         # Noise 2
         # with open(self.base_path + "n_huge_scatterg_AmLi2.csv", 'r') as file:
         # with open(self.base_path + "n_huge_scatterg_CF2.csv", 'r') as file:
-        with open(self.false_2_path, 'r') as file:
+        # with open(self.false_2_path, 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
