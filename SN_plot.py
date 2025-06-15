@@ -12,7 +12,7 @@ class SN():
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
         self.signal_path = self.base_path + self.signal
-        self.name = "CF Signal Noise #2 400 eV"
+        self.name = "CF Signal Noise #1 400 eV"
         self.old_read_files()
         # self.read_files_s_to_N1()
 
