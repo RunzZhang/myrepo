@@ -12,7 +12,7 @@ class SN():
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
         self.signal_path = self.base_path + self.signal
-        self.name = "CF Signal Noise #2 400 eV"
+        self.name = "CF Signal Noise #1 1125 eV"
 
         self.old_read_files()
 
@@ -20,13 +20,13 @@ class SN():
 
 # main funtion we use
     def old_read_files(self):
-        self.Activity = 0.0382  # source activity in mivro curie
+        self.Activity = 0.0416  # source activity in mivro curie
         # self.capture_ratio = 1.164E-3 # 1125eV 1.4g/cm Ar
         # self.capture_ratio = 0.121 # 400 eV 1.4g/cm3 Ar
         # self.capture_ratio = 0.267  # 350 eV
-        self.capture_ratio = 0.116  # 400 eV
+        # self.capture_ratio = 0.116  # 400 eV
         # self.capture_ratio = 6.52E-3  # 700 eV
-        # self.capture_ratio = 1.158E-3  # 1125 eV
+        self.capture_ratio = 1.158E-3  # 1125 eV
         self.rate = 435.6 #/s # CF neutron rate 9 mucurie
         # self.rate = 0.56 #AmLi neutron rate
         self.G4_events= 1E6
@@ -51,11 +51,11 @@ class SN():
         # Noise 1
         # with open(self.base_path + "photon_capture_n_sing_scatterg_AmLi.csv", 'r') as file:
         # with open(self.base_path + "photon_capture_n_sing_scatterg_CF.csv", 'r') as file:
-        # with open(self.false_1_path, 'r') as file:
+        with open(self.false_1_path, 'r') as file:
         # Noise 2
         # with open(self.base_path + "n_huge_scatterg_AmLi2.csv", 'r') as file:
         # with open(self.base_path + "n_huge_scatterg_CF2.csv", 'r') as file:
-        with open(self.false_2_path, 'r') as file:
+        # with open(self.false_2_path, 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
