@@ -14,6 +14,7 @@ class SN():
         self.signal_path = self.base_path + self.signal
         self.name = "CF Signal Noise #1 400 eV"
         self.old_read_files()
+        self.Activity = 9 # source activity in mivro curie
         # self.read_files_s_to_N1()
 
 # main funtion we use
@@ -194,8 +195,8 @@ class SN():
             photon_n_list.append(i)
             (sig_num,noise_num)= self.prepare(i)
             # change signal_number form /s to /h
-            signal_number_list.append(0.0358*3600*sig_num*self.capture_ratio/(9*self.G4_sig_time))
-            noise_number_list.append(3600*0.0358*noise_num/(9*self.G4_noise_time))
+            signal_number_list.append(self.Activity*3600*sig_num*self.capture_ratio/(9*self.G4_sig_time))
+            noise_number_list.append(3600*self.Activity*noise_num/(9*self.G4_noise_time))
             if noise_num !=0:
                 SN_ratio.append((sig_num*self.capture_ratio/self.G4_sig_time)/(noise_num/self.G4_noise_time))
             else:
