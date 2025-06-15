@@ -13,8 +13,9 @@ class SN():
         self.false_2_path = self.base_path + self.false_2
         self.signal_path = self.base_path + self.signal
         self.name = "CF Signal Noise #1 400 eV"
+        self.Activity = 9  # source activity in mivro curie
         self.old_read_files()
-        self.Activity = 9 # source activity in mivro curie
+
         # self.read_files_s_to_N1()
 
 # main funtion we use
