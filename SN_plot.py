@@ -50,11 +50,11 @@ class SN():
         # Noise 1
         # with open(self.base_path + "photon_capture_n_sing_scatterg_AmLi.csv", 'r') as file:
         # with open(self.base_path + "photon_capture_n_sing_scatterg_CF.csv", 'r') as file:
-        with open(self.false_1_path, 'r') as file:
+        # with open(self.false_1_path, 'r') as file:
         # Noise 2
         # with open(self.base_path + "n_huge_scatterg_AmLi2.csv", 'r') as file:
         # with open(self.base_path + "n_huge_scatterg_CF2.csv", 'r') as file:
-        # with open(self.false_2_path, 'r') as file:
+        with open(self.false_2_path, 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
