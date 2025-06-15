@@ -12,7 +12,7 @@ class SN():
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
         self.signal_path = self.base_path + self.signal
-        self.name = "CF Signal Noise #1 400 eV"
+        self.name = "CF Signal Noise #2 400 eV"
 
         self.old_read_files()
 
@@ -51,11 +51,11 @@ class SN():
         # Noise 1
         # with open(self.base_path + "photon_capture_n_sing_scatterg_AmLi.csv", 'r') as file:
         # with open(self.base_path + "photon_capture_n_sing_scatterg_CF.csv", 'r') as file:
-        with open(self.false_1_path, 'r') as file:
+        # with open(self.false_1_path, 'r') as file:
         # Noise 2
         # with open(self.base_path + "n_huge_scatterg_AmLi2.csv", 'r') as file:
         # with open(self.base_path + "n_huge_scatterg_CF2.csv", 'r') as file:
-        # with open(self.false_2_path, 'r') as file:
+        with open(self.false_2_path, 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
