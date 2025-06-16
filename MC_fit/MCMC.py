@@ -85,6 +85,7 @@ class multi_MC():
         ################################################
         # self.flist = ["./Sb124JAEA.txt", "./Co60JAEA.txt", "./Th228JAEA.txt"]
         self.flist = ["/data/runzezhang/result/SRIM_MC/MC_argon_full_20250601_D_Noahformat.txt"]
+        self.hist_address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250601_D"
 
         ################################################
         self.pnlist = ["./Sb", "./Bi"]
@@ -613,7 +614,7 @@ class multi_MC():
         sig = 50
         Event_N = 10 ** 3
         x_bins = []
-        address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250601_D"
+        address = self.hist_address
         with open(address, "rb") as fp:  # Unpickling
             MC_full = pickle.load(fp)
             # print("read", MC_full)
