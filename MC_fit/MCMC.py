@@ -1010,7 +1010,7 @@ class multi_MC():
         sigLow = self.sig_low
         sigUp = self.sig_high
         binsize = .5
-        sourceErr = .05
+        sourceErr = .05 # change to 0.12 ~ 0.02
         background = 100
         backErr = np.round(background ** (1 / 2))
         # energies=[75,100,115,120,140]
