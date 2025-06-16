@@ -84,7 +84,7 @@ class multi_MC():
 
         ################################################
         # self.flist = ["./Sb124JAEA.txt", "./Co60JAEA.txt", "./Th228JAEA.txt"]
-        self.flist = ["/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_Noahformat.txt"]
+        self.flist = ["/data/runzezhang/result/SRIM_MC/MC_argon_full_20250601_D_Noahformat.txt"]
 
         ################################################
         self.pnlist = ["./Sb", "./Bi"]
@@ -1010,7 +1010,7 @@ class multi_MC():
         sigUp = self.sig_high
         binsize = .5
         sourceErr = .05
-        background = 300
+        background = 100
         backErr = np.round(background ** (1 / 2))
         # energies=[75,100,115,120,140]
         # efficiencies=[0,.2,.50,.8,1]
