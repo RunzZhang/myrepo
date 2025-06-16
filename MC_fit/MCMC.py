@@ -105,7 +105,7 @@ class multi_MC():
             self.fileprefix = sys.argv[1]
         except:
             self.fileprefix = "./Test_Dump/test2"
-        self.save_path = "/data/runzezhang/result/chi2_test_TN400_t2E3_300/"
+        self.save_path = "/data/runzezhang/result/TN_sims_D/plot/"
         """ 
         def NucleationEfficiency(r,T,sigma):
             #A=1/2
@@ -202,7 +202,7 @@ class multi_MC():
         # plt.plot(min_x, min_y, color='red', label='min')
         plt.legend()
         plt.xlim(th-3*siglow, th+3*sighi)
-        plt.savefig("/data/runzezhang/result/SRIM_MC/Cf252_refit_300.png")
+        plt.savefig("/data/runzezhang/result/SRIM_MC/Cf252_refit_D_100.png")
         # plt.show()
 
 
@@ -613,7 +613,7 @@ class multi_MC():
         sig = 50
         Event_N = 10 ** 3
         x_bins = []
-        address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
+        address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250601_D"
         with open(address, "rb") as fp:  # Unpickling
             MC_full = pickle.load(fp)
             # print("read", MC_full)
