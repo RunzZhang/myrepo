@@ -94,7 +94,7 @@ class multi_MC():
         ################################################
         self.aplist = [1, 8]  # this is not yet implimented
 
-        self.runN = 20
+        self.runN = 15
         self.runlist =[]
         self.threshold = 400
         self.sig_high = 50
@@ -124,8 +124,8 @@ class multi_MC():
 
 
         # # run and analyze
-        self.multirun(self.runN)
-        # self.analysis_results(self.runN)
+        # self.multirun(self.runN)
+        self.analysis_results(self.runN)
 
         # test new method
         # generate bubbles event by event instead of normalization
