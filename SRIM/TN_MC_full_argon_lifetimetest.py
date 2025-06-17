@@ -35,7 +35,7 @@ class MC_sim_full_argon():
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_-01"
         self.old_address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
-        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250601_D"
+        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250601_D_400_ori"
         self.plot_address = "/data/runzezhang/result/New_density_MC/"
 
 
@@ -48,13 +48,18 @@ class MC_sim_full_argon():
                              3278.7: [0.372 * self.argon40_weight, 0], 8791.2: [100.6 * self.argon36_weight, 0]},
                            self.m_41]
 
+        # self.level60989 = [6098.9, 0 * self.time_factor,
+        #                    {516.1: [10.8, 5582.0], 1034.7: [0.242, 5063.7], 1353.9: [51.2, 4745.0],
+        #                     2398.1: [9.11, 3700.4], 2693: [0.0744, 3405.3], 2733.4: [3.91, 3365.5],
+        #                     2948.7: [3.72, 3150.2],
+        #                     3009.6: [1.02, 3089.4], 3326.8: [8, 2771.8], 3430.7: [0.474, 2668.1],
+        #                     3968.2: [4.09, 2130.7], 4170.0: [0.93, 1828.8]}, self.m_41]
         self.level60989 = [6098.9, 0 * self.time_factor,
-                           {516.1: [10.8, 5582.0], 1034.7: [0.242, 5063.7], 1353.9: [51.2, 4745.0],
-                            2398.1: [9.11, 3700.4], 2693: [0.0744, 3405.3], 2733.4: [3.91, 3365.5],
+                           {516.1: [10.8, 5582.0], 1034.7: [0.242, 5063.7], 1353.9: [51.2*10000, 4745.0],
+                            2398.1: [9.11, 3700.4], 2733.4: [3.91, 3365.5],
                             2948.7: [3.72, 3150.2],
                             3009.6: [1.02, 3089.4], 3326.8: [8, 2771.8], 3430.7: [0.474, 2668.1],
                             3968.2: [4.09, 2130.7], 4170.0: [0.93, 1828.8]}, self.m_41]
-
         self.level42700 = [4270, 0.021*self.time_factor +self.time_offset ,{167.3:[0.279,4102.5]},self.m_41]
         # no data of 42700
         self.level39682 = [3968.2, 0.021*self.time_factor +self.time_offset ,{516.1:[1.86,3451.8],1353.9:[2.7,2614.3]},self.m_41]
@@ -70,8 +75,9 @@ class MC_sim_full_argon():
         self.level27334 = [2733.4, 31*0.001*self.time_factor +self.time_offset, {167.3: [2.6, 2566.1]},self.m_41]
         self.level26930 = [2693, 0*self.time_factor +self.time_offset, {0: [1, 0]},self.m_41]
         self.level23981 = [2398.1, 0.12*self.time_factor +self.time_offset, {167.3: [0.27,2229.5], 516.1:[1.3,1881.5], 1353.9: [5.58, 1044.3]},self.m_41]
-        self.level13539 = [1353.9, 0.40*self.time_factor +self.time_offset, {0: [2.14,1354.0], 167.3:[48.5,1186.8], 516.1: [8.93, 837.7]},self.m_41]
-
+        # self.level13539 = [1353.9, 0.40*self.time_factor +self.time_offset, {0: [2.14,1354.0], 167.3:[48.5,1186.8], 516.1: [8.93, 837.7]},self.m_41]
+        self.level13539 = [1353.9, 0.40 * self.time_factor + self.time_offset,
+                           {0: [2.14, 1354.0], 167.3: [48.5, 1186.8], 516.1: [8.93, 837.7]}, self.m_41]
 
         self.level10347 = [1034.7, 5*self.time_factor +self.time_offset, {167.3 :[1.02,867.3]},self.m_41]
         self.level5161 = [516.1, 260*self.time_factor +self.time_offset, {0 :[23.5,516], 167.3:[6.14,348.7]},self.m_41]
@@ -186,7 +192,7 @@ class MC_sim_full_argon():
         max_step = 10
         solve_tool = Eq_sol.E_loss_solve()
         self.E_deposit_1d = []
-
+        D = 1.597E+22
         for i in range(N):
 
             print(i)
@@ -218,7 +224,7 @@ class MC_sim_full_argon():
                             temp_energy = 0.5 * self.mass * (vx ** 2 + vy ** 2 + vz ** 2) /self.ev # energy in ev
                             # print("pre kenit", temp_energy, "t in ns", state[1])
                             # E_final = solve_tool.E_el_loss_result(temp_energy,state[1])
-                            E_final = solve_tool.E_loss_result(temp_energy, state[1])
+                            E_final = solve_tool.E_loss_result_D(temp_energy, state[1], D)
                             # print("post knit", E_final)
                             E_deposit = temp_energy- E_final
                             E_deposit_list.append(E_deposit)
@@ -381,7 +387,7 @@ class MC_sim_full_argon():
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
-        plot_name = '4700line_10lifetime.png'
+        plot_name = 'D_400_ori.png'
         plt.legend()
         plt.savefig(self.plot_address+plot_name, bbox_inches='tight')
         # plt.show()

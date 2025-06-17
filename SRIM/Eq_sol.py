@@ -62,6 +62,16 @@ class E_loss_solve():
         part_c = (y) ** 0.5 * np.sqrt(2 * self.ev / self.mass) * (1/self.T_factor) # change dE/dx to dE/dt
         return (part_b+part_a)*part_c
 
+    def E_loss_t_fun_ODE_new_D(self, t, y ,  D):
+        # what the effect of changing target density
+        ep = self.C_tf*0.5* (y*0.5/13.6)/(self.Z_tp**2*self.Z**(0.5))
+        part_a = - np.log(1+self.a * ep) / (2 * (ep + self.b * (ep) ** self.c) + self.d * (ep) ** 0.5)* self.factor *D*10**8
+        # part_a = - self.a * ep/ (
+        #             2 * (ep + self.b * (ep) ** self.c) + self.d * (ep) ** 0.5) * self.factor * self.Tar_Den * 10 ** 8
+        part_b = - (y) ** 0.5 * self.total_k
+        part_c = (y) ** 0.5 * np.sqrt(2 * self.ev / self.mass) * (1/self.T_factor) # change dE/dx to dE/dt
+        return (part_b+part_a)*part_c
+
     def E_loss_t_fun_ODE_v2(self, t, y):
         ep = self.C_tf*0.5* (y*0.5/13.6)/(self.Z_tp**2*self.Z**(0.5))
         part_a = - np.log(1+self.a * ep) / (2 * (ep + self.b * (ep) ** self.c) + self.d * (ep) ** 0.5)/self.LSS_factor
@@ -132,6 +142,40 @@ class E_loss_solve():
             self.ini_E = init_E
             if t != 0:
                 solve = solve_ivp(self.E_loss_t_fun_ODE_v2, [0, self.last_t], [self.ini_E],
+                                  t_eval=self.t_list)  # the list from 0 to 2t
+                # t_eval is the intergration interval so it cannot be a single value
+
+                array = solve.y
+                sol_y = array[0][middle_bins] #
+                # print(solve.t)
+                # print(sol_y)
+                # plt.plot(solve.t,array[0])
+                # plt.show()
+            else:
+                sol_y = init_E
+            return sol_y  # return the E value after travels t
+
+    def E_loss_result_D(self, init_E, t, D):
+        # also given the different number density, how is everything changed
+        #given t in ns and E in ev, return the final energy
+        if t >7.3*10**(-4): # hard cut for ini E 2kev, t in ns, E threshold  = 1eV (t threshold = 0.73 ps)
+            # to reduce the waring and caculation speed
+            return 0
+        elif init_E<1:
+            if t>0 : # if E<1 eV cut
+                return 0 # t>0 assume all energy deposit
+            else:# t=0, no deposit energy
+                return init_E
+        else:
+            self.last_t = t * 2
+            self.t_list = []
+            bins = 20
+            middle_bins = int(bins/2)
+            for i in range(bins):
+                self.t_list.append(t*i/10)
+            self.ini_E = init_E
+            if t != 0:
+                solve = solve_ivp(self.E_loss_t_fun_ODE_new_D, [0, self.last_t], [self.ini_E],D=D,
                                   t_eval=self.t_list)  # the list from 0 to 2t
                 # t_eval is the intergration interval so it cannot be a single value
 
