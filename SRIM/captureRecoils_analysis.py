@@ -298,7 +298,9 @@ def Energy_vs_theta_47(theta):
     return value
 
 
-def Energy_vs_theta_47_E(theta, energy_indef):
+def Energy_vs_theta_47_def(theta, energy_indef):
+    # given energy_indef desposit energy in first step, how the Energy recoiled changes as theta
+    # energy_indef given betwen 0-1
     c_v = 3*10**8
     # a = 6299*1000*e/c_v # a momentum
     # b = 2490*1000*e/c_v # b momentum
@@ -367,20 +369,21 @@ def plot_two_body_E_spectrum_47():
     N = 100000
     for i in range(N):
         theta = random.uniform(0, 2 * PI)
-        E = Energy_vs_theta_47(theta)
+        E = Energy_vs_theta_47_def(theta,0)
         angle.append(theta)
         E_list.append(E)
 
     plt.hist(E_list, bins = 500)
     print(max(E_list))
-    plt.show()
+    # plt.show()
+    plt.savefig("/data/runzezhang/result/TN_sims_D/plot/R_theta_0.png")
 if __name__ =="__main__":
 
-    # plot_two_body_E_spectrum_47()
+    plot_two_body_E_spectrum_47()
     # Energy_PDE_plot()
     # plot_test()
     # plot_chains()
-    plot_chain_sum()
+    # plot_chain_sum()
     # plot_chain_separate()
     # plot_chains_ingroup()
 
