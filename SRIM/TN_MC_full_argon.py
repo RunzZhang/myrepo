@@ -47,23 +47,19 @@ class MC_sim_full_argon():
                             3702.9: [0.474 * self.argon40_weight, 0], 3573: [0.0744 * self.argon40_weight, 0],
                              3278.7: [0.372 * self.argon40_weight, 0], 8791.2: [100.6 * self.argon36_weight, 0]},
                            self.m_41]
-        # self.argon_init = [10000, 0 * self.time_factor,
-        #                    {6098.9: [93.57 * self.argon40_weight, 0], 3732: [0.121 * self.argon40_weight, 0],
-        #                     3702.9: [0.474 * self.argon40_weight, 0], 3573: [0.0744 * self.argon40_weight, 0],
-        #                      3278.7: [0.372 * self.argon40_weight, 0], 8791.2: [100000000.6 * self.argon36_weight, 0]},
-        #                    self.m_41]
-        self.level60989 = [6098.9, 0 * self.time_factor,
-                           {516.1: [10.8, 5582.0], 1034.7: [0.242, 5063.7], 1353.9: [51.2, 4745.0],
-                            2398.1: [9.11, 3700.4], 2693: [0.0744, 3405.3], 2733.4: [3.91, 3365.5],
-                            2948.7: [3.72, 3150.2],
-                            3009.6: [1.02, 3089.4], 3326.8: [8, 2771.8], 3430.7: [0.474, 2668.1],
-                            3968.2: [4.09, 2130.7], 4170.0: [0.93, 1828.8]}, self.m_41]
+
         # self.level60989 = [6098.9, 0 * self.time_factor,
         #                    {516.1: [10.8, 5582.0], 1034.7: [0.242, 5063.7], 1353.9: [51.2, 4745.0],
-        #                     2398.1: [9.11, 3700.4], 2733.4: [3.91, 3365.5],
+        #                     2398.1: [9.11, 3700.4], 2693: [0.0744, 3405.3], 2733.4: [3.91, 3365.5],
         #                     2948.7: [3.72, 3150.2],
         #                     3009.6: [1.02, 3089.4], 3326.8: [8, 2771.8], 3430.7: [0.474, 2668.1],
         #                     3968.2: [4.09, 2130.7], 4170.0: [0.93, 1828.8]}, self.m_41]
+        self.level60989 = [6098.9, 0 * self.time_factor,
+                           {516.1: [10.8, 5582.0], 1034.7: [0.242, 5063.7], 1353.9: [51.2*10000, 4745.0],
+                            2398.1: [9.11, 3700.4], 2733.4: [3.91, 3365.5],
+                            2948.7: [3.72, 3150.2],
+                            3009.6: [1.02, 3089.4], 3326.8: [8, 2771.8], 3430.7: [0.474, 2668.1],
+                            3968.2: [4.09, 2130.7], 4170.0: [0.93, 1828.8]}, self.m_41]
         self.level42700 = [4270, 0.021*self.time_factor +self.time_offset ,{167.3:[0.279,4102.5]},self.m_41]
         # no data of 42700
         self.level39682 = [3968.2, 0.021*self.time_factor +self.time_offset ,{516.1:[1.86,3451.8],1353.9:[2.7,2614.3]},self.m_41]
@@ -120,14 +116,14 @@ class MC_sim_full_argon():
         self.gamma_emission_list_1d = []
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
-        # self.MC_sim(self.runtime)
-        # self.data_analysis_v2(self.address)
+        self.MC_sim(self.runtime)
+        self.data_analysis_v2(self.address)
         # self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
         # predict bubble events ratio with different energy threshold
         # also plot how it changes with threshold
-        self.predicted_bubble_events(self.address)
+        # self.predicted_bubble_events(self.address)
         # self.source_uncertainty(0.3)
         # self.source_uncertainty_w_background(0.3, 500)
         # self.bubble_event_with_sigma(0.3)
@@ -377,7 +373,7 @@ class MC_sim_full_argon():
         for i in range(len(hist_result_old[1]) - 1):
             x_bins_old.append((hist_result_old[1][i] + hist_result_old[1][i + 1]) / 2)
 
-        plt.plot(x_bins, hist_result[0], color="blue",label= "1.06g/cm3")
+        plt.plot(x_bins, hist_result[0], color="blue",label= "dominate branch 4700")
         plt.plot(x_bins_old, hist_result_old[0], color="orange", label="1.4g/cm3")
         plt.grid(True, which='both', linestyle='--', linewidth=0.5)
         plt.minorticks_on()
@@ -388,7 +384,7 @@ class MC_sim_full_argon():
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
-        plot_name = 'compare_with_old.png'
+        plot_name = '4700line.png'
         plt.legend()
         plt.savefig(self.plot_address+plot_name, bbox_inches='tight')
         # plt.show()
