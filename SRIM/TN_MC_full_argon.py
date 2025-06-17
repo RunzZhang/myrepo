@@ -75,7 +75,10 @@ class MC_sim_full_argon():
         self.level27334 = [2733.4, 31*0.001*self.time_factor +self.time_offset, {167.3: [2.6, 2566.1]},self.m_41]
         self.level26930 = [2693, 0*self.time_factor +self.time_offset, {0: [1, 0]},self.m_41]
         self.level23981 = [2398.1, 0.12*self.time_factor +self.time_offset, {167.3: [0.27,2229.5], 516.1:[1.3,1881.5], 1353.9: [5.58, 1044.3]},self.m_41]
-        self.level13539 = [1353.9, 0.40*self.time_factor +self.time_offset, {0: [2.14,1354.0], 167.3:[48.5,1186.8], 516.1: [8.93, 837.7]},self.m_41]
+        # self.level13539 = [1353.9, 0.40*self.time_factor +self.time_offset, {0: [2.14,1354.0], 167.3:[48.5,1186.8], 516.1: [8.93, 837.7]},self.m_41]
+        self.level13539 = [1353.9, 0.040 * self.time_factor + self.time_offset,
+                           {0: [2.14, 1354.0], 167.3: [48.5, 1186.8], 516.1: [8.93, 837.7]}, self.m_41]
+
         self.level10347 = [1034.7, 5*self.time_factor +self.time_offset, {167.3 :[1.02,867.3]},self.m_41]
         self.level5161 = [516.1, 260*self.time_factor +self.time_offset, {0 :[23.5,516], 167.3:[6.14,348.7]},self.m_41]
         self.level1673 = [167.3, 315*self.time_factor +self.time_offset, {0 :[74, 167.3]},self.m_41]
@@ -384,7 +387,7 @@ class MC_sim_full_argon():
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
-        plot_name = '4700line.png'
+        plot_name = '4700line_01lifetime.png'
         plt.legend()
         plt.savefig(self.plot_address+plot_name, bbox_inches='tight')
         # plt.show()
