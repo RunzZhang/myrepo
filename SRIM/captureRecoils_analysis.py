@@ -369,14 +369,14 @@ def plot_two_body_E_spectrum_47():
     N = 100000
     for i in range(N):
         theta = random.uniform(0, 2 * PI)
-        E = Energy_vs_theta_47_def(theta,0.4)
+        E = Energy_vs_theta_47_def(theta,0.7)
         angle.append(theta)
         E_list.append(E)
 
     plt.hist(E_list, bins = 500)
     print(max(E_list))
     # plt.show()
-    plt.savefig("/data/runzezhang/result/TN_sims_D/plot/R_theta_04.png")
+    plt.savefig("/data/runzezhang/result/TN_sims_D/plot/R_theta_07.png")
 if __name__ =="__main__":
 
     plot_two_body_E_spectrum_47()
