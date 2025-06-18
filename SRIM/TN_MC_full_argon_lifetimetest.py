@@ -35,7 +35,7 @@ class MC_sim_full_argon():
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_-01"
         self.old_address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
-        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250601_D_400_15"
+        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250601_D_ori_15"
         # to change the density, change the self.address and change the plot name/legend name and change the self.test_Target_Den in Eq_sol
         self.plot_address = "/data/runzezhang/result/New_density_MC/"
 
@@ -56,7 +56,7 @@ class MC_sim_full_argon():
         #                     3009.6: [1.02, 3089.4], 3326.8: [8, 2771.8], 3430.7: [0.474, 2668.1],
         #                     3968.2: [4.09, 2130.7], 4170.0: [0.93, 1828.8]}, self.m_41]
         self.level60989 = [6098.9, 0 * self.time_factor,
-                           {516.1: [10.8, 5582.0], 1034.7: [0.242, 5063.7], 1353.9: [51.2*10000, 4745.0],
+                           {516.1: [10.8, 5582.0], 1034.7: [0.242, 5063.7], 1353.9: [51.2, 4745.0],
                             2398.1: [9.11, 3700.4], 2733.4: [3.91, 3365.5],
                             2948.7: [3.72, 3150.2],
                             3009.6: [1.02, 3089.4], 3326.8: [8, 2771.8], 3430.7: [0.474, 2668.1],
@@ -377,7 +377,7 @@ class MC_sim_full_argon():
         for i in range(len(hist_result_old[1]) - 1):
             x_bins_old.append((hist_result_old[1][i] + hist_result_old[1][i + 1]) / 2)
 
-        plt.plot(x_bins, hist_result[0], color="blue",label= "dominate branch 4700 15 density")
+        plt.plot(x_bins, hist_result[0], color="blue",label= "dominate branch ori 15 density")
         plt.plot(x_bins_old, hist_result_old[0], color="orange", label="1.4g/cm3")
         plt.grid(True, which='both', linestyle='--', linewidth=0.5)
         plt.minorticks_on()
@@ -388,7 +388,7 @@ class MC_sim_full_argon():
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
-        plot_name = 'D_400_15D.png'
+        plot_name = 'D_ori_15D.png'
         plt.legend()
         plt.savefig(self.plot_address+plot_name, bbox_inches='tight')
         # plt.show()
