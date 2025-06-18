@@ -66,7 +66,7 @@ class E_loss_solve():
     def E_loss_t_fun_ODE_new_D(self, t, y):
         # what the effect of changing target density
         ep = self.C_tf*0.5* (y*0.5/13.6)/(self.Z_tp**2*self.Z**(0.5))
-        part_a = - np.log(1+self.a * ep) / (2 * (ep + self.b * (ep) ** self.c) + self.d * (ep) ** 0.5)* self.factor *self.test_TarDen10**8
+        part_a = - np.log(1+self.a * ep) / (2 * (ep + self.b * (ep) ** self.c) + self.d * (ep) ** 0.5)* self.factor *self.test_TarDen*10**8
         # part_a = - self.a * ep/ (
         #             2 * (ep + self.b * (ep) ** self.c) + self.d * (ep) ** 0.5) * self.factor * self.Tar_Den * 10 ** 8
         part_b = - (y) ** 0.5 * self.total_k
