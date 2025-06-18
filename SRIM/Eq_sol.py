@@ -47,7 +47,7 @@ class E_loss_solve():
         self.Tar_Den = 1.597E+22 # atoms/cm3 = 1.06g/cm3
         self.alpha_inv = 137
         self.LSS_factor = 1.6918*(10**(-2))# LSS variable transformation by SRIM table from 1.06 density
-        self.test_TarDen = 1.597E+22 *0.5
+        self.test_TarDen = 1.597E+22
         print("factor",self.factor*self.Tar_Den*10**8)
         print("LSS factor inverse", 1/self.LSS_factor)
 
@@ -159,7 +159,9 @@ class E_loss_solve():
     def E_loss_result_D(self, init_E, t):
         # also given the different number density, how is everything changed
         #given t in ns and E in ev, return the final energy
-        if t >7.3*10**(-4): # hard cut for ini E 2kev, t in ns, E threshold  = 1eV (t threshold = 0.73 ps)
+        # if t >7.3*10**(-4): # hard cut for ini E 2kev, t in ns, E threshold  = 1eV (t threshold = 0.73 ps)
+            # to reduce the waring and caculation speed
+        if t > 4.4 * 10 ** (-4):  # hard cut for ini E 2kev, t in ns, E threshold  = 1eV (t threshold = 0.73 ps)
             # to reduce the waring and caculation speed
             return 0
         elif init_E<1:
