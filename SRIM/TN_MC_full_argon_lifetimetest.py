@@ -224,7 +224,7 @@ class MC_sim_full_argon():
                             temp_energy = 0.5 * self.mass * (vx ** 2 + vy ** 2 + vz ** 2) /self.ev # energy in ev
                             # print("pre kenit", temp_energy, "t in ns", state[1])
                             # E_final = solve_tool.E_el_loss_result(temp_energy,state[1])
-                            E_final = solve_tool.E_loss_result_D(temp_energy, state[1], D)
+                            E_final = solve_tool.E_loss_result_D(temp_energy, state[1])
                             # print("post knit", E_final)
                             E_deposit = temp_energy- E_final
                             E_deposit_list.append(E_deposit)

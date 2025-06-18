@@ -47,6 +47,7 @@ class E_loss_solve():
         self.Tar_Den = 1.597E+22 # atoms/cm3 = 1.06g/cm3
         self.alpha_inv = 137
         self.LSS_factor = 1.6918*(10**(-2))# LSS variable transformation by SRIM table from 1.06 density
+        self.test_TarDen = 1.597E+22 *1.2
         print("factor",self.factor*self.Tar_Den*10**8)
         print("LSS factor inverse", 1/self.LSS_factor)
 
@@ -62,10 +63,10 @@ class E_loss_solve():
         part_c = (y) ** 0.5 * np.sqrt(2 * self.ev / self.mass) * (1/self.T_factor) # change dE/dx to dE/dt
         return (part_b+part_a)*part_c
 
-    def E_loss_t_fun_ODE_new_D(self, t, y, D):
+    def E_loss_t_fun_ODE_new_D(self, t, y):
         # what the effect of changing target density
         ep = self.C_tf*0.5* (y*0.5/13.6)/(self.Z_tp**2*self.Z**(0.5))
-        part_a = - np.log(1+self.a * ep) / (2 * (ep + self.b * (ep) ** self.c) + self.d * (ep) ** 0.5)* self.factor *D*10**8
+        part_a = - np.log(1+self.a * ep) / (2 * (ep + self.b * (ep) ** self.c) + self.d * (ep) ** 0.5)* self.factor *self.test_TarDen10**8
         # part_a = - self.a * ep/ (
         #             2 * (ep + self.b * (ep) ** self.c) + self.d * (ep) ** 0.5) * self.factor * self.Tar_Den * 10 ** 8
         part_b = - (y) ** 0.5 * self.total_k
@@ -176,7 +177,7 @@ class E_loss_solve():
             self.ini_E = init_E
             if t != 0:
                 solve = solve_ivp(self.E_loss_t_fun_ODE_new_D, [0, self.last_t], [self.ini_E],
-                                  t_eval=self.t_list, args=(D,))  # the list from 0 to 2t
+                                  t_eval=self.t_list)  # the list from 0 to 2t
                 # t_eval is the intergration interval so it cannot be a single value
 
                 array = solve.y
