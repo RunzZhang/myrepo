@@ -156,7 +156,7 @@ class E_loss_solve():
                 sol_y = init_E
             return sol_y  # return the E value after travels t
 
-    def E_loss_result_D(self, init_E, t, D):
+    def E_loss_result_D(self, init_E, t):
         # also given the different number density, how is everything changed
         #given t in ns and E in ev, return the final energy
         if t >7.3*10**(-4): # hard cut for ini E 2kev, t in ns, E threshold  = 1eV (t threshold = 0.73 ps)
