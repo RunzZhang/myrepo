@@ -62,7 +62,7 @@ class E_loss_solve():
         part_c = (y) ** 0.5 * np.sqrt(2 * self.ev / self.mass) * (1/self.T_factor) # change dE/dx to dE/dt
         return (part_b+part_a)*part_c
 
-    def E_loss_t_fun_ODE_new_D(self, t, y ,  D):
+    def E_loss_t_fun_ODE_new_D(self, t, y, D):
         # what the effect of changing target density
         ep = self.C_tf*0.5* (y*0.5/13.6)/(self.Z_tp**2*self.Z**(0.5))
         part_a = - np.log(1+self.a * ep) / (2 * (ep + self.b * (ep) ** self.c) + self.d * (ep) ** 0.5)* self.factor *D*10**8
@@ -175,7 +175,7 @@ class E_loss_solve():
                 self.t_list.append(t*i/10)
             self.ini_E = init_E
             if t != 0:
-                solve = solve_ivp(self.E_loss_t_fun_ODE_new_D, [0, self.last_t], [self.ini_E],D=D,
+                solve = solve_ivp(self.E_loss_t_fun_ODE_new_D(D=D), [0, self.last_t], [self.ini_E],
                                   t_eval=self.t_list)  # the list from 0 to 2t
                 # t_eval is the intergration interval so it cannot be a single value
 
