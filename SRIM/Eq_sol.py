@@ -383,7 +383,7 @@ class E_loss_solve():
 
 if __name__=="__main__":
     solve = E_loss_solve()
-    solve.E_loss_find_t_stop(2000)
+    # solve.E_loss_find_t_stop(2000)
     # solve.E_loss_N_x_fun_ODE_pretest()
     # solve.E_loss_N_x_fun_ODE_posttest()
     solve.E_loss_total_t_fun_ODE_posttest()
