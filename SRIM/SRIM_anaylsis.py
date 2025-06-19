@@ -36,6 +36,8 @@ class SRIM_EXY():
     def __init__(self):
         super().__init__()
         # self.file_name = 'EXYZArgon1keV.txt'
+        self.plot_save_path = "/data/runzezhang/result/New_density_MC/"
+        self.plot_name = 'EL_dEdxE.png'
         self.file_name = 'EXYZ_Argon1keVTrueDensity.txt'
         self.file_name_edit = self.file_name[0:-4] + '_edit.txt'
         self.displacement = []  # Want to record the displacement in each step (in meters)
@@ -55,9 +57,10 @@ class SRIM_EXY():
         self.data_ini()
         self.table = SRIM_Table()
         self.secondary_variable()
-        self.scatterplot(self.E_compare_diff_1d, self.E_eV,  "E_diff/eV", "Ek/keV")
+        # self.scatterplot(self.E_compare_diff_1d, self.E_eV,  "E_diff/eV", "Ek/keV")
         # print("sqrt E",self.sqrt_E[:100])
         # self.plotEvX_fit( self.sqrt_E, self.ElStop)
+        self.plotEvE_fit(self.sqrt_E, self.ElStop)
 
 
 
@@ -274,6 +277,23 @@ class SRIM_EXY():
         plt.legend()
 
         plt.show()
+    def plotEvE_fit(self, E_dataset, E_lost_dataset):
+        popt, pcov = curve_fit(li_func2, E_dataset, E_lost_dataset)
+
+        perr = np.sqrt(np.diag(pcov))
+        print("popt", popt, "\n", "perr", perr)
+        print(popt[0])
+        fit_data = []
+        for i in E_dataset:
+            fit_data.append(li_func2(i, popt[0]))
+
+        plt.plot(E_dataset, fit_data, 'r-', label="linear fit")
+        plt.xlabel(r"$\sqrt{E}$/$\sqrt{eV}$")
+        plt.ylabel("dE/dx eV/A")
+        # plt.xlim(0,500)
+        plt.legend()
+
+        plt.savefig(self.plot_save_path+self.plot_name)
 
     def time_displacement_hist(self, t, x, ER, velocity):
         bin_n = 500

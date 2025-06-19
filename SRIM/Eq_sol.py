@@ -50,6 +50,8 @@ class E_loss_solve():
         self.test_TarDen = 1.597E+22
         print("factor",self.factor*self.Tar_Den*10**8)
         print("LSS factor inverse", 1/self.LSS_factor)
+        self.plot_address = "/data/runzezhang/result/New_density_MC/"
+        self.plot_name ="DEDt.png"
 
         # self.main_fun()
         # self.test()
@@ -159,10 +161,10 @@ class E_loss_solve():
     def E_loss_result_D(self, init_E, t):
         # also given the different number density, how is everything changed
         #given t in ns and E in ev, return the final energy
-        # if t >7.3*10**(-4): # hard cut for ini E 2kev, t in ns, E threshold  = 1eV (t threshold = 0.73 ps)
+        if t >7.3*10**(-4): # hard cut for ini E 2kev, t in ns, E threshold  = 1eV (t threshold = 0.73 ps)
             # to reduce the waring and caculation speed
-        if t > 4.4 * 10 ** (-4):  # hard cut for ini E 2kev, t in ns, E threshold  = 1eV (t threshold = 0.73 ps)
-            # to reduce the waring and caculation speed
+        # if t > 4.4 * 10 ** (-4):  # hard cut for ini E 2kev, t in ns, E threshold  = 1eV (t threshold = 0.44 ps)
+            # to reduce the waring and caculation speed old density
             return 0
         elif init_E<1:
             if t>0 : # if E<1 eV cut
@@ -292,10 +294,10 @@ class E_loss_solve():
         # plt.plot(sol_y[1:], Dy_list)
         # print("Dydt", Dy_list)
         plt.xlabel("time/ns")
-        plt.ylabel("initial E/eV")
+        plt.ylabel("E/eV")
         plt.xlim(0,0.001)
-        plt.ylim(0,2000)
-        plt.show()
+        plt.ylim(0,2100)
+        plt.savefig(self.plot_address+self.plot_name)
 
     def E_loss_N_x_fun_ODE_pretest(self):
         # part a works
@@ -384,6 +386,6 @@ if __name__=="__main__":
     solve.E_loss_find_t_stop(2000)
     # solve.E_loss_N_x_fun_ODE_pretest()
     # solve.E_loss_N_x_fun_ODE_posttest()
-    # solve.E_loss_total_t_fun_ODE_posttest()
+    solve.E_loss_total_t_fun_ODE_posttest()
     # print(solve.E_loss_result(1000,7.1E-4))
     # print(solve.E_el_loss_result(2, 0.005))
