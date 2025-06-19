@@ -270,7 +270,7 @@ class E_loss_solve():
     def E_loss_total_t_fun_ODE_posttest(self):
 
         self.last_t = 0.001
-        self.ini_E = 125
+        self.ini_E = 2000
         self.threshold_v = 0.1
         # self.t_crit = 1343 * 10 ** (-6) * np.log(self.ini_E / 0.1)
         self.t_crit = 7.24432998e-04
@@ -285,17 +285,20 @@ class E_loss_solve():
         sol_y = array[0]
         print("y", array,sol_y)
         print("t", solve.t)
+        t_fs =[] # time in fs
+        for i in solve.t:
+            t_fs.append(i*1E6)
         # print("threshold t", np.interp(self.threshold_v, sol_y, solve.t))
-        plt.plot(solve.t, sol_y)
+        plt.plot(t_fs, sol_y)
         Dy_list = []
         for i in range(1, len(sol_y)):  # double check with solution result
             value = (sol_y[i] - sol_y[i - 1]) / (solve.t[i] - solve.t[i - 1])
             Dy_list.append(value)
         # plt.plot(sol_y[1:], Dy_list)
         # print("Dydt", Dy_list)
-        plt.xlabel("time/ns")
+        plt.xlabel("time/fs")
         plt.ylabel("E/eV")
-        plt.xlim(0,0.001)
+        plt.xlim(0,1000)
         plt.ylim(0,2100)
         plt.savefig(self.plot_address+self.plot_name)
 
