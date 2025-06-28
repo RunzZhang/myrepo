@@ -38,7 +38,7 @@ class SRIM_EXY():
         # self.file_name = 'EXYZArgon1keV.txt'
         self.plot_save_path = "/data/runzezhang/result/New_density_MC/"
         self.plot_name = 'EL_dEdxE.png'
-        self.file_name = 'EXYZ_Argon1keVTrueDensity.txt'
+        self.file_name = 'EXYZ_104L.txt'
         self.file_name_edit = self.file_name[0:-4] + '_edit.txt'
         self.displacement = []  # Want to record the displacement in each step (in meters)
         self.displacement_1d = []
@@ -347,7 +347,7 @@ class SRIM_Table():
     def __init__(self):
         super().__init__()
         # self.file_name = 'argon_140keV(gas).txt'
-        self.file_name = 'argon_tn(liquid).txt'
+        self.file_name = 'Argon_in_Argon_104L.txt'
         # self.energy_startpoint = "10.00 keV"
         self.energy_startpoint ="9.99999 eV"
         self.file_name_edit = self.file_name[0:-4] + '_edit.txt'
@@ -375,14 +375,15 @@ class SRIM_Table():
         # self.Tar_Den = 2.1361E+22 # atoms/cm3
         self.Tar_Den = 1.597E+22  # atoms/cm3 1.06 g/cm3
         self.SN = [] # shouldbe ev/cm
-        self.LSS_factor = 1.2656 * (10 ** (-2))
+        # self.LSS_factor = 1.2656 * (10 ** (-2))
+        self.LSS_factor = 1.6918 * (10 ** (-2)) # 10.6 g/cm3
 
 
 
         self.data_ini()
         self.fetch_data()
-        # self.compare_theory()
-        # self.plot_data()
+        self.compare_theory()
+        self.plot_data()
 
     def data_ini(self):
 
@@ -499,8 +500,12 @@ class SRIM_Table():
         print("ep",self.ep_list)
         print("ep2", self.ep2_list)
         print("sn",self.sn)
-
+        print("Ion_ene", self.Ion_ene)
     def sn_func(self, ep):
+        return np.log(1+1.1383*ep)/(2*(ep+0.001321*ep**0.21226+0.19593*ep**0.5))
+
+    def sn_func_v2(self, ep):
+        #sn*LSS*N
         return np.log(1+1.1383*ep)/(2*(ep+0.001321*ep**0.21226+0.19593*ep**0.5))
 
     def plot_data(self):
@@ -509,6 +514,7 @@ class SRIM_Table():
         self.force_fit_LSS()
         plt.plot(self.Ion_ene, self.N_loss, label="experimental data")
         plt.plot(self.Ion_ene, self.sn, label="theoretical curve")
+        # plt.plot(self.Ion_ene, self.SN, label="theoretical curve")
         plt.xlabel("Recoiled energy/eV")
         plt.ylabel("LSS")
         print("exp", self.N_loss)
@@ -526,11 +532,15 @@ class SRIM_Table():
         self.mean_ratio = sum(self.ratio)/len(self.ratio)
         for i in range(len(self.SN)):
             self.SN[i]= self.alpha*self.SN[i]
+            # insert LSS factor instead of alpha
+            # self.SN[i]= self.SN[i]/self.LSS_factor
         print("mean ratio", self.mean_ratio)
         # I think the lost factor is 1/alpha, which is 137, the mean ration is 127
         print("after edit theo", self.SN)
 
     def force_fit_LSS(self):
+        # to estimate the uncerntaity from model to SRIM data more precisely
+
         self.ratio = []
         for i in range(len(self.N_loss)):
             ratio = self.N_loss[i]/self.sn[i]
@@ -647,8 +657,8 @@ class SRIM_scatter():
         plt.show()
         print(self.ep_list)
 if __name__ == "__main__":
-    srim_result  = SRIM_EXY()
-    # srim_data = SRIM_Table()
+    # srim_result  = SRIM_EXY()
+    srim_data = SRIM_Table()
     # test = model_test()
     # scatter = SRIM_scatter()
 
