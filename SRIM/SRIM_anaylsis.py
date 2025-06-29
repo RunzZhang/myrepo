@@ -555,6 +555,7 @@ class SRIM_Table():
         for i in range(len(self.sn_LSS)):
             self.sn_LSS[i]= self.mean_ratio*self.sn_LSS[i]
         print("mean ratio", self.mean_ratio)
+        print("ratio", self.ratio)
         # I think the lost factor is 1/alpha, which is 137, the mean ration is 127
         print("after edit theo", self.sn_LSS)
 
