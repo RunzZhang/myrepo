@@ -516,14 +516,14 @@ class SRIM_Table():
     def plot_data(self):
         print("theo before", self.sn)
         # self.force_fit()
-        # self.force_fit_LSS() # no need to fit
+        self.force_fit_LSS() # if check the factor between exp and theory data, uncomment this, otherwise, it is original data
         plt.plot(self.Ion_ene, self.N_loss, label="experimental data")
         plt.plot(self.Ion_ene, self.sn_LSS, label="theoretical curve")
         # plt.plot(self.Ion_ene, self.SN, label="theoretical curve")
         plt.xlabel("Recoiled energy/eV")
-        plt.ylabel("LSS")
+        plt.ylabel("eV/A")
         print("exp", self.N_loss)
-        print("theo afterwards", self.sn)
+        print("theo afterwards", self.sn_LSS)
 
         plt.legend()
         plt.savefig(self.address+self.plot_name)
@@ -549,14 +549,14 @@ class SRIM_Table():
 
         self.ratio = []
         for i in range(len(self.N_loss)):
-            ratio = self.N_loss[i]/self.sn[i]
+            ratio = self.N_loss[i]/self.sn_LSS[i]
             self.ratio.append(ratio)
         self.mean_ratio = sum(self.ratio)/len(self.ratio)
-        for i in range(len(self.sn)):
-            self.sn[i]= self.mean_ratio*self.sn[i]
+        for i in range(len(self.sn_LSS)):
+            self.sn_LSS[i]= self.mean_ratio*self.sn_LSS[i]
         print("mean ratio", self.mean_ratio)
         # I think the lost factor is 1/alpha, which is 137, the mean ration is 127
-        print("after edit theo", self.sn)
+        print("after edit theo", self.sn_LSS)
 
     def output(self, E):
         # E in eV
