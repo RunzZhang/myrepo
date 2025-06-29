@@ -45,7 +45,7 @@ class E_loss_solve():
         self.total_k = 0.0338721
         self.mass = 6.63551406835257e-26 # argon 40 in kg
         self.T_factor = 0.1 # change m/s to A/ns
-        self.Tar_Den = 2.1361E+22 # atoms/cm3
+        # self.Tar_Den = 2.1361E+22 # atoms/cm3
 
         self.alpha_inv = 137
         # self.LSS_factor = 1.2656*(10**(-2))# LSS variable transformation by SRIM table
