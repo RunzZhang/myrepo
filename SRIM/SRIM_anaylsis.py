@@ -378,7 +378,7 @@ class SRIM_Table():
         self.Tar_Den = 1.597E+22  # atoms/cm3 1.06 g/cm3
         self.SN = [] # shouldbe ev/cm
         # self.LSS_factor = 1.2656 * (10 ** (-2))
-        self.LSS_factor = 1.6918 * (10 ** (-2)) # 1.06 g/cm3
+        self.LSS_factor = 1.6918 * (10 ** (-2)) # 1.06 g/cm3 1.7243
 
 
 
@@ -474,7 +474,7 @@ class SRIM_Table():
             self.E_loss[i] = float(self.E_loss[i])
 
             # self.N_loss[i] = float(self.N_loss[i])*7.0574E-02 # in Mev/(mg/cm2)
-            self.N_loss[i] = float(self.N_loss[i] )*(1.2656*10**(-2))# in LSS
+            self.N_loss[i] = float(self.N_loss[i] ) # in eV/A
             self.Projected_range[i] =float(self.Projected_range[i])
             self.Longitudinal_stra[i] = float(self.Longitudinal_stra[i])
             self.Lateral_stra[i] = float(self.Lateral_stra[i])
