@@ -532,7 +532,7 @@ class SRIM_Table():
     def force_fit(self):
         self.alpha = 137
         self.ratio = []
-        self.ratio_ascend = [0]
+
         for i in range(len(self.N_loss)):
             ratio = self.N_loss[i]/self.SN[i]
             self.ratio.append(ratio)
@@ -550,6 +550,7 @@ class SRIM_Table():
         # to estimate the uncerntaity from model to SRIM data more precisely
 
         self.ratio = []
+        self.ratio_ascend = [0]
         for i in range(len(self.N_loss)):
             ratio = self.N_loss[i]/self.sn_LSS[i]
             self.ratio.append(ratio)
