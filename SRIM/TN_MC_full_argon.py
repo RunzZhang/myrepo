@@ -29,7 +29,7 @@ class MC_sim_full_argon():
         self.m_41 = 40.98 * 10 ** (-3) / (6.023 * 10 ** 23)  # Ar40 mass in kg
         self.m_40 = 39.98 * 10 ** (-3) / (6.023 * 10 ** 23)  # Ar40 mass in kg
         self.m_37 = 36.97 * 10 ** (-3) / (6.023 * 10 ** 23)  # Ar40 mass in kg
-        self.time_factor = 2* 10**(-3)  # time factor from ps to ns
+        self.time_factor = 10**(-3)  # time factor from ps to ns
         self.time_offset = 0*self.time_factor
         # orginal time factor is 10E-3 and we modify it from 0.5 to 2
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
