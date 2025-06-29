@@ -33,7 +33,7 @@ class MC_sim_full_argon():
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_-01"
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
-        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250628_full"
+        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250628_full_compareEq_init"
 
 
         # self.argon_init = [10000, 0*self.time_factor ,{6098.9:[93.57*self.argon40_weight,0],3732:[0.121*self.argon40_weight,0],3702.9:[0.474*self.argon40_weight,0],3573:[0.0744*self.argon40_weight,0],
@@ -330,7 +330,7 @@ class MC_sim_full_argon():
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
         plt.legend()
-        plt.savefig("/data/runzezhang/result/SRIM_MC/old_sepctrum_compare_new_2025.png")
+        plt.savefig("/data/runzezhang/result/SRIM_MC/old_sepctrum_compare_eq_init_2025.png")
         # plt.show()
 
 

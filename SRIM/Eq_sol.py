@@ -17,6 +17,45 @@ def exponential_decay(t, y): return -0.5 * y
 
 class E_loss_solve():
     def __init__(self):
+        # self.a = 1.1383
+        # self.b = 0.01321
+        # self.c = 0.21226
+        # self.d = 0.19593
+        # self.Z_tp = 18
+        # self.C_tf = (9 * PI ** 2 / (2 ** 7)) ** (1 / 3)
+        # self.A_tp = 41
+        # self.Z = (2 * self.Z_tp ** 0.23) ** 2
+        # self.EB = 13.6  # in eV
+        # self.a0 = 5.291 * 10 ** (-11)  # in m
+        # # self.a0 = 0.5291  # in A
+        # # self.energy = range(self.min, self.max, self.step)
+        # self.F1 = self.C_tf * 0.5 * (0.5 / 13.6) / (self.Z_tp ** 2 * self.Z ** (0.5))
+        # print("F1", self.F1)
+        #
+        # self.au = 0.8853 * self.a0 / (2 * self.Z_tp ** 2)  # in m
+        # self.au = self.au * 100  # in cm
+        # print("au", self.au)
+        # self.gam = 4 / 2 ** 2
+        # self.ev = 1.60218e-19
+        # # self.Tar_Den = 2.1361E+22  # atoms/cm3
+        # self.Tar_Den = 1.597E+22  # atoms/cm3 = 1.06g/cm3
+        # self.mean_ratio =  2.1246181979237e-12 # adjust the formula unit to ev/A
+        # self.factor = PI * self.au ** 2 * self.gam * self.mean_ratio /(self.F1)
+        # self.k = 1.541e-05
+        # self.total_k = 0.0338721
+        # self.mass = 6.63551406835257e-26 # argon 40 in kg
+        # self.T_factor = 0.1 # change m/s to A/ns
+        # # self.Tar_Den = 2.1361E+22 # atoms/cm3
+        #
+        # self.alpha_inv = 137
+        # # self.LSS_factor = 1.2656*(10**(-2))# LSS variable transformation by SRIM table
+        # self.LSS_factor = 1.6918 * (10 ** (-2))  # LSS variable transformation by SRIM table from 1.06 density
+        # print("factor",self.factor*self.Tar_Den*10**8)
+        # print("LSS factor inverse", 1/self.LSS_factor)
+        #
+        # # self.main_fun()
+        # # self.test()
+
         self.a = 1.1383
         self.b = 0.01321
         self.c = 0.21226
@@ -37,24 +76,21 @@ class E_loss_solve():
         print("au", self.au)
         self.gam = 4 / 2 ** 2
         self.ev = 1.60218e-19
-        # self.Tar_Den = 2.1361E+22  # atoms/cm3
-        self.Tar_Den = 1.597E+22  # atoms/cm3 = 1.06g/cm3
-        self.mean_ratio =  2.1246181979237e-12 # adjust the formula unit to ev/A
-        self.factor = PI * self.au ** 2 * self.gam * self.mean_ratio /(self.F1)
+        self.Tar_Den = 1.597E+22  # atoms/cm3
+        self.mean_ratio = 2.1246181979237e-12  # adjust the formula unit to ev/A
+        self.factor = PI * self.au ** 2 * self.gam * self.mean_ratio / (self.F1)
         self.k = 1.541e-05
         self.total_k = 0.0338721
-        self.mass = 6.63551406835257e-26 # argon 40 in kg
-        self.T_factor = 0.1 # change m/s to A/ns
-        # self.Tar_Den = 2.1361E+22 # atoms/cm3
-
+        self.mass = 6.63551406835257e-26  # argon 40 in kg
+        self.T_factor = 0.1  # change m/s to A/ns
+        self.Tar_Den = 1.597E+22  # atoms/cm3 = 1.06g/cm3
         self.alpha_inv = 137
-        # self.LSS_factor = 1.2656*(10**(-2))# LSS variable transformation by SRIM table
         self.LSS_factor = 1.6918 * (10 ** (-2))  # LSS variable transformation by SRIM table from 1.06 density
-        print("factor",self.factor*self.Tar_Den*10**8)
-        print("LSS factor inverse", 1/self.LSS_factor)
-
-        # self.main_fun()
-        # self.test()
+        self.test_TarDen = 1.597E+22
+        print("factor", self.factor * self.Tar_Den * 10 ** 8)
+        print("LSS factor inverse", 1 / self.LSS_factor)
+        self.plot_address = "/data/runzezhang/result/New_density_MC/"
+        self.plot_name = "DEDt.png"
 
     def E_loss_t_fun_ODE(self, t, y):
         ep = self.C_tf*0.5* (y*0.5/13.6)/(self.Z_tp**2*self.Z**(0.5))
