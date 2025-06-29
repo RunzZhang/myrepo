@@ -35,7 +35,7 @@ class MC_sim_full_argon():
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_-01"
         self.old_address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
-        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250601_D"
+        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250623_compare"
         self.plot_address = "/data/runzezhang/result/New_density_MC/"
 
 
@@ -340,7 +340,7 @@ class MC_sim_full_argon():
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
-        plot_name = 'compare_with_old_LSS.png'
+        plot_name = 'compare_with_LSS_old.png'
         plt.legend()
         plt.savefig(self.plot_address+plot_name)
         # plt.show()
@@ -370,7 +370,7 @@ class MC_sim_full_argon():
         for i in range(len(hist_result_old[1]) - 1):
             x_bins_old.append((hist_result_old[1][i] + hist_result_old[1][i + 1]) / 2)
 
-        plt.plot(x_bins, hist_result[0], color="blue",label= "dominate branch 4700")
+        plt.plot(x_bins, hist_result[0], color="blue",label= "LSS 1.06")
         plt.plot(x_bins_old, hist_result_old[0], color="orange", label="1.4g/cm3")
         plt.grid(True, which='both', linestyle='--', linewidth=0.5)
         plt.minorticks_on()
@@ -381,7 +381,7 @@ class MC_sim_full_argon():
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
-        plot_name = '4700line_10lifetime.png'
+        plot_name = 'New_spectrum_LSS.png'
         plt.legend()
         plt.savefig(self.plot_address+plot_name, bbox_inches='tight')
         # plt.show()
