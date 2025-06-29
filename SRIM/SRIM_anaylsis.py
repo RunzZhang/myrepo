@@ -351,6 +351,8 @@ class SRIM_Table():
         # self.energy_startpoint = "10.00 keV"
         self.energy_startpoint ="9.99999 eV"
         self.file_name_edit = self.file_name[0:-4] + '_edit.txt'
+        self.address = "/data/runzezhang/result/New_density_MC/"
+        self.plot_name = "theory_data_compare.png"
 
 
         self.step = 200  # in ev
@@ -376,7 +378,7 @@ class SRIM_Table():
         self.Tar_Den = 1.597E+22  # atoms/cm3 1.06 g/cm3
         self.SN = [] # shouldbe ev/cm
         # self.LSS_factor = 1.2656 * (10 ** (-2))
-        self.LSS_factor = 1.6918 * (10 ** (-2)) # 10.6 g/cm3
+        self.LSS_factor = 1.6918 * (10 ** (-2)) # 1.06 g/cm3
 
 
 
@@ -481,13 +483,16 @@ class SRIM_Table():
         self.ep_list = []
         self.ep2_list =[]
         self.sn = []
+        self.sn_LSS = [] # sn(\epsilon) reduced energy sn. We directly use LSS factor generated from SRIM D = 1.06g/cm3
 
         for i in range(len(self.Ion_ene)):
             energy = self.Ion_ene[i]
             sn_value = self.sn_func(self.F1*energy)
+            sn_LSS_value = self.sn_func(self.F1*energy)/self.LSS_factor
             self.ep_list.append(self.F1*energy)
             self.ep2_list.append(self.au*0.5*self.Ion_ene[i]/(self.Z_tp**2*self.ev**2))
             self.sn.append(sn_value)
+            self.sn_LSS.append(sn_LSS_value)
             if energy != 0:
                 # value = PI * self.au ** 2 * self.gam * energy * sn_value / (energy*self.F1) # in
                 # value = PI * self.au ** 2 * self.gam * energy * sn_value
@@ -511,9 +516,9 @@ class SRIM_Table():
     def plot_data(self):
         print("theo before", self.sn)
         # self.force_fit()
-        self.force_fit_LSS()
+        # self.force_fit_LSS() # no need to fit
         plt.plot(self.Ion_ene, self.N_loss, label="experimental data")
-        plt.plot(self.Ion_ene, self.sn, label="theoretical curve")
+        plt.plot(self.Ion_ene, self.sn_LSS, label="theoretical curve")
         # plt.plot(self.Ion_ene, self.SN, label="theoretical curve")
         plt.xlabel("Recoiled energy/eV")
         plt.ylabel("LSS")
@@ -521,7 +526,8 @@ class SRIM_Table():
         print("theo afterwards", self.sn)
 
         plt.legend()
-        plt.show()
+        plt.savefig(self.address+self.plot_name)
+        # plt.show()
 
     def force_fit(self):
         self.alpha = 137
