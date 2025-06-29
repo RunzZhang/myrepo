@@ -329,8 +329,8 @@ class MC_sim_full_argon():
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
         plt.legend()
-        # plt.savefig("/data/runzezhang/result/SRIM_MC/old_sepctrum.png")
-        plt.show()
+        plt.savefig("/data/runzezhang/result/SRIM_MC/old_sepctrum.png")
+        # plt.show()
 
 
 
