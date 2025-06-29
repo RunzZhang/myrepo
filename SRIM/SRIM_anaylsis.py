@@ -532,9 +532,11 @@ class SRIM_Table():
     def force_fit(self):
         self.alpha = 137
         self.ratio = []
+        self.ratio_ascend = [0]
         for i in range(len(self.N_loss)):
             ratio = self.N_loss[i]/self.SN[i]
             self.ratio.append(ratio)
+
         self.mean_ratio = sum(self.ratio)/len(self.ratio)
         for i in range(len(self.SN)):
             self.SN[i]= self.alpha*self.SN[i]
@@ -551,11 +553,14 @@ class SRIM_Table():
         for i in range(len(self.N_loss)):
             ratio = self.N_loss[i]/self.sn_LSS[i]
             self.ratio.append(ratio)
+            if i>=1:
+                self.ratio_ascend.append(self.ratio[i]-self.ratio[i-1])
         self.mean_ratio = sum(self.ratio)/len(self.ratio)
         for i in range(len(self.sn_LSS)):
             self.sn_LSS[i]= self.mean_ratio*self.sn_LSS[i]
-        print("mean ratio", self.mean_ratio)
+        print("mean ratio", self.mean_ratio) #0.716
         print("ratio", self.ratio)
+        print("ratio diff", self.ratio_ascend)
         # I think the lost factor is 1/alpha, which is 137, the mean ration is 127
         print("after edit theo", self.sn_LSS)
 
