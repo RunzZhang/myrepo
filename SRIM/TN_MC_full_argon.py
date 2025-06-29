@@ -20,7 +20,7 @@ class MC_sim_full_argon():
         #[level energy, lifetime ,{next level_i: [branch ratio, gamma energy, possibility boundary]}]
         # argon init first value is 7000 to be distinguishedfrom other lines
         # the list first value must be unique
-        self.runtime = 100000
+        self.runtime = 10000
         self.argon40_weight =97.4/0.93
         self.argon36_weight = 2.5
         self.Energy_factor = 10 ** 3 * 1.602 * 10 ** (-19)
@@ -340,7 +340,7 @@ class MC_sim_full_argon():
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
-        plot_name = 'compare_with_old.png'
+        plot_name = 'compare_with_old_LSS.png'
         plt.legend()
         plt.savefig(self.plot_address+plot_name)
         # plt.show()
