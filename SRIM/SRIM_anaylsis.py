@@ -352,7 +352,7 @@ class SRIM_Table():
         self.energy_startpoint ="9.99999 eV"
         self.file_name_edit = self.file_name[0:-4] + '_edit.txt'
         self.address = "/data/runzezhang/result/New_density_MC/"
-        self.plot_name = "theory_data_compare.png"
+        self.plot_name = "theory_data_compare_fit.png"
 
 
         self.step = 200  # in ev
