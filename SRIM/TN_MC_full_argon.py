@@ -115,14 +115,15 @@ class MC_sim_full_argon():
         self.gamma_emission_list_1d = []
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
-        self.MC_sim(self.runtime)
-        self.data_analysis_v2(self.address)
+        # self.MC_sim(self.runtime)
+        # self.data_analysis_v2(self.address)
         # self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
         # predict bubble events ratio with different energy threshold
         # also plot how it changes with threshold
         # self.predicted_bubble_events(self.address)
+        self.predicted_bubble_events_LSS(self.address)
         # self.source_uncertainty(0.3)
         # self.source_uncertainty_w_background(0.3, 500)
         # self.bubble_event_with_sigma(0.3)
@@ -541,6 +542,38 @@ class MC_sim_full_argon():
         # plt.ylim([1E-5,0.1])
         # plt.legend()
         plt.savefig(self.plot_address+"bubble_number.png")
+
+    def predicted_bubble_events_LSS(self):
+        # given energy threshold in function generate_hist_and_CDF, plot the bubble numbers
+        # this is adjusted based on different LSS factor
+        address05 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS05"
+        address08 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS08"
+        address07 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS07"
+        address10 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS1"
+        x_bins_05, hist_result_05, bubble_event_05  = self.generate_hist_and_CDF(address=address05)
+        x_bins_08, hist_result_08, bubble_event_08 = self.generate_hist_and_CDF(address=address08)
+        x_bins_07, hist_result_07, bubble_event_07 = self.generate_hist_and_CDF(address=address07)
+        x_bins_10, hist_result_10, bubble_event_10 = self.generate_hist_and_CDF(address=address10)
+
+
+
+
+
+        plt.plot(x_bins_05, bubble_event_05,  label = 'LSS05')
+        plt.plot(x_bins_08, bubble_event_08,  label='LSS08')
+        plt.plot(x_bins_07, bubble_event_07,  label='LSS07')
+        plt.plot(x_bins_10, bubble_event_10,  label='LSS10')
+        plt.minorticks_on()
+        plt.xlabel("energy/eV",fontsize=18)
+        plt.ylabel("Bubble Event Number",fontsize=18)
+        plt.yscale("log")
+        plt.yticks(fontsize=18)
+        plt.xticks(fontsize=18)
+        plt.xlim([0, 1200])
+        plt.legend()
+        plt.ylim([1E-5,0.1])
+        plt.legend()
+        plt.savefig(self.plot_address+"LSS_factor_uncertainty")
 
     def bubble_event_with_sigma(self, uncertainty):
         x_bins, hist_result, bubble_event  = self.generate_hist_and_CDF()
