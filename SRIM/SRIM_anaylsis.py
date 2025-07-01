@@ -58,7 +58,7 @@ class SRIM_EXY():
         self.table = SRIM_Table()
         self.secondary_variable()
         # self.scatterplot(self.E_compare_diff_1d, self.E_eV,  "E_diff/eV", "Ek/keV")
-        # print("sqrt E",self.sqrt_E[:100])
+        print("sqrt E",self.sqrt_E[:100])
         # self.plotEvX_fit( self.sqrt_E, self.ElStop)
         self.plotEvE_fit(self.sqrt_E, self.ElStop)
 
