@@ -562,6 +562,7 @@ class MC_sim_full_argon():
                 print("07", bubble_event_07[i])
                 print("08", bubble_event_08[i])
                 print("10", bubble_event_10[i])
+                break
 
 
 
