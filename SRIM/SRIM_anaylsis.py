@@ -538,9 +538,12 @@ class SRIM_Table():
         plt.plot(self.Ion_ene, self.N_loss, label="SRIM data")
         plt.plot(self.Ion_ene, self.hi_limit, label="high limit LSS")
         plt.plot(self.Ion_ene, self.lo_limit, label="low limit LSS")
+
         plt.xlabel("Recoiled energy/eV")
         plt.ylabel("eV/A")
         print("exp", self.N_loss)
+        print(self.min_ratio)
+        print(self.max_ratio)
 
         plt.legend()
         plt.savefig(self.address+self.plot_name)
@@ -597,6 +600,7 @@ class SRIM_Table():
                 self.ratio_ascend.append(self.ratio[i]-self.ratio[i-1])
         self.min_ratio = min(self.ratio)
         self.max_ratio = max(self.ratio)
+
 
         for i in range(len(self.sn_LSS)):
             self.lo_limit.append(self.min_ratio*self.sn_LSS[i])
