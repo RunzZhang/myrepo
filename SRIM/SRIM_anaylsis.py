@@ -535,7 +535,7 @@ class SRIM_Table():
         print("theo before", self.sn)
         # self.force_fit()
         self.force_fit_err() # if check the factor between exp and theory data, uncomment this, otherwise, it is original data
-        plt.plot(self.Ion_ene, self.sn, label="LSS original")
+        plt.plot(self.Ion_ene, self.sn_LSS, label="LSS original")
         plt.plot(self.Ion_ene, self.N_loss, label="SRIM data")
         plt.plot(self.Ion_ene, self.hi_limit, label="high limit LSS fit")
         plt.plot(self.Ion_ene, self.lo_limit, label="low limit LSS fit")
