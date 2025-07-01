@@ -48,6 +48,7 @@ class E_loss_solve():
         self.alpha_inv = 137
         self.LSS_factor = 1.6918*(10**(-2))# LSS variable transformation by SRIM table from 1.06 density
         self.test_TarDen = 1.597E+22
+        self.LSS_modify = 0.552 #0.552 - 0.8562   mid 0.716 set it as 1 if it ioriginal
         print("factor",self.factor*self.Tar_Den*10**8)
         print("LSS factor inverse", 1/self.LSS_factor)
         self.plot_address = "/data/runzezhang/result/New_density_MC/"
@@ -69,7 +70,7 @@ class E_loss_solve():
         # what the effect of changing target density
         ep = self.C_tf*0.5* (y*0.5/13.6)/(self.Z_tp**2*self.Z**(0.5))
         # part_a = - np.log(1+self.a * ep) / (2 * (ep + self.b * (ep) ** self.c) + self.d * (ep) ** 0.5)* self.factor *self.test_TarDen*10**8
-        part_a = - np.log(1 + self.a * ep) / (2 * (ep + self.b * (ep) ** self.c) + self.d * (
+        part_a = - self.LSS_modify*np.log(1 + self.a * ep) / (2 * (ep + self.b * (ep) ** self.c) + self.d * (
             ep) ** 0.5) /self.LSS_factor
         # part_a = - self.a * ep/ (
         #             2 * (ep + self.b * (ep) ** self.c) + self.d * (ep) ** 0.5) * self.factor * self.Tar_Den * 10 ** 8

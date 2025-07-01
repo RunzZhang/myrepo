@@ -381,7 +381,7 @@ class MC_sim_full_argon():
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
-        plot_name = 'New_spectrum_LSS.png'
+        plot_name = 'LSS05factor.png'
         plt.legend()
         plt.savefig(self.plot_address+plot_name, bbox_inches='tight')
         # plt.show()
