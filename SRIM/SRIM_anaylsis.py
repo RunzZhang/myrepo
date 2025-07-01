@@ -38,7 +38,7 @@ class SRIM_EXY():
         # self.file_name = 'EXYZArgon1keV.txt'
         self.plot_save_path = "/data/runzezhang/result/New_density_MC/"
         self.plot_name = 'EL_dEdxE.png'
-        self.file_name = 'EXYZ_104L.txt'
+        self.file_name = 'EXYZ_106L.txt'
         self.file_name_edit = self.file_name[0:-4] + '_edit.txt'
         self.displacement = []  # Want to record the displacement in each step (in meters)
         self.displacement_1d = []
@@ -352,7 +352,7 @@ class SRIM_Table():
         self.energy_startpoint ="9.99999 eV"
         self.file_name_edit = self.file_name[0:-4] + '_edit.txt'
         self.address = "/data/runzezhang/result/New_density_MC/"
-        self.plot_name = "theory_data_compare_fit.png"
+        self.plot_name = "LSS_SRIM_contour.png"
 
 
         self.step = 200  # in ev
@@ -529,6 +529,21 @@ class SRIM_Table():
         plt.savefig(self.address+self.plot_name)
         # plt.show()
 
+    def plot_data_err(self):
+        # print max and min contour of the experimental data
+        print("theo before", self.sn)
+        # self.force_fit()
+        self.force_fit_err() # if check the factor between exp and theory data, uncomment this, otherwise, it is original data
+        plt.plot(self.Ion_ene, self.N_loss, label="SRIM data")
+        plt.plot(self.Ion_ene, self.hi_limit, label="high limit LSS")
+        plt.plot(self.Ion_ene, self.lo_limit, label="low limit LSS")
+        plt.xlabel("Recoiled energy/eV")
+        plt.ylabel("eV/A")
+        print("exp", self.N_loss)
+
+        plt.legend()
+        plt.savefig(self.address+self.plot_name)
+
     def force_fit(self):
         self.alpha = 137
         self.ratio = []
@@ -556,10 +571,37 @@ class SRIM_Table():
             self.ratio.append(ratio)
             if i>=1:
                 self.ratio_ascend.append(self.ratio[i]-self.ratio[i-1])
+
         self.mean_ratio = sum(self.ratio)/len(self.ratio)
         for i in range(len(self.sn_LSS)):
             self.sn_LSS[i]= self.mean_ratio*self.sn_LSS[i]
+
         print("mean ratio", self.mean_ratio) #0.716
+        print("ratio", self.ratio)
+        print("ratio diff", self.ratio_ascend)
+        # I think the lost factor is 1/alpha, which is 137, the mean ration is 127
+        print("after edit theo", self.sn_LSS)
+
+
+    def force_fit_err(self):
+        # to estimate the uncerntaity from model to SRIM data more precisely
+        self.lo_limit = []
+        self.hi_limit = []
+        self.ratio = []
+        self.ratio_ascend = [0]
+        for i in range(len(self.N_loss)):
+            ratio = self.N_loss[i]/self.sn_LSS[i]
+            self.ratio.append(ratio)
+            if i>=1:
+                self.ratio_ascend.append(self.ratio[i]-self.ratio[i-1])
+        self.min_ratio = min(self.ratio)
+        self.max_ratio = max(self.ratio)
+
+        for i in range(len(self.sn_LSS)):
+            self.lo_limit[i]= self.min_ratio*self.sn_LSS[i]
+        for i in range(len(self.sn_LSS)):
+            self.hi_limit[i] = self.max_ratio*self.sn_LSS[i]
+
         print("ratio", self.ratio)
         print("ratio diff", self.ratio_ascend)
         # I think the lost factor is 1/alpha, which is 137, the mean ration is 127
