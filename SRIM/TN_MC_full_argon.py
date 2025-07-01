@@ -20,6 +20,8 @@ class MC_sim_full_argon():
         #[level energy, lifetime ,{next level_i: [branch ratio, gamma energy, possibility boundary]}]
         # argon init first value is 7000 to be distinguishedfrom other lines
         # the list first value must be unique
+        # to change LSS factor, change the Eq LSS_modify/
+        # change the self.plot_address/plot name in the self. plot_data function
         self.runtime = 10000
         self.argon40_weight =97.4/0.93
         self.argon36_weight = 2.5
@@ -35,7 +37,7 @@ class MC_sim_full_argon():
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_-01"
         self.old_address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
-        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS05"
+        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS08"
         self.plot_address = "/data/runzezhang/result/New_density_MC/"
 
 
@@ -381,7 +383,7 @@ class MC_sim_full_argon():
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
-        plot_name = 'LSS05factor.png'
+        plot_name = 'LSS08factor.png'
         plt.legend()
         plt.savefig(self.plot_address+plot_name, bbox_inches='tight')
         # plt.show()
