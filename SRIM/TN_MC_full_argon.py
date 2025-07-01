@@ -555,7 +555,13 @@ class MC_sim_full_argon():
         x_bins_07, hist_result_07, bubble_event_07 = self.generate_hist_and_CDF(address=address07)
         x_bins_10, hist_result_10, bubble_event_10 = self.generate_hist_and_CDF(address=address10)
 
-
+        # check 400eV uncerntatinty
+        for i in range(len(x_bins_10)):
+            if x_bins_10[i]>400:
+                print("05",bubble_event_05[i])
+                print("07", bubble_event_07[i])
+                print("08", bubble_event_08[i])
+                print("10", bubble_event_10[i])
 
 
 
