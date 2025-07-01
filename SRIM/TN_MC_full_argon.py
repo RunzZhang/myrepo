@@ -124,9 +124,9 @@ class MC_sim_full_argon():
         # also plot how it changes with threshold
         # self.predicted_bubble_events(self.address)
         # self.predicted_bubble_events_LSS()
-        self.source_uncertainty(0.5)
+        # self.source_uncertainty(0.5)
         # self.source_uncertainty_w_background(0.3, 500)
-        # self.bubble_event_with_sigma(0.5)
+        self.bubble_event_with_sigma(0.5)
         # self.bubble_event_with_spectrum_sigma()
         # self.spectrum_uncertainty()
         # self.plot_spectrums_sigma()
