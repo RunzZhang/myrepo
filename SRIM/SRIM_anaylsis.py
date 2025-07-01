@@ -535,16 +535,17 @@ class SRIM_Table():
         print("theo before", self.sn)
         # self.force_fit()
         self.force_fit_err() # if check the factor between exp and theory data, uncomment this, otherwise, it is original data
+        plt.plot(self.Ion_ene, self.sn, label="LSS original")
         plt.plot(self.Ion_ene, self.N_loss, label="SRIM data")
-        plt.plot(self.Ion_ene, self.hi_limit, label="high limit LSS")
-        plt.plot(self.Ion_ene, self.lo_limit, label="low limit LSS")
+        plt.plot(self.Ion_ene, self.hi_limit, label="high limit LSS fit")
+        plt.plot(self.Ion_ene, self.lo_limit, label="low limit LSS fit")
 
         plt.xlabel("Recoiled energy/eV")
         plt.ylabel("eV/A")
         print("exp", self.N_loss)
         print(self.min_ratio)
         print(self.max_ratio)
-
+        #0.552 - 0.8562   mid 0.716
         plt.legend()
         plt.savefig(self.address+self.plot_name)
 
