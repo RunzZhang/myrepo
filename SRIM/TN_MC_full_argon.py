@@ -37,7 +37,7 @@ class MC_sim_full_argon():
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_-01"
         self.old_address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
-        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS1"
+        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS05"
         self.plot_address = "/data/runzezhang/result/New_density_MC/"
 
 
@@ -115,15 +115,15 @@ class MC_sim_full_argon():
         self.gamma_emission_list_1d = []
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
-        # self.MC_sim(self.runtime)
-        # self.data_analysis_v2(self.address)
+        self.MC_sim(self.runtime)
+        self.data_analysis_v2(self.address)
         # self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
         # predict bubble events ratio with different energy threshold
         # also plot how it changes with threshold
         # self.predicted_bubble_events(self.address)
-        self.predicted_bubble_events_LSS()
+        # self.predicted_bubble_events_LSS()
         # self.source_uncertainty(0.3)
         # self.source_uncertainty_w_background(0.3, 500)
         # self.bubble_event_with_sigma(0.3)
@@ -221,7 +221,7 @@ class MC_sim_full_argon():
                             temp_energy = 0.5 * self.mass * (vx ** 2 + vy ** 2 + vz ** 2) /self.ev # energy in ev
                             # print("pre kenit", temp_energy, "t in ns", state[1])
                             # E_final = solve_tool.E_el_loss_result(temp_energy,state[1])
-                            E_final = solve_tool.E_loss_result(temp_energy, state[1])
+                            E_final = solve_tool.E_loss_result_D(temp_energy, state[1])
                             # print("post knit", E_final)
                             E_deposit = temp_energy- E_final
                             E_deposit_list.append(E_deposit)
@@ -384,7 +384,7 @@ class MC_sim_full_argon():
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
-        plot_name = 'LSS1factor.png'
+        plot_name = 'LSS05factor.png'
         plt.legend()
         plt.savefig(self.plot_address+plot_name, bbox_inches='tight')
         # plt.show()
