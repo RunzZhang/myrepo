@@ -115,15 +115,15 @@ class MC_sim_full_argon():
         self.gamma_emission_list_1d = []
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
-        self.MC_sim(self.runtime)
-        self.data_analysis_v2(self.address)
+        # self.MC_sim(self.runtime)
+        # self.data_analysis_v2(self.address)
         # self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
         # predict bubble events ratio with different energy threshold
         # also plot how it changes with threshold
         # self.predicted_bubble_events(self.address)
-        # self.predicted_bubble_events_LSS()
+        self.predicted_bubble_events_LSS()
         # self.source_uncertainty(0.3)
         # self.source_uncertainty_w_background(0.3, 500)
         # self.bubble_event_with_sigma(0.3)
