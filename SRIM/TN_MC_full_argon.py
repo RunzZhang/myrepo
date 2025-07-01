@@ -123,8 +123,8 @@ class MC_sim_full_argon():
         # predict bubble events ratio with different energy threshold
         # also plot how it changes with threshold
         # self.predicted_bubble_events(self.address)
-        self.predicted_bubble_events_LSS()
-        # self.source_uncertainty(0.3)
+        # self.predicted_bubble_events_LSS()
+        self.source_uncertainty(0.5)
         # self.source_uncertainty_w_background(0.3, 500)
         # self.bubble_event_with_sigma(0.3)
         # self.bubble_event_with_spectrum_sigma()
@@ -563,6 +563,11 @@ class MC_sim_full_argon():
                 print("08", bubble_event_08[i])
                 print("10", bubble_event_10[i])
                 break
+        #05 147.75935770979376
+        #07 136.51492625850614
+        #08 130.99253956985626
+        #10 127.4086197596412
+#
 
 
 
@@ -602,6 +607,7 @@ class MC_sim_full_argon():
         plt.legend()
         # plt.ylim([1E-5,0.1])
         # plt.legend()
+        plt.savefig(self.plot_address + "source_uncertainty_spectrum.png")
         plt.show()
 
     def bubble_event_with_spectrum_sigma(self):
