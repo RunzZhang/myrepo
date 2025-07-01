@@ -571,9 +571,9 @@ class MC_sim_full_argon():
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.legend()
-        plt.ylim([1E-5,0.1])
-        plt.legend()
-        plt.savefig(self.plot_address+"LSS_factor_uncertainty")
+        # plt.ylim([1E-5,0.1])
+        plt.yscale("log")
+        plt.savefig(self.plot_address+"LSS_factor_uncertainty_spectrum.png")
 
     def bubble_event_with_sigma(self, uncertainty):
         x_bins, hist_result, bubble_event  = self.generate_hist_and_CDF()
