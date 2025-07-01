@@ -599,9 +599,9 @@ class SRIM_Table():
         self.max_ratio = max(self.ratio)
 
         for i in range(len(self.sn_LSS)):
-            self.lo_limit[i]= self.min_ratio*self.sn_LSS[i]
+            self.lo_limit.append(self.min_ratio*self.sn_LSS[i])
         for i in range(len(self.sn_LSS)):
-            self.hi_limit[i] = self.max_ratio*self.sn_LSS[i]
+            self.hi_limit.append(self.max_ratio*self.sn_LSS[i])
 
         print("ratio", self.ratio)
         print("ratio diff", self.ratio_ascend)
