@@ -278,6 +278,10 @@ class SRIM_EXY():
 
         plt.show()
     def plotEvE_fit(self, E_dataset, E_lost_dataset):
+        #popt[0.02175427]
+        #perr[1.806471e-06]
+
+        #0.021754272661296783
         popt, pcov = curve_fit(li_func2, E_dataset, E_lost_dataset)
 
         perr = np.sqrt(np.diag(pcov))
@@ -286,7 +290,7 @@ class SRIM_EXY():
         fit_data = []
         for i in E_dataset:
             fit_data.append(li_func2(i, popt[0]))
-
+        plt.plot(E_dataset, E_lost_dataset, 'bo', label="linear fit")
         plt.plot(E_dataset, fit_data, 'r-', label="linear fit")
         plt.xlabel(r"$\sqrt{E}$/$\sqrt{eV}$")
         plt.ylabel("dE/dx eV/A")

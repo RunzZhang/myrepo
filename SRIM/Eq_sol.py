@@ -40,8 +40,9 @@ class E_loss_solve():
         self.Tar_Den = 1.597E+22  # atoms/cm3
         self.mean_ratio =  2.1246181979237e-12 # adjust the formula unit to ev/A
         self.factor = PI * self.au ** 2 * self.gam * self.mean_ratio /(self.F1)
-        self.k = 1.541e-05
-        self.total_k = 0.0338721
+        self.k = 1.541e-05 # outdated
+        self.total_k = 0.02175
+        # self.total_k = 0.0338721 # linear fit from SRIM data EVE from eV to Sqrt(Ev/A)
         self.mass = 6.63551406835257e-26 # argon 40 in kg
         self.T_factor = 0.1 # change m/s to A/ns
         self.Tar_Den = 1.597E+22 # atoms/cm3 = 1.06g/cm3
