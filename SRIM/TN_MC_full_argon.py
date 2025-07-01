@@ -126,7 +126,7 @@ class MC_sim_full_argon():
         # self.predicted_bubble_events_LSS()
         self.source_uncertainty(0.5)
         # self.source_uncertainty_w_background(0.3, 500)
-        # self.bubble_event_with_sigma(0.3)
+        # self.bubble_event_with_sigma(0.5)
         # self.bubble_event_with_spectrum_sigma()
         # self.spectrum_uncertainty()
         # self.plot_spectrums_sigma()
@@ -608,9 +608,10 @@ class MC_sim_full_argon():
         # plt.ylim([1E-5,0.1])
         # plt.legend()
         plt.savefig(self.plot_address + "source_uncertainty_spectrum.png")
-        plt.show()
+        # plt.show()
 
     def bubble_event_with_spectrum_sigma(self):
+        # time uncertainty
         x_bins, hist_result, bubble_event  = self.generate_hist_and_CDF()
 
         bubble_event_low = self.generate_hist_and_CDF(address="/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_0.5time_0offset")[2]
@@ -679,7 +680,8 @@ class MC_sim_full_argon():
         plt.xlim([0, 1200])
         plt.legend()
         plt.ylim([0,1500])
-        plt.show()
+        plt.savefig(self.plot_address+"reconstructed Eth")
+        # plt.show()
 
     def spectrum_uncertainty(self):
         x_bins, histgram, y_bins = self.generate_hist_and_CDF()
