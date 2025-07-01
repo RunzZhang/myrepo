@@ -386,7 +386,7 @@ class SRIM_Table():
         self.fetch_data()
         self.compare_theory()
         # self.plot_data()
-        self.plot_data_err() # estimate the uncertainty from time constant
+        # self.plot_data_err() # estimate the uncertainty from time constant
 
     def data_ini(self):
 
