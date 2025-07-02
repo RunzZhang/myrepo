@@ -618,7 +618,7 @@ class MC_sim_full_argon():
         # the function is to locate the source intensity/capture rates between 500 and 800 eV
         # 100 hour 0.413 micocurie Cf 252, the capture event number is 113
         source_activity = 0.0416
-        x_bins, hist_result, bubble_event = self.generate_hist_and_CDF(N=113,address=self.address)
+        x_bins, hist_result, bubble_event = self.generate_hist_and_CDF(event_N=113,address=self.address)
         marker_500= False
         marker_800 = True
         BE_500 = 0 # bubble event at 500
