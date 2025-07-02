@@ -1,7 +1,9 @@
 import uproot
 import awkward as ak
 base_address = "/data/runzezhang/result/TN_sims_D/"
-input_file = "dmx_Cf_1E7.root"
+root_name = "dmx_Cf_1E7.root"
+input_file = base_address+root_name
+
 tree_name = "tree"  # Replace with your tree name
 columns = None  # or list of specific branches if you want to filter
 num_parts = 10
@@ -30,7 +32,7 @@ with uproot.open(f"{input_file}:{tree_name}") as tree:
 
         # Save to new root file
         output_file = f"dmx_Cf_1e7_part{i}.root"
-        with uproot.recreate(output_file) as f:
+        with uproot.recreate(base_address+output_file) as f:
             f[tree_name] = array_chunk
 
         print(f"Saved: {output_file}")
