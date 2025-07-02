@@ -15,6 +15,18 @@ def bytes_to_unicode(array, length=32):
     # Decode from bytes to Unicode string (U)
     return np.char.decode(array, encoding='utf-8').astype(f"<U{length}")
 
+def to_fixed_unicode(array, length=32):
+    # Convert to NumPy array if not already
+    np_array = np.asarray(array)
+
+    # If it's object type or bytes, decode manually
+    if np_array.dtype.kind in {'O', 'S'}:
+        decoded = np.char.decode(np_array, encoding='utf-8', errors='replace')
+        return decoded.astype(f"<U{length}")
+    elif np_array.dtype.kind == 'U':
+        return np_array.astype(f"<U{length}")
+    else:
+        raise TypeError(f"Unexpected dtype for string field: {np_array.dtype}")
 
 # Open the full tree
 with uproot.open(f"{input_file}:{tree_name}") as tree:
@@ -37,9 +49,9 @@ with uproot.open(f"{input_file}:{tree_name}") as tree:
             entry_stop=end,
             library="ak"
         )
-        array_chunk = ak.with_field(array_chunk, bytes_to_unicode(array_chunk["Process"]), "Process")
-        array_chunk = ak.with_field(array_chunk, bytes_to_unicode(array_chunk["name"]), "name")
-        array_chunk = ak.with_field(array_chunk, bytes_to_unicode(array_chunk["Volume"]), "Volume")
+        array_chunk = ak.with_field(array_chunk, to_fixed_unicode(array_chunk["Process"]), "Process")
+        array_chunk = ak.with_field(array_chunk, to_fixed_unicode(array_chunk["name"]), "name")
+        array_chunk = ak.with_field(array_chunk, to_fixed_unicode(array_chunk["Volume"]), "Volume")
 
 
 
