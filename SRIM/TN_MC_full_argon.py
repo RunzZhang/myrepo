@@ -126,7 +126,8 @@ class MC_sim_full_argon():
         # self.predicted_bubble_events_LSS()
         # self.source_uncertainty(0.5)
         # self.source_uncertainty_w_background(0.3, 500)
-        self.bubble_event_with_sigma(0.5)
+        # self.bubble_event_with_sigma(0.5)
+        self.locate_source_rate()
         # self.bubble_event_with_spectrum_sigma()
         # self.spectrum_uncertainty()
         # self.plot_spectrums_sigma()
@@ -588,6 +589,7 @@ class MC_sim_full_argon():
         plt.savefig(self.plot_address+"LSS_factor_uncertainty_spectrum.png")
 
     def bubble_event_with_sigma(self, uncertainty):
+
         x_bins, hist_result, bubble_event  = self.generate_hist_and_CDF()
 
         bubble_event_low = [i*(1-uncertainty) for i in bubble_event]
@@ -596,9 +598,8 @@ class MC_sim_full_argon():
         plt.plot(x_bins, bubble_event, color="blue", label = 'bubble number vs E threshold')
         plt.plot(x_bins, bubble_event_low, color="red", label='bubble number with -' + str(uncertainty) +' uncertainty')
         plt.plot(x_bins, bubble_event_high, color="orange", label='bubble number with +' + str(uncertainty) +' uncertainty')
-        # for i in range(len(x_bins)):
-        #     if x_bins[i]>550:
-        #     if x_bins[i]>800:
+
+
         plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
         plt.xlabel("$E_{th}$/eV",fontsize=18)
@@ -611,6 +612,47 @@ class MC_sim_full_argon():
         # plt.ylim([1E-5,0.1])
         # plt.legend()
         plt.savefig(self.plot_address + "source_uncertainty_spectrum.png")
+        # plt.show()
+
+    def locate_source_rate(self):
+        # the function is to locate the source intensity/capture rates between 500 and 800 eV
+        # 100 hour 0.413 micocurie Cf 252, the capture event number is 113
+        source_activity = 0.0416
+        x_bins, hist_result, bubble_event = self.generate_hist_and_CDF(N=113,address=self.address)
+        marker_500= False
+        marker_800 = True
+        BE_500 = 0 # bubble event at 500
+        BE_800= 0 # bubble event at 800
+        for i in range(len(x_bins)):
+            if x_bins[i]>500 and marker_500==False:
+                BE_500 = bubble_event[i]
+                marker_500 = True
+            elif x_bins[i]>800 and marker_800==False:
+                BE_800 = bubble_event[i]
+                marker_800 = True
+
+        print("events", BE_500, BE_800)
+        diff = BE_500-BE_800
+        # bubble event = k* source rate
+        k = diff/source_activity
+        source_rate_list =[]
+        bubble_event_number_list = []
+        for rate_factor in range(len(100)):
+            source_rate_list.append(source_activity*i/10)
+            bubble_event_number_list.append(k*source_activity*i/10)
+
+        plt.plot(source_rate_list, bubble_event_number_list)
+
+        plt.grid(True, which='both', linestyle='-', linewidth=1)
+        plt.minorticks_on()
+        plt.xlabel("Activity/$\mu$Curie", fontsize=18)
+        plt.ylabel("capture event diff between 5/800", fontsize=18)
+        plt.yscale("log")
+        plt.yticks(fontsize=18)
+        plt.xticks(fontsize=18)
+
+
+        plt.savefig(self.plot_address + "source_rate_location.png")
         # plt.show()
 
     def bubble_event_with_spectrum_sigma(self):
