@@ -637,7 +637,7 @@ class MC_sim_full_argon():
         k = diff/source_activity
         source_rate_list =[]
         bubble_event_number_list = []
-        for rate_factor in range(len(100)):
+        for rate_factor in range(100):
             source_rate_list.append(source_activity*i/10)
             bubble_event_number_list.append(k*source_activity*i/10)
 
