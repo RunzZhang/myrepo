@@ -61,8 +61,8 @@ import csv
 
 class RestructureRoot():
     def __init__(self):
-        self.filepath = "/data/runzezhang/result/TN_sims_D/dmx_Cf.root"
-        self.reconstruct_filepath = "/data/runzezhang/result/TN_sims_D/dmx_rcCf.csv"
+        self.filepath = "/data/runzezhang/result/TN_sims_D/dmx_Cf_1E7.root"
+        self.reconstruct_filepath = "/data/runzezhang/result/TN_sims_D/dmx_rcCf_1E7.csv"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
@@ -102,12 +102,12 @@ class ReadRoot():
         self.base_path = "/data/runzezhang/result/TN_sims_D/"
         self.base_path2 = "/data/runzezhang/result/TN_sims_D/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
-        self.false_1 = "Cf_false1.csv"
-        self.false_2 = "Cf_false2.csv"
-        self.signal = "Cf_sig.csv"
-        self.false_1_mid = "Cf_false1_mid.csv"
-        self.false_2_mid = "Cf_false2_mid.csv"
-        self.signal_mid = "Cf_sig_mid.csv"
+        self.false_1 = "Cf_1E7_false1.csv"
+        self.false_2 = "Cf_1E7_false2.csv"
+        self.signal = "Cf_1E7_sig.csv"
+        self.false_1_mid = "Cf_1E7_false1_mid.csv"
+        self.false_2_mid = "Cf_1E7_false2_mid.csv"
+        self.signal_mid = "Cf_1E7_sig_mid.csv"
         self.false_1_path = self.base_path+self.false_1
         self.false_2_path = self.base_path+self.false_2
         self.false_1_path_mid = self.base_path + self.false_1_mid
@@ -115,7 +115,7 @@ class ReadRoot():
         self.signal_path_mid = self.base_path+self.signal_mid
         self.signal_path = self.base_path + self.signal
         # self.filepath = self.base_path +"dmx_lr.root"
-        self.filepath = self.base_path + "dmx_Cf.root"
+        self.filepath = self.base_path + "dmx_Cf_1E7.root"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
@@ -129,9 +129,9 @@ class ReadRoot():
 
         # self.gamma_event()
         # false noise 2, need to relocate directory
-        self.Huge_scatter_event()
+        # self.Huge_scatter_event()
         # signal rate, caputre in liquid argon
-        # self.LAr_gamma_event()
+        self.LAr_gamma_event()
         # single elastic scatter and capture false signal 1
         # self.single_e_n_capture_event()
         # self.FN_spectrum_v2()
@@ -688,8 +688,8 @@ class ReadRoot():
     def LAr_gamma_event(self):
         # for liquid argon capture
         # if already run 1st 2 steps and obtained output csv file, one can directly run 3rd function
-        # self.LAr_compare()
-        # self.LAr_Capture_spectrum()
+        self.LAr_compare()
+        self.LAr_Capture_spectrum()
         self.LAr_find_gamma_e()
 
     def single_e_n_capture_event(self):

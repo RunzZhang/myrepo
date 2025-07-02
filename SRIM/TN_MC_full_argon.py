@@ -596,6 +596,9 @@ class MC_sim_full_argon():
         plt.plot(x_bins, bubble_event, color="blue", label = 'bubble number vs E threshold')
         plt.plot(x_bins, bubble_event_low, color="red", label='bubble number with -' + str(uncertainty) +' uncertainty')
         plt.plot(x_bins, bubble_event_high, color="orange", label='bubble number with +' + str(uncertainty) +' uncertainty')
+        # for i in range(len(x_bins)):
+        #     if x_bins[i]>550:
+        #     if x_bins[i]>800:
         plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
         plt.xlabel("$E_{th}$/eV",fontsize=18)
