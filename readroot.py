@@ -124,14 +124,15 @@ class ReadRoot():
 
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # # process data so that it is easier to read
-        self.df = self.file.arrays(self.selected_columns, library="pd")
+        # first 1000 rows
+        self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         self.modify_df()
 
         # self.gamma_event()
         # false noise 2, need to relocate directory
-        self.Huge_scatter_event()
+        # self.Huge_scatter_event()
         # signal rate, caputre in liquid argon
-        # self.LAr_gamma_event()
+        self.LAr_gamma_event()
         # single elastic scatter and capture false signal 1
         # self.single_e_n_capture_event()
         # self.FN_spectrum_v2()
