@@ -1,5 +1,6 @@
 import uproot
 import awkward as ak
+import numpy as np
 base_address = "/data/runzezhang/result/TN_sims_D/"
 root_name = "dmx_Cf_1E7.root"
 input_file = base_address+root_name
@@ -7,6 +8,8 @@ input_file = base_address+root_name
 tree_name = "tree"  # Replace with your tree name
 columns = None  # or list of specific branches if you want to filter
 num_parts = 10
+def to_fixed_str(array, length=32):
+    return np.array(array, dtype=f"S{length}")  # e.g. 32-byte strings
 
 # Open the full tree
 with uproot.open(f"{input_file}:{tree_name}") as tree:
@@ -29,6 +32,9 @@ with uproot.open(f"{input_file}:{tree_name}") as tree:
             entry_stop=end,
             library="ak"
         )
+        array_chunk = ak.with_field(array_chunk, to_fixed_str(array_chunk["Process"]), "Process")
+        array_chunk = ak.with_field(array_chunk, to_fixed_str(array_chunk["name"]), "name")
+        array_chunk = ak.with_field(array_chunk, to_fixed_str(array_chunk["Volume"]), "Volume")
 
         # Save to new root file
         output_file = f"dmx_Cf_1e7_part{i}.root"
