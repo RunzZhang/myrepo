@@ -122,7 +122,7 @@ class MC_sim_full_argon():
         # self.plot_pile_up()
         # predict bubble events ratio with different energy threshold
         # also plot how it changes with threshold
-        # self.predicted_bubble_events(self.address)
+        self.predicted_bubble_events(self.address)
         # self.predicted_bubble_events_LSS()
         # self.source_uncertainty(0.5)
         # self.source_uncertainty_w_background(0.3, 500)
@@ -487,20 +487,29 @@ class MC_sim_full_argon():
                 integral += Event_N * efficiency_2d[k][l] * hist_result[0][l] * bin_width
             bubble_event.append(integral)
         # add to find the ratio of 400 ev and 1125eV event number
-        first_bin = 0
-        second_bin = 0
-        third_bin =0
-        fourth_bin = 0
+        bin_0 = -1
+        bin_350 = 0
+        bin_400 = 0
+        bin_500 = 0
+        bin_700 =0
+        bin_800 = 0
+        bin_1125 = 0
         for i in range(len(x_bins)):
-            if x_bins[i]>350 and third_bin==0:
-                third_bin=i
-            if x_bins[i]>400 and first_bin==0:
-                first_bin=i
-            if x_bins[i]>700 and fourth_bin==0:
-                fourth_bin=i
-            if x_bins[i]>1125 and second_bin==0:
-                second_bin = i
-        print('first',bubble_event[first_bin],'second',bubble_event[second_bin], 'third',bubble_event[third_bin], '4th',bubble_event[fourth_bin])
+            if x_bins[i]>0 and bin_350==-1:
+                bin_0=i
+            if x_bins[i]>350 and bin_350==0:
+                bin_350=i
+            if x_bins[i]>400 and bin_400==0:
+                bin_400=i
+            if x_bins[i]>500 and bin_500==0:
+                bin_500=i
+            if x_bins[i]>700 and bin_700==0:
+                bin_700=i
+            if x_bins[i]>800 and bin_800==0:
+                bin_800=i
+            if x_bins[i]>1125 and bin_1125==0:
+                bin_1125 = i
+        print("0", bin_0, 400, bin_400, 500,bin_500,800, bin_800,1125, bin_1125 )
         return x_bins, hist_result[0], bubble_event
     def predicted_bubble_events(self, address):
         # given energy threshold in function generate_hist_and_CDF, plot the bubble numbers
@@ -542,7 +551,7 @@ class MC_sim_full_argon():
         # plt.legend()
         # plt.ylim([1E-5,0.1])
         # plt.legend()
-        plt.savefig(self.plot_address+"bubble_number.png")
+        plt.savefig(self.plot_address+"bubble_number_rc.png")
 
     def predicted_bubble_events_LSS(self):
         # given energy threshold in function generate_hist_and_CDF, plot the bubble numbers
@@ -616,7 +625,7 @@ class MC_sim_full_argon():
 
     def locate_source_rate(self):
         # the function is to locate the source intensity/capture rates between 500 and 800 eV
-        # 100 hour 0.413 micocurie Cf 252, the capture event number is 113
+        # 100 hour 0.413 micocurie Cf 252, the capture event number is 
         source_activity = 0.0416
         x_bins, hist_result, bubble_event = self.generate_hist_and_CDF(event_N=113,address=self.address)
         marker_500= False
