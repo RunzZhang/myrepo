@@ -7,7 +7,7 @@ input_file = base_address+root_name
 
 tree_name = "tree"  # Replace with your tree name
 columns = None  # or list of specific branches if you want to filter
-num_parts = 10
+num_parts = 20
 def to_fixed_str(array, length=32):
     return np.array(array, dtype=f"S{length}")  # e.g. 32-byte strings
 
