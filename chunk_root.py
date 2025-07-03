@@ -30,6 +30,27 @@ def to_fixed_unicode(array, length=32):
 
     # return np.array(array, dtype=f"<U{length}")
     return np.array(ak.to_list(array), dtype=f"<U{length}")
+
+
+def clean_array_chunk(array_chunk, str_length=64):
+    cleaned = {}
+    for field in array_chunk.fields:
+        data = array_chunk[field]
+
+        # Convert to plain list (safe)
+        values = ak.to_list(data)
+
+        # Decide dtype
+        if isinstance(values[0], str):
+            cleaned[field] = np.array(values, dtype=f"<U{str_length}")
+        elif isinstance(values[0], (bytes, np.bytes_)):
+            decoded = [v.decode('utf-8', errors='replace') for v in values]
+            cleaned[field] = np.array(decoded, dtype=f"<U{str_length}")
+        else:
+            cleaned[field] = np.array(values)
+
+    return cleaned  # This is a dict of NumPy arrays
+
 # Open the full tree
 with uproot.open(f"{input_file}:{tree_name}") as tree:
     total_entries = tree.num_entries
@@ -51,10 +72,10 @@ with uproot.open(f"{input_file}:{tree_name}") as tree:
             entry_stop=end,
             library="ak"
         )
-        array_chunk = ak.with_field(array_chunk, to_fixed_unicode(array_chunk["Process"]), "Process")
-        array_chunk = ak.with_field(array_chunk, to_fixed_unicode(array_chunk["name"]), "name")
-        array_chunk = ak.with_field(array_chunk, to_fixed_unicode(array_chunk["Volume"]), "Volume")
-
+        # array_chunk = ak.with_field(array_chunk, to_fixed_unicode(array_chunk["Process"]), "Process")
+        # array_chunk = ak.with_field(array_chunk, to_fixed_unicode(array_chunk["name"]), "name")
+        # array_chunk = ak.with_field(array_chunk, to_fixed_unicode(array_chunk["Volume"]), "Volume")
+        array_cleaned = clean_array_chunk(array_chunk)
 
 
         # Save to new root file
