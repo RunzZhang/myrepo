@@ -20,13 +20,15 @@ def to_fixed_unicode(array, length=32):
     np_array = np.asarray(array)
 
     # If it's object type or bytes, decode manually
-    if np_array.dtype.kind in {'O', 'S'}:
-        decoded = np.char.decode(np_array, encoding='utf-8', errors='replace')
-        return decoded.astype(f"<U{length}")
-    elif np_array.dtype.kind == 'U':
-        return np_array.astype(f"<U{length}")
-    else:
-        raise TypeError(f"Unexpected dtype for string field: {np_array.dtype}")
+    # if np_array.dtype.kind in {'O', 'S'}:
+    #     decoded = np.char.decode(np_array, encoding='utf-8', errors='replace')
+    #     return decoded.astype(f"<U{length}")
+    # elif np_array.dtype.kind == 'U':
+    #     return np_array.astype(f"<U{length}")
+    # else:
+    #     raise TypeError(f"Unexpected dtype for string field: {np_array.dtype}")
+
+    return np.array(array, dtype=f"<U{length}")
 
 # Open the full tree
 with uproot.open(f"{input_file}:{tree_name}") as tree:
