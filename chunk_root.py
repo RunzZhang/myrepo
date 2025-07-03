@@ -31,25 +31,31 @@ def to_fixed_unicode(array, length=32):
     # return np.array(array, dtype=f"<U{length}")
     return np.array(ak.to_list(array), dtype=f"<U{length}")
 
-
 def clean_array_chunk(array_chunk, str_length=64):
     cleaned = {}
+
     for field in array_chunk.fields:
         data = array_chunk[field]
 
-        # Convert to plain list (safe)
+        # Convert to list (safe from Awkward's dynamic types)
         values = ak.to_list(data)
 
-        # Decide dtype
-        if isinstance(values[0], str):
+        # If empty batch, create dummy empty NumPy array
+        if len(values) == 0:
+            cleaned[field] = np.array([], dtype=np.float32)  # fallback dtype
+            continue
+
+        first_non_none = next((v for v in values if v is not None), None)
+
+        if isinstance(first_non_none, str):
             cleaned[field] = np.array(values, dtype=f"<U{str_length}")
-        elif isinstance(values[0], (bytes, np.bytes_)):
+        elif isinstance(first_non_none, (bytes, np.bytes_)):
             decoded = [v.decode('utf-8', errors='replace') for v in values]
             cleaned[field] = np.array(decoded, dtype=f"<U{str_length}")
         else:
             cleaned[field] = np.array(values)
 
-    return cleaned  # This is a dict of NumPy arrays
+    return cleaned
 
 # Open the full tree
 with uproot.open(f"{input_file}:{tree_name}") as tree:
