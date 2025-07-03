@@ -122,12 +122,12 @@ class MC_sim_full_argon():
         # self.plot_pile_up()
         # predict bubble events ratio with different energy threshold
         # also plot how it changes with threshold
-        self.predicted_bubble_events(self.address)
+        # self.predicted_bubble_events(self.address)
         # self.predicted_bubble_events_LSS()
         # self.source_uncertainty(0.5)
         # self.source_uncertainty_w_background(0.3, 500)
-        # self.bubble_event_with_sigma(0.5)
-        self.locate_source_rate()
+        self.bubble_event_with_sigma(0.5)
+        # self.locate_source_rate()
         # self.bubble_event_with_spectrum_sigma()
         # self.spectrum_uncertainty()
         # self.plot_spectrums_sigma()
@@ -613,14 +613,14 @@ class MC_sim_full_argon():
         plt.minorticks_on()
         plt.xlabel("$E_{th}$/eV",fontsize=18)
         plt.ylabel("Observed Bubble Event Number $R_B$ at $E_{th}$",fontsize=18)
-        plt.yscale("log")
+        # plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.legend()
         # plt.ylim([1E-5,0.1])
         # plt.legend()
-        plt.savefig(self.plot_address + "source_uncertainty_spectrum.png")
+        plt.savefig(self.plot_address + "source_uncertainty_spectrum_linear.png")
         # plt.show()
 
     def locate_source_rate(self):
