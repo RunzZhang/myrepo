@@ -496,19 +496,19 @@ class MC_sim_full_argon():
         bin_1125 = 0
         for i in range(len(x_bins)):
             if x_bins[i]>0 and bin_0==-1:
-                bin_0=i
+                bin_0=bubble_event[i]
             if x_bins[i]>350 and bin_350==0:
-                bin_350=i
+                bin_350=bubble_event[i]
             if x_bins[i]>400 and bin_400==0:
-                bin_400=i
+                bin_400=bubble_event[i]
             if x_bins[i]>500 and bin_500==0:
-                bin_500=i
+                bin_500=bubble_event[i]
             if x_bins[i]>700 and bin_700==0:
-                bin_700=i
+                bin_700=bubble_event[i]
             if x_bins[i]>800 and bin_800==0:
-                bin_800=i
+                bin_800=bubble_event[i]
             if x_bins[i]>1125 and bin_1125==0:
-                bin_1125 = i
+                bin_1125 =bubble_event[i]
         print("0", bin_0, 400, bin_400, 500,bin_500,800, bin_800,1125, bin_1125 )
         return x_bins, hist_result[0], bubble_event
     def predicted_bubble_events(self, address):
