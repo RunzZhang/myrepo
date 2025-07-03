@@ -36,7 +36,7 @@ class ReadRoot:
 
         with uproot.open(self.filepath) as file:
             tree = file[self.tree_name]
-            total_entries = tree.num_entries
+            total_entries = int(tree.num_entries)
             print(f"Total entries in original file: {total_entries}")
 
             # Calculate entries per chunk
