@@ -102,21 +102,26 @@ class ReadRoot():
         self.base_path = "/data/runzezhang/result/TN_sims_D/"
         self.base_path2 = "/data/runzezhang/result/TN_sims_D/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
-        self.false_1 = "Cf_1E7_false1.csv"
-        self.false_2 = "Cf_1E7_false2.csv"
-        self.signal = "Cf_1E7_sig.csv"
-        self.false_1_mid = "Cf_1E7_false1_mid.csv"
-        self.false_2_mid = "Cf_1E7_false2_mid.csv"
-        self.signal_mid = "Cf_1E7_sig_mid.csv"
-        self.false_1_path = self.base_path+self.false_1
-        self.false_2_path = self.base_path+self.false_2
+
+        # self.filepath = self.base_path +"dmx_lr.root"
+        for i in range(10):
+            self.main_body(i)
+    def main_body(self,i):
+        self.false_1 = f"Cf_1E7_false1_part{i}.csv"
+        self.false_2 = f"Cf_1E7_false2_part{i}.csv"
+        self.signal = f"Cf_1E7_sig_part{i}.csv"
+        self.false_1_mid = f"Cf_1E7_false1_mid_part{i}.csv"
+        self.false_2_mid = f"Cf_1E7_false2_mid_part{i}.csv"
+        self.signal_mid = f"Cf_1E7_sig_mid_part{i}.csv"
+        self.false_1_path = self.base_path + self.false_1
+        self.false_2_path = self.base_path + self.false_2
         self.false_1_path_mid = self.base_path + self.false_1_mid
         self.false_2_path_mid = self.base_path + self.false_2_mid
-        self.signal_path_mid = self.base_path+self.signal_mid
+        self.signal_path_mid = self.base_path + self.signal_mid
         self.signal_path = self.base_path + self.signal
-        # self.filepath = self.base_path +"dmx_lr.root"
-    def main_body(self,i):
-        self.filepath = self.base_path + "dmx_Cf_1E7.root"
+
+
+        self.filepath = self.base_path + f"dmx_Cf_1e7_part{i}.root"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ", self.file.keys())
         # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
@@ -127,16 +132,20 @@ class ReadRoot():
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # # process data so that it is easier to read
         # first 1000 rows
-        self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
+        self.df = self.file.arrays(self.selected_columns, library="pd")
         self.modify_df()
 
-        # self.gamma_event()
-        # false noise 2, need to relocate directory
-        # self.Huge_scatter_event()
+
         # signal rate, caputre in liquid argon
         self.LAr_gamma_event()
+
         # single elastic scatter and capture false signal 1
-        # self.single_e_n_capture_event()
+        self.single_e_n_capture_event()
+
+        # false noise 2, need to relocate directory
+        self.Huge_scatter_event()
+
+
         # self.FN_spectrum_v2()
         # self.plot_elastic()
 
@@ -825,7 +834,7 @@ class ReadRoot():
             wr.writerow(p_observed)
         plt.hist(p_observed, bins=100)
         plt.xlabel("Obeserved Photon per Event")
-        plt.show()
+        # plt.show()
     def single_n_find_gamma_e_loop(self):
         self.df_gamma_rw = pd.read_csv(self.base_path2 + "dmx_single_n_gamma_AmLi_neutron_list_loop.csv")
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
@@ -932,7 +941,7 @@ class ReadRoot():
             wr = csv.writer(myfile)
             wr.writerow(p_observed)
         plt.xlabel("Obeserved Photon per Event")
-        plt.show()
+        # plt.show()
     def check_capture(self):
         self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_gamma.csv")
 
