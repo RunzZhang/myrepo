@@ -28,8 +28,8 @@ def to_fixed_unicode(array, length=32):
     # else:
     #     raise TypeError(f"Unexpected dtype for string field: {np_array.dtype}")
 
-    return np.array(array, dtype=f"<U{length}")
-
+    # return np.array(array, dtype=f"<U{length}")
+    return np.array(ak.to_list(array), dtype=f"<U{length}")
 # Open the full tree
 with uproot.open(f"{input_file}:{tree_name}") as tree:
     total_entries = tree.num_entries
