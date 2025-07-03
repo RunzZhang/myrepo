@@ -495,7 +495,7 @@ class MC_sim_full_argon():
         bin_800 = 0
         bin_1125 = 0
         for i in range(len(x_bins)):
-            if x_bins[i]>0 and bin_350==-1:
+            if x_bins[i]>0 and bin_0==-1:
                 bin_0=i
             if x_bins[i]>350 and bin_350==0:
                 bin_350=i
