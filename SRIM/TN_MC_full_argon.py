@@ -37,7 +37,7 @@ class MC_sim_full_argon():
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_-01"
         self.old_address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
-        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS1"
+        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS07"
         self.plot_address = "/data/runzezhang/result/New_density_MC/"
 
 
@@ -117,7 +117,7 @@ class MC_sim_full_argon():
         # self.gamma_sim(10000)
         # self.MC_sim(self.runtime)
         # self.data_analysis_v2(self.address)
-        # self.plot_spectrum(self.address)
+        self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
         # predict bubble events ratio with different energy threshold
@@ -126,7 +126,7 @@ class MC_sim_full_argon():
         # self.predicted_bubble_events_LSS()
         # self.source_uncertainty(0.5)
         # self.source_uncertainty_w_background(0.3, 500)
-        self.bubble_event_with_sigma(0.5)
+        # self.bubble_event_with_sigma(0.5)
         # self.locate_source_rate()
         # self.bubble_event_with_spectrum_sigma()
         # self.spectrum_uncertainty()
@@ -620,7 +620,7 @@ class MC_sim_full_argon():
         plt.legend()
         # plt.ylim([1E-5,0.1])
         # plt.legend()
-        plt.savefig(self.plot_address + "source_uncertainty_spectrum_linear.png")
+        plt.savefig(self.plot_address + "source_uncertainty_spectrum.png")
         # plt.show()
 
     def locate_source_rate(self):
