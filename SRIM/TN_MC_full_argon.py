@@ -414,7 +414,7 @@ class MC_sim_full_argon():
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
-        plt.savefig(self.plot_address+"New_D_L_spectrum.png", bbox_inches='tight')
+        plt.savefig(self.plot_address+"New_D_L_spectrum_07LSS.png", bbox_inches='tight')
 
     def plot_spectrums_sigma(self):
         start = 0
