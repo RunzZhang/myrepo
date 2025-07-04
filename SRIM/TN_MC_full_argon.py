@@ -22,7 +22,7 @@ class MC_sim_full_argon():
         # the list first value must be unique
         # to change LSS factor, change the Eq LSS_modify/
         # change the self.plot_address/plot name in the self. plot_data function
-        self.runtime = 10000
+        self.runtime = 200000
         self.argon40_weight =97.4/0.93
         self.argon36_weight = 2.5
         self.Energy_factor = 10 ** 3 * 1.602 * 10 ** (-19)
@@ -115,7 +115,7 @@ class MC_sim_full_argon():
         self.gamma_emission_list_1d = []
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
-        # self.MC_sim(self.runtime)
+        self.MC_sim(self.runtime)
         # self.data_analysis_v2(self.address)
         self.plot_spectrum(self.address)
 
