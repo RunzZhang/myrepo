@@ -58,6 +58,10 @@ class ReadRoot:
             # Iterate through the ROOT file in chunks
             for arrays in tree.iterate(expressions=self.selected_columns, library="pd", entry_start=0,
                                        entry_stop=total_entries, step_size=entries_per_chunk):
+                arrays['name'] = arrays['name'].astype(str)
+                arrays['Volume'] = arrays['Volume'].astype(str)
+                arrays['Process'] = arrays['Process'].astype(str)
+                
                 chunk_num += 1
                 output_filename = os.path.join(output_dir, f"dmx_Cf_1E7_{chunk_num}.root")
 
