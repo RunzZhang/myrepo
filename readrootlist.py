@@ -72,6 +72,25 @@ def test_write():
     except Exception as e:
         print(f"Error opening file: {e}")
 
+def find_entries():
+    """
+        Opens a ROOT file and returns the number of entries in a specified TTree.
+        """
+    filepath= "/data/runzezhang/result/TN_sims_D/chunked_root_files_corrupted/dmx_Cf_1E7_1.root"
+    tree_name="tree"
+    try:
+        with uproot.open(filepath) as file:
+            if tree_name in file:
+                tree = file[tree_name]
+                return tree.num_entries
+            else:
+                print(f"Tree '{tree_name}' not found in {filepath}")
+                return None
+    except Exception as e:
+        print(f"Error opening or reading {filepath}: {e}")
+        return None
+
+
 class RestructureRoot():
     def __init__(self):
         self.filepath = "/data/runzezhang/result/TN_sims_D/chunked_root_files/dmx_Cf_1E7.root"
@@ -1156,4 +1175,5 @@ class ReadRoot():
 if __name__ =="__main__":
     # ReR = RestructureRoot()
     # RR = ReadRoot()
-    test_write()
+    # test_write()
+    find_entries()
