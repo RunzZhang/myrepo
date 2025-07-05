@@ -80,7 +80,7 @@ class ReadRoot:
                     print(f"Error writing chunk {chunk_num} to {output_filename}: {e}")
 
                 start_entry += len(arrays)
-                time.sleep(60)
+                time.sleep(5)
 
         print(f"\nFinished chunking the ROOT file into {chunk_num} files in {output_dir}.")
 
