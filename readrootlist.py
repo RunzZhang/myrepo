@@ -63,8 +63,10 @@ def test_write():
         f = uproot.open("/data/runzezhang/result/TN_sims_D/chunked_root_files_corrupted/dmx_Cf_1E7_1.root")
         tree = f["tree"]  # Or whatever your tree name is
         print("Successfully opened the file!")
+        columns= ["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV","Volume","Process"]
+        # columns = ["Event", "Kinetic/keV"]
         # Optional: Try to read a few entries to confirm data is there
-        df_test = tree.arrays(["Event", "Kinetic/keV"], library="pd", entry_start=30633056,entry_stop=30633066)
+        df_test = tree.arrays(columns, library="pd", entry_start=30633056,entry_stop=30633066)
         # df_test = tree.arrays(["Event", "Kinetic/keV"], library="pd",
                               # entry_stop=10)
 
