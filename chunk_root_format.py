@@ -1,6 +1,6 @@
 import uproot
 import pandas as pd
-import os
+import os, time
 
 
 class ReadRoot:
@@ -55,7 +55,6 @@ class ReadRoot:
 
             chunk_num = 0
             start_entry = 0
-
             # Iterate through the ROOT file in chunks
             for arrays in tree.iterate(expressions=self.selected_columns, library="pd", entry_start=0,
                                        entry_stop=total_entries, step_size=entries_per_chunk):
@@ -76,6 +75,7 @@ class ReadRoot:
                     print(f"Error writing chunk {chunk_num} to {output_filename}: {e}")
 
                 start_entry += len(arrays)
+                time.sleep(60)
 
         print(f"\nFinished chunking the ROOT file into {chunk_num} files in {output_dir}.")
 
