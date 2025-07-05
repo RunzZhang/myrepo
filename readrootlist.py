@@ -108,6 +108,7 @@ class ReadRoot():
         # for i in range(1,10):
         #     self.main_body(i)
     def main_body(self,i):
+        print(i)
         self.false_1 = f"Cf_1E7_false1_part{i}.csv"
         self.false_2 = f"Cf_1E7_false2_part{i}.csv"
         self.signal = f"Cf_1E7_sig_part{i}.csv"
