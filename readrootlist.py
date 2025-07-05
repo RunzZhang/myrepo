@@ -157,7 +157,7 @@ class ReadRoot():
 
         self.filepath = self.base_path + f"dmx_Cf_1E7_{i}.root"
         self.file = uproot.open(self.filepath)["tree"]
-        print("columns: ", self.file.keys())
+        # print("columns: ", self.file.keys())
         # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
         self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "Kinetic/keV",
                                  "Recoiled/keV", "Volume", "Process"]
