@@ -169,7 +169,7 @@ class ReadRoot():
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # # process data so that it is easier to read
         # first 1000 rows
-        self.df = self.file.arrays(self.selected_columns, library="pd", entry_start=0,entry_stop=10)
+        self.df = self.file.arrays(self.selected_columns, library="pd", entry_start=0,entry_stop=10000)
         self.modify_df()
 
 
@@ -177,10 +177,10 @@ class ReadRoot():
         self.LAr_gamma_event()
 
         # single elastic scatter and capture false signal 1
-        self.single_e_n_capture_event()
+        # self.single_e_n_capture_event()
 
         # false noise 2, need to relocate directory
-        self.Huge_scatter_event()
+        # self.Huge_scatter_event()
 
 
         # self.FN_spectrum_v2()
