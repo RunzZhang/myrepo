@@ -139,9 +139,9 @@ class ReadRoot():
         self.plot_path = '/data/runzezhang/result/TN_sims_D/chunked_root_files/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        self.main_body(1)
-        # for i in range(1,101):
-        #     self.main_body(i)
+        # self.main_body(1)
+        for i in range(1,101):
+            self.main_body(i)
     def main_body(self,i):
         print(i)
         self.false_1 = f"Cf_1E7_false1_part{i}.csv"
