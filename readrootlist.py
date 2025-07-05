@@ -207,7 +207,7 @@ class ReadRoot():
                 temp_point = event_number[i]
             else:
                 event_number[i] = temp_point
-        print("end", event_number[:100], event_number[-1])
+        # print("end", event_number[:100], event_number[-1])
 
         # put the updated event_number back to data frame
         self.df.update(pd.DataFrame({'Event': event_number}))
