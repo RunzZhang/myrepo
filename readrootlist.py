@@ -64,7 +64,7 @@ def test_write():
         tree = f["tree"]  # Or whatever your tree name is
         print("Successfully opened the file!")
         # columns= ["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV","Volume","Process"]
-        columns = ["Event", "Kinetic/keV","Recoiled/keV","Volume"]
+        columns = ["Event", "Kinetic/keV","Recoiled/keV","Process"]
         # Optional: Try to read a few entries to confirm data is there
         # df_test = tree.arrays(columns, library="pd", entry_start=30633056,entry_stop=30633066)
         df_test = tree.arrays(columns, library="pd")
