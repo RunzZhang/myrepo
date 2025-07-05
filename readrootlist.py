@@ -61,8 +61,8 @@ import csv
 
 class RestructureRoot():
     def __init__(self):
-        self.filepath = "/data/runzezhang/result/TN_sims_D/dmx_Cf_1E7.root"
-        self.reconstruct_filepath = "/data/runzezhang/result/TN_sims_D/dmx_rcCf_1E7.csv"
+        self.filepath = "/data/runzezhang/result/TN_sims_D/chunked_root_files/dmx_Cf_1E7.root"
+        self.reconstruct_filepath = "/data/runzezhang/result/TN_sims_D/chunked_root_files/dmx_rcCf_1E7.csv"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
@@ -99,13 +99,14 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/"
-        self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files/"
+        self.plot_path = '/data/runzezhang/result/TN_sims_D/chunked_root_files/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        for i in range(10):
-            self.main_body(i)
+        self.main_body(2)
+        # for i in range(1,10):
+        #     self.main_body(i)
     def main_body(self,i):
         self.false_1 = f"Cf_1E7_false1_part{i}.csv"
         self.false_2 = f"Cf_1E7_false2_part{i}.csv"
@@ -121,7 +122,7 @@ class ReadRoot():
         self.signal_path = self.base_path + self.signal
 
 
-        self.filepath = self.base_path + f"dmx_Cf_1e7_part{i}.root"
+        self.filepath = self.base_path + f"dmx_Cf_1E7_{i}.root"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ", self.file.keys())
         # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
@@ -140,10 +141,10 @@ class ReadRoot():
         self.LAr_gamma_event()
 
         # single elastic scatter and capture false signal 1
-        self.single_e_n_capture_event()
+        # self.single_e_n_capture_event()
 
         # false noise 2, need to relocate directory
-        self.Huge_scatter_event()
+        # self.Huge_scatter_event()
 
 
         # self.FN_spectrum_v2()
