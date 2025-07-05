@@ -64,9 +64,9 @@ def test_write():
         tree = f["tree"]  # Or whatever your tree name is
         print("Successfully opened the file!")
         # Optional: Try to read a few entries to confirm data is there
-        # df_test = tree.arrays(["Event", "Kinetic/keV"], library="pd", entry_start=10496663981109070736 ,entry_stop=10496663981109071745)
-        df_test = tree.arrays(["Event", "Kinetic/keV"], library="pd",
-                              entry_stop=10)
+        df_test = tree.arrays(["Event", "Kinetic/keV"], library="pd", entry_start=30633056,entry_stop=30633066)
+        # df_test = tree.arrays(["Event", "Kinetic/keV"], library="pd",
+                              # entry_stop=10)
 
         print("First 10 entries:", df_test)
     except Exception as e:
@@ -1175,8 +1175,8 @@ class ReadRoot():
 if __name__ =="__main__":
     # ReR = RestructureRoot()
     # RR = ReadRoot()
-    # test_write()
+    test_write()
 
     # find corrupted file entries
-    num= find_entries()
-    print(num)
+    # num= find_entries()
+    # print(num)
