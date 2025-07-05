@@ -134,9 +134,9 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_corrupted/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_corrupted/"
-        self.plot_path = '/data/runzezhang/result/TN_sims_D/chunked_root_files_corrupted/plot/'
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files/"
+        self.plot_path = '/data/runzezhang/result/TN_sims_D/chunked_root_files/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.main_body(1)
