@@ -69,7 +69,7 @@ class ReadRoot:
                 data_to_write = {col: arrays[col].values for col in self.selected_columns}
 
                 try:
-                    with uproot.recreate(self.base_path+output_filename, compression=uproot.LZ4(level=4)) as output_file:
+                    with uproot.recreate(output_filename, compression=uproot.LZ4(level=4)) as output_file:
                         output_file[self.tree_name] = data_to_write
                     print(f"Successfully wrote {len(arrays)} entries to {output_filename}")
                 except Exception as e:
