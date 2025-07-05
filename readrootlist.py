@@ -139,9 +139,9 @@ class ReadRoot():
         self.plot_path = '/data/runzezhang/result/TN_sims_D/chunked_root_files_corrupted/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        self.main_body(1)
-        # for i in range(1,10):
-        #     self.main_body(i)
+        # self.main_body(1)
+        for i in range(1,21):
+            self.main_body(i)
     def main_body(self,i):
         print(i)
         self.false_1 = f"Cf_1E7_false1_part{i}.csv"
@@ -177,10 +177,10 @@ class ReadRoot():
         self.LAr_gamma_event()
 
         # single elastic scatter and capture false signal 1
-        # self.single_e_n_capture_event()
+        self.single_e_n_capture_event()
 
         # false noise 2, need to relocate directory
-        # self.Huge_scatter_event()
+        self.Huge_scatter_event()
 
 
         # self.FN_spectrum_v2()
