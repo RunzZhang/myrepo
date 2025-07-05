@@ -58,6 +58,16 @@ import matplotlib.pyplot as plt
 import numpy as np
 import csv
 # filename = "/data/runzezhang/Geant4Simulaions/g411_TN/dmx.root"
+def test_write():
+    try:
+        f = uproot.open("/data/runzezhang/result/TN_sims_D/chunked_root_files/dmx_Cf_1E7_1.root")
+        tree = f["tree"]  # Or whatever your tree name is
+        print("Successfully opened the file!")
+        # Optional: Try to read a few entries to confirm data is there
+        df_test = tree.arrays(["Event", "Kinetic/keV"], library="pd", entry_stop=10)
+        print("First 10 entries:", df_test)
+    except Exception as e:
+        print(f"Error opening file: {e}")
 
 class RestructureRoot():
     def __init__(self):
@@ -1139,6 +1149,8 @@ class ReadRoot():
         self.df_test_merge.to_csv(self.base_path +name+".csv")
 
 
+
 if __name__ =="__main__":
     # ReR = RestructureRoot()
-    RR = ReadRoot()
+    # RR = ReadRoot()
+    test_write()
