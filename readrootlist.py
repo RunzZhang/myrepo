@@ -1176,4 +1176,7 @@ if __name__ =="__main__":
     # ReR = RestructureRoot()
     # RR = ReadRoot()
     # test_write()
-    find_entries()
+
+    # find corrupted file entries
+    num= find_entries()
+    print(num)
