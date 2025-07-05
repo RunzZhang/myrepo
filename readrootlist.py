@@ -64,7 +64,10 @@ def test_write():
         tree = f["tree"]  # Or whatever your tree name is
         print("Successfully opened the file!")
         # Optional: Try to read a few entries to confirm data is there
-        df_test = tree.arrays(["Event", "Kinetic/keV"], library="pd", entry_start=10496663981109071736 ,entry_stop=10496663981109071746)
+        # df_test = tree.arrays(["Event", "Kinetic/keV"], library="pd", entry_start=10496663981109071736 ,entry_stop=10496663981109071746)
+        df_test = tree.arrays(["Event", "Kinetic/keV"], library="pd",
+                              entry_stop=10)
+
         print("First 10 entries:", df_test)
     except Exception as e:
         print(f"Error opening file: {e}")
