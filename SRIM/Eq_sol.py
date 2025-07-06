@@ -284,7 +284,7 @@ class E_loss_solve():
             self.e_list.append(i*self.last_t/10)
         print(self.t_crit)
         # solve = solve_ivp(self.E_loss_el_t_fun_ODE, [0, 2*self.last_t], [self.ini_E], t_eval=self.e_list) # check one point's value
-        solve = solve_ivp(self.E_loss_t_fun_ODE_v2, [0, self.last_t], [self.ini_E])
+        solve = solve_ivp(self.E_loss_t_fun_ODE_new_D, [0, self.last_t], [self.ini_E])
         array = solve.y
         sol_y = array[0]
         print("y", array,sol_y)
@@ -293,7 +293,7 @@ class E_loss_solve():
         for i in solve.t:
             t_fs.append(i*1E6)
         # print("threshold t", np.interp(self.threshold_v, sol_y, solve.t))
-        plt.plot(t_fs, sol_y)
+        plt.plot(t_fs, sol_y, linewidth = 5)
         Dy_list = []
         for i in range(1, len(sol_y)):  # double check with solution result
             value = (sol_y[i] - sol_y[i - 1]) / (solve.t[i] - solve.t[i - 1])
