@@ -388,9 +388,9 @@ class SRIM_Table():
 
         self.data_ini()
         self.fetch_data()
-        self.compare_theory()
+        # self.compare_theory()
         # self.plot_data()
-        # self.plot_data_err() # estimate the uncertainty from time constant
+        self.plot_data_err() # estimate the uncertainty from time constant
 
     def data_ini(self):
 
@@ -541,11 +541,12 @@ class SRIM_Table():
         self.force_fit_err() # if check the factor between exp and theory data, uncomment this, otherwise, it is original data
         plt.plot(self.Ion_ene, self.sn_LSS, label="LSS original")
         plt.plot(self.Ion_ene, self.N_loss, label="SRIM data")
-        plt.plot(self.Ion_ene, self.hi_limit, label="high limit LSS fit")
-        plt.plot(self.Ion_ene, self.lo_limit, label="low limit LSS fit")
-
-        plt.xlabel("Recoiled energy/eV")
-        plt.ylabel("eV/A")
+        # plt.plot(self.Ion_ene, self.hi_limit, label="high limit LSS fit")
+        # plt.plot(self.Ion_ene, self.lo_limit, label="low limit LSS fit")
+        plt.plot(self.Ion_ene, self.refit_LSS, label="LSS refit")
+        plt.fill_between(self.Ion_ene, self.hi_limit, self.lo_limit, color='lightgray', alpha=0.5, label='Band')
+        plt.xlabel("Recoiled energy/eV", fontsize =14)
+        plt.ylabel("eV/A", fontsize =14)
         print("exp", self.N_loss)
         print(self.min_ratio)
         print(self.max_ratio)
@@ -596,6 +597,7 @@ class SRIM_Table():
         # to estimate the uncerntaity from model to SRIM data more precisely
         self.lo_limit = []
         self.hi_limit = []
+        self.refit_LSS = []
         self.ratio = []
         self.ratio_ascend = [0]
         for i in range(len(self.N_loss)):
@@ -603,6 +605,7 @@ class SRIM_Table():
             self.ratio.append(ratio)
             if i>=1:
                 self.ratio_ascend.append(self.ratio[i]-self.ratio[i-1])
+        self.mean_ratio = sum(self.ratio) / len(self.ratio)
         self.min_ratio = min(self.ratio)
         self.max_ratio = max(self.ratio)
 
@@ -611,6 +614,8 @@ class SRIM_Table():
             self.lo_limit.append(self.min_ratio*self.sn_LSS[i])
         for i in range(len(self.sn_LSS)):
             self.hi_limit.append(self.max_ratio*self.sn_LSS[i])
+        for i in range(len(self.sn_LSS)):
+            self.refit_LSS.append(self.mean_ratio*self.sn_LSS[i])
 
         print("ratio", self.ratio)
         print("ratio diff", self.ratio_ascend)
