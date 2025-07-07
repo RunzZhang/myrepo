@@ -1569,20 +1569,20 @@ class multi_MC():
                     pnverb = True
                 else:
                     pnverb = False
-                chipn, dtotali[n:], dcounti[n:], totalTrue[n:], totalModeli[n:], countTrue[n:], countModeli[
-                                                                                                n:] = self.photoEval3(
-                    pn,
-                    photoneutrondata,
-                    pnlivetime,
-                    energiesi,
-                    efficiencies0,
-                    photoArrayTrue,
-                    meanBackBubble,
-                    meanBackEvent,
-                    loud=pnverb,
-                    pnuisance=nuisancei[n:],
-                    mode=modei[1],
-                )
+                # chipn, dtotali[n:], dcounti[n:], totalTrue[n:], totalModeli[n:], countTrue[n:], countModeli[
+                #                                                                                 n:] = self.photoEval3(
+                #     pn,
+                #     photoneutrondata,
+                #     pnlivetime,
+                #     energiesi,
+                #     efficiencies0,
+                #     photoArrayTrue,
+                #     meanBackBubble,
+                #     meanBackEvent,
+                #     loud=pnverb,
+                #     pnuisance=nuisancei[n:],
+                #     mode=modei[1],
+                # )
                 # chipn,dtotali[n:],dcounti[n:],totalTrue[n:],totalModeli[n:],countTrue[n:],countModeli[n:]
                 dcountb[:], countModelb[:], dtotalb[:], totalModelb[:] = dcounti[:], countModeli[:], dtotali[
                                                                                                      :], totalModeli[:]
@@ -1767,20 +1767,20 @@ class multi_MC():
                     pnverb = True
                 else:
                     pnverb = False
-                chipn, dtotali[n:], dcounti[n:], totalTrue[n:], totalModeli[n:], countTrue[n:], countModeli[
-                                                                                                n:] = self.photoEval3(
-                    pn,
-                    photoneutrondata,
-                    pnlivetime,
-                    energiesi,
-                    efficiencies0,
-                    photoArrayTrue,
-                    meanBackBubble,
-                    meanBackEvent,
-                    loud=pnverb,
-                    pnuisance=nuisancei[n:],
-                    mode=modei[1],
-                )
+                # chipn, dtotali[n:], dcounti[n:], totalTrue[n:], totalModeli[n:], countTrue[n:], countModeli[
+                #                                                                                 n:] = self.photoEval3(
+                #     pn,
+                #     photoneutrondata,
+                #     pnlivetime,
+                #     energiesi,
+                #     efficiencies0,
+                #     photoArrayTrue,
+                #     meanBackBubble,
+                #     meanBackEvent,
+                #     loud=pnverb,
+                #     pnuisance=nuisancei[n:],
+                #     mode=modei[1],
+                # )
                 chimode[0] = ((modei[0]) / modeErrT) ** 2
                 chimode[1] = ((modei[1]) / modeErrPN) ** 2
                 # for p in range(pn):
