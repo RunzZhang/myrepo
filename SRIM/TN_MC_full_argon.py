@@ -422,7 +422,7 @@ class MC_sim_full_argon():
         start = 0
         end = 1200
         x_bins = []
-        with open("/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS07_2E5", "rb") as fp:  # Unpickling
+        with open("/data/runzezhang/result/SRIM_MC/MC_argon_full_20250601_D_400_07", "rb") as fp:  # Unpickling
             MC_full0= pickle.load(fp)
             print("read",MC_full0)
         bin_n =500
@@ -441,6 +441,11 @@ class MC_sim_full_argon():
         plt.clf()
         hist_result_high = plt.hist(MC_full_high, bins=bin_n, range=(start, end), density=True)
         plt.clf()
+        # scaling 2E5 to 1E4 comment this out and change 2E5 file back to D_400_07
+        # new_set = []
+        # for i in hist_result[0]:
+        #     new_set.append(i/20)
+        # hist_result[0] = new_set
 
         plt.plot(x_bins, hist_result[0], color="blue", label='LSS refit')
         plt.fill_between(x_bins, hist_result_high[0], hist_result_low[0], color='lightgray', alpha=0.5, label='LSS limits')
@@ -598,7 +603,7 @@ class MC_sim_full_argon():
         # this is adjusted based on different LSS factor
         address05 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS05"
         address08 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS08"
-        address07 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS07"
+        address07 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS07_2E5"
         address10 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS1"
         x_bins_05, hist_result_05, bubble_event_05  = self.generate_hist_and_CDF(address=address05)
         x_bins_08, hist_result_08, bubble_event_08 = self.generate_hist_and_CDF(address=address08)
