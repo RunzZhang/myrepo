@@ -503,7 +503,7 @@ class MC_sim_full_argon():
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
         plt.legend()
-        plt.savefig(self.address+"t_uncertainty_spectrum.png", bbox_inches= "tight")
+        plt.savefig(self.plot_address+"t_uncertainty_spectrum.png", bbox_inches= "tight")
 
     def generate_hist_and_CDF(self,event_N= 10**3 , address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"):
         # event_N is neutron capture event numbers in argon per 100 hours
