@@ -1284,8 +1284,12 @@ class multi_MC():
             TrueArray[2, i] = t
             # if i in UsePhotoError:
 
-            rate, count, background, nuisanceT[i] = self.rateJitter(Rate, Count, time=time, sourceErr=sourceErr,
-                                                                   background=background)
+            rate, count, background, nuisanceT[i] = self.rateJitter( Rate,
+            Count,
+            tCommonMode,
+            time=time,
+            sourceErr=sourceErr,
+            background=background,)
             print(nuisanceT[i])
             # rate=Rate
             # count=Count
