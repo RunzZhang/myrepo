@@ -1314,7 +1314,7 @@ class multi_MC():
         Niters = 4000000
         Nwalkers = 4
         printstep = 100000
-        energies0 = [0, 0, 0, 0]  # definition
+        energies0 = [0, 0, 0, 0,0]  # definition
         nuisance0 = np.zeros(n + pn)
         # pnuisance0=np.zeros(pn)
         mode0 = [0, 0]
