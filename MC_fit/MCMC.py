@@ -94,7 +94,7 @@ class multi_MC():
         ################################################
         self.aplist = [1, 8]  # this is not yet implimented
 
-        self.runN = 2
+        self.runN = 1
         self.runlist =[]
         self.threshold = 400
         self.sig_high = 50
@@ -1589,7 +1589,10 @@ class multi_MC():
                 dcountc[:], countModelc[:], dtotalc[:], totalModelb[:] = dcounti[:], countModeli[:], dtotali[
                                                                                                      :], totalModeli[:]
                 chimode[0] = ((modei[0]) / modeErrT) ** 2
-                chimode[1] = ((modei[1]) / modeErrPN) ** 2
+                if modeErrPN!=0:
+                    chimode[1] = ((modei[1]) / modeErrPN) ** 2
+                else:
+                    chimode[1] = 0
                 """
                 for p in range(pn):
                     #test(recoil,rate,energies,efficiencies,r_nuis,t,weight,background=500,time=100)
@@ -1782,7 +1785,10 @@ class multi_MC():
                 #     mode=modei[1],
                 # )
                 chimode[0] = ((modei[0]) / modeErrT) ** 2
-                chimode[1] = ((modei[1]) / modeErrPN) ** 2
+                if modeErrPN != 0:
+                    chimode[1] = ((modei[1]) / modeErrPN) ** 2
+                else:
+                    chimode[1] = 0
                 # for p in range(pn):
                 """
                 for p in range(pn):
