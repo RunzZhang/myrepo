@@ -514,14 +514,14 @@ class MC_sim_full_argon():
         address05 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_0.5time_0offset"
         address20 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_2time_0offset"
         x_bins_10, hist_result_10, bubble_event_10 = self.generate_hist_and_CDF(event_N=94, address=address10)
-        x_bins_25, hist_result_25, bubble_event_25 = self.generate_hist_and_CDF(event_N=94, address=address25)
+        x_bins_05, hist_result_05, bubble_event_05 = self.generate_hist_and_CDF(event_N=94, address=address05)
         x_bins_20, hist_result_20, bubble_event_20 = self.generate_hist_and_CDF(event_N=94, address=address20)
 
         # check 400eV uncerntatinty
         for i in range(len(x_bins_10)):
             if x_bins_10[i] > 400:
                 print("05", bubble_event_10[i])
-                print("07", bubble_event_25[i])
+                print("07", bubble_event_05[i])
                 print("08", bubble_event_20[i])
                 break
         # 05 147.75935770979376
@@ -531,7 +531,7 @@ class MC_sim_full_argon():
         #
 
         # plt.plot(x_bins_10, bubble_event_05,  label = 'lower scaling LSS')
-        # plt.plot(x_bins_25, bubble_event_08,  label='uppper scaling LSS')
+        # plt.plot(x_bins_05, bubble_event_08,  label='uppper scaling LSS')
         plt.fill_between(x_bins_20, bubble_event_05, bubble_event_20, color='dimgray', alpha=0.5,
                          label='0.5-2 time scaling limits')
         plt.plot(x_bins_20, bubble_event_10, label='orignal t')
