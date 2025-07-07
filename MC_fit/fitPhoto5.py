@@ -647,6 +647,7 @@ def phototestTrue(pnc_filepath, livetime, T, sigLow, sigUp):
     for i in range(len(M)):
         average += M[i] * i / np.sum(M)
     print("True Sum: ", bsum)
+    print("True Sum: ", bsum)
     print("Mult Sum: ", np.sum(M) / average)
     print("True Mean: ", bsum / average)
     print("Mult Sum: ", average)

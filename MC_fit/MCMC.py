@@ -84,8 +84,8 @@ class multi_MC():
 
         ################################################
         # self.flist = ["./Sb124JAEA.txt", "./Co60JAEA.txt", "./Th228JAEA.txt"]
-        self.flist = ["/data/runzezhang/result/SRIM_MC/MC_argon_full_20250601_D_Noahformat.txt"]
-        self.hist_address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250601_D"
+        self.flist = ["/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS07_2E5_Noahformat.txt"]
+        self.hist_address = "/data/runzezhang/result/SRIM_MCMC_argon_full_20250701_LSS07_2E5"
 
         ################################################
         self.pnlist = ["./Sb", "./Bi"]
@@ -94,7 +94,7 @@ class multi_MC():
         ################################################
         self.aplist = [1, 8]  # this is not yet implimented
 
-        self.runN = 15
+        self.runN = 1
         self.runlist =[]
         self.threshold = 400
         self.sig_high = 50
@@ -235,17 +235,32 @@ class multi_MC():
                                 energies[i] - energies[i - 1]) + efficiencies[i - 1]
         return 1
 
-    def VectorNucleationEfficiency(self,r, energies, efficiencies):
+    def VectorNucleationEfficiency(self, r, energies, efficiencies):
         n = len(energies)
         en0 = energies[0]
-        en30 = energies[1]
-        en70 = energies[2]
-        en100 = energies[3]
-        return np.piecewise(r,
-                            [r <= en0, (r > en0) & (r <= en30), (r > en30) & (r <= en70), (r > en70) & (r < en100),
-                             r >= en100], [lambda r: 0, lambda r: (0.3) / (en30 - en0) * (r - en0),
-                                           lambda r: (0.4) / (en70 - en30) * (r - en30) + 0.3,
-                                           lambda r: (0.3) / (en100 - en70) * (r - en70) + 0.7, lambda r: 1])
+        en20 = energies[1]
+        en50 = energies[2]
+        en80 = energies[3]
+        en100 = energies[4]
+        return np.piecewise(
+            r,
+            [
+                r <= en0,
+                (r > en0) & (r <= en20),
+                (r > en20) & (r <= en50),
+                (r > en50) & (r <= en80),
+                (r > en80) & (r < en100),
+                r >= en100,
+            ],
+            [
+                lambda r: 0,
+                lambda r: (0.2) / (en20 - en0) * (r - en0),
+                lambda r: (0.3) / (en50 - en20) * (r - en20) + 0.2,
+                lambda r: (0.3) / (en80 - en50) * (r - en50) + 0.5,
+                lambda r: (0.2) / (en100 - en80) * (r - en80) + 0.8,
+                lambda r: 1,
+            ],
+        )
 
     def rateFinder(self,recoil, energies, efficiencies, t, weight):
         # print ("rateFinder: ",data,energy,T,sigma,t,weight)
@@ -463,12 +478,26 @@ class multi_MC():
             W[i] = self.NucleationEfficiencyTrue(recoil[i], T, sigLow, sigUp) * weight[i] / t
         return sum(W)
 
-    def test(self,recoil, rate, energies, efficiencies, r_nuis, t, weight, background=500, time=100):
-        rateT = self.rateFinder(recoil, energies, efficiencies, t, weight) * (1 + r_nuis) + (background / time)
+    def test(self,
+            recoil,
+            rate,
+            energies,
+            efficiencies,
+            r_nuis,
+            t,
+            weight,
+            mode=0,
+            background=500,
+            time=100,
+    ):
+        r_nuis = self.logErr(r_nuis)
+        mode = self.logErr(mode)
+        rateT = self.rateFinder(recoil, energies, efficiencies, t, weight) * (r_nuis) * (mode) + (background / time)
         # print (rateT)
         # print (rate)
+        dif = rateT - rate
         chi = ((rateT - rate) ** 2 / (rate)) * time
-        return chi
+        return chi, dif, rateT, rate
 
     def testLoud(self,recoil, rate, energies, efficiencies, r_nuis, t, weight, background=500, time=100):
         rateT = self.rateFinder(recoil, energies, efficiencies, t, weight) * (1 + r_nuis) + (background / time)
@@ -479,27 +508,31 @@ class multi_MC():
         print("Data Rate: ", rate)
         return chi
 
-    def rateJitter(self,rate, count, time=100, sourceErr=.03, background=500, s_err="False"):
+    def rateJitter(self,rate, count, commonMode, time=100, sourceErr=0.03, background=500, s_err="False"):
         print("Jitter", rate, count, time, sourceErr, background)
 
         if s_err == "False":
-            s_err = np.random.normal(1, sourceErr, 1)
+            s_err = np.squeeze(np.random.normal(0, sourceErr, 1))
+            # s_err = np.random.normal(0, sourceErr, 1)
         # s_err=1+random.uniform(-1,1)*sourceErr
-        count = count * s_err
+        s_err = self.logErr(s_err)
+        commonMode = self.logErr(commonMode)
+        count = count * s_err * commonMode
         count = np.random.poisson(count)
         backgroundexcess = np.random.poisson(background)
         count += backgroundexcess
         rate = count / time
-        if background != 0:
-
-            b_err = backgroundexcess / background - 1
-        else:
-            b_err = 0
+        b_err = backgroundexcess / background - 1
         print("Background: ", backgroundexcess, background)
         print("Source Error: ", s_err)
-        return rate, count, background, s_err
-        # (T,sigLow,sigUp,energiesb,efficiencies0,start=T-4*sigLow,end=T-4*sigUp)
+        return rate, count, backgroundexcess, s_err
 
+    def logErr(self,err):
+        # if err==1:
+        # print ("Pre Log Error: ",err)
+        error = np.exp(err)
+        # print ("Post Log Error: ",error)
+        return error
 
 
     def fittest(self,T, sigLow, sigUp, energiesM, efficienciesM, M=10000, start=40, end=200):
@@ -509,11 +542,12 @@ class multi_MC():
         tot = 0
         calib = 0
         fifty = 0
-        fiftydif = .5
+        fiftydif = 0.5
+        stepwidth = end / M
         # print (T,sigLow,sigUp)
         # print (energiesM,efficienciesM)
         for i in range(M):
-            stepwidth = end / M
+            # stepwidth = end / M
             r = i * stepwidth
             RT = self.NucleationEfficiencyTrue(r, T, sigLow, sigUp)
             # print ("Real Efficiency: ",RT)
@@ -522,8 +556,8 @@ class multi_MC():
             # print ("Difference: ",RT-RG)
             dif += abs(RT - RG) * stepwidth
             tot += RT * stepwidth
-            if fiftydif >= abs(.5 - RG):
-                fiftydif = .5 - RG
+            if fiftydif >= abs(0.5 - RG):
+                fiftydif = 0.5 - RG
                 fifty = r
             RT *= stepwidth
             RG *= stepwidth
@@ -532,10 +566,10 @@ class multi_MC():
             # print ("Absolute Difference: ",dif)
         return dif, fifty, rt, rg, tot
 
-    t = 0.03754 / 100  # hours to run the whole thing,
-
-    T = 105
-    sigma = 15
+    # t = 0.03754 / 100  # hours to run the whole thing,
+    #
+    # T = 105
+    # sigma = 15
 
     def analyze(self,file, T, sigLow, sigUp, N=2 * 10 ** 9, Activity=100, time=100):
         # N is number of events
@@ -557,16 +591,34 @@ class multi_MC():
         # t =10000 for thermal neutron only, 10^5 events per file and the thermal neutron rate AmLi is 10 per hour
         # this might be optimistic but let's use this first
         # 1E5/((1517.76*0.0358)/(9*0.12))
-        t =1987
+        # t =1987
         # for Cf 252
         # t= 100000/ thermal neutron rate Cf252 =1E5/50=2000
         # for Cf 252 0.0358microC
+        t = 2E5/4.06 # updated 2E5 events capture rate is 4.06 for 50 bubbles 0.032 microcure t
+
 
 
         Rate = self.rateFinderTrue(Recoils, T, sigLow, sigUp, t, Weights)
 
         Count = Rate * time
         print("Count",Count)
+
+        return Recoils, Weights, Rate, Count, t, time
+
+    def analyze_Compton(self, file, T, sigLow, sigUp, N=5.0 * 10 ** 7, Activity=100, time=100):
+        Data = np.loadtxt(file)
+        SourceRate = (3.7 * 10 ** 6) * Activity / 100
+        Energy = Data[:, 0]
+        Recoils = Data[:, 1]
+        Weights = Data[:, 2]
+
+        t = N / SourceRate  # live time in seconds
+        t /= 3600  # live time in hours
+
+        Rate = self.rateFinderTrue(Recoils, T, sigLow, sigUp, t, Weights)
+
+        Count = Rate * time
 
         return Recoils, Weights, Rate, Count, t, time
 
@@ -654,16 +706,17 @@ class multi_MC():
         else:
             return False
 
-
-
-    def stepper(self,energies, nuisance, step, n_step, min=20, max=2000):
+    def stepper(self, energies, nuisance, mode, step, n_step, m_step, min=40, max=2000):
         energiesMem = np.zeros(len(energies))
         nuisanceMem = np.zeros(len(nuisance))
+        modeMem = np.zeros(len(mode))
         energiesMem[:] = energies[:]
         nuisanceMem[:] = nuisance[:]
+        modeMem[:] = mode[:]
         chosen = np.random.randint(0, len(energies))
         for i in range(len(energiesMem)):
-            energiesMem[i] = np.random.normal(0, step, 1) + energiesMem[i]
+            energiesMem[i] = np.squeeze(np.random.normal(0, step, 1)) + energiesMem[i]
+            # energiesMem[i] = np.random.normal(0, step, 1) + energiesMem[i]
             if i == 0:
                 if energiesMem[0] < min:
                     energiesMem[0] = min + 5
@@ -695,13 +748,22 @@ class multi_MC():
         chosen = np.random.randint(0, len(nuisance))
         for i in range(len(nuisance)):
             # if i==chosen:
+            # nuisanceMem[i]=logErr(nuisanceMem[i])
             if True:
-                nuisance[i] += np.random.normal(0, n_step, 1)
-            if nuisance[i] > 0.1:
-                nuisance[i] = .1
-            if nuisance[i] < -.1:
-                nuisance[i] = -.1
-        return energiesMem[:], nuisanceMem[:]
+                nuisanceMem[i] += np.squeeze(np.random.normal(0, n_step, 1))
+                # nuisanceMem[i] += np.random.normal(0, n_step, 1)
+            if nuisanceMem[i] > 0.2:
+                nuisanceMem[i] = 0.2
+            if nuisanceMem[i] < -0.2:
+                nuisanceMem[i] = -0.2
+        for i in range(len(mode)):
+            modeMem[i] += np.squeeze(np.random.normal(0, m_step, 1))
+            # modeMem[i] += np.random.normal(0, m_step, 1)
+            if modeMem[i] > 1:
+                modeMem[i] = 1
+            if modeMem[i] < -1:
+                modeMem[i] = -1
+        return energiesMem[:], nuisanceMem[:], modeMem[:]
 
     def photoread(self,pnc_filepath):
         r_list = []
@@ -777,6 +839,105 @@ class multi_MC():
                 print(chi[p])
         return chi
 
+    def phototest3(self, data, energies, efficiencies, sourceStrength=1):
+        m = 0
+        M = []
+        PZ = 0
+        lineO = [0, 0]
+        pz = 0
+        m = 0
+        p1 = 0
+        # print (data)
+        # print (data[:,0])
+        # print (data[:,1])
+        # datOrg=data[:,1]
+        # print (data)
+        # print (np.shape(data))
+        dataMem = np.zeros(np.shape(data))
+        dataMem[:, 1] = data[:, 1]
+        dataMem[:, 2] = data[:, 2]
+
+        # T=80
+        # sigLow=10
+        # sigUp=sigLow
+        dataMem[:, 0] = self.VectorNucleationEfficiency(data[:, 0], energies, efficiencies)
+        bubble_spectra = dataMem[:, 0] * dataMem[:, 1]
+        event_spectra = dataMem[:, 0] * dataMem[:, 2]
+
+        bubble_rate = np.sum(bubble_spectra) * sourceStrength
+        event_rate = np.sum(event_spectra) * sourceStrength
+        return bubble_rate, event_rate
+
+    def photoEval3(self,
+            pn,
+            photoneutrondata,
+            livetime,
+            energies,
+            efficiencies,
+            photoArrayTrue,
+            meanBackBubble,
+            meanBackEvent,
+            loud=False,
+            pnuisance=[1, 1],
+            mode=1,
+    ):
+        chi = np.zeros(pn)
+        difTotal = np.zeros(pn)
+        difCount = np.zeros(pn)
+        totalModel = np.zeros(pn)
+        totalTrue = np.zeros(pn)
+        countModel = np.zeros(pn)
+        countTrue = np.zeros(pn)
+        for p in range(pn):
+            trueCount = 0
+            trueMean = 0
+            trueTot = 0
+            for i in range(20):
+                if i >= 1:
+                    trueCount += photoArrayTrue[p, i]
+                    trueTot += photoArrayTrue[p, i] * (i)
+            # trueMean=np.mean(photoArrayTrue[p,:])
+            # print ("photoEval2")
+            # print("photoneutrondata",photoneutrondata)
+            # print ("photoneutrondata[p]", photoneutrondata[p])
+            total, count = self.phototest3(
+                photoneutrondata[p],
+                energies,
+                efficiencies,
+                sourceStrength=(self.logErr(pnuisance[p]) * self.logErr(mode)))
+            # modelCount=count-czero
+            total += meanBackBubble
+            count += meanBackEvent
+            totalTrue[p] = trueTot
+            countTrue[p] = trueCount
+            totalModel[p] = total
+            countModel[p] = count
+            meanModel = total / count
+            meanTrue = trueTot / trueCount
+            difTotal[p] = meanModel - meanTrue
+            difCount[p] = count - trueCount
+            chiTotal = ((meanModel - meanTrue) ** 2 / meanTrue) * 100 * trueCount
+            chiCount = ((count - trueCount) ** 2 / trueCount) * 100
+            chi[p] = chiTotal + chiCount
+            if loud:
+                print("True Mults: ", photoArrayTrue[p, :])
+                print("Mean Model: ", meanModel)
+                print("Mean True: ", meanTrue)
+                print("True Count: ", trueCount)
+                print("Model Count: ", count)
+                print(">0 True Count: ", sum(photoArrayTrue[p, 1:]))
+                print("True Sum: ", trueTot)
+                print("Model Sum: ", total)
+                # print("True Zeros: ", photoArrayTrue[p, 0])
+                # print("Model Zeros: ", czero)
+                print("Total/Mean True: ", trueTot / trueCount)
+                print("Total/Mean Model: ", total / count)
+                # print("True Mean: ", trueMean)
+                # print("Model Mean: ", mean)
+                print("Chi total: ", chiTotal)
+                print("Chi count: ", chiCount)
+                print(chi[p])
+        return chi, difTotal, difCount, totalTrue, totalModel, countTrue, countModel
     def photoJitter(self,photoSourceTrue, photoBackMean, sourceError, time=100):
         # poisson uncertainty in background + events
         # source strength uncertainty
@@ -1009,9 +1170,11 @@ class multi_MC():
         T = self.threshold
         sigLow = self.sig_low
         sigUp = self.sig_high
-        binsize = .5
+        modeErrT = 0.1
+        modeErrPN = 0
+        binsize = 1
         sourceErr = .05 # change to 0.12 ~ 0.02
-        background = 100
+        background = 52
         backErr = np.round(background ** (1 / 2))
         # energies=[75,100,115,120,140]
         # efficiencies=[0,.2,.50,.8,1]
@@ -1038,6 +1201,10 @@ class multi_MC():
         print("!!!!!")
         pnlivetime = 20
         print("Photo-neutron livetime: ", pnlivetime)
+        meanBackBubble = 0
+        meanBackEvent = np.sum(photoBackMean)
+        for i in range(len(photoBackMean)):
+            meanBackBubble += photoBackMean[i] * i
 
         pn_sourceError = np.empty(pn)
 
@@ -1047,6 +1214,11 @@ class multi_MC():
         # photoArrayC=np.zeros([2,20])
         # photoArrayB=np.zeros([2,20])
         photoneutrondata = []
+        photoneutrondata = []
+        pnCommonMode = 0
+        # while pnCommonMode<0.1:
+        pnCommonMode = np.squeeze(np.random.normal(0, modeErrPN, 1))
+        # pnCommonMode = np.random.normal(0, modeErrPN, 1)
         for p in range(pn):
             print(p, pn)
             print(photoBackMean)
@@ -1094,23 +1266,22 @@ class multi_MC():
         # plt.show()
         # plt.savefig("photomult_bi207.png")
         # plt.clf()
+        tCommonMode = np.squeeze(np.random.normal(0, modeErrT, 1))
+
         for i in range(n):
             print(i, self.flist[i])
             Recoils, Weights, Rate, Count, t, time = self.analyze(self.flist[i], T, sigLow, sigUp, Activity=self.alist[i])
             Recoils, Weights = self.specrafy(Recoils, Weights, binsize=binsize)
             Rate2 = self.rateFinderTrue(Recoils, T, sigLow, sigUp, t, Weights)
             print("Recoils: ", Rate, Rate2, Rate - Rate2)
-            Rate = Rate2
+            Rate = Rate = np.squeeze(Rate2)
             Count = Rate * time
             TrueArray[0, i] = Rate
             TrueArray[1, i] = Count
             TrueArray[2, i] = t
             # if i in UsePhotoError:
-            if False:
-                rate, count, background, nuisanceT[i] = self.rateJitter(Rate, Count, time=time, sourceErr=sourceErr,
-                                                                   background=background, s_err=pn_sourceError[i])
-            else:
-                rate, count, background, nuisanceT[i] = self.rateJitter(Rate, Count, time=time, sourceErr=sourceErr,
+
+            rate, count, background, nuisanceT[i] = self.rateJitter(Rate, Count, time=time, sourceErr=sourceErr,
                                                                    background=background)
             print(nuisanceT[i])
             # rate=Rate
@@ -1132,15 +1303,31 @@ class multi_MC():
         np.savetxt(self.save_path + "start.txt", InArray)
         print("THIS HERE")
         print("p", len(pnweightList), len(pnrecoilList), len(pnweightList))
-        NitersRough = 25000
-        Niters = 100000
+        NitersRough = 20000
+        Niters = 4000000
         Nwalkers = 4
-        printstep = 5000
+        printstep = 100000
         energies0 = [0, 0, 0, 0]  # definition
         nuisance0 = np.zeros(n + pn)
         # pnuisance0=np.zeros(pn)
+        mode0 = [0, 0]
 
-        efficiencies0 = [0, .3, .7, 1]
+        sample_n = 10000
+
+        samplestep = (Niters + 1) // (sample_n)
+        if samplestep == 0:
+            sample_n = Niters
+            samplestep = 1
+
+        plater = np.zeros(len(energies0) + len(nuisance0) + len(mode0) + 1)
+        costco = np.zeros([sample_n, len(plater)])
+
+        # pnuisance0=np.zeros(pn)
+        bestChiList = []
+
+        efficiencies0 = [0, 0.2, 0.5, 0.8, 1]
+
+
         paracount = len(efficiencies0)
         energies0 = np.zeros(paracount)
         buffer = 5
@@ -1153,20 +1340,31 @@ class multi_MC():
         print("Random Threshold Step: ", bound)
         energies0 = np.zeros(paracount)
         step = 1
-        n_step = .005
+        n_step = .003
+        m_step = 0.001
         RoughFact = 2
         roughChiPenalty = 0
-        X = 3
+        X = 20
+        step_shift = 1
 
         # Chi0/T0/sigma0 is the initial guess
         # Chic/Tc/sigmac is the current basis, the iteration that the model will default back on if it does not select the new guess
         # Chii/Ti/sigmai is the most recent iteration
         # Chib/Tb/sigmab is the best fit so far, being stored to compare to future models
         OutArray = np.zeros([len(energies0) + 4, Nwalkers])
+        chimode = np.zeros(2)
+        # chi = np.zeros(n)
+        # chiNuis = np.zeros(n)
+        # chiNuisPN = np.zeros(pn)
+        # chipn = np.zeros(pn)
+
         chi = np.zeros(n)
-        chiNuis = np.zeros(n)
-        chiNuisPN = np.zeros(pn)
+        chiNuis = np.zeros(n + pn)
         chipn = np.zeros(pn)
+        fullnuisance = np.zeros([n + pn + len(mode0), Nwalkers])
+        DTotalB = np.zeros([n + pn, Nwalkers])
+        DCountB = np.zeros([n + pn, Nwalkers])
+
         for nw in range(Nwalkers):
             energies0 = np.zeros(paracount)
             for j in range(paracount):
@@ -1174,22 +1372,69 @@ class multi_MC():
                     energies0[j] = guessfloor + 3 * bound * np.random.rand()
                 else:
                     energies0[j] = energies0[j - 1] + bound * np.random.rand() + buffer
-            # energies0=[180,210,270,300] #fixed intial guess
+            # energies0 = [6.252983462309628493e+01,7.599864648098314035e+01,7.619371624296209689e+01,8.055708179978147143e+01,1.272788497247918968e+02]
+            # energies0 = [60,72,80,88,100]  # fixed initial guess
+            # energies0 = [120,144,160,176,200]  # fixed initial guess
+            # energies0 = [240,288,320,352,400]
+            # energies0=[61.07507532,69.51169466,81.90851564,95.18992111,1037.24945314]
+            # energies0=[70.03499573, 74.51155923, 75.96067757, 82.42290521, 1425.13382012]
+            # energies0=[57.10434916, 77.46442932, 80.46113462, 82.23119383, 1639.12546188]
             print("Initial Guess: ", energies0)
-            np.savetxt(self.save_path + "guess_" + str(nw + 1) + ".txt", energies0)
+            np.savetxt(self.fileprefix + "guess_" + str(nw + 1) + ".txt", energies0)
+            totalTrue = np.zeros(n + pn)
+            countTrue = np.zeros(n + pn)
+
+            dtotalb = np.zeros(n + pn)
+            dcountb = np.zeros(n + pn)
+            dtotalc = np.zeros(n + pn)
+            dcountc = np.zeros(n + pn)
+            dtotali = np.zeros(n + pn)
+            dcounti = np.zeros(n + pn)
+
+            totalModeli = np.zeros(n + pn)
+            countModeli = np.zeros(n + pn)
+            totalModelc = np.zeros(n + pn)
+            countModelc = np.zeros(n + pn)
+            totalModelb = np.zeros(n + pn)
+            countModelb = np.zeros(n + pn)
             for i in range(n):
-                # n is for self.flist index
-                chi[i] = self.test(RecoilList[i], InArray[0, i], energies0, efficiencies0, nuisance0[i], InArray[2, i],
-                              WeightList[i], background=background, time=time)
-            # chipn = self.photoEval2(pn, photoneutrondata, pnlivetime, energies0, efficiencies0, photoArrayTrue,
-            #                    photoBackMean, loud=True, pnuisance=nuisance0[i + 1:])
+                chi[i], dtotali[i], totalModeli[i], totalTrue[i] = self.test(
+                    RecoilList[i],
+                    InArray[0, i],
+                    energies0,
+                    efficiencies0,
+                    nuisance0[i],
+                    InArray[2, i],
+                    WeightList[i],
+                    background=background,
+                    time=time,
+                    mode=mode0[0],
+                )
+                # chi,dif,rateT,rate
+                dcounti[i], countModeli[i], countTrue[i] = dtotali[i], totalModeli[i], totalTrue[i]
+            chipn, dtotali[n:], dcounti[n:], totalTrue[n:], totalModeli[n:], countTrue[n:], countModeli[
+                                                                                            n:] = self.photoEval3(
+                pn,
+                photoneutrondata,
+                pnlivetime,
+                energies0,
+                efficiencies0,
+                photoArrayTrue,
+                meanBackBubble,
+                meanBackEvent,
+                loud=True,
+                pnuisance=nuisance0[i + 1:],
+                mode=mode0[1],
+            )
+            # chi,difTotal,difCount,totalTrue,totalModel,countTrue,countModel
+            # chi,difTotal,difCount,total,trueTot,count,trueCount
             """
             for p in range(pn):
                 #test(recoil,rate,energies,efficiencies,r_nuis,t,weight,background=500,time=100)
                 #print (len(pnrecoilList[i]),len(RecoilList[i]))
                 #chipn[p]=test(pnrecoilList[p],pnrateList[p],energies0,efficiencies0,pnuisance0[p],1,pnweightList[p],background=background,time=time)
-                photoArray[p,:]=self.phototest(self.pnlist[p]+"_ultrafast.txt",10,energies0,efficiencies0)
-                #photoArray[p,:]=self.phototest(self.pnlist[p]+"_ultrafast.txt",500,energiesi,efficiencies0)
+                photoArray[p,:]=phototest(pnlist[p]+"_ultrafast.txt",10,energies0,efficiencies0)
+                #photoArray[p,:]=phototest(pnlist[p]+"_ultrafast.txt",500,energiesi,efficiencies0)
                 for mb in range(len(photoArray)):
                     if photoArrayTrue[p,mb]>0:
                         chipn[p]+=((photoArray[p,mb]-photoArrayTrue[p,mb])**2/photoArrayTrue[p,mb])
@@ -1200,6 +1445,8 @@ class multi_MC():
             print("Chi Thomson: ", chi)
             print("Chi Photo-Neutron: ", np.sum(chipn))
             print("Chi photo: ", chipn)
+            for i in range(n + pn):
+                chiNuis[i] = ((nuisance0[i]) / sourceErr) ** 2
             Chi0 = 0
             if Thomson == True:
                 Chi0 += sum(chi)
@@ -1213,15 +1460,29 @@ class multi_MC():
             Chib = Chi0
             Chic = Chi0
             MM = len(energies0)
+            modei = np.empty(len(mode0))
+            modec = np.empty(len(mode0))
+            modeb = np.empty(len(mode0))
+            modei = mode0[:]
+            modec = mode0[:]
+            modeb = mode0[:]
             energiesi = np.empty(MM)
             energiesb = np.empty(MM)
             energiesc = np.empty(MM)
             nuisancei = np.zeros(n + pn)
             nuisanceb = np.zeros(n + pn)
             nuisancec = np.zeros(n + pn)
+            nuisancei[:] = nuisance0[:]
+            nuisancec[:] = nuisance0[:]
+            nuisanceb[:] = nuisance0[:]
             # pnuisancei=np.zeros(pn)
             # pnuisanceb=np.zeros(pn)
             # pnuisancec=np.zeros(pn)
+            bestChiThom = np.empty(len(chi))
+            bestChiPhot = np.empty(len(chipn))
+            bestChiNuis = np.empty(len(chiNuis))
+            bestChiMode = np.empty(len(chimode))
+
             for i in range(MM):
                 value = energies0[i]
                 energiesi[i] = value
@@ -1232,7 +1493,11 @@ class multi_MC():
             # print (energiesc)
             # print (Chi0,energies0)
             end = T + X * sigUp
-            grade, fifty, RT, RG, TOT = self.fittest(T, sigLow, sigUp, energiesb, efficiencies0, start=0, end=end)
+            if end < 500:
+                end = 500
+            grade, fifty, RT, RG, TOT = self.fittest(
+                T, sigLow, sigUp, energiesb, efficiencies0, start=0, end=end
+            )
             print("")
             print("")
             print("Guess Score: ", grade)
@@ -1249,44 +1514,104 @@ class multi_MC():
                 # print ("*****")
                 # print ("Current Parameters: ", energiesc)
                 # print ("*****")
-                # energiesi[:],nuisancei[:]=self.stepper(energiesc,nuisancec,step*RoughFact,n_step)
-                energiesi[:], nuisancei[:] = self.stepper(energiesc, nuisancec, step * RoughFact, n_step, max=2000)
+                # energiesi[:],nuisancei[:]=stepper(energiesc,nuisancec,step*RoughFact,n_step)
+                # step_shift=Chic/baseChi
+                # if step_shift>max_shift2:
+                # step_shift=max_shift
+                # elif step_shift<min_shift2:
+                # step_shift=min_shift
+                # else:
+                # step_shift=(step_shift)**(1/2)
+                # stepi = step
+                # energiesi[:],nuisancei[:]=stepper(energiesc,nuisancec,stepi,n_step)
+                energiesi[:], nuisancei[:], modei[:] = self.stepper(
+                    energiesc, nuisancec, modec, step * step_shift * RoughFact, n_step * step_shift,
+                                                 m_step * step_shift, max=2000
+                )
+                if Nuisance == False:
+                    nuisancei[:] = nuisance0[:]  # turn nuisance parameters off for the whole fit
+                    modei[:] = mode0[:]  # whole fit ignores common mode uncertainty
                 nuisancei[:] = nuisance0[:]  # rough fit ignores nuisance parameters
+                # modei[:] = mode0[:] # rough fit ignores common mode uncertainty
                 # pnuisancei[:]=pnuisance0[:]
                 for i in range(n):
-                    chi[i] = self.test(RecoilList[i], InArray[0, i], energiesi, efficiencies0, nuisancei[i],
-                                  InArray[2, i], WeightList[i], background=background, time=time)
+                    chi[i], dtotali[i], totalModeli[i], totalTrue[i] = self.test(
+                        RecoilList[i],
+                        InArray[0, i],
+                        energiesi,
+                        efficiencies0,
+                        nuisancei[i],
+                        InArray[2, i],
+                        WeightList[i],
+                        background=background,
+                        time=time,
+                        mode=modei[0],
+                    )
+                    dcounti[i], countModeli[i], countTrue[i] = dtotali[i], totalModeli[i], totalTrue[i]
+                    # dcountb[i],countModelb[i],dtotalb[i],totalModelb[i]=dcounti[i],countModeli[i],dtotali[i],totalModeli[i]
+                    # dcountc[i],countModelc[i],dtotalc[i],totalModelb[i]=dcounti[i],countModeli[i],dtotali[i],totalModeli[i]
+                    # chi,dif,rateT,rate
                     if chi[i] < 0:
                         print("chi i Negative!: ", i)
-                    chiNuis[i] = (nuisancei[i] / sourceErr) ** 2
-                    if chiNuis[i] < 0:
-                        print("chi nuisance Negative!: ", i)
-                        x = red
+                for i in range(n + pn):
+                    chiNuis[i] = ((nuisancei[i]) / sourceErr) ** 2
                 if ni % printstep == 0:
                     pnverb = True
                 else:
                     pnverb = False
-                # chipn = self.photoEval2(pn, photoneutrondata, pnlivetime, energiesi, efficiencies0, photoArrayTrue,
-                #                    photoBackMean, loud=pnverb, pnuisance=nuisancei[i + 1:])
+                chipn, dtotali[n:], dcounti[n:], totalTrue[n:], totalModeli[n:], countTrue[n:], countModeli[
+                                                                                                n:] = self.photoEval3(
+                    pn,
+                    photoneutrondata,
+                    pnlivetime,
+                    energiesi,
+                    efficiencies0,
+                    photoArrayTrue,
+                    meanBackBubble,
+                    meanBackEvent,
+                    loud=pnverb,
+                    pnuisance=nuisancei[n:],
+                    mode=modei[1],
+                )
+                # chipn,dtotali[n:],dcounti[n:],totalTrue[n:],totalModeli[n:],countTrue[n:],countModeli[n:]
+                dcountb[:], countModelb[:], dtotalb[:], totalModelb[:] = dcounti[:], countModeli[:], dtotali[
+                                                                                                     :], totalModeli[:]
+                dcountc[:], countModelc[:], dtotalc[:], totalModelb[:] = dcounti[:], countModeli[:], dtotali[
+                                                                                                     :], totalModeli[:]
+                chimode[0] = ((modei[0]) / modeErrT) ** 2
+                chimode[1] = ((modei[1]) / modeErrPN) ** 2
                 """
                 for p in range(pn):
                     #test(recoil,rate,energies,efficiencies,r_nuis,t,weight,background=500,time=100)
                     #chipn[p]=test(pnrecoilList[p],pnrateList[p],energiesi,efficiencies0,pnuisancei[p],1,pnweightList[p],background=background,time=time)
-                    photoArray[p,:]=self.phototest(self.pnlist[p]+"_ultrafast.txt",10,energiesi,efficiencies0)
+                    photoArray[p,:]=phototest(pnlist[p]+"_ultrafast.txt",10,energiesi,efficiencies0)
                     for mb in range(len(photoArray)):
                         if photoArrayTrue[p,mb]>0:
                             chipn[p]+=((photoArray[p,mb]-photoArrayTrue[p,mb])**2/photoArrayTrue[p,mb])
                 """
                 Chii = 0
-                if Thomson == True:
+                if Thomson:
                     Chii += sum(chi)
-                if Photoneutron == True:
+                if Photoneutron:
                     Chii += sum(chipn)
-                if Nuisance == True:
-                    Chii += sum(chiNuis)
+                if Nuisance:
+                    if Thomson and Photoneutron:
+                        Chii += sum(chiNuis)
+                        Chii += sum(chimode)
+                    elif Thomson:
+                        Chii += sum(chiNuis[:n])
+                        Chii += chimode[0]
+                    elif Photoneutron:
+                        Chii += sum(chiNuis[n:])
+                        Chii += chimode[1]
+                    else:
+                        print("EMPTY RUN EMPTY RUN")
+                        print("no calibration methods")
+                        x = redapple
                 # Chii=sum(chi)+sum(chipn)+sum(chiNuis) #both
                 # Chii=sum(chi)+roughChiPenalty #thomson only
                 # Chii=sum(chipn)+sum(chiNuis) #photoneutron only
+                # print (Chii)
                 if Chii < 0:
                     print("Negative!")
                     Chii = 10 ** 6
@@ -1294,6 +1619,7 @@ class multi_MC():
                     print("Zero!")
                     Chii == 10 ** (-1)
                 bar = Chii / (Chic + Chii)
+                # bar = Chic/Chii
                 judge = np.random.uniform(0, 1)
                 if ni % printstep == 0:
                     print("*****")
@@ -1303,11 +1629,10 @@ class multi_MC():
                     print("Chi photo-n: ", sum(chipn))
                     print("Chi photo: ", chipn)
                     print("Chi nuisance: ", sum(chiNuis))
+                    print("Chi mode: ", sum(chimode))
                     print("Chi Iteration: ", Chii)
                     print("Current Chi: ", Chic)
                     print("Best Chi: ", Chib)
-                    # print (photoArrayTrue)
-                    # print (photoArray)
                     print("*****")
                     print("Iteration Parameters: ", energiesi)
                     print("Current Parameters: ", energiesc)
@@ -1317,29 +1642,58 @@ class multi_MC():
                     print("Current Nuisance: ", nuisancec)
                     print("Best Nuisance: ", nuisanceb)
                     print("Bar/Judge: ", bar, "/", judge)
+                    print("Iteration Mode Nuiance: ", modei)
+                    print("Current Mode Nuiance: ", modec)
+                    print("Best Mode Nuisance: ", modeb)
+                    print("Mode Thomson Error (real/model): ", tCommonMode, " / ", modeb[0])
+                    print("Mode Photoneutron Error (real/model): ", pnCommonMode, " / ", modeb[1])
+                    bestChiList += [Chib]
                     print("*****")
                     print("*****")
                 if Chii < Chib:
                     Chib = Chii
+                    Chic = Chii
                     energiesb[:] = energiesi[:]
                     energiesc[:] = energiesi[:]
                     nuisanceb[:] = nuisancei[:]
                     nuisancec[:] = nuisancei[:]
-                    # pnuisanceb[:]=pnuisancei[:]
-                    # pnuisancec[:]=pnuisancei[:]
+                    modeb[:] = modei[:]
+                    modec[:] = modei[:]
+                    dtotalc[:] = dtotali[:]
+                    dcountc[:] = dcounti[:]
+                    totalModelc[:] = totalModeli[:]
+                    countModelc[:] = countModeli[:]
+                    dtotalb[:] = dtotali[:]
+                    dcountb[:] = dcounti[:]
+                    totalModelb[:] = totalModeli[:]
+                    countModelb[:] = countModeli[:]
+                    bestChiThom[:] = chi[:]
+                    bestChiPhot[:] = chipn[:]
+                    bestChiNuis[:] = chiNuis[:]
+                    bestChiMode[:] = chimode[:]
                 elif Chii < Chic:
                     Chic = Chii
                     energiesc[:] = energiesi[:]
                     nuisancec[:] = nuisancei[:]
-                    # pnuisancec[:]=pnuisancei[:]
+                    modec[:] = modei[:]
+                    dtotalc[:] = dtotali[:]
+                    dcountc[:] = dcounti[:]
+                    totalModelc[:] = totalModeli[:]
+                    countModelc[:] = countModeli[:]
                 elif judge > bar:
                     Chic = Chii
                     energiesc[:] = energiesi[:]
                     nuisancec[:] = nuisancei[:]
-                    # pnuisancec[:]=pnuisancei[:]
+                    modec[:] = modei[:]
+                    dtotalc[:] = dtotali[:]
+                    dcountc[:] = dcounti[:]
+                    totalModelc[:] = totalModeli[:]
+                    countModelc[:] = countModeli[:]
                 else:
                     continue
-            grade, fifty, RT, RG, TOT = self.fittest(T, sigLow, sigUp, energiesb, efficiencies0, start=0, end=end)
+            grade, fifty, RT, RG, TOT = self.fittest(
+                T, sigLow, sigUp, energiesb, efficiencies0, start=0, end=end
+            )
             print("")
             print("")
             print("Rough Score: ", grade)
@@ -1349,24 +1703,53 @@ class multi_MC():
             print("50% Efficiency Point: ", fifty, T)
             print("Model Effective Threshold: ", RG)
             print("True Effective Threshold: ", RT)
+            print("Mode Photoneutron Error: ", pnCommonMode)
+            print("Mode Thomson Error (real/model): ", tCommonMode, " / ", modeb[0])
+            print("Mode Photoneutron Error (real/model): ", pnCommonMode, " / ", modeb[1])
             print("")
             print("")
             Chic = Chib
             energiesc[:] = energiesb[:]
             nuisancec[:] = nuisanceb[:]
+            sample_i = 0
             for ni in range(Niters):
                 # stepi=step*(Niters-ni)/Niters
-                stepi = step
-                # energiesi[:],nuisancei[:]=self.stepper(energiesc,nuisancec,stepi,n_step)
-                energiesi[:], nuisancei[:] = self.stepper(energiesc, nuisancec, step * RoughFact, n_step, max=2000)
+                # step_shift=Chic/baseChi
+                # if step_shift>max_shift2:
+                # step_shift=max_shift
+                # elif step_shift<min_shift2:
+                # step_shift=min_shift
+                # else:
+                # step_shift=(step_shift)**(1/2)
+                # stepi = step
+                # energiesi[:],nuisancei[:]=stepper(energiesc,nuisancec,stepi,n_step)
+                energiesi[:], nuisancei[:], modei[:] = self.stepper(
+                    energiesc, nuisancec, modec, step * step_shift, n_step * step_shift, m_step * step_shift, max=2000
+                )
+                # modei[:] = mode0[:] # whole fit ignores common mode uncertainty
                 if Nuisance == False:
                     nuisancei[:] = nuisance0[:]  # turn nuisance parameters off for the whole fit
+                    modei[:] = mode0[:]  # whole fit ignores common mode uncertainty
                 for i in range(n):
-                    chi[i] = self.test(RecoilList[i], InArray[0, i], energiesi, efficiencies0, nuisancei[i],
-                                  InArray[2, i], WeightList[i], background=background, time=time)
+                    chi[i], dtotali[i], totalModeli[i], totalTrue[i] = self.test(
+                        RecoilList[i],
+                        InArray[0, i],
+                        energiesi,
+                        efficiencies0,
+                        nuisancei[i],
+                        InArray[2, i],
+                        WeightList[i],
+                        background=background,
+                        time=time,
+                        mode=modei[0],
+                    )
+                    dcounti[i], countModeli[i], countTrue[i] = dtotali[i], totalModeli[i], totalTrue[i]
                     if chi[i] < 0:
                         print("chi i Negative!: ", i)
-                    chiNuis[i] = (nuisancei[i] / sourceErr) ** 2
+                    # print (nuisancei[i],sourceErr)
+                for i in range(n + pn):
+                    chiNuis[i] = ((nuisancei[i]) / sourceErr) ** 2
+                    # print (chiNuis[i])
                     if chiNuis[i] < 0:
                         print("chi nuisance Negative!: ", i)
                         x = red
@@ -1374,16 +1757,29 @@ class multi_MC():
                     pnverb = True
                 else:
                     pnverb = False
-                # chipn = self.photoEval2(pn, photoneutrondata, pnlivetime, energiesi, efficiencies0, photoArrayTrue,
-                #                    photoBackMean, loud=pnverb, pnuisance=nuisancei[i + 1:])
+                chipn, dtotali[n:], dcounti[n:], totalTrue[n:], totalModeli[n:], countTrue[n:], countModeli[
+                                                                                                n:] = self.photoEval3(
+                    pn,
+                    photoneutrondata,
+                    pnlivetime,
+                    energiesi,
+                    efficiencies0,
+                    photoArrayTrue,
+                    meanBackBubble,
+                    meanBackEvent,
+                    loud=pnverb,
+                    pnuisance=nuisancei[n:],
+                    mode=modei[1],
+                )
+                chimode[0] = ((modei[0]) / modeErrT) ** 2
+                chimode[1] = ((modei[1]) / modeErrPN) ** 2
                 # for p in range(pn):
-                # chiNuisPN[p]=(pnuisancei[p]/sourceErr)**2
                 """
                 for p in range(pn):
-                    #self.test(recoil,rate,energies,efficiencies,r_nuis,t,weight,background=500,time=100)
-                    #chipn[p]=self.testLoud(pnrecoilList[p],pnrateList[p],energiesi,efficiencies0,pnuisance0[p],1,pnweightList[p],background=background,time=time)
-                    #chipn[p]=self.test(pnrecoilList[p],pnrateList[p],energiesi,efficiencies0,pnuisancei[p],1,pnweightList[p],background=background,time=time)
-                    photoArray[p,:]=self.phototest(self.pnlist[p]+"_ultrafast.txt",10,energiesi,efficiencies0)
+                    #test(recoil,rate,energies,efficiencies,r_nuis,t,weight,background=500,time=100)
+                    #chipn[p]=testLoud(pnrecoilList[p],pnrateList[p],energiesi,efficiencies0,pnuisance0[p],1,pnweightList[p],background=background,time=time)
+                    #chipn[p]=test(pnrecoilList[p],pnrateList[p],energiesi,efficiencies0,pnuisancei[p],1,pnweightList[p],background=background,time=time)
+                    photoArray[p,:]=phototest(pnlist[p]+"_ultrafast.txt",10,energiesi,efficiencies0)
                     #for mb in range(len(photoArray)):
                         #if photoArrayTrue[p,mb]>0:
                             #chipn[p]+=((photoArray[p,mb]-photoArrayTrue[p,mb])**2/photoArrayTrue[p,mb])
@@ -1392,16 +1788,29 @@ class multi_MC():
                             chipn[p]+=((photoArray[p,mb]-photoArrayTrue[p,mb])**2/photoArrayTrue[p,mb])
                 """
                 Chii = 0
-                if Thomson == True:
+                if Thomson:
                     Chii += sum(chi)
-                if Photoneutron == True:
+                if Photoneutron:
                     Chii += sum(chipn)
-                if Nuisance == True:
-                    Chii += sum(chiNuis)
+                if Nuisance:
+                    if Thomson and Photoneutron:
+                        Chii += sum(chiNuis)
+                        Chii += sum(chimode)
+                    elif Thomson:
+                        Chii += sum(chiNuis[:n])
+                        Chii += chimode[0]
+                    elif Photoneutron:
+                        Chii += sum(chiNuis[n:])
+                        Chii += chimode[1]
+                    else:
+                        print("EMPTY RUN EMPTY RUN")
+                        print("no calibration methods")
+                        x = redapple
                 # Chii=sum(chi)+sum(chiNuis)+sum(chipn) #both
                 # Chii=sum(chi)+sum(chiNuis) #no nuisance both
                 # Chii=sum(chi)+sum(chiNuis) #thomson only
                 # Chii=sum(chiNuis)+sum(chipn) #photoneutron only
+                # print (Chii)
                 if Chii < 0:
                     Chii = 10 ** 6
                     print("Negative!")
@@ -1410,6 +1819,15 @@ class multi_MC():
                     Chii = 10 ** (-3)
                 bar = Chii / (Chic + Chii)
                 judge = np.random.uniform(0, 1)
+                if ni % samplestep == 0:
+                    sample_i += 1
+                    plater[0] = Chii
+                    plater[1:MM + 1] = energiesi
+                    plater[MM + 1:MM + n + pn + 1] = nuisancei
+                    plater[MM + n + pn + 1:] = modei
+                    # sample_i=int(ni/samplestep)
+                    if sample_i < sample_n:
+                        costco[sample_i, :] = plater
                 if ni % printstep == 0:
                     print("*****")
                     print("*****")
@@ -1418,6 +1836,7 @@ class multi_MC():
                     print("Chi photo-n: ", sum(chipn))
                     print("Chi photo: ", chipn)
                     print("Chi nuisance: ", sum(chiNuis))
+                    print("Chi mode: ", sum(chimode))
                     print("Chi Iteration: ", Chii)
                     print("Current Chi: ", Chic)
                     print("Best Chi: ", Chib)
@@ -1432,6 +1851,12 @@ class multi_MC():
                     print("Current Nuisance: ", nuisancec)
                     print("Best Nuisance: ", nuisanceb)
                     print("Bar/Judge: ", bar, "/", judge)
+                    print("Iteration Mode Nuiance: ", modei)
+                    print("Current Mode Nuiance: ", modec)
+                    print("Best Mode Nuisance: ", modeb)
+                    print("Mode Thomson Error (real/model): ", tCommonMode, " / ", modeb[0])
+                    print("Mode Photoneutron Error (real/model): ", pnCommonMode, " / ", modeb[1])
+                    bestChiList += [Chib]
                     print("*****")
                     print("*****")
                 if Chii < Chib:
@@ -1440,17 +1865,48 @@ class multi_MC():
                     energiesc[:] = energiesi[:]
                     nuisanceb[:] = nuisancei[:]
                     nuisancec[:] = nuisancei[:]
+                    modeb[:] = modei[:]
+                    modec[:] = modei[:]
+
+                    dtotalc[:] = dtotali[:]
+                    dcountc[:] = dcounti[:]
+                    totalModelc[:] = totalModeli[:]
+                    countModelc[:] = countModeli[:]
+                    dtotalb[:] = dtotali[:]
+                    dcountb[:] = dcounti[:]
+                    totalModelb[:] = totalModeli[:]
+                    countModelb[:] = countModeli[:]
+                    bestChiThom[:] = chi[:]
+                    bestChiPhot[:] = chipn[:]
+                    bestChiNuis[:] = chiNuis[:]
+                    bestChiMode[:] = chimode[:]
                 elif Chii < Chic:
                     Chic = Chii
                     energiesc[:] = energiesi[:]
                     nuisancec[:] = nuisancei[:]
+                    modec[:] = modei[:]
+                    dtotalc[:] = dtotali[:]
+                    dcountc[:] = dcounti[:]
+                    totalModelc[:] = totalModeli[:]
+                    countModelc[:] = countModeli[:]
+                    # dtotalb[:] = dtotali[:]
+                    # dcountb[:] = dcounti[:]
+                    # totalModelb[:] = totalModeli[:]
+                    # countModelb[:] = countModeli[:]
                 elif judge > bar:
                     Chic = Chii
                     energiesc[:] = energiesi[:]
                     nuisancec[:] = nuisancei[:]
+                    modec[:] = modei[:]
+                    dtotalc[:] = dtotali[:]
+                    dcountc[:] = dcounti[:]
+                    totalModelc[:] = totalModeli[:]
+                    countModelc[:] = countModeli[:]
                 else:
                     continue
-            grade, fifty, RT, RG, TOT = self.fittest(T, sigLow, sigUp, energiesb, efficiencies0, start=0, end=end)
+            grade, fifty, RT, RG, TOT = self.fittest(
+                T, sigLow, sigUp, energiesb, efficiencies0, start=0, end=end
+            )
             teff = end - RT
             teffG = end - RG
             print("Real Effective Threshold:  ", teff)
@@ -1468,10 +1924,15 @@ class multi_MC():
             print("Final Chii :", Chib)
             print("50% Efficiency Point: ", fifty, T)
             print("Final Parameters: ", energiesb)
+            print("Mode Thomson Error (real/model): ", tCommonMode, " / ", modeb[0])
+            print("Mode Photoneutron Error (real/model): ", pnCommonMode, " / ", modeb[1])
             print(nuisanceT)
             print(nuisanceb)
+            print("Mode  Error: ", pnCommonMode)
+            print("Mode Thomson Error: ", tCommonMode)
+            print("Mode Nuisance: ", modeb)
             for i in range(n):
-                print(i, self.flist[i])
+                print(i, flist[i])
                 print("Source Strength Uncertainty")
                 print("True: ", (nuisanceT[i] - 1) * 100, "%")
                 print("Model: ", nuisanceb[i] * 100, "%")
@@ -1480,20 +1941,36 @@ class multi_MC():
             print("")
             print("")
             # postfitplot(Tb,sigmab,zero,twenty,fifty,eighty,onehundred,start=zero-10,end=onehundred+10)
-            np.savetxt(self.save_path + runNstr+"fit.txt", OutArray)
-            np.savetxt(self.save_path + runNstr + "node.txt", energiesb)
+
+            fullnuisance[:n + pn, nw] = nuisanceb[:]
+            fullnuisance[n + pn, nw] = modeb[0]
+            fullnuisance[n + pn + 1, nw] = modeb[1]
+
+            for ex in range(len(dcountb)):
+                print("Source #", ex + 1)
+                print("Total - Model - True - Excess: ", countModelb[ex], countTrue[ex], dcountb[ex])
+                print("Total - Model - True - Excess: ", totalModelb[ex], totalTrue[ex], dtotalb[ex])
+                print("#####################################################################")
+
+            DTotalB[:, nw] = dtotalb[:]
+            DCountB[:, nw] = dcountb[:]
+            np.savetxt(self.fileprefix + "fullnuisance.txt", fullnuisance)
+
+            np.savetxt(self.fileprefix + "count_difference.txt", DCountB)
+            np.savetxt(self.fileprefix + "total_difference.txt", DTotalB)
+
+            np.savetxt(self.fileprefix + "photoArrayTrue.txt", photoArrayTrue)
+            np.savetxt(self.fileprefix + "InArray.txt", InArray)
+            np.savetxt(self.fileprefix + "fit.txt", OutArray)
+            np.savetxt(self.fileprefix + "convergence.txt", bestChiList)
+
+            np.savetxt(self.fileprefix + "samples_" + str(nw) + ".txt", costco)
+
+            print("Best Chi Thomson: ", sum(bestChiThom), bestChiThom)
+            print("Best Chi PN: ", sum(bestChiPhot), bestChiPhot)
+            print("Best Chi Nuisance: ", sum(bestChiNuis), bestChiNuis)
+            print("Best Chi Mode: ", sum(bestChiMode), bestChiMode)
         print(OutArray)
-
-    # self.flist = ["NewRuns/Eu152JAEA.txt","NewRuns/Bi207JAEA.txt","NewRuns/Y88JAEA.txt","NewRuns/Th228JAEA.txt"]
-    # self.flist = ["Eu152/JAEA.txt", "Bi207/JAEA.txt", "Sb124/JAEA.txt", "Th228/JAEA.txt", "Y88/JAEA.txt"]
-    # self.flist = ["Sb124/JAEA.txt","Y88/JAEA.txt","Th228/JAEA.txt"]
-    # "Eu152/JAEA.txt", "Bi207/JAEA.txt", "Sb124/JAEA.txt", "Th228/JAEA.txt", "Y88/JAEA.txt"
-    # self.flist = ["Bi207/JAEA.txt","Sb124/JAEA.txt","Eu152/JAEA.txt","Y88/JAEA.txt"]
-    # self.flist=["Bi207/JAEA.txt", "Sb124/JAEA.txt", "Th228/JAEA.txt", "Y88/JAEA.txt"]
-    # self.flist=["Bi207/JAEA.txt","Th228/JAEA.txt"]
-    # self.flist=["../Th228/JAEA.txt","../Bi207/JAEA.txt"]
-
-    # self.phototest()
 
 if __name__ =="__main__":
     mcmc = multi_MC()
