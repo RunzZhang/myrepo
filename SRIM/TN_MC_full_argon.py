@@ -423,7 +423,7 @@ class MC_sim_full_argon():
         end = 1200
         x_bins = []
         # with open("/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS07_2E5", "rb") as fp:  # Unpickling
-        with open("/data/runzezhang/result/SRIM_MC/MC_argon_full_20250601_D_400_07", "rb") as fp:  # Unpickling
+        with open("/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS07_2E5", "rb") as fp:  # Unpickling
             MC_full0= pickle.load(fp)
             print("read",MC_full0)
         bin_n =500
