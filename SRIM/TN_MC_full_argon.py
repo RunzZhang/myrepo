@@ -115,9 +115,9 @@ class MC_sim_full_argon():
         self.gamma_emission_list_1d = []
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
-        self.MC_sim(self.runtime)
+        # self.MC_sim(self.runtime)
         # self.data_analysis_v2(self.address)
-        self.plot_spectrum(self.address)
+        # self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
         # predict bubble events ratio with different energy threshold
@@ -131,6 +131,7 @@ class MC_sim_full_argon():
         # self.bubble_event_with_spectrum_sigma()
         # self.spectrum_uncertainty()
         # self.plot_spectrums_sigma()
+        self.plot_spectrums_sigma_LSS()
     def data_preparation(self):
 
         for i in range(len(self.argon_list)):# for each chain
@@ -416,7 +417,46 @@ class MC_sim_full_argon():
         plt.ylim([1E-5,0.1])
         plt.savefig(self.plot_address+"New_D_L_spectrum_07LSS.png", bbox_inches='tight')
 
-    def plot_spectrums_sigma(self):
+    def plot_spectrums_sigma_LSS(self):
+        # plot spectrum with LSS 0.7 scaling factor and the upper and lower limit of scaling factor 0.5 /0.8 as band
+        start = 0
+        end = 1200
+        x_bins = []
+        with open("/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS07_2E5", "rb") as fp:  # Unpickling
+            MC_full0= pickle.load(fp)
+            print("read",MC_full0)
+        bin_n =500
+        with open("/data/runzezhang/result/SRIM_MC/MC_argon_full_20250601_D_400_05", "rb") as fp:  # Unpickling
+            MC_full_low= pickle.load(fp)
+            print("read",MC_full_low)
+        with open("/data/runzezhang/result/SRIM_MC/MC_argon_full_20250601_D_400_08", "rb") as fp:  # Unpickling
+            MC_full_high= pickle.load(fp)
+            print("read",MC_full_high)
+
+        hist_result = plt.hist(MC_full0, bins =bin_n, range=(start, end) ,density = True)
+        plt.clf()
+        for i in range(len(hist_result[1]) - 1):
+            x_bins.append((hist_result[1][i] + hist_result[1][i + 1]) / 2)
+        hist_result_low = plt.hist(MC_full_low, bins=bin_n, range=(start, end), density=True)
+        plt.clf()
+        hist_result_high = plt.hist(MC_full_high, bins=bin_n, range=(start, end), density=True)
+        plt.clf()
+
+        plt.plot(x_bins, hist_result[0], color="blue", label='LSS refit')
+        plt.fill_between(x_bins, hist_result_high[0], hist_result_low[0], color='lightgray', alpha=0.5, label='LSS limits')
+        plt.grid(True, which='both', linestyle='-', linewidth=1)
+        plt.minorticks_on()
+        plt.xlabel("energy/eV",fontsize=18)
+        plt.ylabel("Possibility",fontsize=18)
+        plt.yscale("log")
+        plt.yticks(fontsize=18)
+        plt.xticks(fontsize=18)
+        plt.xlim([0, 1200])
+        plt.ylim([1E-5,0.1])
+        plt.legend()
+        plt.show()
+
+    def plot_spectrums_sigma_t(self):
         start = 0
         end = 1200
         x_bins = []
