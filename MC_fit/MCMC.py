@@ -1420,21 +1420,21 @@ class multi_MC():
                 )
                 print("first post analysiz")
                 # chi,dif,rateT,rate
-                dcounti[i], countModeli[i], countTrue[i] = dtotali[i], totalModeli[i], totalTrue[i]
-            chipn, dtotali[n:], dcounti[n:], totalTrue[n:], totalModeli[n:], countTrue[n:], countModeli[
-                                                                                            n:] = self.photoEval3(
-                pn,
-                photoneutrondata,
-                pnlivetime,
-                energies0,
-                efficiencies0,
-                photoArrayTrue,
-                meanBackBubble,
-                meanBackEvent,
-                loud=True,
-                pnuisance=nuisance0[i + 1:],
-                mode=mode0[1],
-            )
+            #     dcounti[i], countModeli[i], countTrue[i] = dtotali[i], totalModeli[i], totalTrue[i]
+            # chipn, dtotali[n:], dcounti[n:], totalTrue[n:], totalModeli[n:], countTrue[n:], countModeli[
+            #                                                                                 n:] = self.photoEval3(
+            #     pn,
+            #     photoneutrondata,
+            #     pnlivetime,
+            #     energies0,
+            #     efficiencies0,
+            #     photoArrayTrue,
+            #     meanBackBubble,
+            #     meanBackEvent,
+            #     loud=True,
+            #     pnuisance=nuisance0[i + 1:],
+            #     mode=mode0[1],
+            # )
             # chi,difTotal,difCount,totalTrue,totalModel,countTrue,countModel
             # chi,difTotal,difCount,total,trueTot,count,trueCount
             print("2nd post analysiz")
