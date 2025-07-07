@@ -37,7 +37,7 @@ class MC_sim_full_argon():
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_-01"
         self.old_address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
-        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS07_2E5"
+        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS07_2E5"
         self.plot_address = "/data/runzezhang/result/New_density_MC/"
 
 
@@ -115,7 +115,7 @@ class MC_sim_full_argon():
         self.gamma_emission_list_1d = []
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
-        # self.MC_sim(self.runtime)
+        self.MC_sim(self.runtime)
         # self.data_analysis_v2(self.address)
         # self.plot_spectrum(self.address)
 
@@ -131,7 +131,7 @@ class MC_sim_full_argon():
         # self.bubble_event_with_spectrum_sigma()
         # self.spectrum_uncertainty()
         # self.plot_spectrums_sigma()
-        self.plot_spectrums_sigma_LSS()
+        # self.plot_spectrums_sigma_LSS()
     def data_preparation(self):
 
         for i in range(len(self.argon_list)):# for each chain
@@ -408,8 +408,8 @@ class MC_sim_full_argon():
         plt.plot(x_bins, hist_result[0], color="blue")
         plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
-        plt.xlabel("energy/eV",fontsize=18)
-        plt.ylabel("Possibility",fontsize=18)
+        plt.xlabel("Energy/eV",fontsize=18)
+        plt.ylabel("Possibility/bin",fontsize=18)
         plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
