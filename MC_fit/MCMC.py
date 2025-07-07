@@ -106,7 +106,7 @@ class multi_MC():
             self.fileprefix = sys.argv[1]
         except:
             self.fileprefix = "./Test_Dump/test2"
-        self.save_path = "/data/runzezhang/result/TN_sims_D/plot/"
+        self.save_path = "/data/runzezhang/result/TN_sims_D/plot_07LSS/"
         """ 
         def NucleationEfficiency(r,T,sigma):
             #A=1/2
