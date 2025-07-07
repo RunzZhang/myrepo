@@ -102,10 +102,11 @@ class multi_MC():
         self.ceil =1.5* self.threshold
         self.floor = 0.5*self.threshold
 
-        try:
-            self.fileprefix = sys.argv[1]
-        except:
-            self.fileprefix = "./Test_Dump/test2"
+        # try:
+        #     self.fileprefix = sys.argv[1]
+        # except:
+        #     self.fileprefix = "./Test_Dump/test2"
+        self.fileprefix =  "/data/runzezhang/result/TN_sims_D/plot_07LSS/"
         self.save_path = "/data/runzezhang/result/TN_sims_D/plot_07LSS/"
         """ 
         def NucleationEfficiency(r,T,sigma):
