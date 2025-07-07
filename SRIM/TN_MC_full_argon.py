@@ -644,6 +644,53 @@ class MC_sim_full_argon():
         plt.yscale("log")
         plt.savefig(self.plot_address+"LSS_factor_uncertainty_spectrum.png")
 
+
+    def LSS_introduced_uncertainty(self):
+        # given energy threshold in function generate_hist_and_CDF, plot the bubble numbers
+        # this is adjusted based on different LSS factor
+        address05 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS05"
+        address08 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS08"
+        address07 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS07_2E5"
+        address10 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS1"
+        x_bins_05, hist_result_05, bubble_event_05 = self.generate_hist_and_CDF(address=address05)
+        x_bins_08, hist_result_08, bubble_event_08 = self.generate_hist_and_CDF(address=address08)
+        x_bins_07, hist_result_07, bubble_event_07 = self.generate_hist_and_CDF(address=address07)
+        x_bins_10, hist_result_10, bubble_event_10 = self.generate_hist_and_CDF(address=address10)
+
+        # check 400eV uncerntatinty
+        for i in range(len(x_bins_10)):
+            if x_bins_10[i] > 400:
+                print("05", bubble_event_05[i])
+                print("07", bubble_event_07[i])
+                print("08", bubble_event_08[i])
+                print("10", bubble_event_10[i])
+                break
+        # 05 147.75935770979376
+        # 07 136.51492625850614
+        # 08 130.99253956985626
+        # 10 127.4086197596412
+        #
+        lo_limit = []
+        hi_limit = []
+        mean = []
+        for i in range(len(x_bins_05)):
+            mean.append(bubble_event_07[i]/bubble_event_07[i])
+            lo_limit.append(bubble_event_05[i] / bubble_event_07[i])
+            hi_limit.append(bubble_event_08[i] / bubble_event_07[i])
+        plt.plot(x_bins_05, lo_limit, label='lower scaling LSS')
+        plt.plot(x_bins_08, hi_limit, label='upper scaling LSS')
+        plt.plot(x_bins_07, mean, label='0.7 scaling LSS')
+        plt.minorticks_on()
+        plt.xlabel("Energy/eV", fontsize=18)
+        plt.ylabel("Systematic Uncertainty from LSS scaling", fontsize=18)
+        # plt.yscale("log")
+        plt.yticks(fontsize=18)
+        plt.xticks(fontsize=18)
+        plt.xlim([0, 1200])
+        plt.legend()
+        # plt.ylim([1E-5,0.1])
+        # plt.yscale("log")
+        plt.savefig(self.plot_address + "LSS_factor_uncertainty_spectrum.png")
     def bubble_event_with_sigma(self, uncertainty):
 
         x_bins, hist_result, bubble_event  = self.generate_hist_and_CDF()
@@ -733,6 +780,37 @@ class MC_sim_full_argon():
         # plt.ylim([1E-5,0.1])
         # plt.legend()
         plt.show()
+    def time_introduced_uncertainty(self):
+        # time uncertainty
+        x_bins, hist_result, bubble_event = self.generate_hist_and_CDF()
+
+        bubble_event_low = self.generate_hist_and_CDF(
+            address="/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_0.5time_0offset")[2]
+        bubble_event_high = \
+        self.generate_hist_and_CDF(address="/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_2time_0offset")[
+            2]
+        mean = []
+        low =[]
+        high=[]
+        for i in range(len(x_bins)):
+            mean.append(bubble_event[i]/bubble_event[i])
+            low.append(bubble_event_low[i] / bubble_event[i])
+            high.append(bubble_event_high[i] / bubble_event[i])
+        plt.plot(x_bins, mean, color="blue", label='bubble number vs E threshold')
+        plt.plot(x_bins, low, color="red", label='bubble number with 0.5 gamma level decay time')
+        plt.plot(x_bins, high, color="orange", label='bubble number with 2 gamma level decay time')
+        plt.grid(True, which='both', linestyle='-', linewidth=1)
+        plt.minorticks_on()
+        plt.xlabel("Energy/eV", fontsize=18)
+        plt.ylabel("Systematic Uncertainty from time", fontsize=18)
+
+        plt.yticks(fontsize=18)
+        plt.xticks(fontsize=18)
+        plt.xlim([0, 1200])
+        plt.legend()
+        # plt.ylim([1E-5,0.1])
+        # plt.legend()
+        plt.savefig(self.address+"time_induced_uncertainty.png")
 
     def source_uncertainty(self, uncertainty):
         x_bins, histgram, y_bins = self.generate_hist_and_CDF()
