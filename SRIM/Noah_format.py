@@ -3,12 +3,12 @@ import numpy as np
 class regen_txt():
     def __init__(self):
         # self.address ="/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
-        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250601_D"
+        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS07_2E5"
         # in eV
         self.recoil_list = []
         self.txt = ""
         # self.outputMCaddress = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_Noahformat.txt"
-        self.outputMCaddress = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250601_D_Noahformat.txt"
+        self.outputMCaddress = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS07_2E5_Noahformat.txt"
         self.load()
         self.rewrite()
     def load(self):
