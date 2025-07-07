@@ -637,7 +637,7 @@ class MC_sim_full_argon():
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.legend()
-        plt.ylim([2E2,0.1])
+        plt.ylim([0.1,2E2])
         plt.yscale("log")
         plt.savefig(self.plot_address+"LSS_factor_uncertainty_spectrum_bubbble.png",bbox_inches= "tight")
 
