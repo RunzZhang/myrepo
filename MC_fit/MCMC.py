@@ -124,8 +124,8 @@ class multi_MC():
 
 
         # # run and analyze
-        # self.multirun(self.runN)
-        self.analysis_results(self.runN)
+        self.multirun(self.runN)
+        # self.analysis_results(self.runN)
 
         # test new method
         # generate bubbles event by event instead of normalization
@@ -595,7 +595,10 @@ class multi_MC():
         # for Cf 252
         # t= 100000/ thermal neutron rate Cf252 =1E5/50=2000
         # for Cf 252 0.0358microC
-        t = 2E5/4.06 # updated 2E5 events capture rate is 4.06 for 50 bubbles 0.032 microcure t
+        t = 2E5/0.94 # updated 2E5 events capture rate is 4.06 for 50 bubbles 0.032 microcure t
+
+        # veto analyze
+        # t equals the event number in G4 devided by the signal rate after vetoing
 
 
 
