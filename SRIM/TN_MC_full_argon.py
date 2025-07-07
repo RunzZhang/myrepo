@@ -123,7 +123,7 @@ class MC_sim_full_argon():
         # predict bubble events ratio with different energy threshold
         # also plot how it changes with threshold
         # self.predicted_bubble_events(self.address)
-        self.predicted_bubble_events_LSS()
+        # self.predicted_bubble_events_LSS()
         # self.source_uncertainty(0.5)
         # self.source_uncertainty_w_background(0.3, 500)
         # self.bubble_event_with_sigma(0.5)
@@ -133,6 +133,8 @@ class MC_sim_full_argon():
         # self.plot_spectrums_sigma()
         # self.plot_spectrums_sigma_LSS()
         # self.LSS_introduced_uncertainty()
+
+        self.plot_spectrums_sigma_t()
     def data_preparation(self):
 
         for i in range(len(self.argon_list)):# for each chain
@@ -493,15 +495,15 @@ class MC_sim_full_argon():
         plt.plot(x_bins, hist_result_high[0], color="orange", label='2x decay time spectrum')
         plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
-        plt.xlabel("energy/eV",fontsize=18)
-        plt.ylabel("Possibility",fontsize=18)
+        plt.xlabel("Energy/eV",fontsize=18)
+        plt.ylabel("Possibility/bin",fontsize=18)
         plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
         plt.legend()
-        plt.show()
+        plt.savefig(self.address+"t_uncertainty_spectrum.png", bbox_inches= "tight")
 
     def generate_hist_and_CDF(self,event_N= 10**3 , address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"):
         # event_N is neutron capture event numbers in argon per 100 hours
