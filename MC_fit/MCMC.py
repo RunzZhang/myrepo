@@ -1404,6 +1404,7 @@ class multi_MC():
             countModelc = np.zeros(n + pn)
             totalModelb = np.zeros(n + pn)
             countModelb = np.zeros(n + pn)
+            print("save the model")
             for i in range(n):
                 chi[i], dtotali[i], totalModeli[i], totalTrue[i] = self.test(
                     RecoilList[i],
