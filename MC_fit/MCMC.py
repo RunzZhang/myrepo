@@ -1418,6 +1418,7 @@ class multi_MC():
                     time=time,
                     mode=mode0[0],
                 )
+                print("first post analysiz")
                 # chi,dif,rateT,rate
                 dcounti[i], countModeli[i], countTrue[i] = dtotali[i], totalModeli[i], totalTrue[i]
             chipn, dtotali[n:], dcounti[n:], totalTrue[n:], totalModeli[n:], countTrue[n:], countModeli[
@@ -1436,7 +1437,7 @@ class multi_MC():
             )
             # chi,difTotal,difCount,totalTrue,totalModel,countTrue,countModel
             # chi,difTotal,difCount,total,trueTot,count,trueCount
-            print("first post analysiz")
+            print("2nd post analysiz")
             """
             for p in range(pn):
                 #test(recoil,rate,energies,efficiencies,r_nuis,t,weight,background=500,time=100)
