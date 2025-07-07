@@ -1436,6 +1436,7 @@ class multi_MC():
             )
             # chi,difTotal,difCount,totalTrue,totalModel,countTrue,countModel
             # chi,difTotal,difCount,total,trueTot,count,trueCount
+            print("first post analysiz")
             """
             for p in range(pn):
                 #test(recoil,rate,energies,efficiencies,r_nuis,t,weight,background=500,time=100)
