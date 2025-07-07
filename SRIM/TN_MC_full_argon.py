@@ -446,15 +446,15 @@ class MC_sim_full_argon():
         plt.fill_between(x_bins, hist_result_high[0], hist_result_low[0], color='lightgray', alpha=0.5, label='LSS limits')
         plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
-        plt.xlabel("energy/eV",fontsize=18)
-        plt.ylabel("Possibility",fontsize=18)
+        plt.xlabel("Energy/eV",fontsize=18)
+        plt.ylabel("Possibility/bin",fontsize=18)
         plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
         plt.legend()
-        plt.show()
+        plt.savefig(self.plot_address+"Spectrum_lss_uncertainty.png")
 
     def plot_spectrums_sigma_t(self):
         start = 0
