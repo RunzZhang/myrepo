@@ -131,7 +131,8 @@ class MC_sim_full_argon():
         # self.bubble_event_with_spectrum_sigma()
         # self.spectrum_uncertainty()
         # self.plot_spectrums_sigma()
-        self.plot_spectrums_sigma_LSS()
+        # self.plot_spectrums_sigma_LSS()
+        self.LSS_introduced_uncertainty()
     def data_preparation(self):
 
         for i in range(len(self.argon_list)):# for each chain
@@ -648,22 +649,19 @@ class MC_sim_full_argon():
     def LSS_introduced_uncertainty(self):
         # given energy threshold in function generate_hist_and_CDF, plot the bubble numbers
         # this is adjusted based on different LSS factor
-        address05 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS05"
-        address08 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS08"
-        address07 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS07_2E5"
-        address10 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250101_LSS1"
+        address05 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS05_2E5"
+        address08 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS08_2E5"
+        address07 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS07_2E5"
         x_bins_05, hist_result_05, bubble_event_05 = self.generate_hist_and_CDF(address=address05)
         x_bins_08, hist_result_08, bubble_event_08 = self.generate_hist_and_CDF(address=address08)
         x_bins_07, hist_result_07, bubble_event_07 = self.generate_hist_and_CDF(address=address07)
-        x_bins_10, hist_result_10, bubble_event_10 = self.generate_hist_and_CDF(address=address10)
 
         # check 400eV uncerntatinty
-        for i in range(len(x_bins_10)):
-            if x_bins_10[i] > 400:
+        for i in range(len(x_bins_05)):
+            if x_bins_05[i] > 400:
                 print("05", bubble_event_05[i])
                 print("07", bubble_event_07[i])
                 print("08", bubble_event_08[i])
-                print("10", bubble_event_10[i])
                 break
         # 05 147.75935770979376
         # 07 136.51492625850614
