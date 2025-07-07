@@ -37,7 +37,7 @@ class MC_sim_full_argon():
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_-01"
         self.old_address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
-        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS05_2E5"
+        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS08_2E5"
         self.plot_address = "/data/runzezhang/result/New_density_MC/"
 
 
