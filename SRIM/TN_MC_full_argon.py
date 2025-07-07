@@ -626,8 +626,10 @@ class MC_sim_full_argon():
 
 
 
-        plt.plot(x_bins_05, bubble_event_05,  label = 'lower scaling LSS')
-        plt.plot(x_bins_08, bubble_event_08,  label='uppper scaling LSS')
+        # plt.plot(x_bins_05, bubble_event_05,  label = 'lower scaling LSS')
+        # plt.plot(x_bins_08, bubble_event_08,  label='uppper scaling LSS')
+        plt.fill_between(x_bins_07, bubble_event_08, bubble_event_05, color='dimgray', alpha=0.5,
+                         label='LSS limits')
         plt.plot(x_bins_07, bubble_event_07,  label='0.7 scaling LSS')
         plt.minorticks_on()
         plt.xlabel("Energy/eV",fontsize=18)
