@@ -85,7 +85,7 @@ class SN():
             threshold_list.append(i)
         print("ready to generate graph")
         # plot the S/N ratio picture
-        self.pSN_plot.py(threshold_list)
+        self.plot_sn(threshold_list)
         self.hist_info()
     # def read_files_s_to_N1(self):
     #

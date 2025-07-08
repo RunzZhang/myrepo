@@ -4,23 +4,44 @@ import csv
 import numpy as np
 class SN():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/"
-        self.plot_path=  "/data/runzezhang/result/TN_sims_D/plot/"
+        # after generate new files, you need to select the capture ratio/source for different configs in read_files function.
+        # then choose the correct signal/noise of with clause in read files.
+        # at last change the self.name and plot_name in plot function
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files/"
+        self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
         self.false_1 = "Cf_false1.csv"
         self.false_2 = "Cf_false2.csv"
         self.signal = "Cf_sig.csv"
+        self.name = "CF Signal Noise #2 1125 eV 1E7"
+        self.signal_final_list = []
+        self.noise_final_list =[]
+
+
+
+        for i in range(1,101):
+            self.main_body(i)
+        self.combine_data()
+
+    def main_body(self,i):
+        print(i)
+        self.false_1 = f"Cf_1E7_false1_part{i}.csv"
+        self.false_2 = f"Cf_1E7_false2_part{i}.csv"
+        self.signal = f"Cf_1E7_sig_part{i}.csv"
+
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
         self.signal_path = self.base_path + self.signal
-        self.name = "CF Signal Noise #2 1125 eV"
 
-        self.old_read_files()
+
+        self.read_files()
 
         # self.read_files_s_to_N1()
 
 # main funtion we use
-    def old_read_files(self):
-        self.Activity = 0.0416  # source activity in mivro curie
+    def read_files(self):
+        self.Activity = 0.032  # source activity in mivro curie for 50 bubbles/hour
+        # self.Activity = 0.0416  # source activity in mivro curie
         # self.capture_ratio = 1.164E-3 # 1125eV 1.4g/cm Ar
         # self.capture_ratio = 0.121 # 400 eV 1.4g/cm3 Ar
         # self.capture_ratio = 0.267  # 350 eV
@@ -29,7 +50,7 @@ class SN():
         self.capture_ratio = 1.158E-3  # 1125 eV
         self.rate = 435.6 #/s # CF neutron rate 9 mucurie
         # self.rate = 0.56 #AmLi neutron rate
-        self.G4_events= 1E6
+        self.G4_events= 1E7
         self.G4_sig_time=(self.G4_events / self.rate)
         # with open(self.base_path + "Ar_photon_AmLi2.csv", 'r') as file:
         # with open(self.base_path + "Ar_photon_Cf.csv", 'r') as file:
@@ -39,6 +60,7 @@ class SN():
             number_list = next(reader)
             # Convert the strings to floats
             self.sig_raw_list = [float(value) for value in number_list]
+        self.signal_final_list = self.signal_final_list + self.sig_raw_list
         # self.sig_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\Ar_photon.csv', quoting=csv.QUOTE_ALL)
         # self.sig_raw_list = self.sig_raw_df.columns.to_list()
         #
@@ -62,17 +84,17 @@ class SN():
             # Convert the strings to floats
             self.noise_raw_list = [float(value) for value in number_list]
             # self.noise_raw_list = [float(value)  for value in number_list]
-
+        self.noise_final_list = self.noise_final_list+ self.noise_raw_list
         # self.noise_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\scatter_spectrum.csv', quoting=csv.QUOTE_ALL)
         # self.noise_raw_list = self.noise_raw_df.columns.to_list()
         # self.noise_raw_list = list(map(float, self.noise_raw_list))
-
-        plt.hist(self.noise_raw_list, bins= 1000)
+    def combine_data(self):
+        plt.hist(self.noise_final_list, bins= 1000)
         plt.xlabel("photon number")
         plt.ylabel("frequency")
         plt.savefig(self.plot_path+"noise_list.png")
-        print(len(self.noise_raw_list))
-        max_noise_photon = round(max(self.noise_raw_list))
+        print(len(self.noise_final_list))
+        max_noise_photon = round(max(self.noise_final_list))
         print("max",max_noise_photon)
         # form the threshold function
         threshold_list  = []
@@ -85,57 +107,16 @@ class SN():
             threshold_list.append(i)
         print("ready to generate graph")
         # plot the S/N ratio picture
-        self.pSN_plot.py(threshold_list)
+        self.plot_sn(threshold_list)
         self.hist_info()
-    # def read_files_s_to_N1(self):
-    #
-    #     self.capture_ratio = 1.164E-3 # 1125eV
-    #     # self.capture_ratio = 0.121 # 400 eV
-    #     # self.capture_ratio = 1 # no cut
-    #     self.rate = 435.6 #/s # CF neutron rate
-    #     # self.rate = 0.56 #AmLi neutron rate
-    #     self.G4_events= 1E6
-    #     self.G4_sig_time=(self.G4_events / self.rate)
-    #     with open(self.base_path+"Ar_photon_CF2.csv", 'r') as file:
-    #         reader = csv.reader(file)
-    #         # Read the first row (assuming single row for simplicity)
-    #         number_list = next(reader)
-    #         # Convert the strings to floats
-    #         self.sig_raw_list = [float(value) for value in number_list]
-    #     # self.sig_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\Ar_photon.csv', quoting=csv.QUOTE_ALL)
-    #     # self.sig_raw_list = self.sig_raw_df.columns.to_list()
-    #     #
-    #     # self.sig_raw_list = list(map(float, self.sig_raw_list))
-    #
-    #     print("capture event number", len(self.sig_raw_list))
-    #     with open(self.base_path +"photon_capture_n_sing_scatterg_CF.csv", 'r') as file:
-    #         reader = csv.reader(file)
-    #         # Read the first row (assuming single row for simplicity)
-    #         number_list = next(reader)
-    #         # Convert the strings to floats
-    #         self.noise1 = [float(value) for value in number_list]
-    #     # self.sig_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\Ar_photon.csv', quoting=csv.QUOTE_ALL)
-    #     # self.sig_raw_list = self.sig_raw_df.columns.to_list()
-    #     #
-    #     # self.sig_raw_list = list(map(float, self.sig_raw_list))
-    #
-    #     print("background event number", len(self.noise1))
-    #     print("capture number", len(self.sig_raw_list))
-    #     # self.noise_raw_df = pd.read_csv('C:\\Users\\24230\\Downloads\\scatter_spectrum.csv', quoting=csv.QUOTE_ALL)
-    #     # self.noise_raw_list = self.noise_raw_df.columns.to_list()
-    #     # self.noise_raw_list = list(map(float, self.noise_raw_list))
-    #     print(len(self.noise1))
-    #     # form the threshold function
-    #     self.hist_noise1_info()
-
 
     def hist_info(self):
-        sig_counts, sig_bin_edges = np.histogram(self.sig_raw_list, bins=100)
+        sig_counts, sig_bin_edges = np.histogram(self.signal_final_list, bins=100)
         sig_normalized_counts = sig_counts*self.capture_ratio/self.G4_sig_time
         sig_bin_centers = (sig_bin_edges[:-1] + sig_bin_edges[1:]) / 2
         plt.bar(sig_bin_centers, sig_normalized_counts, width=sig_bin_edges[1] - sig_bin_edges[0], color='red',label='signal')
 
-        noise_counts, noise_bin_edges = np.histogram(self.noise_raw_list, bins=100)
+        noise_counts, noise_bin_edges = np.histogram(self.noise_final_list, bins=100)
         noise_normalized_counts = noise_counts / self.G4_noise_time
         noise_bin_centers = (noise_bin_edges[:-1] + noise_bin_edges[1:]) / 2
         plt.bar(noise_bin_centers, noise_normalized_counts, width=noise_bin_edges[1] - noise_bin_edges[0], color='blue',label='noise')
@@ -143,45 +124,20 @@ class SN():
         # Set x-label and y-label with font size
         # plt.xlabel('Value', fontsize=14)
         # plt.ylabel('Frequency (normalized)', fontsize=14)
-        # plt.hist(self.sig_raw_list, color="red", label='signal')
-        # plt.hist(self.noise_raw_list,color='blue',label='noise')
+        # plt.hist(self.signal_final_list, color="red", label='signal')
+        # plt.hist(self.noise_final_list,color='blue',label='noise')
 
         plt.xlabel("photon detected by SiPM #", fontsize=16)
         plt.ylabel("signal/noise rate #/s", fontsize=16)
         plt.yscale('log')
         plt.legend()
-        plot_name = "sn1"
+        plot_name = "sn1_1E7"
         plt.savefig(self.plot_path+plot_name)
         # plt.show()
-    def hist_noise1_info(self):
-        sig_counts, sig_bin_edges = np.histogram(self.sig_raw_list, bins=100)
-        sig_normalized_counts = sig_counts*self.capture_ratio/self.G4_sig_time
-        sig_bin_centers = (sig_bin_edges[:-1] + sig_bin_edges[1:]) / 2
-        plt.bar(sig_bin_centers, sig_normalized_counts, width=sig_bin_edges[1] - sig_bin_edges[0], color='red',label='signal')
 
-        noise_counts, noise_bin_edges = np.histogram(self.noise1, bins=100)
-        noise_normalized_counts = noise_counts /self.G4_sig_time
-        noise_bin_centers = (noise_bin_edges[:-1] + noise_bin_edges[1:]) / 2
-        plt.bar(noise_bin_centers, noise_normalized_counts, width=noise_bin_edges[1] - noise_bin_edges[0], color='blue',label='background')
-
-        # Set x-label and y-label with font size
-        # plt.xlabel('Value', fontsize=14)
-        # plt.ylabel('Frequency (normalized)', fontsize=14)
-        # plt.hist(self.sig_raw_list, color="red", label='signal')
-        # plt.hist(self.noise_raw_list,color='blue',label='noise')
-
-        plt.xlabel("photon detected by SiPM #", fontsize=16)
-        plt.ylabel("signal/background rate #/s", fontsize=16)
-        plt.yscale('log')
-        print("sig total rate", len(self.sig_raw_list)*self.capture_ratio/self.G4_sig_time)
-        print("back", len(self.noise1) /self.G4_sig_time)
-        plt.legend()
-        plot_name = "hist_noise1"
-        plt.savefig(self.plot_path + plot_name)
-        # plt.show()
     def prepare(self, threshold): # filter the value above the threshold
-        self.sig = [value for value in self.sig_raw_list if value >= threshold]
-        self.noise = [value for value in self.noise_raw_list if value >= threshold]
+        self.sig = [value for value in self.signal_final_list if value >= threshold]
+        self.noise = [value for value in self.noise_final_list if value >= threshold]
         sig_len = len(self.sig)
         noise_len = len(self.noise)
         return (sig_len,noise_len)
@@ -190,8 +146,8 @@ class SN():
         noise_number_list =[]
         SN_ratio = []
         photon_n_list = []
-        print("cut",max(self.noise_raw_list))
-        length = round(max(self.sig_raw_list))
+        print("cut",max(self.noise_final_list))
+        length = round(max(self.signal_final_list))
         point = []
         for i in range(length):
             photon_n_list.append(i)
@@ -212,10 +168,10 @@ class SN():
         print("sig rate",max(signal_number_list))
         if point != []:
             print("sig rate after cut", signal_number_list[point[0]])
-        print("noise stat N", len(self.noise_raw_list))
+        print("noise stat N", len(self.noise_final_list))
         print("noise rate",max(noise_number_list))
         print("SN",max(SN_ratio))
-        print("noise uncetainty", 1.29*max(noise_number_list)/len(self.noise_raw_list))
+        print("noise uncetainty", 1.29*max(noise_number_list)/len(self.noise_final_list))
 
         # plt.plot(photon_n_list,signal_number_list,color='red',label='signal')
         # plt.plot(photon_n_list,noise_number_list,color='blue',label='noise')
