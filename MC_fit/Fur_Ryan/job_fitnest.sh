@@ -20,7 +20,8 @@ if [ ! -d $WORKDIR ]; then
     mkdir $WORKDIR
 fi
 
-python3 fitPhoto5.py $1 $2  ${WORKDIR}/
+#python3 fitPhoto5.py $1 $2  ${WORKDIR}/
+python3 MCMC.py  ${WORKDIR}/
 #rm slurm-* || ls                                                                                                                                                                                           
 
 #echo information

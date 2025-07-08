@@ -1,13 +1,13 @@
-nameJob="Fit5_Quick2_320"
+nameJob="TN_sims_2E5"
 
-SUBDIR=${PWD}/${nameJob}
+SUBDIR="/home/runze/Documents/results/TN_sims_2E5"
 
 if [ ! -d $SUBDIR ]; then
     mkdir $SUBDIR
 fi
 
 cp job_fitnest.sh ${SUBDIR}/job_fitnest.sh
-cp fitPhoto5.py ${SUBDIR}/fitPhoto5.py
+cp MCMC.py ${SUBDIR}/fitPhoto5.py
 
 cd $SUBDIR
 
