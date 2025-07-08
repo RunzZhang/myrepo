@@ -1,6 +1,6 @@
 #!/bin/bash                                                                                                                                                    
 #SBATCH --time=7:59:00                                                                                                                                      
-#SBATCH --array=1-50                                                                                                                                                                            
+#SBATCH --array=1-2
 #SBATCH --account=def-kenclark-ab                                                                                                                                             
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1
@@ -21,7 +21,7 @@ if [ ! -d $WORKDIR ]; then
 fi
 
 #python3 fitPhoto5.py $1 $2  ${WORKDIR}/
-python3 MCMC.py
+python3 MCMC.py ${WORKDIR}/
 #rm slurm-* || ls                                                                                                                                                                                           
 
 #echo information

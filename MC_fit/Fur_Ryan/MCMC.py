@@ -102,11 +102,11 @@ class multi_MC():
         self.ceil =1.5* self.threshold
         self.floor = 0.5*self.threshold
 
-        # try:
-        #     self.fileprefix = sys.argv[1]
-        # except:
-        #     self.fileprefix = "./Test_Dump/test2"
-        self.fileprefix =  "/home/runze/Documents/results/TN_sims_2E5/"
+        try:
+            self.fileprefix = sys.argv[0]
+        except:
+            self.fileprefix = "/home/runze/Documents/results/TN_sims_2E5/"
+
         self.save_path = "/home/runze/Documents/results/TN_sims_2E5/"
         """ 
         def NucleationEfficiency(r,T,sigma):
@@ -1311,8 +1311,12 @@ class multi_MC():
         np.savetxt(self.save_path + "start.txt", InArray)
         print("THIS HERE")
         print("p", len(pnweightList), len(pnrecoilList), len(pnweightList))
-        NitersRough = 20000
-        Niters = 4000000
+        # NitersRough = 20000
+        # Niters = 4000000
+
+        NitersRough = 2000
+        Niters = 400000
+
         Nwalkers = 4
         printstep = 100000
         energies0 = [0, 0, 0, 0,0]  # definition
