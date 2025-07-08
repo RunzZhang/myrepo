@@ -31,13 +31,14 @@ class MC_sim_full_argon():
         self.m_41 = 40.98 * 10 ** (-3) / (6.023 * 10 ** 23)  # Ar40 mass in kg
         self.m_40 = 39.98 * 10 ** (-3) / (6.023 * 10 ** 23)  # Ar40 mass in kg
         self.m_37 = 36.97 * 10 ** (-3) / (6.023 * 10 ** 23)  # Ar40 mass in kg
-        self.time_factor = 1.5*10**(-3)  # time factor from ps to ns
+        self.time_factor = 1.0*10**(-3)  # time factor from ps to ns
         self.time_offset = 0*self.time_factor
         # orginal time factor is 10E-3 and we modify it from 0.5 to 2
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_-01"
         self.old_address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
-        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_t15_2E5"
+
+        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS07_2E5"
         self.plot_address = "/data/runzezhang/result/New_density_MC/"
 
 
@@ -115,7 +116,7 @@ class MC_sim_full_argon():
         self.gamma_emission_list_1d = []
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
-        self.MC_sim(self.runtime)
+        # self.MC_sim(self.runtime)
         # self.data_analysis_v2(self.address)
         # self.plot_spectrum(self.address)
 
@@ -134,7 +135,7 @@ class MC_sim_full_argon():
         # self.plot_spectrums_sigma_LSS()
         # self.LSS_introduced_uncertainty()
 
-        # self.plot_spectrums_sigma_t()
+        self.plot_spectrums_sigma_t()
         # self.predicted_bubble_events_t()
     def data_preparation(self):
 
@@ -471,14 +472,14 @@ class MC_sim_full_argon():
         start = 0
         end = 1200
         x_bins = []
-        with open("/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full", "rb") as fp:  # Unpickling
+        with open("/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS07_2E5", "rb") as fp:  # Unpickling
             MC_full0= pickle.load(fp)
             print("read",MC_full0)
         bin_n =500
-        with open("/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_0.5time_0offset", "rb") as fp:  # Unpickling
+        with open("/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_t05_2E5", "rb") as fp:  # Unpickling
             MC_full_low= pickle.load(fp)
             print("read",MC_full_low)
-        with open("/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_2time_0offset", "rb") as fp:  # Unpickling
+        with open("/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_t15_2E5", "rb") as fp:  # Unpickling
             MC_full_high= pickle.load(fp)
             print("read",MC_full_high)
 
