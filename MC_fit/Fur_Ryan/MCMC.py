@@ -84,8 +84,8 @@ class multi_MC():
 
         ################################################
         # self.flist = ["./Sb124JAEA.txt", "./Co60JAEA.txt", "./Th228JAEA.txt"]
-        self.flist = ["/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS07_2E5_Noahformat.txt"]
-        self.hist_address = "/data/runzezhang/result/SRIM_MCMC_argon_full_20250701_LSS07_2E5"
+        self.flist = ["./MC_argon_full_20250701_LSS07_2E5_Noahformat.txt"]
+        self.hist_address = "./SRIM_MCMC_argon_full_20250701_LSS07_2E5"
 
         ################################################
         self.pnlist = ["./Sb", "./Bi"]
