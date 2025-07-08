@@ -9,7 +9,7 @@ fi
 cp job_fitnest.sh ${SUBDIR}/job_fitnest.sh
 cp MCMC.py ${SUBDIR}/MCMC.py
 
-#cd $SUBDIR
+cd $SUBDIR
 
 #sbatch job_fitnest.sh $1 $2
 sbatch job_fitnest.sh
