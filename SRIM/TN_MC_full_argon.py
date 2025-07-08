@@ -135,8 +135,8 @@ class MC_sim_full_argon():
         # self.plot_spectrums_sigma_LSS()
         # self.LSS_introduced_uncertainty()
 
-        self.plot_spectrums_sigma_t()
-        # self.predicted_bubble_events_t()
+        # self.plot_spectrums_sigma_t()
+        self.predicted_bubble_events_t()
     def data_preparation(self):
 
         for i in range(len(self.argon_list)):# for each chain
@@ -511,9 +511,9 @@ class MC_sim_full_argon():
     def predicted_bubble_events_t(self):
         # given energy threshold in function generate_hist_and_CDF, plot the bubble numbers
         # this is adjusted based on different LSS factor
-        address10 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS05_2E5"
-        address05 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_0.5time_0offset"
-        address20 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full_2time_0offset"
+        address10 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS07_2E5"
+        address05 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_t05_2E5"
+        address20 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_t15_2E5"
         x_bins_10, hist_result_10, bubble_event_10 = self.generate_hist_and_CDF(event_N=94, address=address10)
         x_bins_05, hist_result_05, bubble_event_05 = self.generate_hist_and_CDF(event_N=94, address=address05)
         x_bins_20, hist_result_20, bubble_event_20 = self.generate_hist_and_CDF(event_N=94, address=address20)
@@ -534,7 +534,7 @@ class MC_sim_full_argon():
         # plt.plot(x_bins_10, bubble_event_05,  label = 'lower scaling LSS')
         # plt.plot(x_bins_05, bubble_event_08,  label='uppper scaling LSS')
         plt.fill_between(x_bins_20, bubble_event_05, bubble_event_20, color='dimgray', alpha=0.5,
-                         label='0.5-2 time scaling limits')
+                         label='50% time scaling limits')
         plt.plot(x_bins_20, bubble_event_10, label='orignal t')
         plt.minorticks_on()
         plt.xlabel("Energy/eV", fontsize=18)
