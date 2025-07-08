@@ -525,10 +525,9 @@ class MC_sim_full_argon():
                 print("07", bubble_event_05[i])
                 print("08", bubble_event_20[i])
                 break
-        # 05 147.75935770979376
-        # 07 136.51492625850614
-        # 08 130.99253956985626
-        # 10 127.4086197596412
+
+
+    
         #
 
         # plt.plot(x_bins_10, bubble_event_05,  label = 'lower scaling LSS')
