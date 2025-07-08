@@ -103,7 +103,7 @@ class multi_MC():
         self.floor = 0.5*self.threshold
 
         try:
-            self.fileprefix = sys.argv[0]
+            self.fileprefix = sys.argv[1]
         except:
             self.fileprefix = "/home/runze/Documents/results/TN_sims_2E5/"
 
