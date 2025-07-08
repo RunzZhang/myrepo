@@ -11,7 +11,8 @@ cp MCMC.py ${SUBDIR}/fitPhoto5.py
 
 cd $SUBDIR
 
-sbatch job_fitnest.sh $1 $2
+#sbatch job_fitnest.sh $1 $2
+sbatch job_fitnest.sh
 
 sleep 1
 
