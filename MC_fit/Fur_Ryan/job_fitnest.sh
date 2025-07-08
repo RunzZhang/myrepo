@@ -21,7 +21,7 @@ if [ ! -d $WORKDIR ]; then
 fi
 
 #python3 fitPhoto5.py $1 $2  ${WORKDIR}/
-python3 MCMC.py  ${WORKDIR}/
+python3 MCMC.py
 #rm slurm-* || ls                                                                                                                                                                                           
 
 #echo information
