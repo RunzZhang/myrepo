@@ -181,7 +181,7 @@ class ReadRoot():
         self.single_e_n_capture_event()
 
         # false noise 2, need to relocate directory
-        # self.Huge_scatter_event()
+        self.Huge_scatter_event()
 
 
         # self.FN_spectrum_v2()
