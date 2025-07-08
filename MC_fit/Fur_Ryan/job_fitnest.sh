@@ -1,6 +1,6 @@
 #!/bin/bash                                                                                                                                                    
 #SBATCH --time=7:59:00                                                                                                                                      
-#SBATCH --array=1-2
+#SBATCH --array=1-50
 #SBATCH --account=def-kenclark-ab                                                                                                                                             
 #SBATCH --ntasks-per-node=1
 #SBATCH --cpus-per-task=1

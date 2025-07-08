@@ -1311,11 +1311,11 @@ class multi_MC():
         np.savetxt(self.save_path + "start.txt", InArray)
         print("THIS HERE")
         print("p", len(pnweightList), len(pnrecoilList), len(pnweightList))
-        # NitersRough = 20000
-        # Niters = 4000000
+        NitersRough = 20000
+        Niters = 4000000
 
-        NitersRough = 2000
-        Niters = 400000
+        # NitersRough = 2000
+        # Niters = 400000
 
         Nwalkers = 4
         printstep = 100000
