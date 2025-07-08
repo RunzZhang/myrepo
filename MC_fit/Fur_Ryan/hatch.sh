@@ -7,7 +7,7 @@ if [ ! -d $SUBDIR ]; then
 fi
 
 cp job_fitnest.sh ${SUBDIR}/job_fitnest.sh
-cp MCMC.py ${SUBDIR}/fitPhoto5.py
+cp MCMC.py ${SUBDIR}/MCMC.py
 
 cd $SUBDIR
 
