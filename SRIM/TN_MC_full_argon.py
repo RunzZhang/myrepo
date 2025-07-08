@@ -519,15 +519,30 @@ class MC_sim_full_argon():
         x_bins_20, hist_result_20, bubble_event_20 = self.generate_hist_and_CDF(event_N=94, address=address20)
 
         # check 400eV uncerntatinty
+        bubble_05_cali = 0
+        bubble_20_cali = 0
         for i in range(len(x_bins_10)):
             if x_bins_10[i] > 400:
+                bubble_05_cali  = bubble_event_05[i]
+                bubble_20_cali = bubble_event_20[i]
                 print("05", bubble_event_10[i])
                 print("07", bubble_event_05[i])
                 print("08", bubble_event_20[i])
+                print("threshold", x_bins_10[i])
+                break
+
+        for j in range(len(x_bins_10)):
+            if bubble_event_10[j]<bubble_05_cali:
+                print("05 threshold", x_bins_10[j])
+                break
+
+        for j in range(len(x_bins_10)):
+            if bubble_event_10[j]<bubble_20_cali:
+                print("15 threshold", x_bins_10[j])
                 break
 
 
-    
+
         #
 
         # plt.plot(x_bins_10, bubble_event_05,  label = 'lower scaling LSS')
@@ -656,11 +671,26 @@ class MC_sim_full_argon():
         x_bins_07, hist_result_07, bubble_event_07 = self.generate_hist_and_CDF(event_N=94,address=address07)
 
         # check 400eV uncerntatinty
-        for i in range(len(x_bins_05)):
-            if x_bins_05[i] > 400:
-                print("05", bubble_event_05[i])
-                print("07", bubble_event_07[i])
+        bubble_05_cali = 0
+        bubble_08_cali = 0
+        for i in range(len(x_bins_07)):
+            if x_bins_07[i] > 400:
+                bubble_05_cali = bubble_event_05[i]
+                bubble_08_cali = bubble_event_08[i]
+                print("05", bubble_event_07[i])
+                print("07", bubble_event_05[i])
                 print("08", bubble_event_08[i])
+                print("threshold", x_bins_07[i])
+                break
+
+        for j in range(len(x_bins_07)):
+            if bubble_event_07[j] < bubble_05_cali:
+                print("05 threshold", x_bins_07[j])
+                break
+
+        for j in range(len(x_bins_07)):
+            if bubble_event_07[j] < bubble_08_cali:
+                print("08 threshold", x_bins_07[j])
                 break
         #05 147.75935770979376
         #07 136.51492625850614
