@@ -170,6 +170,7 @@ class SN():
         for j in range(len(signal_rate_list)):
             if photon_n_list[j]>200:
                 print("output",j,signal_rate_list[j],noise_rate_list[j])
+                print("stat num", noise_num_list[j])
                 break
         print("sig rate",max(signal_rate_list))
         if point != []:
