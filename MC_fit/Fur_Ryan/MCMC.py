@@ -89,6 +89,7 @@ class multi_MC():
 
         ################################################
         self.pnlist = ["./Sb", "./Bi"]
+        # you use the spectrum
         ################################################
         self.alist = [100, 100, 10]
         ################################################
@@ -942,6 +943,8 @@ class multi_MC():
                 print("Chi count: ", chiCount)
                 print(chi[p])
         return chi, difTotal, difCount, totalTrue, totalModel, countTrue, countModel
+
+
     def photoJitter(self,photoSourceTrue, photoBackMean, sourceError, time=100):
         # poisson uncertainty in background + events
         # source strength uncertainty
@@ -1441,20 +1444,26 @@ class multi_MC():
                 print("first post analysize")
                 # chi,dif,rateT,rate
             #     dcounti[i], countModeli[i], countTrue[i] = dtotali[i], totalModeli[i], totalTrue[i]
-            chipn, dtotali[n:], dcounti[n:], totalTrue[n:], totalModeli[n:], countTrue[n:], countModeli[
-                                                                                            n:] = self.photoEval3(
-                pn,
-                photoneutrondata,
-                pnlivetime,
-                energies0,
-                efficiencies0,
-                photoArrayTrue,
-                meanBackBubble,
-                meanBackEvent,
-                loud=True,
-                pnuisance=nuisance0[i + 1:],
-                mode=mode0[1],
-            )
+            # all len should be pn
+            # chipn, dtotali[n:], dcounti[n:], totalTrue[n:], totalModeli[n:], countTrue[n:], countModeli[
+            #                                                                                 n:] = self.photoEval3(
+            #     pn,
+            #     photoneutrondata,
+            #     pnlivetime,
+            #     energies0,
+            #     efficiencies0,
+            #     photoArrayTrue,
+            #     meanBackBubble,
+            #     meanBackEvent,
+            #     loud=True,
+            #     pnuisance=nuisance0[i + 1:],
+            #     mode=mode0[1],
+            # )
+
+            print("left",len(chipn), len(dtotali[n:]), len(dcounti[n:]), len(totalTrue[n:]), len(totalModeli[n:]), len(countTrue[n:]), len(countModeli[n:]) )
+            ryan_result = self.photoEval3(pn,photoneutrondata,pnlivetime,energies0,efficiencies0,photoArrayTrue,meanBackBubble,meanBackEvent,loud=True,pnuisance=nuisance0[i + 1:],mode=mode0[1], )
+            print("right",len(ryan_result[0]), len(ryan_result[1]), len(ryan_result[2]), len(ryan_result[3]), len(ryan_result[4]),
+                  len(ryan_result[5]), len(ryan_result[6]))
             # chi,difTotal,difCount,totalTrue,totalModel,countTrue,countModel
             # chi,difTotal,difCount,total,trueTot,count,trueCount
 
