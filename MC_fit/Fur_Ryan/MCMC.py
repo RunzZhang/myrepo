@@ -1311,20 +1311,35 @@ class multi_MC():
         np.savetxt(self.save_path + "start.txt", InArray)
         print("THIS HERE")
         print("p", len(pnweightList), len(pnrecoilList), len(pnweightList))
-        NitersRough = 20000
-        Niters = 4000000
+        # NitersRough = 20000
+        # Niters = 4000000
+        #
+        #
+        #
+        # Nwalkers = 4
+        # printstep = 100000
+        #
+        # energies0 = [0, 0, 0, 0,0]  # definition
+        # nuisance0 = np.zeros(n + pn)
+        # # pnuisance0=np.zeros(pn)
+        # mode0 = [0, 0]
+        #
+        # sample_n = 10000
 
-        # NitersRough = 2000
-        # Niters = 400000
+        NitersRough = 200
+        Niters = 40000
 
         Nwalkers = 4
-        printstep = 100000
-        energies0 = [0, 0, 0, 0,0]  # definition
+        printstep = 1000
+
+        energies0 = [0, 0, 0, 0, 0]  # definition
         nuisance0 = np.zeros(n + pn)
         # pnuisance0=np.zeros(pn)
         mode0 = [0, 0]
 
-        sample_n = 10000
+        sample_n = 100
+
+
 
         samplestep = (Niters + 1) // (sample_n)
         if samplestep == 0:
