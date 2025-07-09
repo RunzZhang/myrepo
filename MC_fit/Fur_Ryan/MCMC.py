@@ -858,7 +858,7 @@ class multi_MC():
         # datOrg=data[:,1]
         # print (data)
         # print (np.shape(data))
-        print("pho_test", 0)
+        print("pho_test", 0, np.shape(data))
         dataMem = np.zeros(np.shape(data))
         dataMem[:, 1] = data[:, 1]
         dataMem[:, 2] = data[:, 2]
