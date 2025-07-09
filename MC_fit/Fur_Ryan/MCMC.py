@@ -861,7 +861,7 @@ class multi_MC():
         dataMem = np.zeros(np.shape(data))
         dataMem[:, 1] = data[:, 1]
         dataMem[:, 2] = data[:, 2]
-
+        print("pho_test", 0 )
         # T=80
         # sigLow=10
         # sigUp=sigLow
