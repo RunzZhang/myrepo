@@ -1,6 +1,6 @@
-nameJob="TN_sims_2E5_test"
+nameJob="TN_sims_2E5"
 
-SUBDIR="/home/runze/Documents/results/TN_sims_2E5_test"
+SUBDIR="/home/runze/Documents/results/TN_sims_2E5"
 
 if [ ! -d $SUBDIR ]; then
     mkdir $SUBDIR
