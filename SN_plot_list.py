@@ -160,7 +160,8 @@ class SN():
             else:
                 point.append(i)
                 # print("point", point)
-                SN_ratio.append(max(SN_ratio))
+                SN_ratio.append(max(SN_ratio)) # append line in the graph
+                SN_ratio.append(max(SN_ratio)*1E5)  # append inf line in the graph
         for j in range(len(signal_number_list)):
             if photon_n_list[j]>200:
                 print("output",j,signal_number_list[j],noise_number_list[j])
@@ -182,6 +183,7 @@ class SN():
         line1, = ax1.plot(photon_n_list, signal_number_list, 'g-', label='signal')
         line2, = ax1.plot(photon_n_list, noise_number_list, 'b-', label='noise')
         ax1.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
+        ax1.set_ylim([2e-5,20])
 
         # Set the labels and title
         ax1.set_xlabel('photon number threshold',fontsize = 16)
@@ -196,6 +198,7 @@ class SN():
 
         # Set the label for the second y-axis
         ax2.set_ylabel('signal to noise ratio', color='black',fontsize = 16)
+        ax2.set_ylim([0.5,2.2])
 
         lines = [line1, line2, line3]
         # lines = [line1,  line3]
