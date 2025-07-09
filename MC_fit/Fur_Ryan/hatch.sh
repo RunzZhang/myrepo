@@ -1,4 +1,4 @@
-nameJob="TN_sims_2E5"
+nameJob="TN_sims_2E5_test"
 
 SUBDIR="/home/runze/Documents/results/TN_sims_2E5_test"
 
