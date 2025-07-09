@@ -142,10 +142,13 @@ class SN():
         noise_len = len(self.noise)
         return (sig_len,noise_len)
     def plot_sn(self, threshold_list):
-        signal_number_list = []
-        noise_number_list =[]
+        signal_rate_list = []
+        noise_rate_list =[]
+        signal_num_list = []
+        noise_num_list = []
         SN_ratio = []
         photon_n_list = []
+
         print("cut",max(self.noise_final_list))
         length = round(max(self.signal_final_list))
         point = []
@@ -153,8 +156,10 @@ class SN():
             photon_n_list.append(i)
             (sig_num,noise_num)= self.prepare(i)
             # change signal_number form /s to /h
-            signal_number_list.append(self.Activity*3600*sig_num*self.capture_ratio/(9*self.G4_sig_time))
-            noise_number_list.append(3600*self.Activity*noise_num/(9*self.G4_noise_time))
+            signal_rate_list.append(self.Activity*3600*sig_num*self.capture_ratio/(9*self.G4_sig_time))
+            noise_rate_list.append(3600*self.Activity*noise_num/(9*self.G4_noise_time))
+            signal_num_list.append(sig_num)
+            noise_num_list.append(noise_num)
             if noise_num !=0:
                 SN_ratio.append((sig_num*self.capture_ratio/self.G4_sig_time)/(noise_num/self.G4_noise_time))
             else:
@@ -162,26 +167,27 @@ class SN():
                 # print("point", point)
                 SN_ratio.append(max(SN_ratio)) # append line in the graph
                 SN_ratio.append(max(SN_ratio)*1E5)  # append inf line in the graph
-        for j in range(len(signal_number_list)):
+        for j in range(len(signal_rate_list)):
             if photon_n_list[j]>200:
-                print("output",j,signal_number_list[j],noise_number_list[j])
+                print("output",j,signal_rate_list[j],noise_rate_list[j])
                 break
-        print("sig rate",max(signal_number_list))
+        print("sig rate",max(signal_rate_list))
         if point != []:
-            print("sig rate after cut", signal_number_list[point[0]])
+            print("sig rate after cut", signal_rate_list[point[0]])
         print("noise stat N", len(self.noise_final_list))
-        print("noise rate",max(noise_number_list))
+        print("noise rate",max(noise_rate_list))
         print("SN",max(SN_ratio))
-        print("noise uncetainty", 1.29*max(noise_number_list)/len(self.noise_final_list))
+        print("noise uncetainty", 1.29*max(noise_rate_list)/len(self.noise_final_list))
+        print("sig_stats", signal_num_list[0], "noise_stats", noise_num_list[0])
 
-        # plt.plot(photon_n_list,signal_number_list,color='red',label='signal')
-        # plt.plot(photon_n_list,noise_number_list,color='blue',label='noise')
+        # plt.plot(photon_n_list,signal_rate_list,color='red',label='signal')
+        # plt.plot(photon_n_list,noise_rate_list,color='blue',label='noise')
         # plt.plot(photon_n_list,SN_ratio,color='green',label='ratio')
         fig, ax1 = plt.subplots()
 
         # Plot dataset 1 and dataset 2 on the left y-axis
-        line1, = ax1.plot(photon_n_list, signal_number_list, 'g-', label='signal')
-        line2, = ax1.plot(photon_n_list, noise_number_list, 'b-', label='noise')
+        line1, = ax1.plot(photon_n_list, signal_rate_list, 'g-', label='signal')
+        line2, = ax1.plot(photon_n_list, noise_rate_list, 'b-', label='noise')
         ax1.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
         ax1.set_ylim([2e-5,20])
 
