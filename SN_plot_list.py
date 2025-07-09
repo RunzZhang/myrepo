@@ -13,7 +13,7 @@ class SN():
         self.false_1 = "Cf_false1.csv"
         self.false_2 = "Cf_false2.csv"
         self.signal = "Cf_sig.csv"
-        self.name = "CF Signal Noise #1 400 eV 1E7"
+        self.name = "Signal Noise #1 400 eV"
         self.signal_final_list = []
         self.noise_final_list =[]
 
