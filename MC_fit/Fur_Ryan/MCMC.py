@@ -1177,7 +1177,7 @@ class multi_MC():
         modeErrT = 0.1
         modeErrPN = 0
         binsize = 1
-        sourceErr = .05 # change to 0.12 ~ 0.02
+        sourceErr = .02 # change to 0.12 ~ 0.02
         background = 52
         backErr = np.round(background ** (1 / 2))
         # energies=[75,100,115,120,140]
@@ -1311,33 +1311,33 @@ class multi_MC():
         np.savetxt(self.save_path + "start.txt", InArray)
         print("THIS HERE")
         print("p", len(pnweightList), len(pnrecoilList), len(pnweightList))
-        NitersRough = 20000
-        Niters = 4000000
-
-
-
-        Nwalkers = 4
-        printstep = 100000
-
-        energies0 = [0, 0, 0, 0,0]  # definition
-        nuisance0 = np.zeros(n + pn)
-        # pnuisance0=np.zeros(pn)
-        mode0 = [0, 0]
-
-        sample_n = 10000
-        # time
-        # NitersRough = 200
-        # Niters = 40000
+        # NitersRough = 20000
+        # Niters = 4000000
+        #
+        #
         #
         # Nwalkers = 4
-        # printstep = 1000
+        # printstep = 100000
         #
-        # energies0 = [0, 0, 0, 0, 0]  # definition
+        # energies0 = [0, 0, 0, 0,0]  # definition
         # nuisance0 = np.zeros(n + pn)
         # # pnuisance0=np.zeros(pn)
         # mode0 = [0, 0]
         #
-        # sample_n = 100
+        # sample_n = 10000
+        # save time
+        NitersRough = 2000
+        Niters = 400000
+
+        Nwalkers = 4
+        printstep = 10000
+
+        energies0 = [0, 0, 0, 0, 0]  # definition
+        nuisance0 = np.zeros(n + pn)
+        # pnuisance0=np.zeros(pn)
+        mode0 = [0, 0]
+
+        sample_n = 1000
 
 
 
@@ -1400,7 +1400,7 @@ class multi_MC():
                 else:
                     energies0[j] = energies0[j - 1] + bound * np.random.rand() + buffer
             # energies0 = [6.252983462309628493e+01,7.599864648098314035e+01,7.619371624296209689e+01,8.055708179978147143e+01,1.272788497247918968e+02]
-            # energies0 = [60,72,80,88,100]  # fixed initial guess
+            energies0 = [350,375,400,425,450]  # fixed initial guess
             # energies0 = [120,144,160,176,200]  # fixed initial guess
             # energies0 = [240,288,320,352,400]
             # energies0=[61.07507532,69.51169466,81.90851564,95.18992111,1037.24945314]
@@ -1457,7 +1457,7 @@ class multi_MC():
             # )
             # chi,difTotal,difCount,totalTrue,totalModel,countTrue,countModel
             # chi,difTotal,difCount,total,trueTot,count,trueCount
-            print("2nd post analysiz")
+
             """
             for p in range(pn):
                 #test(recoil,rate,energies,efficiencies,r_nuis,t,weight,background=500,time=100)
