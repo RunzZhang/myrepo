@@ -370,7 +370,7 @@ class ReadRoot():
         # print scatter scatter
         plt.hist(scatter_ene, bins=100)
         plt.xscale("log")
-        plt.yscale("Log")
+        plt.yscale("log")
         print("scatter number", len(scatter_ene))
         plt.xlabel("scatter energy per Event")
         # plt.show()
