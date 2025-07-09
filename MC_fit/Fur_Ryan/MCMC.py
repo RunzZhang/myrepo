@@ -886,7 +886,6 @@ class multi_MC():
                    pnuisance=[1, 1],
                    mode=1,
                    ):
-        print(0)
         chi = np.zeros(pn)
         difTotal = np.zeros(pn)
         difCount = np.zeros(pn)
@@ -907,6 +906,7 @@ class multi_MC():
             # print ("photoEval2")
             # print("photoneutrondata",photoneutrondata)
             # print ("photoneutrondata[p]", photoneutrondata[p])
+            print(2)
             total, count = self.phototest3(
                 photoneutrondata[p],
                 energies,
@@ -1463,6 +1463,7 @@ class multi_MC():
             # )
 
             print("left",len(chipn), len(dtotali[n:]), len(dcounti[n:]), len(totalTrue[n:]), len(totalModeli[n:]), len(countTrue[n:]), len(countModeli[n:]) )
+            print()
             ryan_result = self.photoEval3(pn,photoneutrondata,pnlivetime,energies0,efficiencies0,photoArrayTrue,meanBackBubble,meanBackEvent,loud=True,pnuisance=nuisance0[i + 1:],mode=mode0[1], )
             print("right",len(ryan_result[0]), len(ryan_result[1]), len(ryan_result[2]), len(ryan_result[3]), len(ryan_result[4]),
                   len(ryan_result[5]), len(ryan_result[6]))
