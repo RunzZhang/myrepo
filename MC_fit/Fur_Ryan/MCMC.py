@@ -886,6 +886,7 @@ class multi_MC():
                    pnuisance=[1, 1],
                    mode=1,
                    ):
+        print(0)
         chi = np.zeros(pn)
         difTotal = np.zeros(pn)
         difCount = np.zeros(pn)
@@ -893,6 +894,7 @@ class multi_MC():
         totalTrue = np.zeros(pn)
         countModel = np.zeros(pn)
         countTrue = np.zeros(pn)
+        print(1)
         for p in range(pn):
             trueCount = 0
             trueMean = 0
