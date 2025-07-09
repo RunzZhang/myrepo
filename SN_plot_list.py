@@ -18,7 +18,7 @@ class SN():
         self.noise_final_list =[]
 
 
-
+        #982 statics false 1
         for i in range(1,101):
             self.main_body(i)
         self.combine_data()
