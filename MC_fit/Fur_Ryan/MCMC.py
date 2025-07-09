@@ -874,18 +874,18 @@ class multi_MC():
         return bubble_rate, event_rate
 
     def photoEval3(self,
-            pn,
-            photoneutrondata,
-            livetime,
-            energies,
-            efficiencies,
-            photoArrayTrue,
-            meanBackBubble,
-            meanBackEvent,
-            loud=False,
-            pnuisance=[1, 1],
-            mode=1,
-    ):
+                   pn,
+                   photoneutrondata,
+                   livetime,
+                   energies,
+                   efficiencies,
+                   photoArrayTrue,
+                   meanBackBubble,
+                   meanBackEvent,
+                   loud=False,
+                   pnuisance=[1, 1],
+                   mode=1,
+                   ):
         chi = np.zeros(pn)
         difTotal = np.zeros(pn)
         difCount = np.zeros(pn)
