@@ -29,7 +29,6 @@ def raw_to_list(path):
         s = s.strip()
         if not s:
             return None
-        # Insert 'E' in front of the exponent
         if '+' in s[1:]:
             s = s.replace('+', 'E+', 1)
         elif '-' in s[1:]:
@@ -40,28 +39,27 @@ def raw_to_list(path):
             return None
 
     with open(path, "r") as f:
-        for line in f:
-            # Skip lines that don't match expected numeric blocks
-            if re.match(r'\s*\d+\.\d{6}[+-]\d\s+\d+\.\d{6}[+-]\d', line):
-                for i in range(0, 66, 22):
-                    s1 = line[i:i + 11]
-                    s2 = line[i + 11:i + 22]
-                    val1 = parse_endf_float(s1)
-                    val2 = parse_endf_float(s2)
-                    if val1 is not None and val2 is not None:
-                        energy.append(val1)
-                        intensity.append(val2)
+        lines = f.readlines()
 
-    # Convert to NumPy arrays
+    # Skip first 8 lines (metadata headers)
+    for line in lines[8:]:
+        if re.match(r'\s*\d+\.\d{6}[+-]\d\s+\d+\.\d{6}[+-]\d', line):
+            for i in range(0, 66, 22):
+                s1 = line[i:i + 11]
+                s2 = line[i + 11:i + 22]
+                val1 = parse_endf_float(s1)
+                val2 = parse_endf_float(s2)
+                if val1 is not None and val2 is not None:
+                    energy.append(val1)
+                    intensity.append(val2)
+
     energy = np.array(energy)
     intensity = np.array(intensity)
 
-    # Filter out zero or invalid intensity values
     nonzero = intensity > 0
     energy = energy[nonzero]
     intensity = intensity[nonzero]
 
-    # Normalize spectrum to unit area
     intensity /= np.trapz(intensity, energy)
 
     return energy, intensity
