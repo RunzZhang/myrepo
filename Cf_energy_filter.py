@@ -17,6 +17,7 @@ def dat_to_list(path):
             if len(parts) == 3:
                 energy_list.append(float(parts[1]))
                 intensity_list.append(float(parts[2]))
+
     return energy_list, intensity_list
 
 def raw_to_list(path):
@@ -67,9 +68,11 @@ def raw_to_list(path):
 
 #fast neutron fs thermal neutron tn
 (ene_fn, intens_fn)=dat_to_list(before_KE_path)
-(ene_tn,intens_tn) = raw_to_list(after_KE_path)
 
-# plt.plot(ene_fn,intens_fn,label='Fast Neutron Spectrum')
+(ene_tn,intens_tn) = raw_to_list(after_KE_path)
+print((ene_tn,intens_tn))
+
+plt.plot(ene_fn,intens_fn,label='Fast Neutron Spectrum')
 plt.plot(ene_tn,intens_tn,label='Thermal Neutron Spectrum')
 plt.xscale("log")
 plt.yscale("log")
