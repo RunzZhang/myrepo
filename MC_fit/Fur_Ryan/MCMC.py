@@ -1410,7 +1410,7 @@ class multi_MC():
                 else:
                     energies0[j] = energies0[j - 1] + bound * np.random.rand() + buffer
             # energies0 = [6.252983462309628493e+01,7.599864648098314035e+01,7.619371624296209689e+01,8.055708179978147143e+01,1.272788497247918968e+02]
-            energies0 = [350,375,400,425,450]  # fixed initial guess
+            # energies0 = [350,375,400,425,450]  # fixed initial guess
             # energies0 = [120,144,160,176,200]  # fixed initial guess
             # energies0 = [240,288,320,352,400]
             # energies0=[61.07507532,69.51169466,81.90851564,95.18992111,1037.24945314]
