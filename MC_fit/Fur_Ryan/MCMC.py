@@ -860,11 +860,10 @@ class multi_MC():
         # print (np.shape(data))
         print("pho_test", 0, np.shape(data))
         dataMem = np.zeros(np.shape(data))
-        # dataMem[:, 1] = data[:, 1] # original
-        # dataMem[:, 2] = data[:, 2]
+        dataMem[:, 1] = data[:, 1] # original
+        dataMem[:, 2] = data[:, 2]
 
-        dataMem[:, 0] = data[:, 0]
-        dataMem[:, 1] = data[:, 1]
+
         print("pho_test", 1 )
         # T=80
         # sigLow=10
