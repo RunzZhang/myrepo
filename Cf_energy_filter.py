@@ -6,6 +6,7 @@ import re
 
 after_KE_path = "./Cf252_spontanous.txt"
 before_KE_path = "/data/runzezhang/Geant4Simulaions/g411_TN/CF252Sap7.5Poly6Pad10KE.dat"
+plot_path= "/data/runzezhang/result/TN_sims_D/plot/"
 
 def dat_to_list(path):
     energy_list = [] # in MeV
@@ -60,4 +61,4 @@ plt.ylabel("Intensity")
 plt.xlim()
 # plt.ylim()
 plt.legend()
-plt.savefig("compare")
+plt.savefig(plot_path+"Cf_filter.png")
