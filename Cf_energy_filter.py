@@ -7,6 +7,7 @@ import re
 after_KE_path = "./Cf252_spontanous.txt"
 before_KE_path = "/data/runzezhang/Geant4Simulaions/g411_TN/CF252Sap7.5Poly6Pad10KE.dat"
 plot_path= "/data/runzezhang/result/TN_sims_D/plot/"
+ce('+', 'E+').replace('-', 'E-', 1))
 
 def dat_to_list(path):
     energy_list = [] # in MeV
@@ -19,35 +20,52 @@ def dat_to_list(path):
                 intensity_list.append(float(parts[2]))
     return energy_list, intensity_list
 
-
 def raw_to_list(path):
-
-
     energy = []
     intensity = []
 
+    def parse_endf_float(s):
+        """Convert ENDF-style float (e.g., '2.000000-5') to Python float."""
+        s = s.strip()
+        if not s:
+            return None
+        # Insert 'E' in front of the exponent
+        if '+' in s[1:]:
+            s = s.replace('+', 'E+', 1)
+        elif '-' in s[1:]:
+            s = s.replace('-', 'E-', 1)
+        try:
+            return float(s)
+        except ValueError:
+            return None
+
     with open(path, "r") as f:
         for line in f:
+            # Skip lines that don't match expected numeric blocks
             if re.match(r'\s*\d+\.\d{6}[+-]\d\s+\d+\.\d{6}[+-]\d', line):
-                # Each line has 3 (energy, intensity) pairs
-                numbers = [float(line[i:i + 11]) * 10 ** float(line[i + 11:i + 13])
-                           for i in range(0, 66, 22)]
-                for i in range(0, len(numbers), 2):
-                    energy.append(numbers[i])
-                    intensity.append(numbers[i + 1])
+                for i in range(0, 66, 22):
+                    s1 = line[i:i + 11]
+                    s2 = line[i + 11:i + 22]
+                    val1 = parse_endf_float(s1)
+                    val2 = parse_endf_float(s2)
+                    if val1 is not None and val2 is not None:
+                        energy.append(val1)
+                        intensity.append(val2)
 
     # Convert to NumPy arrays
     energy = np.array(energy)
     intensity = np.array(intensity)
 
-    # Optional: remove trailing zeros or normalize
+    # Filter out zero or invalid intensity values
     nonzero = intensity > 0
     energy = energy[nonzero]
     intensity = intensity[nonzero]
 
-    # Normalize if needed
+    # Normalize spectrum to unit area
     intensity /= np.trapz(intensity, energy)
-    return energy,intensity
+
+    return energy, intensity
+
 #fast neutron fs thermal neutron tn
 (ene_fn, intens_fn)=dat_to_list(before_KE_path)
 (ene_tn,intens_tn) = raw_to_list(after_KE_path)
