@@ -970,7 +970,9 @@ class multi_MC():
 
     def phototestTrue(self,pnc_filepath, livetime, T, sigLow, sigUp):
         # data1=np.loadtxt("../photoNC/Informacion_Sb124_high1.txt",skiprows=1,dtype="str")
-        data = np.loadtxt(pnc_filepath, dtype="int")
+        # data = np.loadtxt(pnc_filepath, dtype="int")
+        data = np.loadtxt(pnc_filepath).astype(np.int64)
+
         # data=data[0:2000]
         # print("Neutron output shape: ",np.shape(data))
         m = 0
