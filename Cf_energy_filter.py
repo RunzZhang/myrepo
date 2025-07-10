@@ -69,7 +69,7 @@ def raw_to_list(path):
 (ene_fn, intens_fn)=dat_to_list(before_KE_path)
 (ene_tn,intens_tn) = raw_to_list(after_KE_path)
 
-plt.plot(ene_fn,intens_fn,label='Fast Neutron Spectrum')
+# plt.plot(ene_fn,intens_fn,label='Fast Neutron Spectrum')
 plt.plot(ene_tn,intens_tn,label='Thermal Neutron Spectrum')
 plt.xscale("log")
 plt.yscale("log")
