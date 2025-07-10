@@ -1234,7 +1234,7 @@ class multi_MC():
         for p in range(pn):
             print(p, pn)
             print(photoBackMean)
-            pnc_array = self.photoread(self.pnlist[p] + "_faster.txt")
+            pnc_array = np.loadtxt(pnlist[p] + "_recoils.txt")
             photoneutrondata += [pnc_array]
             print("")
             print("")
@@ -1244,13 +1244,17 @@ class multi_MC():
             print("********************")
             print("")
             print("")
-            photoArrayTrue[p, :] = self.phototestTrue(self.pnlist[p] + "_fast.txt", 500, T, sigLow, sigUp)
-            print("before", photoArrayTrue)
-            pn_sourceError[p] = np.random.normal(1, sourceErr, 1)
-            photoArrayTrue[p, :] = self.photoJitter(photoArrayTrue[p, :], photoBackMean, pn_sourceError[p], time=time)
+            photoArrayTrue[p, :] = self.phototestTrue(
+                pnlist[p] + "_slow.txt", 2000, T, sigLow, sigUp
+            )
+            pn_sourceError[p] = np.squeeze(np.random.normal(0, sourceErr, 1))
+            # pn_sourceError[p] = np.random.normal(0, sourceErr, 1)
+            photoArrayTrue[p, :] = self.photoJitter(
+                photoArrayTrue[p, :], photoBackMean, pn_sourceError[p], pnCommonMode, time=time
+            )
             # print ("M:",M)
-            print("after", photoArrayTrue)
             print(photoBackMean)
+
             # comment spec1
             # spec11,spec21,spec22,spec31,spec32,spec33,specn1,specn2,specn3,specnn=self.load_photN2(self.pnlist[p])
             # B1,B2,B3,Bn=self.multiplicer2(spec11,spec21,spec22,spec31,spec32,spec33,specn1,specn2,specn3,specnn,T,sigLow,sigUp,1)
