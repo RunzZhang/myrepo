@@ -9,7 +9,7 @@ fi
 cp job_fitnest.sh ${SUBDIR}/job_fitnest.sh
 cp MCMC.py ${SUBDIR}/MCMC.py
 cp MC_argon_full_20250701_LSS07_2E5_Noahformat.txt ${SUBDIR}/MC_argon_full_20250701_LSS07_2E5_Noahformat.txt
-cp SRIM_MCMC_argon_full_20250701_LSS07_2E5 ${SUBDIR}/SRIM_MCMC_argon_full_20250701_LSS07_2E5
+cp MC_argon_full_20250701_LSS07_2E5 ${SUBDIR}/MC_argon_full_20250701_LSS07_2E5
 cp *.txt ${SUBDIR}/
 
 cd $SUBDIR
