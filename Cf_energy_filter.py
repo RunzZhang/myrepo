@@ -71,7 +71,7 @@ def raw_to_list(path):
 print((ene_fn,intens_fn))
 
 plt.plot(ene_fn,intens_fn,label='Fast Neutron Spectrum')
-plt.plot(ene_tn,intens_tn,label='Thermal Neutron Spectrum')
+# plt.plot(ene_tn,intens_tn,label='Thermal Neutron Spectrum')
 plt.xscale("log")
 plt.yscale("log")
 plt.xlabel("Energy/eV")
