@@ -909,7 +909,7 @@ class multi_MC():
             # print ("photoEval2")
             # print("photoneutrondata",photoneutrondata)
             # print ("photoneutrondata[p]", photoneutrondata[p])
-            
+
             total, count = self.phototest3(
                 photoneutrondata[p],
                 energies,
