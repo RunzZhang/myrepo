@@ -950,34 +950,38 @@ class multi_MC():
         return chi, difTotal, difCount, totalTrue, totalModel, countTrue, countModel
 
 
-    def photoJitter(self,photoSourceTrue, photoBackMean, sourceError, time=100):
+    def photoJitter(self,photoSourceTrue, photoBackMean, sourceError,pnCommonMode, time=100):
         # poisson uncertainty in background + events
         # source strength uncertainty
         photoBack = np.zeros(len(photoBackMean))
-        photoSourceTrue *= (sourceError)
+        pnCommonMode = self.logErr(pnCommonMode)
+        sourceError = self.logErr(sourceError)
+        photoSourceTrue *= sourceError
+        photoSourceTrue *= pnCommonMode
         photoSourceTrue *= time
         photoBack = time * photoBackMean
         for i in range(len(photoSourceTrue)):
             photoSourceTrue[i] = np.random.poisson(photoSourceTrue[i])
             photoBack[i] = np.random.poisson(photoBack[i])
+            # photoSourceTrue[i] = photoSourceTrue[i]
+            # photoBack[i] = photoBack[i]
         photoSourceTrue = (photoSourceTrue + photoBack) / time
         return photoSourceTrue
 
     def phototestTrue(self,pnc_filepath, livetime, T, sigLow, sigUp):
         # data1=np.loadtxt("../photoNC/Informacion_Sb124_high1.txt",skiprows=1,dtype="str")
-        data = np.loadtxt(pnc_filepath, skiprows=1, dtype="str")
-        # return a 1-d array with at i'th position, record number of events of multiplicity of i
-        print(pnc_filepath, data[:10])
+        data = np.loadtxt(pnc_filepath, dtype="int")
         # data=data[0:2000]
         # print("Neutron output shape: ",np.shape(data))
         m = 0
         M = np.zeros(20)
         bsum = 0
+        i = 0
         # for i in range(500):
-        for i in range(len(data)):
+        for line in data:
             if i == 0:
                 m = 0
-            elif data[i, 0] == data[i - 1, 0]:
+            elif line[0] == line_old[0]:
                 # print ("Same: ", i, data[i,0])
                 m = m
             else:
@@ -988,17 +992,7 @@ class multi_MC():
                     M[m] += 1
                     # print ("Recorded: ",m,i, M[m])
                 m = 0
-            r = float(data[i, 1])
-            u = data[i, 2]
-            if u == "eV":
-                r = r
-            elif u == "keV":
-                r = 1000 * r
-            elif u == "MeV":
-                r = 1000000 * r
-            else:
-                # print ("Help!",i+1,u)
-                fiftyfive = 55
+            r = line[1]
             t = 1
             weight = 1
             popper = np.random.uniform(0, 1)
@@ -1015,7 +1009,9 @@ class multi_MC():
                     M[0] += 1
                 else:
                     M[m] += 1
-                    # print ("Recorded: ",m,i, M[m])
+            line_old = line
+            i += 1
+            # print ("Recorded: ",m,i, M[m])
         # print ("M :",M/np.sum(M))
         average = 0
         for i in range(len(M)):
@@ -1470,7 +1466,7 @@ class multi_MC():
             # )
 
             print("left",len(chipn), len(dtotali[n:]), len(dcounti[n:]), len(totalTrue[n:]), len(totalModeli[n:]), len(countTrue[n:]), len(countModeli[n:]) )
-            print()
+
             ryan_result = self.photoEval3(pn,photoneutrondata,pnlivetime,energies0,efficiencies0,photoArrayTrue,meanBackBubble,meanBackEvent,loud=True,pnuisance=nuisance0[i + 1:],mode=mode0[1], )
             print("right",len(ryan_result[0]), len(ryan_result[1]), len(ryan_result[2]), len(ryan_result[3]), len(ryan_result[4]),
                   len(ryan_result[5]), len(ryan_result[6]))
