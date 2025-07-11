@@ -1180,7 +1180,7 @@ class multi_MC():
         T = self.threshold
         sigLow = self.sig_low
         sigUp = self.sig_high
-        modeErrT = 0.1
+        modeErrT = 0.2
         modeErrPN = 0.2
         binsize = 1
         sourceErr = .05 # change to 0.12 ~ 0.02
