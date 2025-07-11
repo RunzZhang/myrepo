@@ -6,6 +6,7 @@ import re
 
 before_KE_path = "./Cf252_spontanous.txt"
 after_KE_path = "/data/runzezhang/Geant4Simulaions/g411_TN/CF252Sap7.5Poly6Pad10KE.dat"
+before_KE_G4_path = "./Cf252_spontanous_g4.txt"
 plot_path= "/data/runzezhang/result/TN_sims_D/plot/"
 
 def dat_to_list(path):
@@ -65,13 +66,13 @@ def raw_to_list(path):
     return energy, intensity
 
 #fast neutron fs thermal neutron tn
-(ene_fn, intens_fn)=raw_to_list(before_KE_path)
-
+# (ene_fn, intens_fn)=raw_to_list(before_KE_path)
+(ene_fn, intens_fn)=dat_to_list(before_KE_G4_path)
 (ene_tn,intens_tn) = dat_to_list(after_KE_path)
 print((ene_fn,intens_fn))
 
 plt.plot(ene_fn,intens_fn,label='Fast Neutron Spectrum')
-# plt.plot(ene_tn,intens_tn,label='Thermal Neutron Spectrum')
+plt.plot(ene_tn,intens_tn,label='Thermal Neutron Spectrum')
 plt.xscale("log")
 plt.yscale("log")
 plt.xlabel("Energy/eV")
