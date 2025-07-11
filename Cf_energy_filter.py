@@ -9,15 +9,25 @@ after_KE_path = "/data/runzezhang/Geant4Simulaions/g411_TN/CF252Sap7.5Poly6Pad10
 before_KE_G4_path = "./Cf252_spontanous_g4.txt"
 plot_path= "/data/runzezhang/result/TN_sims_D/plot/"
 
-def dat_to_list(path):
+Before_Activity = 39600 # both for 9 micro curie and unit is /s
+After_Activity = 435.6
+def dat_to_list(path, source_number):
     energy_list = [] # in MeV
     intensity_list = [] # I don't know unit
+    intensity_nor_list = [] # normalized
     with open(path, "r") as file:
         for line in file:
             parts = line.strip().split()
             if len(parts) == 3:
                 energy_list.append(float(parts[1]))
                 intensity_list.append(float(parts[2]))
+    total_intensity = sum(intensity_list)
+    if source_number == 0: # 0 means original activity, 1 means thermal neutron rates
+        for i in intensity_list:
+            intensity_nor_list.append(i*Before_Activity/total_intensity)
+    elif source_number ==1:
+        for i in intensity_list:
+            intensity_nor_list.append(i*After_Activity/total_intensity)
 
     return energy_list, intensity_list
 
@@ -77,7 +87,6 @@ plt.xscale("log")
 plt.yscale("log")
 plt.xlabel("Energy/eV")
 plt.ylabel("Intensity")
-plt.xlim()
-# plt.ylim()
+plt.xlim([1e-9,10])
 plt.legend()
 plt.savefig(plot_path+"Cf_filter.png")
