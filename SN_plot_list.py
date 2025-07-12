@@ -13,7 +13,8 @@ class SN():
         self.false_1 = "Cf_false1.csv"
         self.false_2 = "Cf_false2.csv"
         self.signal = "Cf_sig.csv"
-        self.name = "False Signal Noise #2 400 eV"
+        self.name = "False Signal Noise #1 400 eV"
+        self.plot_name = self.name+"1E7.png"
         self.signal_final_list = []
         self.noise_final_list =[]
 
@@ -193,8 +194,8 @@ class SN():
         ax1.set_ylim([2e-5,20])
 
         # Set the labels and title
-        ax1.set_xlabel('photon number threshold',fontsize = 16)
-        ax1.set_ylabel('detected event rate #/h', color='black',fontsize = 16)
+        ax1.set_xlabel('Photon Number Threshold',fontsize = 16)
+        ax1.set_ylabel('Detected Event Rate #/h', color='black',fontsize = 16)
         ax1.set_yscale('log')
 
         # Create another y-axis that shares the same x-axis
@@ -214,7 +215,7 @@ class SN():
         # Show the plot
 
         plt.title(self.name, fontsize = 16)
-        plt.savefig(self.plot_path + self.name)
+        plt.savefig(self.plot_path + self.plot_name)
         # plt.show()
 
 
