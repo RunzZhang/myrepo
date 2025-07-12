@@ -229,8 +229,8 @@ class SN():
         ax1.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
 
         # Set the labels and title
-        ax1.set_xlabel('Photon Number Threshold',fontsize = 16)
-        ax1.set_ylabel('Detected Event Rate #/h', color='black',fontsize = 16)
+        ax1.set_xlabel('photon number threshold',fontsize = 16)
+        ax1.set_ylabel('detected event rate #/h', color='black',fontsize = 16)
         ax1.set_yscale('log')
 
         # Create another y-axis that shares the same x-axis
