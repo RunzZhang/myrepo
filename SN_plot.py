@@ -205,7 +205,7 @@ class SN():
             else:
                 point.append(i)
                 # print("point", point)
-                SN_ratio.append(max(SN_ratio))
+                SN_ratio.append(max(SN_ratio)*100)
         for j in range(len(signal_number_list)):
             if photon_n_list[j]>200:
                 print("output",j,signal_number_list[j],noise_number_list[j])
