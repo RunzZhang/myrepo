@@ -118,13 +118,13 @@ class MC_sim_full_argon():
         # self.gamma_sim(10000)
         # self.MC_sim(self.runtime)
         # self.data_analysis_v2(self.address)
-        # self.plot_spectrum(self.address)
+        self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
         # predict bubble events ratio with different energy threshold
         # also plot how it changes with threshold
         # self.predicted_bubble_events(self.address)
-        self.predicted_bubble_events_LSS()
+        # self.predicted_bubble_events_LSS()
         # self.source_uncertainty(0.5)
         # self.source_uncertainty_w_background(0.3, 500)
         # self.bubble_event_with_sigma(0.5)
@@ -411,7 +411,7 @@ class MC_sim_full_argon():
             x_bins.append((hist_result[1][i] + hist_result[1][i + 1]) / 2)
 
         plt.plot(x_bins, hist_result[0], color="blue")
-        plt.grid(True, which='both', linestyle='-', linewidth=1)
+        # plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
         plt.xlabel("Energy/eV",fontsize=18)
         plt.ylabel("Possibility/bin",fontsize=18)
