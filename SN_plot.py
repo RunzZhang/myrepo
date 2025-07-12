@@ -12,7 +12,8 @@ class SN():
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
         self.signal_path = self.base_path + self.signal
-        self.name = "CF Signal Noise #2 400 eV"
+        self.name = "CF Signal Noise #1 400 eV"
+        self.plot_name = self.name+"1E7.png"
 
         self.old_read_files()
 
@@ -29,7 +30,7 @@ class SN():
         # self.capture_ratio = 1.158E-3  # 1125 eV
         self.rate = 435.6 #/s # CF neutron rate 9 mucurie
         # self.rate = 0.56 #AmLi neutron rate
-        self.G4_events= 1E6
+        self.G4_events= 1E7
         self.G4_sig_time=(self.G4_events / self.rate)
         # with open(self.base_path + "Ar_photon_AmLi2.csv", 'r') as file:
         # with open(self.base_path + "Ar_photon_Cf.csv", 'r') as file:
@@ -248,7 +249,7 @@ class SN():
         # Show the plot
 
         plt.title(self.name, fontsize = 16)
-        plt.savefig(self.plot_path + self.name)
+        plt.savefig(self.plot_path + self.plot_name)
         # plt.show()
 
 
