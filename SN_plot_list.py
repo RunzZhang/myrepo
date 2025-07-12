@@ -188,8 +188,8 @@ class SN():
         fig, ax1 = plt.subplots()
 
         # Plot dataset 1 and dataset 2 on the left y-axis
-        line1, = ax1.plot(photon_n_list, signal_rate_list, 'g-', label='signal')
-        line2, = ax1.plot(photon_n_list, noise_rate_list, 'b-', label='noise')
+        line1, = ax1.plot(photon_n_list, signal_rate_list, 'g-', label='Signal')
+        line2, = ax1.plot(photon_n_list, noise_rate_list, 'b-', label='Noise')
         ax1.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
         ax1.set_ylim([2e-5,20])
 
@@ -202,7 +202,7 @@ class SN():
         ax2 = ax1.twinx()
 
         # Plot dataset 3 on the right y-axis
-        line3, = ax2.plot(photon_n_list, SN_ratio, 'r-', label='signal to noise ratio')
+        line3, = ax2.plot(photon_n_list, SN_ratio, 'r-', label='Signal to Noise Ratio')
 
         # Set the label for the second y-axis
         ax2.set_ylabel('signal to noise ratio', color='black',fontsize = 16)
