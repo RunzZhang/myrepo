@@ -81,8 +81,8 @@ def raw_to_list(path):
 (ene_tn,intens_tn) = dat_to_list(after_KE_path, 1)
 print((ene_fn,intens_fn))
 
-plt.plot(ene_fn,intens_fn,label='Cf252 neutron spectrum')
-plt.plot(ene_tn,intens_tn,label='Outgoing neutron spectrum through sapphire')
+plt.plot(ene_fn,intens_fn,label='Cf252 Neutron Spectrum')
+plt.plot(ene_tn,intens_tn,label='Outgoing Neutron Spectrum Through Sapphire')
 plt.xscale("log")
 plt.yscale("log")
 plt.xlabel("Energy/eV", fontsize =16)
