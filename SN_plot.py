@@ -12,8 +12,7 @@ class SN():
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
         self.signal_path = self.base_path + self.signal
-        self.name = "CF Signal Noise #2 400 eV"
-        self.plot_name = self.name+"1E7.png"
+        self.name = "CF Signal Noise #2 1125 eV"
 
         self.old_read_files()
 
@@ -25,9 +24,9 @@ class SN():
         # self.capture_ratio = 1.164E-3 # 1125eV 1.4g/cm Ar
         # self.capture_ratio = 0.121 # 400 eV 1.4g/cm3 Ar
         # self.capture_ratio = 0.267  # 350 eV
-        self.capture_ratio = 0.116  # 400 eV
+        # self.capture_ratio = 0.116  # 400 eV
         # self.capture_ratio = 6.52E-3  # 700 eV
-        # self.capture_ratio = 1.158E-3  # 1125 eV
+        self.capture_ratio = 1.158E-3  # 1125 eV
         self.rate = 435.6 #/s # CF neutron rate 9 mucurie
         # self.rate = 0.56 #AmLi neutron rate
         self.G4_events= 1E7
