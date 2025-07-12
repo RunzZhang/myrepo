@@ -24,10 +24,10 @@ def dat_to_list(path, source_number):
     total_intensity = sum(intensity_list)
     if source_number == 0: # 0 means original activity, 1 means thermal neutron rates
         for i in intensity_list:
-            intensity_nor_list.append(i*Before_Activity/total_intensity)
+            intensity_nor_list.append((0.032*3600*i*Before_Activity)/(9*total_intensity))
     elif source_number ==1:
         for i in intensity_list:
-            intensity_nor_list.append(i*After_Activity/total_intensity)
+            intensity_nor_list.append((0.032*3600*i*After_Activity)/(9*total_intensity))
 
     return energy_list, intensity_list
 
@@ -86,7 +86,7 @@ plt.plot(ene_tn,intens_tn,label='Outgoing neutron spectrum through sapphire')
 plt.xscale("log")
 plt.yscale("log")
 plt.xlabel("Energy/eV", fontsize =16)
-plt.ylabel("Intensity", fontsize =16)
+plt.ylabel("Event Rate #/h", fontsize =16)
 plt.xlim([1e-9,7.6])
 plt.legend()
 plt.savefig(plot_path+"Cf_filter.png",bbox_inches='tight')
