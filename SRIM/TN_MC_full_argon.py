@@ -124,7 +124,7 @@ class MC_sim_full_argon():
         # predict bubble events ratio with different energy threshold
         # also plot how it changes with threshold
         # self.predicted_bubble_events(self.address)
-        # self.predicted_bubble_events_LSS()
+        self.predicted_bubble_events_LSS()
         # self.source_uncertainty(0.5)
         # self.source_uncertainty_w_background(0.3, 500)
         # self.bubble_event_with_sigma(0.5)
@@ -136,7 +136,7 @@ class MC_sim_full_argon():
         # self.LSS_introduced_uncertainty()
 
         # self.plot_spectrums_sigma_t()
-        self.predicted_bubble_events_t()
+        # self.predicted_bubble_events_t()
     def data_preparation(self):
 
         for i in range(len(self.argon_list)):# for each chain
@@ -703,8 +703,8 @@ class MC_sim_full_argon():
         # plt.plot(x_bins_05, bubble_event_05,  label = 'lower scaling LSS')
         # plt.plot(x_bins_08, bubble_event_08,  label='uppper scaling LSS')
         plt.fill_between(x_bins_07, bubble_event_08, bubble_event_05, color='dimgray', alpha=0.5,
-                         label='LSS limits')
-        plt.plot(x_bins_07, bubble_event_07,  label='0.7 scaling LSS')
+                         label='LSS Limits')
+        plt.plot(x_bins_07, bubble_event_07,  label='0.7 Scaling LSS')
         plt.minorticks_on()
         plt.xlabel("Energy/eV",fontsize=18)
         plt.ylabel("Bubble Event Number in 100 h",fontsize=18)
