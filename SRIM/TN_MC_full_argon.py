@@ -118,7 +118,7 @@ class MC_sim_full_argon():
         # self.gamma_sim(10000)
         # self.MC_sim(self.runtime)
         # self.data_analysis_v2(self.address)
-        self.plot_spectrum(self.address)
+        # self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
         # predict bubble events ratio with different energy threshold
@@ -132,7 +132,7 @@ class MC_sim_full_argon():
         # self.bubble_event_with_spectrum_sigma()
         # self.spectrum_uncertainty()
         # self.plot_spectrums_sigma()
-        # self.plot_spectrums_sigma_LSS()
+        self.plot_spectrums_sigma_LSS()
         # self.LSS_introduced_uncertainty()
 
         # self.plot_spectrums_sigma_t()
@@ -452,10 +452,10 @@ class MC_sim_full_argon():
         # for i in hist_result[0]:
         #     new_set.append(i/20)
         # plt.plot(x_bins, new_set, color="blue", label='LSS refit')
-        plt.plot(x_bins, hist_result[0], color="blue", label='LSS refit')
+        plt.plot(x_bins, hist_result[0], color="blue", label='LSS Refit')
         # plt.plot(x_bins, hist_result_low[0], color="green", label="0.5 LSS scaling")
         # plt.plot(x_bins, hist_result_high[0], color="orange", label='0.8 LSS scaling')
-        plt.fill_between(x_bins, hist_result_high[0], hist_result_low[0], color='dimgray', alpha=0.5, label='LSS limits')
+        plt.fill_between(x_bins, hist_result_high[0], hist_result_low[0], color='dimgray', alpha=0.5, label='LSS Limits')
         plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
         plt.xlabel("Energy/eV",fontsize=18)
