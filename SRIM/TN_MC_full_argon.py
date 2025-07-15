@@ -456,7 +456,7 @@ class MC_sim_full_argon():
         # plt.plot(x_bins, hist_result_low[0], color="green", label="0.5 LSS scaling")
         # plt.plot(x_bins, hist_result_high[0], color="orange", label='0.8 LSS scaling')
         plt.fill_between(x_bins, hist_result_high[0], hist_result_low[0], color='dimgray', alpha=0.5, label='LSS Limits')
-        plt.grid(True, which='both', linestyle='-', linewidth=1)
+        # plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
         plt.xlabel("Energy/eV",fontsize=18)
         plt.ylabel("Possibility/bin",fontsize=18)
