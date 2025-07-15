@@ -727,8 +727,8 @@ class SRIM_scatter():
         plt.show()
         print(self.ep_list)
 if __name__ == "__main__":
-    srim_result  = SRIM_EXY()
-    # srim_data = SRIM_Table()
+    # srim_result  = SRIM_EXY()
+    srim_data = SRIM_Table()
     # test = model_test()
     # scatter = SRIM_scatter()
 
