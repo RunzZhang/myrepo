@@ -79,14 +79,20 @@ def raw_to_list(path):
 # (ene_fn, intens_fn)=raw_to_list(before_KE_path)
 (ene_fn, intens_fn)=dat_to_list(before_KE_G4_path, 0)
 (ene_tn,intens_tn) = dat_to_list(after_KE_path, 1)
+ene_fn_ev = []
+ene_tn_ev = []
+for i in range(len(ene_tn)):
+    ene_tn_ev.append(ene_tn[i]*10**6)
+for i in range(len(ene_fn)):
+    ene_fn_ev.append(ene_fn[i]*10**6)
 print((ene_fn,intens_fn))
 
-plt.plot(ene_fn,intens_fn,label='Cf252 Neutron Spectrum')
-plt.plot(ene_tn,intens_tn,label='Outgoing Neutron Spectrum Through Sapphire')
+plt.plot(ene_fn_ev,intens_fn,label='Cf252 Neutron Spectrum')
+plt.plot(ene_tn_ev,intens_tn,label='Outgoing Neutron Spectrum Through Sapphire')
 plt.xscale("log")
 plt.yscale("log")
-plt.xlabel("Energy/eV", fontsize =16)
-plt.ylabel(r"Event Rate #/(h $\cdot$ bin)", fontsize =16)
-plt.xlim([1e-9,7.6])
+plt.xlabel("Energy (eV)", fontsize =16)
+plt.ylabel(r"Event Rate (event/hr/bin)", fontsize =16)
+plt.xlim([1e-3,7.6e6])
 plt.legend()
-plt.savefig(plot_path+"Cf_filter.png",bbox_inches='tight')
+plt.savefig(plot_path+"Cf_filter.pdf",bbox_inches='tight')
