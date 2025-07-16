@@ -118,7 +118,7 @@ class MC_sim_full_argon():
         # self.gamma_sim(10000)
         # self.MC_sim(self.runtime)
         # self.data_analysis_v2(self.address)
-        self.plot_spectrum(self.address)
+        # self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
         # predict bubble events ratio with different energy threshold
@@ -135,7 +135,7 @@ class MC_sim_full_argon():
         # self.plot_spectrums_sigma_LSS()
         # self.LSS_introduced_uncertainty()
 
-        # self.plot_spectrums_sigma_t()
+        self.plot_spectrums_sigma_t()
         # self.predicted_bubble_events_t()
     def data_preparation(self):
 
@@ -414,7 +414,7 @@ class MC_sim_full_argon():
         # plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
         plt.xlabel("Energy (eV)",fontsize=18)
-        plt.ylabel("Probability (/bin)",fontsize=18)
+        # plt.ylabel("Probability (/bin)",fontsize=18)
         plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
@@ -498,15 +498,15 @@ class MC_sim_full_argon():
         # plt.plot(x_bins, hist_result_high[0], color="orange", label='2x decay time spectrum')
         # plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
-        plt.xlabel("Energy/eV",fontsize=18)
-        plt.ylabel("Possibility/bin",fontsize=18)
+        plt.xlabel("Energy (eV)",fontsize=18)
+        plt.ylabel("Possibility (bin)",fontsize=18)
         plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
         plt.legend()
-        plt.savefig(self.plot_address+"t_uncertainty_spectrum.png", bbox_inches= "tight")
+        plt.savefig(self.plot_address+"t_uncertainty_spectrum.pdf", bbox_inches= "tight")
 
     def predicted_bubble_events_t(self):
         # given energy threshold in function generate_hist_and_CDF, plot the bubble numbers
@@ -551,8 +551,8 @@ class MC_sim_full_argon():
                          label='50% Time Scaling Limits')
         plt.plot(x_bins_20, bubble_event_10, label='Orignal t')
         plt.minorticks_on()
-        plt.xlabel("Energy/eV", fontsize=18)
-        plt.ylabel("Bubble Event Number in 100 h", fontsize=18)
+        plt.xlabel("Energy (eV)", fontsize=18)
+        plt.ylabel("Bubble Event Number in 100 h (event)", fontsize=18)
         plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
@@ -560,7 +560,7 @@ class MC_sim_full_argon():
         plt.legend()
         plt.ylim([0.1, 2E2])
         plt.yscale("log")
-        plt.savefig(self.plot_address + "t_uncertainty_spectrum_bubbble.png", bbox_inches="tight")
+        plt.savefig(self.plot_address + "t_uncertainty_spectrum_bubbble.pdf", bbox_inches="tight")
 
     def generate_hist_and_CDF(self,event_N= 10**3 , address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"):
         # event_N is neutron capture event numbers in argon per 100 hours
