@@ -135,8 +135,8 @@ class MC_sim_full_argon():
         # self.plot_spectrums_sigma_LSS()
         # self.LSS_introduced_uncertainty()
 
-        self.plot_spectrums_sigma_t()
-        # self.predicted_bubble_events_t()
+        # self.plot_spectrums_sigma_t()
+        self.predicted_bubble_events_t()
     def data_preparation(self):
 
         for i in range(len(self.argon_list)):# for each chain
