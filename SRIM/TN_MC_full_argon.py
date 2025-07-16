@@ -118,13 +118,13 @@ class MC_sim_full_argon():
         # self.gamma_sim(10000)
         # self.MC_sim(self.runtime)
         # self.data_analysis_v2(self.address)
-        # self.plot_spectrum(self.address)
+        self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
         # predict bubble events ratio with different energy threshold
         # also plot how it changes with threshold
         # self.predicted_bubble_events(self.address)
-        self.predicted_bubble_events_LSS()
+        # self.predicted_bubble_events_LSS()
         # self.source_uncertainty(0.5)
         # self.source_uncertainty_w_background(0.3, 500)
         # self.bubble_event_with_sigma(0.5)
@@ -413,14 +413,14 @@ class MC_sim_full_argon():
         plt.plot(x_bins, hist_result[0], color="blue")
         # plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
-        plt.xlabel("Energy/eV",fontsize=18)
-        plt.ylabel("Possibility/bin",fontsize=18)
+        plt.xlabel("Energy (eV)",fontsize=18)
+        plt.ylabel("Probability (/bin)",fontsize=18)
         plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
-        plt.savefig(self.plot_address+"New_D_L_spectrum_07LSS.png", bbox_inches='tight')
+        plt.savefig(self.plot_address+"New_D_L_spectrum_07LSS.pdf", bbox_inches='tight')
 
     def plot_spectrums_sigma_LSS(self):
         # plot spectrum with LSS 0.7 scaling factor and the upper and lower limit of scaling factor 0.5 /0.8 as band
