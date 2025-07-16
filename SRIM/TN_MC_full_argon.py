@@ -132,11 +132,13 @@ class MC_sim_full_argon():
         # self.bubble_event_with_spectrum_sigma()
         # self.spectrum_uncertainty()
         # self.plot_spectrums_sigma()
-        # self.plot_spectrums_sigma_LSS()
+
+        self.plot_spectrums_sigma_LSS()
+        # self.predicted_bubble_events_LSS()
         # self.LSS_introduced_uncertainty()
 
         # self.plot_spectrums_sigma_t()
-        self.predicted_bubble_events_t()
+        # self.predicted_bubble_events_t()
     def data_preparation(self):
 
         for i in range(len(self.argon_list)):# for each chain
@@ -458,15 +460,15 @@ class MC_sim_full_argon():
         plt.fill_between(x_bins, hist_result_high[0], hist_result_low[0], color='dimgray', alpha=0.5, label='LSS Limits')
         # plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
-        plt.xlabel("Energy/eV",fontsize=18)
-        plt.ylabel("Possibility/bin",fontsize=18)
+        plt.xlabel("Energy (eV)",fontsize=18)
+        plt.ylabel("Probability (/bin)",fontsize=18)
         plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
         plt.legend()
-        plt.savefig(self.plot_address+"Spectrum_lss_uncertainty.png", bbox_inches='tight')
+        plt.savefig(self.plot_address+"Spectrum_lss_uncertainty.pdf", bbox_inches='tight')
 
     def plot_spectrums_sigma_t(self):
         start = 0
@@ -499,7 +501,7 @@ class MC_sim_full_argon():
         # plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
         plt.xlabel("Energy (eV)",fontsize=18)
-        plt.ylabel("Possibility (bin)",fontsize=18)
+        plt.ylabel("Probability (/bin)",fontsize=18)
         plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
@@ -706,8 +708,8 @@ class MC_sim_full_argon():
                          label='LSS Limits')
         plt.plot(x_bins_07, bubble_event_07,  label='0.7 Scaling LSS')
         plt.minorticks_on()
-        plt.xlabel("Energy/eV",fontsize=18)
-        plt.ylabel("Bubble Event Number in 100 h",fontsize=18)
+        plt.xlabel("Energy (eV)",fontsize=18)
+        plt.ylabel("Bubble Event Number in 100 h (number)",fontsize=18)
         plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
@@ -715,7 +717,7 @@ class MC_sim_full_argon():
         plt.legend()
         plt.ylim([0.1,2E2])
         plt.yscale("log")
-        plt.savefig(self.plot_address+"LSS_factor_uncertainty_spectrum_bubbble.png",bbox_inches= "tight")
+        plt.savefig(self.plot_address+"LSS_factor_uncertainty_spectrum_bubbble.pdf",bbox_inches= "tight")
 
 
     def LSS_introduced_uncertainty(self):
@@ -751,7 +753,7 @@ class MC_sim_full_argon():
         plt.plot(x_bins_08, hi_limit, label='upper scaling LSS')
         plt.plot(x_bins_07, mean, label='0.7 scaling LSS')
         plt.minorticks_on()
-        plt.xlabel("Energy/eV", fontsize=18)
+        plt.xlabel("Energy (eV)", fontsize=18)
         plt.ylabel("Systematic Uncertainty from LSS scaling", fontsize=18)
         # plt.yscale("log")
         plt.yticks(fontsize=18)
@@ -760,7 +762,7 @@ class MC_sim_full_argon():
         plt.legend()
         # plt.ylim([1E-5,0.1])
         # plt.yscale("log")
-        plt.savefig(self.plot_address + "LSS_factor_uncertainty_spectrum_scaled.png")
+        plt.savefig(self.plot_address + "LSS_factor_uncertainty_spectrum_scaled.pdf")
     def bubble_event_with_sigma(self, uncertainty):
 
         x_bins, hist_result, bubble_event  = self.generate_hist_and_CDF()
