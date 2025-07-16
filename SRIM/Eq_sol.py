@@ -53,7 +53,7 @@ class E_loss_solve():
         print("factor",self.factor*self.Tar_Den*10**8)
         print("LSS factor inverse", 1/self.LSS_factor)
         self.plot_address = "/data/runzezhang/result/New_density_MC/"
-        self.plot_name ="DEDt_log.png"
+        self.plot_name ="DEDt_log.pdf"
 
         # self.main_fun()
         # self.test()
