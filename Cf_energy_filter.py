@@ -25,16 +25,10 @@ def dat_to_list(path, source_number):
     if source_number == 0: # 0 means original activity, 1 means thermal neutron rates
         for i in range(len(intensity_list)):
 
-            if intensity_list[i]==0: # for log plot, if value is zero, it cannot be ploted correcly
-                intensity_nor_pev_list.append(1e-1)
-            else:
-                intensity_nor_pev_list.append((0.032*3600*intensity_list[i]*Before_Activity)/(9*total_intensity))
+           intensity_nor_pev_list.append((0.032*3600*intensity_list[i]*Before_Activity)/(9*total_intensity))
     elif source_number ==1:
         for i in range(len(intensity_list)):
-            if intensity_list[i]==0: # for log plot, if value is zero, it cannot be ploted correcly
-                intensity_nor_pev_list.append(1e-1)
-            else:
-                intensity_nor_pev_list.append((0.032*3600*intensity_list[i]*After_Activity)/(9*total_intensity))
+            intensity_nor_pev_list.append((0.032*3600*intensity_list[i]*After_Activity)/(9*total_intensity))
 
     return energy_list, intensity_nor_pev_list
 
@@ -86,7 +80,7 @@ def raw_to_list(path):
 # (ene_fn, intens_fn)=raw_to_list(before_KE_path)
 (ene_fn, intens_fn)=dat_to_list(before_KE_G4_path, 0)
 (ene_tn,intens_tn) = dat_to_list(after_KE_path, 1)
-
+intens_fn[-1]= 1e-1 # modify last 0 to be plot right in log scale
 print((ene_fn,intens_fn))
 
 plt.plot(ene_fn,intens_fn,label='Cf252 Neutron Spectrum')
