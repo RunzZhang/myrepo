@@ -1,5 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+from matplotlib.ticker import LogLocator
 import csv
 import numpy as np
 import re
@@ -89,6 +90,7 @@ plt.xscale("log")
 plt.yscale("log")
 plt.xlabel("Energy (eV)", fontsize =16)
 plt.ylabel(r"Neutron Relative Intensity", fontsize =16)
+plt.gca().xaxis.set_major_locator(LogLocator(base=10.0, numticks=15))
 plt.xlim([1e-3,1e7])
 plt.legend()
 plt.savefig(plot_path+"Cf_filter_eVbin.pdf",bbox_inches='tight')
