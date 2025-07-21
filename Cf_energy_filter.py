@@ -14,22 +14,30 @@ After_Activity = 435.6
 def dat_to_list(path, source_number):
     energy_list = [] # in MeV
     intensity_list = [] # I don't know unit
-    intensity_nor_list = [] # normalized
+    intensity_nor_pev_list = [] # normalized rate, and considering the activtity, and value is per eV
     with open(path, "r") as file:
         for line in file:
             parts = line.strip().split()
             if len(parts) == 3:
-                energy_list.append(float(parts[1]))
+                energy_list.append(float(parts[1])*10**6) # energy in eV
                 intensity_list.append(float(parts[2]))
     total_intensity = sum(intensity_list)
     if source_number == 0: # 0 means original activity, 1 means thermal neutron rates
-        for i in intensity_list:
-            intensity_nor_list.append((0.032*3600*i*Before_Activity)/(9*total_intensity))
+        for i in range(len(intensity_list)):
+            if i ==0:
+                bin_size = energy_list[i] -0
+            else:
+                bin_size  = energy_list[i]-energy_list[i-1]
+            intensity_nor_pev_list.append((0.032*3600*intensity_list[i]*Before_Activity)/(9*total_intensity*bin_size))
     elif source_number ==1:
-        for i in intensity_list:
-            intensity_nor_list.append((0.032*3600*i*After_Activity)/(9*total_intensity))
+        for i in range(len(intensity_list)):
+            if i == 0:
+                bin_size = energy_list[i] - 0
+            else:
+                bin_size = energy_list[i] - energy_list[i - 1]
+            intensity_nor_pev_list.append((0.032*3600*intensity_list[i]*After_Activity)/(9*total_intensity*bin_size))
 
-    return energy_list, intensity_list
+    return energy_list, intensity_nor_pev_list
 
 def raw_to_list(path):
     energy = []
@@ -79,20 +87,15 @@ def raw_to_list(path):
 # (ene_fn, intens_fn)=raw_to_list(before_KE_path)
 (ene_fn, intens_fn)=dat_to_list(before_KE_G4_path, 0)
 (ene_tn,intens_tn) = dat_to_list(after_KE_path, 1)
-ene_fn_ev = []
-ene_tn_ev = []
-for i in range(len(ene_tn)):
-    ene_tn_ev.append(ene_tn[i]*10**6)
-for i in range(len(ene_fn)):
-    ene_fn_ev.append(ene_fn[i]*10**6)
+
 print((ene_fn,intens_fn))
 
-plt.plot(ene_fn_ev,intens_fn,label='Cf252 Neutron Spectrum')
-plt.plot(ene_tn_ev,intens_tn,label='Outgoing Neutron Spectrum Through Sapphire')
+plt.plot(ene_fn,intens_fn,label='Cf252 Neutron Spectrum')
+plt.plot(ene_tn,intens_tn,label='Outgoing Neutron Spectrum Through Sapphire')
 plt.xscale("log")
 plt.yscale("log")
 plt.xlabel("Energy (eV)", fontsize =16)
-plt.ylabel(r"Event Rate (event/hr/bin)", fontsize =16)
+plt.ylabel(r"Neutron Rate (event/hr/eV)", fontsize =16)
 plt.xlim([1e-3,7.6e6])
 plt.legend()
-plt.savefig(plot_path+"Cf_filter.pdf",bbox_inches='tight')
+plt.savefig(plot_path+"Cf_filter_eVbin.pdf",bbox_inches='tight')
