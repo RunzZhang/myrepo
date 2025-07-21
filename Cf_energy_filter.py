@@ -91,11 +91,11 @@ def raw_to_list(path):
 print((ene_fn,intens_fn))
 
 plt.plot(ene_fn,intens_fn,label='Cf252 Neutron Spectrum')
-plt.plot(ene_tn,intens_tn,label='Outgoing Neutron Spectrum Through Sapphire')
+# plt.plot(ene_tn,intens_tn,label='Outgoing Neutron Spectrum Through Sapphire')
 plt.xscale("log")
 plt.yscale("log")
 plt.xlabel("Energy (eV)", fontsize =16)
 plt.ylabel(r"Neutron Relative Intensity", fontsize =16)
-plt.xlim([1e-3,0.99e7])
+plt.xlim([1e-3,1e7])
 plt.legend()
 plt.savefig(plot_path+"Cf_filter_eVbin.pdf",bbox_inches='tight')
