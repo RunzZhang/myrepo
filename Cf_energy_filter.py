@@ -26,13 +26,13 @@ def dat_to_list(path, source_number):
         for i in range(len(intensity_list)):
 
             if intensity_list[i]==0: # for log plot, if value is zero, it cannot be ploted correcly
-                intensity_nor_pev_list.append(1e-10)
+                intensity_nor_pev_list.append(1e-1)
             else:
                 intensity_nor_pev_list.append((0.032*3600*intensity_list[i]*Before_Activity)/(9*total_intensity))
     elif source_number ==1:
         for i in range(len(intensity_list)):
             if intensity_list[i]==0: # for log plot, if value is zero, it cannot be ploted correcly
-                intensity_nor_pev_list.append(1e-10)
+                intensity_nor_pev_list.append(1e-1)
             else:
                 intensity_nor_pev_list.append((0.032*3600*intensity_list[i]*After_Activity)/(9*total_intensity))
 
