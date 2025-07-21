@@ -28,14 +28,14 @@ def dat_to_list(path, source_number):
                 bin_size = energy_list[i] - energy_list[i-1]
             else:
                 bin_size  = energy_list[i+1]-energy_list[i]
-            intensity_nor_pev_list.append((0.032*3600*intensity_list[i]*Before_Activity)/(9*total_intensity*bin_size))
+            intensity_nor_pev_list.append((0.032*3600*intensity_list[i]*Before_Activity)/(9*total_intensity))
     elif source_number ==1:
         for i in range(len(intensity_list)):
             if i == len(intensity_list)-1:
                 bin_size = energy_list[i] - energy_list[i-1]
             else:
                 bin_size = energy_list[i+1] - energy_list[i]
-            intensity_nor_pev_list.append((0.032*3600*intensity_list[i]*After_Activity)/(9*total_intensity*bin_size))
+            intensity_nor_pev_list.append((0.032*3600*intensity_list[i]*After_Activity)/(9*total_intensity))
 
     return energy_list, intensity_nor_pev_list
 
