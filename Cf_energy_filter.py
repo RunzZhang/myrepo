@@ -24,14 +24,14 @@ def dat_to_list(path, source_number):
     total_intensity = sum(intensity_list)
     if source_number == 0: # 0 means original activity, 1 means thermal neutron rates
         for i in range(len(intensity_list)):
-            if i ==len(intensity_list):
+            if i ==len(intensity_list)-1:
                 bin_size = energy_list[i] - energy_list[i-1]
             else:
                 bin_size  = energy_list[i+1]-energy_list[i]
             intensity_nor_pev_list.append((0.032*3600*intensity_list[i]*Before_Activity)/(9*total_intensity*bin_size))
     elif source_number ==1:
         for i in range(len(intensity_list)):
-            if i == len(intensity_list):
+            if i == len(intensity_list)-1:
                 bin_size = energy_list[i] - energy_list[i-1]
             else:
                 bin_size = energy_list[i+1] - energy_list[i]
