@@ -24,18 +24,17 @@ def dat_to_list(path, source_number):
     total_intensity = sum(intensity_list)
     if source_number == 0: # 0 means original activity, 1 means thermal neutron rates
         for i in range(len(intensity_list)):
-            if i ==len(intensity_list)-1:
-                bin_size = energy_list[i] - energy_list[i-1]
+
+            if intensity_list[i]==0: # for log plot, if value is zero, it cannot be ploted correcly
+                intensity_nor_pev_list.append(1e-10)
             else:
-                bin_size  = energy_list[i+1]-energy_list[i]
-            intensity_nor_pev_list.append((0.032*3600*intensity_list[i]*Before_Activity)/(9*total_intensity))
+                intensity_nor_pev_list.append((0.032*3600*intensity_list[i]*Before_Activity)/(9*total_intensity))
     elif source_number ==1:
         for i in range(len(intensity_list)):
-            if i == len(intensity_list)-1:
-                bin_size = energy_list[i] - energy_list[i-1]
+            if intensity_list[i]==0: # for log plot, if value is zero, it cannot be ploted correcly
+                intensity_nor_pev_list.append(1e-10)
             else:
-                bin_size = energy_list[i+1] - energy_list[i]
-            intensity_nor_pev_list.append((0.032*3600*intensity_list[i]*After_Activity)/(9*total_intensity))
+                intensity_nor_pev_list.append((0.032*3600*intensity_list[i]*After_Activity)/(9*total_intensity))
 
     return energy_list, intensity_nor_pev_list
 
@@ -91,7 +90,7 @@ def raw_to_list(path):
 print((ene_fn,intens_fn))
 
 plt.plot(ene_fn,intens_fn,label='Cf252 Neutron Spectrum')
-# plt.plot(ene_tn,intens_tn,label='Outgoing Neutron Spectrum Through Sapphire')
+plt.plot(ene_tn,intens_tn,label='Outgoing Neutron Spectrum Through Sapphire')
 plt.xscale("log")
 plt.yscale("log")
 plt.xlabel("Energy (eV)", fontsize =16)
