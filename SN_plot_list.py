@@ -189,21 +189,21 @@ class SN():
 
         # Plot dataset 1 and dataset 2 on the left y-axis
         line1, = ax1.plot(photon_n_list, signal_rate_list, 'g-', label='Signal')
-        line2, = ax1.plot(photon_n_list, noise_rate_list, 'b-', label='Noise')
+        line2, = ax1.plot(photon_n_list, noise_rate_list, 'b-', label='Background')
         ax1.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
         ax1.set_ylim([2e-5,20])
 
         # Set the labels and title
         ax1.set_xlabel('Photon Number Threshold (number)',fontsize = 16)
         ax1.set_ylabel('Detected Event Rate (event/hr)', color='black',fontsize = 16)
-        ax1.axvline(x=200, color='black')
+        ax1.axvline(x=200, color='black', linestyle='dotted')
         ax1.set_yscale('log')
 
         # Create another y-axis that shares the same x-axis
         ax2 = ax1.twinx()
 
         # Plot dataset 3 on the right y-axis
-        line3, = ax2.plot(photon_n_list, SN_ratio, 'r-', label='Signal to Noise Ratio')
+        line3, = ax2.plot(photon_n_list, SN_ratio, 'r-', label='SNR')
 
         # Set the label for the second y-axis
         ax2.set_ylabel('signal to noise ratio', color='black',fontsize = 16)
