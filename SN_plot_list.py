@@ -216,7 +216,7 @@ class SN():
         # Show the plot
 
         plt.title(self.name, fontsize = 16)
-        plt.savefig(self.plot_path + self.plot_name)
+        plt.savefig(self.plot_path + self.plot_name, bbox_inches='standard')
         # plt.show()
 
 
