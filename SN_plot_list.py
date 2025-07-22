@@ -192,7 +192,7 @@ class SN():
         line2, = ax1.plot(photon_n_list, noise_rate_list, 'b-', label='Background')
         ax1.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
         ax1.set_xlim([0, 600])
-        # ax1.set_ylim([2e-5,20])
+        ax1.set_ylim([1e-3,20])
 
         # Set the labels and title
         ax1.set_xlabel('Photon Number Threshold (number)',fontsize = 16)
@@ -208,7 +208,7 @@ class SN():
 
         # Set the label for the second y-axis
         ax2.set_ylabel('signal to noise ratio', color='black',fontsize = 16)
-        # ax2.set_ylim([0.5,2.2])
+        ax2.set_ylim([0.5,2.2])
 
         lines = [line1, line2, line3]
         # lines = [line1,  line3]
