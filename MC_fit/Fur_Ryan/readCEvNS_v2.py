@@ -505,7 +505,7 @@ plt.ylabel("CEvNS Rate (arbitrary)", **axis_font)
 plt.xlabel("Energy (eV)", **axis_font)
 plt.legend(fontsize=12)
 plt.tick_params(labelsize=14)
-plt.savefig("CEvNS.png")
+plt.savefig("CEvNS.pdf")
 plt.clf()
 
 #effectiveT=115.98381738323732
@@ -520,10 +520,10 @@ plt.fill_between(R,RL,RH,alpha=.4,color="red")
 plt.fill_between(R,RL2,RH2,alpha=.2,color="red")
 #plt.plot(R,RM)
 plt.xlim([start,end])
-plt.savefig(source+".png")
+plt.savefig(source+".pdf")
 plt.clf()
 
-print ("saved: ",source+".png")
+print ("saved: ",source+".pdf")
 
 print ("Mean figure start/end: ",start,end)
 
@@ -536,13 +536,13 @@ plt.fill_between(R,RL,RH,alpha=.15,color="red",label="1-sigma error")
 #plt.xlim([50,end])
 plt.xlim([50,T*2]) 
 plt.ylabel("Nucleation Efficiency", **axis_font)
-plt.xlabel("Energy (eV)", **axis_font)
+plt.xlabel("NR energy (eV)", **axis_font)
 plt.legend(fontsize=12)
 plt.tick_params(labelsize=14)
-plt.savefig(source+"_CEvNS.png")
+plt.savefig(source+"_CEvNS.pdf")
 plt.clf()
 
-print ("saved: ",source+"_CEvNS.png")
+print ("saved: ",source+"_CEvNS.pdf")
 if blotcount>0:
     for i in range(M):
         r=i/M*end
@@ -566,5 +566,5 @@ if blotcount>0:
     plt.fill_between(R,RL,RH,alpha=.4,color="red")
     plt.fill_between(R,RL2,RH2,alpha=.2,color="red")
     plt.xlim([start,end])
-    plt.savefig(source+"clean.png")
+    plt.savefig(source+"clean.pdf")
     plt.clf()

@@ -530,7 +530,7 @@ plt.ylabel("Nucleation Efficiency", **axis_font)
 plt.xlabel("Energy (eV)", **axis_font)
 plt.legend(fontsize=12)
 plt.tick_params(labelsize=14)
-plt.savefig("Sample_Efficiency.png")
+plt.savefig("Sample_Efficiency.pdf")
 plt.clf()
 
 plt.plot(R,RT)
@@ -538,10 +538,10 @@ plt.fill_between(R,RL,RH,alpha=.4,color="red")
 plt.fill_between(R,RL2,RH2,alpha=.2,color="red")
 #plt.plot(R,RM)
 plt.xlim([start,end])
-plt.savefig(source+".png")
+plt.savefig(source+".pdf")
 plt.clf()
 
-print ("saved: ",source+".png")
+print ("saved: ",source+".pdf")
 
 #axis_font = {'size':'14'}
 
@@ -559,7 +559,7 @@ plt.ylabel("Nucleation Efficiency", **axis_font)
 plt.xlabel("Energy (eV)", **axis_font)
 plt.legend(fontsize=12)
 plt.tick_params(labelsize=14)
-plt.savefig(source+"_WIMP.png")
+plt.savefig(source+"_WIMP.pdf")
 plt.clf()
 
 #plt.plot(R,RT,label="Monte Carlo Truth")
@@ -570,13 +570,13 @@ plt.plot(cevns[:,0]/1000,cevns[:,1],linestyle=":",marker="",color="green",label=
 #plt.fill_between(R,RL2,RH2,alpha=.2,color="red")                                                                                                                                                                                             
 #plt.xlim([start,end])
 plt.ylabel("WIMP Rate (events/day/kg/keV)", **axis_font)
-plt.xlabel("Energy (keV)", **axis_font)
+plt.xlabel("NR energy (eV)", **axis_font)
 plt.legend(fontsize=12)
 plt.tick_params(labelsize=14)
-plt.savefig("WIMP.png")
+plt.savefig("WIMP.pdf")
 plt.clf()
 
-print ("saved: ",source+"_WIMP.png")
+print ("saved: ",source+"_WIMP.pdf")
 if blotcount>0:
     for i in range(M):
         r=i/M*end
@@ -600,5 +600,5 @@ if blotcount>0:
     plt.fill_between(R,RL,RH,alpha=.4,color="red")
     plt.fill_between(R,RL2,RH2,alpha=.2,color="red")
     plt.xlim([start,end])
-    plt.savefig(source+"clean.png")
+    plt.savefig(source+"clean.pdf")
     plt.clf()
