@@ -553,7 +553,7 @@ class SRIM_Table():
         print(self.min_ratio)
         print(self.max_ratio)
         #0.552 - 0.8562   mid 0.716
-        # 0.552 0.832 0.70
+        # 0.552 0.832 0.697
         plt.legend()
         plt.savefig(self.address+self.plot_name)
 
