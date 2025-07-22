@@ -133,12 +133,12 @@ class MC_sim_full_argon():
         # self.spectrum_uncertainty()
         # self.plot_spectrums_sigma()
 
-        # self.plot_spectrums_sigma_LSS()
+        self.plot_spectrums_sigma_LSS()
         # self.predicted_bubble_events_LSS()
         # self.LSS_introduced_uncertainty()
 
         # self.plot_spectrums_sigma_t()
-        self.predicted_bubble_events_t()
+        # self.predicted_bubble_events_t()
     def data_preparation(self):
 
         for i in range(len(self.argon_list)):# for each chain
@@ -454,7 +454,7 @@ class MC_sim_full_argon():
         # for i in hist_result[0]:
         #     new_set.append(i/20)
         # plt.plot(x_bins, new_set, color="blue", label='LSS refit')
-        plt.plot(x_bins, hist_result[0], color="blue", label='LSS Refit')
+        plt.plot(x_bins, hist_result[0], color="blue", label='LSS Nominal')
         # plt.plot(x_bins, hist_result_low[0], color="green", label="0.5 LSS scaling")
         # plt.plot(x_bins, hist_result_high[0], color="orange", label='0.8 LSS scaling')
         plt.fill_between(x_bins, hist_result_high[0], hist_result_low[0], color='dimgray', alpha=0.5, label='LSS Limits')
