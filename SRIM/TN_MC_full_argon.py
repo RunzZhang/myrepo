@@ -133,8 +133,8 @@ class MC_sim_full_argon():
         # self.spectrum_uncertainty()
         # self.plot_spectrums_sigma()
 
-        self.plot_spectrums_sigma_LSS()
-        # self.predicted_bubble_events_LSS()
+        # self.plot_spectrums_sigma_LSS()
+        self.predicted_bubble_events_LSS()
         # self.LSS_introduced_uncertainty()
 
         # self.plot_spectrums_sigma_t()
@@ -706,7 +706,7 @@ class MC_sim_full_argon():
         # plt.plot(x_bins_08, bubble_event_08,  label='uppper scaling LSS')
         plt.fill_between(x_bins_07, bubble_event_08, bubble_event_05, color='dimgray', alpha=0.5,
                          label='LSS Limits')
-        plt.plot(x_bins_07, bubble_event_07,  label='0.7 Scaling LSS')
+        plt.plot(x_bins_07, bubble_event_07,  label='LSS Nominal', color="blue")
         plt.minorticks_on()
         plt.xlabel("Energy (eV)",fontsize=18)
         plt.ylabel("Bubble Event Number in 100 h",fontsize=18)
