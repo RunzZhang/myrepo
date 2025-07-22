@@ -540,13 +540,15 @@ class SRIM_Table():
         # self.force_fit()
         self.force_fit_err() # if check the factor between exp and theory data, uncomment this, otherwise, it is original data
         plt.plot(self.Ion_ene, self.sn_LSS, label="LSS Original")
-        plt.plot(self.Ion_ene, self.N_loss, label="SRIM Data")
+        plt.plot(self.Ion_ene, self.N_loss, label="SRIM Simulation")
         # plt.plot(self.Ion_ene, self.hi_limit, label="high limit LSS fit")
         # plt.plot(self.Ion_ene, self.lo_limit, label="low limit LSS fit")
         plt.plot(self.Ion_ene, self.refit_LSS, label="LSS Refit")
         plt.fill_between(self.Ion_ene, self.hi_limit, self.lo_limit, color='lightgray', alpha=0.5, label='LSS Limits')
         plt.xlabel("Particle Kinetic Energy (eV)", fontsize =14)
         plt.ylabel("Nuclear Stopping Power (eV/A)", fontsize =14)
+        plt.xlim(0,1200)
+        plt.yscale("log")
         print("exp", self.N_loss)
         print(self.min_ratio)
         print(self.max_ratio)
@@ -600,14 +602,19 @@ class SRIM_Table():
         self.refit_LSS = []
         self.ratio = []
         self.ratio_ascend = [0]
+        #find the ratio
         for i in range(len(self.N_loss)):
-            ratio = self.N_loss[i]/self.sn_LSS[i]
-            self.ratio.append(ratio)
-            if i>=1:
-                self.ratio_ascend.append(self.ratio[i]-self.ratio[i-1])
+            if self.Ion_ene[i]< 1200: # only care about energies less than 1200eV
+                ratio = self.N_loss[i] / self.sn_LSS[i]
+                self.ratio.append(ratio)
+                if i >= 1:
+                    self.ratio_ascend.append(self.ratio[i] - self.ratio[i - 1])
+            else:
+                break
         self.mean_ratio = sum(self.ratio) / len(self.ratio)
         self.min_ratio = min(self.ratio)
         self.max_ratio = max(self.ratio)
+        print("mean, min, max", self.mean_ratio, self.min_ratio, self.max_ratio)
 
 
         for i in range(len(self.sn_LSS)):
