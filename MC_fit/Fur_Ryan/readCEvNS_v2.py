@@ -502,7 +502,7 @@ axis_font = {'size':'14'}
 plt.plot(cevns[:,0],cevns[:,1]/cevns[0,1],linestyle=":",marker="",color="green",label="CEvNS Spectrum")
 plt.xlim([0,200])
 plt.ylabel("CEvNS Rate (arbitrary)", **axis_font)
-plt.xlabel("Energy (eV)", **axis_font)
+plt.xlabel("NR energy (eV)", **axis_font)
 plt.legend(fontsize=12)
 plt.tick_params(labelsize=14)
 plt.savefig("CEvNS.pdf")
