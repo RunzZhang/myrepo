@@ -37,7 +37,7 @@ class SRIM_EXY():
         super().__init__()
         # self.file_name = 'EXYZArgon1keV.txt'
         self.plot_save_path = "/data/runzezhang/result/New_density_MC/"
-        self.plot_name = 'EL_dEdxE.png'
+        self.plot_name = 'EL_dEdxE.pdf'
         self.file_name = 'EXYZ_106L.txt'
         self.file_name_edit = self.file_name[0:-4] + '_edit.txt'
         self.displacement = []  # Want to record the displacement in each step (in meters)
@@ -553,6 +553,7 @@ class SRIM_Table():
         print(self.min_ratio)
         print(self.max_ratio)
         #0.552 - 0.8562   mid 0.716
+        # 0.552 0.832 0.70
         plt.legend()
         plt.savefig(self.address+self.plot_name)
 
