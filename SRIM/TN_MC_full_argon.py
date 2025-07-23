@@ -118,7 +118,7 @@ class MC_sim_full_argon():
         # self.gamma_sim(10000)
         # self.MC_sim(self.runtime)
         # self.data_analysis_v2(self.address)
-        self.plot_spectrum(self.address)
+        # self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
         # predict bubble events ratio with different energy threshold
@@ -133,7 +133,7 @@ class MC_sim_full_argon():
         # self.spectrum_uncertainty()
         # self.plot_spectrums_sigma()
 
-        # self.plot_spectrums_sigma_LSS()
+        self.plot_spectrums_sigma_LSS()
         # self.predicted_bubble_events_LSS()
         # self.LSS_introduced_uncertainty()
 
@@ -506,7 +506,7 @@ class MC_sim_full_argon():
         # plt.plot(x_bins, hist_result_high[0], color="orange", label='2x decay time spectrum')
         # plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
-        plt.xlabel("NR  Energy (eV)",fontsize=18)
+        plt.xlabel("NR Energy (eV)",fontsize=18)
         plt.ylabel("Probability (/bin)",fontsize=18)
         plt.yscale("log")
         plt.yticks(fontsize=18)
@@ -559,7 +559,7 @@ class MC_sim_full_argon():
                          label='50% Time Scaling Limits')
         plt.plot(x_bins_20, bubble_event_10, label='Orignal t', color= "blue")
         plt.minorticks_on()
-        plt.xlabel("NR  Energy (eV)", fontsize=18)
+        plt.xlabel("NR Energy (eV)", fontsize=18)
         plt.ylabel("Bubble Event Number in 100 h", fontsize=18)
         plt.yscale("log")
         plt.yticks(fontsize=18)
