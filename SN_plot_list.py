@@ -13,7 +13,7 @@ class SN():
         self.false_1 = "Cf_false1.csv"
         self.false_2 = "Cf_false2.csv"
         self.signal = "Cf_sig.csv"
-        self.name = "Background 1 400 eV"
+        self.name = "Background 1"
         self.plot_name = self.name+"1E7.png"
         self.signal_final_list = []
         self.noise_final_list =[]
@@ -196,7 +196,7 @@ class SN():
 
         # Set the labels and title
         ax1.set_xlabel('Photon Number Threshold (number)',fontsize = 16)
-        ax1.set_ylabel('Detected Event Rate (event/hr)', color='black',fontsize = 16)
+        ax1.set_ylabel('Rate (event/hr)', color='black',fontsize = 16)
         ax1.axvline(x=200, color='black', linestyle='dotted')
         ax1.set_yscale('log')
 
