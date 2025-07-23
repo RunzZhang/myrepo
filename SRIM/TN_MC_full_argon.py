@@ -118,7 +118,7 @@ class MC_sim_full_argon():
         # self.gamma_sim(10000)
         # self.MC_sim(self.runtime)
         # self.data_analysis_v2(self.address)
-        # self.plot_spectrum(self.address)
+        self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
         # predict bubble events ratio with different energy threshold
@@ -138,7 +138,7 @@ class MC_sim_full_argon():
         # self.LSS_introduced_uncertainty()
 
         # self.plot_spectrums_sigma_t()
-        self.predicted_bubble_events_t()
+        # self.predicted_bubble_events_t()
     def data_preparation(self):
 
         for i in range(len(self.argon_list)):# for each chain
@@ -411,12 +411,18 @@ class MC_sim_full_argon():
         plt.clf()
         for i in range(len(hist_result[1]) - 1):
             x_bins.append((hist_result[1][i] + hist_result[1][i + 1]) / 2)
+        # change y unit from probablity /bin to probability /ev
+        y_bins=[]
+        x_bin_length = x_bins[1]-x_bins[0]
+        for i in  range(len(hist_result[0])):
+            y_bins.append(hist_result[0][i]/x_bin_length)
+
 
         plt.plot(x_bins, hist_result[0], color="blue")
         # plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
-        plt.xlabel("Energy (eV)",fontsize=18)
-        # plt.ylabel("Probability (/bin)",fontsize=18)
+        plt.xlabel("NR Energy (eV)",fontsize=18)
+        plt.ylabel("Probability (1/eV)",fontsize=18)
         plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
@@ -500,7 +506,7 @@ class MC_sim_full_argon():
         # plt.plot(x_bins, hist_result_high[0], color="orange", label='2x decay time spectrum')
         # plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
-        plt.xlabel("Energy (eV)",fontsize=18)
+        plt.xlabel("NR  Energy (eV)",fontsize=18)
         plt.ylabel("Probability (/bin)",fontsize=18)
         plt.yscale("log")
         plt.yticks(fontsize=18)
@@ -553,7 +559,7 @@ class MC_sim_full_argon():
                          label='50% Time Scaling Limits')
         plt.plot(x_bins_20, bubble_event_10, label='Orignal t', color= "blue")
         plt.minorticks_on()
-        plt.xlabel("Energy (eV)", fontsize=18)
+        plt.xlabel("NR  Energy (eV)", fontsize=18)
         plt.ylabel("Bubble Event Number in 100 h", fontsize=18)
         plt.yscale("log")
         plt.yticks(fontsize=18)
