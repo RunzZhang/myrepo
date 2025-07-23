@@ -133,8 +133,8 @@ class MC_sim_full_argon():
         # self.spectrum_uncertainty()
         # self.plot_spectrums_sigma()
 
-        self.plot_spectrums_sigma_LSS()
-        # self.predicted_bubble_events_LSS()
+        # self.plot_spectrums_sigma_LSS()
+        self.predicted_bubble_events_LSS()
         # self.LSS_introduced_uncertainty()
 
         # self.plot_spectrums_sigma_t()
