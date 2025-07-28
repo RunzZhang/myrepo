@@ -461,7 +461,7 @@ class MC_sim_full_argon():
         # for i in hist_result[0]:
         #     new_set.append(i/20)
         # plt.plot(x_bins, new_set, color="blue", label='LSS refit')
-        for i in range(len(hist_result[0])):
+        
         print("x_width", bin_width)
         plt.plot(x_bins, hist_result[0], color="blue", label='LSS Nominal')
         # plt.plot(x_bins, hist_result_low[0], color="green", label="0.5 LSS scaling")
