@@ -546,7 +546,7 @@ class SRIM_Table():
         plt.plot(self.Ion_ene, self.refit_LSS, label="LSS Nominal", color="blue")
         plt.fill_between(self.Ion_ene, self.hi_limit, self.lo_limit, color='lightgray', alpha=0.5, label='LSS Limits')
         plt.xlabel("Particle Kinetic Energy (eV)", fontsize =14)
-        plt.ylabel("Nuclear Stopping Power (eV/A)", fontsize =14)
+        plt.ylabel("Nuclear Stopping Power (eV/$\AA$)", fontsize =14)
         plt.xlim(0,1200)
         plt.yscale("log")
         print("exp", self.N_loss)
