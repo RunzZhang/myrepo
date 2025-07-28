@@ -133,11 +133,11 @@ class MC_sim_full_argon():
         # self.spectrum_uncertainty()
         # self.plot_spectrums_sigma()
 
-        self.plot_spectrums_sigma_LSS()
+        # self.plot_spectrums_sigma_LSS()
         # self.predicted_bubble_events_LSS()
         # self.LSS_introduced_uncertainty()
 
-        # self.plot_spectrums_sigma_t()
+        self.plot_spectrums_sigma_t()
         # self.predicted_bubble_events_t()
     def data_preparation(self):
 
@@ -511,14 +511,24 @@ class MC_sim_full_argon():
         hist_result_high = plt.hist(MC_full_high, bins=bin_n, range=(start, end), density=True)
         plt.clf()
 
-        plt.plot(x_bins, hist_result[0], color="blue", label='Original Spectrum')
-        plt.fill_between(x_bins, hist_result_high[0], hist_result_low[0], color='dimgray', alpha=0.5, label='Stopping Time Variation Band')
+        bin_width = x_bins[1]- x_bins[0]
+
+        y_mid = []
+        y_high = []
+        y_low = []
+        for i in range(len(hist_result[0])):
+            y_mid.append(hist_result[0][i] / bin_width)
+            y_high.append(hist_result_high[0][i] / bin_width)
+            y_low.append(hist_result_low[0][i] / bin_width)
+
+        plt.plot(x_bins, y_mid, color="blue", label='Original Spectrum')
+        plt.fill_between(x_bins, y_high, y_low, color='dimgray', alpha=0.5, label='Stopping Time Variation Band')
         # plt.plot(x_bins, hist_result_low[0], color="green", label="0.5x decay time spectrum")
         # plt.plot(x_bins, hist_result_high[0], color="orange", label='2x decay time spectrum')
         # plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
         plt.xlabel("NR Energy (eV)",fontsize=18)
-        plt.ylabel("Probability (/bin)",fontsize=18)
+        plt.ylabel("Probability (1/eV)",fontsize=18)
         plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
