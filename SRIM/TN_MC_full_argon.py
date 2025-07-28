@@ -118,7 +118,7 @@ class MC_sim_full_argon():
         # self.gamma_sim(10000)
         # self.MC_sim(self.runtime)
         # self.data_analysis_v2(self.address)
-        # self.plot_spectrum(self.address)
+        self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
         # predict bubble events ratio with different energy threshold
@@ -138,7 +138,7 @@ class MC_sim_full_argon():
         # self.LSS_introduced_uncertainty()
 
         # self.plot_spectrums_sigma_t()
-        self.predicted_bubble_events_t()
+        # self.predicted_bubble_events_t()
     def data_preparation(self):
 
         for i in range(len(self.argon_list)):# for each chain
@@ -418,7 +418,7 @@ class MC_sim_full_argon():
             y_bins.append(hist_result[0][i]/x_bin_length)
 
 
-        plt.plot(x_bins, hist_result[0], color="blue")
+        plt.plot(x_bins, y_bins, color="blue")
         # plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
         plt.xlabel("NR Energy (eV)",fontsize=18)
