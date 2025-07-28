@@ -133,12 +133,12 @@ class MC_sim_full_argon():
         # self.spectrum_uncertainty()
         # self.plot_spectrums_sigma()
 
-        # self.plot_spectrums_sigma_LSS()
+        self.plot_spectrums_sigma_LSS()
         # self.predicted_bubble_events_LSS()
         # self.LSS_introduced_uncertainty()
 
         # self.plot_spectrums_sigma_t()
-        self.predicted_bubble_events_t()
+        # self.predicted_bubble_events_t()
     def data_preparation(self):
 
         for i in range(len(self.argon_list)):# for each chain
@@ -451,6 +451,7 @@ class MC_sim_full_argon():
         plt.clf()
         for i in range(len(hist_result[1]) - 1):
             x_bins.append((hist_result[1][i] + hist_result[1][i + 1]) / 2)
+        bin_width = x_bins[1] - x_bins[0]
         hist_result_low = plt.hist(MC_full_low, bins=bin_n, range=(start, end), density=True)
         plt.clf()
         hist_result_high = plt.hist(MC_full_high, bins=bin_n, range=(start, end), density=True)
@@ -460,6 +461,8 @@ class MC_sim_full_argon():
         # for i in hist_result[0]:
         #     new_set.append(i/20)
         # plt.plot(x_bins, new_set, color="blue", label='LSS refit')
+        for i in range(len(hist_result[0])):
+        print("x_width", bin_width)
         plt.plot(x_bins, hist_result[0], color="blue", label='LSS Nominal')
         # plt.plot(x_bins, hist_result_low[0], color="green", label="0.5 LSS scaling")
         # plt.plot(x_bins, hist_result_high[0], color="orange", label='0.8 LSS scaling')
@@ -467,7 +470,7 @@ class MC_sim_full_argon():
         # plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
         plt.xlabel("NR Energy (eV)",fontsize=18)
-        plt.ylabel("Probability (/bin)",fontsize=18)
+        plt.ylabel("Probability (1/eV)",fontsize=18)
         plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
