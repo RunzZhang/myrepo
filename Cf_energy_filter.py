@@ -84,7 +84,7 @@ def raw_to_list(path):
 intens_fn[-1]= 1e-1 # modify last 0 to be plot right in log scale
 print((ene_fn,intens_fn))
 
-plt.plot(ene_fn,intens_fn,label='Cf252 Neutron Spectrum')
+plt.plot(ene_fn,intens_fn,label='$^{252}$Cf Neutron Spectrum')
 plt.plot(ene_tn,intens_tn,label='Outgoing Neutron Spectrum Through Sapphire')
 plt.xscale("log")
 plt.yscale("log")
