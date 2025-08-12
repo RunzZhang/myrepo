@@ -34,11 +34,10 @@ class MC_sim_full_argon():
         self.time_factor = 1.0*10**(-3)  # time factor from ps to ns
         self.time_offset = 0*self.time_factor
         # orginal time factor is 10E-3 and we modify it from 0.5 to 2
-        # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
-        # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_-01"
-        self.old_address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
 
-        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS07_2E5"
+
+        self.address_41 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS07_2E5_Ar41"
+        self.address_37 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS07_2E5_Ar37"
         self.plot_address = "/data/runzezhang/result/New_density_MC/"
 
 
@@ -50,6 +49,11 @@ class MC_sim_full_argon():
                             3702.9: [0.474 * self.argon40_weight, 0], 3573: [0.0744 * self.argon40_weight, 0],
                              3278.7: [0.372 * self.argon40_weight, 0], 8791.2: [100.6 * self.argon36_weight, 0]},
                            self.m_41]
+        self.argon_init = [10000, 0 * self.time_factor,
+                           {6098.9: [93.57 * self.argon40_weight, 0], 3732: [0.121 * self.argon40_weight, 0],
+                            3702.9: [0.474 * self.argon40_weight, 0], 3573: [0.0744 * self.argon40_weight, 0],
+                            3278.7: [0.372 * self.argon40_weight, 0], 8791.2: [100.6 * self.argon36_weight, 0]},
+                           self.m_41] #Ar41
 
         self.level60989 = [6098.9, 0 * self.time_factor,
                            {516.1: [10.8, 5582.0], 1034.7: [0.242, 5063.7], 1353.9: [51.2, 4745.0],
@@ -197,7 +201,9 @@ class MC_sim_full_argon():
     def MC_sim(self, N):
         max_step = 10
         solve_tool = Eq_sol.E_loss_solve()
-        self.E_deposit_1d = []
+        self.E41_deposit_1d = []
+        self.E37_deposit_1d = []
+        self.iso_tag = True # distinguish if mass is 41 or 37 to plot different spectrum
 
         for i in range(N):
 
@@ -223,6 +229,10 @@ class MC_sim_full_argon():
                     for key in state[2]:
                         # judge which mass it is
                         self.mass = state[3]
+                        if self.mass ==self.m_41:
+                            self.iso_tag = True
+                        else:
+                            self.iso_tag = False
                         if chance <= state[2][key][2] :
                             # success and go to next event
                             gamma_energy = state[2][key][1]
@@ -275,14 +285,20 @@ class MC_sim_full_argon():
                     # print(vz_list)
                     # print(E_deposit_list)
                     E_deposit_sum = E_last  + sum(E_deposit_list)  # in ev
-                    self.E_deposit_1d.append(E_deposit_sum)
+                    if self.iso_tag:
+                        self.E41_deposit_1d.append(E_deposit_sum)
+                    else:
+                        self.E37_deposit_1d.append(E_deposit_sum)
+                    self.iso_tag = True
                     # print("depositlist", E_deposit_list)
                     # print("deposit", E_last , E_deposit_sum)
                     break
 
         # print(self.E_deposit_1d)
-        with open(self.address, "wb") as fp:  # Pickling
-            pickle.dump(self.E_deposit_1d, fp)
+        with open(self.address_41, "wb") as fp:  # Pickling
+            pickle.dump(self.E41_deposit_1d, fp)
+        with open(self.address_37, "wb") as fp:  # Pickling
+            pickle.dump(self.E37_deposit_1d, fp)
 
 
 
