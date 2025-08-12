@@ -168,7 +168,7 @@ class SN():
         point = []
         for i in range(length):
             photon_n_list.append(i)
-            (sig_num,noise_num)= self.prepare(i)
+            (sig_num,noise_num)= self.prepare(noise_list,i)
             # change signal_number form /s to /h
             signal_rate_list.append(self.Activity*3600*sig_num*self.capture_ratio/(9*self.G4_sig_time))
             noise_rate_list.append(3600*self.Activity*noise_num/(9*self.G4_noise_time))
