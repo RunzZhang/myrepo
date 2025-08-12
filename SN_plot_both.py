@@ -221,7 +221,7 @@ class SN():
         # Legend for first plot
         lines_group1 = [line1, line2, line3]
         labels_group1 = [line.get_label() for line in lines_group1]
-        ax1.legend(lines_group1, labels_group1, loc='upper right', bbox_to_anchor=(0.95, 0.9))
+        ax1.legend(lines_group1, labels_group1, loc='upper right')
 
         ax1.set_title(self.name1, fontsize=16)
 
@@ -247,7 +247,7 @@ class SN():
         # Legend for first plot
         lines_group2 = [line4, line5, line6]
         labels_group2 = [line.get_label() for line in lines_group2]
-        ax3.legend(lines_group2, labels_group2, loc='upper right', bbox_to_anchor=(0.95, 0.9))
+        ax3.legend(lines_group2, labels_group2, loc='upper right')
 
         ax3.set_title(self.name2, fontsize=16)
 
