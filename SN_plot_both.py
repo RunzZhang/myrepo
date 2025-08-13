@@ -13,8 +13,8 @@ class SN():
         self.false_1 = "Cf_false1.csv"
         self.false_2 = "Cf_false2.csv"
         self.signal = "Cf_sig.csv"
-        self.name1 = "Background 1"
-        self.name2 = "Background 2"
+        self.name1 = "External Capture Background"
+        self.name2 = "Hard Scatter Background"
         self.name = "Backgrounds"
         self.plot_name = self.name+"1E7.pdf"
         self.signal_final_list = []
