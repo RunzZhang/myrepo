@@ -145,10 +145,10 @@ class ReadRoot():
     def main_body(self,i):
         print(i)
         self.false_1 = f"Cf_1E7_false1_part{i}.csv"
-        self.false_2 = f"Cf_1E7_false2_part{i}.csv"
+        self.false_2 = f"Cf_1E7_inelastic_false2_part{i}.csv"
         self.signal = f"Cf_1E7_sig_part{i}.csv"
         self.false_1_mid = f"Cf_1E7_false1_mid_part{i}.csv"
-        self.false_2_mid = f"Cf_1E7_false2_mid_part{i}.csv"
+        self.false_2_mid = f"Cf_1E7_inelastic_false2_mid_part{i}.csv"
         self.signal_mid = f"Cf_1E7_sig_mid_part{i}.csv"
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
@@ -178,7 +178,7 @@ class ReadRoot():
         # self.LAr_gamma_event()
 
         # single elastic scatter and capture false signal 1
-        self.single_e_n_capture_event()
+        # self.single_e_n_capture_event()
 
         # false noise 2, need to relocate directory
         self.Huge_scatter_event()
@@ -359,6 +359,97 @@ class ReadRoot():
         # check event 1256
         self.df_event_1542 = self.df[
             self.df["Event"] == 1542][["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV", "Volume","Process"]]
+        self.df_event_1542.to_csv("/data/runzezhang/result/TN_sims3/event1542.csv", index=False)
+        with open(self.false_2_path, 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(p_observed)
+        # print photon number
+        # plt.hist(p_observed, bins=100)
+        # plt.xlabel("Obeserved Photon per Event")
+
+        # print scatter scatter
+        plt.hist(scatter_ene, bins=100)
+        plt.xscale("log")
+        plt.yscale("log")
+        print("scatter number", len(scatter_ene))
+        plt.xlabel("scatter energy per Event")
+        # plt.show()
+        # plt.savefig(self.plot_path+"n_huge_scatter_ene_AmLi2.png")
+
+    def Huge_scatter_wt_inelastic_spectrum(self):
+        self.df_Nscatter = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Volume', 'Track ID', 'Parent ID']]
+        self.df_Ninelastic = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
+                    self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Track ID']]
+
+        self.df_capture = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Volume', 'Track ID']]
+        self.df_capture[["Event"]].to_csv(self.base_path2 + "capture_event_list.csv", index=False)
+        print("Ela", len(self.df_Nscatter["Event"].unique()))
+        print("capture", self.df_capture.head(10))
+        print("inelastic", self.df_Ninelastic.head(10))
+
+        (self.df_sing_Nscatter, self.df_multi_Nscatter) = self.find_single_n_multi(self.df_Nscatter, "Event", "Volume")
+
+        print("sing", self.df_sing_Nscatter)
+        print("multi", self.df_multi_Nscatter)
+        # self.df_cap_gamma = pd.DataFrame('Event','Track ID')
+        filtered_df = self.df_sing_Nscatter
+        print("merged_xor,\n", filtered_df.head(10))
+        # 2nd filter filter out ncapture recoiled energy
+        merged_df2 = pd.merge(filtered_df, self.df_capture, on=['Event'], how='left', indicator=True)
+
+        filtered_df2 = merged_df2[merged_df2['_merge'] == 'left_only'].drop(columns=['_merge'])
+        print("merged_xor,\n", filtered_df2.head(10))
+
+        self.LAr_recoiled = \
+        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/keV"] > 0.001)][
+            ['Event']]
+
+        # print("LAr recoiled",self.LAr_recoiled)
+        # filtered df to remove nCapture event
+        self.LAr_n_merged = pd.merge(filtered_df2, self.LAr_recoiled, on=['Event'], how='inner')
+        # self.LAr_n_merged = pd.merge(self.df_sing_Nscatter, self.LAr_recoiled, on=['Event'], how='inner')
+        n_list = self.LAr_n_merged["Event"].to_list()
+        self.N_check = self.df[self.df["Event"].isin(n_list) & (
+                (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))]
+        self.N_check.to_csv(self.false_2_path_mid, index=False)
+        # print(self.LAr_n_merged)
+        # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
+
+        max_values = self.N_check[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])[
+            "Recoiled/keV"].max().reset_index()
+        print(max_values.head(20))
+
+        # add gamma up
+        self.Ar_recoiled_list = max_values["Recoiled/keV"].to_list()
+        # actually it is /MeV
+        p_observed = []
+        scatter_ene = []  # in eV
+        for i in range(len(self.Ar_recoiled_list)):
+            # 10 /keV 0.03 and 0.2 PCE and PDE
+            if i > 1E-6:
+                pho_num = self.Ar_recoiled_list[i] * 1E6 * 10 * 0.03 * 0.2 / (1000)
+                scatter_ene.append(self.Ar_recoiled_list[i] * 1E6)
+                if pho_num > 1:
+                    p_observed.append(pho_num)
+
+        num = 0
+        for i in p_observed:
+            if i >= 1:
+                num += 1
+        print("photon observed number ", num, len(p_observed))
+        print("max", max(p_observed), "\n", "min", min(p_observed))
+        # plt.hist(self.Ar_recoiled_list, bins=100)
+        # check event 1256
+        self.df_event_1542 = self.df[
+            self.df["Event"] == 1542][
+            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "Kinetic/keV", "Recoiled/keV", "Volume",
+             "Process"]]
         self.df_event_1542.to_csv("/data/runzezhang/result/TN_sims3/event1542.csv", index=False)
         with open(self.false_2_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
@@ -731,7 +822,8 @@ class ReadRoot():
 
     def Huge_scatter_event(self):
         # single scatter spectrum
-        self.Huge_scatter_spectrum()
+        # self.Huge_scatter_spectrum()
+        self.Huge_scatter_wt_inelastic_spectrum()
         # self.Huge_scatter_spectrum_CF()
         # self.Huge_scatter_spectrum_CF_fake()
 
