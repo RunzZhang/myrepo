@@ -385,7 +385,7 @@ class MC_sim_full_argon():
 
         ax1.plot(x_bins, y_bins_37, color="brown", label="$^{37}$Ar")
         ax1.plot(x_bins, y_bins_41, color="green", label="$^{41}$Ar")
-        ax2.plot(x_bins, y_bins_full, color="blue",label="$^{37}$Ar+^{41}$Ar")
+        ax2.plot(x_bins, y_bins_full, color="blue",label="$^{37}$Ar+$^{41}$Ar")
 
 
 
@@ -406,6 +406,7 @@ class MC_sim_full_argon():
         ax2.tick_params(axis='both', labelsize=18)
         ax2.set_xlim([0, 1200])
         ax2.set_ylim([1E-5, 0.1])
+        ax2.yaxis.set_tick_params(labelleft=True)
         ax2.legend(loc='upper right')
 
         plt.tight_layout()
