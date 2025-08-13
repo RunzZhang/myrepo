@@ -380,22 +380,37 @@ class MC_sim_full_argon():
         x_bin_length = x_bins[1] - x_bins[0]
         for i in range(len(hist_result_full[0])):
             y_bins_full.append(hist_result_full[0][i] / x_bin_length)
-        plt.plot(x_bins, y_bins_37, color="brown", label="$^{37}$Ar")
-        plt.plot(x_bins, y_bins_41, color="green", label="$^{41}$Ar")
-        # plt.plot(x_bins, y_bins_full, color="blue",label="$^{37}$Ar+^{41}$Ar")
+
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5), sharey=True)
+
+        ax1.plot(x_bins, y_bins_37, color="brown", label="$^{37}$Ar")
+        ax1.plot(x_bins, y_bins_41, color="green", label="$^{41}$Ar")
+        ax2.plot(x_bins, y_bins_full, color="blue",label="$^{37}$Ar+^{41}$Ar")
 
 
 
         # plt.grid(True, which='both', linestyle='-', linewidth=1)
-        plt.minorticks_on()
-        plt.xlabel("NR Energy (eV)", fontsize=18)
-        plt.ylabel("Probability (1/eV)", fontsize=18)
-        plt.yscale("log")
-        plt.yticks(fontsize=18)
-        plt.xticks(fontsize=18)
-        plt.xlim([0, 1200])
-        plt.ylim([1E-5, 0.1])
-        plt.legend(loc='upper right')
+        ax1.minorticks_on()
+        ax1.xlabel("NR Energy (eV)", fontsize=18)
+        ax1.ylabel("Probability (1/eV)", fontsize=18)
+        ax1.yscale("log")
+        ax1.yticks(fontsize=18)
+        ax1.xticks(fontsize=18)
+        ax1.xlim([0, 1200])
+        ax1.ylim([1E-5, 0.1])
+        ax1.legend(loc='upper right')
+
+        ax2.minorticks_on()
+        ax2.xlabel("NR Energy (eV)", fontsize=18)
+        ax2.ylabel("Probability (1/eV)", fontsize=18)
+        ax2.yscale("log")
+        ax2.yticks(fontsize=18)
+        ax2.xticks(fontsize=18)
+        ax2.xlim([0, 1200])
+        ax2.ylim([1E-5, 0.1])
+        ax2.legend(loc='upper right')
+
+        plt.tight_layout()
         plt.savefig(self.plot_address + "spectrum_diff.pdf", bbox_inches='tight')
 
     def data_analysis_v2(self, address):
