@@ -115,7 +115,7 @@ class ReadRoot():
         self.signal_path_mid = self.base_path+self.signal_mid
         self.signal_path = self.base_path + self.signal
         # self.filepath = self.base_path +"dmx_lr.root"
-        self.filepath = self.base_path + "dmx_Cf_1E7.root"
+        self.filepath = self.base_path + "dmx_Cf.root"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
@@ -130,9 +130,9 @@ class ReadRoot():
 
         # self.gamma_event()
         # false noise 2, need to relocate directory
-        # self.Huge_scatter_event()
+        self.Huge_scatter_event()
         # signal rate, caputre in liquid argon
-        self.LAr_gamma_event()
+        # self.LAr_gamma_event()
         # single elastic scatter and capture false signal 1
         # self.single_e_n_capture_event()
         # self.FN_spectrum_v2()
@@ -256,7 +256,8 @@ class ReadRoot():
         self.df_capture[["Event"]].to_csv(self.base_path2 + "capture_event_list.csv", index=False)
         print("Ela",len(self.df_Nscatter["Event"].unique()))
         print("capture",self.df_capture.head(10))
-        print("inelastic", self.df_Ninelastic.head(10))
+
+        print("inelastic", len(self.df_Ninelastic["Event"].unique()),self.df_Ninelastic.head(10))
 
         (self.df_sing_Nscatter, self.df_multi_Nscatter) = self.find_single_n_multi(self.df_Nscatter, "Event", "Volume")
 

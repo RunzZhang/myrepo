@@ -383,9 +383,9 @@ class MC_sim_full_argon():
 
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5), sharey=True)
 
-        ax1.plot(x_bins, y_bins_37, color="brown", label="$^{37}$Ar")
-        ax1.plot(x_bins, y_bins_41, color="green", label="$^{41}$Ar")
-        ax2.plot(x_bins, y_bins_full, color="blue",label="$^{37}$Ar+$^{41}$Ar")
+        ax1.plot(x_bins, y_bins_37, color="brown", label="$^{36}$Ar")
+        ax1.plot(x_bins, y_bins_41, color="green", label="$^{40}$Ar")
+        ax2.plot(x_bins, y_bins_full, color="blue",label="$^{36}$Ar+$^{41}$Ar")
 
 
 
