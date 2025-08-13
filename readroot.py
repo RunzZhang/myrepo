@@ -125,7 +125,8 @@ class ReadRoot():
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # # process data so that it is easier to read
         # first 1000 rows
-        self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
+        self.df = self.file.arrays(self.selected_columns, library="pd")
+        # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         self.modify_df()
 
         # self.gamma_event()
