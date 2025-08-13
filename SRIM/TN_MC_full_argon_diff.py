@@ -382,7 +382,7 @@ class MC_sim_full_argon():
             y_bins_full.append(hist_result_full[0][i] / x_bin_length)
         plt.plot(x_bins, y_bins_37, color="brown", label="$^{37}$Ar")
         plt.plot(x_bins, y_bins_41, color="green", label="$^{41}$Ar")
-        plt.plot(x_bins, y_bins_full, color="blue",label="^{37}$Ar+^{41}$Ar")
+        # plt.plot(x_bins, y_bins_full, color="blue",label="$^{37}$Ar+^{41}$Ar")
 
 
 
@@ -395,7 +395,7 @@ class MC_sim_full_argon():
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
         plt.ylim([1E-5, 0.1])
-        plt.legend()
+        plt.legend(loc='upper right')
         plt.savefig(self.plot_address + "spectrum_diff.pdf", bbox_inches='tight')
 
     def data_analysis_v2(self, address):
