@@ -120,8 +120,8 @@ class MC_sim_full_argon():
         self.gamma_emission_list_1d = []
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
-        self.MC_sim(self.runtime)
-        # self.data_analysis_v2(self.address)
+        # self.MC_sim(self.runtime)
+        self.data_analysis()
         # self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
@@ -336,42 +336,68 @@ class MC_sim_full_argon():
 
         return E_deposit_list
 
-    def data_analysis(self, address):
+    def data_analysis(self):
         start = 0
         end = 1200
         x_bins = []
-        with open(self.address, "rb") as fp:  # Unpickling
-            MC_full = pickle.load(fp)
-            print("read",MC_full)
+        with open(self.address_41, "rb") as fp:  # Unpickling
+            MC_41 = pickle.load(fp)
+            print("read 41",MC_41)
         bin_n =500
 
-        hist_result = plt.hist(MC_full, bins =bin_n, range=(start, end) ,density = True)
+        hist_result_41 = plt.hist(MC_41, bins =bin_n, range=(start, end) ,density = True)
+
+
+
         plt.clf()
-        for i in range(len(hist_result[1]) - 1):
-            x_bins.append((hist_result[1][i] + hist_result[1][i + 1]) / 2)
+        for i in range(len(hist_result_41[1]) - 1):
+            x_bins.append((hist_result_41[1][i] + hist_result_41[1][i + 1]) / 2)
 
-        #plot the previous
-        total_8spectrum_address = "/data/runzezhang/result/SRIM_MC/MC_argon_8cascades_20231107"
-        with open(total_8spectrum_address, "rb") as fp:  # Unpickling
-            MC_8 = pickle.load(fp)
-            # thedata is stored as [[xbins],[y value]]
-            print("read",MC_8)
+        with open(self.address_37, "rb") as fp:  # Unpickling
+            MC_37 = pickle.load(fp)
+            print("read 37",MC_37)
+        hist_result_37 = plt.hist(MC_37, bins=bin_n, range=(start, end), density=True)
 
-        plt.plot(x_bins, hist_result[0], color="blue",label= "full chains")
-        # plt.plot(MC_8[0], MC_8[1], color="orange", label = "8 main chain")
-        plt.grid(True, which='both', linestyle='--', linewidth=0.5)
+        plt.clf()
+
+        MC_full = MC_41+MC_37
+
+        hist_result_full = plt.hist(MC_full, bins=bin_n, range=(start, end), density=True)
+
+
+        plt.clf()
+
+        # change y unit from probablity /bin to probability /ev
+        y_bins_41 = []
+        x_bin_length = x_bins[1] - x_bins[0]
+        for i in range(len(hist_result_41[0])):
+            y_bins_41.append(hist_result_41[0][i] / x_bin_length)
+        y_bins_37 = []
+        x_bin_length = x_bins[1] - x_bins[0]
+        for i in range(len(hist_result_37[0])):
+            y_bins_37.append(hist_result_37[0][i] / x_bin_length)
+        y_bins_full = []
+        x_bin_length = x_bins[1] - x_bins[0]
+        for i in range(len(hist_result_full[0])):
+            y_bins_full.append(hist_result_full[0][i] / x_bin_length)
+        plt.plot(x_bins, y_bins_37, color="brown", label="$^{37}$Ar")
+        plt.plot(x_bins, y_bins_41, color="green", label="$^{41}$Ar")
+        plt.plot(x_bins, y_bins_full, color="blue",label="^{37}$Ar+^{41}$Ar")
+
+
+
+        # plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
-        plt.xlabel("energy/eV",fontsize=18)
-        plt.ylabel("Possibility",fontsize=18)
+        plt.xlabel("NR Energy (eV)", fontsize=18)
+        plt.ylabel("Probability (1/eV)", fontsize=18)
         plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
-        plt.ylim([1E-5,0.1])
-        plot_name = 'compare_with_LSS_old.png'
+        plt.ylim([1E-5, 0.1])
         plt.legend()
-        plt.savefig(self.plot_address+plot_name)
-        # plt.show()
+        plt.savefig(self.plot_address + "spectrum_diff.pdf", bbox_inches='tight')
+
     def data_analysis_v2(self, address):
         # try to compare the new density 1.06 to previous density 1.46 graph
         start = 0
