@@ -398,6 +398,7 @@ class MC_sim_full_argon():
         ax1.set_xlim([0, 1200])
         ax1.set_ylim([1E-5, 0.1])
         ax1.legend(loc='upper right')
+        ax1.set_title("Separated Isotopes", fontsize=16)
 
         ax2.minorticks_on()
         ax2.set_xlabel("NR Energy (eV)", fontsize=18)
@@ -408,6 +409,7 @@ class MC_sim_full_argon():
         ax2.set_ylim([1E-5, 0.1])
         ax2.yaxis.set_tick_params(labelleft=True)
         ax2.legend(loc='upper right')
+        ax2.set_title("Normalized Spectrum", fontsize=16)
 
         plt.tight_layout()
         plt.savefig(self.plot_address + "spectrum_diff.pdf", bbox_inches='tight')
