@@ -277,7 +277,7 @@ class ReadRoot():
         filtered_df2 = merged_df2[merged_df2['_merge'] == 'left_only'].drop(columns=['_merge'])
         print("merged_xor,\n", filtered_df2.head(10))
 
-        self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))&(self.df["Recoiled/keV"]>0.001) ][
+        self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))&(self.df["Recoiled/keV"]>0) ][
             ['Event']]
         # print("LAr recoiled",self.LAr_recoiled)
         # filtered df to remove nCapture event
@@ -330,7 +330,7 @@ class ReadRoot():
         print("scatter number", len(scatter_ene))
         # before 21434
         # add elastic > 0.001 12945
-        # add elastic
+        # add elastic 11094
         plt.xlabel("scatter energy per Event")
         # plt.show()
         plt.savefig(self.plot_path+"n_huge_scatter_ene_AmLi2.png")
