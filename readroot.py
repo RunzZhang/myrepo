@@ -267,9 +267,9 @@ class ReadRoot():
         print("sing", self.df_sing_Nscatter)
         print("multi", self.df_multi_Nscatter)
         # self.df_cap_gamma = pd.DataFrame('Event','Track ID')
-        # merged_df = pd.merge(self.df_sing_Nscatter, self.df_Ninelastic, on=['Event'], how='left', indicator=True)
-        # filtered_df = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge'])
-        filtered_df = self.df_sing_Nscatter
+        merged_df = pd.merge(self.df_sing_Nscatter, self.df_Ninelastic, on=['Event'], how='left', indicator=True)
+        filtered_df = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge'])
+        # filtered_df = self.df_sing_Nscatter
         print("merged_xor,\n", filtered_df.head(10))
         #2nd filter filter out ncapture recoiled energy
         merged_df2 = pd.merge(filtered_df, self.df_capture, on=['Event'], how='left', indicator=True)
@@ -277,7 +277,7 @@ class ReadRoot():
         filtered_df2 = merged_df2[merged_df2['_merge'] == 'left_only'].drop(columns=['_merge'])
         print("merged_xor,\n", filtered_df2.head(10))
 
-        self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))&(self.df["Recoiled/keV"]>0) ][
+        self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))&(self.df["Recoiled/keV"]>0.001) ][
             ['Event']]
         # print("LAr recoiled",self.LAr_recoiled)
         # filtered df to remove nCapture event
@@ -330,6 +330,7 @@ class ReadRoot():
         print("scatter number", len(scatter_ene))
         # before 21434
         # add elastic > 0.001 12945
+        # add elastic
         plt.xlabel("scatter energy per Event")
         # plt.show()
         plt.savefig(self.plot_path+"n_huge_scatter_ene_AmLi2.png")
@@ -369,7 +370,7 @@ class ReadRoot():
         print("merged_xor,\n", filtered_df2.head(10))
 
         self.LAr_recoiled = \
-        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/keV"] > 0)][
+        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/keV"] > 0.0125)][
             ['Event']]
         # print("LAr recoiled",self.LAr_recoiled)
         # filtered df to remove nCapture event
@@ -397,7 +398,7 @@ class ReadRoot():
                 scatter_ene.append(self.Ar_recoiled_list[i] * 1E6)
                 if pho_num > 1:
                     p_observed.append(pho_num)
-
+        print("all recoil", len(self.Ar_recoiled_list), "scintilti recoil", len(p_observed))
         num = 0
         for i in p_observed:
             if i >= 1:
