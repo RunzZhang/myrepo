@@ -201,7 +201,7 @@ class SN():
 
         # ======== FIRST PLOT (your original one) ========
         # Plot dataset 1 and dataset 2 on the left y-axis
-        line1, = ax1.plot(pho1, sig1, 'g-', label='Signal')
+        line1, = ax1.plot(pho1, sig1, 'g-', label='Neutron Capture Signal')
         line2, = ax1.plot(pho1, noise1, 'b-', label='Background')
         ax1.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
         ax1.set_xlim([0, 600])
@@ -227,7 +227,7 @@ class SN():
 
         # ======== SECOND PLOT (side-by-side) ========
         # Example plot — replace with your own data
-        line4, = ax3.plot(pho2, sig2, 'g-', label='Signal')
+        line4, = ax3.plot(pho2, sig2, 'g-', label='Neutron Capture Signal')
         line5, = ax3.plot(pho2, noise2, 'b-', label='Background')
         ax3.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
         ax3.set_xlim([0, 600])

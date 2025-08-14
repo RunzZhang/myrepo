@@ -361,6 +361,9 @@ class ReadRoot():
         # self.df_cap_gamma = pd.DataFrame('Event','Track ID')
         merged_df = pd.merge(self.df_sing_Nscatter, self.df_Ninelastic, on=['Event'], how='left', indicator=True)
         filtered_df = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge'])
+        # use all scatter events
+
+        filtered_df = self.df_Nscatter
         # filtered_df = self.df_sing_Nscatter
         print("merged_xor,\n", filtered_df.head(10))
         # 2nd filter filter out ncapture recoiled energy
