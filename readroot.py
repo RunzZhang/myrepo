@@ -131,7 +131,7 @@ class ReadRoot():
 
         # self.gamma_event()
         # false noise 2, need to relocate directory
-        # self.Huge_scatter_event()
+        self.Huge_scatter_event()
         # signal rate, caputre in liquid argon
         # self.LAr_gamma_event()
         # single elastic scatter and capture false signal 1
@@ -142,7 +142,7 @@ class ReadRoot():
         # self.find_multiplicity()
         # self.Check_inelastic()
         # test elatic and inelastic effect
-        self.bubble_rate()
+        # self.bubble_rate()
 
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
@@ -277,7 +277,7 @@ class ReadRoot():
         filtered_df2 = merged_df2[merged_df2['_merge'] == 'left_only'].drop(columns=['_merge'])
         print("merged_xor,\n", filtered_df2.head(10))
 
-        self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))&(self.df["Recoiled/keV"]>0.001) ][
+        self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))&(self.df["Recoiled/keV"]>0) ][
             ['Event']]
         # print("LAr recoiled",self.LAr_recoiled)
         # filtered df to remove nCapture event
@@ -329,7 +329,7 @@ class ReadRoot():
         plt.yscale("Log")
         print("scatter number", len(scatter_ene))
         # before 21434
-        # add elastic
+        # add elastic > 0.001 12945
         plt.xlabel("scatter energy per Event")
         # plt.show()
         plt.savefig(self.plot_path+"n_huge_scatter_ene_AmLi2.png")
@@ -424,7 +424,7 @@ class ReadRoot():
         plt.yscale("Log")
         print("scatter number", len(scatter_ene))
         # before 21434
-        # add elastic > 0.001 12945
+
         # only elastic
         plt.xlabel("scatter energy per Event")
         # plt.show()
