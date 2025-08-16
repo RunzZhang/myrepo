@@ -106,7 +106,7 @@ class ReadRoot():
         self.false_2 = "Cf_1E6_false2.csv"
         self.signal = "Cf_1E6_sig.csv"
         self.false_1_mid = "Cf_1E6_false1_mid.csv"
-        self.false_2_mid = "Cf_1E6_false2_mid_th0.csv"
+        self.false_2_mid = "Cf_1E6_false2_mid_th1k.csv"
         self.signal_mid = "Cf_1E6_sig_mid.csv"
         self.false_1_path = self.base_path+self.false_1
         self.false_2_path = self.base_path+self.false_2
@@ -277,7 +277,7 @@ class ReadRoot():
         filtered_df2 = merged_df2[merged_df2['_merge'] == 'left_only'].drop(columns=['_merge'])
         print("merged_xor,\n", filtered_df2.head(10))
 
-        self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))&(self.df["Recoiled/keV"]>0) ][
+        self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))&(self.df["Recoiled/keV"]>0.001) ][
             ['Event']]
         # print("LAr recoiled",self.LAr_recoiled)
         # filtered df to remove nCapture event
