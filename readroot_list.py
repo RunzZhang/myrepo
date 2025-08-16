@@ -157,7 +157,7 @@ class ReadRoot():
         self.signal_path_mid = self.base_path + self.signal_mid
         self.signal_path = self.base_path + self.signal
 
-        
+
 
         self.filepath = self.base_path + f"dmx_Cf_1E7_{i}.root"
         self.file = uproot.open(self.filepath)["tree"]
@@ -420,7 +420,7 @@ class ReadRoot():
         n_list = self.LAr_n_merged["Event"].to_list()
         self.N_check = self.df[self.df["Event"].isin(n_list) & (
                 (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))]
-        self.N_check.to_csv(self.false_2_inelas_path_mid, index=False)
+        self.N_check.to_csv(self.false_2_path_mid, index=False)
         # print(self.LAr_n_merged)
         # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
 
@@ -454,7 +454,7 @@ class ReadRoot():
             ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "Kinetic/keV", "Recoiled/keV", "Volume",
              "Process"]]
         self.df_event_1542.to_csv("/data/runzezhang/result/TN_sims3/event1542.csv", index=False)
-        with open(self.false_2_inela_path, 'w', newline='') as myfile:
+        with open(self.false_2_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(p_observed)
         # print photon number
