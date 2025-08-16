@@ -106,7 +106,7 @@ class ReadRoot():
         self.false_2 = "Cf_1E6_false2.csv"
         self.signal = "Cf_1E6_sig.csv"
         self.false_1_mid = "Cf_1E6_false1_mid.csv"
-        self.false_2_mid = "Cf_1E6_false2_mid.csv"
+        self.false_2_mid = "Cf_1E6_false2_mid_th0.csv"
         self.signal_mid = "Cf_1E6_sig_mid.csv"
         self.false_1_path = self.base_path+self.false_1
         self.false_2_path = self.base_path+self.false_2
