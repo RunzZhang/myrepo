@@ -106,7 +106,7 @@ class ReadRoot():
         self.false_2 = "Cf_1E6_false2.csv"
         self.signal = "Cf_1E6_sig.csv"
         self.false_1_mid = "Cf_1E6_false1_mid.csv"
-        self.false_2_mid = "Cf_1E6_false2_mid_th1k.csv"
+        self.false_2_mid = "Cf_1E6_false2_mid_inelas.csv"
         self.signal_mid = "Cf_1E6_sig_mid.csv"
         self.false_1_path = self.base_path+self.false_1
         self.false_2_path = self.base_path+self.false_2
@@ -267,9 +267,9 @@ class ReadRoot():
         print("sing", self.df_sing_Nscatter)
         print("multi", self.df_multi_Nscatter)
         # self.df_cap_gamma = pd.DataFrame('Event','Track ID')
-        merged_df = pd.merge(self.df_sing_Nscatter, self.df_Ninelastic, on=['Event'], how='left', indicator=True)
-        filtered_df = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge'])
-        # filtered_df = self.df_sing_Nscatter
+        # merged_df = pd.merge(self.df_sing_Nscatter, self.df_Ninelastic, on=['Event'], how='left', indicator=True)
+        # filtered_df = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge'])
+        filtered_df = self.df_sing_Nscatter
         print("merged_xor,\n", filtered_df.head(10))
         #2nd filter filter out ncapture recoiled energy
         merged_df2 = pd.merge(filtered_df, self.df_capture, on=['Event'], how='left', indicator=True)
@@ -328,9 +328,7 @@ class ReadRoot():
         plt.xscale("log")
         plt.yscale("Log")
         print("scatter number", len(scatter_ene))
-        # before 21434
-        # add elastic > 0.001 12945
-        # add elastic 11094
+        # before 6846
         plt.xlabel("scatter energy per Event")
         # plt.show()
         plt.savefig(self.plot_path+"n_huge_scatter_ene_AmLi2.png")
