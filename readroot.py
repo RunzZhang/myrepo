@@ -329,6 +329,7 @@ class ReadRoot():
         plt.yscale("Log")
         print("scatter number", len(scatter_ene))
         # before 6846
+        # after including inelastic scattering 8681
         plt.xlabel("scatter energy per Event")
         # plt.show()
         plt.savefig(self.plot_path+"n_huge_scatter_ene_AmLi2.png")
