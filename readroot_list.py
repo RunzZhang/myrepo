@@ -153,7 +153,7 @@ class ReadRoot():
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
         self.false_1_path_mid = self.base_path + self.false_1_mid
-        self.false_2_mid = f"Cf_1E7_inelastic_false2_mid_part{i}.csv"
+        self.false_2_path_mid = self.base_path + self.false_2_mid
         self.signal_path_mid = self.base_path + self.signal_mid
         self.signal_path = self.base_path + self.signal
 
