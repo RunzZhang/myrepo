@@ -129,8 +129,8 @@ class ReadRoot():
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # # process data so that it is easier to read
         # first 1000 rows
-        self.df = self.file.arrays(self.selected_columns, library="pd")
-        # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
+        # self.df = self.file.arrays(self.selected_columns, library="pd")
+        self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         self.modify_df()
         # print(self.df)
 
@@ -867,6 +867,7 @@ class ReadRoot():
         self.check_capture()
         # self.plot_gamma()
     def gamma_momentum(self):
+        self.df.to_csv(self.false_3_path_mid, index=False)
         # z face is 1150mm
         self.df_gamma_income = self.df[
             (self.df["name"] == 'gamma') & (self.df["Z/mm"] >=1140)& (self.df["Z/mm"] <=1160)& (self.df["Parent ID"] ==0)][
@@ -876,7 +877,7 @@ class ReadRoot():
         
 
         
-        self.df_gamma_income.to_csv(self.false_3_path_mid, index=False)
+        # self.df_gamma_income.to_csv(self.false_3_path_mid, index=False)
 
         # gamma_energy = self.df_gamma_income[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])[
         #     "Recoiled/keV"].max().reset_index()
