@@ -142,6 +142,7 @@ class ReadRoot():
         # PDF
 
         self.gamma_momentum()
+        self.plot_gamma_momentum()
 
         # self.gamma_event()
         # false noise 2, need to relocate directory
@@ -897,6 +898,28 @@ class ReadRoot():
         with open(self.false_3_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(self.gamma_Ek_list)
+
+    def plot_gamma_momentum(self):
+
+        with open(self.false_3_path, 'r') as file:
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            self.noise3_raw_list = [float(value) for value in number_list]
+
+        sig_counts, sig_bin_edges = np.histogram(self.noise3_raw_list, bins=100)
+        sig_normalized_counts = sig_counts * self.noise3_raw_list / 1
+        sig_bin_centers = (sig_bin_edges[:-1] + sig_bin_edges[1:]) / 2
+        plt.bar(sig_bin_centers, sig_normalized_counts, width=sig_bin_edges[1] - sig_bin_edges[0], color='red',
+                label='signal')
+
+        plt.xlabel("photon detected by SiPM #", fontsize=16)
+        plt.ylabel("signal/noise rate #/s", fontsize=16)
+        plt.yscale('log')
+        plt.legend()
+        plot_name = "sn1_1E6"
+        plt.savefig(self.plot_path + plot_name)
 
 
     def Huge_scatter_event(self):
