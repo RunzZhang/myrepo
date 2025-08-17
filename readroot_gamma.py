@@ -870,16 +870,17 @@ class ReadRoot():
         # z face is 1150mm
         self.df_gamma_income = self.df[
             (self.df["name"] == 'gamma') & (self.df["Z/mm"] >=1140)& (self.df["Z/mm"] <=1160)& (self.df["Parent ID"] ==0)][
-            ['Event', 'Volume', 'Track ID', 'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV','Parent ID']]
+            ['Event', 'Volume', 'Track ID', 'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV',"Kinetic/keV",'Parent ID']]
         self.df_gamma_income = self.keep_1st(self.df_gamma_income)
         
 
         
         self.df_gamma_income.to_csv(self.false_3_path_mid, index=False)
 
-        gamma_energy = self.df_gamma_income[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])[
-            "Recoiled/keV"].max().reset_index()
-
+        # gamma_energy = self.df_gamma_income[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])[
+        #     "Recoiled/keV"].max().reset_index()
+        gamma_energy = \
+        self.df_gamma_income
 
 
         # add gamma up
