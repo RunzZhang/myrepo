@@ -274,8 +274,8 @@ class ReadRoot():
         merged_df = pd.merge(self.df_sing_Nscatter, self.df_Ninelastic, on=['Event'], how='left', indicator=True)
         filtered_df = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge'])
         # inelastic
-        merged_df = pd.merge(self.df_sing_Nscatter, self.df_Nscatter, on=['Event'], how='left', indicator=True)
-        filtered_df_inela = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge'])
+        # merged_df = pd.merge(self.df_sing_Nscatter, self.df_Nscatter, on=['Event'], how='left', indicator=True)
+        filtered_df_inela = self.df_Ninelastic
         print("merged_xor,\n", filtered_df_inela.head(10))
         #2nd filter filter out ncapture recoiled energy
         # elastic
