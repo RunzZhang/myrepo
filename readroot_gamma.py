@@ -887,9 +887,9 @@ class ReadRoot():
 
         # add gamma up
         self.gamma_Ek_list=[]
-        self.gamma_px_list= gamma_energy["px/keV"].to_list()
-        self.gamma_py_list = gamma_energy["py/keV"].to_list()
-        self.gamma_pz_list = gamma_energy["pz/keV"].to_list()
+        self.gamma_px_list= gamma_energy["px/MeV"].to_list()
+        self.gamma_py_list = gamma_energy["py/MeV"].to_list()
+        self.gamma_pz_list = gamma_energy["pz/MeV"].to_list()
         for i in range(len(self.gamma_px_list)):
             self.gamma_Ek_list.append((self.gamma_px_list[i]**2+self.gamma_py_list[i]**2+self.gamma_pz_list[i]**2)**0.5)
         print("gamma in 1E6 ", len(self.gamma_Ek_list))
