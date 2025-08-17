@@ -145,15 +145,19 @@ class ReadRoot():
     def main_body(self,i):
         print(i)
         self.false_1 = f"Cf_1E7_false1_part{i}.csv"
-        self.false_2 = f"Cf_1E7_inelastic_false2_part{i}.csv"
+        self.false_2 = f"Cf_1E7_false2_part{i}.csv"
+        self.false_3 = f"Cf_1E7_false3_part{i}.csv"
         self.signal = f"Cf_1E7_sig_part{i}.csv"
         self.false_1_mid = f"Cf_1E7_false1_mid_part{i}.csv"
-        self.false_2_mid = f"Cf_1E7_inelastic_false2_mid_part{i}.csv"
+        self.false_2_mid = f"Cf_1E7_false2_mid_part{i}.csv"
+        self.false_3_mid = f"Cf_1E7_false3_mid_part{i}.csv"
         self.signal_mid = f"Cf_1E7_sig_mid_part{i}.csv"
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
+        self.false_3_path = self.base_path + self.false_3
         self.false_1_path_mid = self.base_path + self.false_1_mid
         self.false_2_path_mid = self.base_path + self.false_2_mid
+        self.false_3_path_mid = self.base_path + self.false_3_mid
         self.signal_path_mid = self.base_path + self.signal_mid
         self.signal_path = self.base_path + self.signal
 
@@ -182,10 +186,10 @@ class ReadRoot():
         # self.single_e_n_capture_event()
 
         # false noise 2, need to relocate directory
-        # self.Huge_scatter_event()
+        # including inelastic
+        self.Huge_scatter_event()
 
-        # false 2, including inelastic]
-        self.Huge_scatter_wt_inelastic_spectrum()
+
 
         # self.FN_spectrum_v2()
         # self.plot_elastic()
@@ -386,7 +390,7 @@ class ReadRoot():
         self.df_Ninelastic = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
                     self.df["Volume"] == 'LAr_phys')][
-            ['Event', 'Track ID']]
+            ['Event', 'Volume', 'Track ID', 'Parent ID']]
 
         self.df_capture = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
@@ -394,19 +398,30 @@ class ReadRoot():
         self.df_capture[["Event"]].to_csv(self.base_path2 + "capture_event_list.csv", index=False)
         print("Ela", len(self.df_Nscatter["Event"].unique()))
         print("capture", self.df_capture.head(10))
-        print("inelastic", self.df_Ninelastic.head(10))
+        print("inelastic", len(self.df_Ninelastic["Event"].unique()), self.df_Ninelastic.head(10))
 
         (self.df_sing_Nscatter, self.df_multi_Nscatter) = self.find_single_n_multi(self.df_Nscatter, "Event", "Volume")
 
         print("sing", self.df_sing_Nscatter)
         print("multi", self.df_multi_Nscatter)
         # self.df_cap_gamma = pd.DataFrame('Event','Track ID')
-        filtered_df = self.df_sing_Nscatter
-        print("merged_xor,\n", filtered_df.head(10))
+        # elastic
+        merged_df = pd.merge(self.df_sing_Nscatter, self.df_Ninelastic, on=['Event'], how='left', indicator=True)
+        filtered_df = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge'])
+        # inelastic
+        # merged_df = pd.merge(self.df_sing_Nscatter, self.df_Nscatter, on=['Event'], how='left', indicator=True)
+        filtered_df_inela = self.df_Ninelastic
+        print("merged_xor,\n", filtered_df_inela.head(10))
         # 2nd filter filter out ncapture recoiled energy
+        # elastic
         merged_df2 = pd.merge(filtered_df, self.df_capture, on=['Event'], how='left', indicator=True)
 
         filtered_df2 = merged_df2[merged_df2['_merge'] == 'left_only'].drop(columns=['_merge'])
+
+        merged_df3 = pd.merge(filtered_df_inela, self.df_capture, on=['Event'], how='left', indicator=True)
+
+        filtered_df3 = merged_df3[merged_df3['_merge'] == 'left_only'].drop(columns=['_merge'])
+
         print("merged_xor,\n", filtered_df2.head(10))
 
         self.LAr_recoiled = \
@@ -415,12 +430,22 @@ class ReadRoot():
 
         # print("LAr recoiled",self.LAr_recoiled)
         # filtered df to remove nCapture event
+        # elastic and inelastic
         self.LAr_n_merged = pd.merge(filtered_df2, self.LAr_recoiled, on=['Event'], how='inner')
-        # self.LAr_n_merged = pd.merge(self.df_sing_Nscatter, self.LAr_recoiled, on=['Event'], how='inner')
+        self.LAr_n_merged_inela = pd.merge(filtered_df3, self.LAr_recoiled, on=['Event'], how='inner')
+
         n_list = self.LAr_n_merged["Event"].to_list()
         self.N_check = self.df[self.df["Event"].isin(n_list) & (
                 (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))]
         self.N_check.to_csv(self.false_2_path_mid, index=False)
+
+        n_list_inela = self.LAr_n_merged_inela["Event"].to_list()
+        print("Ncheck_ inel", n_list_inela)
+        self.N_check_inela = self.df[self.df["Event"].isin(n_list_inela) & (
+                (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36') | (
+                    self.df["name"] == 'gamma'))]
+        self.N_check_inela.to_csv(self.false_3_path_mid, index=False)
+
         # print(self.LAr_n_merged)
         # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
 
@@ -430,7 +455,6 @@ class ReadRoot():
 
         # add gamma up
         self.Ar_recoiled_list = max_values["Recoiled/keV"].to_list()
-        # actually it is /MeV
         p_observed = []
         scatter_ene = []  # in eV
         for i in range(len(self.Ar_recoiled_list)):
@@ -457,6 +481,8 @@ class ReadRoot():
         with open(self.false_2_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(p_observed)
+
+        self.p_observed = p_observed
         # print photon number
         # plt.hist(p_observed, bins=100)
         # plt.xlabel("Obeserved Photon per Event")
@@ -464,14 +490,16 @@ class ReadRoot():
         # print scatter scatter
         plt.hist(scatter_ene, bins=100)
         plt.xscale("log")
-        plt.yscale("log")
+        plt.yscale("Log")
         print("scatter number", len(scatter_ene))
+        # before 6846
+        # after including inelastic scattering 8681
         plt.xlabel("scatter energy per Event")
         # plt.show()
-        # plt.savefig(self.plot_path+"n_huge_scatter_ene_AmLi2.png")
+        plt.savefig(self.plot_path + "n_huge_scatter_ene_AmLi2.png")
 
     def inelastic_gamma(self):
-        self.df_gamma_rw = pd.read_csv(self.false_2_path_mid)
+        self.df_gamma_rw = pd.read_csv(self.false_3_path_mid)
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
 
         self.gamma_Scint = self.df_gamma_rw[
@@ -509,9 +537,10 @@ class ReadRoot():
         print("photon observed number ", num, len(p_observed))
         print("max", max(p_observed), "\n", "min", min(p_observed))
         # plt.hist(self.electron_recoiled_list, bins=100)
-        with open(self.false_2_path, 'w', newline='') as myfile:
+        self.p_observed += p_observed
+        with open(self.false_3_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
-            wr.writerow(p_observed)
+            wr.writerow(self.p_observed)
         plt.hist(p_observed, bins=100)
         plt.xlabel("Obeserved Photon per Event")
 
@@ -872,6 +901,7 @@ class ReadRoot():
         # single scatter spectrum
         # self.Huge_scatter_spectrum()
         self.Huge_scatter_wt_inelastic_spectrum()
+        self.inelastic_gamma()
         # self.Huge_scatter_spectrum_CF()
         # self.Huge_scatter_spectrum_CF_fake()
 
