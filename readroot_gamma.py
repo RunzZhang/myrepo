@@ -130,9 +130,9 @@ class ReadRoot():
         # # process data so that it is easier to read
         # first 1000 rows
         self.df = self.file.arrays(self.selected_columns, library="pd")
-        self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
+        # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         self.modify_df()
-        print(self.df)
+        # print(self.df)
 
         # gamma direction x -1 or +1
         # one gamma per event
@@ -871,6 +871,7 @@ class ReadRoot():
         self.df_gamma_income = self.df[
             (self.df["name"] == 'gamma') & (self.df["Z/mm"] >=1140)& (self.df["Z/mm"] <=1160)& (self.df["Parent ID"] ==0)][
             ['Event', 'Volume', 'Track ID', 'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV',"Kinetic/keV",'Parent ID']]
+        print("first iincome",self.df_gamma_income.head(100))
         self.df_gamma_income = self.keep_1st(self.df_gamma_income)
         
 
