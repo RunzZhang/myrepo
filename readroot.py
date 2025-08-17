@@ -255,7 +255,7 @@ class ReadRoot():
         self.df_Ninelastic = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
                         self.df["Volume"] == 'LAr_phys')][
-            ['Event', 'Track ID']]
+            ['Event', 'Volume', 'Track ID', 'Parent ID']]
         
         self.df_capture = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
@@ -276,7 +276,7 @@ class ReadRoot():
         # inelastic
         merged_df = pd.merge(self.df_sing_Nscatter, self.df_Nscatter, on=['Event'], how='left', indicator=True)
         filtered_df_inela = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge'])
-        print("merged_xor,\n", filtered_df.head(10))
+        print("merged_xor,\n", filtered_df_inela.head(10))
         #2nd filter filter out ncapture recoiled energy
         # elastic
         merged_df2 = pd.merge(filtered_df, self.df_capture, on=['Event'], how='left', indicator=True)
