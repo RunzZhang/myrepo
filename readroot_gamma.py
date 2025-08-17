@@ -108,7 +108,7 @@ class ReadRoot():
         self.signal = "Cf_1E6_sig.csv"
         self.false_1_mid = "Cf_1E6_false1_mid.csv"
         self.false_2_mid = "Cf_1E6_false2_mid.csv"
-        self.false_3_mid = "Cf_1E6_false2_mid_inelas.csv"
+        self.false_3_mid = "Cf_1E6_false3_mid.csv"
         self.signal_mid = "Cf_1E6_sig_mid.csv"
         self.false_1_path = self.base_path+self.false_1
         self.false_2_path = self.base_path+self.false_2
@@ -123,7 +123,7 @@ class ReadRoot():
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
-        self.selected_columns = ["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV", "Volume","Process"]
+        self.selected_columns = ["Event","name","Parent ID","Track ID","Step ID",'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV' "Kinetic/keV","Recoiled/keV", "Volume","Process"]
         self.rows = 1000
 
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
@@ -140,6 +140,8 @@ class ReadRoot():
         # collection gamma energy
         # 1e? FISSIons
         # PDF
+
+        self.gamma_momentum()
 
         # self.gamma_event()
         # false noise 2, need to relocate directory
@@ -864,11 +866,35 @@ class ReadRoot():
         self.find_gamma_e()
         self.check_capture()
         # self.plot_gamma()
+    def gamma_momentum(self):
+        # z face is 1150mm
+        self.df_gamma_income = self.df[
+            (self.df["name"] == 'gamma') & (self.df["Z/mm"] >=1140)& (self.df["Z/mm"] <=1160)& (self.df["ParentID"] ==0)][
+            ['Event', 'Volume', 'Track ID', 'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV','Parent ID']]
+        self.df_gamma_income = self.keep_1st(self.df_gamma_income)
+        
+
+        
+        self.df_gamma_income.to_csv(self.false_3_path_mid, index=False)
+
+        gamma_energy = self.df_gamma_income[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])[
+            "Recoiled/keV"].max().reset_index()
+
+
+
+        # add gamma up
+        self.gamma_Ek_list = gamma_energy["Kinetic/keV"].to_list()
+        print("gamma in 1E6 ", len(self.gamma_Ek_list))
+
+        with open(self.false_3_path, 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(self.gamma_Ek_list)
+
 
     def Huge_scatter_event(self):
         # single scatter spectrum
         self.Huge_scatter_spectrum()
-        self.inelastic_gamma()
+        # self.inelastic_gamma()
         # self.Huge_scatter_spectrum_CF()
         # self.Huge_scatter_spectrum_CF_fake()
 
