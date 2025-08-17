@@ -869,7 +869,7 @@ class ReadRoot():
     def gamma_momentum(self):
         # z face is 1150mm
         self.df_gamma_income = self.df[
-            (self.df["name"] == 'gamma') & (self.df["Z/mm"] >=1140)& (self.df["Z/mm"] <=1160)& (self.df["ParentID"] ==0)][
+            (self.df["name"] == 'gamma') & (self.df["Z/mm"] >=1140)& (self.df["Z/mm"] <=1160)& (self.df["Parent ID"] ==0)][
             ['Event', 'Volume', 'Track ID', 'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV','Parent ID']]
         self.df_gamma_income = self.keep_1st(self.df_gamma_income)
         
