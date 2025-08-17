@@ -32,7 +32,7 @@ class SN():
     def main_body(self,i):
         print(i)
         self.false_1 = f"Cf_1E7_false1_part{i}.csv"
-        self.false_2 = f"Cf_1E7_inelastic_false2_mid_part{i}.csv"
+        self.false_2 = f"Cf_1E7_inelastic_false2_part{i}.csv"
         self.signal = f"Cf_1E7_sig_part{i}.csv"
 
         self.false_1_path = self.base_path + self.false_1
