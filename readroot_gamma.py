@@ -908,15 +908,15 @@ class ReadRoot():
             # Convert the strings to floats
             self.noise3_raw_list = [float(value) for value in number_list]
 
-        sig_counts, sig_bin_edges = np.histogram(self.noise3_raw_list, bins=100)
-        sig_normalized_counts = 1
-        sig_bin_centers = (sig_bin_edges[:-1] + sig_bin_edges[1:]) / 2
-        plt.bar(sig_bin_centers, sig_normalized_counts, width=sig_bin_edges[1] - sig_bin_edges[0], color='red',
-                label='signal')
+        sig_counts, sig_bin_edges = plt.hist(self.noise3_raw_list, bins=100)
+        # sig_normalized_counts = 1
+        # sig_bin_centers = (sig_bin_edges[:-1] + sig_bin_edges[1:]) / 2
+        # plt.bar(sig_bin_centers, sig_normalized_counts, width=sig_bin_edges[1] - sig_bin_edges[0], color='red',
+        #         label='signal')
 
-        plt.xlabel("photon detected by SiPM #", fontsize=16)
-        plt.ylabel("signal/noise rate #/s", fontsize=16)
-        plt.yscale('log')
+        plt.xlabel("gamma energy/MeV", fontsize=16)
+        plt.ylabel("counts", fontsize=16)
+        # plt.yscale('log')
         plt.legend()
         plot_name = "sn1_1E6"
         plt.savefig(self.plot_path + plot_name)
