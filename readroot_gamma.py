@@ -909,7 +909,7 @@ class ReadRoot():
             self.noise3_raw_list = [float(value) for value in number_list]
 
         sig_counts, sig_bin_edges = np.histogram(self.noise3_raw_list, bins=100)
-        sig_normalized_counts = sig_counts * self.noise3_raw_list / 1
+        sig_normalized_counts = 1
         sig_bin_centers = (sig_bin_edges[:-1] + sig_bin_edges[1:]) / 2
         plt.bar(sig_bin_centers, sig_normalized_counts, width=sig_bin_edges[1] - sig_bin_edges[0], color='red',
                 label='signal')
