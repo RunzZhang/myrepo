@@ -32,11 +32,13 @@ class SN():
     def main_body(self,i):
         print(i)
         self.false_1 = f"Cf_1E7_false1_part{i}.csv"
-        self.false_2 = f"Cf_1E7_inelastic_false2_part{i}.csv"
+        self.false_2 = f"Cf_1E7_false2_part{i}.csv"
+        self.false_3 = f"Cf_1E7_false3_part{i}.csv"
         self.signal = f"Cf_1E7_sig_part{i}.csv"
 
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
+        self.false_3_path = self.base_path + self.false_3
         self.signal_path = self.base_path + self.signal
 
 
@@ -88,7 +90,14 @@ class SN():
             # Convert the strings to floats
             self.noise2_raw_list = [float(value) for value in number_list]
             # self.noise_raw_list = [float(value)  for value in number_list]
-        self.noise2_final_list = self.noise2_final_list+ self.noise2_raw_list
+        # add noise 3 to noise 2 too.
+        with open(self.false_3_path, 'r') as file:
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            self.noise3_raw_list = [float(value) for value in number_list]
+        self.noise2_final_list = self.noise2_final_list+ self.noise3_raw_list
 
     def combine_data(self):
         # get rate vs diff threshold
