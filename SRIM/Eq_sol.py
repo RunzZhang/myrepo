@@ -273,7 +273,7 @@ class E_loss_solve():
 
     def E_loss_total_t_fun_ODE_posttest(self):
 
-        self.last_t = 0.00001
+        self.last_t = 0.001
         self.ini_E = 2000
         self.threshold_v = 0.1
         # self.t_crit = 1343 * 10 ** (-6) * np.log(self.ini_E / 0.1)
