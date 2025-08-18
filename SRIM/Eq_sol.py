@@ -279,7 +279,7 @@ class E_loss_solve():
         # self.t_crit = 1343 * 10 ** (-6) * np.log(self.ini_E / 0.1)
         self.t_crit = 7.24432998e-04
         self.e_list =[]
-        self.bins = 10000
+        self.bins = 100000
         for i in range(self.bins):
             self.e_list.append(i*self.last_t/10)
         print(self.t_crit)
