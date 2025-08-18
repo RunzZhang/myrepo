@@ -53,7 +53,7 @@ class E_loss_solve():
         print("factor",self.factor*self.Tar_Den*10**8)
         print("LSS factor inverse", 1/self.LSS_factor)
         self.plot_address = "/data/runzezhang/result/New_density_MC/"
-        self.plot_name ="DEDt_log.pdf"
+        self.plot_name ="DEDt.pdf"
 
         # self.main_fun()
         # self.test()
@@ -273,13 +273,13 @@ class E_loss_solve():
 
     def E_loss_total_t_fun_ODE_posttest(self):
 
-        self.last_t = 0.001
+        self.last_t = 0.00001
         self.ini_E = 2000
         self.threshold_v = 0.1
         # self.t_crit = 1343 * 10 ** (-6) * np.log(self.ini_E / 0.1)
         self.t_crit = 7.24432998e-04
         self.e_list =[]
-        self.bins = 200
+        self.bins = 10000
         for i in range(self.bins):
             self.e_list.append(i*self.last_t/10)
         print(self.t_crit)
