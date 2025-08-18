@@ -281,7 +281,7 @@ class E_loss_solve():
         self.e_list =[]
         self.bins = 100000
         for i in range(self.bins):
-            self.e_list.append(i*self.last_t/10)
+            self.e_list.append(i*self.last_t/1000)
         print(self.t_crit)
         # solve = solve_ivp(self.E_loss_el_t_fun_ODE, [0, 2*self.last_t], [self.ini_E], t_eval=self.e_list) # check one point's value
         solve = solve_ivp(self.E_loss_t_fun_ODE_new_D, [0, self.last_t], [self.ini_E])
