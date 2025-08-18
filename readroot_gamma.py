@@ -908,7 +908,7 @@ class ReadRoot():
             # Convert the strings to floats
             self.noise3_raw_list = [float(value) for value in number_list]
 
-        sig_counts, sig_bin_edges = plt.hist(self.noise3_raw_list)
+        sig_counts, sig_bin_edges, _ = plt.hist(self.noise3_raw_list)
         # sig_normalized_counts = 1
         # sig_bin_centers = (sig_bin_edges[:-1] + sig_bin_edges[1:]) / 2
         # plt.bar(sig_bin_centers, sig_normalized_counts, width=sig_bin_edges[1] - sig_bin_edges[0], color='red',
