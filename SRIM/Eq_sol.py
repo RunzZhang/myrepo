@@ -284,7 +284,7 @@ class E_loss_solve():
             self.e_list.append(i*self.last_t/100)
         print(self.t_crit)
         # solve = solve_ivp(self.E_loss_el_t_fun_ODE, [0, 2*self.last_t], [self.ini_E], t_eval=self.e_list) # check one point's value
-        solve = solve_ivp(self.E_loss_t_fun_ODE_new_D, [0, self.last_t], [self.ini_E], t_eval=self.e_list)
+        solve = solve_ivp(self.E_loss_t_fun_ODE_new_D, [0, self.e_list[-1]], [self.ini_E], t_eval=self.e_list)
         array = solve.y
         sol_y = array[0]
         print("y", array,sol_y)
