@@ -1001,8 +1001,15 @@ class ReadRoot():
 
         ini_ene = [self.neutron_Ek_dic[key][0]*1e6 for key in self.neutron_Ek_dic]
         final_ene = [self.neutron_Ek_dic[key][1]*1e6 for key in self.neutron_Ek_dic]
-        print(ini_ene)
-        sig_counts, sig_bin_edges, _ = plt.hist(final_ene, bins=100)
+        cross_list = []
+        for i in range(len(final_ene)):
+            if final_ene[i] != 0:
+                cross_list.append(ini_ene[i])
+
+
+        # print(ini_ene)
+
+        sig_counts, sig_bin_edges, _ = plt.hist(cross_list, bins=100)
         # sig_normalized_counts = 1
         # sig_bin_centers = (sig_bin_edges[:-1] + sig_bin_edges[1:]) / 2
         # plt.bar(sig_bin_centers, sig_normalized_counts, width=sig_bin_edges[1] - sig_bin_edges[0], color='red',
