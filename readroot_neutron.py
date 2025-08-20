@@ -906,7 +906,7 @@ class ReadRoot():
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
             # Convert the strings to floats
-            self.noise3_raw_list = [float(value) for value in number_list]
+            self.noise3_raw_list = [float(value)*1e6 for value in number_list]
 
         sig_counts, sig_bin_edges, _ = plt.hist(self.noise3_raw_list, bins= 100)
         # sig_normalized_counts = 1
