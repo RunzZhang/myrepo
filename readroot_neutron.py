@@ -970,29 +970,37 @@ class ReadRoot():
             self.df_neutron_income
 
         # add gamma up
-        self.neutron_Ek_list = []
+        self.neutron_Ek_dic={}
+        self.neutron_event_list = neutron_energy["Event"].to_list()
         self.neutron_px_list = neutron_energy["px/MeV"].to_list()
         self.neutron_py_list = neutron_energy["py/MeV"].to_list()
         self.neutron_pz_list = neutron_energy["pz/MeV"].to_list()
         for i in range(len(self.neutron_px_list)):
-            self.neutron_Ek_list.append(
-                (self.neutron_px_list[i] ** 2 + self.neutron_py_list[i] ** 2 + self.neutron_pz_list[i] ** 2) ** 0.5)
+            self.neutron_Ek_dic[self.neutron_event_list[i]]= [(self.neutron_px_list[i] ** 2 + self.neutron_py_list[i] ** 2 + self.neutron_pz_list[i] ** 2) ** 0.5,0]
+
         print("enutron in 1E6 ", len(self.neutron_Ek_list))
 
-        with open(self.false_3_path, 'w', newline='') as myfile:
-            wr = csv.writer(myfile)
-            wr.writerow(self.neutron_Ek_list)
+        self.df_neutron_cross = self.keep_1st(self.df_neutron_cross)
+
+        neutron_final_energy = \
+            self.df_neutron_cross
+
+        # add gamma up
+
+        self.neutron_final_event_list = neutron_final_energy["Event"].to_list()
+        self.neutron_final_px_list = neutron_final_energy["px/MeV"].to_list()
+        self.neutron_final_py_list = neutron_final_energy["py/MeV"].to_list()
+        self.neutron_final_pz_list = neutron_final_energy["pz/MeV"].to_list()
+        for i in range(len(self.neutron_final_px_list)):
+            self.neutron_Ek_dic[self.neutron_final_event_list[i]][1] =  (self.neutron_final_px_list[i] ** 2 + self.neutron_final_py_list[i] ** 2 + self.neutron_final_pz_list[i] ** 2) ** 0.5
+
 
     def plot_ncrystal_test(self):
 
-        with open(self.false_3_path, 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.noise3_raw_list = [float(value) * 1e6 for value in number_list]
+        ini_ene = [self.neutron_Ek_dic[key][0] for key in self.neutron_Ek_dic]
+        final_ene = [self.neutron_Ek_dic[key][1] for key in self.neutron_Ek_dic]
 
-        sig_counts, sig_bin_edges, _ = plt.hist(self.noise3_raw_list, bins=100)
+        sig_counts, sig_bin_edges, _ = plt.hist(ini_ene, bins=100)
         # sig_normalized_counts = 1
         # sig_bin_centers = (sig_bin_edges[:-1] + sig_bin_edges[1:]) / 2
         # plt.bar(sig_bin_centers, sig_normalized_counts, width=sig_bin_edges[1] - sig_bin_edges[0], color='red',
