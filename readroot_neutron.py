@@ -129,8 +129,8 @@ class ReadRoot():
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # # process data so that it is easier to read
         # first 1000 rows
-        # self.df = self.file.arrays(self.selected_columns, library="pd")
-        self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
+        self.df = self.file.arrays(self.selected_columns, library="pd")
+        # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         self.modify_df()
         # print(self.df)
 
@@ -870,34 +870,34 @@ class ReadRoot():
     def neutron_momentum(self):
         self.df.to_csv(self.false_3_path_mid, index=False)
         # z face is 1150mm
-        self.df_gamma_income = self.df[
+        self.df_neutron_income = self.df[
             (self.df["name"] == 'neutron') & (self.df["Z/mm"] >=1240)& (self.df["Z/mm"] <=1260)& (self.df["Parent ID"] ==0)][
             ['Event', 'Volume', 'Track ID', 'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV',"Kinetic/keV",'Parent ID']]
-        print("first iincome",self.df_gamma_income.head(100))
-        self.df_gamma_income = self.keep_1st(self.df_gamma_income)
+        print("first iincome",self.df_neutron_income.head(100))
+        self.df_neutron_income = self.keep_1st(self.df_neutron_income)
         
 
         
-        # self.df_gamma_income.to_csv(self.false_3_path_mid, index=False)
+        # self.df_neutron_income.to_csv(self.false_3_path_mid, index=False)
 
-        # gamma_energy = self.df_gamma_income[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])[
+        # neutron_energy = self.df_neutron_income[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])[
         #     "Recoiled/keV"].max().reset_index()
-        gamma_energy = \
-        self.df_gamma_income
+        neutron_energy = \
+        self.df_neutron_income
 
 
         # add gamma up
-        self.gamma_Ek_list=[]
-        self.gamma_px_list= gamma_energy["px/MeV"].to_list()
-        self.gamma_py_list = gamma_energy["py/MeV"].to_list()
-        self.gamma_pz_list = gamma_energy["pz/MeV"].to_list()
-        for i in range(len(self.gamma_px_list)):
-            self.gamma_Ek_list.append((self.gamma_px_list[i]**2+self.gamma_py_list[i]**2+self.gamma_pz_list[i]**2)**0.5)
-        print("gamma in 1E6 ", len(self.gamma_Ek_list))
+        self.neutron_Ek_list=[]
+        self.neutron_px_list= neutron_energy["px/MeV"].to_list()
+        self.neutron_py_list = neutron_energy["py/MeV"].to_list()
+        self.neutron_pz_list = neutron_energy["pz/MeV"].to_list()
+        for i in range(len(self.neutron_px_list)):
+            self.neutron_Ek_list.append((self.neutron_px_list[i]**2+self.neutron_py_list[i]**2+self.neutron_pz_list[i]**2)**0.5)
+        print("enutron in 1E6 ", len(self.neutron_Ek_list))
 
         with open(self.false_3_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
-            wr.writerow(self.gamma_Ek_list)
+            wr.writerow(self.neutron_Ek_list)
 
     def plot_neutron_momentum(self):
 
@@ -918,7 +918,7 @@ class ReadRoot():
         plt.ylabel("counts", fontsize=16)
         # plt.yscale('log')
         plt.legend()
-        plot_name = "sn1_1E6"
+        plot_name = "sn1_neutron_1E6"
         plt.savefig(self.plot_path + plot_name)
 
 
