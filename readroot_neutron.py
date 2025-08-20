@@ -999,7 +999,7 @@ class ReadRoot():
 
         ini_ene = [self.neutron_Ek_dic[key][0] for key in self.neutron_Ek_dic]
         final_ene = [self.neutron_Ek_dic[key][1] for key in self.neutron_Ek_dic]
-
+        print(ini_ene)
         sig_counts, sig_bin_edges, _ = plt.hist(ini_ene, bins=100)
         # sig_normalized_counts = 1
         # sig_bin_centers = (sig_bin_edges[:-1] + sig_bin_edges[1:]) / 2
