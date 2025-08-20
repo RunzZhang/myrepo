@@ -104,11 +104,11 @@ class ReadRoot():
         self.plot_path = '/data/runzezhang/result/TN_box/plot/'
         self.false_1 = "Cf_1E6_N_false1.csv"
         self.false_2 = "Cf_1E6_N_false2.csv"
-        self.false_3 = "Cf_1E6_N_false3.csv"
+        self.false_3 = "Cf_1E6_N_ini_false3.csv"
         self.signal = "Cf_1E6_N_sig.csv"
         self.false_1_mid = "Cf_1E6_N_false1_mid.csv"
         self.false_2_mid = "Cf_1E6_N_false2_mid.csv"
-        self.false_3_mid = "Cf_1E6_N_false3_mid.csv"
+        self.false_3_mid = "Cf_1E6_N_ini_false3_mid.csv"
         self.signal_mid = "Cf_1E6_N_sig_mid.csv"
         self.false_1_path = self.base_path+self.false_1
         self.false_2_path = self.base_path+self.false_2
@@ -870,9 +870,14 @@ class ReadRoot():
     def neutron_momentum(self):
         self.df.to_csv(self.false_3_path_mid, index=False)
         # z face is 1150mm
+        # self.df_neutron_income = self.df[
+        #     (self.df["name"] == 'neutron') & (self.df["Z/mm"] >=1240)& (self.df["Z/mm"] <=1260)& (self.df["Parent ID"] ==0)][
+        #     ['Event', 'Volume', 'Track ID', 'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV',"Kinetic/keV",'Parent ID']]
         self.df_neutron_income = self.df[
-            (self.df["name"] == 'neutron') & (self.df["Z/mm"] >=1240)& (self.df["Z/mm"] <=1260)& (self.df["Parent ID"] ==0)][
-            ['Event', 'Volume', 'Track ID', 'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV',"Kinetic/keV",'Parent ID']]
+            (self.df["name"] == 'neutron') & (self.df["Step ID"] == 0) & (
+                        self.df["Parent ID"] == 0)][
+            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
+             'Parent ID']]
         print("first iincome",self.df_neutron_income.head(100))
         self.df_neutron_income = self.keep_1st(self.df_neutron_income)
         
@@ -920,7 +925,7 @@ class ReadRoot():
         plt.xscale('log')
         plt.xlim(1e-3,1e7)
         plt.legend()
-        plot_name = "sn1_neutron_1E6"
+        plot_name = "sn1_neutron_ini_1E6"
         plt.savefig(self.plot_path + plot_name)
 
 
