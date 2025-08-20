@@ -972,11 +972,12 @@ class ReadRoot():
         # add gamma up
         self.neutron_Ek_dic={}
         self.neutron_event_list = neutron_energy["Event"].to_list()
+        self.neutron_ek_list = neutron_energy["Kinetic/keV"].to_list()
         self.neutron_px_list = neutron_energy["px/MeV"].to_list()
         self.neutron_py_list = neutron_energy["py/MeV"].to_list()
         self.neutron_pz_list = neutron_energy["pz/MeV"].to_list()
         for i in range(len(self.neutron_px_list)):
-            self.neutron_Ek_dic[self.neutron_event_list[i]]= [(self.neutron_px_list[i] ** 2 + self.neutron_py_list[i] ** 2 + self.neutron_pz_list[i] ** 2) ** 0.5,0]
+            self.neutron_Ek_dic[self.neutron_event_list[i]]= [self.neutron_ek_list[i] ,0]
 
         print("enutron in 1E6 ", len(self.neutron_Ek_dic))
 
@@ -988,11 +989,12 @@ class ReadRoot():
         # add gamma up
 
         self.neutron_final_event_list = neutron_final_energy["Event"].to_list()
+        self.neutron_final_ek_list = neutron_final_energy["Kinetic/keV"].to_list()
         self.neutron_final_px_list = neutron_final_energy["px/MeV"].to_list()
         self.neutron_final_py_list = neutron_final_energy["py/MeV"].to_list()
         self.neutron_final_pz_list = neutron_final_energy["pz/MeV"].to_list()
         for i in range(len(self.neutron_final_px_list)):
-            self.neutron_Ek_dic[self.neutron_final_event_list[i]][1] =  (self.neutron_final_px_list[i] ** 2 + self.neutron_final_py_list[i] ** 2 + self.neutron_final_pz_list[i] ** 2) ** 0.5
+            self.neutron_Ek_dic[self.neutron_final_event_list[i]][1] =  self.neutron_final_ek_list[i]
 
 
     def plot_ncrystal_test(self):
