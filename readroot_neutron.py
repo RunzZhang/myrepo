@@ -141,8 +141,14 @@ class ReadRoot():
         # 1e? FISSIons
         # PDF
 
-        self.neutron_momentum()
-        self.plot_neutron_momentum()
+        # neutron spectrum on detector
+        # self.neutron_momentum()
+        # self.plot_neutron_momentum()
+
+        # ncrystal test
+        self.ncrystal_test()
+        self.plot_ncrystal_test()
+
 
         # self.gamma_event()
         # false noise 2, need to relocate directory
