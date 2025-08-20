@@ -999,8 +999,8 @@ class ReadRoot():
 
     def plot_ncrystal_test(self):
 
-        ini_ene = [self.neutron_Ek_dic[key][0] for key in self.neutron_Ek_dic]
-        final_ene = [self.neutron_Ek_dic[key][1] for key in self.neutron_Ek_dic]
+        ini_ene = [self.neutron_Ek_dic[key][0]*1e6 for key in self.neutron_Ek_dic]
+        final_ene = [self.neutron_Ek_dic[key][1]*1e6 for key in self.neutron_Ek_dic]
         print(ini_ene)
         sig_counts, sig_bin_edges, _ = plt.hist(ini_ene, bins=100)
         # sig_normalized_counts = 1
