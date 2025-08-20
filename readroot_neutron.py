@@ -873,9 +873,15 @@ class ReadRoot():
         # self.df_neutron_income = self.df[
         #     (self.df["name"] == 'neutron') & (self.df["Z/mm"] >=1240)& (self.df["Z/mm"] <=1260)& (self.df["Parent ID"] ==0)][
         #     ['Event', 'Volume', 'Track ID', 'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV',"Kinetic/keV",'Parent ID']]
+        # self.df_neutron_income = self.df[
+        #     (self.df["name"] == 'neutron') & (self.df["Step ID"] == 0) & (
+        #                 self.df["Parent ID"] == 0)][
+        #     ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
+        #      'Parent ID']]
+
         self.df_neutron_income = self.df[
-            (self.df["name"] == 'neutron') & (self.df["Step ID"] == 0) & (
-                        self.df["Parent ID"] == 0)][
+            (self.df["name"] == 'neutron') & ((self.df["Process"] == 'neutronInelastic')|(self.df["Process"] == "nCapture")) & (
+                    self.df["Parent ID"] == 0)][
             ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
              'Parent ID']]
         print("first iincome",self.df_neutron_income.head(100))
@@ -923,9 +929,9 @@ class ReadRoot():
         plt.ylabel("counts", fontsize=16)
         plt.yscale('log')
         plt.xscale('log')
-        plt.xlim(1e-3,1e7)
+        plt.xlim(1e-5,1e7)
         plt.legend()
-        plot_name = "sn1_neutron_ini_1E6"
+        plot_name = "sn1_neutron_crystal_1E6.png"
         plt.savefig(self.plot_path + plot_name)
 
 
