@@ -1009,7 +1009,7 @@ class ReadRoot():
 
         # print(ini_ene)
 
-        sig_counts, sig_bin_edges, _ = plt.hist(cross_list, bins=50)
+        sig_counts, sig_bin_edges, _ = plt.hist(cross_list, bins= np.logspace(-5, 7, 50))
         # sig_normalized_counts = 1
         # sig_bin_centers = (sig_bin_edges[:-1] + sig_bin_edges[1:]) / 2
         # plt.bar(sig_bin_centers, sig_normalized_counts, width=sig_bin_edges[1] - sig_bin_edges[0], color='red',
