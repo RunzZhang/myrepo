@@ -978,7 +978,7 @@ class ReadRoot():
         for i in range(len(self.neutron_px_list)):
             self.neutron_Ek_dic[self.neutron_event_list[i]]= [(self.neutron_px_list[i] ** 2 + self.neutron_py_list[i] ** 2 + self.neutron_pz_list[i] ** 2) ** 0.5,0]
 
-        print("enutron in 1E6 ", len(self.neutron_Ek_list))
+        print("enutron in 1E6 ", len(self.neutron_Ek_dic))
 
         self.df_neutron_cross = self.keep_1st(self.df_neutron_cross)
 
