@@ -916,7 +916,9 @@ class ReadRoot():
 
         plt.xlabel("neutron energy/MeV", fontsize=16)
         plt.ylabel("counts", fontsize=16)
-        # plt.yscale('log')
+        plt.yscale('log')
+        plt.xscale('log')
+        plt.xlim(1e-3,1e7)
         plt.legend()
         plot_name = "sn1_neutron_1E6"
         plt.savefig(self.plot_path + plot_name)
