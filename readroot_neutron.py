@@ -1000,7 +1000,7 @@ class ReadRoot():
 
         plt.xlabel("neutron energy/eV", fontsize=16)
         plt.ylabel("counts", fontsize=16)
-        plt.yscale('log')
+        # plt.yscale('log')
         # plt.xscale('log')
         plt.xlim(1e-5, 1e7)
         plt.legend()
