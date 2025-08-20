@@ -934,6 +934,72 @@ class ReadRoot():
         plot_name = "sn1_neutron_crystal_1E6.png"
         plt.savefig(self.plot_path + plot_name)
 
+    def ncrystal_test(self):
+        self.df.to_csv(self.false_3_path_mid, index=False)
+        # z face is 1150mm
+        # self.df_neutron_income = self.df[
+        #     (self.df["name"] == 'neutron') & (self.df["Z/mm"] >=1240)& (self.df["Z/mm"] <=1260)& (self.df["Parent ID"] ==0)][
+        #     ['Event', 'Volume', 'Track ID', 'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV',"Kinetic/keV",'Parent ID']]
+        # self.df_neutron_income = self.df[
+        #     (self.df["name"] == 'neutron') & (self.df["Step ID"] == 0) & (
+        #                 self.df["Parent ID"] == 0)][
+        #     ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
+        #      'Parent ID']]
+        self.df_neutron_income = self.df_neutron_cross = self.df[
+            (self.df["name"] == 'neutron')  & (
+                    self.df["Parent ID"] == 0)&(self.df["Step ID"] == 0)&(self.df["volume"] == "physSD2")][
+            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
+             'Parent ID']]
+
+        self.df_neutron_cross = self.df[
+            (self.df["name"] == 'neutron') & (
+                        (self.df["Process"] == 'neutronInelastic') | (self.df["Process"] == "nCapture")) & (
+                    self.df["Parent ID"] == 0)&(self.df["volume"] == "physSap")][
+            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
+             'Parent ID']]
+        print("first iincome", self.df_neutron_income.head(100))
+        self.df_neutron_income = self.keep_1st(self.df_neutron_income)
+
+        neutron_energy = \
+            self.df_neutron_income
+
+        # add gamma up
+        self.neutron_Ek_list = []
+        self.neutron_px_list = neutron_energy["px/MeV"].to_list()
+        self.neutron_py_list = neutron_energy["py/MeV"].to_list()
+        self.neutron_pz_list = neutron_energy["pz/MeV"].to_list()
+        for i in range(len(self.neutron_px_list)):
+            self.neutron_Ek_list.append(
+                (self.neutron_px_list[i] ** 2 + self.neutron_py_list[i] ** 2 + self.neutron_pz_list[i] ** 2) ** 0.5)
+        print("enutron in 1E6 ", len(self.neutron_Ek_list))
+
+        with open(self.false_3_path, 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(self.neutron_Ek_list)
+
+    def plot_ncrystal_test(self):
+
+        with open(self.false_3_path, 'r') as file:
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            self.noise3_raw_list = [float(value) * 1e6 for value in number_list]
+
+        sig_counts, sig_bin_edges, _ = plt.hist(self.noise3_raw_list, bins=100)
+        # sig_normalized_counts = 1
+        # sig_bin_centers = (sig_bin_edges[:-1] + sig_bin_edges[1:]) / 2
+        # plt.bar(sig_bin_centers, sig_normalized_counts, width=sig_bin_edges[1] - sig_bin_edges[0], color='red',
+        #         label='signal')
+
+        plt.xlabel("neutron energy/eV", fontsize=16)
+        plt.ylabel("counts", fontsize=16)
+        plt.yscale('log')
+        plt.xscale('log')
+        plt.xlim(1e-5, 1e7)
+        plt.legend()
+        plot_name = "sn1_neutron_crystal_1E6.png"
+        plt.savefig(self.plot_path + plot_name)
 
     def Huge_scatter_event(self):
         # single scatter spectrum
