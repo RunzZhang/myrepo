@@ -1017,7 +1017,7 @@ class ReadRoot():
 
         # print(ini_ene)
         print("cross list",len(cross_list))
-        sig_counts, sig_bin_edges, _ = plt.hist(ini_ene, bins=np.logspace(-5, 7, 50))
+        sig_counts, sig_bin_edges, _ = plt.hist(self.neutron_ek_list, bins=np.logspace(-5, 7, 50))
         # sig_counts, sig_bin_edges, _ = plt.hist(cross_list, bins= np.logspace(-5, 7, 50))
         # sig_normalized_counts = 1
         # sig_bin_centers = (sig_bin_edges[:-1] + sig_bin_edges[1:]) / 2
