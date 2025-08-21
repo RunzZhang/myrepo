@@ -953,7 +953,7 @@ class ReadRoot():
         #      'Parent ID']]
         self.df_neutron_income = self.df_neutron_cross = self.df[
             (self.df["name"] == 'neutron')  & (
-                    self.df["Parent ID"] == 0)&(self.df["Step ID"] == 1)&(self.df["Volume"] == "physSD2")][
+                    self.df["Parent ID"] == 0)&(self.df["Step ID"] == 1)&(self.df["Volume"] == "physWorld")][
             ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
              'Parent ID']]
 
