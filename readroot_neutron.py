@@ -971,7 +971,7 @@ class ReadRoot():
                     self.df["Parent ID"] == 0) & (self.df["Volume"] == "physSap")][
             ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
              'Parent ID']]
-        print("first iincome", self.df_neutron_income.head(100))
+        print("first iincome", self.df_neutron_cross.head(100))
         self.df_neutron_income = self.keep_1st(self.df_neutron_income)
 
         neutron_energy = \
@@ -987,7 +987,7 @@ class ReadRoot():
         for i in range(len(self.neutron_px_list)):
             self.neutron_Ek_dic[self.neutron_event_list[i]]= [self.neutron_ek_list[i] ,0]
 
-        print("enutron in 1E6 ", len(self.neutron_Ek_dic))
+        print("enutron in 1E6 ", len(self.neutron_Ek_dic) )
 
         self.df_neutron_cross = self.keep_1st(self.df_neutron_cross)
 
@@ -1003,7 +1003,7 @@ class ReadRoot():
         self.neutron_final_pz_list = neutron_final_energy["pz/MeV"].to_list()
         for i in range(len(self.neutron_final_px_list)):
             self.neutron_Ek_dic[self.neutron_final_event_list[i]][1] =  self.neutron_final_ek_list[i]
-
+        print("enutron cross  in 1E6 ", len(self.neutron_final_event_list) )
 
     def plot_ncrystal_test(self):
 
