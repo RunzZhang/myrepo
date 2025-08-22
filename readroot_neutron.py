@@ -1029,7 +1029,7 @@ class ReadRoot():
         plt.ylabel("counts", fontsize=16)
         # plt.yscale('log')
         # plt.xscale('log')
-        plt.xlim(1e-5, 1e7)
+        # plt.xlim(1e-5, 1e7)
         plt.legend()
         plot_name = "sn1_neutron_crystal_1E6.png"
         plt.savefig(self.plot_path + plot_name)
