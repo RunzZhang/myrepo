@@ -108,10 +108,12 @@ class ReadRoot():
         self.multi_run_loop()
 
     def multi_run_loop(self):
+        self.process = []
         self.ene = []
         self.cross_number = []
         for i in range(0,11):
             self.multi_run(i)
+        print(self.process)
         self.plot_ncrystal_test()
     def multi_run(self, i):
 
@@ -174,6 +176,10 @@ class ReadRoot():
         (n_energy, in_num, out_num)=self.ncrystal_test()
         self.ene.append(n_energy)
         self.cross_number.append(out_num/in_num)
+
+        self.process += self.df["Process"].unique()
+
+
 
 
     def single_run(self):
