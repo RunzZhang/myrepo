@@ -102,6 +102,81 @@ class ReadRoot():
         self.base_path = "/data/runzezhang/result/TN_box/"
         self.base_path2 = "/data/runzezhang/result/TN_box/"
         self.plot_path = '/data/runzezhang/result/TN_box/plot/'
+
+
+        # self.single_run()
+        self.multi_run_loop()
+
+    def multi_run_loop(self):
+        self.ene = []
+        self.cross_number = []
+        for i in range(0,11):
+            self.multi_run(i)
+        self.plot_ncrystal_test()
+    def multi_run(self, i):
+
+        self.false_1 = "Cf_1E6_"+str(i)+"N_false1.csv"
+        self.false_2 = "Cf_1E6_"+str(i)+"N_false2.csv"
+        self.false_3 = "Cf_1E6_"+str(i)+"N_ini_false3.csv"
+        self.signal = "Cf_1E6_"+str(i)+"N_sig.csv"
+        self.false_1_mid = "Cf_1E6_"+str(i)+"N_false1_mid.csv"
+        self.false_2_mid = "Cf_1E6_"+str(i)+"N_false2_mid.csv"
+        self.false_3_mid = "Cf_1E6_"+str(i)+"N_ini_false3_mid.csv"
+        self.signal_mid = "Cf_1E6_"+str(i)+"N_sig_mid.csv"
+        self.false_1_path = self.base_path + self.false_1
+        self.false_2_path = self.base_path + self.false_2
+        self.false_3_path = self.base_path + self.false_3
+        self.false_1_path_mid = self.base_path + self.false_1_mid
+        self.false_2_path_mid = self.base_path + self.false_2_mid
+        self.false_3_path_mid = self.base_path + self.false_3_mid
+        self.signal_path_mid = self.base_path + self.signal_mid
+        self.signal_path = self.base_path + self.signal
+        # self.filepath = self.base_path +"dmx_lr.root"
+        # self.filepath = self.base_path + "dmx_Cfneutron_Ncry_1E6.root"
+        self.filepath = self.base_path +"dmx_Cfneutron_Ncry_1E6_"+str(i)+".root"
+
+        self.file = uproot.open(self.filepath)["tree"]
+        print("columns: ", self.file.keys(), len(self.file.arrays()))
+        # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
+        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV',
+                                 'py/MeV', 'pz/MeV', "Kinetic/keV", "Recoiled/keV", "Volume", "Process"]
+        self.rows = 1000
+
+        # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
+        # # process data so that it is easier to read
+        # first 1000 rows
+        # self.df = self.file.arrays(self.selected_columns, library="pd")
+        self.df = self.file.arrays(library="pd")
+        print("df", self.df.head(self.rows))
+        # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
+        # only valid for ncrystal
+
+        # self.df_list = []
+        # for i in self.ene_dict:
+        #     df_temp = self.df[""]
+        #     self.modify_df_group(i)
+        self.modify_df()
+        # print(self.df)
+
+        # gamma direction x -1 or +1
+        # one gamma per event
+        # gamma place at  [30.50, 30.52]
+        # collection gamma energy
+        # 1e? FISSIons
+        # PDF
+
+        # neutron spectrum on detector
+        # self.neutron_momentum()
+        # self.plot_neutron_momentum()
+
+        # ncrystal test
+
+        (n_energy, in_num, out_num)=self.ncrystal_test()
+        self.ene.append(n_energy)
+        self.cross_number.append(out_num/in_num)
+
+
+    def single_run(self):
         self.false_1 = "Cf_1E6_N_false1.csv"
         self.false_2 = "Cf_1E6_N_false2.csv"
         self.false_3 = "Cf_1E6_N_ini_false3.csv"
@@ -110,22 +185,23 @@ class ReadRoot():
         self.false_2_mid = "Cf_1E6_N_false2_mid.csv"
         self.false_3_mid = "Cf_1E6_N_ini_false3_mid.csv"
         self.signal_mid = "Cf_1E6_N_sig_mid.csv"
-        self.false_1_path = self.base_path+self.false_1
-        self.false_2_path = self.base_path+self.false_2
+        self.false_1_path = self.base_path + self.false_1
+        self.false_2_path = self.base_path + self.false_2
         self.false_3_path = self.base_path + self.false_3
         self.false_1_path_mid = self.base_path + self.false_1_mid
         self.false_2_path_mid = self.base_path + self.false_2_mid
         self.false_3_path_mid = self.base_path + self.false_3_mid
-        self.signal_path_mid = self.base_path+self.signal_mid
+        self.signal_path_mid = self.base_path + self.signal_mid
         self.signal_path = self.base_path + self.signal
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.filepath = self.base_path + "dmx_Cfneutron_Ncry_1E6.root"
         self.filepath = self.base_path + "dmx_Cfneutron_Ncry_1E6_0.root"
 
         self.file = uproot.open(self.filepath)["tree"]
-        print("columns: ",self.file.keys(),len(self.file.arrays()))
-        #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
-        self.selected_columns = ["Event","name","Parent ID","Track ID","Step ID",'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV', "Kinetic/keV","Recoiled/keV", "Volume","Process"]
+        print("columns: ", self.file.keys(), len(self.file.arrays()))
+        # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
+        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV',
+                                 'py/MeV', 'pz/MeV', "Kinetic/keV", "Recoiled/keV", "Volume", "Process"]
         self.rows = 1000
 
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
@@ -133,12 +209,12 @@ class ReadRoot():
         # first 1000 rows
         # self.df = self.file.arrays(self.selected_columns, library="pd")
         self.df = self.file.arrays(library="pd")
-        print("df",self.df.head(self.rows))
+        print("df", self.df.head(self.rows))
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # only valid for ncrystal
         self.ene_dict = {}
-        for i in range(-12,1):
-            self.ene_dict[10**i] = None
+        for i in range(-12, 1):
+            self.ene_dict[10 ** i] = None
         # self.df_list = []
         # for i in self.ene_dict:
         #     df_temp = self.df[""]
@@ -161,7 +237,6 @@ class ReadRoot():
         self.ncrystal_test()
         self.plot_ncrystal_test()
 
-
         # self.gamma_event()
         # false noise 2, need to relocate directory
         # self.Huge_scatter_event()
@@ -179,6 +254,7 @@ class ReadRoot():
 
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
+
     def reidx_event(self):
         event_number = self.df[:]["Event"].to_list()
         print(event_number[:100])
@@ -1046,33 +1122,38 @@ class ReadRoot():
         for i in range(len(self.neutron_final_px_list)):
             self.neutron_Ek_dic[self.neutron_final_event_list[i]][1] =  self.neutron_final_ek_list[i]
         print("enutron cross  in 1E6 ", len(self.neutron_final_event_list) )
+        # ouotput the energy, the incident number of neutron, and captured/inelastic neutron number
+        return (self.neutron_ek_list[0],len(self.neutron_Ek_dic) ,len(self.neutron_final_event_list))
 
     def plot_ncrystal_test(self):
 
-        ini_ene = [self.neutron_Ek_dic[key][0]*1e6 for key in self.neutron_Ek_dic]
-        final_ene = [self.neutron_Ek_dic[key][1]*1e6 for key in self.neutron_Ek_dic]
-        cross_list = []
-        for i in range(len(final_ene)):
-            if final_ene[i] != 0:
-                cross_list.append(ini_ene[i])
+        # ini_ene = [self.neutron_Ek_dic[key][0]*1e6 for key in self.neutron_Ek_dic]
+        # final_ene = [self.neutron_Ek_dic[key][1]*1e6 for key in self.neutron_Ek_dic]
+        # cross_list = []
+        # for i in range(len(final_ene)):
+        #     if final_ene[i] != 0:
+        #         cross_list.append(ini_ene[i])
+        #
+        #
+        # # print(ini_ene)
+        # print("cross list",len(cross_list))
+        # print("ini, max, min", max(ini_ene), min(ini_ene))
+        # # sig_counts, sig_bin_edges, _ = plt.hist(self.neutron_ek_list, bins=np.logspace(-5, 7, 50))
+        # sig_counts, sig_bin_edges, _ = plt.hist(ini_ene, bins=np.logspace(-5, 7, 50))
+        # # sig_counts, sig_bin_edges, _ = plt.hist(cross_list, bins= np.logspace(-5, 7, 50))
+        # # sig_normalized_counts = 1
+        # # sig_bin_centers = (sig_bin_edges[:-1] + sig_bin_edges[1:]) / 2
+        # # plt.bar(sig_bin_centers, sig_normalized_counts, width=sig_bin_edges[1] - sig_bin_edges[0], color='red',
+        # #         label='signal')
 
-
-        # print(ini_ene)
-        print("cross list",len(cross_list))
-        print("ini, max, min", max(ini_ene), min(ini_ene))
-        # sig_counts, sig_bin_edges, _ = plt.hist(self.neutron_ek_list, bins=np.logspace(-5, 7, 50))
-        sig_counts, sig_bin_edges, _ = plt.hist(ini_ene, bins=np.logspace(-5, 7, 50))
-        # sig_counts, sig_bin_edges, _ = plt.hist(cross_list, bins= np.logspace(-5, 7, 50))
-        # sig_normalized_counts = 1
-        # sig_bin_centers = (sig_bin_edges[:-1] + sig_bin_edges[1:]) / 2
-        # plt.bar(sig_bin_centers, sig_normalized_counts, width=sig_bin_edges[1] - sig_bin_edges[0], color='red',
-        #         label='signal')
-
+        ene = [ i*1e6 for i in self.ene]
+        cross = [i for i in self.cross_number]
+        plt.plot(ene,cross)
         plt.xlabel("neutron energy/eV", fontsize=16)
         plt.ylabel("counts", fontsize=16)
-        # plt.yscale('log')
-        # plt.xscale('log')
-        # plt.xlim(1e-5, 1e7)
+        plt.yscale('log')
+        plt.xscale('log')
+        plt.xlim(1e-5, 1e7)
         plt.legend()
         plot_name = "sn1_neutron_crystal_1E6.png"
         plt.savefig(self.plot_path + plot_name)
