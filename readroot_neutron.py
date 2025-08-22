@@ -130,7 +130,16 @@ class ReadRoot():
         # # process data so that it is easier to read
         # first 1000 rows
         self.df = self.file.arrays(self.selected_columns, library="pd")
+        print(self.df.head(self.rows))
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
+        # only valid for ncrystal
+        self.ene_dict = {}
+        for i in range(-12,1):
+            self.ene_dict[10**i] = None
+        # self.df_list = []
+        # for i in self.ene_dict:
+        #     df_temp = self.df[""]
+        #     self.modify_df_group(i)
         self.modify_df()
         # print(self.df)
 
@@ -216,6 +225,36 @@ class ReadRoot():
         self.df['Process'] = self.df['Process'].astype(str)
         # this make event number correct
         self.reidx_event()
+
+    def reidx_event_group(self,ene=0):
+        event_number = self.df[:]["Event"].to_list()
+        print(event_number[:100])
+        started_point = 0
+        temp_point = 1
+        # find event number 1's index
+        for i in range(0, len(event_number)):
+            if event_number[i] == 1:
+                started_point = i
+        print("start", started_point)
+        # then if there is 0 in the event number, replace it with last none-zero event number
+        for i in range(started_point, len(event_number)):
+            if event_number[i] != 0:
+                temp_point = event_number[i]
+            else:
+                event_number[i] = temp_point
+        print("end", event_number[:100], event_number[-1])
+
+        # put the updated event_number back to data frame
+        self.df.update(pd.DataFrame({'Event': event_number}))
+
+    def modify_df_group(self,ene=0):
+        # change column property. Mainly this change awkuard into str
+        print(self.df.dtypes)
+        self.df['name'] = self.df['name'].astype(str)
+        self.df['Volume'] = self.df['Volume'].astype(str)
+        self.df['Process'] = self.df['Process'].astype(str)
+        # this make event number correct
+        self.reidx_event_group(ene)
 
     def Capture_spectrum(self):
 
