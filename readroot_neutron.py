@@ -131,7 +131,8 @@ class ReadRoot():
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # # process data so that it is easier to read
         # first 1000 rows
-        self.df = self.file.arrays(self.selected_columns, library="pd")
+        # self.df = self.file.arrays(self.selected_columns, library="pd")
+        self.df = self.file.arrays(library="pd")
         print("df",self.df.head(self.rows))
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # only valid for ncrystal
