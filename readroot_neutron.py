@@ -123,7 +123,7 @@ class ReadRoot():
         self.filepath = self.base_path + "dmx_Cfneutron_Ncry_1E6_1.root"
 
         self.file = uproot.open(self.filepath)["tree"]
-        print("columns: ",self.file.keys())
+        print("columns: ",self.file.keys(),len(self.file.arrays()))
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
         self.selected_columns = ["Event","name","Parent ID","Track ID","Step ID",'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV', "Kinetic/keV","Recoiled/keV", "Volume","Process"]
         self.rows = 1000
