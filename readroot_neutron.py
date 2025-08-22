@@ -119,7 +119,9 @@ class ReadRoot():
         self.signal_path_mid = self.base_path+self.signal_mid
         self.signal_path = self.base_path + self.signal
         # self.filepath = self.base_path +"dmx_lr.root"
-        self.filepath = self.base_path + "dmx_Cfneutron_Ncry_1E6.root"
+        # self.filepath = self.base_path + "dmx_Cfneutron_Ncry_1E6.root"
+        self.filepath = self.base_path + "dmx_Cfneutron_Ncry_1E6_1.root"
+
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
