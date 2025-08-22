@@ -1148,6 +1148,8 @@ class ReadRoot():
 
         ene = [ i*1e6 for i in self.ene]
         cross = [i for i in self.cross_number]
+        print("ene",ene )
+        print("cross", cross)
         plt.plot(ene,cross)
         plt.xlabel("neutron energy/eV", fontsize=16)
         plt.ylabel("counts", fontsize=16)
