@@ -177,7 +177,7 @@ class ReadRoot():
         self.ene.append(n_energy)
         self.cross_number.append(out_num/in_num)
 
-        self.process += self.df["Process"].unique()
+        self.process += self.df["Process"].unique().to_list()
 
 
 
