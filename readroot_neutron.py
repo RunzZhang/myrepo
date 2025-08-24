@@ -999,7 +999,7 @@ class ReadRoot():
         self.df.to_csv(self.false_3_path_mid, index=False)
         # z face is 1150mm
         self.df_neutron_income = self.df[
-            (self.df["name"] == 'neutron') & (self.df["Parent ID"] ==0)&(self.df["Step ID"] ==0)&(self.df["Volume"] =="physSD2")][
+            (self.df["name"] == 'neutron') & (self.df["Parent ID"] ==0)&(self.df["Step ID"] ==1)&(self.df["Volume"] =="physSD2")][
             ['Event', 'Volume', 'Track ID', 'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV',"Kinetic/keV",'Parent ID']]
         print("first income shoule be 1E6", len(self.df_neutron_income["Event"].to_list()),self.df_neutron_income.head(100))
 
