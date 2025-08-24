@@ -104,8 +104,8 @@ class ReadRoot():
         self.plot_path = '/data/runzezhang/result/TN_box/plot/'
 
 
-        # self.single_run()
-        
+        self.single_run()
+
         # self.multi_run_loop()
 
     def multi_run_loop(self):
@@ -203,6 +203,7 @@ class ReadRoot():
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.filepath = self.base_path + "dmx_Cfneutron_Ncry_1E6.root"
         self.filepath = self.base_path + "dmx_Cfneutron_1E6.root"
+        print(self.filepath)
 
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ", self.file.keys(), len(self.file.arrays()))
@@ -214,8 +215,7 @@ class ReadRoot():
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # # process data so that it is easier to read
         # first 1000 rows
-        # self.df = self.file.arrays(self.selected_columns, library="pd")
-        self.df = self.file.arrays(library="pd")
+        self.df = self.file.arrays(self.selected_columns, library="pd")
         print("df", self.df.head(self.rows))
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # only valid for ncrystal
