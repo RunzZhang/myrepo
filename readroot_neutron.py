@@ -1007,7 +1007,7 @@ class ReadRoot():
         # 157.5
         self.df_neutron_outcome = self.df[
             (self.df["name"] == 'neutron')& (
-                    self.df["Parent ID"] == 0)&(self.df["Volume"] =="physWorld")&(self.df["Z/mm"] <= 158)&(self.df["X/mm"] <= 25)&(self.df["Y/mm"] <= 25)][
+                    self.df["Parent ID"] == 0)&(self.df["Volume"] =="physWorld")&(self.df["Z/mm"] <= 158)&(self.df["Z/mm"] >= 157)&(self.df["X/mm"] <= 25)&(self.df["Y/mm"] <= 25)][
             ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
              'Parent ID']]
         print("first outcome",len(self.df_neutron_outcome["Event"].to_list()),self.df_neutron_outcome.head(100))
@@ -1047,7 +1047,8 @@ class ReadRoot():
             # Convert the strings to floats
             self.noise3_raw_list = [float(value)*1e6 for value in number_list]
 
-        sig_counts, sig_bin_edges, _ = plt.hist(self.noise3_raw_list, bins= 100)
+        # sig_counts, sig_bin_edges, _ = plt.hist(self.noise3_raw_list, bins= 100)
+        sig_counts, sig_bin_edges, _ = plt.hist(self.noise3_raw_list, bins=np.logspace(-5, 7, 50))
         # sig_normalized_counts = 1
         # sig_bin_centers = (sig_bin_edges[:-1] + sig_bin_edges[1:]) / 2
         # plt.bar(sig_bin_centers, sig_normalized_counts, width=sig_bin_edges[1] - sig_bin_edges[0], color='red',
