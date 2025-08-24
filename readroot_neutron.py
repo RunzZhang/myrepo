@@ -104,8 +104,8 @@ class ReadRoot():
         self.plot_path = '/data/runzezhang/result/TN_box/plot/'
 
 
-        # self.single_run()
-        self.multi_run_loop()
+        self.single_run()
+        # self.multi_run_loop()
 
     def multi_run_loop(self):
         self.process = []
@@ -201,7 +201,7 @@ class ReadRoot():
         self.signal_path = self.base_path + self.signal
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.filepath = self.base_path + "dmx_Cfneutron_Ncry_1E6.root"
-        self.filepath = self.base_path + "dmx_Cfneutron_Ncry_1E6_0.root"
+        self.filepath = self.base_path + "dmx_Cfneutron_1E6.root"
 
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ", self.file.keys(), len(self.file.arrays()))
@@ -218,9 +218,6 @@ class ReadRoot():
         print("df", self.df.head(self.rows))
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # only valid for ncrystal
-        self.ene_dict = {}
-        for i in range(-12, 1):
-            self.ene_dict[10 ** i] = None
         # self.df_list = []
         # for i in self.ene_dict:
         #     df_temp = self.df[""]
@@ -236,12 +233,12 @@ class ReadRoot():
         # PDF
 
         # neutron spectrum on detector
-        # self.neutron_momentum()
-        # self.plot_neutron_momentum()
+        self.neutron_momentum()
+        self.plot_neutron_momentum()
 
         # ncrystal test
-        self.ncrystal_test()
-        self.plot_ncrystal_test()
+        # self.ncrystal_test()
+        # self.plot_ncrystal_test()
 
         # self.gamma_event()
         # false noise 2, need to relocate directory
@@ -1000,41 +997,39 @@ class ReadRoot():
     def neutron_momentum(self):
         self.df.to_csv(self.false_3_path_mid, index=False)
         # z face is 1150mm
-        # self.df_neutron_income = self.df[
-        #     (self.df["name"] == 'neutron') & (self.df["Z/mm"] >=1240)& (self.df["Z/mm"] <=1260)& (self.df["Parent ID"] ==0)][
-        #     ['Event', 'Volume', 'Track ID', 'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV',"Kinetic/keV",'Parent ID']]
-        # self.df_neutron_income = self.df[
-        #     (self.df["name"] == 'neutron') & (self.df["Step ID"] == 0) & (
-        #                 self.df["Parent ID"] == 0)][
-        #     ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
-        #      'Parent ID']]
-
         self.df_neutron_income = self.df[
-            (self.df["name"] == 'neutron') & ((self.df["Process"] == 'neutronInelastic')|(self.df["Process"] == "nCapture")) & (
-                    self.df["Parent ID"] == 0)][
+            (self.df["name"] == 'neutron') & (self.df["Parent ID"] ==0)&(self.df["Step ID"] ==0)&(self.df["Volume"] =="physSD2")][
+            ['Event', 'Volume', 'Track ID', 'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV',"Kinetic/keV",'Parent ID']]
+        print("first income shoule be 1E6", len(self.df_neutron_income["Event"].to_list()),self.df_neutron_income.head(100))
+
+        #?? escape the outerface of sapphire
+        # 157.5
+        self.df_neutron_outcome = self.df[
+            (self.df["name"] == 'neutron')& (
+                    self.df["Parent ID"] == 0)&(self.df["Volume"] =="physWorld")&(self.df["Z/mm"] <= 158)&(self.df["X/mm"] <= 25)&(self.df["Y/mm"] <= 25)][
             ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
              'Parent ID']]
-        print("first iincome",self.df_neutron_income.head(100))
-        self.df_neutron_income = self.keep_1st(self.df_neutron_income)
+        print("first ioutcome",len(self.df_neutron_outcome["Event"].to_list()),self.df_neutron_outcome.head(100))
+        self.df_neutron_outcome = self.keep_1st(self.df_neutron_outcome)
         
 
         
-        # self.df_neutron_income.to_csv(self.false_3_path_mid, index=False)
+        # self.df_neutron_outcome.to_csv(self.false_3_path_mid, index=False)
 
-        # neutron_energy = self.df_neutron_income[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])[
+        # neutron_energy = self.df_neutron_outcome[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])[
         #     "Recoiled/keV"].max().reset_index()
         neutron_energy = \
-        self.df_neutron_income
+        self.df_neutron_outcome
 
 
         # add gamma up
-        self.neutron_Ek_list=[]
+        self.neutron_Ek_list=neutron_energy["Kinetic/keV"].to_list()
         self.neutron_px_list= neutron_energy["px/MeV"].to_list()
         self.neutron_py_list = neutron_energy["py/MeV"].to_list()
         self.neutron_pz_list = neutron_energy["pz/MeV"].to_list()
-        for i in range(len(self.neutron_px_list)):
-            self.neutron_Ek_list.append((self.neutron_px_list[i]**2+self.neutron_py_list[i]**2+self.neutron_pz_list[i]**2)**0.5)
-        print("enutron in 1E6 ", len(self.neutron_Ek_list))
+        # for i in range(len(self.neutron_px_list)):
+        #     self.neutron_Ek_list.append((self.neutron_px_list[i]**2+self.neutron_py_list[i]**2+self.neutron_pz_list[i]**2)**0.5)
+        print("nenutron in 1E6 ", len(self.neutron_Ek_list))
 
         with open(self.false_3_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
@@ -1061,7 +1056,7 @@ class ReadRoot():
         plt.xscale('log')
         plt.xlim(1e-5,1e7)
         plt.legend()
-        plot_name = "sn1_neutron_crystal_1E6.png"
+        plot_name = "sn1_neutron_1E6.png"
         plt.savefig(self.plot_path + plot_name)
 
     def ncrystal_test(self):
