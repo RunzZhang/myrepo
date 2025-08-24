@@ -104,7 +104,8 @@ class ReadRoot():
         self.plot_path = '/data/runzezhang/result/TN_box/plot/'
 
 
-        self.single_run()
+        # self.single_run()
+        
         # self.multi_run_loop()
 
     def multi_run_loop(self):
