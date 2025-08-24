@@ -1005,15 +1005,16 @@ class ReadRoot():
 
         #?? escape the outerface of sapphire
         # 157.5
-        self.df_neutron_outcome = self.df[
-            (self.df["name"] == 'neutron')& (
-                    self.df["Parent ID"] == 0)&(self.df["Volume"] =="physWorld")&(self.df["Z/mm"] <= 158)&(self.df["Z/mm"] >= 157)&(self.df["X/mm"] <= 25)&(self.df["Y/mm"] <= 25)][
-            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
-             'Parent ID']]
+        # 150.0
+        # self.df_neutron_outcome = self.df[
+        #     (self.df["name"] == 'neutron')& (
+        #             self.df["Parent ID"] == 0)&(self.df["Volume"] =="physWorld")&(self.df["Z/mm"] <= 158)&(self.df["Z/mm"] >= 157)&(self.df["X/mm"] <= 25)&(self.df["Y/mm"] <= 25)][
+        #     ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
+        #      'Parent ID']]
         self.df_neutron_outcome = self.df[
             (self.df["name"] == 'neutron') & (
-                    self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] <= 158) & (
-                        self.df["Z/mm"] >= 157) & (self.df["X/mm"] <= 25) & (self.df["Y/mm"] <= 25)][
+                    self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] <= 151) & (
+                        self.df["Z/mm"] >= 149) & (self.df["X/mm"] <= 25) & (self.df["Y/mm"] <= 25)][
             ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
              'Parent ID']]
         print("first outcome",len(self.df_neutron_outcome["Event"].to_list()),self.df_neutron_outcome.head(100))
