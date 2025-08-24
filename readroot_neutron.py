@@ -1042,7 +1042,7 @@ class ReadRoot():
         print(self.neutron_x_list)
         # for i in range(len(self.neutron_px_list)):
         #     self.neutron_Ek_list.append((self.neutron_px_list[i]**2+self.neutron_py_list[i]**2+self.neutron_pz_list[i]**2)**0.5)
-        print("nenutron in 1E6 ", len(self.neutron_Ek_list))
+        print("nenutron in 1E6 ", len(self.neutron_Ek_list), max(self.neutron_Ek_list))
 
         with open(self.false_3_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
