@@ -1009,7 +1009,7 @@ class ReadRoot():
                     self.df["Parent ID"] == 0)&(self.df["Volume"] =="physWorld")&(self.df["Z/mm"] <= 158)&(self.df["X/mm"] <= 25)&(self.df["Y/mm"] <= 25)][
             ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
              'Parent ID']]
-        print("first ioutcome",len(self.df_neutron_outcome["Event"].to_list()),self.df_neutron_outcome.head(100))
+        print("first outcome",len(self.df_neutron_outcome["Event"].to_list()),self.df_neutron_outcome.head(100))
         self.df_neutron_outcome = self.keep_1st(self.df_neutron_outcome)
         
 
