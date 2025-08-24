@@ -1020,9 +1020,9 @@ class ReadRoot():
         # neutron_energy = self.df_neutron_outcome[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])[
         #     "Recoiled/keV"].max().reset_index()
 
-        neutron_energy =   self.df_neutron_income
+        # neutron_energy =   self.df_neutron_income
 
-        # neutron_energy =  self.df_neutron_outcome
+        neutron_energy =  self.df_neutron_outcome
 
 
         # add gamma up
@@ -1060,7 +1060,7 @@ class ReadRoot():
         plt.xscale('log')
         plt.xlim(1e-5,1e7)
         plt.legend()
-        plot_name = "sn1_neutron_income_1E6.png"
+        plot_name = "sn1_neutron_outcome_1E6.png"
         plt.savefig(self.plot_path + plot_name)
 
     def ncrystal_test(self):
