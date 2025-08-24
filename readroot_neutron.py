@@ -1013,8 +1013,7 @@ class ReadRoot():
         #      'Parent ID']]
         self.df_neutron_outcome = self.df[
             (self.df["name"] == 'neutron') & (
-                    self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] <= 151) & (
-                        self.df["Z/mm"] >= 149) & (self.df["X/mm"] <= 25) & (self.df["Y/mm"] <= 25)][
+                    self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] ==150.0 )][
             ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
              'Parent ID']]
         print("first outcome",len(self.df_neutron_outcome["Event"].to_list()),self.df_neutron_outcome.head(100))
@@ -1039,7 +1038,8 @@ class ReadRoot():
         self.neutron_pz_list = neutron_energy["pz/MeV"].to_list()
         # check surface
         self.neutron_z_list = neutron_energy["Z/mm"].to_list()
-        print(self.neutron_z_list)
+        self.neutron_x_list = neutron_energy["X/mm"].to_list()
+        print(self.neutron_x_list)
         # for i in range(len(self.neutron_px_list)):
         #     self.neutron_Ek_list.append((self.neutron_px_list[i]**2+self.neutron_py_list[i]**2+self.neutron_pz_list[i]**2)**0.5)
         print("nenutron in 1E6 ", len(self.neutron_Ek_list))
