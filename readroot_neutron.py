@@ -104,9 +104,9 @@ class ReadRoot():
         self.plot_path = '/data/runzezhang/result/TN_box/plot/'
 
 
-        self.single_run()
+        # self.single_run()
 
-        # self.multi_run_loop()
+        self.multi_run_loop()
 
     def multi_run_loop(self):
         self.process = []
@@ -1001,7 +1001,7 @@ class ReadRoot():
         self.df_neutron_income = self.df[
             (self.df["name"] == 'neutron') & (self.df["Parent ID"] ==0)&(self.df["Step ID"] ==1)&(self.df["Volume"] =="physSD2")][
             ['Event', 'Volume', 'Track ID', 'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV',"Kinetic/keV",'Parent ID']]
-        print("first income shoule be 1E6", len(self.df_neutron_income["Event"].to_list()),self.df_neutron_income.head(100))
+        print("first income shoule be 1E7", len(self.df_neutron_income["Event"].to_list()),self.df_neutron_income.head(100))
 
         #?? escape the outerface of sapphire
         # 157.5
@@ -1013,9 +1013,10 @@ class ReadRoot():
         #      'Parent ID']]
         self.df_neutron_outcome = self.df[
             (self.df["name"] == 'neutron') & (
-                    self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] ==150.0 )][
+                    self.df["Parent ID"] == 0) & ((self.df["Volume"] == "physAr2")|(self.df["Volume"] == "physAr3")) ][
             ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
              'Parent ID']]
+        # out going spectrum
         print("first outcome",len(self.df_neutron_outcome["Event"].to_list()),self.df_neutron_outcome.head(100))
         self.df_neutron_outcome = self.keep_1st(self.df_neutron_outcome)
         
