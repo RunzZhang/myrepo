@@ -1195,8 +1195,9 @@ class ReadRoot():
         fig, axs = plt.subplots(2, 2, figsize=(10, 8))
 
         axs[0, 0].hist(self.noise3_raw_list, bins=np.logspace(-5, 7, 50))
-        axs[0, 0].set_title("1st plane energy")
+        axs[0, 0].set_title("1st plane energy; total counts"+str(len(self.noise3_raw_list)))
         axs[0, 0].set_xscale('log')
+        axs[0, 0].set_yscale('log')
         axs[0, 0].set_xlim(1e-5,1e7)
         axs[0, 0].set_xlabel("Energy/eV")
         axs[0, 0].set_ylabel("Counts")
@@ -1204,24 +1205,26 @@ class ReadRoot():
 
         axs[0, 1].hist(self.neutron_angle_list2)
         axs[0, 1].set_title("1st plane angle")
+        axs[0, 1].set_yscale('log')
         axs[0, 1].set_xlabel("angle/rad")
         axs[0, 1].set_ylabel("Counts")
 
 
         axs[1, 0].hist(self.noise4_raw_list, bins=np.logspace(-5, 7, 50))
-        axs[1, 0].set_title("2nd plane energy")
+        axs[1, 0].set_title("2nd plane energy; total counts"+str(len(self.noise3_raw_list)))
         axs[1, 0].set_xscale('log')
+        axs[1, 0].set_yscale('log')
         axs[1, 0].set_xlim(1e-5, 1e7)
         axs[1, 0].set_xlabel("Energy/eV")
         axs[1, 0].set_ylabel("Counts")
 
         axs[1, 1].hist(self.neutron_angle_list3)
         axs[1, 1].set_title("2nd plane angle")
+        axs[1, 1].set_yscale('log')
         axs[1, 1].set_xlabel("angle/rad")
         axs[1, 1].set_ylabel("Counts")
 
-
-
+        plt.tight_layout()
         plot_name = "sn1_neutron_outcome_distribution_1E6.png"
         plt.savefig(self.plot_path + plot_name)
 
