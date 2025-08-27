@@ -1199,7 +1199,7 @@ class ReadRoot():
         axs[0, 0].set_title("1st plane energy; total counts "+str(len(self.noise3_raw_list)))
         axs[0, 0].set_xscale('log')
         axs[0, 0].set_yscale('log')
-        axs[0, 0].set_xlim(1e-5,1e7)
+        axs[0, 0].set_xlim(1e-3,1e7)
         axs[0, 0].set_xlabel("Energy/eV")
         axs[0, 0].set_ylabel("Counts")
 
@@ -1215,7 +1215,7 @@ class ReadRoot():
         axs[1, 0].set_title("2nd plane energy; total counts "+str(len(self.noise4_raw_list)))
         axs[1, 0].set_xscale('log')
         axs[1, 0].set_yscale('log')
-        axs[1, 0].set_xlim(1e-5, 1e7)
+        axs[1, 0].set_xlim(1e-3, 1e7)
         axs[1, 0].set_xlabel("Energy/eV")
         axs[1, 0].set_ylabel("Counts")
 
@@ -1256,7 +1256,7 @@ class ReadRoot():
             axs[0, i].set_title("2nd plane energy; total counts " + str(len(self.Ek_matrix[i]))+"\n R/mm range:"+str(i*R/dim)+" to "+str((i+1)*R/dim))
             axs[0, i].set_xscale('log')
             axs[0, i].set_yscale('log')
-            axs[0, i].set_xlim(1e-5, 1e7)
+            axs[0, i].set_xlim(1e-3, 1e7)
             axs[0, i].set_xlabel("Energy/eV")
             axs[0, i].set_ylabel("Counts")
 
