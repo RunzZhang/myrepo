@@ -1146,7 +1146,7 @@ class ReadRoot():
         self.neutron_angle_list2 = []
         for i in range(len(self.neutron_Ek_list2)):
             self.neutron_angle_list2.append(np.arctan(np.sqrt(self.neutron_px_list2[i]**2+self.neutron_py_list2[i]**2)/self.neutron_pz_list2[i]))
-        print(self.neutron_x_list2)
+        # print(self.neutron_x_list2)
         # for i in range(len(self.neutron_px_list)):
         #     self.neutron_Ek_list.append((self.neutron_px_list[i]**2+self.neutron_py_list[i]**2+self.neutron_pz_list[i]**2)**0.5)
         print("nenutron2 in 1E6 ", len(self.neutron_Ek_list2), min(self.neutron_Ek_list2))
@@ -1159,7 +1159,7 @@ class ReadRoot():
         # check surface
         self.neutron_z_list3 = neutron_energy3["Z/mm"].to_list()
         self.neutron_x_list3 = neutron_energy3["X/mm"].to_list()
-        print(self.neutron_x_list3)
+        # print(self.neutron_x_list3)
         print("nenutron3 in 1E6 ", len(self.neutron_Ek_list3), min(self.neutron_Ek_list3))
 
         self.neutron_angle_list3 = []
