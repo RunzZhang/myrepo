@@ -1249,7 +1249,7 @@ class ReadRoot():
             self.rad_matrix[i] = self.df_neutron_outcome3[(self.df_neutron_outcome3["R/mm"]<=R*(1+i)/dim)&(self.df_neutron_outcome3["R/mm"]>=R*i/dim)]["ang/rad"].tolist()
 
         fig, axs = plt.subplots(2, dim, figsize=(10, 8))
-        for i in dim:
+        for i in range(dim):
             axs[0, i].hist(self.Ek_matrix[i], bins=np.logspace(-5, 7, 50))
             axs[0, i].set_title("2nd plane energy; total counts " + str(len(self.Ek_matrix[i]))+"\n R/mm range:"+str(i*R/dim)+" to "+str((i+1)*R/dim))
             axs[0, i].set_xscale('log')
@@ -1258,7 +1258,7 @@ class ReadRoot():
             axs[0, i].set_xlabel("Energy/eV")
             axs[0, i].set_ylabel("Counts")
 
-        for i in dim:
+        for i in range(dim):
             axs[1, i].hist(self.rad_matrix[i])
             axs[1, i].set_title("2nd plane energy; total counts " + str(len(self.rad_matrix[i]))+"\n R/mm range:"+str(i*R/dim)+" to "+str((i+1)*R/dim))
             axs[1, i].set_yscale('log')
