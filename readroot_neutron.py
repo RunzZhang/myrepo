@@ -238,8 +238,8 @@ class ReadRoot():
         # PDF
 
         # neutron spectrum on detector
-        self.neutron_momentum()
-        self.plot_neutron_momentum()
+        self.neutron_momentum_spacial()
+        self.plot_neutron_momentum_spacial()
 
         # ncrystal test
         # self.ncrystal_test()
