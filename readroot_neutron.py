@@ -206,7 +206,7 @@ class ReadRoot():
         self.signal_path = self.base_path + self.signal
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.filepath = self.base_path + "dmx_Cfneutron_Ncry_1E6.root"
-        self.filepath = self.base_path + "dmx_Cfneutron_1E7.root"
+        self.filepath = self.base_path + "dmx_Cfneutron_Ar_1E7.root"
         print(self.filepath)
 
         self.file = uproot.open(self.filepath)["tree"]
@@ -1098,6 +1098,9 @@ class ReadRoot():
         #             self.df["Parent ID"] == 0)][
         #     ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
         #      'Parent ID']]
+
+
+
 
 
         #1270mmm
