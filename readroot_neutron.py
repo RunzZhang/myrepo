@@ -1241,7 +1241,7 @@ class ReadRoot():
         self.df_neutron_outcome3["ang/rad"] = np.arctan(
             (np.sqrt(self.df_neutron_outcome3['px/MeV'] ** 2 + self.df_neutron_outcome3['py/MeV'] ** 2) / self.df_neutron_outcome3['pz/MeV']))
         dim = 3
-        R = 1.414 # root square 2
+        R = 1414 # root square 2 in mmm
         self.Ek_matrix = [[] for _ in range(dim)]
         self.rad_matrix = [[] for _ in range(dim)]
         for i in range(dim):
