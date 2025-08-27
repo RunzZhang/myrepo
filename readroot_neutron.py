@@ -240,6 +240,7 @@ class ReadRoot():
         # neutron spectrum on detector
         self.neutron_momentum_spacial()
         self.plot_neutron_momentum_spacial()
+        self.plot_neutron_momentum_spacial_distribute()
 
         # ncrystal test
         # self.ncrystal_test()
@@ -1195,7 +1196,7 @@ class ReadRoot():
         fig, axs = plt.subplots(2, 2, figsize=(10, 8))
 
         axs[0, 0].hist(self.noise3_raw_list, bins=np.logspace(-5, 7, 50))
-        axs[0, 0].set_title("1st plane energy; total counts"+str(len(self.noise3_raw_list)))
+        axs[0, 0].set_title("1st plane energy; total counts "+str(len(self.noise3_raw_list)))
         axs[0, 0].set_xscale('log')
         axs[0, 0].set_yscale('log')
         axs[0, 0].set_xlim(1e-5,1e7)
@@ -1211,7 +1212,7 @@ class ReadRoot():
 
 
         axs[1, 0].hist(self.noise4_raw_list, bins=np.logspace(-5, 7, 50))
-        axs[1, 0].set_title("2nd plane energy; total counts"+str(len(self.noise3_raw_list)))
+        axs[1, 0].set_title("2nd plane energy; total counts "+str(len(self.noise4_raw_list)))
         axs[1, 0].set_xscale('log')
         axs[1, 0].set_yscale('log')
         axs[1, 0].set_xlim(1e-5, 1e7)
@@ -1226,6 +1227,48 @@ class ReadRoot():
 
         plt.tight_layout()
         plot_name = "sn1_neutron_outcome_distribution_1E6.png"
+        plt.savefig(self.plot_path + plot_name)
+
+    def plot_neutron_momentum_spacial_distribute(self):
+
+        self.df_neutron_outcome3 = self.df[
+            (self.df["name"] == 'neutron') & (
+                    self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] == 1270.0) & (
+                    self.df["Parent ID"] == 0)][
+            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
+             'Parent ID']]
+        self.df_neutron_outcome3["R/mm"] = np.sqrt(self.df_neutron_outcome3["X/mm"]**2+self.df_neutron_outcome3["Y/mm"]**2)
+        self.df_neutron_outcome3["ang/rad"] = np.arctan(
+            (np.sqrt(self.df_neutron_outcome3['px/MeV'] ** 2 + self.df_neutron_outcome3['py/MeV'] ** 2) / self.df_neutron_outcome3['pz/MeV']))
+        dim = 3
+        R = 1.414 # root square 2
+        self.Ek_matrix = [[] for _ in range(dim)]
+        self.rad_matrix = [[] for _ in range(dim)]
+        for i in range(dim):
+            self.Ek_matrix[i]=self.df_neutron_outcome3[(self.df_neutron_outcome3["R/mm"]<=R*(1+i)/dim)&(self.df_neutron_outcome3["R/mm"]>=R*i/dim)][["Kinetic/keV"]].to_list()
+            self.rad_matrix[i] = self.df_neutron_outcome3[(self.df_neutron_outcome3["R/mm"]<=R*(1+i)/dim)&(self.df_neutron_outcome3["R/mm"]>=R*i/dim)][["ang/rad"]].to_list()
+
+        fig, axs = plt.subplots(2, dim, figsize=(10, 8))
+        for i in dim:
+            axs[0, i].hist(self.Ek_matrix[i], bins=np.logspace(-5, 7, 50))
+            axs[0, i].set_title("2nd plane energy; total counts " + str(len(self.Ek_matrix[i]))+"\n R/mm range:"+str(i*R/dim)+" to "+str((i+1)*R/dim))
+            axs[0, i].set_xscale('log')
+            axs[0, i].set_yscale('log')
+            axs[0, i].set_xlim(1e-5, 1e7)
+            axs[0, i].set_xlabel("Energy/eV")
+            axs[0, i].set_ylabel("Counts")
+
+        for i in dim:
+            axs[1, i].hist(self.rad_matrix[i])
+            axs[1, i].set_title("2nd plane energy; total counts " + str(len(self.rad_matrix[i]))+"\n R/mm range:"+str(i*R/dim)+" to "+str((i+1)*R/dim))
+            axs[1, i].set_yscale('log')
+            axs[1, i].set_xlabel("angle/rad")
+            axs[1, i].set_ylabel("Counts")
+
+
+
+        plt.tight_layout()
+        plot_name = "sn1_neutron_outcome_distribution2_1E6.png"
         plt.savefig(self.plot_path + plot_name)
 
     def ncrystal_test(self):
