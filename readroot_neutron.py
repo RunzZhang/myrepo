@@ -214,14 +214,14 @@ class ReadRoot():
         # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
         self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV',
                                  'py/MeV', 'pz/MeV', "Kinetic/keV", "Recoiled/keV", "Volume", "Process"]
-        self.rows = 1000
+        self.rows = 1e6
 
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # # process data so that it is easier to read
         # first 1000 rows
-        self.df = self.file.arrays(self.selected_columns, library="pd")
-        print("df", self.df.head(self.rows))
-        # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
+        # self.df = self.file.arrays(self.selected_columns, library="pd")
+        # print("df", self.df.head(self.rows))
+        self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # only valid for ncrystal
         # self.df_list = []
         # for i in self.ene_dict:
@@ -1076,7 +1076,7 @@ class ReadRoot():
         plt.savefig(self.plot_path + plot_name)
 
     def neutron_momentum_spacial(self):
-        self.df.to_csv(self.false_3_path_mid, index=False)
+        # self.df.to_csv(self.false_3_path_mid, index=False)
         # z face is 1150mm
         self.df_neutron_income = self.df[
             (self.df["name"] == 'neutron') & (self.df["Parent ID"] == 0) & (self.df["Step ID"] == 1) & (
