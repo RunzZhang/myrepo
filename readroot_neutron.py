@@ -1247,6 +1247,8 @@ class ReadRoot():
         for i in range(dim):
             self.Ek_matrix[i]=self.df_neutron_outcome3[(self.df_neutron_outcome3["R/mm"]<=R*(1+i)/dim)&(self.df_neutron_outcome3["R/mm"]>=R*i/dim)]["Kinetic/keV"].tolist()
             self.rad_matrix[i] = self.df_neutron_outcome3[(self.df_neutron_outcome3["R/mm"]<=R*(1+i)/dim)&(self.df_neutron_outcome3["R/mm"]>=R*i/dim)]["ang/rad"].tolist()
+            print("Ek list length", i, len(self.Ek_matrix[i]))
+            print("rad list length", i, len(self.rad_matrix[i]))
 
         fig, axs = plt.subplots(2, dim, figsize=(10, 8))
         for i in range(dim):
