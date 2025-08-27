@@ -206,7 +206,7 @@ class ReadRoot():
         self.signal_path = self.base_path + self.signal
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.filepath = self.base_path + "dmx_Cfneutron_Ncry_1E6.root"
-        self.filepath = self.base_path + "dmx_Cfneutron_Ar_1E7.root"
+        self.filepath = self.base_path + "dmx_Cfneutron_Arplane_1E6.root"
         print(self.filepath)
 
         self.file = uproot.open(self.filepath)["tree"]
@@ -1087,35 +1087,35 @@ class ReadRoot():
               self.df_neutron_income.head(100))
 
         #270mm
-        self.df_neutron_outcome2 = self.df[
-            (self.df["name"] == 'neutron') & (
-                    self.df["Parent ID"] == 0) &  (self.df["Volume"] == "physAr2")][
-            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
-             'Parent ID']]
         # self.df_neutron_outcome2 = self.df[
         #     (self.df["name"] == 'neutron') & (
-        #             self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] == 270.0) & (
-        #             self.df["Parent ID"] == 0)][
+        #             self.df["Parent ID"] == 0) &  (self.df["Volume"] == "physAr2")][
         #     ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
         #      'Parent ID']]
+        self.df_neutron_outcome2 = self.df[
+            (self.df["name"] == 'neutron') & (
+                    self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] == 270.0) & (
+                    self.df["Parent ID"] == 0)][
+            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
+             'Parent ID']]
 
 
 
 
 
         #1270mmm
-        self.df_neutron_outcome3 = self.df[
-            (self.df["name"] == 'neutron') & (
-                    self.df["Parent ID"] == 0) &  (self.df["Volume"] == "physAr3")][
-            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
-             'Parent ID']]
-
         # self.df_neutron_outcome3 = self.df[
         #     (self.df["name"] == 'neutron') & (
-        #             self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] == 1270.0) & (
-        #             self.df["Parent ID"] == 0)][
+        #             self.df["Parent ID"] == 0) &  (self.df["Volume"] == "physAr3")][
         #     ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
         #      'Parent ID']]
+
+        self.df_neutron_outcome3 = self.df[
+            (self.df["name"] == 'neutron') & (
+                    self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] == 1270.0) & (
+                    self.df["Parent ID"] == 0)][
+            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
+             'Parent ID']]
         # add the Z
         # out going spectrum
         print("first outcome2", len(self.df_neutron_outcome2["Event"].to_list()), self.df_neutron_outcome2.head(100))
