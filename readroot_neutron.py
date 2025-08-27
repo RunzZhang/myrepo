@@ -206,7 +206,7 @@ class ReadRoot():
         self.signal_path = self.base_path + self.signal
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.filepath = self.base_path + "dmx_Cfneutron_Ncry_1E6.root"
-        self.filepath = self.base_path + "dmx_Cfneutron_1E6.root"
+        self.filepath = self.base_path + "dmx_Cfneutron_1E7.root"
         print(self.filepath)
 
         self.file = uproot.open(self.filepath)["tree"]
