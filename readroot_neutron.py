@@ -1245,8 +1245,8 @@ class ReadRoot():
         self.Ek_matrix = [[] for _ in range(dim)]
         self.rad_matrix = [[] for _ in range(dim)]
         for i in range(dim):
-            self.Ek_matrix[i]=self.df_neutron_outcome3[(self.df_neutron_outcome3["R/mm"]<=R*(1+i)/dim)&(self.df_neutron_outcome3["R/mm"]>=R*i/dim)]["Kinetic/keV"].tolist()
-            self.rad_matrix[i] = self.df_neutron_outcome3[(self.df_neutron_outcome3["R/mm"]<=R*(1+i)/dim)&(self.df_neutron_outcome3["R/mm"]>=R*i/dim)]["ang/rad"].tolist()
+            self.Ek_matrix[i]=(self.df_neutron_outcome3[(self.df_neutron_outcome3["R/mm"]<=R*(1+i)/dim)&(self.df_neutron_outcome3["R/mm"]>=R*i/dim)]["Kinetic/keV"]*1e6).tolist()
+            self.rad_matrix[i] = (self.df_neutron_outcome3[(self.df_neutron_outcome3["R/mm"]<=R*(1+i)/dim)&(self.df_neutron_outcome3["R/mm"]>=R*i/dim)]["ang/rad"]*180/(2*np.pi)).tolist()
             print("Ek list length", i, len(self.Ek_matrix[i]))
             print("rad list length", i, len(self.rad_matrix[i]))
 
@@ -1264,7 +1264,7 @@ class ReadRoot():
             axs[1, i].hist(self.rad_matrix[i])
             axs[1, i].set_title("2nd plane energy; total counts " + str(len(self.rad_matrix[i]))+"\n R/mm range:"+str(i*R/dim)+" to "+str((i+1)*R/dim))
             axs[1, i].set_yscale('log')
-            axs[1, i].set_xlabel("angle/rad")
+            axs[1, i].set_xlabel("angle/degree")
             axs[1, i].set_ylabel("Counts")
 
 
