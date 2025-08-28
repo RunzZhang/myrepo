@@ -1272,7 +1272,7 @@ class ReadRoot():
 
 
         plt.tight_layout()
-        plot_name = "sn1_neutron_outcome_distribution_double_1E6.png"
+        plot_name = "sn1_neutron_outcome_spacial_double_1E6.png"
         plt.savefig(self.plot_path + plot_name)
 
     def ncrystal_test(self):
