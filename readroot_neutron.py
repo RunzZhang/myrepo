@@ -1087,7 +1087,8 @@ class ReadRoot():
         print("first income shoule be 1E7", len(self.df_neutron_income["Event"].to_list()),
               self.df_neutron_income.head(100))
 
-        #270mm
+        #270mm for single sap
+        # 535 for double sap
         # self.df_neutron_outcome2 = self.df[
         #     (self.df["name"] == 'neutron') & (
         #             self.df["Parent ID"] == 0) &  (self.df["Volume"] == "physAr2")][
@@ -1104,7 +1105,8 @@ class ReadRoot():
 
 
 
-        #1270mmm
+        #1270mmm for sing sap
+        # 1535mm for double sap
         # self.df_neutron_outcome3 = self.df[
         #     (self.df["name"] == 'neutron') & (
         #             self.df["Parent ID"] == 0) &  (self.df["Volume"] == "physAr3")][
