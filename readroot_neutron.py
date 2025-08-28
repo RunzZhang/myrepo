@@ -1228,7 +1228,7 @@ class ReadRoot():
         axs[1, 1].set_ylabel("Counts")
 
         plt.tight_layout()
-        plot_name = "sn1_neutron_outcome_distribution_cylinder_1E6.png"
+        plot_name = "sn1_neutron_outcome_distribution_double_1E6.png"
         plt.savefig(self.plot_path + plot_name)
 
     def plot_neutron_momentum_spacial_distribute(self):
@@ -1272,7 +1272,7 @@ class ReadRoot():
 
 
         plt.tight_layout()
-        plot_name = "sn1_neutron_outcome_distribution_2cylinder_1E6.png"
+        plot_name = "sn1_neutron_outcome_distribution_double_1E6.png"
         plt.savefig(self.plot_path + plot_name)
 
     def ncrystal_test(self):
