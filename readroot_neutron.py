@@ -206,7 +206,7 @@ class ReadRoot():
         self.signal_path = self.base_path + self.signal
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.filepath = self.base_path + "dmx_Cfneutron_Ncry_1E6.root"
-        self.filepath = self.base_path + "dmx_Cfneutron_cylinder_Arplane_1E6.root"
+        self.filepath = self.base_path + "dmx_Cfneutron_vertical_Arplane_1E6.root"
         print(self.filepath)
 
         self.file = uproot.open(self.filepath)["tree"]
@@ -1228,7 +1228,7 @@ class ReadRoot():
         axs[1, 1].set_ylabel("Counts")
 
         plt.tight_layout()
-        plot_name = "sn1_neutron_outcome_distribution_double_1E6.png"
+        plot_name = "sn1_neutron_outcome_distribution_vertical_1E6.png"
         plt.savefig(self.plot_path + plot_name)
 
     def plot_neutron_momentum_spacial_distribute(self):
@@ -1272,7 +1272,7 @@ class ReadRoot():
 
 
         plt.tight_layout()
-        plot_name = "sn1_neutron_outcome_spacial_double_1E6.png"
+        plot_name = "sn1_neutron_outcome_spacial_vertical_1E6.png"
         plt.savefig(self.plot_path + plot_name)
 
     def ncrystal_test(self):
