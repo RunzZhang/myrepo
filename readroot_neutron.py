@@ -186,13 +186,13 @@ class ReadRoot():
     def single_run(self):
         self.false_1 = "Cf_1E6_N_false1.csv"
         self.false_2 = "Cf_1E6_N_false2.csv"
-        self.false_3 = "Cf_1E6_N_1stplane_cylin_false3.csv"
-        self.false_4 = "Cf_1E6_N_1stplane_cylin_false4.csv"
+        self.false_3 = "Cf_1E6_N_1stplane_vertical_false3.csv"
+        self.false_4 = "Cf_1E6_N_1stplane_vertical_false4.csv"
         self.signal = "Cf_1E6_N_sig.csv"
         self.false_1_mid = "Cf_1E6_N_false1_mid.csv"
         self.false_2_mid = "Cf_1E6_N_false2_mid.csv"
-        self.false_3_mid = "Cf_1E6_N_1stplane_cylin_false3_mid.csv"
-        self.false_4_mid = "Cf_1E6_N_1stplane_cylin_false4_mid.csv"
+        self.false_3_mid = "Cf_1E6_N_1stplane_vertical_false3_mid.csv"
+        self.false_4_mid = "Cf_1E6_N_1stplane_vertical_false4_mid.csv"
         self.signal_mid = "Cf_1E6_N_sig_mid.csv"
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
