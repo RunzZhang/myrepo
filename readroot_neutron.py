@@ -191,8 +191,8 @@ class ReadRoot():
         self.signal = "Cf_1E6_N_sig.csv"
         self.false_1_mid = "Cf_1E6_N_false1_mid.csv"
         self.false_2_mid = "Cf_1E6_N_false2_mid.csv"
-        self.false_3_mid = "Cf_1E6_N_1stplane_thick_false3_mid.csv"
-        self.false_4_mid = "Cf_1E6_N_1stplane_thick_false4_mid.csv"
+        self.false_3_mid = "Cf_1E6_N_1stplane_db_thick_false3_mid.csv"
+        self.false_4_mid = "Cf_1E6_N_1stplane_db_thick_false4_mid.csv"
         self.signal_mid = "Cf_1E6_N_sig_mid.csv"
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
@@ -206,7 +206,7 @@ class ReadRoot():
         self.signal_path = self.base_path + self.signal
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.filepath = self.base_path + "dmx_Cfneutron_Ncry_1E6.root"
-        self.filepath = self.base_path + "dmx_Cfneutron_thickSap_Arplane_1E6.root"
+        self.filepath = self.base_path + "dmx_Cfneutron_double_thick_1E6.root"
         print(self.filepath)
 
         self.file = uproot.open(self.filepath)["tree"]
@@ -1228,7 +1228,7 @@ class ReadRoot():
         axs[1, 1].set_ylabel("Counts")
 
         plt.tight_layout()
-        plot_name = "sn1_neutron_outcome_distribution_thick_1E6.png"
+        plot_name = "sn1_neutron_outcome_distribution_db_thick_1E6.png"
         plt.savefig(self.plot_path + plot_name)
 
     def plot_neutron_momentum_spacial_distribute(self):
@@ -1272,7 +1272,7 @@ class ReadRoot():
 
 
         plt.tight_layout()
-        plot_name = "sn1_neutron_outcome_spacial_thick_1E6.png"
+        plot_name = "sn1_neutron_outcome_spacial_db_thick_1E6.png"
         plt.savefig(self.plot_path + plot_name)
 
     def ncrystal_test(self):
