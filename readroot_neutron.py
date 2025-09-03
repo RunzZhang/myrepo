@@ -1096,7 +1096,7 @@ class ReadRoot():
         #      'Parent ID']]
         self.df_neutron_outcome2 = self.df[
             (self.df["name"] == 'neutron') & (
-                    self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] == 270.0) & (
+                    self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] == 535) & (
                     self.df["Parent ID"] == 0)][
             ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
              'Parent ID']]
@@ -1115,7 +1115,7 @@ class ReadRoot():
 
         self.df_neutron_outcome3 = self.df[
             (self.df["name"] == 'neutron') & (
-                    self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] == 1270.0) & (
+                    self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] == 1535.0) & (
                     self.df["Parent ID"] == 0)][
             ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
              'Parent ID']]
@@ -1235,7 +1235,7 @@ class ReadRoot():
 
         self.df_neutron_outcome3 = self.df[
             (self.df["name"] == 'neutron') & (
-                    self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] == 1270.0) & (
+                    self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] == 1535.0) & (
                     self.df["Parent ID"] == 0)][
             ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Kinetic/keV",
              'Parent ID']]
