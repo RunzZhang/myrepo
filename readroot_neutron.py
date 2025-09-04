@@ -1197,7 +1197,7 @@ class ReadRoot():
 
         fig, axs = plt.subplots(2, 2, figsize=(10, 8))
 
-        axs[0, 0].hist(self.noise3_raw_list, bins=np.logspace(-5, 7, 50))
+        axs[0, 0].hist(self.noise3_raw_list, bins=np.logspace(-5, 7, 500))
         axs[0, 0].set_title("1st plane energy; total counts "+str(len(self.noise3_raw_list)))
         axs[0, 0].set_xscale('log')
         axs[0, 0].set_yscale('log')
@@ -1213,7 +1213,7 @@ class ReadRoot():
         axs[0, 1].set_ylabel("Counts")
 
 
-        axs[1, 0].hist(self.noise4_raw_list, bins=np.logspace(-5, 7, 50))
+        axs[1, 0].hist(self.noise4_raw_list, bins=np.logspace(-5, 7, 500))
         axs[1, 0].set_title("2nd plane energy; total counts "+str(len(self.noise4_raw_list)))
         axs[1, 0].set_xscale('log')
         axs[1, 0].set_yscale('log')
@@ -1254,7 +1254,7 @@ class ReadRoot():
 
         fig, axs = plt.subplots(2, dim, figsize=(10, 8))
         for i in range(dim):
-            axs[0, i].hist(self.Ek_matrix[i], bins=np.logspace(-5, 7, 50))
+            axs[0, i].hist(self.Ek_matrix[i], bins=np.logspace(-5, 7, 500))
             axs[0, i].set_title("2nd plane energy; total counts " + str(len(self.Ek_matrix[i]))+"\n R/mm range:"+str(i*R/dim)+" to "+str((i+1)*R/dim))
             axs[0, i].set_xscale('log')
             axs[0, i].set_yscale('log')
@@ -1263,7 +1263,7 @@ class ReadRoot():
             axs[0, i].set_ylabel("Counts")
 
         for i in range(dim):
-            axs[1, i].hist(self.rad_matrix[i])
+            axs[1, i].hist(self.rad_matrix[i], bins = 500)
             axs[1, i].set_title("2nd plane energy; total counts " + str(len(self.rad_matrix[i]))+"\n R/mm range:"+str(i*R/dim)+" to "+str((i+1)*R/dim))
             axs[1, i].set_yscale('log')
             axs[1, i].set_xlabel("angle/degree")
