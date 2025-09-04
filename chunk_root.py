@@ -85,7 +85,7 @@ with uproot.open(f"{input_file}:{tree_name}") as tree:
 
 
         # Save to new root file
-        output_file = f"dmx_Cf_1e7_part{i}.root"
+        output_file = f"dmx_AmLi_1E7_part{i}.root"
         with uproot.recreate(base_address+output_file) as f:
             f[tree_name] = array_chunk
 
