@@ -184,16 +184,16 @@ class ReadRoot():
 
 
     def single_run(self):
-        self.false_1 = "AmLi_1E6_N_false1.csv"
-        self.false_2 = "AmLi_1E6_N_false2.csv"
-        self.false_3 = "AmLi_1E6_N_1stplane_false3.csv"
-        self.false_4 = "AmLi_1E6_N_1stplane_false4.csv"
-        self.signal = "AmLi_1E6_N_sig.csv"
-        self.false_1_mid = "AmLi_1E6_N_false1_mid.csv"
-        self.false_2_mid = "AmLi_1E6_N_false2_mid.csv"
-        self.false_3_mid = "AmLi_1E6_N_1stplane__false3_mid.csv"
-        self.false_4_mid = "AmLi_1E6_N_1stplane__false4_mid.csv"
-        self.signal_mid = "AmLi_1E6_N_sig_mid.csv"
+        self.false_1 = "AmLi_1E7_N_false1.csv"
+        self.false_2 = "AmLi_1E7_N_false2.csv"
+        self.false_3 = "AmLi_1E7_N_1stplane_false3.csv"
+        self.false_4 = "AmLi_1E7_N_1stplane_false4.csv"
+        self.signal = "AmLi_1E7_N_sig.csv"
+        self.false_1_mid = "AmLi_1E7_N_false1_mid.csv"
+        self.false_2_mid = "AmLi_1E7_N_false2_mid.csv"
+        self.false_3_mid = "AmLi_1E7_N_1stplane__false3_mid.csv"
+        self.false_4_mid = "AmLi_1E7_N_1stplane__false4_mid.csv"
+        self.signal_mid = "AmLi_1E7_N_sig_mid.csv"
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
         self.false_3_path = self.base_path + self.false_3
@@ -206,7 +206,7 @@ class ReadRoot():
         self.signal_path = self.base_path + self.signal
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.filepath = self.base_path + "dmx_Cfneutron_Ncry_1E6.root"
-        self.filepath = self.base_path + "dmx_AmLi_neutron_1E6.root"
+        self.filepath = self.base_path + "dmx_AmLi_neutron_1E7.root"
         print(self.filepath)
 
         self.file = uproot.open(self.filepath)["tree"]
@@ -1228,7 +1228,7 @@ class ReadRoot():
         axs[1, 1].set_ylabel("Counts")
 
         plt.tight_layout()
-        plot_name = "AmLi_neutron_outcome_distribution_1E6.png"
+        plot_name = "AmLi_neutron_outcome_distribution_1E7.png"
         plt.savefig(self.plot_path + plot_name)
 
     def plot_neutron_momentum_spacial_distribute(self):
@@ -1272,7 +1272,7 @@ class ReadRoot():
 
 
         plt.tight_layout()
-        plot_name = "AmLi_neutron_outcome_spacial__1E6.png"
+        plot_name = "AmLi_neutron_outcome_spacial_1E7.png"
         plt.savefig(self.plot_path + plot_name)
 
     def ncrystal_test(self):
