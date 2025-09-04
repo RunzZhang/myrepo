@@ -1,8 +1,8 @@
 import uproot
 import awkward as ak
 import numpy as np
-base_address = "/data/runzezhang/result/TN_sims_D/"
-root_name = "dmx_Cf_1E7.root"
+base_address = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi/"
+root_name = "dmx_AmLi_1E7.root"
 input_file = base_address+root_name
 
 tree_name = "tree"  # Replace with your tree name
