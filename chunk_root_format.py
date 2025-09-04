@@ -5,8 +5,8 @@ import os, time
 
 class ReadRoot:
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi/"
-        self.plot_path = '/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi/plot/'
+        self.base_path = "/data/runzezhang/result/TN_sims_D/"
+        self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         self.false_1 = "AmLi_1E7_false1.csv"
         self.false_2 = "AmLi_1E7_false2.csv"
