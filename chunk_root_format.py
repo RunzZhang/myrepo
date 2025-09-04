@@ -5,15 +5,15 @@ import os, time
 
 class ReadRoot:
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/"
-        self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi/"
+        self.plot_path = '/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi/plot/'
 
-        self.false_1 = "Cf_1E7_false1.csv"
-        self.false_2 = "Cf_1E7_false2.csv"
-        self.signal = "Cf_1E7_sig.csv"
-        self.false_1_mid = "Cf_1E7_false1_mid.csv"
-        self.false_2_mid = "Cf_1E7_false2_mid.csv"
-        self.signal_mid = "Cf_1E7_sig_mid.csv"
+        self.false_1 = "AmLi_1E7_false1.csv"
+        self.false_2 = "AmLi_1E7_false2.csv"
+        self.signal = "AmLi_1E7_sig.csv"
+        self.false_1_mid = "AmLi_1E7_false1_mid.csv"
+        self.false_2_mid = "AmLi_1E7_false2_mid.csv"
+        self.signal_mid = "AmLi_1E7_sig_mid.csv"
 
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
@@ -22,7 +22,7 @@ class ReadRoot:
         self.signal_path_mid = self.base_path + self.signal_mid
         self.signal_path = self.base_path + self.signal
 
-        self.filepath = self.base_path + "dmx_Cf_1E7.root"
+        self.filepath = self.base_path + "dmx_AmLi_1E7.root"
         # self.filepath = self.base_path + "dmx_AmLi.root" # test
         self.tree_name = "tree"  # Assuming your TTree is named "tree"
 
@@ -32,7 +32,7 @@ class ReadRoot:
 
     def chunk_and_write_root(self, num_chunks=20, output_dir=None):
         if output_dir is None:
-            output_dir = os.path.join(self.base_path, "chunked_root_files")
+            output_dir = os.path.join(self.base_path, "chunked_root_files_AmLi")
         os.makedirs(output_dir, exist_ok=True)
 
         with uproot.open(self.filepath) as file:
@@ -64,7 +64,7 @@ class ReadRoot:
                 arrays['Process'] = arrays['Process'].astype(str)
 
                 chunk_num += 1
-                output_filename = os.path.join(output_dir, f"dmx_Cf_1E7_{chunk_num}.root")
+                output_filename = os.path.join(output_dir, f"dmx_AmLi_1E7_{chunk_num}.root")
 
                 print(f"Processing chunk {chunk_num} (entries {start_entry} to {start_entry + len(arrays) - 1})")
 
