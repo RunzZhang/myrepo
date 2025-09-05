@@ -7,12 +7,12 @@ class SN():
         # after generate new files, you need to select the capture ratio/source for different configs in read_files function.
         # then choose the correct signal/noise of with clause in read files.
         # at last change the self.name and plot_name in plot function
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
-        self.false_1 = "Cf_false1.csv"
-        self.false_2 = "Cf_false2.csv"
-        self.signal = "Cf_sig.csv"
+        self.false_1 = "AmLi_false1.csv"
+        self.false_2 = "AmLi_false2.csv"
+        self.signal = "AmLi_sig.csv"
         self.name1 = "External Capture Background"
         self.name2 = "Hard Scatter Background"
         self.name = "Backgrounds"
@@ -31,10 +31,10 @@ class SN():
 
     def main_body(self,i):
         print(i)
-        self.false_1 = f"Cf_1E7_false1_part{i}.csv"
-        self.false_2 = f"Cf_1E7_false2_part{i}.csv"
-        self.false_3 = f"Cf_1E7_false3_part{i}.csv"
-        self.signal = f"Cf_1E7_sig_part{i}.csv"
+        self.false_1 = f"AmLi_1E7_false1_part{i}.csv"
+        self.false_2 = f"AmLi_1E7_false2_part{i}.csv"
+        self.false_3 = f"AmLi_1E7_false3_part{i}.csv"
+        self.signal = f"AmLi_1E7_sig_part{i}.csv"
 
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
@@ -56,8 +56,8 @@ class SN():
         self.capture_ratio = 0.116  # 400 eV
         # self.capture_ratio = 6.52E-3  # 700 eV
         # self.capture_ratio = 1.158E-3  # 1125 eV
-        self.rate = 435.6 #/s # CF neutron rate 9 mucurie
-        # self.rate = 0.56 #AmLi neutron rate
+        # self.rate = 435.6 #/s # CF neutron rate 9 mucurie
+        self.rate = 0.56 #AmLi neutron rate
         self.G4_events= 1E7
         self.G4_sig_time=(self.G4_events / self.rate)
         with open(self.signal_path, 'r') as file:
