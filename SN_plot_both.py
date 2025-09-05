@@ -16,7 +16,7 @@ class SN():
         self.name1 = "External Capture Background"
         self.name2 = "Hard Scatter Background"
         self.name = "Backgrounds"
-        self.plot_name = self.name+"1E7_elas.pdf"
+        self.plot_name = self.name+"AmLi_1E7_inelas.pdf"
         self.signal_final_list = []
         self.noise1_final_list =[]
         self.noise2_final_list = []
@@ -98,7 +98,8 @@ class SN():
             number_list = next(reader)
             # Convert the strings to floats
             self.noise3_raw_list = [float(value) for value in number_list]
-        # self.noise2_final_list = self.noise2_final_list+ self.noise3_raw_list
+        # decide if include the noise3
+        self.noise2_final_list = self.noise2_final_list+ self.noise3_raw_list
 
     def combine_data(self):
         # get rate vs diff threshold
