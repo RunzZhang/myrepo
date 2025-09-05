@@ -1024,7 +1024,7 @@ class ReadRoot():
 
         # add gamma up
         self.electron_recoiled_list  = summed_values["Recoiled/keV"].to_list()
-        p_observed = []
+        p_observed = [0]
         for i in range(len(self.electron_recoiled_list)):
             # 40 /keV 0.03 and 0.2 PCE and PDE
             if i> 1E-6:
