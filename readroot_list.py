@@ -183,12 +183,12 @@ class ReadRoot():
         # self.LAr_gamma_event()
 
         # single elastic scatter and capture false signal 1
-        self.single_e_n_capture_event()
+        # self.single_e_n_capture_event()
 
         # false noise 2, need to relocate directory
         # including inelastic
-        # self.Huge_scatter_event()
-
+        self.Huge_scatter_event()
+        #
 
 
         # self.FN_spectrum_v2()
@@ -1000,7 +1000,8 @@ class ReadRoot():
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
-        # in 1 event number, only the first series of gammas, avoiding over-countting
+        # in 1 event number, only the first series of gammas, avoi
+        # ding over-countting
         # self.gamma_Scint = self.df_gamma_rw[
         #     (self.df_gamma_rw['Volume'] == 'LAr_phys') | (self.df_gamma_rw['Volume'] == 'hydraulic_fluid_phys')]
         self.gamma_Scint = self.df_gamma_rw[
