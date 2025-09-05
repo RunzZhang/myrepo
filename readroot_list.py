@@ -346,7 +346,7 @@ class ReadRoot():
 
         # add gamma up
         self.Ar_recoiled_list = max_values["Recoiled/keV"].to_list()
-        p_observed = []
+        p_observed = [0]
         scatter_ene = [] # in eV
         for i in range(len(self.Ar_recoiled_list)):
             # 40 /keV 0.03 and 0.2 PCE and PDE
@@ -455,7 +455,7 @@ class ReadRoot():
 
         # add gamma up
         self.Ar_recoiled_list = max_values["Recoiled/keV"].to_list()
-        p_observed = []
+        p_observed = [0]
         scatter_ene = []  # in eV
         for i in range(len(self.Ar_recoiled_list)):
             # 10 /keV 0.03 and 0.2 PCE and PDE
@@ -595,7 +595,7 @@ class ReadRoot():
 
         # add gamma up
         self.Ar_recoiled_list = max_values["Recoiled/keV"].to_list()
-        p_observed = []
+        p_observed = [0]
         for i in range(len(self.Ar_recoiled_list)):
             # 40 /keV 0.03 and 0.2 PCE and PDE
             if i > 1E-6:
@@ -672,7 +672,7 @@ class ReadRoot():
 
         # add gamma up
         self.Ar_recoiled_list = max_values["Recoiled/keV"].to_list()
-        p_observed = []
+        p_observed = [0]
         for i in range(len(self.Ar_recoiled_list)):
             # 40 /keV 0.03 and 0.2 PCE and PDE
             if i > 1E-6:
@@ -976,7 +976,7 @@ class ReadRoot():
 
         # add gamma up
         self.electron_recoiled_list  = summed_values["Recoiled/keV"].to_list()
-        p_observed = []
+        p_observed = [0]
         for i in range(len(self.electron_recoiled_list)):
             # 40 /keV 0.03 and 0.2 PCE and PDE
             p_observed.append(self.electron_recoiled_list[i]*1E6*40*0.03*0.2/(1000))
@@ -1071,7 +1071,7 @@ class ReadRoot():
 
         # add gamma up
         self.electron_recoiled_list  = summed_values["Recoiled/keV"].to_list()
-        p_observed = []
+        p_observed = [0]
         for i in range(len(self.electron_recoiled_list)):
             # 40 /keV 0.03 and 0.2 PCE and PDE
             if i> 1E-6:
@@ -1130,7 +1130,7 @@ class ReadRoot():
 
         # add gamma up
         self.electron_recoiled_list  = summed_values["Recoiled/keV"].to_list()
-        p_observed = []
+        p_observed = [0]
         print("recoil list", len(self.electron_recoiled_list))
         for i in range(len(self.electron_recoiled_list)):
             # 40 /keV 0.03 and 0.2 PCE and PDE
