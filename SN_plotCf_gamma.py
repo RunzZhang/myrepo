@@ -32,8 +32,8 @@ class SN():
         for i in range(1,101):
         # for i in range(1, 2):
             self.main_body(i)
-        self.plot_G()
-        # self.plot_gamma()
+        # self.plot_G()
+        self.plot_gamma()
 
 
     def main_body(self,i):
