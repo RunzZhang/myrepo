@@ -238,7 +238,7 @@ class SN():
 
         # ======== FIRST PLOT (your original one) ========
         # Plot dataset 1 and dataset 2 on the left y-axis
-        line1= ax1.hist(self.gamma_list)
+        line1= ax1.hist(self.gamma_list, bins = 100)
         ax1.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
         # ax1.set_xlim([0, 600])
         # ax1.set_ylim([1e-3, 20])
@@ -259,7 +259,7 @@ class SN():
 
         # ======== SECOND PLOT (side-by-side) ========
         # Example plot — replace with your own data
-        line4 = ax3.hist(self.yield_rate)
+        line4 = ax3.hist(self.yield_rate, bins = 100)
 
         ax3.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
         # ax3.set_xlim([0, 600])
