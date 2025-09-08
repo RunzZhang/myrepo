@@ -8,19 +8,19 @@ class ReadRoot:
         self.base_path = "/data/runzezhang/result/TN_sims_D/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
-        self.false_1 = "AmLi_1E7_false1.csv"
-        self.false_2 = "AmLi_1E7_false2.csv"
-        self.signal = "AmLi_1E7_sig.csv"
-        self.false_1_mid = "AmLi_1E7_false1_mid.csv"
-        self.false_2_mid = "AmLi_1E7_false2_mid.csv"
-        self.signal_mid = "AmLi_1E7_sig_mid.csv"
-
-        self.false_1_path = self.base_path + self.false_1
-        self.false_2_path = self.base_path + self.false_2
-        self.false_1_path_mid = self.base_path + self.false_1_mid
-        self.false_2_path_mid = self.base_path + self.false_2_mid
-        self.signal_path_mid = self.base_path + self.signal_mid
-        self.signal_path = self.base_path + self.signal
+        # self.false_1 = "AmLi_1E7_false1.csv"
+        # self.false_2 = "AmLi_1E7_false2.csv"
+        # self.signal = "AmLi_1E7_sig.csv"
+        # self.false_1_mid = "AmLi_1E7_false1_mid.csv"
+        # self.false_2_mid = "AmLi_1E7_false2_mid.csv"
+        # self.signal_mid = "AmLi_1E7_sig_mid.csv"
+        #
+        # self.false_1_path = self.base_path + self.false_1
+        # self.false_2_path = self.base_path + self.false_2
+        # self.false_1_path_mid = self.base_path + self.false_1_mid
+        # self.false_2_path_mid = self.base_path + self.false_2_mid
+        # self.signal_path_mid = self.base_path + self.signal_mid
+        # self.signal_path = self.base_path + self.signal
 
         self.filepath = self.base_path + "dmx_AmLi_1E7.root"
         # self.filepath = self.base_path + "dmx_AmLi.root" # test
