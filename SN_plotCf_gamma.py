@@ -21,6 +21,7 @@ class SN():
         self.noise1_final_list =[]
         self.noise2_final_list = []
         self.noise3_final_list = []
+        self.noise5_final_list = []
         self.gamma_list = []
         self.yield_rate = []
 
@@ -29,7 +30,7 @@ class SN():
         #982 statics false 1
         for i in range(1,101):
             self.main_body(i)
-        
+
         self.plot_gamma()
 
 
@@ -57,15 +58,9 @@ class SN():
 # main funtion we use
     def read_files(self):
 
-        with open(self.false_4_path, 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.noise4_raw_list = [float(value) for value in number_list]
-        self.gamma_list += self.noise4_raw_list
 
-        with open(self.false_3_path, 'r') as file:
+
+        with open(self.false_3_path, 'r') as file: # electron deposit energy per event
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
@@ -73,11 +68,27 @@ class SN():
             self.noise3_raw_list = [float(value)*1000/( 1E6 * 10 * 0.03 * 0.2) for value in number_list] # electron recoiled energy in MeV
         self.noise3_final_list  += self.noise3_raw_list
 
-        print(len(self.gamma_list), len(self.noise3_final_list))
-        if len(self.gamma_list)== len(self.noise3_final_list):
+        with open(self.false_4_path, 'r') as file: # gamma energy per particle
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            self.noise4_raw_list = [float(value) for value in number_list]
+        self.gamma_list += self.noise4_raw_list
 
-            for i in range(len(self.gamma_list)):
-                self.yield_rate.append(self.noise3_final_list[i]/self.gamma_list[i])
+        with open(self.false_5_path, 'r') as file: # gamma energy per event
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            self.noise5_raw_list = [float(value) for value in number_list]
+        self.noise5_final_list += self.noise5_raw_list
+
+        print(len(self.noise3_final_list), len(self.noise5_final_list))
+        if len(self.noise3_final_list)== len(self.noise5_final_list):
+
+            for i in range(len(self.noise5_final_list)):
+                self.yield_rate.append(self.noise3_final_list[i]/self.noise5_final_list[i])
         if self.yield_rate[0] == None: # in case error in later plot sections
             self.yield_rate.append(0)
 
