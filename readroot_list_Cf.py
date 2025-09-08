@@ -584,7 +584,7 @@ class ReadRoot():
         # print out the file of inelastic scattering
 
         print("gamma filter", len(gamma_list))
-        self.gamma_Scint = self.keep_1st(self.gamma_Scint)
+        self.gamma_Scint = self.keep_1st(self.gamma_Scint[(self.df['name'] == 'gamma') & (self.df['Volume'] == 'LAr_phys')])
         print("scint", self.gamma_Scint)
         # print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]!=1])
 
