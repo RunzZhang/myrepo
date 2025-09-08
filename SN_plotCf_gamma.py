@@ -82,7 +82,7 @@ class SN():
             # Convert the strings to floats
             self.noise4_raw_list = [float(value) for value in number_list]
         self.gamma_list += self.noise4_raw_list
-        print("F", len(self.noise4_raw_list))
+        print("F4", len(self.noise4_raw_list))
 
         with open(self.false_5_path, 'r') as file: # gamma energy per event
             reader = csv.reader(file)
