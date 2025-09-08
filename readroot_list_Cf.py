@@ -975,8 +975,8 @@ class ReadRoot():
         # single scatter spectrum
         # self.Huge_scatter_spectrum()
         self.Huge_scatter_wt_inelastic_spectrum()
-        # self.inelastic_gamma_induced_e()  # collect electronrecoiled energy
-        self.inelastic_gamma() # collect inleasci gammas
+        self.inelastic_gamma_induced_e()  # collect electronrecoiled energy
+        # self.inelastic_gamma() # collect inleasci gammas
         # self.Huge_scatter_spectrum_CF()
         # self.Huge_scatter_spectrum_CF_fake()
 
