@@ -594,7 +594,7 @@ class ReadRoot():
             wr = csv.writer(myfile)
             wr.writerow(self.gamma_spectrum)
 
-        summed_values = self.gamma_spectrum.groupby(['Event'])["Kinetic/keV"].sum().reset_index()
+        summed_values = self.df_electron_gamma.groupby(['Event'])["Kinetic/keV"].sum().reset_index()
         print(summed_values.head(20))
 
         # add gamma up
