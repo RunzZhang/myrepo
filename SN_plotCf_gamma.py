@@ -89,7 +89,7 @@ class SN():
 
             for i in range(len(self.noise5_final_list)):
                 self.yield_rate.append(self.noise3_final_list[i]/self.noise5_final_list[i])
-        if self.yield_rate[0] == None: # in case error in later plot sections
+        if self.yield_rate == []: # in case error in later plot sections
             self.yield_rate.append(0)
 
 
