@@ -141,7 +141,7 @@ class ReadRoot():
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.main_body(1)
         # for i in range(1,101):
-        for i in range(1, 1):
+        for i in range(1, 2):
             self.main_body(i)
     def main_body(self,i):
         print(i)
