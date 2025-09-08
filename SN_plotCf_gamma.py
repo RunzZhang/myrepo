@@ -102,11 +102,11 @@ class SN():
         self.noise6_final_list += self.noise6_raw_list
         print("F6", len(self.noise6_raw_list))
 
-        print(len(self.noise3_final_list), len(self.noise5_final_list), len(self.noise6_final_list))
-        if len(self.noise6_final_list)== len(self.noise5_final_list):
+        print(len(self.noise3_raw_list), len(self.noise5_raw_list), len(self.noise6_raw_list))
+        if len(self.noise6_raw_list)== len(self.noise5_raw_list):
 
-            for i in range(len(self.noise5_final_list)):
-                self.yield_rate.append(self.noise6_final_list[i]/self.noise5_final_list[i])
+            for i in range(len(self.noise5_raw_list)):
+                self.yield_rate.append(self.noise6_raw_list[i]/self.noise5_raw_list[i])
         if self.yield_rate == []: # in case error in later plot sections
             self.yield_rate.append(0)
 
