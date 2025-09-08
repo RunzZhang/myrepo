@@ -140,7 +140,8 @@ class ReadRoot():
 
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.main_body(1)
-        for i in range(1,101):
+        # for i in range(1,101):
+        for i in range(1, 1):
             self.main_body(i)
     def main_body(self,i):
         print(i)
@@ -532,7 +533,8 @@ class ReadRoot():
                                           how='inner')
 
 
-        print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()))
+        # print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()))
+        print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()), self.df_electron_gamma["Event"].unique())
         print(self.df_electron_gamma.head(10))
         # double check gamma
 
@@ -583,7 +585,8 @@ class ReadRoot():
         self.df_electron_gamma = pd.merge(self.electron_column, self.gamma_Scint, on=['Event', "Track ID"],
                                           how='inner')
 
-        print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()))
+        # print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()))
+        print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()),self.df_electron_gamma["Event"].unique())
         print(self.df_electron_gamma.head(10))
         # double check gamma self.inelastic_gamma_path
         self.df_electron_gamma.to_csv(self.inelastic_gamma_path, index= False)
