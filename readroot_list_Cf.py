@@ -148,14 +148,16 @@ class ReadRoot():
         self.false_1 = f"Cf_1E7_false1_part{i}.csv"
         self.false_2 = f"Cf_1E7_false2_part{i}.csv"
         self.false_3 = f"Cf_1E7_false3_part{i}.csv"
-        self.false_4 = f"Cf_1E7_false4_part{i}.csv" # inelastic gamma energies per gamma track ID
+        self.false_4 = f"Cf_1E7_false4_part{i}.csv"
         self.false_5 = f"Cf_1E7_false5_part{i}.csv" # inelastic gamma energies, summed grouped by event
+        self.false_6 = f"Cf_1E7_false6_part{i}.csv"  # inelastic gamma energies per gamma track ID
         self.signal = f"Cf_1E7_sig_part{i}.csv"
         self.false_1_mid = f"Cf_1E7_false1_mid_part{i}.csv"
         self.false_2_mid = f"Cf_1E7_false2_mid_part{i}.csv"
         self.false_3_mid = f"Cf_1E7_false3_mid_part{i}.csv"
         self.false_4_mid = f"Cf_1E7_false4_mid_part{i}.csv"
         self.false_5_mid = f"Cf_1E7_false5_mid_part{i}.csv"
+        self.false_6_mid = f"Cf_1E7_false6_mid_part{i}.csv"
         self.signal_mid = f"Cf_1E7_sig_mid_part{i}.csv"
         self.inelastic_gamma_form = f"Cf_1E7_inelastic_mid_part{i}.csv"
         self.false_1_path = self.base_path + self.false_1
@@ -163,12 +165,14 @@ class ReadRoot():
         self.false_3_path = self.base_path + self.false_3
         self.false_4_path = self.base_path + self.false_4
         self.false_5_path = self.base_path + self.false_5
+        self.false_6_path = self.base_path + self.false_6
 
         self.false_1_path_mid = self.base_path + self.false_1_mid
         self.false_2_path_mid = self.base_path + self.false_2_mid
         self.false_3_path_mid = self.base_path + self.false_3_mid
         self.false_4_path_mid = self.base_path + self.false_4_mid
         self.false_5_path_mid = self.base_path + self.false_5_mid
+        self.false_6_path_mid = self.base_path + self.false_6_mid
 
         self.signal_path_mid = self.base_path + self.signal_mid
         self.signal_path = self.base_path + self.signal
@@ -543,6 +547,9 @@ class ReadRoot():
 
         # add gamma up
         self.electron_recoiled_list = summed_values["Recoiled/keV"].to_list()
+        with open(self.false_6_path, 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(self.electron_recoiled_list)
         p_observed = [0]
         for i in range(len(self.electron_recoiled_list)):
             # 40 /keV 0.03 and 0.2 PCE and PDE
@@ -556,12 +563,12 @@ class ReadRoot():
         print("photon observed number ", num, len(p_observed))
         print("max", max(p_observed), "\n", "min", min(p_observed))
         # plt.hist(self.electron_recoiled_list, bins=100)
-        self.p_observed += p_observed
+        self.p_observed = p_observed
         with open(self.false_3_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(self.p_observed)
-        plt.hist(p_observed, bins=100)
-        plt.xlabel("Obeserved Photon per Event")
+        # plt.hist(p_observed, bins=100)
+        # plt.xlabel("Obeserved Photon per Event")
 
     def inelastic_gamma(self):
         self.df_gamma_rw = pd.read_csv(self.false_3_path_mid)
