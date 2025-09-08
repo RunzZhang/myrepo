@@ -67,6 +67,7 @@ class SN():
             # Convert the strings to floats
             self.noise3_raw_list = [float(value)*1000/( 1E6 * 10 * 0.03 * 0.2) for value in number_list] # electron recoiled energy in MeV
         self.noise3_final_list  += self.noise3_raw_list
+        print("F3", len(self.noise3_raw_list))
 
         with open(self.false_4_path, 'r') as file: # gamma energy per particle
             reader = csv.reader(file)
@@ -75,6 +76,7 @@ class SN():
             # Convert the strings to floats
             self.noise4_raw_list = [float(value) for value in number_list]
         self.gamma_list += self.noise4_raw_list
+        print("F", len(self.noise4_raw_list))
 
         with open(self.false_5_path, 'r') as file: # gamma energy per event
             reader = csv.reader(file)
@@ -83,6 +85,7 @@ class SN():
             # Convert the strings to floats
             self.noise5_raw_list = [float(value) for value in number_list]
         self.noise5_final_list += self.noise5_raw_list
+        print("F5", len(self.noise5_raw_list))
 
         print(len(self.noise3_final_list), len(self.noise5_final_list))
         if len(self.noise3_final_list)== len(self.noise5_final_list):
