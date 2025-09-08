@@ -22,6 +22,7 @@ class SN():
         self.noise2_final_list = []
         self.noise3_final_list = []
         self.noise5_final_list = []
+        self.noise6_final_list = []
         self.gamma_list = []
         self.yield_rate = []
 
@@ -42,6 +43,7 @@ class SN():
         self.false_3 = f"Cf_1E7_false3_part{i}.csv"
         self.false_4 = f"Cf_1E7_false4_part{i}.csv"
         self.false_5 = f"Cf_1E7_false5_part{i}.csv"
+        self.false_6 = f"Cf_1E7_false6_part{i}.csv"
         self.signal = f"Cf_1E7_sig_part{i}.csv"
 
         self.false_1_path = self.base_path + self.false_1
@@ -49,6 +51,7 @@ class SN():
         self.false_3_path = self.base_path + self.false_3
         self.false_4_path = self.base_path + self.false_4
         self.false_5_path = self.base_path + self.false_5
+        self.false_6_path = self.base_path + self.false_6
         self.signal_path = self.base_path + self.signal
 
 
@@ -61,7 +64,7 @@ class SN():
 
 
 
-        with open(self.false_3_path, 'r') as file: # electron deposit energy per event
+        with open(self.false_3_path, 'r') as file: # electron yielding photons per event, similar to 6, but 6 is electron energy instead of photon nums
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
@@ -69,6 +72,8 @@ class SN():
             self.noise3_raw_list = [float(value)*1000/( 1E6 * 10 * 0.03 * 0.2) for value in number_list] # electron recoiled energy in MeV
         self.noise3_final_list  += self.noise3_raw_list
         print("F3", len(self.noise3_raw_list))
+
+
 
         with open(self.false_4_path, 'r') as file: # gamma energy per particle
             reader = csv.reader(file)
@@ -86,13 +91,22 @@ class SN():
             # Convert the strings to floats
             self.noise5_raw_list = [float(value) for value in number_list]
         self.noise5_final_list += self.noise5_raw_list
-        print("F5", len(self.noise5_raw_list))
+        print("F5", len(self.noise5_raw_list),self.noise5_raw_list[:10])
 
-        print(len(self.noise3_final_list), len(self.noise5_final_list))
-        if len(self.noise3_final_list)== len(self.noise5_final_list):
+        with open(self.false_6_path, 'r') as file:  # electron deposit energy per event
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            self.noise6_raw_list = [float(value) for value in number_list]  # electron recoiled energy in MeV
+        self.noise6_final_list += self.noise6_raw_list
+        print("F6", len(self.noise6_raw_list))
+
+        print(len(self.noise3_final_list), len(self.noise5_final_list), len(self.noise6_final_list))
+        if len(self.noise6_final_list)== len(self.noise5_final_list):
 
             for i in range(len(self.noise5_final_list)):
-                self.yield_rate.append(self.noise3_final_list[i]/self.noise5_final_list[i])
+                self.yield_rate.append(self.noise6_final_list[i]/self.noise5_final_list[i])
         if self.yield_rate == []: # in case error in later plot sections
             self.yield_rate.append(0)
 
