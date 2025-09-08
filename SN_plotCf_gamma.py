@@ -116,7 +116,7 @@ class SN():
 
     def plot_G(self):
         bin_num =100
-        plt.hist(self.gamma_list, bin= bin_num)
+        plt.hist(self.gamma_list, bins= bin_num)
         plt.xlabel("gamma energy/MeV")
         plt.ylabel("counts")
         plt.savefig(self.plot_name)
