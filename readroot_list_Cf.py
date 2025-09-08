@@ -462,6 +462,7 @@ class ReadRoot():
                 (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36') | (
                     self.df["name"] == 'gamma')|(self.df["name"] == 'e-'))]
         self.N_check_inela.to_csv(self.false_3_path_mid, index=False)
+        print("inelastic df",self.N_check_inela.head(20))
 
         # print(self.LAr_n_merged)
         # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
@@ -535,6 +536,8 @@ class ReadRoot():
         self.df_electron = self.keep_1st(self.df_electron)
         self.df_electron_gamma = pd.merge(self.df_electron, self.gamma_Scint_column, on=['Event', 'Parent ID'],
                                           how='inner')
+
+        print("all inelastic gamma df", self.df_electron_gamma.head(20))
 
 
         # print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()))
