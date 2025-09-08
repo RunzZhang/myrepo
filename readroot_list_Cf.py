@@ -462,7 +462,7 @@ class ReadRoot():
                 (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36') | (
                     self.df["name"] == 'gamma')|(self.df["name"] == 'e-'))]
         self.N_check_inela.to_csv(self.false_3_path_mid, index=False)
-        print("inelastic df",self.N_check_inela.head(20))
+        print("inelastic df",self.N_check_inela.head(10))
 
         # print(self.LAr_n_merged)
         # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
@@ -597,7 +597,7 @@ class ReadRoot():
 
         # print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()))
         print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()),self.df_electron_gamma["Event"].unique())
-        print(self.df_electron_gamma.head(10))
+        print(self.df_electron_gamma.head(20))
         # double check gamma self.inelastic_gamma_path
         self.df_electron_gamma.to_csv(self.inelastic_gamma_path, index= False)
 
@@ -978,8 +978,8 @@ class ReadRoot():
         # single scatter spectrum
         # self.Huge_scatter_spectrum()
         self.Huge_scatter_wt_inelastic_spectrum()
-        self.inelastic_gamma_induced_e()  # collect electronrecoiled energy
-        # self.inelastic_gamma() # collect inleasci gammas
+        # self.inelastic_gamma_induced_e()  # collect electronrecoiled energy
+        self.inelastic_gamma() # collect inleasci gammas
         # self.Huge_scatter_spectrum_CF()
         # self.Huge_scatter_spectrum_CF_fake()
 
