@@ -267,7 +267,6 @@ class SN():
 
         ax3.set_xlabel('Yield Rate ER/Gamma each event', fontsize=16)
         ax3.set_ylabel('Counts', color='black', fontsize=16)
-        ax3.axvline(x=200, color='black', linestyle='dotted')
         ax3.set_yscale('log')
 
 
