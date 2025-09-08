@@ -106,7 +106,10 @@ class SN():
         if len(self.noise6_raw_list)== len(self.noise5_raw_list):
 
             for i in range(len(self.noise5_raw_list)):
-                self.yield_rate.append(self.noise6_raw_list[i]/self.noise5_raw_list[i])
+                if self.noise5_raw_list[i]==0:
+                    continue
+                else:
+                    self.yield_rate.append(self.noise6_raw_list[i]/self.noise5_raw_list[i])
         if self.yield_rate == []: # in case error in later plot sections
             self.yield_rate.append(0)
 
