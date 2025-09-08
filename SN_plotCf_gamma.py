@@ -243,7 +243,7 @@ class SN():
         # ax1.set_xlim([0, 600])
         # ax1.set_ylim([1e-3, 20])
 
-        ax1.set_xlabel('Gamma sepctrum by Cf 252 inelastic scattering in Ar', fontsize=16)
+        ax1.set_xlabel('Gamma Energy/MeV', fontsize=16)
         ax1.set_ylabel('Counts', color='black', fontsize=16)
         # ax1.axvline(x=200, color='black', linestyle='dotted')
         ax1.set_yscale('log')
