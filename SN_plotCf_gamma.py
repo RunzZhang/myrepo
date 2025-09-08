@@ -28,7 +28,8 @@ class SN():
 
 
         #982 statics false 1
-        for i in range(1,101):
+        # for i in range(1,101):
+        for i in range(1, 2):
             self.main_body(i)
         self.plot_G()
         # self.plot_gamma()
