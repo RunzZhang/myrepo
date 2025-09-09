@@ -594,6 +594,7 @@ class ReadRoot():
         self.electron_column.columns = ['Event', "Track ID"]
         self.df_electron_gamma = pd.merge(self.gamma_Scint,self.electron_column, on=['Event', "Track ID"],
                                           how='inner')
+        self.df_electron_gamma = self.keep_1st(self.df_electron_gamma)
 
         # print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()))
         print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()),self.df_electron_gamma["Event"].unique())
