@@ -25,6 +25,7 @@ class SN():
         self.noise6_final_list = []
         self.gamma_list = []
         self.yield_rate = []
+        self.abnormal_yield = []
 
 
 
@@ -109,9 +110,13 @@ class SN():
                 if self.noise5_raw_list[i]==0:
                     continue
                 else:
+                    if self.noise6_raw_list[i]/self.noise5_raw_list[i]>1:
+                        self.abnormal_yield.append([i,self.noise6_raw_list[i]/self.noise5_raw_list[i],self.noise6_raw_list[i],self.noise5_raw_list[i]])
                     self.yield_rate.append(self.noise6_raw_list[i]/self.noise5_raw_list[i])
         if self.yield_rate == []: # in case error in later plot sections
             self.yield_rate.append(0)
+        print("rate>1",self.abnormal_yield)
+
 
 
     def plot_G(self):
