@@ -77,13 +77,27 @@ class SN():
 
 
 
+        # with open(self.false_4_path, 'r') as file: # gamma energy per particle
+        #     reader = csv.reader(file)
+        #     # Read the first row (assuming single row for simplicity)
+        #     number_list = next(reader)
+        #     # Convert the strings to floats
+        #     self.noise4_raw_list = [float(value) for value in number_list if value !=0]
+        # for i in range(len(self.noise4_raw_list)):
+        #     if self.noise4_raw_list[i]< 1.4:
+        #         self.low_gamma_list.append([i,self.noise4_raw_list[i]])
+        # self.gamma_list += self.noise4_raw_list
+        # print("F4", len(self.noise4_raw_list))
+        # print("low F4", len(self.low_gamma_list))
+
+        # only head 20
         with open(self.false_4_path, 'r') as file: # gamma energy per particle
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
             # Convert the strings to floats
             self.noise4_raw_list = [float(value) for value in number_list if value !=0]
-        for i in range(len(self.noise4_raw_list)):
+        for i in range(len(self.noise4_raw_list[:20])):
             if self.noise4_raw_list[i]< 1.4:
                 self.low_gamma_list.append([i,self.noise4_raw_list[i]])
         self.gamma_list += self.noise4_raw_list
