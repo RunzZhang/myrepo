@@ -599,6 +599,8 @@ class ReadRoot():
 
         # print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()))
         print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()),self.df_electron_gamma["Event"].unique())
+        self.low_gamma = self.df_electron_gamma[self.df_electron_gamma["Kinetic/keV"]<1.4]
+        print("low gamma filter 2", len(self.low_gamma["Event"].unique()), self.low_gamma["Event"].unique())
         print(self.df_electron_gamma.head(20))
         # double check gamma self.inelastic_gamma_path
         self.df_electron_gamma.to_csv(self.inelastic_gamma_path, index= False)
