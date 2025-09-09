@@ -581,7 +581,9 @@ class ReadRoot():
         self.df_gamma_rw = pd.read_csv(self.false_3_path_mid)
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
 
-        self.gamma_Scint = self.df_gamma_rw[(self.df_gamma_rw['name'] == 'gamma') & (self.df_gamma_rw['Volume'] == 'LAr_phys')]
+        self.gamma_Scint = self.df_gamma_rw[(self.df_gamma_rw['name'] == 'gamma') & (self.df_gamma_rw['Volume'] == 'LAr_phys')(self.df_gamma_rw['Kinetic/keV'] >0)]
+        # >0 to rule out no contribution gammas
+        
         gamma_list = self.gamma_Scint["Event"].unique()
 
         # print out the file of inelastic scattering
@@ -607,6 +609,7 @@ class ReadRoot():
         # all gamma events that cause ER in LAr
         print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()))
         self.gamma_energies = self.df[(self.df["Event"].isin(self.df_electron_gamma["Event"].to_list()))]
+
         self.low_gamma = self.df_electron_gamma[self.df_electron_gamma["Kinetic/keV"]<1.0]
         self.low_gamma_energies = self.df[(self.df["Event"].isin(self.low_gamma["Event"].to_list()))]
 
