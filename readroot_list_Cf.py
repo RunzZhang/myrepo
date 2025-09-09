@@ -589,7 +589,7 @@ class ReadRoot():
         print("gamma filter", len(gamma_list))
         self.gamma_Scint = self.keep_1st(self.gamma_Scint)
         # print("scint", self.gamma_Scint)
-        print("scint 193", self.gamma_Scint[(self.gamma_Scint['Event'] == 193)])
+        # print("scint 193", self.gamma_Scint[(self.gamma_Scint['Event'] == 193)])
         # print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]!=1])
 
         self.df_electron = self.df[(self.df['name'] == 'e-') & (self.df['Volume'] == 'LAr_phys')]
@@ -600,14 +600,14 @@ class ReadRoot():
                                           how='inner')
         self.df_electron_gamma = self.keep_1st(self.df_electron_gamma)
 
-        print("frist gammas", self.df_electron_gamma[(self.df_electron_gamma['Event'] == 193)])
+        # print("frist gammas", self.df_electron_gamma[(self.df_electron_gamma['Event'] == 193)])
 
         # print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()))
 
         # all gamma events that cause ER in LAr
         print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()))
         self.gamma_energies = self.df[(self.df["Event"].isin(self.df_electron_gamma["Event"].to_list()))]
-        self.low_gamma = self.df_electron_gamma[self.df_electron_gamma["Kinetic/keV"]<1.4]
+        self.low_gamma = self.df_electron_gamma[self.df_electron_gamma["Kinetic/keV"]<1.0]
         self.low_gamma_energies = self.df[(self.df["Event"].isin(self.low_gamma["Event"].to_list()))]
 
         self.gamma_energies.to_csv(self.gamma_energy_path,index= False)
