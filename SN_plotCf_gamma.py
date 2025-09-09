@@ -80,7 +80,7 @@ class SN():
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
             # Convert the strings to floats
-            self.noise4_raw_list = [float(value) for value in number_list]
+            self.noise4_raw_list = [float(value) for value in number_list if value !=0]
         self.gamma_list += self.noise4_raw_list
         print("F4", len(self.noise4_raw_list))
 
