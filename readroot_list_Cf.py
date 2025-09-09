@@ -140,8 +140,8 @@ class ReadRoot():
 
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.main_body(1)
-        # for i in range(1,101):
-        for i in range(1, 2):
+        for i in range(1,101):
+        # for i in range(1, 2):
             self.main_body(i)
     def main_body(self,i):
         print(i)
@@ -536,6 +536,7 @@ class ReadRoot():
         self.df_electron = self.keep_1st(self.df_electron)
         self.df_electron_gamma = pd.merge(self.df_electron, self.gamma_Scint_column, on=['Event', 'Parent ID'],
                                           how='inner')
+        self.df_electron_gamma =self.keep_1st(self.df_electron_gamma)
 
         print("all inelastic gamma df", self.df_electron_gamma.head(20))
 
