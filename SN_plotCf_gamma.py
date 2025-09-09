@@ -24,6 +24,7 @@ class SN():
         self.noise5_final_list = []
         self.noise6_final_list = []
         self.gamma_list = []
+        self.low_gamma_list = []
         self.yield_rate = []
         self.abnormal_yield = []
 
@@ -82,8 +83,12 @@ class SN():
             number_list = next(reader)
             # Convert the strings to floats
             self.noise4_raw_list = [float(value) for value in number_list if value !=0]
+        for i in range(len(self.noise4_raw_list)):
+            if self.noise4_raw_list[i]< 1.4:
+                self.low_gamma_list.append([i,self.noise4_raw_list[i]])
         self.gamma_list += self.noise4_raw_list
         print("F4", len(self.noise4_raw_list))
+        print("low F4", len(self.low_gamma_list))
 
         with open(self.false_5_path, 'r') as file: # gamma energy per event
             reader = csv.reader(file)
