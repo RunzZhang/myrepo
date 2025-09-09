@@ -600,6 +600,8 @@ class ReadRoot():
                                           how='inner')
         self.df_electron_gamma = self.keep_1st(self.df_electron_gamma)
 
+        print("frist gammas", self.df_electron_gamma[(self.df_electron_gamma['Event'] == 193)])
+
         # print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()))
 
         # all gamma events that cause ER in LAr
