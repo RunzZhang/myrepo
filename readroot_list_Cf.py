@@ -622,7 +622,7 @@ class ReadRoot():
         self.df_electron_gamma.to_csv(self.inelastic_gamma_path, index= False)
 
         self.gamma_spectrum = self.df_electron_gamma["Kinetic/keV"].to_list() # in MeV
-
+        print("gamma spectrum F4", self.gamma_spectrum[:10])
         with open(self.false_4_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(self.gamma_spectrum)
