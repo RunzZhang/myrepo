@@ -179,7 +179,7 @@ class ReadRoot():
         self.inelastic_gamma_path  = self.base_path + self.inelastic_gamma_form
 
         self.gamma_energy_path = self.base_path + "gamma_energies.csv"
-        self._lowgamma_energy_path = self.base_path + "low_gamma_energies.csv"
+        self.lowgamma_energy_path = self.base_path + "low_gamma_energies.csv"
 
 
 
@@ -581,15 +581,15 @@ class ReadRoot():
         self.df_gamma_rw = pd.read_csv(self.false_3_path_mid)
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
 
-        self.gamma_Scint = self.df_gamma_rw[(self.df_gamma_rw['name'] == 'gamma') & (self.df_gamma_rw['Volume'] == 'LAr_phys')&
-            (self.df_gamma_rw['Volume'] == 'LAr_phys')]
+        self.gamma_Scint = self.df_gamma_rw[(self.df_gamma_rw['name'] == 'gamma') & (self.df_gamma_rw['Volume'] == 'LAr_phys')]
         gamma_list = self.gamma_Scint["Event"].unique()
 
         # print out the file of inelastic scattering
 
         print("gamma filter", len(gamma_list))
         self.gamma_Scint = self.keep_1st(self.gamma_Scint)
-        print("scint", self.gamma_Scint)
+        # print("scint", self.gamma_Scint)
+        print("scint 193", self.gamma_Scint[(self.gamma_Scint['Event'] == 193)])
         # print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]!=1])
 
         self.df_electron = self.df[(self.df['name'] == 'e-') & (self.df['Volume'] == 'LAr_phys')]
@@ -609,7 +609,7 @@ class ReadRoot():
         self.low_gamma_energies = self.df[(self.df["Event"].isin(self.low_gamma["Event"].to_list()))]
 
         self.gamma_energies.to_csv(self.gamma_energy_path,index= False)
-        self.low_gamma_energies.to_csv(self._lowgamma_energy_path,index= False)
+        self.low_gamma_energies.to_csv(self.lowgamma_energy_path,index= False)
         # gamma events that gamma energy less than 1.4 MeV
         print("low gamma filter 2", len(self.low_gamma["Event"].unique()))
         print(self.df_electron_gamma.head(20))
