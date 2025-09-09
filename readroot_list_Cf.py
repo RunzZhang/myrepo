@@ -609,7 +609,7 @@ class ReadRoot():
         self.low_gamma_energies = self.df[(self.df["Event"].isin(self.low_gamma["Event"].to_list()))]
 
         self.gamma_energies.to_csv(self.gamma_energy_path,index= False)
-        self.lowgamma_energies.to_csv(self._lowgamma_energy_path,index= False)
+        self.low_gamma_energies.to_csv(self._lowgamma_energy_path,index= False)
         # gamma events that gamma energy less than 1.4 MeV
         print("low gamma filter 2", len(self.low_gamma["Event"].unique()))
         print(self.df_electron_gamma.head(20))
