@@ -607,7 +607,7 @@ class ReadRoot():
         # print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()))
 
         # all gamma events that cause ER in LAr
-        print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()))
+        print("gamma filter 2 Event numbers", len(self.df_electron_gamma["Event"].unique()))
         self.gamma_energies = self.df[(self.df["Event"].isin(self.df_electron_gamma["Event"].to_list()))]
 
         self.low_gamma = self.df_electron_gamma[self.df_electron_gamma["Kinetic/keV"]<1.0]
@@ -616,8 +616,8 @@ class ReadRoot():
         self.gamma_energies.to_csv(self.gamma_energy_path,index= False)
         self.low_gamma_energies.to_csv(self.lowgamma_energy_path,index= False)
         # gamma events that gamma energy less than 1.4 MeV
-        print("low gamma filter 2", len(self.low_gamma["Event"].unique()))
-        print(self.df_electron_gamma.head(20))
+        print("low gamma filter 2 Event numbers", len(self.low_gamma["Event"].unique()))
+        print(self.df_electron_gamma.head(40))
         # double check gamma self.inelastic_gamma_path
         self.df_electron_gamma.to_csv(self.inelastic_gamma_path, index= False)
 
