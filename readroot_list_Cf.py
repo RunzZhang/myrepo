@@ -566,7 +566,7 @@ class ReadRoot():
         for i in range(len(self.electron_recoiled_list)):
             # 40 /keV 0.03 and 0.2 PCE and PDE
             if i > 1E-6:
-                p_observed.append(self.electron_recoiled_list[i] * 1E6 * 40 * 0.03 * 0.2 / (1000))
+                p_observed.append(self.electron_recoiled_list[i][1] * 1E6 * 40 * 0.03 * 0.2 / (1000))
 
         num = 0
         for i in p_observed:
