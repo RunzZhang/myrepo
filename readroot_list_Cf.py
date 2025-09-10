@@ -528,7 +528,7 @@ class ReadRoot():
         self.df_gamma_rw = pd.read_csv(self.false_3_path_mid)
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
 
-        self.gamma_Scint = self.df_gamma_rw[
+        self.gamma_Scint = self.df_gamma_rw[(self.df['name'] == 'gamma')&
             (self.df_gamma_rw['Volume'] == 'LAr_phys')&(self.df_gamma_rw['Kinetic/keV'] >0)]
         gamma_list = self.gamma_Scint["Event"].unique()
 
@@ -595,7 +595,7 @@ class ReadRoot():
         self.df_gamma_rw = pd.read_csv(self.false_3_path_mid)
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
 
-        self.gamma_Scint = self.df_gamma_rw[ (self.df_gamma_rw['Volume'] == 'LAr_phys')&(self.df_gamma_rw['Kinetic/keV'] >0)]
+        self.gamma_Scint = self.df_gamma_rw[ (self.df['name'] == 'gamma')&(self.df_gamma_rw['Volume'] == 'LAr_phys')&(self.df_gamma_rw['Kinetic/keV'] >0)]
         # >0 to rule out no contribution gammas
 
         gamma_list = self.gamma_Scint["Event"].unique()
