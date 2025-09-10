@@ -561,7 +561,7 @@ class ReadRoot():
         print("induced electron", len(self.electron_recoiled_list))
         with open(self.false_6_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
-            wr.writerow(self.electron_recoiled_list)
+            wr.writerows(self.electron_recoiled_list)
         p_observed = [0]
         for i in range(len(self.electron_recoiled_list)):
             # 40 /keV 0.03 and 0.2 PCE and PDE
