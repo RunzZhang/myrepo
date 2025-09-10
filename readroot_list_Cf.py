@@ -549,11 +549,13 @@ class ReadRoot():
         print(self.df_electron_gamma.head(10))
         # double check gamma
 
-        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/keV"].sum().reset_index()
+        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/keV"].sum()
         print(summed_values.head(20))
 
         # add gamma up
-        self.electron_recoiled_list = summed_values["Recoiled/keV"].to_list()
+        self.electron_recoiled_list=[None, None]
+        self.electron_recoiled_list[1]   = summed_values.tolist()
+        self.electron_recoiled_list[0]   =  summed_values.index.tolist()
         print("induced electron", len(self.electron_recoiled_list))
         with open(self.false_6_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
@@ -633,8 +635,8 @@ class ReadRoot():
 
         # add gamma up
         self.gamma_kinetic_list= [None,None]
-        self.gamma_kinetic_list[0]= summed_values.tolist()
-        self.gamma_kinetic_list[1] = summed_values.index.tolist()
+        self.gamma_kinetic_list[1]= summed_values.tolist()
+        self.gamma_kinetic_list[0] = summed_values.index.tolist()
 
         print("gamma summed value len",len(self.gamma_kinetic_list))
         with open(self.false_5_path, 'w', newline='') as myfile:
