@@ -628,7 +628,7 @@ class ReadRoot():
             wr = csv.writer(myfile)
             wr.writerow(self.gamma_spectrum)
 
-        summed_values = self.df_electron_gamma.groupby(['Event'])["Kinetic/keV"].sum().reset_index()
+        summed_values = self.df_electron_gamma.groupby(['Event'])["Kinetic/keV"].sum()
         print(summed_values.head(20))
 
         # add gamma up
@@ -690,11 +690,11 @@ class ReadRoot():
             wr = csv.writer(myfile)
             wr.writerow(self.gamma_spectrum)
 
-        summed_values = self.df_electron_gamma.groupby(['Event'])["Kinetic/keV"].sum().reset_index()
+        summed_values = self.df_electron_gamma.groupby(['Event'])["Kinetic/keV"].sum()
         print(summed_values.head(20))
 
         # add gamma up
-        self.gamma_kinetic_list = summed_values["Kinetic/keV"].to_list()
+        self.gamma_kinetic_list = []
 
 
         with open(self.false_5_path, 'w', newline='') as myfile:
