@@ -555,9 +555,9 @@ class ReadRoot():
         # add gamma up
         self.temp_value = summed_values.tolist()
         self.temp_event = summed_values.index.tolist()
-        self.gamma_kinetic_list = []
+        self.electron_recoiled_list = []
         for i in range(len(self.temp_value)):
-            self.gamma_kinetic_list.append([self.temp_event[i], self.temp_value[i]])
+            self.electron_recoiled_list.append([self.temp_event[i], self.temp_value[i]])
         print("induced electron", len(self.electron_recoiled_list))
         with open(self.false_6_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)

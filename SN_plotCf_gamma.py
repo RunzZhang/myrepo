@@ -21,8 +21,8 @@ class SN():
         self.noise1_final_list =[]
         self.noise2_final_list = []
         self.noise3_final_list = []
-        self.noise5_final_list = [None,None]
-        self.noise6_final_list = [None,None]
+        self.noise5_final_list = []
+        self.noise6_final_list = []
         self.gamma_list = []
         self.low_gamma_list = []
         self.yield_rate = []
@@ -91,54 +91,59 @@ class SN():
         print("low F4", len(self.low_gamma_list))
 
         # only head 20
-        with open(self.false_4_path, 'r') as file: # gamma energy per particle
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.noise4_raw_list = [float(value) for value in number_list if value !=0]
-        for i in range(len(self.noise4_raw_list[:20])):
-            if self.noise4_raw_list[i]< 1.4:
-                self.low_gamma_list.append([i,self.noise4_raw_list[i]])
-        self.gamma_list += self.noise4_raw_list
-        print("F4", len(self.noise4_raw_list))
-        print("low F4", len(self.low_gamma_list))
+        # with open(self.false_4_path, 'r') as file: # gamma energy per particle
+        #     reader = csv.reader(file)
+        #     # Read the first row (assuming single row for simplicity)
+        #     number_list = next(reader)
+        #     # Convert the strings to floats
+        #     self.noise4_raw_list = [float(value) for value in number_list if value !=0]
+        # for i in range(len(self.noise4_raw_list[:20])):
+        #     if self.noise4_raw_list[i]< 1.4:
+        #         self.low_gamma_list.append([i,self.noise4_raw_list[i]])
+        # self.gamma_list += self.noise4_raw_list
+        # print("F4", len(self.noise4_raw_list))
+        # print("low F4", len(self.low_gamma_list))
 
-        self.noise5_raw_list = [None,None]
+        self.noise5_raw_list = [[0,0]]
         # 5 and 6 is 2d matrix, first column is the event number and second is the energy
         with open(self.false_5_path, 'r') as file: # gamma energy per event
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
             # Convert the strings to floats
-            self.noise5_raw_list[0] = [int(value) for value in number_list[0]]
-            self.noise5_raw_list[1] = [int(value) for value in number_list[1]]
-        self.noise5_final_list[0] += self.noise5_raw_list[0]
-        self.noise5_final_list[1] += self.noise5_raw_list[1]
-        print("F5", len(self.noise5_raw_list),self.noise5_raw_list[0][:10])
+            self.noise5_raw_list.append([float(x) for x in value] for value in number_list)
+        self.noise5_final_list += self.noise5_raw_list
+        print("F5", len(self.noise5_raw_list),self.noise5_raw_list)
 
-        self.noise6_raw_list = [None, None]
+        self.noise6_raw_list = [[0,0]]
         with open(self.false_6_path, 'r') as file:  # electron deposit energy per event
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
             # Convert the strings to floats
-            self.noise6_raw_list = [float(value) for value in number_list]  # electron recoiled energy in MeV
+            self.noise6_raw_list.append([float(x) for x in value] for value in number_list)  # electron recoiled energy in MeV
         self.noise6_final_list += self.noise6_raw_list
         print("F6", len(self.noise6_raw_list))
 
         print(len(self.noise3_raw_list), len(self.noise5_raw_list), len(self.noise6_raw_list))
-        if len(self.noise6_raw_list)== len(self.noise5_raw_list):
 
-            for i in range(len(self.noise5_raw_list)):
-                if self.noise5_raw_list[i]==0:
-                    continue
-                else:
-                    if self.noise6_raw_list[i]/self.noise5_raw_list[i]>1:
-                        self.abnormal_yield.append([i,self.noise6_raw_list[i]/self.noise5_raw_list[i],self.noise6_raw_list[i],self.noise5_raw_list[i]])
-                    self.yield_rate.append(self.noise6_raw_list[i]/self.noise5_raw_list[i])
-        else:
-            print("PLOTTING FAILED! the length of two list doesn't match!")
+        ini_pointer = 0
+        ratio = 0
+        for i in range(len(self.noise5_raw_list)):
+            if self.noise5_raw_list[i][1]==0:
+                continue
+            else:
+                event_id = self.noise5_raw_list[i][0]
+                for j in range(ini_pointer,len(self.noise6_raw_list)):
+                    if self.noise6_raw_list[j][0]==event_id:
+                        ratio = self.noise6_raw_list[j][1]/self.noise5_raw_list[i][1]
+                        ini_pointer = j
+
+
+                        if ratio>1:
+                            self.abnormal_yield.append([i,ratio,self.noise6_raw_list[j][1],self.noise5_raw_list[i][1]])
+                        self.yield_rate.append(ratio)
+
         if self.yield_rate == []: # in case error in later plot sections
             self.yield_rate.append(0)
         print("rate>1",self.abnormal_yield)
