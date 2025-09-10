@@ -524,7 +524,7 @@ class ReadRoot():
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
 
         self.gamma_Scint = self.df_gamma_rw[
-            (self.df_gamma_rw['Volume'] == 'LAr_phys')]
+            (self.df_gamma_rw['Volume'] == 'LAr_phys')&(self.df_gamma_rw['Kinetic/keV'] >0)]
         gamma_list = self.gamma_Scint["Event"].unique()
 
         # print out the file of inelastic scattering
@@ -591,7 +591,7 @@ class ReadRoot():
         print("gamma filter", len(gamma_list))
         self.gamma_Scint = self.keep_1st(self.gamma_Scint)
         # print("scint", self.gamma_Scint)
-        print("scint 193", self.gamma_Scint[(self.gamma_Scint['Event'] == 391)])
+        # print("scint 193", self.gamma_Scint[(self.gamma_Scint['Event'] == 391)])
         # print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]!=1])
 
         self.df_electron = self.df[(self.df['name'] == 'e-') & (self.df['Volume'] == 'LAr_phys')]
@@ -602,7 +602,7 @@ class ReadRoot():
                                           how='inner')
         self.df_electron_gamma = self.keep_1st(self.df_electron_gamma)
 
-        print("frist gammas", self.df_electron_gamma[(self.df_electron_gamma['Event'] == 391)])
+        # print("frist gammas", self.df_electron_gamma[(self.df_electron_gamma['Event'] == 391)])
 
         # print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()))
 
@@ -1060,8 +1060,8 @@ class ReadRoot():
         # single scatter spectrum
         # self.Huge_scatter_spectrum()
         self.Huge_scatter_wt_inelastic_spectrum()
-        # self.inelastic_gamma_induced_e()  # collect electronrecoiled energy
-        self.inelastic_gamma() # collect inleasci gammas
+        self.inelastic_gamma_induced_e()  # collect electronrecoiled energy
+        # self.inelastic_gamma() # collect inleasci gammas
         # self.Huge_scatter_spectrum_CF()
         # self.Huge_scatter_spectrum_CF_fake()
 
