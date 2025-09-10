@@ -581,7 +581,7 @@ class ReadRoot():
         self.df_gamma_rw = pd.read_csv(self.false_3_path_mid)
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
 
-        self.gamma_Scint = self.df_gamma_rw[(self.df_gamma_rw['name'] == 'gamma') & (self.df_gamma_rw['Volume'] == 'LAr_phys')&(self.df_gamma_rw['Kinetic/keV'] >0)]
+        self.gamma_Scint = self.df_gamma_rw[ (self.df_gamma_rw['Volume'] == 'LAr_phys')&(self.df_gamma_rw['Kinetic/keV'] >0)]
         # >0 to rule out no contribution gammas
 
         gamma_list = self.gamma_Scint["Event"].unique()
@@ -1060,7 +1060,7 @@ class ReadRoot():
         # single scatter spectrum
         # self.Huge_scatter_spectrum()
         self.Huge_scatter_wt_inelastic_spectrum()
-        # self.inelastic_gamma_induced_e()  # collect electronrecoiled energy
+        self.inelastic_gamma_induced_e()  # collect electronrecoiled energy
         self.inelastic_gamma() # collect inleasci gammas
         # self.Huge_scatter_spectrum_CF()
         # self.Huge_scatter_spectrum_CF_fake()
