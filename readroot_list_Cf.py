@@ -554,6 +554,7 @@ class ReadRoot():
 
         # add gamma up
         self.electron_recoiled_list = summed_values["Recoiled/keV"].to_list()
+        print("induced electron", len(self.electron_recoiled_list))
         with open(self.false_6_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(self.electron_recoiled_list)
