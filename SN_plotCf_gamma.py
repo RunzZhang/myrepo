@@ -111,7 +111,7 @@ class SN():
             # Read the first row (assuming single row for simplicity)
 
             # Convert the strings to floats
-            self.noise5_raw_list= [[int(row[0]), float(row[1])] for row in reader]
+            self.noise5_raw_list= [[float(row[0]), float(row[1])] for row in reader]
         self.noise5_final_list += self.noise5_raw_list
         print("F5", len(self.noise5_raw_list),self.noise5_raw_list)
 
@@ -121,7 +121,7 @@ class SN():
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
             # Convert the strings to floats
-            self.noise6_raw_list= [[int(row[0]), float(row[1])] for row in reader]  # electron recoiled energy in MeV
+            self.noise6_raw_list= [[float(row[0]), float(row[1])] for row in reader]  # electron recoiled energy in MeV
         self.noise6_final_list += self.noise6_raw_list
         print("F6", len(self.noise6_raw_list))
 
