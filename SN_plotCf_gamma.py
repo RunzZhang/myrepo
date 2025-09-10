@@ -16,7 +16,7 @@ class SN():
         self.name1 = "Gamma spectrum"
         self.name2 = "Gamma despostion Rate"
         self.name = "Backgrounds"
-        self.plot_name = self.name+"Cf_gamma_spectrum.png"
+        self.plot_name = self.name+"Cf_gamma_spectrum_cut_abnormal_e.png"
         self.signal_final_list = []
         self.noise1_final_list =[]
         self.noise2_final_list = []
