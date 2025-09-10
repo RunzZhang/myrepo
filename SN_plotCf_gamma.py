@@ -55,8 +55,8 @@ class SN():
         self.false_3_path = self.base_path + self.false_3
         self.false_4_path = self.base_path + self.false_4
         self.false_5_path = self.base_path + self.false_5
-        self.false_6 = self.base_path + self.false_6
-        self.false_7 = self.base_path + self.false_7
+        self.false_6_path = self.base_path + self.false_6
+        self.false_7_path = self.base_path + self.false_7
 
         self.signal_path = self.base_path + self.signal
 
