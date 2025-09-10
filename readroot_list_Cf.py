@@ -634,7 +634,7 @@ class ReadRoot():
         # add gamma up
         self.gamma_kinetic_list = summed_values["Kinetic/keV"].to_list()
 
-
+        print("gamma summed value len",len(self.gamma_kinetic_list))
         with open(self.false_5_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(self.gamma_kinetic_list)
