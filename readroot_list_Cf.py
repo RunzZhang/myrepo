@@ -645,7 +645,7 @@ class ReadRoot():
         print("gamma summed value len",len(self.gamma_kinetic_list))
         with open(self.false_5_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
-            wr.writerow(self.gamma_kinetic_list)
+            wr.writerows(self.gamma_kinetic_list)
 
 
     def argon_inelastic_gamma(self): # only argon produced inelastic scattering spectrum
@@ -707,7 +707,7 @@ class ReadRoot():
 
         with open(self.false_5_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
-            wr.writerow(self.gamma_kinetic_list)
+            wr.writerows(self.gamma_kinetic_list)
 
 
 
