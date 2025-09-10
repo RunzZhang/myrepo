@@ -535,8 +535,11 @@ class ReadRoot():
         # print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]!=1])
         self.gamma_Scint_column = self.gamma_Scint[['Event', "Track ID"]]
         self.gamma_Scint_column.columns = ['Event', "Parent ID"]
-        self.df_electron = self.df[(self.df['name'] == 'e-') & (self.df['Volume'] == 'LAr_phys')& (self.df['Kinetic/keV'] == 0)]
+        self.df_electron = self.df[(self.df['name'] == 'e-') & (self.df['Volume'] == 'LAr_phys')]
+
         self.df_electron = self.keep_1st(self.df_electron)
+        # then filter out Ek!=0
+        self.df_electron = self.df_electron[self.df_electron['Kinetic/keV'] == 0]
         self.df_electron_gamma = pd.merge(self.df_electron, self.gamma_Scint_column, on=['Event', 'Parent ID'],
                                           how='inner')
         self.df_electron_gamma =self.keep_1st(self.df_electron_gamma)
@@ -599,8 +602,9 @@ class ReadRoot():
         # print("scint 193", self.gamma_Scint[(self.gamma_Scint['Event'] == 391)])
         # print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]!=1])
 
-        self.df_electron = self.df[(self.df['name'] == 'e-') & (self.df['Volume'] == 'LAr_phys')& (self.df['Kinetic/keV'] == 0)]
+        self.df_electron = self.df[(self.df['name'] == 'e-') & (self.df['Volume'] == 'LAr_phys')]
         self.df_electron = self.keep_1st(self.df_electron)
+        self.df_electron = self.df_electron[self.df_electron['Kinetic/keV'] == 0]
         self.electron_column = self.df_electron[['Event', "Parent ID"]]
         self.electron_column.columns = ['Event', "Track ID"]
         self.df_electron_gamma = pd.merge(self.gamma_Scint,self.electron_column, on=['Event', "Track ID"],
@@ -1070,7 +1074,7 @@ class ReadRoot():
         # self.Huge_scatter_spectrum()
         self.Huge_scatter_wt_inelastic_spectrum()
         self.inelastic_gamma_induced_e()  # collect electronrecoiled energy
-        # self.inelastic_gamma() # collect inleasci gammas
+        self.inelastic_gamma() # collect inleasci gammas
         # self.Huge_scatter_spectrum_CF()
         # self.Huge_scatter_spectrum_CF_fake()
 
