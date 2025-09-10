@@ -553,9 +553,11 @@ class ReadRoot():
         print(summed_values.head(20))
 
         # add gamma up
-        self.electron_recoiled_list=[None, None]
-        self.electron_recoiled_list[1]   = summed_values.tolist()
-        self.electron_recoiled_list[0]   =  summed_values.index.tolist()
+        self.temp_value = summed_values.tolist()
+        self.temp_event = summed_values.index.tolist()
+        self.gamma_kinetic_list = []
+        for i in range(len(self.temp_value)):
+            self.gamma_kinetic_list.append([self.temp_event[i], self.temp_value[i]])
         print("induced electron", len(self.electron_recoiled_list))
         with open(self.false_6_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
@@ -634,9 +636,11 @@ class ReadRoot():
         print(summed_values.head(20))
 
         # add gamma up
-        self.gamma_kinetic_list= [None,None]
-        self.gamma_kinetic_list[1]= summed_values.tolist()
-        self.gamma_kinetic_list[0] = summed_values.index.tolist()
+        self.temp_value= summed_values.tolist()
+        self.temp_event = summed_values.index.tolist()
+        self.gamma_kinetic_list=[]
+        for i in range(len(self.temp_value)):
+            self.gamma_kinetic_list.append([self.temp_event[i],self.temp_value[i]])
 
         print("gamma summed value len",len(self.gamma_kinetic_list))
         with open(self.false_5_path, 'w', newline='') as myfile:

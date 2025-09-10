@@ -21,8 +21,8 @@ class SN():
         self.noise1_final_list =[]
         self.noise2_final_list = []
         self.noise3_final_list = []
-        self.noise5_final_list = []
-        self.noise6_final_list = []
+        self.noise5_final_list = [None,None]
+        self.noise6_final_list = [None,None]
         self.gamma_list = []
         self.low_gamma_list = []
         self.yield_rate = []
@@ -104,15 +104,20 @@ class SN():
         print("F4", len(self.noise4_raw_list))
         print("low F4", len(self.low_gamma_list))
 
+        self.noise5_raw_list = [None,None]
+        # 5 and 6 is 2d matrix, first column is the event number and second is the energy
         with open(self.false_5_path, 'r') as file: # gamma energy per event
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
             # Convert the strings to floats
-            self.noise5_raw_list = [float(value) for value in number_list]
-        self.noise5_final_list += self.noise5_raw_list
-        print("F5", len(self.noise5_raw_list),self.noise5_raw_list[:10])
+            self.noise5_raw_list[0] = [int(value) for value in number_list[0]]
+            self.noise5_raw_list[1] = [int(value) for value in number_list[1]]
+        self.noise5_final_list[0] += self.noise5_raw_list[0]
+        self.noise5_final_list[1] += self.noise5_raw_list[1]
+        print("F5", len(self.noise5_raw_list),self.noise5_raw_list[0][:10])
 
+        self.noise6_raw_list = [None, None]
         with open(self.false_6_path, 'r') as file:  # electron deposit energy per event
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
