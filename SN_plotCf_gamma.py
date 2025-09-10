@@ -23,6 +23,7 @@ class SN():
         self.noise3_final_list = []
         self.noise5_final_list = []
         self.noise6_final_list = []
+        self.noise7_final_list = []
         self.gamma_list = []
         self.low_gamma_list = []
         self.yield_rate = []
@@ -34,8 +35,8 @@ class SN():
         # for i in range(1,101):
         for i in range(1, 2):
             self.main_body(i)
-        # self.plot_G()
-        self.plot_gamma()
+        self.plot_G()
+        # self.plot_gamma()
 
 
     def main_body(self,i):
@@ -46,6 +47,7 @@ class SN():
         self.false_4 = f"Cf_1E7_false4_part{i}.csv"
         self.false_5 = f"Cf_1E7_false5_part{i}.csv"
         self.false_6 = f"Cf_1E7_false6_part{i}.csv"
+        self.false_7 = f"Cf_1E7_false7_part{i}.csv"
         self.signal = f"Cf_1E7_sig_part{i}.csv"
 
         self.false_1_path = self.base_path + self.false_1
@@ -53,7 +55,9 @@ class SN():
         self.false_3_path = self.base_path + self.false_3
         self.false_4_path = self.base_path + self.false_4
         self.false_5_path = self.base_path + self.false_5
-        self.false_6_path = self.base_path + self.false_6
+        self.false_6 = f"Cf_1E7_false6_part{i}.csv"
+        self.false_7 = f"Cf_1E7_false7_part{i}.csv"
+
         self.signal_path = self.base_path + self.signal
 
 
@@ -149,13 +153,24 @@ class SN():
         print("rate>1",self.abnormal_yield)
 
 
+        with open(self.false_7_path, 'r') as file: # gamma energy per particle
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            self.noise7_raw_list = [float(value) for value in number_list if value !=0]
+
+        self.noise7_final_list += self.noise7_raw_list
+        print("F4", len(self.noise7_raw_list))
+
+
 
     def plot_G(self):
         bin_num =100
-        plt.hist(self.gamma_list, bins= bin_num)
+        plt.hist(self.noise7_final_list, bins= bin_num)
         plt.xlabel("gamma energy/MeV")
         plt.ylabel("counts")
-        plt.savefig(self.plot_name)
+        plt.savefig(self.plot_path+"gamma spetrum.png")
 
 
     def combine_data(self):

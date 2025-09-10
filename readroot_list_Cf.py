@@ -151,6 +151,7 @@ class ReadRoot():
         self.false_4 = f"Cf_1E7_false4_part{i}.csv"
         self.false_5 = f"Cf_1E7_false5_part{i}.csv" # inelastic gamma energies, summed grouped by event
         self.false_6 = f"Cf_1E7_false6_part{i}.csv"  # inelastic gamma energies per gamma track ID
+        self.false_7 = f"Cf_1E7_false7_part{i}.csv"  # inelastic gamma energies per gamma track ID, not necessarily induce ER
         self.signal = f"Cf_1E7_sig_part{i}.csv"
         self.false_1_mid = f"Cf_1E7_false1_mid_part{i}.csv"
         self.false_2_mid = f"Cf_1E7_false2_mid_part{i}.csv"
@@ -158,6 +159,7 @@ class ReadRoot():
         self.false_4_mid = f"Cf_1E7_false4_mid_part{i}.csv"
         self.false_5_mid = f"Cf_1E7_false5_mid_part{i}.csv"
         self.false_6_mid = f"Cf_1E7_false6_mid_part{i}.csv"
+        self.false_7_mid = f"Cf_1E7_false7_mid_part{i}.csv"
         self.signal_mid = f"Cf_1E7_sig_mid_part{i}.csv"
         self.inelastic_gamma_form = f"Cf_1E7_inelastic_mid_part{i}.csv"
         self.false_1_path = self.base_path + self.false_1
@@ -166,6 +168,7 @@ class ReadRoot():
         self.false_4_path = self.base_path + self.false_4
         self.false_5_path = self.base_path + self.false_5
         self.false_6_path = self.base_path + self.false_6
+        self.false_7_path = self.base_path + self.false_7
 
         self.false_1_path_mid = self.base_path + self.false_1_mid
         self.false_2_path_mid = self.base_path + self.false_2_mid
@@ -173,6 +176,7 @@ class ReadRoot():
         self.false_4_path_mid = self.base_path + self.false_4_mid
         self.false_5_path_mid = self.base_path + self.false_5_mid
         self.false_6_path_mid = self.base_path + self.false_6_mid
+        self.false_7_path_mid = self.base_path + self.false_7_mid
 
         self.signal_path_mid = self.base_path + self.signal_mid
         self.signal_path = self.base_path + self.signal
@@ -662,7 +666,7 @@ class ReadRoot():
         self.df_gamma_rw = pd.read_csv(self.false_3_path_mid)
         print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
 
-        self.gamma_Scint = self.df_gamma_rw[(self.df_gamma_rw['name'] == 'gamma') & (self.df_gamma_rw['Volume'] == 'LAr_phys')&(self.df_gamma_rw['Kinetic/keV'] >0)]
+        self.gamma_Scint = self.df_gamma_rw[(self.df_gamma_rw['name'] == 'gamma')&(self.df_gamma_rw['Kinetic/keV'] >0)]
         # >0 to rule out no contribution gammas
 
         gamma_list = self.gamma_Scint["Event"].unique()
@@ -671,53 +675,17 @@ class ReadRoot():
 
         print("gamma filter", len(gamma_list))
         self.gamma_Scint = self.keep_1st(self.gamma_Scint)
-        # print("scint", self.gamma_Scint)
-        print("scint 193", self.gamma_Scint[(self.gamma_Scint['Event'] == 391)])
-        # print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]!=1])
 
-        self.df_electron = self.df[(self.df['name'] == 'e-') & (self.df['Volume'] == 'LAr_phys')]
-        self.df_electron = self.keep_1st(self.df_electron)
-        self.electron_column = self.df_electron[['Event', "Parent ID"]]
-        self.electron_column.columns = ['Event', "Track ID"]
-        self.df_electron_gamma = pd.merge(self.gamma_Scint,self.electron_column, on=['Event', "Track ID"],
-                                          how='inner')
-        self.df_electron_gamma = self.keep_1st(self.df_electron_gamma)
 
-        print("frist gammas", self.df_electron_gamma[(self.df_electron_gamma['Event'] == 391)])
 
-        # print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()))
 
-        # all gamma events that cause ER in LAr
-        print("gamma filter 2 Event numbers", len(self.df_electron_gamma["Event"].unique()))
-        self.gamma_energies = self.df[(self.df["Event"].isin(self.df_electron_gamma["Event"].to_list()))]
-
-        self.low_gamma = self.df_electron_gamma[self.df_electron_gamma["Kinetic/keV"]<1.0]
-        self.low_gamma_energies = self.df[(self.df["Event"].isin(self.low_gamma["Event"].to_list()))]
-
-        self.gamma_energies.to_csv(self.gamma_energy_path,index= False)
-        self.low_gamma_energies.to_csv(self.lowgamma_energy_path,index= False)
-        # gamma events that gamma energy less than 1.4 MeV
-        print("low gamma filter 2 Event numbers", len(self.low_gamma["Event"].unique()))
-        print(self.df_electron_gamma.head(40))
-        # double check gamma self.inelastic_gamma_path
-        self.df_electron_gamma.to_csv(self.inelastic_gamma_path, index= False)
-
-        self.gamma_spectrum = self.df_electron_gamma["Kinetic/keV"].to_list() # in MeV
+        self.gamma_spectrum = self.gamma_Scint["Kinetic/keV"].to_list() # in MeV
         print("gamma spectrum F4", len(self.gamma_spectrum),self.gamma_spectrum[:10])
-        with open(self.false_4_path, 'w', newline='') as myfile:
+        with open(self.false_7_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(self.gamma_spectrum)
 
-        summed_values = self.df_electron_gamma.groupby(['Event'])["Kinetic/keV"].sum()
-        print(summed_values.head(20))
 
-        # add gamma up
-        self.gamma_kinetic_list = []
-
-
-        with open(self.false_5_path, 'w', newline='') as myfile:
-            wr = csv.writer(myfile)
-            wr.writerows(self.gamma_kinetic_list)
 
 
 
@@ -1079,8 +1047,9 @@ class ReadRoot():
         # single scatter spectrum
         # self.Huge_scatter_spectrum()
         self.Huge_scatter_wt_inelastic_spectrum()
-        self.inelastic_gamma_induced_e()  # collect electronrecoiled energy
-        self.inelastic_gamma() # collect inleasci gammas
+        # self.inelastic_gamma_induced_e()  # collect electronrecoiled energy
+        # self.inelastic_gamma() # collect inleasci gammas
+        self.argon_inelastic_gamma() # argon inelastic gammas, initial Ar produced inelastic gamma spectrum by Cf
         # self.Huge_scatter_spectrum_CF()
         # self.Huge_scatter_spectrum_CF_fake()
 
