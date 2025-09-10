@@ -109,9 +109,9 @@ class SN():
         with open(self.false_5_path, 'r') as file: # gamma energy per event
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
+
             # Convert the strings to floats
-            self.noise5_raw_list.append([float(x) for x in value] for value in number_list)
+            self.noise5_raw_list= [[int(row[0]), float(row[1])] for row in reader]
         self.noise5_final_list += self.noise5_raw_list
         print("F5", len(self.noise5_raw_list),self.noise5_raw_list)
 
@@ -121,7 +121,7 @@ class SN():
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
             # Convert the strings to floats
-            self.noise6_raw_list.append([float(x) for x in value] for value in number_list)  # electron recoiled energy in MeV
+            self.noise6_raw_list= [[int(row[0]), float(row[1])] for row in reader]  # electron recoiled energy in MeV
         self.noise6_final_list += self.noise6_raw_list
         print("F6", len(self.noise6_raw_list))
 
