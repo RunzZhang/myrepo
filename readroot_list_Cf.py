@@ -632,7 +632,7 @@ class ReadRoot():
         print(summed_values.head(20))
 
         # add gamma up
-        self.gamma_kinetic_list = summed_values["Kinetic/keV"].to_list()
+        # self.gamma_kinetic_list = summed_values["Kinetic/keV"].to_list()
 
         print("gamma summed value len",len(self.gamma_kinetic_list))
         with open(self.false_5_path, 'w', newline='') as myfile:
