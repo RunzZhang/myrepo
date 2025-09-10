@@ -141,7 +141,7 @@ class SN():
 
 
                         if ratio>1:
-                            self.abnormal_yield.append([i,ratio,self.noise6_raw_list[j][1],self.noise5_raw_list[i][1]])
+                            self.abnormal_yield.append([self.noise5_raw_list[i][0],ratio,self.noise6_raw_list[j][1],self.noise5_raw_list[i][1]])
                         self.yield_rate.append(ratio)
 
         if self.yield_rate == []: # in case error in later plot sections
