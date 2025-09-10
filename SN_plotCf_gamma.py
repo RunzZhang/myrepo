@@ -132,6 +132,8 @@ class SN():
                     if self.noise6_raw_list[i]/self.noise5_raw_list[i]>1:
                         self.abnormal_yield.append([i,self.noise6_raw_list[i]/self.noise5_raw_list[i],self.noise6_raw_list[i],self.noise5_raw_list[i]])
                     self.yield_rate.append(self.noise6_raw_list[i]/self.noise5_raw_list[i])
+        else:
+            print("PLOTTING FAILED! the length of two list doesn't match!")
         if self.yield_rate == []: # in case error in later plot sections
             self.yield_rate.append(0)
         print("rate>1",self.abnormal_yield)
