@@ -594,7 +594,7 @@ class ReadRoot():
         # print("scint 193", self.gamma_Scint[(self.gamma_Scint['Event'] == 391)])
         # print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]!=1])
 
-        self.df_electron = self.df[(self.df['name'] == 'e-') & (self.df['Volume'] == 'LAr_phys')]
+        self.df_electron = self.df[(self.df['name'] == 'e-') & (self.df['Volume'] == 'LAr_phys')& (self.df['Kinetic/keV'] == 0)]
         self.df_electron = self.keep_1st(self.df_electron)
         self.electron_column = self.df_electron[['Event', "Parent ID"]]
         self.electron_column.columns = ['Event', "Track ID"]
