@@ -552,7 +552,7 @@ class ReadRoot():
         summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/keV"].sum()
         print(summed_values.head(20))
 
-        # add gamma up
+        # add ER up
         self.temp_value = summed_values.tolist()
         self.temp_event = summed_values.index.tolist()
         self.electron_recoiled_list = []
@@ -1070,7 +1070,7 @@ class ReadRoot():
         # self.Huge_scatter_spectrum()
         self.Huge_scatter_wt_inelastic_spectrum()
         self.inelastic_gamma_induced_e()  # collect electronrecoiled energy
-        self.inelastic_gamma() # collect inleasci gammas
+        # self.inelastic_gamma() # collect inleasci gammas
         # self.Huge_scatter_spectrum_CF()
         # self.Huge_scatter_spectrum_CF_fake()
 
