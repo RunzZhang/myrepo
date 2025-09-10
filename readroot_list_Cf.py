@@ -412,8 +412,13 @@ class ReadRoot():
                     self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
 
+        # self.df_capture = self.df[
+        #     (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
+        #     ['Event', 'Volume', 'Track ID']]
+        # capture behaviour sometimes is wired.
+        # try to kill all capture instead of Lar capture
         self.df_capture = self.df[
-            (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') ][
             ['Event', 'Volume', 'Track ID']]
         self.df_capture[["Event"]].to_csv(self.base_path2 + "capture_event_list.csv", index=False)
         print("Ela", len(self.df_Nscatter["Event"].unique()))
@@ -539,6 +544,7 @@ class ReadRoot():
 
         self.df_electron = self.keep_1st(self.df_electron)
         # then filter out Ek!=0
+        # order matters, we filter out the step 1 electron particle Kinetic energy !=0
         self.df_electron = self.df_electron[self.df_electron['Kinetic/keV'] == 0]
         self.df_electron_gamma = pd.merge(self.df_electron, self.gamma_Scint_column, on=['Event', 'Parent ID'],
                                           how='inner')
