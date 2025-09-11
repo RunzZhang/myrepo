@@ -675,6 +675,7 @@ class ReadRoot():
 
         print("gamma filter", len(gamma_list))
         self.gamma_Scint = self.keep_1st(self.gamma_Scint)
+        print(self.gamma_Scint.head(20))
 
 
 
