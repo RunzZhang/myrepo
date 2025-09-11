@@ -668,7 +668,7 @@ class ReadRoot():
 
         self.gamma_Scint = self.df_gamma_rw[(self.df_gamma_rw['name'] == 'gamma')&(self.df_gamma_rw['Kinetic/keV'] >0)& (self.df['Volume'] == 'LAr_phys')& (self.df['Step ID'] == 1)]
         # >0 to rule out no contribution gammas
-
+        print("before filter out1",self.gamma_Scint.head(20))
         gamma_list = self.gamma_Scint["Event"].unique()
 
         # print out the file of inelastic scattering
