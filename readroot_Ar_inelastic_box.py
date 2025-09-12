@@ -268,11 +268,11 @@ class ReadRoot():
         # test elatic and inelastic effect
         # self.bubble_rate()
         # neutron spectrum on detector
-        self.neutron_momentum_spacial()
+        # self.neutron_momentum_spacial()
         # self.plot_neutron_momentum_spacial()
         # self.plot_neutron_momentum_spacial_distribute()
 
-        self.plot_neutron_inelastic_spectrum()
+        # self.plot_neutron_inelastic_spectrum()
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
 
