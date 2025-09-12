@@ -1154,9 +1154,11 @@ class ReadRoot():
         with open(self.false_5_path, 'r') as file: # incident neutron energy
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
-
+            number_list = next(reader)
             # Convert the strings to floats
-            self.noise5_raw_list= [[float(row[0]), float(row[1])] for row in reader]
+            self.noise5_raw_list = [float(value)*1e6 for value in reader]
+            # Convert the strings to floats
+            # self.noise5_raw_list= [[float(row[0]), float(row[1])] for row in reader]
 
 
 
@@ -1168,14 +1170,14 @@ class ReadRoot():
             # Convert the strings to floats
             self.noise4_raw_list= [[float(row[0]), float(row[1])] for row in reader]
 
-        noise_5_list =[value[1]*1e6 for value in self.noise5_raw_list]
-        print("noise 5 list", noise_5_list[:10])
+        # noise_5_list =[value[1]*1e6 for value in self.noise5_raw_list]
+        # print("noise 5 list", noise_5_list[:10])
         noise_4_list = [value[1] * 1e6 for value in self.noise4_raw_list]
-        print("noise 4 list", noise_5_list[:10])
+        print("noise 4 list", noise_4_list[:10])
         
         fig, axs = plt.subplots(2, 2, figsize=(10, 8))
 
-        axs[0, 0].hist(noise_5_list, bins=np.logspace(-5, 7, 500))
+        axs[0, 0].hist(self.noise5_raw_list, bins=np.logspace(-5, 7, 500))
         axs[0, 0].set_title("Neutron Initial energy; total counts " + str(len(self.noise5_raw_list)))
         axs[0, 0].set_xscale('log')
         axs[0, 0].set_yscale('log', nonpositive="clip")
