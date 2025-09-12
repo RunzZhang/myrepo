@@ -1169,6 +1169,7 @@ class ReadRoot():
             self.noise4_raw_list= [[float(row[0]), float(row[1])] for row in reader]
 
         noise_5_list =[value[1]*1e6 for value in self.noise5_raw_list]
+        print("noise 5 list", noise_5_list[:10])
         noise_4_list = [value[1] * 1e6 for value in self.noise4_raw_list]
         
         fig, axs = plt.subplots(2, 1, figsize=(10, 8))
