@@ -1124,7 +1124,7 @@ class ReadRoot():
         print(self.df.head(30))
         self.df_neutron_income = self.df[
             (self.df["name"] == 'neutron') & (self.df["Parent ID"] == 0) & (self.df["Step ID"] == 1) & (
-                        self.df["Volume"] == "physSD2")][
+                        self.df["Volume"] == "physWorld")][
             ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Pre Kinetic/MeV",
              'Parent ID']]
         print("first income shoule be 1E7", len(self.df_neutron_income["Event"].to_list()),
