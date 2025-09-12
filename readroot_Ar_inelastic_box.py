@@ -562,7 +562,7 @@ class ReadRoot():
         print("gamma filter 2 Event numbers", len(self.df_electron_gamma["Event"].unique()))
         self.gamma_energies = self.df[(self.df["Event"].isin(self.df_electron_gamma["Event"].to_list()))]
 
-        self.low_gamma = self.df_electron_gamma[self.df_electron_gamma["Pre Kinetic/MeV"] < 1.0]
+        self.low_gamma = self.df_electron_gamma[self.df_electron_gamma["Pre Kinetic/MeV"] < 1.4]
         self.low_gamma_energies = self.df[(self.df["Event"].isin(self.low_gamma["Event"].to_list()))]
 
         self.gamma_energies.to_csv(self.gamma_energy_path, index=False)
@@ -1171,7 +1171,7 @@ class ReadRoot():
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
             # Convert the strings to floats
-            self.noise4_raw_list = [float(value) * 1e6 for value in number_list]
+            self.noise4_raw_list = [float(value)  for value in number_list]
         print("noise 4 list", self.noise4_raw_list[:10])
 
         # noise_5_list =[value[1]*1e6 for value in self.noise5_raw_list]
@@ -1193,8 +1193,8 @@ class ReadRoot():
         axs[1].set_title("Inelastic Gamma energy; total counts " + str(len(self.noise4_raw_list)))
         # axs[1].set_xscale('log')
         # axs[1].set_yscale('log')
-        axs[1].set_xlim(1e6, 1e7)
-        axs[1].set_xlabel("Energy/eV")
+        axs[1].set_xlim(0, 10)
+        axs[1].set_xlabel("Energy/MeV")
         axs[1].set_ylabel("Counts")
        
 
