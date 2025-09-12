@@ -208,6 +208,8 @@ class ReadRoot():
         self.false_5_path_mid = self.base_path + self.false_5_mid
         self.signal_path_mid = self.base_path + self.signal_mid
         self.signal_path = self.base_path + self.signal
+        self.income_particle = "inelastic_ar_income.csv"
+        self.inelastic_gamma_energy ="inelatic_ar_gamma.csv"
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.filepath = self.base_path + "dmx_Cfneutron_Ncry_1E6.root"
 
@@ -255,7 +257,7 @@ class ReadRoot():
 
         # self.gamma_event()
         # false noise 2, need to relocate directory
-        # self.Huge_scatter_event()
+        self.Huge_scatter_event()
         # signal rate, caputre in liquid argon
         # self.LAr_gamma_event()
         # single elastic scatter and capture false signal 1
@@ -268,7 +270,7 @@ class ReadRoot():
         # test elatic and inelastic effect
         # self.bubble_rate()
         # neutron spectrum on detector
-        self.neutron_momentum_spacial()  # cannot directly run with previous codes. can cause conflict and wrong results
+        self.neutron_momentum_spacial()
         # self.plot_neutron_momentum_spacial()
         # self.plot_neutron_momentum_spacial_distribute()
 
@@ -1145,13 +1147,13 @@ class ReadRoot():
         self.neutron_x_list1 = neutron_energy1["X/mm"].to_list()
 
 
-        with open(self.false_5_path, 'w', newline='') as myfile:
+        with open(self.base_path+self.income_particle, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(self.neutron_Ek_list1)
 
     def plot_neutron_inelastic_spectrum(self):
 
-        with open(self.false_5_path, 'r') as file: # incident neutron energy
+        with open(self.base_path+self.income_particle, 'r') as file: # incident neutron energy
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
@@ -1159,21 +1161,23 @@ class ReadRoot():
             self.noise5_raw_list = [float(value)*1e6 for value in number_list]
             # Convert the strings to floats
             # self.noise5_raw_list= [[float(row[0]), float(row[1])] for row in reader]
-
+        print("noise 5 list",self.noise5_raw_list[:10])
+        #
 
 
 
         with open(self.false_4_path, 'r') as file: # inelastic neutron gamma energy
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
-
+            number_list = next(reader)
             # Convert the strings to floats
-            self.noise4_raw_list= [[float(row[0]), float(row[1])] for row in reader]
+            self.noise4_raw_list = [float(value) * 1e6 for value in number_list]
+        print("noise 4 list", self.noise4_raw_list[:10])
 
         # noise_5_list =[value[1]*1e6 for value in self.noise5_raw_list]
         # print("noise 5 list", noise_5_list[:10])
-        noise_4_list = [value[1] * 1e6 for value in self.noise4_raw_list]
-        print("noise 4 list", noise_4_list[:10])
+        # noise_4_list = [value[1] * 1e6 for value in self.noise4_raw_list]
+        # print("noise 4 list", noise_4_list[:10])
         
         fig, axs = plt.subplots(2, 2, figsize=(10, 8))
 
