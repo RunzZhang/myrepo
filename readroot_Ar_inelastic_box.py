@@ -268,7 +268,7 @@ class ReadRoot():
         # test elatic and inelastic effect
         # self.bubble_rate()
         # neutron spectrum on detector
-        # self.neutron_momentum_spacial()
+        # self.neutron_momentum_spacial()  # cannot directly run with previous codes. can cause conflict and wrong results
         # self.plot_neutron_momentum_spacial()
         # self.plot_neutron_momentum_spacial_distribute()
 
