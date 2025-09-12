@@ -65,8 +65,8 @@ class RestructureRoot():
         self.reconstruct_filepath = "/data/runzezhang/result/TN_sims_D/dmx_rcCf_1E7.csv"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
-        #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'PreKinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
-        self.selected_columns = ["Event","name","Parent ID","Track ID","Step ID","X/mm","PreKinetic/MeV","Recoiled/MeV","Volume","Process"]
+        #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Pre Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
+        self.selected_columns = ["Event","name","Parent ID","Track ID","Step ID","X/mm","Pre Kinetic/MeV","Recoiled/MeV","Volume","Process"]
         self.rows = 1000
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         self.df = self.file.arrays(self.selected_columns, library="pd")
@@ -140,9 +140,9 @@ class ReadRoot():
 
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ", self.file.keys(), len(self.file.arrays()))
-        # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'PreKinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
+        # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Pre Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
         self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV',
-                                 'py/MeV', 'pz/MeV', "PreKinetic/MeV", "Recoiled/MeV", "Volume", "Process"]
+                                 'py/MeV', 'pz/MeV', "Pre Kinetic/MeV", "Recoiled/MeV", "Volume", "Process"]
         self.rows = 1000
 
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
@@ -221,9 +221,9 @@ class ReadRoot():
 
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ", self.file.keys(), len(self.file.arrays()))
-        # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'PreKinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
+        # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Pre Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
         self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV',
-                                 'py/MeV', 'pz/MeV', "PreKinetic/MeV", "Recoiled/MeV", "Volume", "Process"]
+                                 'py/MeV', 'pz/MeV', "Pre Kinetic/MeV", "Recoiled/MeV", "Volume", "Process"]
         self.rows = 1e6
 
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
@@ -501,7 +501,7 @@ class ReadRoot():
         # check event 1256
         self.df_event_1542 = self.df[
             self.df["Event"] == 1542][
-            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV", "Recoiled/MeV", "Volume",
+            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "Pre Kinetic/MeV", "Recoiled/MeV", "Volume",
              "Process"]]
         self.df_event_1542.to_csv("/data/runzezhang/result/TN_sims3/event1542.csv", index=False)
         with open(self.false_2_path, 'w', newline='') as myfile:
@@ -524,11 +524,11 @@ class ReadRoot():
 
     def inelastic_gamma(self):
         self.df_gamma_rw = pd.read_csv(self.false_3_path_mid)
-        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
+        print(self.df_gamma_rw[["Pre Kinetic/MeV"]].head(20))
 
         self.gamma_Scint = self.df_gamma_rw[
             (self.df['name'] == 'gamma') & (self.df_gamma_rw['Volume'] == 'physAr') & (
-                        self.df_gamma_rw['PreKinetic/MeV'] > 0)]
+                        self.df_gamma_rw['Pre Kinetic/MeV'] > 0)]
         # >0 to rule out no contribution gammas
 
         gamma_list = self.gamma_Scint["Event"].unique()
@@ -543,7 +543,7 @@ class ReadRoot():
 
         self.df_electron = self.df[(self.df['name'] == 'e-') & (self.df['Volume'] == 'physAr')]
         self.df_electron = self.keep_1st(self.df_electron)
-        self.df_electron = self.df_electron[self.df_electron['PreKinetic/MeV'] == 0]
+        self.df_electron = self.df_electron[self.df_electron['Pre Kinetic/MeV'] == 0]
         self.electron_column = self.df_electron[['Event', "Parent ID"]]
         self.electron_column.columns = ['Event', "Track ID"]
         self.df_electron_gamma = pd.merge(self.gamma_Scint, self.electron_column, on=['Event', "Track ID"],
@@ -558,7 +558,7 @@ class ReadRoot():
         print("gamma filter 2 Event numbers", len(self.df_electron_gamma["Event"].unique()))
         self.gamma_energies = self.df[(self.df["Event"].isin(self.df_electron_gamma["Event"].to_list()))]
 
-        self.low_gamma = self.df_electron_gamma[self.df_electron_gamma["PreKinetic/MeV"] < 1.0]
+        self.low_gamma = self.df_electron_gamma[self.df_electron_gamma["Pre Kinetic/MeV"] < 1.0]
         self.low_gamma_energies = self.df[(self.df["Event"].isin(self.low_gamma["Event"].to_list()))]
 
         self.gamma_energies.to_csv(self.gamma_energy_path, index=False)
@@ -569,13 +569,13 @@ class ReadRoot():
         # double check gamma self.inelastic_gamma_path
         self.df_electron_gamma.to_csv(self.inelastic_gamma_path, index=False)
 
-        self.gamma_spectrum = self.df_electron_gamma["PreKinetic/MeV"].to_list()  # in MeV
+        self.gamma_spectrum = self.df_electron_gamma["Pre Kinetic/MeV"].to_list()  # in MeV
         print("gamma spectrum F4", len(self.gamma_spectrum), self.gamma_spectrum[:10])
         with open(self.false_4_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(self.gamma_spectrum)
 
-        summed_values = self.df_electron_gamma.groupby(['Event'])["PreKinetic/MeV"].sum()
+        summed_values = self.df_electron_gamma.groupby(['Event'])["Pre Kinetic/MeV"].sum()
         print(summed_values.head(20))
 
         # add gamma up
@@ -667,7 +667,7 @@ class ReadRoot():
         # check event 1256
         self.df_event_1542 = self.df[
             self.df["Event"] == 1542][
-            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV", "Recoiled/MeV", "Volume",
+            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "Pre Kinetic/MeV", "Recoiled/MeV", "Volume",
              "Process"]]
         self.df_event_1542.to_csv("/data/runzezhang/result/TN_sims3/event1542.csv", index=False)
         with open(self.false_2_path, 'w', newline='') as myfile:
@@ -758,7 +758,7 @@ class ReadRoot():
         # check event 1256
         self.df_event_390 = self.df[
             self.df["Event"] == 390][
-            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV", "Recoiled/MeV", "Volume",
+            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "Pre Kinetic/MeV", "Recoiled/MeV", "Volume",
              "Process"]]
         self.df_event_390.to_csv("/data/runzezhang/result/TN_sims3/event390.csv", index=False)
         with open("/data/runzezhang/result/TN_sims3/n_huge_scatterg_CF2.csv", 'w', newline='') as myfile:
@@ -835,7 +835,7 @@ class ReadRoot():
         # check event 1256
         self.df_event_390 = self.df[
             self.df["Event"] == 390][
-            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV", "Recoiled/MeV", "Volume",
+            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "Pre Kinetic/MeV", "Recoiled/MeV", "Volume",
              "Process"]]
         self.df_event_390.to_csv("/data/runzezhang/result/TN_sims3/event390_fake.csv", index=False)
         with open("/data/runzezhang/result/TN_sims3/n_huge_scatterg_CF2_fake.csv", 'w', newline='') as myfile:
@@ -848,7 +848,7 @@ class ReadRoot():
     def Capture_n_scatter_spectrum(self): # somehow logan made the cross where the id difference is 1 like compare 4 scatter with 5 photon generation
 
         self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')][['Event','Track ID']]
-        self.df_head = self.df[(self.df["Event"]==5837)|(self.df["Event"]==2906)|(self.df["Event"]==2907)][["Event","name","Parent ID","Track ID","Step ID","X/mm","PreKinetic/MeV","Recoiled/MeV", "Volume","Process"]]
+        self.df_head = self.df[(self.df["Event"]==5837)|(self.df["Event"]==2906)|(self.df["Event"]==2907)][["Event","name","Parent ID","Track ID","Step ID","X/mm","Pre Kinetic/MeV","Recoiled/MeV", "Volume","Process"]]
         self.df_Nscatter = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Volume','Track ID', 'Parent ID']]
@@ -902,7 +902,7 @@ class ReadRoot():
         self.df_single_n_gamma.to_csv(self.base_path +"dmx_single_n_gamma_CF.csv", index=False)
 
     def Capture_n_scatter_spectrum_loop(self):
-        self.df["Kinetic diff/MeV"] = self.df["PreKinetic/MeV"].diff()
+        self.df["Kinetic diff/MeV"] = self.df["Pre Kinetic/MeV"].diff()
         self.df["Kinetic diff/MeV"] = self.df["Kinetic diff/MeV"].fillna(0)
 
         self.df_Ncapture = self.df[
@@ -1046,7 +1046,7 @@ class ReadRoot():
         # z face is 1150mm
         self.df_neutron_income = self.df[
             (self.df["name"] == 'neutron') & (self.df["Parent ID"] ==0)&(self.df["Step ID"] ==1)&(self.df["Volume"] =="physSD2")][
-            ['Event', 'Volume', 'Track ID', 'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV',"PreKinetic/MeV",'Parent ID']]
+            ['Event', 'Volume', 'Track ID', 'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV',"Pre Kinetic/MeV",'Parent ID']]
         print("first income shoule be 1E7", len(self.df_neutron_income["Event"].to_list()),self.df_neutron_income.head(100))
 
         #?? escape the outerface of sapphire
@@ -1056,7 +1056,7 @@ class ReadRoot():
             (self.df["name"] == 'neutron') & (
                     self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] == 150.0)&(
             self.df["Parent ID"] == 0)][
-        ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "PreKinetic/MeV",
+        ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Pre Kinetic/MeV",
          'Parent ID']]  # the the sepctrum coming out of Sapphire.
 
         # out going spectrum
@@ -1076,7 +1076,7 @@ class ReadRoot():
 
 
         # add gamma up
-        self.neutron_Ek_list=neutron_energy["PreKinetic/MeV"].to_list()
+        self.neutron_Ek_list=neutron_energy["Pre Kinetic/MeV"].to_list()
         self.neutron_px_list= neutron_energy["px/MeV"].to_list()
         self.neutron_py_list = neutron_energy["py/MeV"].to_list()
         self.neutron_pz_list = neutron_energy["pz/MeV"].to_list()
@@ -1123,17 +1123,17 @@ class ReadRoot():
         self.df_neutron_income = self.df[
             (self.df["name"] == 'neutron') & (self.df["Parent ID"] == 0) & (self.df["Step ID"] == 1) & (
                         self.df["Volume"] == "physSD2")][
-            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "PreKinetic/MeV",
+            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Pre Kinetic/MeV",
              'Parent ID']]
         print("first income shoule be 1E7", len(self.df_neutron_income["Event"].to_list()),
-              self.df_neutron_income["PreKinetic/MeV"].head(100))
+              self.df_neutron_income["Pre Kinetic/MeV"].head(100))
 
        
 
         neutron_energy1 = self.df_neutron_income
 
         # add gamma up
-        self.neutron_Ek_list1 = neutron_energy1["PreKinetic/MeV"].to_list()
+        self.neutron_Ek_list1 = neutron_energy1["Pre Kinetic/MeV"].to_list()
         self.neutron_px_list1 = neutron_energy1["px/MeV"].to_list()
         self.neutron_py_list1 = neutron_energy1["py/MeV"].to_list()
         self.neutron_pz_list1 = neutron_energy1["pz/MeV"].to_list()
@@ -1196,7 +1196,7 @@ class ReadRoot():
             (self.df["name"] == 'neutron') & (
                     self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] == 1270) & (
                     self.df["Parent ID"] == 0)][
-            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "PreKinetic/MeV",
+            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Pre Kinetic/MeV",
              'Parent ID']]
         self.df_neutron_outcome3["R/mm"] = np.sqrt(self.df_neutron_outcome3["X/mm"]**2+self.df_neutron_outcome3["Y/mm"]**2)
         self.df_neutron_outcome3["ang/rad"] = np.arctan(
@@ -1206,7 +1206,7 @@ class ReadRoot():
         self.Ek_matrix = [[] for _ in range(dim)]
         self.rad_matrix = [[] for _ in range(dim)]
         for i in range(dim):
-            self.Ek_matrix[i]=(self.df_neutron_outcome3[(self.df_neutron_outcome3["R/mm"]<=R*(1+i)/dim)&(self.df_neutron_outcome3["R/mm"]>=R*i/dim)]["PreKinetic/MeV"]*1e6).tolist()
+            self.Ek_matrix[i]=(self.df_neutron_outcome3[(self.df_neutron_outcome3["R/mm"]<=R*(1+i)/dim)&(self.df_neutron_outcome3["R/mm"]>=R*i/dim)]["Pre Kinetic/MeV"]*1e6).tolist()
             self.rad_matrix[i] = (self.df_neutron_outcome3[(self.df_neutron_outcome3["R/mm"]<=R*(1+i)/dim)&(self.df_neutron_outcome3["R/mm"]>=R*i/dim)]["ang/rad"]*180/(2*np.pi)).tolist()
             print("Ek list length", i, len(self.Ek_matrix[i]))
             print("rad list length", i, len(self.rad_matrix[i]))
@@ -1239,30 +1239,30 @@ class ReadRoot():
         # z face is 1150mm
         # self.df_neutron_income = self.df[
         #     (self.df["name"] == 'neutron') & (self.df["Z/mm"] >=1240)& (self.df["Z/mm"] <=1260)& (self.df["Parent ID"] ==0)][
-        #     ['Event', 'Volume', 'Track ID', 'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV',"PreKinetic/MeV",'Parent ID']]
+        #     ['Event', 'Volume', 'Track ID', 'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV',"Pre Kinetic/MeV",'Parent ID']]
         # self.df_neutron_income = self.df[
         #     (self.df["name"] == 'neutron') & (self.df["Step ID"] == 0) & (
         #                 self.df["Parent ID"] == 0)][
-        #     ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "PreKinetic/MeV",
+        #     ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Pre Kinetic/MeV",
         #      'Parent ID']]
         self.df_neutron_income = self.df_neutron_cross = self.df[
             (self.df["name"] == 'neutron')  & (
                     self.df["Parent ID"] == 0)&(self.df["Step ID"] == 1)&(self.df["Volume"] == "physWorld")][
-            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "PreKinetic/MeV",
+            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Pre Kinetic/MeV",
              'Parent ID']]
 
         # self.df_neutron_cross = self.df[
         #     (self.df["name"] == 'neutron') & (
         #                 (self.df["Process"] == 'neutronInelastic') | (self.df["Process"] == "nCapture")) & (
         #             self.df["Parent ID"] == 0)&(self.df["Volume"] == "physSap")][
-        #     ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "PreKinetic/MeV",
+        #     ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Pre Kinetic/MeV",
         #      'Parent ID']]
 
         self.df_neutron_cross = self.df[
             (self.df["name"] == 'neutron') & (
                     (self.df["Process"] == 'hadElastic') | (self.df["Process"] == "nCapture")) & (
                     self.df["Parent ID"] == 0) & (self.df["Volume"] == "physSap")][
-            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "PreKinetic/MeV",
+            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Pre Kinetic/MeV",
              'Parent ID']]
 
 
@@ -1271,7 +1271,7 @@ class ReadRoot():
         # self.df_neutron_cross = self.df[
         #     (self.df["name"] == 'neutron') &  (
         #             self.df["Parent ID"] == 0) & (self.df["Volume"] == "physSap")][
-        #     ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "PreKinetic/MeV",
+        #     ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Pre Kinetic/MeV",
         #      'Parent ID']]
         print("first iincome", self.df_neutron_cross.head(100))
         self.df_neutron_income = self.keep_1st(self.df_neutron_income)
@@ -1282,7 +1282,7 @@ class ReadRoot():
         # add gamma up
         self.neutron_Ek_dic={}
         self.neutron_event_list = neutron_energy["Event"].to_list()
-        self.neutron_ek_list = neutron_energy["PreKinetic/MeV"].to_list()
+        self.neutron_ek_list = neutron_energy["Pre Kinetic/MeV"].to_list()
         self.neutron_px_list = neutron_energy["px/MeV"].to_list()
         self.neutron_py_list = neutron_energy["py/MeV"].to_list()
         self.neutron_pz_list = neutron_energy["pz/MeV"].to_list()
@@ -1299,7 +1299,7 @@ class ReadRoot():
         # add gamma up
 
         self.neutron_final_event_list = neutron_final_energy["Event"].to_list()
-        self.neutron_final_ek_list = neutron_final_energy["PreKinetic/MeV"].to_list()
+        self.neutron_final_ek_list = neutron_final_energy["Pre Kinetic/MeV"].to_list()
         self.neutron_final_px_list = neutron_final_energy["px/MeV"].to_list()
         self.neutron_final_py_list = neutron_final_energy["py/MeV"].to_list()
         self.neutron_final_pz_list = neutron_final_energy["pz/MeV"].to_list()
@@ -1369,7 +1369,7 @@ class ReadRoot():
         # self.single_n_find_gamma_e()
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv(self.base_path +"dmx_gamma.csv")
-        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
+        print(self.df_gamma_rw[["Pre Kinetic/MeV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
@@ -1400,7 +1400,7 @@ class ReadRoot():
         self.gamma_Scint.to_csv(self.base_path +"gamma_scint2.csv", index=False)
     def find_gamma_e(self):
         self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_gamma.csv")
-        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
+        print(self.df_gamma_rw[["Pre Kinetic/MeV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
@@ -1443,7 +1443,7 @@ class ReadRoot():
 
     def single_n_find_gamma_e(self):
         self.df_gamma_rw = pd.read_csv(self.false_1_path_mid)
-        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
+        print(self.df_gamma_rw[["Pre Kinetic/MeV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
@@ -1491,7 +1491,7 @@ class ReadRoot():
         plt.show()
     def single_n_find_gamma_e_loop(self):
         self.df_gamma_rw = pd.read_csv(self.base_path2 + "dmx_single_n_gamma_AmLi_neutron_list_loop.csv")
-        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
+        print(self.df_gamma_rw[["Pre Kinetic/MeV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
@@ -1537,7 +1537,7 @@ class ReadRoot():
         plt.show()
     def LAr_find_gamma_e(self):
         self.df_gamma_rw = pd.read_csv(self.signal_path_mid)
-        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
+        print(self.df_gamma_rw[["Pre Kinetic/MeV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
@@ -1618,7 +1618,7 @@ class ReadRoot():
             else:
                 if self.gamma.iloc[index]['Track ID'] not in track_p:
                     track_p.append(self.gamma.iloc[index]['Track ID'])
-                    energy += self.gamma.iloc[index]["PreKinetic/MeV"]*1000000 # to ev Actullay it is Kinetic/MeV
+                    energy += self.gamma.iloc[index]["Pre Kinetic/MeV"]*1000000 # to ev Actullay it is Kinetic/MeV
 
         print("energy", energy_p[:10])
 
