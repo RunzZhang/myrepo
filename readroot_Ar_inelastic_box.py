@@ -408,10 +408,10 @@ class ReadRoot():
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'physAr')][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
         self.df_Ninelastic = self.df[
-            (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'inelastic') & (
                     self.df["Volume"] == 'physAr')][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
-
+        ##?? difference neutroninelastic and inelastic
         # self.df_capture = self.df[
         #     (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
         #     ['Event', 'Volume', 'Track ID']]
