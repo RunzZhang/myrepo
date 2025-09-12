@@ -1158,6 +1158,9 @@ class ReadRoot():
             self.noise5_raw_list = [float(value) * 1e6 for value in number_list]
 
 
+        print(self.noise5_raw_list[:10])
+
+
         with open(self.false_4_path, 'r') as file: # inelastic neutron gamma energy
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
@@ -1169,13 +1172,13 @@ class ReadRoot():
         
         fig, axs = plt.subplots(2, 1, figsize=(10, 8))
 
-        # axs[0, 0].hist(self.noise5_raw_list, bins=np.logspace(-5, 7, 500))
-        # axs[0, 0].set_title("Neutron Initial energy; total counts " + str(len(self.noise5_raw_list)))
-        # axs[0, 0].set_xscale('log')
-        # axs[0, 0].set_yscale('log')
-        # axs[0, 0].set_xlim(1e-3, 1e7)
-        # axs[0, 0].set_xlabel("Energy/eV")
-        # axs[0, 0].set_ylabel("Counts")
+        axs[0, 0].hist(self.noise5_raw_list, bins=np.logspace(-5, 7, 500))
+        axs[0, 0].set_title("Neutron Initial energy; total counts " + str(len(self.noise5_raw_list)))
+        axs[0, 0].set_xscale('log')
+        axs[0, 0].set_yscale('log')
+        axs[0, 0].set_xlim(1e-3, 1e7)
+        axs[0, 0].set_xlabel("Energy/eV")
+        axs[0, 0].set_ylabel("Counts")
 
         axs[0, 1].hist(self.noise4_raw_list, bins=500)
         axs[0, 1].set_title("Inelastic Gamma energy; total counts " + str(len(self.noise4_raw_list)))
