@@ -65,8 +65,8 @@ class RestructureRoot():
         self.reconstruct_filepath = "/data/runzezhang/result/TN_sims_D/dmx_rcCf_1E7.csv"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
-        #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
-        self.selected_columns = ["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV","Volume","Process"]
+        #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'PreKinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
+        self.selected_columns = ["Event","name","Parent ID","Track ID","Step ID","X/mm","PreKinetic/MeV","Recoiled/MeV","Volume","Process"]
         self.rows = 1000
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         self.df = self.file.arrays(self.selected_columns, library="pd")
@@ -97,40 +97,67 @@ class RestructureRoot():
         self.df.to_csv(self.reconstruct_filepath, sep=',', index=False, encoding='utf-8')
         # uproot.writing._dask_write.dask_write(self.df, self.reconstruct_filepath/)
 
-class ReadRoot(): # read Cf gamma backgrounds
+class ReadRoot():
     def __init__(self):
         self.base_path = "/data/runzezhang/result/TN_box/"
         self.base_path2 = "/data/runzezhang/result/TN_box/"
         self.plot_path = '/data/runzezhang/result/TN_box/plot/'
-        self.false_1 = "Cf_1E6_false1.csv"
-        self.false_2 = "Cf_1E6_false2.csv"
-        self.false_3 = "Cf_1E6_false3.csv"
-        self.signal = "Cf_1E6_sig.csv"
-        self.false_1_mid = "Cf_1E6_false1_mid.csv"
-        self.false_2_mid = "Cf_1E6_false2_mid.csv"
-        self.false_3_mid = "Cf_1E6_false3_mid.csv"
-        self.signal_mid = "Cf_1E6_sig_mid.csv"
-        self.false_1_path = self.base_path+self.false_1
-        self.false_2_path = self.base_path+self.false_2
+
+
+        self.single_run()
+
+        # self.multi_run_loop()
+
+    def multi_run_loop(self):
+        self.process = []
+        self.ene = []
+        self.cross_number = []
+        for i in range(0,11):
+            self.multi_run(i)
+        print(self.process)
+        self.plot_ncrystal_test()
+    def multi_run(self, i):
+
+        self.false_1 = "Cf_1E6_"+str(i)+"N_false1.csv"
+        self.false_2 = "Cf_1E6_"+str(i)+"N_false2.csv"
+        self.false_3 = "Cf_1E6_"+str(i)+"N_ini_false3.csv"
+        self.signal = "Cf_1E6_"+str(i)+"N_sig.csv"
+        self.false_1_mid = "Cf_1E6_"+str(i)+"N_false1_mid.csv"
+        self.false_2_mid = "Cf_1E6_"+str(i)+"N_false2_mid.csv"
+        self.false_3_mid = "Cf_1E6_"+str(i)+"N_ini_false3_mid.csv"
+        self.signal_mid = "Cf_1E6_"+str(i)+"N_sig_mid.csv"
+        self.false_1_path = self.base_path + self.false_1
+        self.false_2_path = self.base_path + self.false_2
         self.false_3_path = self.base_path + self.false_3
         self.false_1_path_mid = self.base_path + self.false_1_mid
         self.false_2_path_mid = self.base_path + self.false_2_mid
         self.false_3_path_mid = self.base_path + self.false_3_mid
-        self.signal_path_mid = self.base_path+self.signal_mid
+        self.signal_path_mid = self.base_path + self.signal_mid
         self.signal_path = self.base_path + self.signal
         # self.filepath = self.base_path +"dmx_lr.root"
-        self.filepath = self.base_path + "dmx_Cfgamma_1E6.root"
+        # self.filepath = self.base_path + "dmx_Cfneutron_Ncry_1E6.root"
+        self.filepath = self.base_path +"dmx_Cfneutron_Ncry_1E6_"+str(i)+".root"
+
         self.file = uproot.open(self.filepath)["tree"]
-        print("columns: ",self.file.keys())
-        #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
-        self.selected_columns = ["Event","name","Parent ID","Track ID","Step ID",'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV', "Kinetic/keV","Recoiled/keV", "Volume","Process"]
+        print("columns: ", self.file.keys(), len(self.file.arrays()))
+        # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'PreKinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
+        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV',
+                                 'py/MeV', 'pz/MeV', "PreKinetic/MeV", "Recoiled/MeV", "Volume", "Process"]
         self.rows = 1000
 
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # # process data so that it is easier to read
         # first 1000 rows
         # self.df = self.file.arrays(self.selected_columns, library="pd")
-        self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
+        self.df = self.file.arrays(library="pd")
+        print("df", self.df.head(self.rows))
+        # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
+        # only valid for ncrystal
+
+        # self.df_list = []
+        # for i in self.ene_dict:
+        #     df_temp = self.df[""]
+        #     self.modify_df_group(i)
         self.modify_df()
         # print(self.df)
 
@@ -141,8 +168,85 @@ class ReadRoot(): # read Cf gamma backgrounds
         # 1e? FISSIons
         # PDF
 
-        self.gamma_momentum()
-        self.plot_gamma_momentum()
+        # neutron spectrum on detector
+        # self.neutron_momentum()
+        # self.plot_neutron_momentum()
+
+        # ncrystal test
+
+        (n_energy, in_num, out_num)=self.ncrystal_test()
+        self.ene.append(n_energy)
+        self.cross_number.append(out_num/in_num)
+
+        self.process += self.df["Process"].unique().tolist()
+
+
+
+
+    def single_run(self):
+        self.false_1 = "AmLi_1E6_N_false1.csv"
+        self.false_2 = "AmLi_1E6_N_false2.csv"
+        self.false_3 = "AmLi_1E6_N_1stplane_false3.csv"
+        self.false_4 = "AmLi_1E6_N_1stplane_false4.csv"
+        self.signal = "AmLi_1E6_N_sig.csv"
+        self.false_1_mid = "AmLi_1E6_N_false1_mid.csv"
+        self.false_2_mid = "AmLi_1E6_N_false2_mid.csv"
+        self.false_3_mid = "AmLi_1E6_N_1stplane__false3_mid.csv"
+        self.false_4_mid = "AmLi_1E6_N_1stplane__false4_mid.csv"
+        self.signal_mid = "AmLi_1E6_N_sig_mid.csv"
+        self.false_1_path = self.base_path + self.false_1
+        self.false_2_path = self.base_path + self.false_2
+        self.false_3_path = self.base_path + self.false_3
+        self.false_4_path = self.base_path + self.false_4
+        self.false_5_path = self.base_path + self.false_5
+        self.false_1_path_mid = self.base_path + self.false_1_mid
+        self.false_2_path_mid = self.base_path + self.false_2_mid
+        self.false_3_path_mid = self.base_path + self.false_3_mid
+        self.false_4_path_mid = self.base_path + self.false_4_mid
+        self.false_5_path_mid = self.base_path + self.false_5_mid
+        self.signal_path_mid = self.base_path + self.signal_mid
+        self.signal_path = self.base_path + self.signal
+        # self.filepath = self.base_path +"dmx_lr.root"
+        # self.filepath = self.base_path + "dmx_Cfneutron_Ncry_1E6.root"
+        self.filepath = self.base_path + "dmx_AmLi_neutron_1E6.root"
+        print(self.filepath)
+
+        self.file = uproot.open(self.filepath)["tree"]
+        print("columns: ", self.file.keys(), len(self.file.arrays()))
+        # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'PreKinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
+        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV',
+                                 'py/MeV', 'pz/MeV', "PreKinetic/MeV", "Recoiled/MeV", "Volume", "Process"]
+        self.rows = 1e6
+
+        # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
+        # # process data so that it is easier to read
+        # first 1000 rows
+        self.df = self.file.arrays(self.selected_columns, library="pd")
+        # print("df", self.df.head(self.rows))
+        # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
+        # only valid for ncrystal
+        # self.df_list = []
+        # for i in self.ene_dict:
+        #     df_temp = self.df[""]
+        #     self.modify_df_group(i)
+        self.modify_df()
+        # print(self.df)
+
+        # gamma direction x -1 or +1
+        # one gamma per event
+        # gamma place at  [30.50, 30.52]
+        # collection gamma energy
+        # 1e? FISSIons
+        # PDF
+
+        # neutron spectrum on detector
+        self.neutron_momentum_spacial()
+        self.plot_neutron_momentum_spacial()
+        # self.plot_neutron_momentum_spacial_distribute()
+
+        # ncrystal test
+        # self.ncrystal_test()
+        # self.plot_ncrystal_test()
 
         # self.gamma_event()
         # false noise 2, need to relocate directory
@@ -161,6 +265,7 @@ class ReadRoot(): # read Cf gamma backgrounds
 
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
+
     def reidx_event(self):
         event_number = self.df[:]["Event"].to_list()
         print(event_number[:100])
@@ -210,6 +315,36 @@ class ReadRoot(): # read Cf gamma backgrounds
         self.df['Process'] = self.df['Process'].astype(str)
         # this make event number correct
         self.reidx_event()
+
+    def reidx_event_group(self,ene=0):
+        event_number = self.df[:]["Event"].to_list()
+        print(event_number[:100])
+        started_point = 0
+        temp_point = 1
+        # find event number 1's index
+        for i in range(0, len(event_number)):
+            if event_number[i] == 1:
+                started_point = i
+        print("start", started_point)
+        # then if there is 0 in the event number, replace it with last none-zero event number
+        for i in range(started_point, len(event_number)):
+            if event_number[i] != 0:
+                temp_point = event_number[i]
+            else:
+                event_number[i] = temp_point
+        print("end", event_number[:100], event_number[-1])
+
+        # put the updated event_number back to data frame
+        self.df.update(pd.DataFrame({'Event': event_number}))
+
+    def modify_df_group(self,ene=0):
+        # change column property. Mainly this change awkuard into str
+        print(self.df.dtypes)
+        self.df['name'] = self.df['name'].astype(str)
+        self.df['Volume'] = self.df['Volume'].astype(str)
+        self.df['Process'] = self.df['Process'].astype(str)
+        # this make event number correct
+        self.reidx_event_group(ene)
 
     def Capture_spectrum(self):
 
@@ -300,7 +435,7 @@ class ReadRoot(): # read Cf gamma backgrounds
 
         print("merged_xor,\n", filtered_df2.head(10))
 
-        self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))&(self.df["Recoiled/keV"]>0.001) ][
+        self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))&(self.df["Recoiled/MeV"]>0.001) ][
             ['Event']]
 
 
@@ -324,11 +459,11 @@ class ReadRoot(): # read Cf gamma backgrounds
         # print(self.LAr_n_merged)
         # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
 
-        max_values = self.N_check[( (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])["Recoiled/keV"].max().reset_index()
+        max_values = self.N_check[( (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])["Recoiled/MeV"].max().reset_index()
         print(max_values.head(20))
 
         # add gamma up
-        self.Ar_recoiled_list = max_values["Recoiled/keV"].to_list()
+        self.Ar_recoiled_list = max_values["Recoiled/MeV"].to_list()
         p_observed = []
         scatter_ene = [] # in eV
         for i in range(len(self.Ar_recoiled_list)):
@@ -348,7 +483,7 @@ class ReadRoot(): # read Cf gamma backgrounds
         # plt.hist(self.Ar_recoiled_list, bins=100)
         # check event 1256
         self.df_event_1542 = self.df[
-            self.df["Event"] == 1542][["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV", "Volume","Process"]]
+            self.df["Event"] == 1542][["Event","name","Parent ID","Track ID","Step ID","X/mm","PreKinetic/MeV","Recoiled/MeV", "Volume","Process"]]
         self.df_event_1542.to_csv("/data/runzezhang/result/TN_sims3/event1542.csv", index=False)
         with open(self.false_2_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
@@ -372,7 +507,7 @@ class ReadRoot(): # read Cf gamma backgrounds
 
     def inelastic_gamma(self):
         self.df_gamma_rw = pd.read_csv(self.false_3_path_mid)
-        print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
+        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
 
         self.gamma_Scint = self.df_gamma_rw[
             (self.df_gamma_rw['Volume'] == 'LAr_phys')]
@@ -391,11 +526,11 @@ class ReadRoot(): # read Cf gamma backgrounds
         print(self.df_electron_gamma.head(10))
         # double check gamma
 
-        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/keV"].sum().reset_index()
+        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
         print(summed_values.head(20))
 
         # add gamma up
-        self.electron_recoiled_list = summed_values["Recoiled/keV"].to_list()
+        self.electron_recoiled_list = summed_values["Recoiled/MeV"].to_list()
         p_observed = []
         for i in range(len(self.electron_recoiled_list)):
             # 40 /keV 0.03 and 0.2 PCE and PDE
@@ -454,7 +589,7 @@ class ReadRoot(): # read Cf gamma backgrounds
         print("merged_xor,\n", filtered_df2.head(10))
 
         self.LAr_recoiled = \
-        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/keV"] > 0.0125)][
+        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/MeV"] > 0.0125)][
             ['Event']]
         # print("LAr recoiled",self.LAr_recoiled)
         # filtered df to remove nCapture event
@@ -468,11 +603,11 @@ class ReadRoot(): # read Cf gamma backgrounds
         # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
 
         max_values = self.N_check[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])[
-            "Recoiled/keV"].max().reset_index()
+            "Recoiled/MeV"].max().reset_index()
         print(max_values.head(20))
 
         # add gamma up
-        self.Ar_recoiled_list = max_values["Recoiled/keV"].to_list()
+        self.Ar_recoiled_list = max_values["Recoiled/MeV"].to_list()
         p_observed = []
         scatter_ene = []  # in eV
         for i in range(len(self.Ar_recoiled_list)):
@@ -493,7 +628,7 @@ class ReadRoot(): # read Cf gamma backgrounds
         # check event 1256
         self.df_event_1542 = self.df[
             self.df["Event"] == 1542][
-            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "Kinetic/keV", "Recoiled/keV", "Volume",
+            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV", "Recoiled/MeV", "Volume",
              "Process"]]
         self.df_event_1542.to_csv("/data/runzezhang/result/TN_sims3/event1542.csv", index=False)
         with open(self.false_2_path, 'w', newline='') as myfile:
@@ -547,7 +682,7 @@ class ReadRoot(): # read Cf gamma backgrounds
         print("merged_xor,\n", filtered_df2.head(10))
 
         self.LAr_recoiled = \
-        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/keV"] > 1E-6)][
+        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/MeV"] > 1E-6)][
             ['Event']]
         # print("LAr recoiled",self.LAr_recoiled)
         # filtered df to remove nCapture event
@@ -561,11 +696,11 @@ class ReadRoot(): # read Cf gamma backgrounds
         # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
 
         max_values = self.N_check[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])[
-            "Recoiled/keV"].max().reset_index()
+            "Recoiled/MeV"].max().reset_index()
         print(max_values.head(20))
 
         # add gamma up
-        self.Ar_recoiled_list = max_values["Recoiled/keV"].to_list()
+        self.Ar_recoiled_list = max_values["Recoiled/MeV"].to_list()
         p_observed = []
         for i in range(len(self.Ar_recoiled_list)):
             # 40 /keV 0.03 and 0.2 PCE and PDE
@@ -584,7 +719,7 @@ class ReadRoot(): # read Cf gamma backgrounds
         # check event 1256
         self.df_event_390 = self.df[
             self.df["Event"] == 390][
-            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "Kinetic/keV", "Recoiled/keV", "Volume",
+            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV", "Recoiled/MeV", "Volume",
              "Process"]]
         self.df_event_390.to_csv("/data/runzezhang/result/TN_sims3/event390.csv", index=False)
         with open("/data/runzezhang/result/TN_sims3/n_huge_scatterg_CF2.csv", 'w', newline='') as myfile:
@@ -624,7 +759,7 @@ class ReadRoot(): # read Cf gamma backgrounds
 
 
         self.LAr_recoiled = \
-        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/keV"] > 1E-6)][
+        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/MeV"] > 1E-6)][
             ['Event']]
         # print("LAr recoiled",self.LAr_recoiled)
         # filtered df to remove nCapture event
@@ -638,11 +773,11 @@ class ReadRoot(): # read Cf gamma backgrounds
         # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
 
         max_values = self.N_check[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])[
-            "Recoiled/keV"].max().reset_index()
+            "Recoiled/MeV"].max().reset_index()
         print(max_values.head(20))
 
         # add gamma up
-        self.Ar_recoiled_list = max_values["Recoiled/keV"].to_list()
+        self.Ar_recoiled_list = max_values["Recoiled/MeV"].to_list()
         p_observed = []
         for i in range(len(self.Ar_recoiled_list)):
             # 40 /keV 0.03 and 0.2 PCE and PDE
@@ -661,7 +796,7 @@ class ReadRoot(): # read Cf gamma backgrounds
         # check event 1256
         self.df_event_390 = self.df[
             self.df["Event"] == 390][
-            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "Kinetic/keV", "Recoiled/keV", "Volume",
+            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV", "Recoiled/MeV", "Volume",
              "Process"]]
         self.df_event_390.to_csv("/data/runzezhang/result/TN_sims3/event390_fake.csv", index=False)
         with open("/data/runzezhang/result/TN_sims3/n_huge_scatterg_CF2_fake.csv", 'w', newline='') as myfile:
@@ -674,7 +809,7 @@ class ReadRoot(): # read Cf gamma backgrounds
     def Capture_n_scatter_spectrum(self): # somehow logan made the cross where the id difference is 1 like compare 4 scatter with 5 photon generation
 
         self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')][['Event','Track ID']]
-        self.df_head = self.df[(self.df["Event"]==5837)|(self.df["Event"]==2906)|(self.df["Event"]==2907)][["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV", "Volume","Process"]]
+        self.df_head = self.df[(self.df["Event"]==5837)|(self.df["Event"]==2906)|(self.df["Event"]==2907)][["Event","name","Parent ID","Track ID","Step ID","X/mm","PreKinetic/MeV","Recoiled/MeV", "Volume","Process"]]
         self.df_Nscatter = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Volume','Track ID', 'Parent ID']]
@@ -702,9 +837,9 @@ class ReadRoot(): # read Cf gamma backgrounds
         # self.df_n = pd.merge(self.df_sing_Nscatter, self.df_Ncapture,on=['Event','Track ID'], how='inner')
 
 
-        # self.LAr_recoiled = self.df[((self.df["name"]=='Ar40') | (self.df["name"]=='Ar36') )&(self.df["Recoiled/keV"]>1E-3)][['Event','Track ID',"Recoiled/keV"]]
+        # self.LAr_recoiled = self.df[((self.df["name"]=='Ar40') | (self.df["name"]=='Ar36') )&(self.df["Recoiled/MeV"]>1E-3)][['Event','Track ID',"Recoiled/MeV"]]
         # self.LAr_recoiled = \
-        # self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/keV"] > 0.001)][
+        # self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/MeV"] > 0.001)][
         #     ['Event']]
         self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) ][
             ['Event']]
@@ -728,7 +863,7 @@ class ReadRoot(): # read Cf gamma backgrounds
         self.df_single_n_gamma.to_csv(self.base_path +"dmx_single_n_gamma_CF.csv", index=False)
 
     def Capture_n_scatter_spectrum_loop(self):
-        self.df["Kinetic diff/MeV"] = self.df["Kinetic/keV"].diff()
+        self.df["Kinetic diff/MeV"] = self.df["PreKinetic/MeV"].diff()
         self.df["Kinetic diff/MeV"] = self.df["Kinetic diff/MeV"].fillna(0)
 
         self.df_Ncapture = self.df[
@@ -803,7 +938,7 @@ class ReadRoot(): # read Cf gamma backgrounds
         self.last_cross = pd.merge(self.x3_n2, self.df_sing_Nscatter, on=['Event'], how='inner')
         self.last_cross_list = self.intersection(self.x3_n2["Event"].unique(),self.df_sing_Nscatter["Event"].unique())
         print("last cross check", len(self.last_cross_list), self.last_cross_list[:10])
-        # # self.LAr_recoiled = self.df[((self.df["name"]=='Ar40') | (self.df["name"]=='Ar36') )&(self.df["Recoiled/keV"]>1E-3)][['Event','Track ID',"Recoiled/keV"]]
+        # # self.LAr_recoiled = self.df[((self.df["name"]=='Ar40') | (self.df["name"]=='Ar36') )&(self.df["Recoiled/MeV"]>1E-3)][['Event','Track ID',"Recoiled/MeV"]]
         # self.LAr_recoiled = \
         #     self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) ][
         #         ['Event']]
@@ -867,60 +1002,428 @@ class ReadRoot(): # read Cf gamma backgrounds
         self.find_gamma_e()
         self.check_capture()
         # self.plot_gamma()
-    def gamma_momentum(self):
+    def neutron_momentum_logan(self):
         self.df.to_csv(self.false_3_path_mid, index=False)
         # z face is 1150mm
-        self.df_gamma_income = self.df[
-            (self.df["name"] == 'gamma') & (self.df["Z/mm"] >=1240)& (self.df["Z/mm"] <=1260)& (self.df["Parent ID"] ==0)][
-            ['Event', 'Volume', 'Track ID', 'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV',"Kinetic/keV",'Parent ID']]
-        print("first iincome",self.df_gamma_income.head(100))
-        self.df_gamma_income = self.keep_1st(self.df_gamma_income)
+        self.df_neutron_income = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Parent ID"] ==0)&(self.df["Step ID"] ==1)&(self.df["Volume"] =="physSD2")][
+            ['Event', 'Volume', 'Track ID', 'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV',"PreKinetic/MeV",'Parent ID']]
+        print("first income shoule be 1E7", len(self.df_neutron_income["Event"].to_list()),self.df_neutron_income.head(100))
+
+        #?? escape the outerface of sapphire
+        # 157.5
+        # 150.0
+        self.df_neutron_outcome = self.df[
+            (self.df["name"] == 'neutron') & (
+                    self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] == 150.0)&(
+            self.df["Parent ID"] == 0)][
+        ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "PreKinetic/MeV",
+         'Parent ID']]  # the the sepctrum coming out of Sapphire.
+
+        # out going spectrum
+        print("first outcome",len(self.df_neutron_outcome["Event"].to_list()),self.df_neutron_outcome.head(100))
+        self.df_neutron_outcome = self.keep_1st(self.df_neutron_outcome)
         
 
         
-        # self.df_gamma_income.to_csv(self.false_3_path_mid, index=False)
+        # self.df_neutron_outcome.to_csv(self.false_3_path_mid, index=False)
 
-        # gamma_energy = self.df_gamma_income[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])[
-        #     "Recoiled/keV"].max().reset_index()
-        gamma_energy = \
-        self.df_gamma_income
+        # neutron_energy = self.df_neutron_outcome[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])[
+        #     "Recoiled/MeV"].max().reset_index()
+
+        # neutron_energy =   self.df_neutron_income
+
+        neutron_energy =  self.df_neutron_outcome
 
 
         # add gamma up
-        self.gamma_Ek_list=[]
-        self.gamma_px_list= gamma_energy["px/MeV"].to_list()
-        self.gamma_py_list = gamma_energy["py/MeV"].to_list()
-        self.gamma_pz_list = gamma_energy["pz/MeV"].to_list()
-        for i in range(len(self.gamma_px_list)):
-            self.gamma_Ek_list.append((self.gamma_px_list[i]**2+self.gamma_py_list[i]**2+self.gamma_pz_list[i]**2)**0.5)
-        print("gamma in 1E6 ", len(self.gamma_Ek_list))
+        self.neutron_Ek_list=neutron_energy["PreKinetic/MeV"].to_list()
+        self.neutron_px_list= neutron_energy["px/MeV"].to_list()
+        self.neutron_py_list = neutron_energy["py/MeV"].to_list()
+        self.neutron_pz_list = neutron_energy["pz/MeV"].to_list()
+        # check surface
+        self.neutron_z_list = neutron_energy["Z/mm"].to_list()
+        self.neutron_x_list = neutron_energy["X/mm"].to_list()
+        print(self.neutron_x_list)
+        # for i in range(len(self.neutron_px_list)):
+        #     self.neutron_Ek_list.append((self.neutron_px_list[i]**2+self.neutron_py_list[i]**2+self.neutron_pz_list[i]**2)**0.5)
+        print("nenutron in 1E6 ", len(self.neutron_Ek_list), min(self.neutron_Ek_list))
 
         with open(self.false_3_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
-            wr.writerow(self.gamma_Ek_list)
+            wr.writerow(self.neutron_Ek_list)
 
-    def plot_gamma_momentum(self):
+    def plot_neutron_momentum_logan(self):
 
         with open(self.false_3_path, 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
             # Convert the strings to floats
-            self.noise3_raw_list = [float(value) for value in number_list]
+            self.noise3_raw_list = [float(value)*1e6 for value in number_list]
 
-        sig_counts, sig_bin_edges, _ = plt.hist(self.noise3_raw_list, bins= 100)
+        # sig_counts, sig_bin_edges, _ = plt.hist(self.noise3_raw_list, bins= 100)
+        sig_counts, sig_bin_edges, _ = plt.hist(self.noise3_raw_list, bins=np.logspace(-5, 7, 50))
         # sig_normalized_counts = 1
         # sig_bin_centers = (sig_bin_edges[:-1] + sig_bin_edges[1:]) / 2
         # plt.bar(sig_bin_centers, sig_normalized_counts, width=sig_bin_edges[1] - sig_bin_edges[0], color='red',
         #         label='signal')
 
-        plt.xlabel("gamma energy/MeV", fontsize=16)
+        plt.xlabel("neutron energy/MeV", fontsize=16)
         plt.ylabel("counts", fontsize=16)
-        # plt.yscale('log')
+        plt.yscale('log')
+        plt.xscale('log')
+        plt.xlim(1e-5,1e7)
         plt.legend()
-        plot_name = "sn1_1E6"
+        plot_name = "sn1_neutron_outcome_1E6.png"
         plt.savefig(self.plot_path + plot_name)
 
+    def neutron_momentum_spacial(self):
+        # self.df.to_csv(self.false_3_path_mid, index=False)
+        # z face is 1150mm
+        self.df_neutron_income = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Parent ID"] == 0) & (self.df["Step ID"] == 1) & (
+                        self.df["Volume"] == "physSD2")][
+            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "PreKinetic/MeV",
+             'Parent ID']]
+        print("first income shoule be 1E7", len(self.df_neutron_income["Event"].to_list()),
+              self.df_neutron_income.head(100))
+
+        #270mm for single sap
+        # 535 for double sap
+        # self.df_neutron_outcome2 = self.df[
+        #     (self.df["name"] == 'neutron') & (
+        #             self.df["Parent ID"] == 0) &  (self.df["Volume"] == "physAr2")][
+        #     ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "PreKinetic/MeV",
+        #      'Parent ID']]
+        self.df_neutron_outcome2 = self.df[
+            (self.df["name"] == 'neutron') & (
+                    self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] == 270) & (
+                    self.df["Parent ID"] == 0)][
+            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "PreKinetic/MeV",
+             'Parent ID']]
+
+
+
+
+
+        #1270mmm for sing sap
+        # 1535mm for double sap
+        # self.df_neutron_outcome3 = self.df[
+        #     (self.df["name"] == 'neutron') & (
+        #             self.df["Parent ID"] == 0) &  (self.df["Volume"] == "physAr3")][
+        #     ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "PreKinetic/MeV",
+        #      'Parent ID']]
+
+        self.df_neutron_outcome3 = self.df[
+            (self.df["name"] == 'neutron') & (
+                    self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] == 1270) & (
+                    self.df["Parent ID"] == 0)][
+            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "PreKinetic/MeV",
+             'Parent ID']]
+        # add the Z
+        # out going spectrum
+        print("first outcome2", len(self.df_neutron_outcome2["Event"].to_list()), self.df_neutron_outcome2.head(100))
+        print("first outcome3", len(self.df_neutron_outcome3["Event"].to_list()), self.df_neutron_outcome3.head(100))
+        self.df_neutron_outcome2 = self.keep_1st(self.df_neutron_outcome2)
+        self.df_neutron_outcome3 = self.keep_1st(self.df_neutron_outcome3)
+
+        # self.df_neutron_outcome.to_csv(self.false_3_path_mid, index=False)
+
+        # neutron_energy = self.df_neutron_outcome[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])[
+        #     "Recoiled/MeV"].max().reset_index()
+
+        # neutron_energy =   self.df_neutron_income
+
+        neutron_energy1 = self.df_neutron_income
+
+        # add gamma up
+        self.neutron_Ek_list1 = neutron_energy1["PreKinetic/MeV"].to_list()
+        self.neutron_px_list1 = neutron_energy1["px/MeV"].to_list()
+        self.neutron_py_list1 = neutron_energy1["py/MeV"].to_list()
+        self.neutron_pz_list1 = neutron_energy1["pz/MeV"].to_list()
+        # check surface
+        self.neutron_z_list1 = neutron_energy1["Z/mm"].to_list()
+        self.neutron_x_list1 = neutron_energy1["X/mm"].to_list()
+
+        neutron_energy2 = self.df_neutron_outcome2
+
+        # add gamma up
+        self.neutron_Ek_list2 = neutron_energy2["PreKinetic/MeV"].to_list()
+        self.neutron_px_list2 = neutron_energy2["px/MeV"].to_list()
+        self.neutron_py_list2 = neutron_energy2["py/MeV"].to_list()
+        self.neutron_pz_list2 = neutron_energy2["pz/MeV"].to_list()
+        # check surface
+        self.neutron_z_list2 = neutron_energy2["Z/mm"].to_list()
+        self.neutron_x_list2 = neutron_energy2["X/mm"].to_list()
+
+
+        # angle
+        self.neutron_angle_list2 = []
+        for i in range(len(self.neutron_Ek_list2)):
+            self.neutron_angle_list2.append(np.arctan(np.sqrt(self.neutron_px_list2[i]**2+self.neutron_py_list2[i]**2)/self.neutron_pz_list2[i]))
+        # print(self.neutron_x_list2)
+        # for i in range(len(self.neutron_px_list)):
+        #     self.neutron_Ek_list.append((self.neutron_px_list[i]**2+self.neutron_py_list[i]**2+self.neutron_pz_list[i]**2)**0.5)
+        print("nenutron2 in 1E6 ", len(self.neutron_Ek_list2), min(self.neutron_Ek_list2))
+
+        neutron_energy3 = self.df_neutron_outcome3
+        self.neutron_Ek_list3 = neutron_energy3["PreKinetic/MeV"].to_list()
+        self.neutron_px_list3 = neutron_energy3["px/MeV"].to_list()
+        self.neutron_py_list3 = neutron_energy3["py/MeV"].to_list()
+        self.neutron_pz_list3 = neutron_energy3["pz/MeV"].to_list()
+        # check surface
+        self.neutron_z_list3 = neutron_energy3["Z/mm"].to_list()
+        self.neutron_x_list3 = neutron_energy3["X/mm"].to_list()
+        # print(self.neutron_x_list3)
+        print("nenutron3 in 1E6 ", len(self.neutron_Ek_list3), min(self.neutron_Ek_list3))
+
+        self.neutron_angle_list3 = []
+        for i in range(len(self.neutron_Ek_list3)):
+            self.neutron_angle_list3.append(np.arctan(
+                np.sqrt(self.neutron_px_list3[i] ** 2 + self.neutron_py_list3[i] ** 2) / self.neutron_pz_list3[i]))
+
+        with open(self.false_3_path, 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(self.neutron_Ek_list2)
+
+        with open(self.false_4_path, 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(self.neutron_Ek_list3)
+
+
+        with open(self.false_5_path, 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(self.neutron_Ek_list1)
+
+    def plot_neutron_momentum_spacial(self):
+
+        with open(self.false_3_path, 'r') as file:
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            self.noise3_raw_list = [float(value) * 1e6 for value in number_list]
+
+
+        with open(self.false_4_path, 'r') as file:
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            self.noise4_raw_list = [float(value) * 1e6 for value in number_list]
+
+
+        with open(self.false_5_path, 'r') as file:
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            self.noise5_raw_list = [float(value) * 1e6 for value in number_list]
+
+        fig, axs = plt.subplots(3, 2, figsize=(10, 8))
+
+        axs[0, 0].hist(self.noise5_raw_list, bins=np.logspace(-5, 7, 500))
+        axs[0, 0].set_title("Initial energy; total counts " + str(len(self.noise5_raw_list)))
+        axs[0, 0].set_xscale('log')
+        axs[0, 0].set_yscale('log')
+        axs[0, 0].set_xlim(1e-3, 1e7)
+        axs[0, 0].set_xlabel("Energy/eV")
+        axs[0, 0].set_ylabel("Counts")
+
+        # axs[0, 1].hist(self.neutron_angle_list2)
+        # axs[0, 1].set_title("1st plane angle")
+        # axs[0, 1].set_yscale('log')
+        # axs[0, 1].set_xlabel("angle/rad")
+        # axs[0, 1].set_ylabel("Counts")
+
+        axs[1, 0].hist(self.noise3_raw_list, bins=np.logspace(-5, 7, 500))
+        axs[1, 0].set_title("1st plane energy; total counts "+str(len(self.noise3_raw_list)))
+        axs[1, 0].set_xscale('log')
+        axs[1, 0].set_yscale('log')
+        axs[1, 0].set_xlim(1e-3,1e7)
+        axs[1, 0].set_xlabel("Energy/eV")
+        axs[1, 0].set_ylabel("Counts")
+
+
+        axs[1, 1].hist(self.neutron_angle_list2)
+        axs[1, 1].set_title("1st plane angle")
+        axs[1, 1].set_yscale('log')
+        axs[1, 1].set_xlabel("angle/rad")
+        axs[1, 1].set_ylabel("Counts")
+
+
+        axs[2, 0].hist(self.noise4_raw_list, bins=np.logspace(-5, 7, 500))
+        axs[2, 0].set_title("2nd plane energy; total counts "+str(len(self.noise4_raw_list)))
+        axs[2, 0].set_xscale('log')
+        axs[2, 0].set_yscale('log')
+        axs[2, 0].set_xlim(1e-3, 1e7)
+        axs[2, 0].set_xlabel("Energy/eV")
+        axs[2, 0].set_ylabel("Counts")
+
+        axs[2, 1].hist(self.neutron_angle_list3)
+        axs[2, 1].set_title("2nd plane angle")
+        axs[2, 1].set_yscale('log')
+        axs[2, 1].set_xlabel("angle/rad")
+        axs[2, 1].set_ylabel("Counts")
+
+        plt.tight_layout()
+        plot_name = "AmLi_neutron_outcome_distribution_1E6.png"
+        plt.savefig(self.plot_path + plot_name)
+
+    def plot_neutron_momentum_spacial_distribute(self):
+
+        self.df_neutron_outcome3 = self.df[
+            (self.df["name"] == 'neutron') & (
+                    self.df["Parent ID"] == 0) & (self.df["Volume"] == "physWorld") & (self.df["Z/mm"] == 1270) & (
+                    self.df["Parent ID"] == 0)][
+            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "PreKinetic/MeV",
+             'Parent ID']]
+        self.df_neutron_outcome3["R/mm"] = np.sqrt(self.df_neutron_outcome3["X/mm"]**2+self.df_neutron_outcome3["Y/mm"]**2)
+        self.df_neutron_outcome3["ang/rad"] = np.arctan(
+            (np.sqrt(self.df_neutron_outcome3['px/MeV'] ** 2 + self.df_neutron_outcome3['py/MeV'] ** 2) / self.df_neutron_outcome3['pz/MeV']))
+        dim = 3
+        R = 1414 # root square 2 in mmm
+        self.Ek_matrix = [[] for _ in range(dim)]
+        self.rad_matrix = [[] for _ in range(dim)]
+        for i in range(dim):
+            self.Ek_matrix[i]=(self.df_neutron_outcome3[(self.df_neutron_outcome3["R/mm"]<=R*(1+i)/dim)&(self.df_neutron_outcome3["R/mm"]>=R*i/dim)]["PreKinetic/MeV"]*1e6).tolist()
+            self.rad_matrix[i] = (self.df_neutron_outcome3[(self.df_neutron_outcome3["R/mm"]<=R*(1+i)/dim)&(self.df_neutron_outcome3["R/mm"]>=R*i/dim)]["ang/rad"]*180/(2*np.pi)).tolist()
+            print("Ek list length", i, len(self.Ek_matrix[i]))
+            print("rad list length", i, len(self.rad_matrix[i]))
+
+        fig, axs = plt.subplots(2, dim, figsize=(10, 8))
+        for i in range(dim):
+            axs[0, i].hist(self.Ek_matrix[i], bins=np.logspace(-5, 7, 500))
+            axs[0, i].set_title("2nd plane energy; total counts " + str(len(self.Ek_matrix[i]))+"\n R/mm range:"+str(i*R/dim)+" to "+str((i+1)*R/dim))
+            axs[0, i].set_xscale('log')
+            axs[0, i].set_yscale('log')
+            axs[0, i].set_xlim(1e-3, 1e7)
+            axs[0, i].set_xlabel("Energy/eV")
+            axs[0, i].set_ylabel("Counts")
+
+        for i in range(dim):
+            axs[1, i].hist(self.rad_matrix[i], bins = 500)
+            axs[1, i].set_title("2nd plane energy; total counts " + str(len(self.rad_matrix[i]))+"\n R/mm range:"+str(i*R/dim)+" to "+str((i+1)*R/dim))
+            axs[1, i].set_yscale('log')
+            axs[1, i].set_xlabel("angle/degree")
+            axs[1, i].set_ylabel("Counts")
+
+
+
+        plt.tight_layout()
+        plot_name = "AmLi_neutron_outcome_spacial_1E7.png"
+        plt.savefig(self.plot_path + plot_name)
+
+    def ncrystal_test(self):
+        self.df.to_csv(self.false_3_path_mid, index=False)
+        # z face is 1150mm
+        # self.df_neutron_income = self.df[
+        #     (self.df["name"] == 'neutron') & (self.df["Z/mm"] >=1240)& (self.df["Z/mm"] <=1260)& (self.df["Parent ID"] ==0)][
+        #     ['Event', 'Volume', 'Track ID', 'X/mm','Y/mm','Z/mm','px/MeV','py/MeV','pz/MeV',"PreKinetic/MeV",'Parent ID']]
+        # self.df_neutron_income = self.df[
+        #     (self.df["name"] == 'neutron') & (self.df["Step ID"] == 0) & (
+        #                 self.df["Parent ID"] == 0)][
+        #     ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "PreKinetic/MeV",
+        #      'Parent ID']]
+        self.df_neutron_income = self.df_neutron_cross = self.df[
+            (self.df["name"] == 'neutron')  & (
+                    self.df["Parent ID"] == 0)&(self.df["Step ID"] == 1)&(self.df["Volume"] == "physWorld")][
+            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "PreKinetic/MeV",
+             'Parent ID']]
+
+        # self.df_neutron_cross = self.df[
+        #     (self.df["name"] == 'neutron') & (
+        #                 (self.df["Process"] == 'neutronInelastic') | (self.df["Process"] == "nCapture")) & (
+        #             self.df["Parent ID"] == 0)&(self.df["Volume"] == "physSap")][
+        #     ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "PreKinetic/MeV",
+        #      'Parent ID']]
+
+        self.df_neutron_cross = self.df[
+            (self.df["name"] == 'neutron') & (
+                    (self.df["Process"] == 'hadElastic') | (self.df["Process"] == "nCapture")) & (
+                    self.df["Parent ID"] == 0) & (self.df["Volume"] == "physSap")][
+            ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "PreKinetic/MeV",
+             'Parent ID']]
+
+
+
+        # test neutron just hit sapphire
+        # self.df_neutron_cross = self.df[
+        #     (self.df["name"] == 'neutron') &  (
+        #             self.df["Parent ID"] == 0) & (self.df["Volume"] == "physSap")][
+        #     ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "PreKinetic/MeV",
+        #      'Parent ID']]
+        print("first iincome", self.df_neutron_cross.head(100))
+        self.df_neutron_income = self.keep_1st(self.df_neutron_income)
+
+        neutron_energy = \
+            self.df_neutron_income
+
+        # add gamma up
+        self.neutron_Ek_dic={}
+        self.neutron_event_list = neutron_energy["Event"].to_list()
+        self.neutron_ek_list = neutron_energy["PreKinetic/MeV"].to_list()
+        self.neutron_px_list = neutron_energy["px/MeV"].to_list()
+        self.neutron_py_list = neutron_energy["py/MeV"].to_list()
+        self.neutron_pz_list = neutron_energy["pz/MeV"].to_list()
+        for i in range(len(self.neutron_px_list)):
+            self.neutron_Ek_dic[self.neutron_event_list[i]]= [self.neutron_ek_list[i] ,0]
+
+        print("enutron in 1E6 ", len(self.neutron_Ek_dic) )
+
+        self.df_neutron_cross = self.keep_1st(self.df_neutron_cross)
+
+        neutron_final_energy = \
+            self.df_neutron_cross
+
+        # add gamma up
+
+        self.neutron_final_event_list = neutron_final_energy["Event"].to_list()
+        self.neutron_final_ek_list = neutron_final_energy["PreKinetic/MeV"].to_list()
+        self.neutron_final_px_list = neutron_final_energy["px/MeV"].to_list()
+        self.neutron_final_py_list = neutron_final_energy["py/MeV"].to_list()
+        self.neutron_final_pz_list = neutron_final_energy["pz/MeV"].to_list()
+        for i in range(len(self.neutron_final_px_list)):
+            self.neutron_Ek_dic[self.neutron_final_event_list[i]][1] =  self.neutron_final_ek_list[i]
+        print("enutron cross  in 1E6 ", len(self.neutron_final_event_list) )
+        # ouotput the energy, the incident number of neutron, and captured/inelastic neutron number
+        return (self.neutron_ek_list[0],len(self.neutron_Ek_dic) ,len(self.neutron_final_event_list))
+
+    def plot_ncrystal_test(self):
+
+        # ini_ene = [self.neutron_Ek_dic[key][0]*1e6 for key in self.neutron_Ek_dic]
+        # final_ene = [self.neutron_Ek_dic[key][1]*1e6 for key in self.neutron_Ek_dic]
+        # cross_list = []
+        # for i in range(len(final_ene)):
+        #     if final_ene[i] != 0:
+        #         cross_list.append(ini_ene[i])
+        #
+        #
+        # # print(ini_ene)
+        # print("cross list",len(cross_list))
+        # print("ini, max, min", max(ini_ene), min(ini_ene))
+        # # sig_counts, sig_bin_edges, _ = plt.hist(self.neutron_ek_list, bins=np.logspace(-5, 7, 50))
+        # sig_counts, sig_bin_edges, _ = plt.hist(ini_ene, bins=np.logspace(-5, 7, 50))
+        # # sig_counts, sig_bin_edges, _ = plt.hist(cross_list, bins= np.logspace(-5, 7, 50))
+        # # sig_normalized_counts = 1
+        # # sig_bin_centers = (sig_bin_edges[:-1] + sig_bin_edges[1:]) / 2
+        # # plt.bar(sig_bin_centers, sig_normalized_counts, width=sig_bin_edges[1] - sig_bin_edges[0], color='red',
+        # #         label='signal')
+
+        ene = [ i*1e6 for i in self.ene]
+        cross = [i for i in self.cross_number]
+        print("ene",ene )
+        print("cross", cross)
+        plt.plot(ene,cross)
+        plt.xlabel("neutron energy/eV", fontsize=16)
+        plt.ylabel("counts", fontsize=16)
+        plt.yscale('log')
+        plt.xscale('log')
+        plt.xlim(1e-5, 1e7)
+        plt.legend()
+        plot_name = "sn1_neutron_crystal_1E6.png"
+        plt.savefig(self.plot_path + plot_name)
 
     def Huge_scatter_event(self):
         # single scatter spectrum
@@ -947,7 +1450,7 @@ class ReadRoot(): # read Cf gamma backgrounds
         # self.single_n_find_gamma_e()
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv(self.base_path +"dmx_gamma.csv")
-        print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
+        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
@@ -978,7 +1481,7 @@ class ReadRoot(): # read Cf gamma backgrounds
         self.gamma_Scint.to_csv(self.base_path +"gamma_scint2.csv", index=False)
     def find_gamma_e(self):
         self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_gamma.csv")
-        print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
+        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
@@ -995,11 +1498,11 @@ class ReadRoot(): # read Cf gamma backgrounds
         print(self.df_electron_gamma.head(10))
         # double check gamma
 
-        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/keV"].sum().reset_index()
+        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
         print(summed_values.head(20))
 
         # add gamma up
-        self.electron_recoiled_list  = summed_values["Recoiled/keV"].to_list()
+        self.electron_recoiled_list  = summed_values["Recoiled/MeV"].to_list()
         p_observed = []
         for i in range(len(self.electron_recoiled_list)):
             # 40 /keV 0.03 and 0.2 PCE and PDE
@@ -1021,7 +1524,7 @@ class ReadRoot(): # read Cf gamma backgrounds
 
     def single_n_find_gamma_e(self):
         self.df_gamma_rw = pd.read_csv(self.false_1_path_mid)
-        print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
+        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
@@ -1043,11 +1546,11 @@ class ReadRoot(): # read Cf gamma backgrounds
         print(self.df_electron_gamma.head(10))
         # double check gamma
 
-        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/keV"].sum().reset_index()
+        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
         print(summed_values.head(20))
 
         # add gamma up
-        self.electron_recoiled_list  = summed_values["Recoiled/keV"].to_list()
+        self.electron_recoiled_list  = summed_values["Recoiled/MeV"].to_list()
         p_observed = []
         for i in range(len(self.electron_recoiled_list)):
             # 40 /keV 0.03 and 0.2 PCE and PDE
@@ -1069,7 +1572,7 @@ class ReadRoot(): # read Cf gamma backgrounds
         plt.show()
     def single_n_find_gamma_e_loop(self):
         self.df_gamma_rw = pd.read_csv(self.base_path2 + "dmx_single_n_gamma_AmLi_neutron_list_loop.csv")
-        print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
+        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
@@ -1089,11 +1592,11 @@ class ReadRoot(): # read Cf gamma backgrounds
         print(self.df_electron_gamma.head(10))
         # double check gamma
 
-        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/keV"].sum().reset_index()
+        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
         print(summed_values.head(20))
 
         # add gamma up
-        self.electron_recoiled_list  = summed_values["Recoiled/keV"].to_list()
+        self.electron_recoiled_list  = summed_values["Recoiled/MeV"].to_list()
         p_observed = []
         for i in range(len(self.electron_recoiled_list)):
             # 40 /keV 0.03 and 0.2 PCE and PDE
@@ -1115,7 +1618,7 @@ class ReadRoot(): # read Cf gamma backgrounds
         plt.show()
     def LAr_find_gamma_e(self):
         self.df_gamma_rw = pd.read_csv(self.signal_path_mid)
-        print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
+        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
@@ -1144,15 +1647,15 @@ class ReadRoot(): # read Cf gamma backgrounds
         print(self.df_electron_gamma_merged.head(10))
         # double check gamma
 
-        # summed_values = self.df_electron_gamma_merged.groupby(['Event', 'Parent ID'])["Recoiled/keV"].sum().reset_index()
+        # summed_values = self.df_electron_gamma_merged.groupby(['Event', 'Parent ID'])["Recoiled/MeV"].sum().reset_index()
         summed_values = self.df_electron_gamma_merged.groupby(['Event'])[
-            "Recoiled/keV"].sum().reset_index()
+            "Recoiled/MeV"].sum().reset_index()
         print("summed values", len(summed_values["Event"].unique()),
               summed_values["Event"].unique()[:20])
         print(summed_values.head(20))
 
         # add gamma up
-        self.electron_recoiled_list  = summed_values["Recoiled/keV"].to_list()
+        self.electron_recoiled_list  = summed_values["Recoiled/MeV"].to_list()
         p_observed = []
         print("recoil list", len(self.electron_recoiled_list))
         for i in range(len(self.electron_recoiled_list)):
@@ -1196,7 +1699,7 @@ class ReadRoot(): # read Cf gamma backgrounds
             else:
                 if self.gamma.iloc[index]['Track ID'] not in track_p:
                     track_p.append(self.gamma.iloc[index]['Track ID'])
-                    energy += self.gamma.iloc[index]["Kinetic/keV"]*1000000 # to ev Actullay it is Kinetic/MeV
+                    energy += self.gamma.iloc[index]["PreKinetic/MeV"]*1000000 # to ev Actullay it is Kinetic/MeV
 
         print("energy", energy_p[:10])
 
@@ -1216,7 +1719,7 @@ class ReadRoot(): # read Cf gamma backgrounds
 
     def FN_spectrum_v2(self):
 
-        self.df_Arrecoil = self.df[(self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')][['Event','name','Parent ID','Track ID',"Recoiled/keV",'Process']]
+        self.df_Arrecoil = self.df[(self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')][['Event','name','Parent ID','Track ID',"Recoiled/MeV",'Process']]
 
         print(self.df_Arrecoil.head(10))
         # capture ar41 and then radiactive decay
@@ -1265,7 +1768,7 @@ class ReadRoot(): # read Cf gamma backgrounds
         self.df_Arrecoil = self.df[
             (self.df["name"] == 'Ar36') | (self.df["name"] == 'Ar37') | (self.df["name"] == 'Ar40') | (
                         self.df["name"] == 'Ar41')][
-            ['Event', 'name', 'Parent ID', 'Track ID', "Recoiled/keV", 'Volume','Process']]
+            ['Event', 'name', 'Parent ID', 'Track ID', "Recoiled/MeV", 'Volume','Process']]
 
         self.df_neutron = self.df[(self.df['name'] == 'neutron')&(self.df['Volume'] == 'LAr_phys')]
         self.df_n_cap = self.df_neutron[self.df_neutron["Process"]=='nCapture']
@@ -1296,11 +1799,11 @@ class ReadRoot(): # read Cf gamma backgrounds
         self.multi_clean_df = self.keep_1st(self.multi_df,["Event","Parent ID"])
         print("multi_clean", len(self.multi_clean_df.index),'\n', self.multi_clean_df.head(10))
 
-        self.ela_sig_300 = self.sig_df[self.sig_df["Recoiled/keV"] > 1E-3]
+        self.ela_sig_300 = self.sig_df[self.sig_df["Recoiled/MeV"] > 1E-3]
         print("300", len(self.ela_sig_300.index), '\n', self.ela_sig_300.head(10))
 
         # energy after applying threshold
-        (self.sig_df_t, self.multi_df_t) = self.find_single_n_multi(self.ar_nela[self.ar_nela["Recoiled/keV"]>1E-3])
+        (self.sig_df_t, self.multi_df_t) = self.find_single_n_multi(self.ar_nela[self.ar_nela["Recoiled/MeV"]>1E-3])
         print("sig_t", len(self.sig_df_t.index), '\n', self.sig_df_t.head(10))
         print("multi_t", len(self.multi_df_t.index), '\n', self.multi_df_t.head(10))
         self.multi_clean_df_t = self.keep_1st(self.multi_df_t, ["Event", "Parent ID"])
@@ -1313,7 +1816,7 @@ class ReadRoot(): # read Cf gamma backgrounds
 
     def plot_elastic(self):
         self.df = pd.read_csv(self.base_path +"dmx_argon_elastic.csv")
-        energy_list  = self.df["Recoiled/keV"].to_list()
+        energy_list  = self.df["Recoiled/MeV"].to_list()
         energy_ev = []
         energy_1kev = []
         energy_10kev = []
