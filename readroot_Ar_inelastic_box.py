@@ -528,7 +528,7 @@ class ReadRoot():
 
         self.gamma_Scint = self.df_gamma_rw[
             (self.df['name'] == 'gamma') & (self.df_gamma_rw['Volume'] == 'physAr') & (
-                        self.df_gamma_rw['Pre Kinetic/MeV'] > 0)]
+                        self.df_gamma_rw['Pre Kinetic/MeV'] > 0)& (self.df_gamma_rw['Step ID'] == 1) ]
         # >0 to rule out no contribution gammas
 
         gamma_list = self.gamma_Scint["Event"].unique()
@@ -546,8 +546,9 @@ class ReadRoot():
         self.df_electron = self.df_electron[self.df_electron['Pre Kinetic/MeV'] == 0]
         self.electron_column = self.df_electron[['Event', "Parent ID"]]
         self.electron_column.columns = ['Event', "Track ID"]
-        self.df_electron_gamma = pd.merge(self.gamma_Scint, self.electron_column, on=['Event', "Track ID"],
-                                          how='inner')
+        # self.df_electron_gamma = pd.merge(self.gamma_Scint, self.electron_column, on=['Event', "Track ID"],
+        #                                   how='inner')
+        self.df_electron_gamma = self.gamma_Scint
         self.df_electron_gamma = self.keep_1st(self.df_electron_gamma)
 
         # print("frist gammas", self.df_electron_gamma[(self.df_electron_gamma['Event'] == 391)])
