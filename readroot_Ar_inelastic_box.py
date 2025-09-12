@@ -247,10 +247,7 @@ class ReadRoot():
         # 1e? FISSIons
         # PDF
 
-        # neutron spectrum on detector
-        self.neutron_momentum_spacial()
-        # self.plot_neutron_momentum_spacial()
-        # self.plot_neutron_momentum_spacial_distribute()
+
 
         # ncrystal test
         # self.ncrystal_test()
@@ -270,7 +267,11 @@ class ReadRoot():
         # self.Check_inelastic()
         # test elatic and inelastic effect
         # self.bubble_rate()
-        
+        # neutron spectrum on detector
+        self.neutron_momentum_spacial()
+        # self.plot_neutron_momentum_spacial()
+        # self.plot_neutron_momentum_spacial_distribute()
+
         self.plot_neutron_inelastic_spectrum()
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
@@ -1123,7 +1124,7 @@ class ReadRoot():
         # z face is 1150mm
 
         self.df_neutron_income = self.df[
-            (self.df["name"] == 'neutron') & (self.df["Parent ID"] == 0) & (self.df["Step ID"] == 1) & (
+            (self.df["name"] == 'neutron') & (self.df["Parent ID"] == 0) &(self.df["Track ID"] == 1) & (self.df["Step ID"] == 1) & (
                         self.df["Volume"] == "physWorld")][
             ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "Pre Kinetic/MeV",
              'Parent ID']]
@@ -1158,7 +1159,6 @@ class ReadRoot():
             self.noise5_raw_list= [[float(row[0]), float(row[1])] for row in reader]
 
 
-        print("noise 5 list",self.noise5_raw_list[:10])
 
 
         with open(self.false_4_path, 'r') as file: # inelastic neutron gamma energy
@@ -1171,6 +1171,7 @@ class ReadRoot():
         noise_5_list =[value[1]*1e6 for value in self.noise5_raw_list]
         print("noise 5 list", noise_5_list[:10])
         noise_4_list = [value[1] * 1e6 for value in self.noise4_raw_list]
+        print("noise 4 list", noise_5_list[:10])
         
         fig, axs = plt.subplots(2, 2, figsize=(10, 8))
 
@@ -1186,7 +1187,7 @@ class ReadRoot():
         axs[0, 1].set_title("Inelastic Gamma energy; total counts " + str(len(self.noise4_raw_list)))
         # axs[0, 1].set_xscale('log')
         # axs[0, 1].set_yscale('log')
-        axs[0, 1].set_xlim(1e6, 1e7)
+        # axs[0, 1].set_xlim(1e6, 1e7)
         axs[0, 1].set_xlabel("Energy/eV")
         axs[0, 1].set_ylabel("Counts")
        
