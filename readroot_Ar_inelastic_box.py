@@ -255,7 +255,7 @@ class ReadRoot():
 
         # self.gamma_event()
         # false noise 2, need to relocate directory
-        self.Huge_scatter_event()
+        # self.Huge_scatter_event()
         # signal rate, caputre in liquid argon
         # self.LAr_gamma_event()
         # single elastic scatter and capture false signal 1
@@ -268,11 +268,11 @@ class ReadRoot():
         # test elatic and inelastic effect
         # self.bubble_rate()
         # neutron spectrum on detector
-        # self.neutron_momentum_spacial()  # cannot directly run with previous codes. can cause conflict and wrong results
+        self.neutron_momentum_spacial()  # cannot directly run with previous codes. can cause conflict and wrong results
         # self.plot_neutron_momentum_spacial()
         # self.plot_neutron_momentum_spacial_distribute()
 
-        # self.plot_neutron_inelastic_spectrum()
+        self.plot_neutron_inelastic_spectrum()
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
 
