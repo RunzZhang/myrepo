@@ -1172,15 +1172,15 @@ class ReadRoot():
         print("noise 5 list", noise_5_list[:10])
         noise_4_list = [value[1] * 1e6 for value in self.noise4_raw_list]
         
-        fig, axs = plt.subplots(2, 1, figsize=(10, 8))
+        fig, axs = plt.subplots(2, 2, figsize=(10, 8))
 
-        # axs[0, 0].hist(noise_5_list, bins=np.logspace(-5, 7, 500))
-        # axs[0, 0].set_title("Neutron Initial energy; total counts " + str(len(self.noise5_raw_list)))
-        # axs[0, 0].set_xscale('log')
-        # axs[0, 0].set_yscale('log', nonpositive="clip")
-        # axs[0, 0].set_xlim(1e-3, 1e7)
-        # axs[0, 0].set_xlabel("Energy/eV")
-        # axs[0, 0].set_ylabel("Counts")
+        axs[0, 0].hist(noise_5_list, bins=np.logspace(-5, 7, 500))
+        axs[0, 0].set_title("Neutron Initial energy; total counts " + str(len(self.noise5_raw_list)))
+        axs[0, 0].set_xscale('log')
+        axs[0, 0].set_yscale('log', nonpositive="clip")
+        axs[0, 0].set_xlim(1e-3, 1e7)
+        axs[0, 0].set_xlabel("Energy/eV")
+        axs[0, 0].set_ylabel("Counts")
 
         axs[0, 1].hist(noise_4_list, bins=500)
         axs[0, 1].set_title("Inelastic Gamma energy; total counts " + str(len(self.noise4_raw_list)))
