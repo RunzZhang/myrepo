@@ -1193,7 +1193,7 @@ class ReadRoot():
         axs[1].set_title("Inelastic Gamma energy; total counts " + str(len(self.noise4_raw_list)))
         # axs[1].set_xscale('log')
         # axs[1].set_yscale('log')
-        axs[1].set_xlticks(range(0,10,1))
+        axs[1].set_xlticks(np.arange(0, 11, 1))
         axs[1].set_xlim(0, 10)
         axs[1].set_xlabel("Energy/MeV")
         axs[1].set_ylabel("Counts")
