@@ -1156,7 +1156,7 @@ class ReadRoot():
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
             # Convert the strings to floats
-            self.noise5_raw_list = [float(value)*1e6 for value in reader]
+            self.noise5_raw_list = [float(value)*1e6 for value in number_list]
             # Convert the strings to floats
             # self.noise5_raw_list= [[float(row[0]), float(row[1])] for row in reader]
 
