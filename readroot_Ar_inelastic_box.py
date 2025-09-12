@@ -465,7 +465,7 @@ class ReadRoot():
         self.N_check.to_csv(self.false_2_path_mid, index=False)
 
         n_list_inela = self.LAr_n_merged_inela["Event"].to_list()
-        print("Ncheck_ inel", n_list_inela)
+        # print("Ncheck_ inel", n_list_inela)
         self.N_check_inela = self.df[(self.df["Event"].isin(n_list_inela)) & (
                 (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36') | (
                 self.df["name"] == 'gamma') | (self.df["name"] == 'e-'))]
