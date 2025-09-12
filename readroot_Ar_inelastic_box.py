@@ -1158,7 +1158,7 @@ class ReadRoot():
             self.noise5_raw_list = [float(value) * 1e6 for value in number_list]
 
 
-        print(self.noise5_raw_list[:10])
+        print("noise 5 list",self.noise5_raw_list[:10])
 
 
         with open(self.false_4_path, 'r') as file: # inelastic neutron gamma energy
