@@ -1189,11 +1189,11 @@ class ReadRoot():
         axs[0, 0].set_xlabel("Energy/eV")
         axs[0, 0].set_ylabel("Counts")
 
-        axs[0, 1].hist(self.noise4_raw_list, bins=500)
+        axs[0, 1].hist(self.noise4_raw_list, bins=np.logspace(-5, 7, 500))
         axs[0, 1].set_title("Inelastic Gamma energy; total counts " + str(len(self.noise4_raw_list)))
-        # axs[0, 1].set_xscale('log')
-        # axs[0, 1].set_yscale('log')
-        # axs[0, 1].set_xlim(1e6, 1e7)
+        axs[0, 1].set_xscale('log')
+        axs[0, 1].set_yscale('log')
+        axs[0, 1].set_xlim(1e6, 1e7)
         axs[0, 1].set_xlabel("Energy/eV")
         axs[0, 1].set_ylabel("Counts")
        
