@@ -1089,7 +1089,7 @@ class ReadRoot():
             ['Event', 'Volume', 'Track ID', 'X/mm', 'Y/mm', 'Z/mm', 'px/MeV', 'py/MeV', 'pz/MeV', "PreKinetic/MeV",
              'Parent ID']]
         print("first income shoule be 1E7", len(self.df_neutron_income["Event"].to_list()),
-              self.df_neutron_income.head(100))
+              self.df_neutron_income["PreKinetic/MeV"].head(100))
 
         #270mm for single sap
         # 535 for double sap
