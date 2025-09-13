@@ -218,7 +218,8 @@ class ReadRoot():
         self.gamma_energy_path = self.base_path + "gamma_energies.csv"
         self.lowgamma_energy_path = self.base_path + "low_gamma_energies.csv"
 
-        self.filepath = self.base_path + "dmx_ar_inelastic_1E6.root"
+        # self.filepath = self.base_path + "dmx_ar_inelastic_1E6.root"
+        self.filepath = self.base_path +"dmx_ar_inelastic_low14_1E6.root"
         print(self.filepath)
 
         self.file = uproot.open(self.filepath)["tree"]
