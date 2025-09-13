@@ -8,6 +8,9 @@ class ReadRoot:
         self.base_path = "/data/runzezhang/result/TN_sims_D/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
+        self.base_path = "/data/runzezhang/result/TN_box/"
+        self.plot_path = '/data/runzezhang/result/TN_box/plot/'
+
         # self.false_1 = "AmLi_1E7_false1.csv"
         # self.false_2 = "AmLi_1E7_false2.csv"
         # self.signal = "AmLi_1E7_sig.csv"
