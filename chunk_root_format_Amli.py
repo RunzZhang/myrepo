@@ -30,7 +30,10 @@ class ReadRoot:
         self.tree_name = "tree"  # Assuming your TTree is named "tree"
 
         # Define the columns you want to read and write
-        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV","PostKinetic/MeV"
+        # self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV","PostKinetic/MeV"
+        #                          "Recoiled/MeV", "Volume", "Process"]
+        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV",
+                                 "PostKinetic/MeV",
                                  "Recoiled/MeV", "Volume", "Process"]
 
     def chunk_and_write_root(self, num_chunks=20, output_dir=None):
