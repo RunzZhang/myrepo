@@ -7,8 +7,8 @@ class SN():
         # after generate new files, you need to select the capture ratio/source for different configs in read_files function.
         # then choose the correct signal/noise of with clause in read files.
         # at last change the self.name and plot_name in plot function
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_2/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_2/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
         self.false_1 = "AmLi_false1.csv"
         self.false_2 = "AmLi_false2.csv"
