@@ -1228,7 +1228,7 @@ class ReadRoot():
 
         fig, axs = plt.subplots(3, 2, figsize=(10, 8))
 
-        axs[0, 0].hist(self.noise5_raw_list, bins=np.logspace(-5, 7, 200))
+        axs[0, 0].hist(self.noise5_raw_list, bins=np.logspace(-10, 1, 200))
         axs[0, 0].set_title("Initial energy; total counts " + str(len(self.noise5_raw_list)))
         axs[0, 0].set_xscale('log')
         axs[0, 0].set_yscale('log')
@@ -1242,7 +1242,7 @@ class ReadRoot():
         # axs[0, 1].set_xlabel("angle/rad")
         # axs[0, 1].set_ylabel("Counts")
 
-        counts_KE, bins_KE, patches_KE =axs[1, 0].hist(self.noise3_raw_list, bins=np.logspace(-5, 7, 200))
+        counts_KE, bins_KE, patches_KE =axs[1, 0].hist(self.noise3_raw_list, bins=np.logspace(-10, 1, 200))
         # axs[1, 0].hist(self.noise3_raw_list, bins=np.logspace(-5, 7, 200))
         axs[1, 0].set_title("1st plane energy; total counts " + str(len(self.noise3_raw_list)))
         axs[1, 0].set_xscale('log')
@@ -1259,7 +1259,7 @@ class ReadRoot():
 
 
         # counts_KE, bins_KE, patches_KE =axs[2, 0].hist(self.noise4_raw_list, bins=np.logspace(-5, 7, 200))
-        axs[2, 0].hist(self.noise4_raw_list, bins=np.logspace(-5, 7, 200))
+        axs[2, 0].hist(self.noise4_raw_list, bins=np.logspace(-10, 1, 200))
         axs[2, 0].set_title("2nd plane energy; total counts "+str(len(self.noise4_raw_list)))
         axs[2, 0].set_xscale('log')
         axs[2, 0].set_yscale('log')
