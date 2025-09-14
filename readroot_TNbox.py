@@ -1206,7 +1206,7 @@ class ReadRoot():
             number_list = next(reader)
             # Convert the strings to floats
             self.noise3_raw_list = [float(value) for value in number_list]
-        print("noise3",min(self.noise3_raw_list))
+        print("noise3",min(self.noise3_raw_list), self.noise3_raw_list[:20])
 
 
         with open(self.false_4_path, 'r') as file:
@@ -1215,7 +1215,7 @@ class ReadRoot():
             number_list = next(reader)
             # Convert the strings to floats
             self.noise4_raw_list = [float(value) for value in number_list]
-        print("noise4", min(self.noise4_raw_list))
+        print("noise4", min(self.noise4_raw_list), self.noise4_raw_list[:20])
 
 
         with open(self.false_5_path, 'r') as file:
@@ -1271,11 +1271,11 @@ class ReadRoot():
         Theta_bin_center = 0.5 * (bins_theta[:-1] + bins_theta[1:])
         print("KE")
         for energy, count in zip(KE_bin_center, counts_KE):
-            print(f"/gps/hist/point {energy:.6e} {int(count)}")
+            print(f"/gps/hist/point {energy:.11e} {int(count)}")
 
         print("\n Theta")
         for energy, count in zip(Theta_bin_center, counts_theta):
-            print(f"/gps/hist/point {energy:.6e} {int(count)}")
+            print(f"/gps/hist/point {energy:.11e} {int(count)}")
 
         axs[2, 1].hist(self.neutron_angle_list3, bins = 200)
         axs[2, 1].set_title("2nd plane angle")
