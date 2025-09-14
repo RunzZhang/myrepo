@@ -138,6 +138,8 @@ class ReadRoot():
         # self.filepath = self.base_path + "dmx_Cfneutron_Ncry_1E6.root"
         self.filepath = self.base_path +"dmx_Cfneutron_Ncry_1E6_"+str(i)+".root"
 
+
+
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ", self.file.keys(), len(self.file.arrays()))
         # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Pre Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
