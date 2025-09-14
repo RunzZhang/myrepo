@@ -860,6 +860,7 @@ class ReadRoot():
         self.df_20575 = self.df[(self.df["Event"]==581)|(self.df["Event"]==2906)|(self.df["Event"]==329)|(self.df["Event"]==568)]
         self.df_20575.to_csv(self.base_path + "dmx_single_n_gamma_CF_20575.csv", index=False)
     def LAr_compare(self):
+        print(self.df.head(30))
         self.df_Ncapture = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Track ID']]
