@@ -8,8 +8,8 @@ class ReadRoot:
         self.base_path = "/data/runzezhang/result/TN_sims_D/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
-        self.base_path = "/data/runzezhang/result/TN_box/"
-        self.plot_path = '/data/runzezhang/result/TN_box/plot/'
+        # self.base_path = "/data/runzezhang/result/TN_box/"
+        # self.plot_path = '/data/runzezhang/result/TN_box/plot/'
 
         # self.false_1 = "AmLi_1E7_false1.csv"
         # self.false_2 = "AmLi_1E7_false2.csv"
@@ -25,7 +25,7 @@ class ReadRoot:
         # self.signal_path_mid = self.base_path + self.signal_mid
         # self.signal_path = self.base_path + self.signal
 
-        self.filepath = self.base_path + "dmx_AmLi_neutron_1E7.root"
+        self.filepath = self.base_path + "dmx_AmLi_1E7.root"
         # self.filepath = self.base_path + "dmx_AmLi.root" # test
         self.tree_name = "tree"  # Assuming your TTree is named "tree"
 
@@ -38,7 +38,7 @@ class ReadRoot:
 
     def chunk_and_write_root(self, num_chunks=20, output_dir=None):
         if output_dir is None:
-            output_dir = os.path.join(self.base_path, "chunked_root_files_AmLi_2")
+            output_dir = os.path.join(self.base_path, "chunked_root_files_AmLi_SN")
         os.makedirs(output_dir, exist_ok=True)
 
         with uproot.open(self.filepath) as file:
