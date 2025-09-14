@@ -63,12 +63,12 @@ def test_write():
         f = uproot.open("/data/runzezhang/result/TN_sims_D/chunked_root_files_test/dmx_Cf_1E7_2.root")
         tree = f["tree"]  # Or whatever your tree name is
         print("Successfully opened the file!")
-        columns= ["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV","Volume","Process"]
-        # columns = ["Event", "Kinetic/keV","Recoiled/keV","Process"]
+        columns= ["Event","name","Parent ID","Track ID","Step ID","X/mm","PreKinetic/MeV","Recoiled/MeV","Volume","Process"]
+        # columns = ["Event", "PreKinetic/MeV","Recoiled/MeV","Process"]
         # Optional: Try to read a few entries to confirm data is there
         # df_test = tree.arrays(columns, library="pd", entry_start=30633056,entry_stop=30633066)
         df_test = tree.arrays(columns, library="pd")
-        # df_test = tree.arrays(["Event", "Kinetic/keV"], library="pd",
+        # df_test = tree.arrays(["Event", "PreKinetic/MeV"], library="pd",
                               # entry_stop=10)
 
         print("First 10 entries:", df_test)
@@ -100,8 +100,8 @@ class RestructureRoot():
         self.reconstruct_filepath = "/data/runzezhang/result/TN_sims_D/chunked_root_files/dmx_rcCf_1E7.csv"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
-        #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
-        self.selected_columns = ["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV","Volume","Process"]
+        #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
+        self.selected_columns = ["Event","name","Parent ID","Track ID","Step ID","X/mm","PreKinetic/MeV","Recoiled/MeV","Volume","Process"]
         self.rows = 1000
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         self.df = self.file.arrays(self.selected_columns, library="pd")
@@ -167,9 +167,9 @@ class ReadRoot():
         self.filepath = self.base_path + f"dmx_AmLi_1E7_{i}.root"
         self.file = uproot.open(self.filepath)["tree"]
         # print("columns: ", self.file.keys())
-        # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/keV', 'Recoiled/keV', 'Volume', 'Process']
-        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "Kinetic/keV",
-                                 "Recoiled/keV", "Volume", "Process"]
+        # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
+        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV","PostKinetic/MeV",
+                                 "Recoiled/MeV", "Volume", "Process"]
         self.rows = 1000
 
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
@@ -329,7 +329,7 @@ class ReadRoot():
         filtered_df2 = merged_df2[merged_df2['_merge'] == 'left_only'].drop(columns=['_merge'])
         print("merged_xor,\n", filtered_df2.head(10))
 
-        self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))&(self.df["Recoiled/keV"]>0) ][
+        self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))&(self.df["Recoiled/MeV"]>0) ][
             ['Event']]
         # print("LAr recoiled",self.LAr_recoiled)
         # filtered df to remove nCapture event
@@ -342,15 +342,15 @@ class ReadRoot():
         # print(self.LAr_n_merged)
         # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
 
-        max_values = self.N_check[( (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])["Recoiled/keV"].max().reset_index()
+        max_values = self.N_check[( (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])["Recoiled/MeV"].max().reset_index()
         print(max_values.head(20))
 
         # add gamma up
-        self.Ar_recoiled_list = max_values["Recoiled/keV"].to_list()
+        self.Ar_recoiled_list = max_values["Recoiled/MeV"].to_list()
         p_observed = [0]
         scatter_ene = [] # in eV
         for i in range(len(self.Ar_recoiled_list)):
-            # 40 /keV 0.03 and 0.2 PCE and PDE
+            # 40 /MeV 0.03 and 0.2 PCE and PDE
             if i > 1E-6:
                 pho_num = self.Ar_recoiled_list[i] * 1E6 * 10 * 0.03 * 0.2 / (1000)
                 scatter_ene.append(self.Ar_recoiled_list[i] * 1E6)
@@ -366,7 +366,7 @@ class ReadRoot():
         # plt.hist(self.Ar_recoiled_list, bins=100)
         # check event 1256
         self.df_event_1542 = self.df[
-            self.df["Event"] == 1542][["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV", "Volume","Process"]]
+            self.df["Event"] == 1542][["Event","name","Parent ID","Track ID","Step ID","X/mm","PreKinetic/MeV","Recoiled/MeV", "Volume","Process"]]
         self.df_event_1542.to_csv("/data/runzezhang/result/TN_sims3/event1542.csv", index=False)
         with open(self.false_2_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
@@ -426,7 +426,7 @@ class ReadRoot():
         print("merged_xor,\n", filtered_df2.head(10))
 
         self.LAr_recoiled = \
-        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/keV"] > 0.001)][
+        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/MeV"] > 0.001)][
             ['Event']]
 
         # print("LAr recoiled",self.LAr_recoiled)
@@ -451,15 +451,15 @@ class ReadRoot():
         # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
 
         max_values = self.N_check[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])[
-            "Recoiled/keV"].max().reset_index()
+            "Recoiled/MeV"].max().reset_index()
         print(max_values.head(20))
 
         # add gamma up
-        self.Ar_recoiled_list = max_values["Recoiled/keV"].to_list()
+        self.Ar_recoiled_list = max_values["Recoiled/MeV"].to_list()
         p_observed = [0]
         scatter_ene = []  # in eV
         for i in range(len(self.Ar_recoiled_list)):
-            # 10 /keV 0.03 and 0.2 PCE and PDE
+            # 10 /MeV 0.03 and 0.2 PCE and PDE
             if i > 1E-6:
                 pho_num = self.Ar_recoiled_list[i] * 1E6 * 10 * 0.03 * 0.2 / (1000)
                 scatter_ene.append(self.Ar_recoiled_list[i] * 1E6)
@@ -476,7 +476,7 @@ class ReadRoot():
         # check event 1256
         self.df_event_1542 = self.df[
             self.df["Event"] == 1542][
-            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "Kinetic/keV", "Recoiled/keV", "Volume",
+            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV", "Recoiled/MeV", "Volume",
              "Process"]]
         self.df_event_1542.to_csv("/data/runzezhang/result/TN_sims3/event1542.csv", index=False)
         with open(self.false_2_path, 'w', newline='') as myfile:
@@ -501,7 +501,7 @@ class ReadRoot():
 
     def inelastic_gamma(self):
         self.df_gamma_rw = pd.read_csv(self.false_3_path_mid)
-        print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
+        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
 
         self.gamma_Scint = self.df_gamma_rw[
             (self.df_gamma_rw['Volume'] == 'LAr_phys')]
@@ -520,14 +520,14 @@ class ReadRoot():
         print(self.df_electron_gamma.head(10))
         # double check gamma
 
-        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/keV"].sum().reset_index()
+        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
         print(summed_values.head(20))
 
         # add gamma up
-        self.electron_recoiled_list = summed_values["Recoiled/keV"].to_list()
+        self.electron_recoiled_list = summed_values["Recoiled/MeV"].to_list()
         p_observed = [0]
         for i in range(len(self.electron_recoiled_list)):
-            # 40 /keV 0.03 and 0.2 PCE and PDE
+            # 40 /MeV 0.03 and 0.2 PCE and PDE
             if i > 1E-6:
                 p_observed.append(self.electron_recoiled_list[i] * 1E6 * 40 * 0.03 * 0.2 / (1000))
 
@@ -577,7 +577,7 @@ class ReadRoot():
         print("merged_xor,\n", filtered_df2.head(10))
 
         self.LAr_recoiled = \
-        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/keV"] > 1E-6)][
+        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/MeV"] > 1E-6)][
             ['Event']]
         # print("LAr recoiled",self.LAr_recoiled)
         # filtered df to remove nCapture event
@@ -591,14 +591,14 @@ class ReadRoot():
         # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
 
         max_values = self.N_check[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])[
-            "Recoiled/keV"].max().reset_index()
+            "Recoiled/MeV"].max().reset_index()
         print(max_values.head(20))
 
         # add gamma up
-        self.Ar_recoiled_list = max_values["Recoiled/keV"].to_list()
+        self.Ar_recoiled_list = max_values["Recoiled/MeV"].to_list()
         p_observed = [0]
         for i in range(len(self.Ar_recoiled_list)):
-            # 40 /keV 0.03 and 0.2 PCE and PDE
+            # 40 /MeV 0.03 and 0.2 PCE and PDE
             if i > 1E-6:
                 pho_num = self.Ar_recoiled_list[i] * 1E6 * 10 * 0.03 * 0.2 / (1000)
                 if pho_num > 1:
@@ -614,7 +614,7 @@ class ReadRoot():
         # check event 1256
         self.df_event_390 = self.df[
             self.df["Event"] == 390][
-            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "Kinetic/keV", "Recoiled/keV", "Volume",
+            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV", "Recoiled/MeV", "Volume",
              "Process"]]
         self.df_event_390.to_csv("/data/runzezhang/result/TN_sims3/event390.csv", index=False)
         with open(self.base_path+"/n_huge_scatterg_CF2.csv", 'w', newline='') as myfile:
@@ -654,7 +654,7 @@ class ReadRoot():
 
 
         self.LAr_recoiled = \
-        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/keV"] > 1E-6)][
+        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/MeV"] > 1E-6)][
             ['Event']]
         # print("LAr recoiled",self.LAr_recoiled)
         # filtered df to remove nCapture event
@@ -668,14 +668,14 @@ class ReadRoot():
         # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
 
         max_values = self.N_check[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])[
-            "Recoiled/keV"].max().reset_index()
+            "Recoiled/MeV"].max().reset_index()
         print(max_values.head(20))
 
         # add gamma up
-        self.Ar_recoiled_list = max_values["Recoiled/keV"].to_list()
+        self.Ar_recoiled_list = max_values["Recoiled/MeV"].to_list()
         p_observed = [0]
         for i in range(len(self.Ar_recoiled_list)):
-            # 40 /keV 0.03 and 0.2 PCE and PDE
+            # 40 /MeV 0.03 and 0.2 PCE and PDE
             if i > 1E-6:
                 pho_num = self.Ar_recoiled_list[i] * 1E6 * 10 * 0.03 * 0.2 / (1000)
                 if pho_num > 1:
@@ -691,7 +691,7 @@ class ReadRoot():
         # check event 1256
         self.df_event_390 = self.df[
             self.df["Event"] == 390][
-            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "Kinetic/keV", "Recoiled/keV", "Volume",
+            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV", "Recoiled/MeV", "Volume",
              "Process"]]
         self.df_event_390.to_csv("/data/runzezhang/result/TN_sims3/event390_fake.csv", index=False)
         with open(self.base_path+"/n_huge_scatterg_CF2_fake.csv", 'w', newline='') as myfile:
@@ -704,7 +704,7 @@ class ReadRoot():
     def Capture_n_scatter_spectrum(self): # somehow logan made the cross where the id difference is 1 like compare 4 scatter with 5 photon generation
 
         self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]!='LAr_phys')][['Event','Track ID']]
-        self.df_head = self.df[(self.df["Event"]==5837)|(self.df["Event"]==2906)|(self.df["Event"]==2907)][["Event","name","Parent ID","Track ID","Step ID","X/mm","Kinetic/keV","Recoiled/keV", "Volume","Process"]]
+        self.df_head = self.df[(self.df["Event"]==5837)|(self.df["Event"]==2906)|(self.df["Event"]==2907)][["Event","name","Parent ID","Track ID","Step ID","X/mm","PreKinetic/MeV","Recoiled/MeV", "Volume","Process"]]
         self.df_Nscatter = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Volume','Track ID', 'Parent ID']]
@@ -732,9 +732,9 @@ class ReadRoot():
         # self.df_n = pd.merge(self.df_sing_Nscatter, self.df_Ncapture,on=['Event','Track ID'], how='inner')
 
 
-        # self.LAr_recoiled = self.df[((self.df["name"]=='Ar40') | (self.df["name"]=='Ar36') )&(self.df["Recoiled/keV"]>1E-3)][['Event','Track ID',"Recoiled/keV"]]
+        # self.LAr_recoiled = self.df[((self.df["name"]=='Ar40') | (self.df["name"]=='Ar36') )&(self.df["Recoiled/MeV"]>1E-3)][['Event','Track ID',"Recoiled/MeV"]]
         # self.LAr_recoiled = \
-        # self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/keV"] > 0.001)][
+        # self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/MeV"] > 0.001)][
         #     ['Event']]
         self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) ][
             ['Event']]
@@ -758,7 +758,7 @@ class ReadRoot():
         self.df_single_n_gamma.to_csv(self.base_path +"dmx_single_n_gamma_CF.csv", index=False)
 
     def Capture_n_scatter_spectrum_loop(self):
-        self.df["Kinetic diff/MeV"] = self.df["Kinetic/keV"].diff()
+        self.df["Kinetic diff/MeV"] = self.df["PreKinetic/MeV"].diff()
         self.df["Kinetic diff/MeV"] = self.df["Kinetic diff/MeV"].fillna(0)
 
         self.df_Ncapture = self.df[
@@ -833,7 +833,7 @@ class ReadRoot():
         self.last_cross = pd.merge(self.x3_n2, self.df_sing_Nscatter, on=['Event'], how='inner')
         self.last_cross_list = self.intersection(self.x3_n2["Event"].unique(),self.df_sing_Nscatter["Event"].unique())
         print("last cross check", len(self.last_cross_list), self.last_cross_list[:10])
-        # # self.LAr_recoiled = self.df[((self.df["name"]=='Ar40') | (self.df["name"]=='Ar36') )&(self.df["Recoiled/keV"]>1E-3)][['Event','Track ID',"Recoiled/keV"]]
+        # # self.LAr_recoiled = self.df[((self.df["name"]=='Ar40') | (self.df["name"]=='Ar36') )&(self.df["Recoiled/MeV"]>1E-3)][['Event','Track ID',"Recoiled/MeV"]]
         # self.LAr_recoiled = \
         #     self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) ][
         #         ['Event']]
@@ -924,7 +924,7 @@ class ReadRoot():
         self.single_n_find_gamma_e()
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv(self.base_path +"dmx_gamma.csv")
-        print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
+        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
@@ -955,7 +955,7 @@ class ReadRoot():
         self.gamma_Scint.to_csv(self.base_path +"gamma_scint2.csv", index=False)
     def find_gamma_e(self):
         self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_gamma.csv")
-        print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
+        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
@@ -972,14 +972,14 @@ class ReadRoot():
         print(self.df_electron_gamma.head(10))
         # double check gamma
 
-        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/keV"].sum().reset_index()
+        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
         print(summed_values.head(20))
 
         # add gamma up
-        self.electron_recoiled_list  = summed_values["Recoiled/keV"].to_list()
+        self.electron_recoiled_list  = summed_values["Recoiled/MeV"].to_list()
         p_observed = [0]
         for i in range(len(self.electron_recoiled_list)):
-            # 40 /keV 0.03 and 0.2 PCE and PDE
+            # 40 /MeV 0.03 and 0.2 PCE and PDE
             p_observed.append(self.electron_recoiled_list[i]*1E6*40*0.03*0.2/(1000))
 
         num = 0
@@ -998,7 +998,7 @@ class ReadRoot():
 
     def single_n_find_gamma_e(self):
         self.df_gamma_rw = pd.read_csv(self.false_1_path_mid)
-        print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
+        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoi
@@ -1021,14 +1021,14 @@ class ReadRoot():
         print(self.df_electron_gamma.head(10))
         # double check gamma
 
-        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/keV"].sum().reset_index()
+        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
         print(summed_values.head(20))
 
         # add gamma up
-        self.electron_recoiled_list  = summed_values["Recoiled/keV"].to_list()
+        self.electron_recoiled_list  = summed_values["Recoiled/MeV"].to_list()
         p_observed = [0]
         for i in range(len(self.electron_recoiled_list)):
-            # 40 /keV 0.03 and 0.2 PCE and PDE
+            # 40 /MeV 0.03 and 0.2 PCE and PDE
             if i> 1E-6:
                 p_observed.append(self.electron_recoiled_list[i]*1E6*40*0.03*0.2/(1000))
 
@@ -1047,7 +1047,7 @@ class ReadRoot():
         # plt.show()
     def single_n_find_gamma_e_loop(self):
         self.df_gamma_rw = pd.read_csv(self.base_path2 + "dmx_single_n_gamma_AmLi_neutron_list_loop.csv")
-        print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
+        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
@@ -1067,14 +1067,14 @@ class ReadRoot():
         print(self.df_electron_gamma.head(10))
         # double check gamma
 
-        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/keV"].sum().reset_index()
+        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
         print(summed_values.head(20))
 
         # add gamma up
-        self.electron_recoiled_list  = summed_values["Recoiled/keV"].to_list()
+        self.electron_recoiled_list  = summed_values["Recoiled/MeV"].to_list()
         p_observed = [0]
         for i in range(len(self.electron_recoiled_list)):
-            # 40 /keV 0.03 and 0.2 PCE and PDE
+            # 40 /MeV 0.03 and 0.2 PCE and PDE
             if i> 1E-6:
                 p_observed.append(self.electron_recoiled_list[i]*1E6*40*0.03*0.2/(1000))
 
@@ -1093,7 +1093,7 @@ class ReadRoot():
         plt.show()
     def LAr_find_gamma_e(self):
         self.df_gamma_rw = pd.read_csv(self.signal_path_mid)
-        print(self.df_gamma_rw[["Kinetic/keV"]].head(20))
+        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
         # we need to do severalthings:
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
@@ -1122,19 +1122,19 @@ class ReadRoot():
         print(self.df_electron_gamma_merged.head(10))
         # double check gamma
 
-        # summed_values = self.df_electron_gamma_merged.groupby(['Event', 'Parent ID'])["Recoiled/keV"].sum().reset_index()
+        # summed_values = self.df_electron_gamma_merged.groupby(['Event', 'Parent ID'])["Recoiled/MeV"].sum().reset_index()
         summed_values = self.df_electron_gamma_merged.groupby(['Event'])[
-            "Recoiled/keV"].sum().reset_index()
+            "Recoiled/MeV"].sum().reset_index()
         print("summed values", len(summed_values["Event"].unique()),
               summed_values["Event"].unique()[:20])
         print(summed_values.head(20))
 
         # add gamma up
-        self.electron_recoiled_list  = summed_values["Recoiled/keV"].to_list()
+        self.electron_recoiled_list  = summed_values["Recoiled/MeV"].to_list()
         p_observed = [0]
         print("recoil list", len(self.electron_recoiled_list))
         for i in range(len(self.electron_recoiled_list)):
-            # 40 /keV 0.03 and 0.2 PCE and PDE
+            # 40 /MeV 0.03 and 0.2 PCE and PDE
             p_observed.append(self.electron_recoiled_list[i]*1E6*40*0.03*0.2/(1000))
         print("p observed list len",len(p_observed))
 
@@ -1174,7 +1174,7 @@ class ReadRoot():
             else:
                 if self.gamma.iloc[index]['Track ID'] not in track_p:
                     track_p.append(self.gamma.iloc[index]['Track ID'])
-                    energy += self.gamma.iloc[index]["Kinetic/keV"]*1000000 # to ev Actullay it is Kinetic/MeV
+                    energy += self.gamma.iloc[index]["PreKinetic/MeV"]*1000000 # to ev Actullay it is Kinetic/MeV
 
         print("energy", energy_p[:10])
 
@@ -1194,7 +1194,7 @@ class ReadRoot():
 
     def FN_spectrum_v2(self):
 
-        self.df_Arrecoil = self.df[(self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')][['Event','name','Parent ID','Track ID',"Recoiled/keV",'Process']]
+        self.df_Arrecoil = self.df[(self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')][['Event','name','Parent ID','Track ID',"Recoiled/MeV",'Process']]
 
         print(self.df_Arrecoil.head(10))
         # capture ar41 and then radiactive decay
@@ -1243,7 +1243,7 @@ class ReadRoot():
         self.df_Arrecoil = self.df[
             (self.df["name"] == 'Ar36') | (self.df["name"] == 'Ar37') | (self.df["name"] == 'Ar40') | (
                         self.df["name"] == 'Ar41')][
-            ['Event', 'name', 'Parent ID', 'Track ID', "Recoiled/keV", 'Volume','Process']]
+            ['Event', 'name', 'Parent ID', 'Track ID', "Recoiled/MeV", 'Volume','Process']]
 
         self.df_neutron = self.df[(self.df['name'] == 'neutron')&(self.df['Volume'] == 'LAr_phys')]
         self.df_n_cap = self.df_neutron[self.df_neutron["Process"]=='nCapture']
@@ -1274,11 +1274,11 @@ class ReadRoot():
         self.multi_clean_df = self.keep_1st(self.multi_df,["Event","Parent ID"])
         print("multi_clean", len(self.multi_clean_df.index),'\n', self.multi_clean_df.head(10))
 
-        self.ela_sig_300 = self.sig_df[self.sig_df["Recoiled/keV"] > 1E-3]
+        self.ela_sig_300 = self.sig_df[self.sig_df["Recoiled/MeV"] > 1E-3]
         print("300", len(self.ela_sig_300.index), '\n', self.ela_sig_300.head(10))
 
         # energy after applying threshold
-        (self.sig_df_t, self.multi_df_t) = self.find_single_n_multi(self.ar_nela[self.ar_nela["Recoiled/keV"]>1E-3])
+        (self.sig_df_t, self.multi_df_t) = self.find_single_n_multi(self.ar_nela[self.ar_nela["Recoiled/MeV"]>1E-3])
         print("sig_t", len(self.sig_df_t.index), '\n', self.sig_df_t.head(10))
         print("multi_t", len(self.multi_df_t.index), '\n', self.multi_df_t.head(10))
         self.multi_clean_df_t = self.keep_1st(self.multi_df_t, ["Event", "Parent ID"])
@@ -1291,7 +1291,7 @@ class ReadRoot():
 
     def plot_elastic(self):
         self.df = pd.read_csv(self.base_path +"dmx_argon_elastic.csv")
-        energy_list  = self.df["Recoiled/keV"].to_list()
+        energy_list  = self.df["Recoiled/MeV"].to_list()
         energy_ev = []
         energy_1kev = []
         energy_10kev = []
