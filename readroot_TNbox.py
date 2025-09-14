@@ -1242,7 +1242,8 @@ class ReadRoot():
         # axs[0, 1].set_xlabel("angle/rad")
         # axs[0, 1].set_ylabel("Counts")
 
-        axs[1, 0].hist(self.noise3_raw_list, bins=np.logspace(-5, 7, 200))
+        counts_KE, bins_KE, patches_KE =axs[1, 0].hist(self.noise3_raw_list, bins=np.logspace(-5, 7, 200))
+        # axs[1, 0].hist(self.noise3_raw_list, bins=np.logspace(-5, 7, 200))
         axs[1, 0].set_title("1st plane energy; total counts " + str(len(self.noise3_raw_list)))
         axs[1, 0].set_xscale('log')
         axs[1, 0].set_yscale('log')
@@ -1257,14 +1258,15 @@ class ReadRoot():
         axs[1, 1].set_ylabel("Counts")
 
 
-        counts_KE, bins_KE, patches_KE =axs[2, 0].hist(self.noise4_raw_list, bins=np.logspace(-5, 7, 200))
+        # counts_KE, bins_KE, patches_KE =axs[2, 0].hist(self.noise4_raw_list, bins=np.logspace(-5, 7, 200))
+        axs[2, 0].hist(self.noise4_raw_list, bins=np.logspace(-5, 7, 200))
         axs[2, 0].set_title("2nd plane energy; total counts "+str(len(self.noise4_raw_list)))
         axs[2, 0].set_xscale('log')
         axs[2, 0].set_yscale('log')
         axs[2, 0].set_xlim(1e-9, 1e1)
         axs[2, 0].set_xlabel("Energy/MeV")
         axs[2, 0].set_ylabel("Counts")
-
+        print("bins kE", bins_KE[:20])
         KE_bin_center = 0.5*(bins_KE[:-1]+bins_KE[1:])
         Theta_bin_center = 0.5 * (bins_theta[:-1] + bins_theta[1:])
         print("KE")
