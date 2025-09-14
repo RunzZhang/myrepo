@@ -1205,7 +1205,7 @@ class ReadRoot():
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
             # Convert the strings to floats
-            self.noise3_raw_list = [float(value) * 1e6 for value in number_list]
+            self.noise3_raw_list = [float(value) for value in number_list]
 
 
         with open(self.false_4_path, 'r') as file:
@@ -1213,7 +1213,7 @@ class ReadRoot():
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
             # Convert the strings to floats
-            self.noise4_raw_list = [float(value) * 1e6 for value in number_list]
+            self.noise4_raw_list = [float(value) for value in number_list]
 
 
         with open(self.false_5_path, 'r') as file:
@@ -1221,7 +1221,7 @@ class ReadRoot():
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
             # Convert the strings to floats
-            self.noise5_raw_list = [float(value) * 1e6 for value in number_list]
+            self.noise5_raw_list = [float(value) for value in number_list]
 
         fig, axs = plt.subplots(3, 2, figsize=(10, 8))
 
@@ -1229,8 +1229,8 @@ class ReadRoot():
         axs[0, 0].set_title("Initial energy; total counts " + str(len(self.noise5_raw_list)))
         axs[0, 0].set_xscale('log')
         axs[0, 0].set_yscale('log')
-        axs[0, 0].set_xlim(1e-3, 1e7)
-        axs[0, 0].set_xlabel("Energy/eV")
+        axs[0, 0].set_xlim(1e-9, 1e1)
+        axs[0, 0].set_xlabel("Energy/MeV")
         axs[0, 0].set_ylabel("Counts")
 
         # axs[0, 1].hist(self.neutron_angle_list2)
@@ -1240,37 +1240,48 @@ class ReadRoot():
         # axs[0, 1].set_ylabel("Counts")
 
         axs[1, 0].hist(self.noise3_raw_list, bins=np.logspace(-5, 7, 100))
-        axs[1, 0].set_title("1st plane energy; total counts "+str(len(self.noise3_raw_list)))
+        axs[1, 0].set_title("1st plane energy; total counts " + str(len(self.noise3_raw_list)))
         axs[1, 0].set_xscale('log')
         axs[1, 0].set_yscale('log')
-        axs[1, 0].set_xlim(1e-3,1e7)
-        axs[1, 0].set_xlabel("Energy/eV")
+        axs[1, 0].set_xlim(1e-9, 1e1)
+        axs[1, 0].set_xlabel("Energy/MeV")
         axs[1, 0].set_ylabel("Counts")
 
-
-        axs[1, 1].hist(self.neutron_angle_list2)
+        counts_theta, bins_theta, patches_theta =axs[1, 1].hist(self.neutron_angle_list2, bins = 100)
         axs[1, 1].set_title("1st plane angle")
         axs[1, 1].set_yscale('log')
         axs[1, 1].set_xlabel("angle/rad")
         axs[1, 1].set_ylabel("Counts")
 
 
-        axs[2, 0].hist(self.noise4_raw_list, bins=np.logspace(-5, 7, 100))
+        counts_KE, bins_KE, patches_KE =axs[2, 0].hist(self.noise4_raw_list, bins=np.logspace(-5, 7, 100))
         axs[2, 0].set_title("2nd plane energy; total counts "+str(len(self.noise4_raw_list)))
         axs[2, 0].set_xscale('log')
         axs[2, 0].set_yscale('log')
-        axs[2, 0].set_xlim(1e-3, 1e7)
-        axs[2, 0].set_xlabel("Energy/eV")
+        axs[2, 0].set_xlim(1e-9, 1e1)
+        axs[2, 0].set_xlabel("Energy/MeV")
         axs[2, 0].set_ylabel("Counts")
 
-        axs[2, 1].hist(self.neutron_angle_list3)
+        KE_bin_center = 0.5*(bins_KE[:-1]+bins_KE[1:])
+        Theta_bin_center = 0.5 * (bins_theta[:-1] + bins_theta[1:])
+        print("KE")
+        for energy, count in zip(KE_bin_center, counts_KE):
+            print(f"/gps/hist/point {energy:.6e} {int(count)}")
+
+        print("\n Theta")
+        for energy, count in zip(Theta_bin_center, counts_theta):
+            print(f"/gps/hist/point {energy:.6e} {int(count)}")
+
+        axs[2, 1].hist(self.neutron_angle_list3, bins = 100)
         axs[2, 1].set_title("2nd plane angle")
         axs[2, 1].set_yscale('log')
         axs[2, 1].set_xlabel("angle/rad")
         axs[2, 1].set_ylabel("Counts")
 
+
+
         plt.tight_layout()
-        plot_name = "AmLi_neutron_outcome_distribution_1E6.png"
+        plot_name = "AmLi_neutron_outcome_distribution_1E7.png"
         plt.savefig(self.plot_path + plot_name)
 
     def plot_neutron_momentum_spacial_distribute(self):
