@@ -1206,6 +1206,7 @@ class ReadRoot():
             number_list = next(reader)
             # Convert the strings to floats
             self.noise3_raw_list = [float(value) for value in number_list]
+        print("noise3",min(self.noise3_raw_list))
 
 
         with open(self.false_4_path, 'r') as file:
@@ -1214,6 +1215,7 @@ class ReadRoot():
             number_list = next(reader)
             # Convert the strings to floats
             self.noise4_raw_list = [float(value) for value in number_list]
+        print("noise4", min(self.noise4_raw_list))
 
 
         with open(self.false_5_path, 'r') as file:
@@ -1222,6 +1224,7 @@ class ReadRoot():
             number_list = next(reader)
             # Convert the strings to floats
             self.noise5_raw_list = [float(value) for value in number_list]
+        print("noise5", min(self.noise5_raw_list))
 
         fig, axs = plt.subplots(3, 2, figsize=(10, 8))
 
