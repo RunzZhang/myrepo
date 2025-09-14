@@ -48,7 +48,7 @@ class SN():
 
 # main funtion we use
     def read_files(self):
-        self.Activity = 0.032  # source activity in mivro curie for 50 bubbles/hour
+        self.Activity = 2.135  # source activity in mivro curie for 50 bubbles/hour
         # self.Activity = 0.0416  # source activity in mivro curie
         # self.capture_ratio = 1.164E-3 # 1125eV 1.4g/cm Ar
         # self.capture_ratio = 0.121 # 400 eV 1.4g/cm3 Ar
@@ -57,7 +57,7 @@ class SN():
         # self.capture_ratio = 6.52E-3  # 700 eV
         # self.capture_ratio = 1.158E-3  # 1125 eV
         # self.rate = 435.6 #/s # CF neutron rate 9 mucurie
-        self.rate = 0.56 #AmLi neutron rate
+        self.rate = 0.1968 #AmLi neutron rate
         self.G4_events= 1E7
         self.G4_sig_time=(self.G4_events / self.rate)
         with open(self.signal_path, 'r') as file:
@@ -181,8 +181,8 @@ class SN():
             photon_n_list.append(i)
             (sig_num,noise_num)= self.prepare(noise_list,i)
             # change signal_number form /s to /h
-            signal_rate_list.append(self.Activity*3600*sig_num*self.capture_ratio/(9*self.G4_sig_time))
-            noise_rate_list.append(3600*self.Activity*noise_num/(9*self.G4_noise_time))
+            signal_rate_list.append(self.Activity*3600*sig_num*self.capture_ratio/(2.135*self.G4_sig_time))
+            noise_rate_list.append(3600*self.Activity*noise_num/(2.135*self.G4_noise_time))
             signal_num_list.append(sig_num)
             noise_num_list.append(noise_num)
             if noise_num !=0:
