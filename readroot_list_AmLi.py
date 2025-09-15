@@ -164,7 +164,7 @@ class ReadRoot():
 
 
 
-        self.filepath = self.base_path + f"dmx_AmLi_1E7_2_{i}.root"
+        self.filepath = self.base_path + f"dmx_AmLi_1E7_{i}.root"
         self.file = uproot.open(self.filepath)["tree"]
         # print("columns: ", self.file.keys())
         # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
@@ -181,14 +181,14 @@ class ReadRoot():
 
 
         # signal rate, caputre in liquid argon
-        # self.LAr_gamma_event()
+        self.LAr_gamma_event()
 
         # single elastic scatter and capture false signal 1
         # self.single_e_n_capture_event()
 
         # false noise 2, need to relocate directory
         # including inelastic
-        self.Huge_scatter_event()
+        # self.Huge_scatter_event()
         #
 
 
