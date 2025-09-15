@@ -250,7 +250,7 @@ class SN():
         ax2 = ax1.twinx()
         line3, = ax2.plot(pho1, sn1, 'r-', label='SNR')
         ax2.set_ylabel('Signal to noise ratio', color='black', fontsize=16)
-        ax2.set_ylim([0, 20])
+        ax2.set_ylim([0, 120])
 
         # Legend for first plot
         lines_group1 = [line1, line2, line3]
@@ -277,7 +277,7 @@ class SN():
         ax4 = ax3.twinx()
         line6, = ax4.plot(pho2, sn2, 'r-', label='SNR')
         ax4.set_ylabel('Signal to noise ratio', color='black', fontsize=16)
-        ax4.set_ylim([0,20])
+        ax4.set_ylim([0,120])
 
         # Legend for first plot
         lines_group2 = [line4, line5, line6]
@@ -304,7 +304,7 @@ class SN():
         ax6 = ax5.twinx()
         line9, = ax5.plot(pho3, sn3, 'r-', label='SNR')
         ax6.set_ylabel('Signal to noise ratio', color='black', fontsize=16)
-        ax4.set_ylim([0.0, 20])
+        ax6.set_ylim([0.0, 120])
 
         # Legend for first plot
         lines_group3 = [line7, line8, line9]
