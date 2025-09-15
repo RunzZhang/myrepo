@@ -209,8 +209,8 @@ class SN():
 
                 point.append(i)
                 # print("point", point)
-                SN_ratio.append(max(SN_ratio)) # append line in the graph
-                # SN_ratio.append(max(SN_ratio)*1E5)  # append inf line in the graph
+                # SN_ratio.append(max(SN_ratio)) # append line in the graph
+                SN_ratio.append(max(SN_ratio)*1E5)  # append inf line in the graph
         for j in range(len(signal_rate_list)):
             if photon_n_list[j]>200:
                 print("output",j,signal_rate_list[j],noise_rate_list[j])
