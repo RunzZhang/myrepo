@@ -235,8 +235,8 @@ class SN():
         line1, = ax1.plot(pho1, sig1, 'g-', label='Neutron Capture Signal')
         line2, = ax1.plot(pho1, noise1, 'b-', label='Background')
         ax1.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
-        # ax1.set_xlim([0, 600])
-        # ax1.set_ylim([1e-3, 20])
+        ax1.set_xlim([0, 600])
+        ax1.set_ylim([1e-2, 10])
         # print("pho",pho1)
         # print("noise1", noise1)
 
@@ -264,8 +264,8 @@ class SN():
         line4, = ax3.plot(pho2, sig2, 'g-', label='Neutron Capture Signal')
         line5, = ax3.plot(pho2, noise2, 'b-', label='Background')
         ax3.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
-        # ax3.set_xlim([0, 600])
-        # ax3.set_ylim([1e-3, 20])
+        ax3.set_xlim([0, 600])
+        ax3.set_ylim([1e-2, 10])
 
         ax3.set_xlabel('Photon Number Threshold (number)', fontsize=16)
         ax3.set_ylabel('Rate (event/hr)', color='black', fontsize=16)
@@ -291,8 +291,8 @@ class SN():
         line7, = ax5.plot(pho3, sig3, 'g-', label='Neutron Capture Signal')
         line8, = ax5.plot(pho3, noise3, 'b-', label='Background')
         ax5.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
-        # ax3.set_xlim([0, 600])
-        # ax3.set_ylim([1e-3, 20])
+        ax3.set_xlim([0, 600])
+        ax3.set_ylim([1e-2, 10])
 
         ax5.set_xlabel('Photon Number Threshold (number)', fontsize=16)
         ax5.set_ylabel('Rate (event/hr)', color='black', fontsize=16)
