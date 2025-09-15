@@ -106,6 +106,7 @@ class SN():
     def combine_data(self):
         # get rate vs diff threshold
         print(len(self.noise1_final_list))
+        print("noise1", self.noise1_final_list)
         max_noise1_photon = round(max(self.noise1_final_list))
         print("max",max_noise1_photon)
         # form the threshold function
