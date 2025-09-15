@@ -230,7 +230,7 @@ class SN():
     def plot_sn(self, sig1, sig2,sig3, pho1, pho2, pho3,noise1, noise2, noise3, sn1, sn2, sn3):
         fig, (ax1, ax3, ax5) = plt.subplots(1, 3, figsize=(12, 5))  # ax1 for first plot, ax3 for second plot
         left_axis_range=[4e-2,3e1]
-        right_axis_range=[1e-1,1e2]
+        right_axis_range=[1e-1,1e3]
 
         # ======== FIRST PLOT (your original one) ========
         # Plot dataset 1 and dataset 2 on the left y-axis
