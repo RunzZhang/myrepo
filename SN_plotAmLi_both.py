@@ -229,6 +229,8 @@ class SN():
         return(signal_rate_list, photon_n_list, noise_rate_list,  SN_ratio)
     def plot_sn(self, sig1, sig2,sig3, pho1, pho2, pho3,noise1, noise2, noise3, sn1, sn2, sn3):
         fig, (ax1, ax3, ax5) = plt.subplots(1, 3, figsize=(12, 5))  # ax1 for first plot, ax3 for second plot
+        left_axis_range=[4e-2,3e1]
+        right_axis_range=[1e-1,1e2]
 
         # ======== FIRST PLOT (your original one) ========
         # Plot dataset 1 and dataset 2 on the left y-axis
@@ -236,7 +238,7 @@ class SN():
         line2, = ax1.plot(pho1, noise1, 'b-', label='Background')
         ax1.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
         ax1.set_xlim([0, 600])
-        ax1.set_ylim([1e-2, 10])
+        ax1.set_ylim(left_axis_range)
         # print("pho",pho1)
         # print("noise1", noise1)
 
@@ -251,7 +253,9 @@ class SN():
         ax2 = ax1.twinx()
         line3, = ax2.plot(pho1, sn1, 'r-', label='SNR')
         ax2.set_ylabel('Signal to noise ratio', color='black', fontsize=16)
-        ax2.set_ylim([0, 120])
+        # ax2.set_ylim([0, 120])
+        ax2.set_ylim(right_axis_range)
+        ax2.set_yscale('log')
 
         # Legend for first plot
         lines_group1 = [line1, line2, line3]
@@ -266,7 +270,7 @@ class SN():
         line5, = ax3.plot(pho2, noise2, 'b-', label='Background')
         ax3.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
         ax3.set_xlim([0, 600])
-        ax3.set_ylim([1e-2, 10])
+        ax3.set_ylim(left_axis_range)
 
         ax3.set_xlabel('Photon Number Threshold (number)', fontsize=16)
         ax3.set_ylabel('Rate (event/hr)', color='black', fontsize=16)
@@ -278,7 +282,9 @@ class SN():
         ax4 = ax3.twinx()
         line6, = ax4.plot(pho2, sn2, 'r-', label='SNR')
         ax4.set_ylabel('Signal to noise ratio', color='black', fontsize=16)
-        ax4.set_ylim([0,120])
+        # ax4.set_ylim([0,120])
+        ax4.set_ylim(right_axis_range)
+        ax4.set_yscale('log')
 
         # Legend for first plot
         lines_group2 = [line4, line5, line6]
@@ -293,7 +299,7 @@ class SN():
         line8, = ax5.plot(pho3, noise3, 'b-', label='Background')
         ax5.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
         ax3.set_xlim([0, 600])
-        ax3.set_ylim([1e-2, 10])
+        ax3.set_ylim(left_axis_range)
 
         ax5.set_xlabel('Photon Number Threshold (number)', fontsize=16)
         ax5.set_ylabel('Rate (event/hr)', color='black', fontsize=16)
@@ -306,6 +312,9 @@ class SN():
         line9, = ax5.plot(pho3, sn3, 'r-', label='SNR')
         ax6.set_ylabel('Signal to noise ratio', color='black', fontsize=16)
         ax6.set_ylim([0.0, 120])
+
+        ax6.set_ylim(right_axis_range)
+        ax6.set_yscale('log')
 
         # Legend for first plot
         lines_group3 = [line7, line8, line9]
