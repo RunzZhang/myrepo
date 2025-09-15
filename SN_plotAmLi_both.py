@@ -18,6 +18,7 @@ class SN():
         self.name3 = "Inelastic Background"
         self.name = "Backgrounds"
         self.plot_name = self.name+"AmLi_1E7_total_updated.pdf"
+        self.pho_threshold = 100
         self.signal_final_list = []
         self.noise1_final_list =[]
         self.noise2_final_list = []
@@ -212,7 +213,7 @@ class SN():
                 # SN_ratio.append(max(SN_ratio)) # append line in the graph
                 SN_ratio.append(max(SN_ratio)*1E5)  # append inf line in the graph
         for j in range(len(signal_rate_list)):
-            if photon_n_list[j]>200:
+            if photon_n_list[j]>self.pho_threshold:
                 print("output",j,signal_rate_list[j],noise_rate_list[j])
                 print("stat num", noise_num_list[j])
                 break
@@ -244,7 +245,7 @@ class SN():
 
         ax1.set_xlabel('Photon Number Threshold (number)', fontsize=16)
         ax1.set_ylabel('Rate (event/hr)', color='black', fontsize=16)
-        ax1.axvline(x=200, color='black', linestyle='dotted')
+        ax1.axvline(x=self.pho_threshold, color='black', linestyle='dotted')
         ax1.set_yscale('log')
         # ax1.set_aspect('equal', adjustable="datalim")
 
@@ -274,7 +275,7 @@ class SN():
 
         ax3.set_xlabel('Photon Number Threshold (number)', fontsize=16)
         ax3.set_ylabel('Rate (event/hr)', color='black', fontsize=16)
-        ax3.axvline(x=200, color='black', linestyle='dotted')
+        ax3.axvline(x=self.pho_threshold, color='black', linestyle='dotted')
         ax3.set_yscale('log')
         # ax3.set_aspect('equal')
 
@@ -303,7 +304,7 @@ class SN():
 
         ax5.set_xlabel('Photon Number Threshold (number)', fontsize=16)
         ax5.set_ylabel('Rate (event/hr)', color='black', fontsize=16)
-        ax5.axvline(x=200, color='black', linestyle='dotted')
+        ax5.axvline(x=self.pho_threshold, color='black', linestyle='dotted')
         ax5.set_yscale('log')
         # ax5.set_aspect('equal')
 
