@@ -106,7 +106,6 @@ class SN():
     def combine_data(self):
         # get rate vs diff threshold
         print(len(self.noise1_final_list))
-        print("noise1", self.noise1_final_list)
         max_noise1_photon = round(max(self.noise1_final_list))
         print("max",max_noise1_photon)
         # form the threshold function
@@ -195,7 +194,7 @@ class SN():
 
         print("cut",max(noise_list))
         length = round(max(self.signal_final_list))
-        point = []
+        point = [] # threshold cut?
         for i in range(length):
             photon_n_list.append(i)
             (sig_num,noise_num)= self.prepare(noise_list,i)
@@ -245,6 +244,7 @@ class SN():
         ax1.set_ylabel('Rate (event/hr)', color='black', fontsize=16)
         ax1.axvline(x=200, color='black', linestyle='dotted')
         ax1.set_yscale('log')
+        ax1.set_aspect('equal')
 
         # Create another y-axis for SNR
         ax2 = ax1.twinx()
@@ -271,6 +271,7 @@ class SN():
         ax3.set_ylabel('Rate (event/hr)', color='black', fontsize=16)
         ax3.axvline(x=200, color='black', linestyle='dotted')
         ax3.set_yscale('log')
+        ax3.set_aspect('equal')
 
         # Create another y-axis for SNR
         ax4 = ax3.twinx()
@@ -297,6 +298,7 @@ class SN():
         ax5.set_ylabel('Rate (event/hr)', color='black', fontsize=16)
         ax5.axvline(x=200, color='black', linestyle='dotted')
         ax5.set_yscale('log')
+        ax5.set_aspect('equal')
 
         # Create another y-axis for SNR
         ax6 = ax5.twinx()
