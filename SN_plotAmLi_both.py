@@ -299,8 +299,8 @@ class SN():
         line7, = ax5.plot(pho3, sig3, 'g-', label='Neutron Capture Signal')
         line8, = ax5.plot(pho3, noise3, 'b-', label='Background')
         ax5.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
-        ax3.set_xlim([0, 600])
-        ax3.set_ylim(left_axis_range)
+        ax5.set_xlim([0, 600])
+        ax5.set_ylim(left_axis_range)
 
         ax5.set_xlabel('Photon Number Threshold (number)', fontsize=16)
         ax5.set_ylabel('Rate (event/hr)', color='black', fontsize=16)
