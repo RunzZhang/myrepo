@@ -244,7 +244,7 @@ class SN():
         ax1.set_ylabel('Rate (event/hr)', color='black', fontsize=16)
         ax1.axvline(x=200, color='black', linestyle='dotted')
         ax1.set_yscale('log')
-        ax1.set_aspect('equal')
+        # ax1.set_aspect('equal')
 
         # Create another y-axis for SNR
         ax2 = ax1.twinx()
@@ -271,7 +271,7 @@ class SN():
         ax3.set_ylabel('Rate (event/hr)', color='black', fontsize=16)
         ax3.axvline(x=200, color='black', linestyle='dotted')
         ax3.set_yscale('log')
-        ax3.set_aspect('equal')
+        # ax3.set_aspect('equal')
 
         # Create another y-axis for SNR
         ax4 = ax3.twinx()
@@ -298,7 +298,7 @@ class SN():
         ax5.set_ylabel('Rate (event/hr)', color='black', fontsize=16)
         ax5.axvline(x=200, color='black', linestyle='dotted')
         ax5.set_yscale('log')
-        ax5.set_aspect('equal')
+        # ax5.set_aspect('equal')
 
         # Create another y-axis for SNR
         ax6 = ax5.twinx()
