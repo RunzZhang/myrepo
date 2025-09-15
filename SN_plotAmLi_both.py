@@ -244,7 +244,7 @@ class SN():
         ax1.set_ylabel('Rate (event/hr)', color='black', fontsize=16)
         ax1.axvline(x=200, color='black', linestyle='dotted')
         ax1.set_yscale('log')
-        ax1.set_aspect('equal', adjustable='box')
+        ax1.set_aspect('equal', adjustable="datalim")
 
         # Create another y-axis for SNR
         ax2 = ax1.twinx()
