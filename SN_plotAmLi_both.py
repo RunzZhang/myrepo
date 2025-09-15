@@ -245,7 +245,7 @@ class SN():
         ax1.axvline(x=200, color='black', linestyle='dotted')
         ax1.set_yscale('log')
         # ax1.set_aspect('equal', adjustable="datalim")
-        fig.set_size_inches(6, 6)
+        fig.set_size_inches(25, 6)
 
         # Create another y-axis for SNR
         ax2 = ax1.twinx()
