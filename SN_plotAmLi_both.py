@@ -306,7 +306,7 @@ class SN():
         labels_group3 = [line.get_label() for line in lines_group3]
         ax5.legend(lines_group3, labels_group3, loc='upper right')
 
-        ax3.set_title(self.name3, fontsize=16)
+        ax5.set_title(self.name3, fontsize=16)
 
         # Adjust spacing so plots don’t overlap
         plt.tight_layout()
