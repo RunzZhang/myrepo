@@ -237,6 +237,8 @@ class SN():
         ax1.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
         # ax1.set_xlim([0, 600])
         # ax1.set_ylim([1e-3, 20])
+        print("pho",pho1)
+        print("noise1", noise1)
 
         ax1.set_xlabel('Photon Number Threshold (number)', fontsize=16)
         ax1.set_ylabel('Rate (event/hr)', color='black', fontsize=16)
