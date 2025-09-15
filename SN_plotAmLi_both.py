@@ -15,18 +15,20 @@ class SN():
         self.signal = "AmLi_sig.csv"
         self.name1 = "External Capture Background"
         self.name2 = "Hard Scatter Background"
+        self.name3 = "Inelastic Background"
         self.name = "Backgrounds"
-        self.plot_name = self.name+"AmLi_1E7_inelas_updated.pdf"
+        self.plot_name = self.name+"AmLi_1E7_total_updated.pdf"
         self.signal_final_list = []
         self.noise1_final_list =[]
         self.noise2_final_list = []
+        self.noise3_final_list = []
 
 
         #982 statics false 1
         for i in range(1,101):
             self.main_body(i)
-        (result1, result2)=self.combine_data()
-        self.plot_sn(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
+        (result1, result2, result3)=self.combine_data()
+        self.plot_sn(result1[0],result2[0],result3[0], result1[1],result2[1],result3[1],result1[2],result2[2],result3[2],result1[3],result2[3],result3[3])
 
 
     def main_body(self,i):
@@ -99,7 +101,7 @@ class SN():
             # Convert the strings to floats
             self.noise3_raw_list = [float(value) for value in number_list]
         # decide if include the noise3
-        self.noise2_final_list = self.noise2_final_list+ self.noise3_raw_list
+        self.noise3_final_list = self.noise3_final_list+ self.noise3_raw_list
 
     def combine_data(self):
         # get rate vs diff threshold
@@ -130,10 +132,26 @@ class SN():
                 print(f"Noise 2 Progress: {percentage:.0f}%")
             threshold2_list.append(i)
 
+
+        print(len(self.noise3_final_list))
+        max_noise3_photon = round(max(self.noise3_final_list))
+        print("max", max_noise3_photon)
+        # form the threshold function
+        threshold3_list = []
+        bin_size = round(
+            max_noise3_photon / 10)  # if the max noise photon is too large, then we need to modity this bc of RAM
+        for i in range(0, max_noise3_photon):
+            # for i in range(0,round(max_noise_photon*0.1)):
+            if i % bin_size == 0:
+                percentage = (i / max_noise3_photon) * 100
+                print(f"Noise 3 Progress: {percentage:.0f}%")
+            threshold3_list.append(i)
+
         # plot the S/N ratio picture
         result1 = self.unit_transfer( self.noise1_final_list,threshold1_list)
         result2 = self.unit_transfer(self.noise2_final_list, threshold2_list)
-        return (result1, result2)
+        result3 = self.unit_transfer(self.noise3_final_list, threshold3_list)
+        return (result1, result2, result3)
 
     def hist_info(self):
         sig_counts, sig_bin_edges = np.histogram(self.signal_final_list, bins=100)
@@ -209,8 +227,8 @@ class SN():
         print("sig_stats", signal_num_list[0], "noise_stats", noise_num_list[0])
 
         return(signal_rate_list, photon_n_list, noise_rate_list,  SN_ratio)
-    def plot_sn(self, sig1, sig2, pho1, pho2, noise1, noise2, sn1, sn2):
-        fig, (ax1, ax3) = plt.subplots(1, 2, figsize=(12, 5))  # ax1 for first plot, ax3 for second plot
+    def plot_sn(self, sig1, sig2,sig3, pho1, pho2, pho3,noise1, noise2, noise3, sn1, sn2, sn3):
+        fig, (ax1, ax3, ax5) = plt.subplots(1, 3, figsize=(12, 5))  # ax1 for first plot, ax3 for second plot
 
         # ======== FIRST PLOT (your original one) ========
         # Plot dataset 1 and dataset 2 on the left y-axis
@@ -263,6 +281,32 @@ class SN():
         ax3.legend(lines_group2, labels_group2, loc='upper right')
 
         ax3.set_title(self.name2, fontsize=16)
+
+        # ======== THRID PLOT (side-by-side) ========
+        # Example plot — replace with your own data
+        line7, = ax5.plot(pho3, sig3, 'g-', label='Neutron Capture Signal')
+        line8, = ax5.plot(pho3, noise3, 'b-', label='Background')
+        ax5.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
+        # ax3.set_xlim([0, 600])
+        # ax3.set_ylim([1e-3, 20])
+
+        ax5.set_xlabel('Photon Number Threshold (number)', fontsize=16)
+        ax5.set_ylabel('Rate (event/hr)', color='black', fontsize=16)
+        ax5.axvline(x=200, color='black', linestyle='dotted')
+        ax5.set_yscale('log')
+
+        # Create another y-axis for SNR
+        ax6 = ax5.twinx()
+        line9, = ax5.plot(pho3, sn3, 'r-', label='SNR')
+        ax6.set_ylabel('Signal to noise ratio', color='black', fontsize=16)
+        # ax4.set_ylim([0.5, 2.2])
+
+        # Legend for first plot
+        lines_group3 = [line7, line8, line9]
+        labels_group3 = [line.get_label() for line in lines_group3]
+        ax5.legend(lines_group3, labels_group3, loc='upper right')
+
+        ax3.set_title(self.name3, fontsize=16)
 
         # Adjust spacing so plots don’t overlap
         plt.tight_layout()
