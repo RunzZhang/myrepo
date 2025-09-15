@@ -16,7 +16,7 @@ class SN():
         self.name1 = "External Capture Background"
         self.name2 = "Hard Scatter Background"
         self.name = "Backgrounds"
-        self.plot_name = self.name+"AmLi_1E7_inelas.pdf"
+        self.plot_name = self.name+"AmLi_1E7_inelas_updated.pdf"
         self.signal_final_list = []
         self.noise1_final_list =[]
         self.noise2_final_list = []
