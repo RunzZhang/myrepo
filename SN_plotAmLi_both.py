@@ -7,8 +7,8 @@ class SN():
         # after generate new files, you need to select the capture ratio/source for different configs in read_files function.
         # then choose the correct signal/noise of with clause in read files.
         # at last change the self.name and plot_name in plot function
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_SN/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_SN/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_PNNL/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_PNNL/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
         self.false_1 = "AmLi_false1.csv"
         self.false_2 = "AmLi_false2.csv"
@@ -17,7 +17,7 @@ class SN():
         self.name2 = "Hard Scatter Background"
         self.name3 = "Inelastic Background"
         self.name = "Backgrounds"
-        self.plot_name = self.name+"AmLi_1E7_total_updated.pdf"
+        self.plot_name = self.name+"AmLi_1E7_total_PNNL_updated.pdf"
         self.pho_threshold = 100
         self.signal_final_list = []
         self.noise1_final_list =[]
@@ -51,7 +51,8 @@ class SN():
 
 # main funtion we use
     def read_files(self):
-        self.Activity = 568.72  # source activity in mivro curie for 50 bubbles/hour
+        self.original_Activity = 2.135 # original activity in the paper
+        self.Activity = 2.135  # source practical activity in mivro curie for 50 bubbles/hour
         # self.Activity = 0.0416  # source activity in mivro curie
         # self.capture_ratio = 1.164E-3 # 1125eV 1.4g/cm Ar
         # self.capture_ratio = 0.121 # 400 eV 1.4g/cm3 Ar
@@ -60,7 +61,8 @@ class SN():
         # self.capture_ratio = 6.52E-3  # 700 eV
         # self.capture_ratio = 1.158E-3  # 1125 eV
         # self.rate = 435.6 #/s # CF neutron rate 9 mucurie
-        self.rate = 0.1968 #AmLi neutron rate
+        # self.rate = 0.1968 #AmLi neutron rate /s
+        self.rate = 2.52e4  # AmLi neutron rate /s PNNL
         self.G4_events= 1E7
         self.G4_sig_time=(self.G4_events / self.rate)
         with open(self.signal_path, 'r') as file:
