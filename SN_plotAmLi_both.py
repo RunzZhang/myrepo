@@ -236,7 +236,7 @@ class SN():
         # right_axis_range=[1e-1,1e3]
 
         left_axis_range = [1e-1, 3e4]
-        right_axis_range = [1e-1, 1e3]
+        right_axis_range = [1e-1, 1e5]
 
         # ======== FIRST PLOT (your original one) ========
         # Plot dataset 1 and dataset 2 on the left y-axis
