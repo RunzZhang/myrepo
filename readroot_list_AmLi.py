@@ -134,8 +134,8 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_SN/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_SN/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_PNNL/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_PNNL/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
@@ -181,14 +181,14 @@ class ReadRoot():
 
 
         # signal rate, caputre in liquid argon
-        # self.LAr_gamma_event()
+        self.LAr_gamma_event()
 
         # single elastic scatter and capture false signal 1
         # self.single_e_n_capture_event()
 
         # false noise 2, need to relocate directory
         # including inelastic
-        self.Huge_scatter_event()
+        # self.Huge_scatter_event()
         #
 
 
