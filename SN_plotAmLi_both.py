@@ -62,7 +62,8 @@ class SN():
         # self.capture_ratio = 1.158E-3  # 1125 eV
         # self.rate = 435.6 #/s # CF neutron rate 9 mucurie
         # self.rate = 0.1968 #AmLi neutron rate /s
-        self.rate = 2.52e4  # AmLi neutron rate /s PNNL
+        # self.rate = 2.52e4  # AmLi neutron rate /s PNNL
+        self.rate = 39  # AmLi neutron rate /s PNNL
         # self.G4_events= 1E7
         self.G4_events = 2E7
         self.G4_sig_time=(self.G4_events / self.rate)
