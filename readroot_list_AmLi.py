@@ -134,8 +134,8 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_v2/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_v2/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
@@ -188,6 +188,17 @@ class ReadRoot():
 
         # false noise 2, need to relocate directory
         # including inelastic
+
+
+        #updated noises
+        # Signal 1 is all single bubble signal that cause NR>1keV and ER in LAr
+        # the single bubble can be inelastic or elastic, but must be single bubbles
+        # the ER can caused by either capture somewhere else, or inelastic inside or outside the LAr
+        # Also we need to count all single bubble NR>1keV number, even without any photons, this decide the activity of the source
+
+
+
+        #
         self.Huge_scatter_event()
         #
 
