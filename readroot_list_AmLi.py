@@ -723,7 +723,7 @@ class ReadRoot():
                                                         how='inner')
         self.single_scattering_wo_ncap_wt_NR = self.single_scattering_wo_ncap_wt_NR.drop(
             columns=['Track ID_y', "Volume_y", "Parent ID_y"])
-        print("huge scatter", self.single_scattering_wo_ncap_wt_NR["Event"].unique(),"\n",self.single_scattering_wo_ncap_wt_NR.columns)
+        print("huge scatter", self.single_scattering_wo_ncap_wt_NR["Event"].unique(),"\n",self.single_scattering_wo_ncap_wt_NR.columns,"\n",len(self.single_scattering_wo_ncap_wt_NR["Event"].unique()))
         self.single_scattering_wo_ncap_wt_NR.columns = [ 'Event', 'Volume', 'Track ID', 'Parent ID']
 
 
@@ -750,7 +750,7 @@ class ReadRoot():
         # Huge elastic exclude these ER
         self.single_scattering_wo_ncapER_wt_NR= self.single_scattering_wo_ncap_wt_NR[~self.single_scattering_wo_ncap_wt_NR["Event"].isin(low_ER_event_list)]
         # check the difference to previous list
-        print("huge scatter", self.single_scattering_wo_ncapER_wt_NR["Event"].unique())
+        print("huge scatter without ER", self.single_scattering_wo_ncapER_wt_NR["Event"].unique(),"\n",len(self.single_scattering_wo_ncapER_wt_NR["Event"].unique()))
 
 
 
