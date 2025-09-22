@@ -744,7 +744,7 @@ class ReadRoot():
         print(summed_values.head(20))
 
         # add ER up
-        self.lowER = summed_values(summed_values["Recoiled/MeV"<=0.042])
+        self.lowER = summed_values(summed_values["Recoiled/MeV"]<=0.042)
         low_ER_event_list = self.lowER["Event"].to_list()
 
         # Huge elastic exclude these ER
