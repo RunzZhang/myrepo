@@ -715,14 +715,14 @@ class ReadRoot():
         self.single_scattering_wo_ncap = merged_df[merged_df['_merge'] == 'left_only'].drop(
             columns=['_merge', 'Track ID_y', "Volume_y", "Parent ID_y"])
         print(self.single_scattering_wo_ncap.columns)
-        self.single_scattering_wo_ncap.columns = ["index", 'Event', 'Volume', 'Track ID', 'Parent ID']
+        self.single_scattering_wo_ncap.columns = [ 'Event', 'Volume', 'Track ID', 'Parent ID']
 
         # common LAR NR >1keV
         self.single_scattering_wo_ncap_wt_NR = pd.merge(self.single_scattering_wo_ncap, self.df_LAr_NR, on=['Event'],
                                                         how='inner')
         self.single_scattering_wo_ncap_wt_NR = self.single_scattering_wo_ncap_wt_NR.drop(
             columns=['Track ID_y', "Volume_y", "Parent ID_y"])
-        print("huge scatter", self.single_scattering_wo_ncap_wt_NR["Event"].unique())
+        print("huge scatter", self.single_scattering_wo_ncap_wt_NR["Event"].unique(),"\n",self.single_scattering_wo_ncap_wt_NR.columns)
         self.single_scattering_wo_ncap_wt_NR.columns = ["index", 'Event', 'Volume', 'Track ID', 'Parent ID']
 
         max_values = self.single_scattering_wo_ncap_wt_NR[((self.single_scattering_wo_ncap_wt_NR["name"] == 'Ar40') | (self.single_scattering_wo_ncap_wt_NR["name"] == 'Ar36'))].groupby(['Event'])[
