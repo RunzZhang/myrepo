@@ -78,16 +78,15 @@ class SN():
         print("capture event number", len(self.sig_raw_list))
         self.G4_noise_time = self.G4_events / self.rate
         # with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'r') as file:
-        # Noise 1
-        # with open(self.base_path + "photon_capture_n_sing_scatterg_AmLi.csv", 'r') as file:
-        # with open(self.base_path + "photon_capture_n_sing_scatterg_CF.csv", 'r') as file:
+        # Noise 1,
         with open(self.false_1_path, 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
             # Convert the strings to floats
-            self.noise1_raw_list = [float(value) for value in number_list]
-            # self.noise_raw_list = [float(value)  for value in number_list]
+            self.noise1_raw_list = [float(value) for value in number_list[1:]]
+
+            # the [0] is NR number and [1:] is the photon numbers
         self.noise1_final_list = self.noise1_final_list + self.noise1_raw_list
         # Noise 2
         with open(self.false_2_path, 'r') as file:

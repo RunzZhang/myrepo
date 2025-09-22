@@ -198,7 +198,7 @@ class ReadRoot():
 
 
 
-        #
+        #same still big scattering signals because only NR can cause both photon and bubbles, single bubbles only
         self.Huge_scatter_event()
         #
 
@@ -863,6 +863,132 @@ class ReadRoot():
         # event_list  =  self.N_check["Event"].unique()
         # print("event", len(event_list),event_list[:10])
 
+    def kNR(self):
+        # all events with NR >1keV and single bubble
+        self.df["Kinetic diff/MeV"] = self.df["PreKinetic/MeV"].diff()
+        self.df["Kinetic diff/MeV"] = self.df["Kinetic diff/MeV"].fillna(0)
+
+        self.df_Ncapture = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Track ID']]
+        self.df_el_scatter = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (
+                        self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Volume', 'Track ID', 'Parent ID']]
+        self.df_LAr_NR = self.df[
+            ( (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) &  (
+                    self.df["Volume"] == 'LAr_phys')&(self.df["Recoiled/MeV"] >= 0.001)][['Event', 'Volume', 'Track ID', 'Parent ID','Step ID']]
+
+
+        self.df_in_el_scatter = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
+                    self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Track ID']]
+        #elastic but no inelastic, mayhave capture, maybe have multiple scattering
+        self.df_el_scatter_clean= pd.merge(self.df_el_scatter, self.df_in_el_scatter, on=['Event'], how='left', indicator=True)
+        self.df_in_el_scatter_clean = pd.merge(self.df_in_el_scatter,self.df_el_scatter, on=['Event'], how='left',
+                                            indicator=True)
+
+        #
+
+
+
+        print("capture to be vetoed", len(self.df_Ncapture["Event"].unique()))
+        print("Ela", len(self.df_el_scatter["Event"].unique()))
+        print("inelastic", len(self.df_in_el_scatter["Event"].unique()))
+        # combine Ela and inelastic
+
+
+        (self.df_el_scatter_clean_sing, self.df_el_scatter_clean_multi) = self.distinguish_single_all(self.df_el_scatter_clean)
+        (self.df_in_el_scatter_clean_sing, self.df_in_el_scatter_clean_multi) = self.distinguish_single_all(
+            self.df_in_el_scatter_clean, "Event", "Volume")
+
+        print("sing elastic", self.df_el_scatter_clean_sing.head(20), len(self.df_el_scatter_clean_sing["Event"].unique()))
+        print("multi elastic", self.df_el_scatter_clean_multi.head(20), len(self.df_el_scatter_clean_multi["Event"].unique()))
+        print("sing inelastic", self.df_in_el_scatter_clean_sing.head(20),
+              len(self.df_in_el_scatter_clean_sing["Event"].unique()))
+        print("multi inelastic", self.df_in_el_scatter_clean_multi.head(20),
+              len(self.df_in_el_scatter_clean_multi["Event"].unique()))
+
+        # all single scattering
+        # may check if single elastic and inelastic has any overlap
+        self.single_scattering = self.exclude_common(self.df_el_scatter_clean_sing,self.df_in_el_scatter_clean_sing)
+        print("single scattering", self.single_scattering.head(20))
+        print("single elastic events", self.df_el_scatter_clean_sing["Event"].unique()[:20],"\n",
+              "sing inelastic events",self.df_in_el_scatter_clean_sing["Event"].unique()[:20],"\n",
+              "sing events",self.single_scattering["Event"].unique()[:20])
+
+        # no Ncapture inside LAr
+        merged_df = pd.merge(self.single_scattering,self.df_Ncapture , on=['Event'], how='left', indicator=True)
+        self.single_scattering_wo_ncap = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge', 'Track ID_y'])
+
+        # common LAR NR >1keV
+        self.single_scattering_wo_ncap_wt_NR = pd.merge(self.single_scattering_wo_ncap, self.df_LAr_NR, on=['Event'], how='inner')
+        self.NR_num = len(self.single_scattering_wo_ncap_wt_NR["Event"].unique())
+
+
+
+    def allER(self):
+        # we need to do several things:
+        # gamma only in LAr or CF4
+        # in 1 event number, only the first series of gammas, avoiding over-countting
+        self.gamma_Scint = self.df[
+            (self.df['Volume'] == 'LAr_phys') & (self.df['Process'] == "compt")]
+        gamma_list = self.gamma_Scint["Event"].unique()
+        print("gamma filter", len(gamma_list))
+        self.gamma_Scint = self.keep_1st(self.gamma_Scint)
+        print("scint", self.gamma_Scint)
+        # find electrons are daughter of those gammas
+        self.gamma_Scint_column = self.gamma_Scint[['Event', "Track ID"]]
+        self.gamma_Scint_column.columns = ['Event', "Parent ID"]
+        self.df_electron = self.df[(self.df['name'] == 'e-') & (self.df['Volume'] == 'LAr_phys')]
+        self.df_electron = self.keep_1st(self.df_electron)
+        self.df_electron_gamma = pd.merge(self.df_electron, self.gamma_Scint_column, on=['Event', 'Parent ID'],
+                                          how='inner')
+
+    def combine_NRnER(self):
+
+        self.sing_NR_ER  = pd.merge(self.single_scattering_wo_ncap_wt_NR, self.df_electron_gamma, on=['Event'],
+                                          how='inner')
+        self.sing_NR_ER.to_csv(self.false_1_path_mid, index=False)
+        print("Final Event list", len(self.sing_NR_ER["Event"].unique()))
+        self.tagged_gamma = self.sing_NR_ER[self.sing_NR_ER["name"]=="e-"]
+        # double check gamma
+
+        summed_values = self.tagged_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
+        print(summed_values.head(20))
+
+        # add gamma up
+        self.electron_recoiled_list = summed_values["Recoiled/MeV"].to_list()
+
+        p_observed = [self.NR_num] # the first digit is always the NR number
+        for i in range(len(self.electron_recoiled_list)):
+            # 40 /MeV 0.03 and 0.2 PCE and PDE
+            if i > 1E-6:
+                p_observed.append(self.electron_recoiled_list[i] * 1E6 * 40 * 0.03 * 0.2 / (1000))
+
+
+        print("max", max(p_observed), "\n", "min", min(p_observed))
+        # p_observe only contains ER, if one event only has NR, it still produce bubbles that we need to compress
+        with open(self.false_1_path, 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(p_observed)
+
+
+
+    def exclude_common(self,df1, df2): # exclude same ["Event"]
+        common_events = set(df1["Event"]) & set(df2["Event"])
+
+        # 2. Drop common events from both
+        df1_clean = df1[~df1["Event"].isin(common_events)]
+        df2_clean = df2[~df2["Event"].isin(common_events)]
+
+        # 3. Combine
+        df_combined = pd.concat([df1_clean, df2_clean])
+
+        # 4. Sort by Event
+        df_combined = df_combined.sort_values("Event").reset_index()
+        return df_combined
     def intersection(self, lst1, lst2):
         lst3 = [value for value in lst1 if value in lst2]
         return lst3
@@ -934,6 +1060,14 @@ class ReadRoot():
         # self.single_n_find_gamma_e_loop()
         # get the photon number per event
         self.single_n_find_gamma_e()
+
+    def bubbleNR_n_ER(self):
+        self.kNR()
+        self.allER()
+        self.combine_NRnER()
+
+
+
     def Gamma_spectrum(self):
         self.df_gamma_rw = pd.read_csv(self.base_path +"dmx_gamma.csv")
         print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
@@ -1337,6 +1471,25 @@ class ReadRoot():
         print("multi", filtered_df_multi.head(10))
         print("sing", filtered_df_sing.head(10))
         return (filtered_df_sing,filtered_df_multi)
+
+    def distinguish_single_all(self, df, Event="Event", Parent="Parent ID"):
+
+        # find only elastic or only inelastic once
+
+        # if an entry has same event and parent ID but has different Track ID
+        # df = self.keep_1st(df, ['Event', 'Track ID'])
+
+        df['combined_tuple'] = list(zip(df.iloc[:][Event], df.iloc[:][Parent]))
+        multi_appearance_mask = df['combined_tuple'].duplicated(keep=False)
+        sing_appearance_mask = ~df['combined_tuple'].duplicated(keep=False)
+        # find the duplicated
+        filtered_df_sing = df[sing_appearance_mask]
+        filtered_df_multi = df[multi_appearance_mask]
+        filtered_df_sing = filtered_df_sing.drop(columns=['combined_tuple'])
+        filtered_df_multi = filtered_df_multi.drop(columns=['combined_tuple'])
+        print("multi", filtered_df_multi.head(10))
+        print("sing", filtered_df_sing.head(10))
+        return (filtered_df_sing, filtered_df_multi)
 
 
     def Check_inelastic(self):
