@@ -139,10 +139,10 @@ class ReadRoot():
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        self.main_body(1)
-        # for i in range(1,101):
+        # self.main_body(1)
+        for i in range(1,101):
         # # for i in range(1, 34):
-        #     self.main_body(i)
+            self.main_body(i)
     def main_body(self,i):
         print(i)
         self.false_1 = f"AmLi_1E7_false1_part{i}.csv"
@@ -190,7 +190,7 @@ class ReadRoot():
         # including inelastic
 
         # update signals
-        # self.single_ncap()
+        self.single_ncap()
         #updated noises
         # Signal 1 is all single bubble signal that cause NR>1keV and ER in LAr
         # the single bubble can be inelastic or elastic, but must be single bubbles
@@ -201,7 +201,7 @@ class ReadRoot():
 
 
         #same still big scattering signals because only NR can cause both photon and bubbles, single bubbles only
-        self.Huge_NR()
+        # self.Huge_NR()
         #
 
 
@@ -723,7 +723,7 @@ class ReadRoot():
         self.single_scattering_wo_ncap_wt_NR = self.single_scattering_wo_ncap_wt_NR.drop(
             columns=['Track ID_y', "Volume_y", "Parent ID_y"])
         print("huge scatter", self.single_scattering_wo_ncap_wt_NR["Event"].unique(),"\n",self.single_scattering_wo_ncap_wt_NR.columns)
-        self.single_scattering_wo_ncap_wt_NR.columns = ["index", 'Event', 'Volume', 'Track ID', 'Parent ID']
+        self.single_scattering_wo_ncap_wt_NR.columns = [ 'Event', 'Volume', 'Track ID', 'Parent ID']
 
         max_values = self.single_scattering_wo_ncap_wt_NR[((self.single_scattering_wo_ncap_wt_NR["name"] == 'Ar40') | (self.single_scattering_wo_ncap_wt_NR["name"] == 'Ar36'))].groupby(['Event'])[
             "Recoiled/MeV"].max().reset_index()
