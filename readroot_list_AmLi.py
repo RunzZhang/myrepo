@@ -737,7 +737,7 @@ class ReadRoot():
         print("electron afterward", len(self.df_electron["Event"].unique()),
               self.df_electron["Event"].unique()[:20])
 
-        summed_values = self.df_electron_gamma_merged.groupby(['Event'])[
+        summed_values = self.df_electron.groupby(['Event'])[
             "Recoiled/MeV"].sum().reset_index()
         print("summed values", len(summed_values["Event"].unique()),
               summed_values["Event"].unique()[:20])
