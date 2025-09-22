@@ -18,7 +18,7 @@ class SN():
         self.name2 = "Hard Scatter Background"
         self.name = "Backgrounds"
         self.plot_name = self.name+"AmLi_1E7_total_LZ_updated_v2.pdf"
-        self.pho_threshold = 100
+        self.pho_threshold = 200
         self.signal_final_list = []
         self.noise1_final_list =[]
         self.noise2_final_list = []
