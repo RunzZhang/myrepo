@@ -90,7 +90,7 @@ class SN():
 
             # the [0] is NR number and [1:] is the photon numbers
         self.noise1_final_list = self.noise1_final_list + self.noise1_raw_list
-        self.untagged_bubble_list.append(bubble_num)
+        self.untagged_bubble_list.append(float(bubble_num))
         # Noise 2
         with open(self.false_2_path, 'r') as file:
             reader = csv.reader(file)
