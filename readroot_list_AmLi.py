@@ -261,6 +261,146 @@ class ReadRoot():
         self.df['Process'] = self.df['Process'].astype(str)
         # this make event number correct
         self.reidx_event()
+    def single_ncap(self):
+        self.nCapture_NR()
+        self.nCapture_gamma()
+        self.nCapture_ER()
+
+    def nCapture_NR(self):
+
+
+        # self.df_Ncapture = self.df[
+        #     (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
+        #     ['Event', 'Track ID']]
+        #
+        # print("N capture events", len(self.df_Ncapture["Event"].unique()), self.df_Ncapture["Event"].unique()[:50])
+
+        # # only record gamma event, whose event id same as ncap and parent id is ncap's track id.
+        # # change Track ID name into Parent ID so that ready for merge
+        # self.df_Ncapture.columns = ['Event', 'Parent ID']
+        # # select all gamma events
+        # self.df_cap_gamma = self.df[self.df['name'] == 'gamma']
+        # print("gamma events", len(self.df_cap_gamma["Event"].unique()), self.df_cap_gamma["Event"].unique()[:20])
+        # # select gamma events whose Event number is same as neutron event and parent id is neutron's track ID
+        # self.df_cap_gamma_merged = pd.merge(self.df_Ncapture, self.df_cap_gamma, on=['Event', 'Parent ID'], how='inner')
+        # # print(self.df_cap_gamma.head(20))
+        # print("gamma merged", len(self.df_cap_gamma_merged["Event"].unique()),
+        #       self.df_cap_gamma_merged["Event"].unique()[:20])
+        # lost_event = list(set(self.df_Ncapture["Event"].unique()) - set(self.df_cap_gamma_merged["Event"].unique()))
+        # print("lost", lost_event)
+        # print("len2", len(self.df_cap_gamma_merged.index))
+
+        self.df["Kinetic diff/MeV"] = self.df["PreKinetic/MeV"].diff()
+        self.df["Kinetic diff/MeV"] = self.df["Kinetic diff/MeV"].fillna(0)
+
+        self.df_Ncapture = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Volume', 'Track ID', 'Parent ID']]
+        # single bubble only, exclude inelastic and elastic > 1NR in LAr
+        self.df_bubble_scatter = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')&(self.df["Kinetic diff/MeV"] <-0.00125)][
+            ['Event', 'Volume', 'Track ID', 'Parent ID']]
+
+        self.df_in_elastic = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
+                        self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Volume', 'Track ID', 'Parent ID']]
+
+        # check ncapture and inelastic scattering happen event
+        self.df_ncap_in = pd.merge(self.df_Ncapture, self.df_in_el_scatter, on=['Event'], how='inner',
+                                            indicator=True)
+        print(self.df_ncap_in['Event'].unique())
+
+
+        # only ncapture but no elastic scattering or inelastic scattering in LAr
+        self.df_ncap_wo_ela = pd.merge(self.df_Ncapture, self.df_bubble_scatter, on=['Event'], how='left',
+                                            indicator=True)
+        self.df_ncap_wo_ela = self.df_ncap_wo_ela[self.df_ncap_wo_ela['_merge'] == 'left_only'].drop(
+            columns=['_merge', 'Track ID_y', "Volume_y", "Parent ID_y"])
+        self.df_ncap_wo_ela.columns = ['Event', 'Volume', 'Track ID', 'Parent ID']
+
+        # decide if to exclude inelastic or not
+
+    def nCapture_gamma(self):
+        # find gammas that are daughters of ncapture events above
+        # change Track ID name into Parent ID so that ready for merge
+        self.ncap_clean_event_group = self.df_ncap_wo_ela.drop(columns=["Volume", "Parent ID"])
+        self.ncap_clean_event_group.columns = ['Event', 'Parent ID']
+        # select all gamma events
+        self.df_cap_gamma = self.df[self.df['name'] == 'gamma']
+        # select gamma events whose Event number is same as neutron event and parent id is neutron's track ID
+        self.df_cap_gamma_merged = pd.merge(self.ncap_clean_event_group, self.df_cap_gamma, on=['Event', 'Parent ID'], how='inner')
+        print("gamma merged", len(self.df_cap_gamma_merged["Event"].unique()),
+              self.df_cap_gamma_merged["Event"].unique()[:20])
+        # save these gamma event
+        self.df_cap_gamma_merged.to_csv(self.signal_path_mid, index=False)
+
+    def nCapture_ER(self):
+        self.df_gamma_rw = pd.read_csv(self.signal_path_mid)
+        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
+        # we need to do severalthings:
+        # gamma only in LAr or CF4
+        # in 1 event number, only the first series of gammas, avoiding over-countting
+
+        self.gamma_Scint = self.df_gamma_rw[self.df_gamma_rw['Volume'] == 'LAr_phys']
+        print("gamma scint overcount", len(self.gamma_Scint["Event"].unique()),
+              self.gamma_Scint["Event"].unique()[:20])
+        self.gamma_Scint = self.keep_1st(self.gamma_Scint)
+        print("gamma scint", len(self.gamma_Scint["Event"].unique()),
+              self.gamma_Scint["Event"].unique()[:20])
+        print("scint", self.gamma_Scint)
+        # print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]!=1])
+        self.gamma_Scint_column = self.gamma_Scint[['Event', "Track ID"]]
+        self.gamma_Scint_column.columns = ['Event', "Parent ID"]
+        self.df_electron = self.df[(self.df['name'] == 'e-') & (self.df['Volume'] == 'LAr_phys')]
+        print("electron first", len(self.df_electron["Event"].unique()),
+              self.df_electron["Event"].unique()[:20])
+        self.df_electron = self.keep_1st(self.df_electron)
+        print("electron afterward", len(self.df_electron["Event"].unique()),
+              self.df_electron["Event"].unique()[:20])
+        self.df_electron_gamma_merged = pd.merge(self.df_electron, self.gamma_Scint_column, on=['Event', 'Parent ID'],
+                                                 how='inner')
+        print("gamma scint merged", len(self.df_electron_gamma_merged["Event"].unique()),
+              self.df_electron_gamma_merged["Event"].unique()[:20])
+        lost_event = list(
+            set(self.gamma_Scint["Event"].unique()) - set(self.df_electron_gamma_merged["Event"].unique()))
+        print("lost", lost_event)
+        print(self.df_electron_gamma_merged.head(10))
+        # double check gamma
+
+        # summed_values = self.df_electron_gamma_merged.groupby(['Event', 'Parent ID'])["Recoiled/MeV"].sum().reset_index()
+        summed_values = self.df_electron_gamma_merged.groupby(['Event'])[
+            "Recoiled/MeV"].sum().reset_index()
+        print("summed values", len(summed_values["Event"].unique()),
+              summed_values["Event"].unique()[:20])
+        print(summed_values.head(20))
+
+        # add gamma up
+        self.electron_recoiled_list = summed_values["Recoiled/MeV"].to_list()
+        p_observed = [0]
+        print("recoil list", len(self.electron_recoiled_list))
+        for i in range(len(self.electron_recoiled_list)):
+            # 40 /MeV 0.03 and 0.2 PCE and PDE
+            p_observed.append(self.electron_recoiled_list[i] * 1E6 * 40 * 0.03 * 0.2 / (1000))
+        print("p observed list len", len(p_observed))
+
+        num = 0
+        for i in p_observed:
+            if i >= 1:
+                num += 1
+        print("photon observed number ", num)
+        print("max", max(p_observed), "\n", "min", min(p_observed))
+        # plt.hist(self.electron_recoiled_list, bins=100)
+        plt.hist(p_observed, bins=100)
+        print("output len", len(p_observed))
+        with open(self.signal_path, 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(p_observed)
+        plt.xlabel("Obeserved Photon per Event")
+        # plt.show()
+
+
+
 
     def Capture_spectrum(self):
 
@@ -288,6 +428,11 @@ class ReadRoot():
     def LAr_Capture_spectrum(self):
 
         self.df_Ncapture = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='nCapture')&(self.df["Volume"]=='LAr_phys')][['Event','Track ID']]
+        # single bubble only, exclude inelastic and elastic > 1NR in LAr
+        self.df_bubble_scatter = self.df[(self.df["name"]=='neutron')&(self.df["Process"]=='hadElastic')&(self.df["Volume"]=='LAr_phys')][['Event','Track ID']]
+
+
+
         self.df_Ncapture_check = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] != 'LAr_phys')][
             ['Event', 'Volume','Track ID']]
@@ -526,7 +671,7 @@ class ReadRoot():
         self.df_LAr_NR = self.df[
             ((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (
                     self.df["Volume"] == 'LAr_phys') & (self.df["Recoiled/MeV"] >= 0.015)][
-            ['Event', 'Volume', 'Track ID', 'Parent ID']]  #0.016 to generate photons 
+            ['Event', 'Volume', 'Track ID', 'Parent ID']]  #0.016 to generate photons
 
         self.df_in_el_scatter = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
