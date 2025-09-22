@@ -308,7 +308,7 @@ class ReadRoot():
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
 
         # check ncapture and inelastic scattering happen event
-        self.df_ncap_in = pd.merge(self.df_Ncapture, self.df_in_el_scatter, on=['Event'], how='inner',
+        self.df_ncap_in = pd.merge(self.df_Ncapture, self.df_in_elastic, on=['Event'], how='inner',
                                             indicator=True)
         print(self.df_ncap_in['Event'].unique())
 
