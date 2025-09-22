@@ -928,6 +928,7 @@ class ReadRoot():
         # no Ncapture inside LAr
         merged_df = pd.merge(self.single_scattering,self.df_Ncapture , on=['Event'], how='left', indicator=True)
         self.single_scattering_wo_ncap = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge', 'Track ID_y',"Volume_y", "Parent ID_y"])
+        print(self.single_scattering_wo_ncap.columns)
         self.single_scattering_wo_ncap.columns= ['Event', 'Volume', 'Track ID', 'Parent ID']
 
         # common LAR NR >1keV
