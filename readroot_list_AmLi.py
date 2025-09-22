@@ -866,6 +866,8 @@ class ReadRoot():
 
     def kNR(self):
         # all events with NR >1keV and single bubble
+        # first save reference data
+        self.df[(self.df["name"] == 'neutron')|(self.df["name"] == 'Ar40')|(self.df["name"] == 'Ar36')].to_csv(self.base_path+'tempo_info.csv', index=False)
         self.df["Kinetic diff/MeV"] = self.df["PreKinetic/MeV"].diff()
         self.df["Kinetic diff/MeV"] = self.df["Kinetic diff/MeV"].fillna(0)
 
