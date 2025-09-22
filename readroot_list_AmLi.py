@@ -310,7 +310,7 @@ class ReadRoot():
         # check ncapture and inelastic scattering happen event
         self.df_ncap_in = pd.merge(self.df_Ncapture, self.df_in_elastic, on=['Event'], how='inner',
                                             indicator=True)
-        print(self.df_ncap_in['Event'].unique())
+        print("common between ncap and inelastic",self.df_ncap_in['Event'].unique())
 
 
         # only ncapture but no elastic scattering or inelastic scattering in LAr
