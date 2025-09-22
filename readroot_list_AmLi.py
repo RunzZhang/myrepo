@@ -888,12 +888,14 @@ class ReadRoot():
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
         #elastic but no inelastic, mayhave capture, maybe have multiple scattering
         self.df_el_scatter_clean= pd.merge(self.df_el_scatter, self.df_in_el_scatter, on=['Event'], how='left', indicator=True)
-        self.df_el_scatter_clean = self.df_el_scatter_clean[self.df_el_scatter_clean['_merge'] == 'left_only'].drop(columns=['_merge', 'Track ID_y'])
-
+        self.df_el_scatter_clean = self.df_el_scatter_clean[self.df_el_scatter_clean['_merge'] == 'left_only'].drop(columns=['_merge', 'Track ID_y',"Volume_y", "Parent ID_y"])
+        self.df_el_scatter_clean.columns = ['Event', 'Volume', 'Track ID', 'Parent ID']
         self.df_in_el_scatter_clean = pd.merge(self.df_in_el_scatter,self.df_el_scatter, on=['Event'], how='left',
                                             indicator=True)
         self.df_in_el_scatter_clean = self.df_in_el_scatter_clean[self.df_in_el_scatter_clean['_merge'] == 'left_only'].drop(
-            columns=['_merge', 'Track ID_y'])
+            columns=['_merge', 'Track ID_y',"Volume_y", "Parent ID_y"])
+        self.df_in_el_scatter_clean.columns= ['Event', 'Volume', 'Track ID', 'Parent ID']
+
 
         #
 
@@ -906,8 +908,7 @@ class ReadRoot():
 
         print("check columns",self.df_el_scatter_clean.columns)
         (self.df_el_scatter_clean_sing, self.df_el_scatter_clean_multi) = self.distinguish_single_all(self.df_el_scatter_clean)
-        (self.df_in_el_scatter_clean_sing, self.df_in_el_scatter_clean_multi) = self.distinguish_single_all(
-            self.df_in_el_scatter_clean)
+        (self.df_in_el_scatter_clean_sing, self.df_in_el_scatter_clean_multi) = self.distinguish_single_all(self.df_in_el_scatter_clean)
 
         print("sing elastic", self.df_el_scatter_clean_sing.head(20), len(self.df_el_scatter_clean_sing["Event"].unique()))
         print("multi elastic", self.df_el_scatter_clean_multi.head(20), len(self.df_el_scatter_clean_multi["Event"].unique()))
@@ -926,7 +927,8 @@ class ReadRoot():
 
         # no Ncapture inside LAr
         merged_df = pd.merge(self.single_scattering,self.df_Ncapture , on=['Event'], how='left', indicator=True)
-        self.single_scattering_wo_ncap = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge', 'Track ID_y'])
+        self.single_scattering_wo_ncap = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge', 'Track ID_y',"Volume_y", "Parent ID_y"])
+        self.single_scattering_wo_ncap.columns= ['Event', 'Volume', 'Track ID', 'Parent ID']
 
         # common LAR NR >1keV
         self.single_scattering_wo_ncap_wt_NR = pd.merge(self.single_scattering_wo_ncap, self.df_LAr_NR, on=['Event'], how='inner')
