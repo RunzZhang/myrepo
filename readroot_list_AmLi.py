@@ -867,7 +867,7 @@ class ReadRoot():
     def kNR(self):
         # all events with NR >1keV and single bubble
         # first save reference data
-        self.df[(self.df["name"] == 'neutron')|(self.df["name"] == 'Ar40')|(self.df["name"] == 'Ar36')].to_csv(self.plot_path+'tempo_info.csv', index=False)
+        # self.df[(self.df["name"] == 'neutron')|(self.df["name"] == 'Ar40')|(self.df["name"] == 'Ar36')].to_csv(self.plot_path+'tempo_info.csv', index=False)
         self.df["Kinetic diff/MeV"] = self.df["PreKinetic/MeV"].diff()
         self.df["Kinetic diff/MeV"] = self.df["Kinetic diff/MeV"].fillna(0)
 
@@ -904,7 +904,7 @@ class ReadRoot():
 
         (self.df_el_scatter_clean_sing, self.df_el_scatter_clean_multi) = self.distinguish_single_all(self.df_el_scatter_clean)
         (self.df_in_el_scatter_clean_sing, self.df_in_el_scatter_clean_multi) = self.distinguish_single_all(
-            self.df_in_el_scatter_clean, "Event", "Volume")
+            self.df_in_el_scatter_clean)
 
         print("sing elastic", self.df_el_scatter_clean_sing.head(20), len(self.df_el_scatter_clean_sing["Event"].unique()))
         print("multi elastic", self.df_el_scatter_clean_multi.head(20), len(self.df_el_scatter_clean_multi["Event"].unique()))
