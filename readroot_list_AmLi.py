@@ -754,8 +754,9 @@ class ReadRoot():
 
 
 
-        #
-        max_values = self.single_scattering_wo_ncapER_wt_NR[((self.single_scattering_wo_ncapER_wt_NR["name"] == 'Ar40') | (self.single_scattering_wo_ncapER_wt_NR["name"] == 'Ar36'))].groupby(['Event'])[
+        #find NR in those events
+        single_scattering_wo_ncapER_wt_NR_list = self.single_scattering_wo_ncapER_wt_NR["Event"].to_list()
+        max_values = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))&(self.df["Event"].isin(single_scattering_wo_ncapER_wt_NR_list))].groupby(['Event'])[
             "Recoiled/MeV"].max().reset_index()
         print(max_values.head(20))
 
