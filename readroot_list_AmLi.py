@@ -868,12 +868,11 @@ class ReadRoot():
         # all events with NR >1keV and single bubble
         # first save reference data
         # self.df[(self.df["name"] == 'neutron')|(self.df["name"] == 'Ar40')|(self.df["name"] == 'Ar36')].to_csv(self.plot_path+'tempo_info.csv', index=False)
-        self.df["Kinetic diff/MeV"] = self.df["PreKinetic/MeV"].diff()
-        self.df["Kinetic diff/MeV"] = self.df["Kinetic diff/MeV"].fillna(0)
+
 
         self.df_Ncapture = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
-            ['Event', 'Track ID']]
+            ['Event', 'Volume', 'Track ID', 'Parent ID']]
         self.df_el_scatter = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (
                         self.df["Volume"] == 'LAr_phys')][
@@ -886,7 +885,7 @@ class ReadRoot():
         self.df_in_el_scatter = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
                     self.df["Volume"] == 'LAr_phys')][
-            ['Event', 'Track ID']]
+            ['Event', 'Volume', 'Track ID', 'Parent ID']]
         #elastic but no inelastic, mayhave capture, maybe have multiple scattering
         self.df_el_scatter_clean= pd.merge(self.df_el_scatter, self.df_in_el_scatter, on=['Event'], how='left', indicator=True)
         self.df_el_scatter_clean = self.df_el_scatter_clean[self.df_el_scatter_clean['_merge'] == 'left_only'].drop(columns=['_merge', 'Track ID_y'])
