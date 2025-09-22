@@ -291,7 +291,7 @@ class SN():
 
 
         # Adjust spacing so plots don’t overlap
-        fig.set_size_inches(20, 6)
+        # fig.set_size_inches(20, 6)
         plt.tight_layout()
 
         # Save or show
