@@ -139,10 +139,10 @@ class ReadRoot():
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        self.main_body(1)
-        # for i in range(1,101):
+        # self.main_body(1)
+        for i in range(1,101):
         # # for i in range(1, 34):
-        #     self.main_body(i)
+            self.main_body(i)
     def main_body(self,i):
         print(i)
         self.false_1 = f"AmLi_1E7_false1_part{i}.csv"
@@ -751,7 +751,7 @@ class ReadRoot():
         self.single_scattering_wo_ncapER_wt_NR= self.single_scattering_wo_ncap_wt_NR[~self.single_scattering_wo_ncap_wt_NR["Event"].isin(low_ER_event_list)]
         # check the difference to previous list
         print("huge scatter without ER", self.single_scattering_wo_ncapER_wt_NR["Event"].unique(),"\n",len(self.single_scattering_wo_ncapER_wt_NR["Event"].unique()))
-
+        # in 1 chunked files excluded 2 events out of 63 events
 
 
         #find NR in those events
