@@ -139,10 +139,10 @@ class ReadRoot():
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        # self.main_body(1)
-        for i in range(1,101):
+        self.main_body(1)
+        # for i in range(1,101):
         # # for i in range(1, 34):
-            self.main_body(i)
+        #     self.main_body(i)
     def main_body(self,i):
         print(i)
         self.false_1 = f"AmLi_1E7_false1_part{i}.csv"
@@ -190,7 +190,7 @@ class ReadRoot():
         # including inelastic
 
         # update signals
-        self.single_ncap()
+        # self.single_ncap()
         #updated noises
         # Signal 1 is all single bubble signal that cause NR>1keV and ER in LAr
         # the single bubble can be inelastic or elastic, but must be single bubbles
@@ -201,7 +201,7 @@ class ReadRoot():
 
 
         #same still big scattering signals because only NR can cause both photon and bubbles, single bubbles only
-        # self.Huge_NR()
+        self.Huge_NR()
         #
 
 
@@ -664,6 +664,7 @@ class ReadRoot():
 
     def Huge_NR(self):
         # all events with NR that generate single bubble in LAr
+        # exclude gamma
 
         # first save reference data
 
@@ -717,7 +718,7 @@ class ReadRoot():
         print(self.single_scattering_wo_ncap.columns)
         self.single_scattering_wo_ncap.columns = [ 'Event', 'Volume', 'Track ID', 'Parent ID']
 
-        # common LAR NR >1keV
+        # common LAR NR >15keV
         self.single_scattering_wo_ncap_wt_NR = pd.merge(self.single_scattering_wo_ncap, self.df_LAr_NR, on=['Event'],
                                                         how='inner')
         self.single_scattering_wo_ncap_wt_NR = self.single_scattering_wo_ncap_wt_NR.drop(
@@ -725,7 +726,36 @@ class ReadRoot():
         print("huge scatter", self.single_scattering_wo_ncap_wt_NR["Event"].unique(),"\n",self.single_scattering_wo_ncap_wt_NR.columns)
         self.single_scattering_wo_ncap_wt_NR.columns = [ 'Event', 'Volume', 'Track ID', 'Parent ID']
 
-        max_values = self.single_scattering_wo_ncap_wt_NR[((self.single_scattering_wo_ncap_wt_NR["name"] == 'Ar40') | (self.single_scattering_wo_ncap_wt_NR["name"] == 'Ar36'))].groupby(['Event'])[
+
+        # no ER or ER don't generate photons. this need to be excluded from huge NR because it is counted also in false 1
+        #
+
+        self.df_electron = self.df[(self.df['name'] == 'e-') & (self.df['Volume'] == 'LAr_phys')]
+        print("electron first", len(self.df_electron["Event"].unique()),
+              self.df_electron["Event"].unique()[:20])
+        self.df_electron = self.keep_1st(self.df_electron)
+        print("electron afterward", len(self.df_electron["Event"].unique()),
+              self.df_electron["Event"].unique()[:20])
+
+        summed_values = self.df_electron_gamma_merged.groupby(['Event'])[
+            "Recoiled/MeV"].sum().reset_index()
+        print("summed values", len(summed_values["Event"].unique()),
+              summed_values["Event"].unique()[:20])
+        print(summed_values.head(20))
+
+        # add ER up
+        self.lowER = summed_values(summed_values["Recoiled/MeV"<=0.042])
+        low_ER_event_list = self.lowER["Event"].to_list()
+
+        # Huge elastic exclude these ER
+        self.single_scattering_wo_ncapER_wt_NR= self.single_scattering_wo_ncap_wt_NR[~self.single_scattering_wo_ncap_wt_NR["Event"].isin(low_ER_event_list)]
+        # check the difference to previous list
+        print("huge scatter", self.single_scattering_wo_ncapER_wt_NR["Event"].unique())
+
+
+
+        #
+        max_values = self.single_scattering_wo_ncapER_wt_NR[((self.single_scattering_wo_ncapER_wt_NR["name"] == 'Ar40') | (self.single_scattering_wo_ncapER_wt_NR["name"] == 'Ar36'))].groupby(['Event'])[
             "Recoiled/MeV"].max().reset_index()
         print(max_values.head(20))
 
