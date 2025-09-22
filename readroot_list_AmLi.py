@@ -927,12 +927,13 @@ class ReadRoot():
 
         # no Ncapture inside LAr
         merged_df = pd.merge(self.single_scattering,self.df_Ncapture , on=['Event'], how='left', indicator=True)
-        self.single_scattering_wo_ncap = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge', 'Track ID_y',"Volume_y", "Parent ID_y"])
+        self.single_scattering_wo_ncap = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=["index",'_merge', 'Track ID_y',"Volume_y", "Parent ID_y"])
         print(self.single_scattering_wo_ncap.columns)
         self.single_scattering_wo_ncap.columns= ['Event', 'Volume', 'Track ID', 'Parent ID']
 
         # common LAR NR >1keV
         self.single_scattering_wo_ncap_wt_NR = pd.merge(self.single_scattering_wo_ncap, self.df_LAr_NR, on=['Event'], how='inner')
+        print("final list",self.single_scattering_wo_ncap_wt_NR.head(20))
         self.NR_num = len(self.single_scattering_wo_ncap_wt_NR["Event"].unique())
 
 
