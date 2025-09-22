@@ -879,7 +879,7 @@ class ReadRoot():
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
         self.df_LAr_NR = self.df[
             ( (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) &  (
-                    self.df["Volume"] == 'LAr_phys')&(self.df["Recoiled/MeV"] >= 0.001)][['Event', 'Volume', 'Track ID', 'Parent ID','Step ID']]
+                    self.df["Volume"] == 'LAr_phys')&(self.df["Recoiled/MeV"] >= 0.001)][['Event', 'Volume', 'Track ID', 'Parent ID']]
 
 
         self.df_in_el_scatter = self.df[
@@ -927,12 +927,14 @@ class ReadRoot():
 
         # no Ncapture inside LAr
         merged_df = pd.merge(self.single_scattering,self.df_Ncapture , on=['Event'], how='left', indicator=True)
-        self.single_scattering_wo_ncap = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=["index",'_merge', 'Track ID_y',"Volume_y", "Parent ID_y"])
+        self.single_scattering_wo_ncap = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge', 'Track ID_y',"Volume_y", "Parent ID_y"])
         print(self.single_scattering_wo_ncap.columns)
-        self.single_scattering_wo_ncap.columns= ['Event', 'Volume', 'Track ID', 'Parent ID']
+        self.single_scattering_wo_ncap.columns= ["index",'Event', 'Volume', 'Track ID', 'Parent ID']
 
         # common LAR NR >1keV
         self.single_scattering_wo_ncap_wt_NR = pd.merge(self.single_scattering_wo_ncap, self.df_LAr_NR, on=['Event'], how='inner')
+        self.single_scattering_wo_ncap_wt_NR = self.single_scattering_wo_ncap_wt_NR.drop(columns = ['Track ID_y',"Volume_y", "Parent ID_y"])
+        self.single_scattering_wo_ncap_wt_NR.columns = ["index",'Event', 'Volume', 'Track ID', 'Parent ID']
         print("final list",self.single_scattering_wo_ncap_wt_NR.head(20))
         self.NR_num = len(self.single_scattering_wo_ncap_wt_NR["Event"].unique())
 
