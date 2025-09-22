@@ -312,6 +312,11 @@ class ReadRoot():
                                             indicator=True)
         print("common between ncap and inelastic",self.df_ncap_in['Event'].unique())
 
+        #check ncapture and elastic scattering happen event
+        self.df_ncap_el = pd.merge(self.df_Ncapture, self.df_bubble_scatter, on=['Event'], how='inner',
+                                   indicator=True)
+        print("common between ncap and elastic", self.df_ncap_el['Event'].unique())
+
 
         # only ncapture but no elastic scattering or inelastic scattering in LAr
         self.df_ncap_wo_ela = pd.merge(self.df_Ncapture, self.df_bubble_scatter, on=['Event'], how='left',
