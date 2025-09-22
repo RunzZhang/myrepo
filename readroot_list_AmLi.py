@@ -190,7 +190,7 @@ class ReadRoot():
         # including inelastic
 
         # update signals
-        self.single_ncap()
+        # self.single_ncap()
         #updated noises
         # Signal 1 is all single bubble signal that cause NR>1keV and ER in LAr
         # the single bubble can be inelastic or elastic, but must be single bubbles
@@ -201,7 +201,7 @@ class ReadRoot():
 
 
         #same still big scattering signals because only NR can cause both photon and bubbles, single bubbles only
-        # self.Huge_NR()
+        self.Huge_NR()
         #
 
 
@@ -722,6 +722,7 @@ class ReadRoot():
                                                         how='inner')
         self.single_scattering_wo_ncap_wt_NR = self.single_scattering_wo_ncap_wt_NR.drop(
             columns=['Track ID_y', "Volume_y", "Parent ID_y"])
+        print("huge scatter", self.single_scattering_wo_ncap_wt_NR["Event"].unique())
         self.single_scattering_wo_ncap_wt_NR.columns = ["index", 'Event', 'Volume', 'Track ID', 'Parent ID']
 
         max_values = self.single_scattering_wo_ncap_wt_NR[((self.single_scattering_wo_ncap_wt_NR["name"] == 'Ar40') | (self.single_scattering_wo_ncap_wt_NR["name"] == 'Ar36'))].groupby(['Event'])[
