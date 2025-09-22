@@ -200,7 +200,7 @@ class ReadRoot():
 
 
         #same still big scattering signals because only NR can cause both photon and bubbles, single bubbles only
-        # self.Huge_scatter_event()
+        self.Huge_NR()
         #
 
 
@@ -510,6 +510,94 @@ class ReadRoot():
         plt.xlabel("scatter energy per Event")
         # plt.show()
         plt.savefig(self.plot_path + "n_huge_scatter_ene_AmLi2.png")
+
+    def Huge_NR(self):
+        # all events with NR that generate single bubble in LAr
+
+        # first save reference data
+
+        self.df_Ncapture = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Volume', 'Track ID', 'Parent ID']]
+        self.df_el_scatter = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (
+                    self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Volume', 'Track ID', 'Parent ID']]
+        self.df_LAr_NR = self.df[
+            ((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (
+                    self.df["Volume"] == 'LAr_phys') & (self.df["Recoiled/MeV"] >= 0.015)][
+            ['Event', 'Volume', 'Track ID', 'Parent ID']]  #0.016 to generate photons 
+
+        self.df_in_el_scatter = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
+                    self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Volume', 'Track ID', 'Parent ID']]
+        # elastic but no inelastic, mayhave capture, maybe have multiple scattering
+        self.df_el_scatter_clean = pd.merge(self.df_el_scatter, self.df_in_el_scatter, on=['Event'], how='left',
+                                            indicator=True)
+        self.df_el_scatter_clean = self.df_el_scatter_clean[self.df_el_scatter_clean['_merge'] == 'left_only'].drop(
+            columns=['_merge', 'Track ID_y', "Volume_y", "Parent ID_y"])
+        self.df_el_scatter_clean.columns = ['Event', 'Volume', 'Track ID', 'Parent ID']
+
+
+        #
+
+        print("capture to be vetoed", len(self.df_Ncapture["Event"].unique()))
+        print("Ela", len(self.df_el_scatter["Event"].unique()))
+        # combine Ela and inelastic
+
+        print("check columns", self.df_el_scatter_clean.columns)
+        (self.df_el_scatter_clean_sing, self.df_el_scatter_clean_multi) = self.distinguish_single_all(
+            self.df_el_scatter_clean)
+
+
+        print("sing elastic", self.df_el_scatter_clean_sing.head(20),
+              len(self.df_el_scatter_clean_sing["Event"].unique()))
+        print("multi elastic", self.df_el_scatter_clean_multi.head(20),
+              len(self.df_el_scatter_clean_multi["Event"].unique()))
+
+
+
+
+        # no Ncapture inside LAr
+        merged_df = pd.merge(self.df_el_scatter_clean_sing, self.df_Ncapture, on=['Event'], how='left', indicator=True)
+        self.single_scattering_wo_ncap = merged_df[merged_df['_merge'] == 'left_only'].drop(
+            columns=['_merge', 'Track ID_y', "Volume_y", "Parent ID_y"])
+        print(self.single_scattering_wo_ncap.columns)
+        self.single_scattering_wo_ncap.columns = ["index", 'Event', 'Volume', 'Track ID', 'Parent ID']
+
+        # common LAR NR >1keV
+        self.single_scattering_wo_ncap_wt_NR = pd.merge(self.single_scattering_wo_ncap, self.df_LAr_NR, on=['Event'],
+                                                        how='inner')
+        self.single_scattering_wo_ncap_wt_NR = self.single_scattering_wo_ncap_wt_NR.drop(
+            columns=['Track ID_y', "Volume_y", "Parent ID_y"])
+        self.single_scattering_wo_ncap_wt_NR.columns = ["index", 'Event', 'Volume', 'Track ID', 'Parent ID']
+
+        max_values = self.single_scattering_wo_ncap_wt_NR[((self.single_scattering_wo_ncap_wt_NR["name"] == 'Ar40') | (self.single_scattering_wo_ncap_wt_NR["name"] == 'Ar36'))].groupby(['Event'])[
+            "Recoiled/MeV"].max().reset_index()
+        print(max_values.head(20))
+
+        # add gamma up
+        self.Ar_recoiled_list = max_values["Recoiled/MeV"].to_list()
+        p_observed = [0]
+        scatter_ene = []  # in eV
+        for i in range(len(self.Ar_recoiled_list)):
+            # 10 /MeV 0.03 and 0.2 PCE and PDE
+            if i > 1E-6:
+                pho_num = self.Ar_recoiled_list[i] * 1E6 * 10 * 0.03 * 0.2 / (1000)
+                scatter_ene.append(self.Ar_recoiled_list[i] * 1E6)
+                if pho_num > 1:
+                    p_observed.append(pho_num)
+
+
+        print("max", max(p_observed), "\n", "min", min(p_observed))
+
+
+        with open(self.false_2_path, 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(p_observed)
+
+
 
     def inelastic_gamma(self):
         self.df_gamma_rw = pd.read_csv(self.false_3_path_mid)
@@ -1052,7 +1140,7 @@ class ReadRoot():
         # single scatter spectrum
         # self.Huge_scatter_spectrum()
         self.Huge_scatter_wt_inelastic_spectrum()
-        self.inelastic_gamma()
+        # self.inelastic_gamma()
         # self.Huge_scatter_spectrum_CF()
         # self.Huge_scatter_spectrum_CF_fake()
 
