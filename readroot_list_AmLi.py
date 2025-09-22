@@ -889,8 +889,11 @@ class ReadRoot():
             ['Event', 'Track ID']]
         #elastic but no inelastic, mayhave capture, maybe have multiple scattering
         self.df_el_scatter_clean= pd.merge(self.df_el_scatter, self.df_in_el_scatter, on=['Event'], how='left', indicator=True)
+        self.df_el_scatter_clean = self.df_el_scatter_clean[self.df_el_scatter_clean['_merge'] == 'left_only'].drop(columns=['_merge', 'Track ID_y'])
         self.df_in_el_scatter_clean = pd.merge(self.df_in_el_scatter,self.df_el_scatter, on=['Event'], how='left',
                                             indicator=True)
+        self.df_in_el_scatter_clean = self.df_in_el_scatter_clean[self.df_in_el_scatter_clean['_merge'] == 'left_only'].drop(
+            columns=['_merge', 'Track ID_y'])
 
         #
 
