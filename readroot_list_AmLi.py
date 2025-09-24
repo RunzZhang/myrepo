@@ -831,7 +831,7 @@ class ReadRoot():
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
         self.df_LAr_NR = self.df[
             ((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (
-                    self.df["Volume"] == 'LAr_phys') & (self.df["Recoiled/MeV"] >= 0.015)][
+                    self.df["Volume"] == 'LAr_phys') & (self.df["Recoiled/MeV"] >= 0.016)][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]  #0.016 to generate photons
 
         self.df_in_el_scatter = self.df[

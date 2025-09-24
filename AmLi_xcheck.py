@@ -154,10 +154,14 @@ class SN():
         print(diff_sig)
         print("Huge scattering diff")
         diff_huge = set(self.noise2_new_raw_list) ^ set(self.noise2_final_list)
+        print("only in new huge", set(self.noise2_new_raw_list) - set(self.noise2_final_list))
+        print("only in old huge",  set(self.noise2_final_list) - set(self.noise2_new_raw_list))
         print(diff_huge)
         print("ER scattering diff")
         self.old_scattering = self.noise1_final_list+self.noise3_final_list
         diff_scattering = set(self.old_scattering) ^ set(self.noise2_new_final_list)
+        print("only in new scatter", set(self.noise2_new_final_list) - set(self.old_scattering))
+        print("only in old scatter", set(self.old_scattering) - set(self.noise2_new_final_list))
         print(diff_scattering)
 
 if __name__=="__main__":
