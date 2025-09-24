@@ -148,29 +148,45 @@ class ReadRoot():
         self.false_1 = f"AmLi_1E7_false1_part{i}.csv"
         self.false_2 = f"AmLi_1E7_false2_part{i}.csv"
         self.false_3 = f"AmLi_1E7_false3_part{i}.csv"
+        self.false_1_old = f"AmLi_1E7_false1_old_part{i}.csv"
+        self.false_2_old = f"AmLi_1E7_false2_old_part{i}.csv"
+        self.false_3_old = f"AmLi_1E7_false3_old_part{i}.csv"
         self.false_1_new = f"AmLi_1E7_false1_new_part{i}.csv"
         self.false_2_new = f"AmLi_1E7_false2_new_part{i}.csv"
         self.signal = f"AmLi_1E7_sig_part{i}.csv"
+        self.signal_old = f"AmLi_1E7_sig_old_part{i}.csv"
         self.signal_new = f"AmLi_1E7_sig_new_part{i}.csv"
         self.false_1_mid = f"AmLi_1E7_false1_mid_part{i}.csv"
         self.false_2_mid = f"AmLi_1E7_false2_mid_part{i}.csv"
         self.false_3_mid = f"AmLi_1E7_false3_mid_part{i}.csv"
         self.signal_mid = f"AmLi_1E7_sig_mid_part{i}.csv"
+        self.false_1_old_mid = f"AmLi_1E7_false1_old_mid_part{i}.csv"
+        self.false_2_old_mid = f"AmLi_1E7_false2_old_mid_part{i}.csv"
+        self.false_3_old_mid = f"AmLi_1E7_false3_old_mid_part{i}.csv"
+        self.signal_old_mid = f"AmLi_1E7_sig_old_mid_part{i}.csv"
         self.false_1_new_mid = f"AmLi_1E7_false1_new_mid_part{i}.csv"
         self.false_2_new_mid = f"AmLi_1E7_false2_new_mid_part{i}.csv"
         self.signal_new_mid = f"AmLi_1E7_sig_new_mid_part{i}.csv"
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
         self.false_3_path = self.base_path + self.false_3
+        self.false_1_old_path = self.base_path + self.false_1_old
+        self.false_2_old_path = self.base_path + self.false_2_old
+        self.false_3_old_path = self.base_path + self.false_3_old
         self.false_1_new_path = self.base_path + self.false_1_new
         self.false_2_new_path = self.base_path + self.false_2_new
         self.false_1_path_mid = self.base_path + self.false_1_mid
         self.false_2_path_mid = self.base_path + self.false_2_mid
         self.false_3_path_mid = self.base_path + self.false_3_mid
+        self.false_1_old_path_mid = self.base_path + self.false_1_old_mid
+        self.false_2_old_path_mid = self.base_path + self.false_2_old_mid
+        self.false_3_old_path_mid = self.base_path + self.false_3_old_mid
         self.false_1_new_path_mid = self.base_path + self.false_1_new_mid
         self.false_2_new_path_mid = self.base_path + self.false_2_new_mid
         self.signal_path_mid = self.base_path + self.signal_mid
         self.signal_path = self.base_path + self.signal
+        self.signal_old_path_mid = self.base_path + self.signal_old_mid
+        self.signal_old_path = self.base_path + self.signal_old
         self.signal_new_path_mid = self.base_path + self.signal_new_mid
         self.signal_new_path = self.base_path + self.signal_new
 
@@ -193,7 +209,7 @@ class ReadRoot():
 
 
         # signal rate, caputre in liquid argon
-        # self.LAr_gamma_event()
+        self.LAr_gamma_event()
 
         # single elastic scatter and capture false signal 1
         # self.single_e_n_capture_event()
@@ -214,7 +230,7 @@ class ReadRoot():
 
 
         #same still big scattering signals because only NR can cause both photon and bubbles, single bubbles only
-        self.Huge_NR()
+        # self.Huge_NR()
         #
 
 
@@ -780,7 +796,7 @@ class ReadRoot():
             ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV", "Recoiled/MeV", "Volume",
              "Process"]]
         self.df_event_1542.to_csv("/data/runzezhang/result/TN_sims3/event1542.csv", index=False)
-        with open(self.false_2_path, 'w', newline='') as myfile:
+        with open(self.false_2_old_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(self.Ar_recoiled_event_list)
 
@@ -1013,7 +1029,7 @@ class ReadRoot():
         print("max", max(p_observed), "\n", "min", min(p_observed))
         # plt.hist(self.electron_recoiled_list, bins=100)
         self.p_observed += p_observed
-        with open(self.false_3_path, 'w', newline='') as myfile:
+        with open(self.false_3_old_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(self.electron_recoiled_event_list)
         plt.hist(p_observed, bins=100)
@@ -1719,7 +1735,7 @@ class ReadRoot():
         print("photon observed number ", num, len(p_observed))
         print("max", max(p_observed), "\n", "min", min(p_observed))
         # plt.hist(self.electron_recoiled_list, bins=100)
-        with open(self.false_1_path, 'w', newline='') as myfile:
+        with open(self.false_1_old_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(self.electron_recoiled_event_list)
         plt.hist(p_observed, bins=100)
@@ -1891,7 +1907,7 @@ class ReadRoot():
         # plt.hist(self.electron_recoiled_list, bins=100)
         plt.hist(p_observed, bins=100)
         print("output len",len(p_observed))
-        with open(self.signal_path, 'w', newline='') as myfile:
+        with open(self.signal_old_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(self.electron_recoiled_event_list)
         plt.xlabel("Obeserved Photon per Event")
