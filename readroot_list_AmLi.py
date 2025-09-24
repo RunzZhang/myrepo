@@ -218,7 +218,7 @@ class ReadRoot():
 
         # false noise 2, need to relocate directory
         # including inelastic
-        self.Huge_scatter_event()
+        # self.Huge_scatter_event()
 
         # update signals
         # self.single_ncap()
@@ -232,7 +232,7 @@ class ReadRoot():
 
 
         #same still big scattering signals because only NR can cause both photon and bubbles, single bubbles only
-        # self.Huge_NR()
+        self.Huge_NR()
         #
 
 
