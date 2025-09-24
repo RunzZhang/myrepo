@@ -144,3 +144,6 @@ class SN():
         diff_scattering = set(self.old_scattering) ^ set(self.noise2_new_final_list)
         print(diff_scattering)
 
+if __name__=="__main__":
+    sn = SN()
+    # test = test_csv()
