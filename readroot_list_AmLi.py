@@ -216,7 +216,7 @@ class ReadRoot():
 
         # false noise 2, need to relocate directory
         # including inelastic
-        self.Huge_scatter_event()
+        # self.Huge_scatter_event()
 
         # update signals
         # self.single_ncap()
@@ -230,7 +230,7 @@ class ReadRoot():
 
 
         #same still big scattering signals because only NR can cause both photon and bubbles, single bubbles only
-        # self.Huge_NR()
+        self.Huge_NR()
         #
 
 
@@ -772,16 +772,19 @@ class ReadRoot():
 
         # add gamma up
         self.Ar_recoiled_list = max_values["Recoiled/MeV"].to_list()
-        self.Ar_recoiled_event_list = max_values["Event"].to_list()
+        self.Ar_recoiled_event_raw_list = max_values["Event"].to_list()
+        self.Ar_recoiled_event_list = []
         p_observed = [0]
         scatter_ene = []  # in eV
         for i in range(len(self.Ar_recoiled_list)):
-            # 10 /MeV 0.03 and 0.2 PCE and PDE
+            # 10 /keV 0.03 and 0.2 PCE and PDE
             if i > 1E-6:
                 pho_num = self.Ar_recoiled_list[i] * 1E6 * 10 * 0.03 * 0.2 / (1000)
                 scatter_ene.append(self.Ar_recoiled_list[i] * 1E6)
                 if pho_num > 1:
                     p_observed.append(pho_num)
+                    self.Ar_recoiled_event_list.append(self.Ar_recoiled_event_raw_list[i])
+
 
         num = 0
         for i in p_observed:
@@ -855,6 +858,8 @@ class ReadRoot():
         print("check columns", self.df_el_scatter_clean.columns)
         (self.df_el_scatter_clean_sing, self.df_el_scatter_clean_multi) = self.distinguish_single_all(
             self.df_el_scatter_clean)
+        #is multiscattering here?
+        print("multiscattering?",self.df_el_scatter_clean_sing["Event"].to_list())
 
 
         print("sing elastic", self.df_el_scatter_clean_sing.head(20),
