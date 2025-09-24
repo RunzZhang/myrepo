@@ -198,6 +198,8 @@ class ReadRoot():
         # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
         self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV","PostKinetic/MeV",
                                  "Recoiled/MeV", "Volume", "Process"]
+
+        self.bubble_threshold = 0.00125 # MeV bubble generate threshold
         self.rows = 1000
 
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
@@ -328,12 +330,12 @@ class ReadRoot():
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
         # single bubble only, exclude inelastic and elastic > 1NR in LAr
         self.df_bubble_scatter = self.df[
-            (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')&(self.df["Kinetic diff/MeV"] <-0.00125)][
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')&(self.df["Kinetic diff/MeV"] <-self.bubble_threshold)][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
 
         self.df_in_elastic = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
-                        self.df["Volume"] == 'LAr_phys')&(self.df["Kinetic diff/MeV"] <-0.00125)][
+                        self.df["Volume"] == 'LAr_phys')&(self.df["Kinetic diff/MeV"] <-self.bubble_threshold)][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
 
         # check ncapture and inelastic scattering happen event
@@ -833,7 +835,7 @@ class ReadRoot():
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
         self.df_el_scatter = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (
-                    self.df["Volume"] == 'LAr_phys')&(self.df["Kinetic diff/MeV"] <-0.00125)][
+                    self.df["Volume"] == 'LAr_phys')&(self.df["Kinetic diff/MeV"] <-self.bubble_threshold)][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
         self.df_LAr_NR = self.df[
             ((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (
@@ -842,7 +844,7 @@ class ReadRoot():
 
         self.df_in_el_scatter = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
-                    self.df["Volume"] == 'LAr_phys')&(self.df["Kinetic diff/MeV"] <-0.00125)][
+                    self.df["Volume"] == 'LAr_phys')&(self.df["Kinetic diff/MeV"] <-self.bubble_threshold)][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
         # elastic but no inelastic, mayhave capture, maybe have multiple scattering
         self.df_el_scatter_clean = pd.merge(self.df_el_scatter, self.df_in_el_scatter, on=['Event'], how='left',
@@ -1263,7 +1265,7 @@ class ReadRoot():
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] != 'LAr_phys')][
             ['Event', 'Track ID']]
         self.df_Nscatter = self.df[
-            (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')& (self.df["Kinetic diff/MeV"] <-0.00125)][
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')& (self.df["Kinetic diff/MeV"] <-self.bubble_threshold)][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
         self.df_Nscatter_wo = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (
