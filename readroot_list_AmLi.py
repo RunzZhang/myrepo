@@ -333,7 +333,7 @@ class ReadRoot():
 
         self.df_in_elastic = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
-                        self.df["Volume"] == 'LAr_phys')][
+                        self.df["Volume"] == 'LAr_phys')&(self.df["Kinetic diff/MeV"] <-0.00125)][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
 
         # check ncapture and inelastic scattering happen event
@@ -825,12 +825,15 @@ class ReadRoot():
 
         # first save reference data
 
+        self.df["Kinetic diff/MeV"] = self.df["PreKinetic/MeV"].diff()
+        self.df["Kinetic diff/MeV"] = self.df["Kinetic diff/MeV"].fillna(0)
+
         self.df_Ncapture = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
         self.df_el_scatter = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (
-                    self.df["Volume"] == 'LAr_phys')][
+                    self.df["Volume"] == 'LAr_phys')&(self.df["Kinetic diff/MeV"] <-0.00125)][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
         self.df_LAr_NR = self.df[
             ((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (
@@ -839,7 +842,7 @@ class ReadRoot():
 
         self.df_in_el_scatter = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
-                    self.df["Volume"] == 'LAr_phys')][
+                    self.df["Volume"] == 'LAr_phys')&(self.df["Kinetic diff/MeV"] <-0.00125)][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
         # elastic but no inelastic, mayhave capture, maybe have multiple scattering
         self.df_el_scatter_clean = pd.merge(self.df_el_scatter, self.df_in_el_scatter, on=['Event'], how='left',
@@ -2097,7 +2100,7 @@ class ReadRoot():
         # find only elastic or only inelastic once
 
         # if an entry has same event and parent ID but has different Track ID
-        df = self.keep_1st(df, [column1, column2])
+        # df = self.keep_1st(df, [column1, column2])
 
         df['combined_tuple'] = list(zip(df.iloc[:][column1], df.iloc[:][column2]))
         multi_appearance_mask = df['combined_tuple'].duplicated(keep=False)
