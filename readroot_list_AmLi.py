@@ -134,33 +134,45 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_v2/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_v2/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_cross_check/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_crosee_check/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        # self.main_body(1)
-        for i in range(1,101):
+        self.main_body(1)
+        # for i in range(1,101):
         # # for i in range(1, 34):
-            self.main_body(i)
+        #     self.main_body(i)
     def main_body(self,i):
         print(i)
         self.false_1 = f"AmLi_1E7_false1_part{i}.csv"
         self.false_2 = f"AmLi_1E7_false2_part{i}.csv"
         self.false_3 = f"AmLi_1E7_false3_part{i}.csv"
+        self.false_1_new = f"AmLi_1E7_false1_new_part{i}.csv"
+        self.false_2_new = f"AmLi_1E7_false2_new_part{i}.csv"
         self.signal = f"AmLi_1E7_sig_part{i}.csv"
+        self.signal_new = f"AmLi_1E7_sig_new_part{i}.csv"
         self.false_1_mid = f"AmLi_1E7_false1_mid_part{i}.csv"
         self.false_2_mid = f"AmLi_1E7_false2_mid_part{i}.csv"
         self.false_3_mid = f"AmLi_1E7_false3_mid_part{i}.csv"
         self.signal_mid = f"AmLi_1E7_sig_mid_part{i}.csv"
+        self.false_1_new_mid = f"AmLi_1E7_false1_new_mid_part{i}.csv"
+        self.false_2_new_mid = f"AmLi_1E7_false2_new_mid_part{i}.csv"
+        self.signal_new_mid = f"AmLi_1E7_sig_new_mid_part{i}.csv"
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
         self.false_3_path = self.base_path + self.false_3
+        self.false_1_new_path = self.base_path + self.false_1_new
+        self.false_2_new_path = self.base_path + self.false_2_new
         self.false_1_path_mid = self.base_path + self.false_1_mid
         self.false_2_path_mid = self.base_path + self.false_2_mid
         self.false_3_path_mid = self.base_path + self.false_3_mid
+        self.false_1_new_path_mid = self.base_path + self.false_1_new_mid
+        self.false_2_new_path_mid = self.base_path + self.false_2_new_mid
         self.signal_path_mid = self.base_path + self.signal_mid
         self.signal_path = self.base_path + self.signal
+        self.signal_new_path_mid = self.base_path + self.signal_new_mid
+        self.signal_new_path = self.base_path + self.signal_new
 
 
 
@@ -181,13 +193,14 @@ class ReadRoot():
 
 
         # signal rate, caputre in liquid argon
-        # self.LAr_gamma_event()
+        self.LAr_gamma_event()
 
         # single elastic scatter and capture false signal 1
         # self.single_e_n_capture_event()
 
         # false noise 2, need to relocate directory
         # including inelastic
+        # self.Huge_scatter_event()
 
         # update signals
         # self.single_ncap()
@@ -201,7 +214,7 @@ class ReadRoot():
 
 
         #same still big scattering signals because only NR can cause both photon and bubbles, single bubbles only
-        self.Huge_NR()
+        # self.Huge_NR()
         #
 
 
@@ -383,6 +396,7 @@ class ReadRoot():
 
         # add gamma up
         self.electron_recoiled_list = summed_values["Recoiled/MeV"].to_list()
+        self.electron_recoiled_event_list = summed_values["Event"].to_list()
         p_observed = [0]
         print("recoil list", len(self.electron_recoiled_list))
         for i in range(len(self.electron_recoiled_list)):
@@ -402,6 +416,9 @@ class ReadRoot():
         with open(self.signal_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(p_observed)
+        with open(self.signal_new_path, 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(self.electron_recoiled_event_list)
         plt.xlabel("Obeserved Photon per Event")
         # plt.show()
 
@@ -619,6 +636,7 @@ class ReadRoot():
 
         # add gamma up
         self.Ar_recoiled_list = max_values["Recoiled/MeV"].to_list()
+        self.Ar_recoiled_event_list = max_values["Event"].to_list()
         p_observed = [0]
         scatter_ene = []  # in eV
         for i in range(len(self.Ar_recoiled_list)):
@@ -645,6 +663,126 @@ class ReadRoot():
         with open(self.false_2_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(p_observed)
+
+        self.p_observed = p_observed
+        # print photon number
+        # plt.hist(p_observed, bins=100)
+        # plt.xlabel("Obeserved Photon per Event")
+
+        # print scatter scatter
+        plt.hist(scatter_ene, bins=100)
+        plt.xscale("log")
+        plt.yscale("Log")
+        print("scatter number", len(scatter_ene))
+        # before 6846
+        # after including inelastic scattering 8681
+        plt.xlabel("scatter energy per Event")
+        # plt.show()
+        plt.savefig(self.plot_path + "n_huge_scatter_ene_AmLi2.png")
+
+    def Huge_scatter_wt_inelastic_spectrum_xcheck(self):
+        self.df_Nscatter = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Volume', 'Track ID', 'Parent ID']]
+        self.df_Ninelastic = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
+                    self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Volume', 'Track ID', 'Parent ID']]
+
+        self.df_capture = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Volume', 'Track ID']]
+        self.df_capture[["Event"]].to_csv(self.base_path2 + "capture_event_list.csv", index=False)
+        print("Ela", len(self.df_Nscatter["Event"].unique()))
+        print("capture", self.df_capture.head(10))
+        print("inelastic", len(self.df_Ninelastic["Event"].unique()), self.df_Ninelastic.head(10))
+
+        (self.df_sing_Nscatter, self.df_multi_Nscatter) = self.find_single_n_multi(self.df_Nscatter, "Event", "Volume")
+
+        print("sing", self.df_sing_Nscatter)
+        print("multi", self.df_multi_Nscatter)
+        # self.df_cap_gamma = pd.DataFrame('Event','Track ID')
+        # elastic
+        merged_df = pd.merge(self.df_sing_Nscatter, self.df_Ninelastic, on=['Event'], how='left', indicator=True)
+        filtered_df = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge'])
+        # inelastic
+        # merged_df = pd.merge(self.df_sing_Nscatter, self.df_Nscatter, on=['Event'], how='left', indicator=True)
+        filtered_df_inela = self.df_Ninelastic
+        print("merged_xor,\n", filtered_df_inela.head(10))
+        # 2nd filter filter out ncapture recoiled energy
+        # elastic
+        merged_df2 = pd.merge(filtered_df, self.df_capture, on=['Event'], how='left', indicator=True)
+
+        filtered_df2 = merged_df2[merged_df2['_merge'] == 'left_only'].drop(columns=['_merge'])
+
+        merged_df3 = pd.merge(filtered_df_inela, self.df_capture, on=['Event'], how='left', indicator=True)
+
+        filtered_df3 = merged_df3[merged_df3['_merge'] == 'left_only'].drop(columns=['_merge'])
+
+        print("merged_xor,\n", filtered_df2.head(10))
+
+        self.LAr_recoiled = \
+        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/MeV"] > 0.001)][
+            ['Event']]
+
+        # print("LAr recoiled",self.LAr_recoiled)
+        # filtered df to remove nCapture event
+        # elastic and inelastic
+        self.LAr_n_merged = pd.merge(filtered_df2, self.LAr_recoiled, on=['Event'], how='inner')
+        self.LAr_n_merged_inela = pd.merge(filtered_df3, self.LAr_recoiled, on=['Event'], how='inner')
+
+        n_list = self.LAr_n_merged["Event"].to_list()
+        self.N_check = self.df[self.df["Event"].isin(n_list) & (
+                (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))]
+        self.N_check.to_csv(self.false_2_path_mid, index=False)
+
+        n_list_inela = self.LAr_n_merged_inela["Event"].to_list()
+        print("Ncheck_ inel", n_list_inela)
+        self.N_check_inela = self.df[self.df["Event"].isin(n_list_inela) & (
+                (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36') | (
+                    self.df["name"] == 'gamma'))]
+        # with open(self.false_3_path, 'w', newline='') as myfile:
+        #     wr = csv.writer(myfile)
+        #     wr.writerow(self.Ar_recoiled_event_list)
+
+        self.N_check_inela.to_csv(self.false_3_path_mid, index=False)
+
+        # print(self.LAr_n_merged)
+        # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
+
+        max_values = self.N_check[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])[
+            "Recoiled/MeV"].max().reset_index()
+        print(max_values.head(20))
+
+        # add gamma up
+        self.Ar_recoiled_list = max_values["Recoiled/MeV"].to_list()
+        self.Ar_recoiled_event_list = max_values["Event"].to_list()
+        p_observed = [0]
+        scatter_ene = []  # in eV
+        for i in range(len(self.Ar_recoiled_list)):
+            # 10 /MeV 0.03 and 0.2 PCE and PDE
+            if i > 1E-6:
+                pho_num = self.Ar_recoiled_list[i] * 1E6 * 10 * 0.03 * 0.2 / (1000)
+                scatter_ene.append(self.Ar_recoiled_list[i] * 1E6)
+                if pho_num > 1:
+                    p_observed.append(pho_num)
+
+        num = 0
+        for i in p_observed:
+            if i >= 1:
+                num += 1
+        print("photon observed number ", num, len(p_observed))
+        print("max", max(p_observed), "\n", "min", min(p_observed))
+        # plt.hist(self.Ar_recoiled_list, bins=100)
+        # check event 1256
+        self.df_event_1542 = self.df[
+            self.df["Event"] == 1542][
+            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV", "Recoiled/MeV", "Volume",
+             "Process"]]
+        self.df_event_1542.to_csv("/data/runzezhang/result/TN_sims3/event1542.csv", index=False)
+        with open(self.false_2_path, 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(self.Ar_recoiled_event_list)
 
         self.p_observed = p_observed
         # print photon number
@@ -762,6 +900,7 @@ class ReadRoot():
 
         # add gamma up
         self.Ar_recoiled_list = max_values["Recoiled/MeV"].to_list()
+        self.Ar_recoiled_event_list = max_values["Event"].to_list()
         p_observed = [0]
         scatter_ene = []  # in eV
         for i in range(len(self.Ar_recoiled_list)):
@@ -779,6 +918,10 @@ class ReadRoot():
         with open(self.false_2_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(p_observed)
+
+        with open(self.false_2_new_path, 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(self.Ar_recoiled_event_list)
 
 
 
@@ -808,6 +951,7 @@ class ReadRoot():
 
         # add gamma up
         self.electron_recoiled_list = summed_values["Recoiled/MeV"].to_list()
+        self.electron_recoiled_event_list = summed_values["Recoiled/MeV"].to_list()
         p_observed = [0]
         for i in range(len(self.electron_recoiled_list)):
             # 40 /MeV 0.03 and 0.2 PCE and PDE
@@ -825,6 +969,53 @@ class ReadRoot():
         with open(self.false_3_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(self.p_observed)
+        plt.hist(p_observed, bins=100)
+        plt.xlabel("Obeserved Photon per Event")
+
+    def inelastic_gamma_xcheck(self):
+        self.df_gamma_rw = pd.read_csv(self.false_3_path_mid)
+        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
+
+        self.gamma_Scint = self.df_gamma_rw[
+            (self.df_gamma_rw['Volume'] == 'LAr_phys')]
+        gamma_list = self.gamma_Scint["Event"].unique()
+        print("gamma filter", len(gamma_list))
+        self.gamma_Scint = self.keep_1st(self.gamma_Scint)
+        print("scint", self.gamma_Scint)
+        # print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]!=1])
+        self.gamma_Scint_column = self.gamma_Scint[['Event', "Track ID"]]
+        self.gamma_Scint_column.columns = ['Event', "Parent ID"]
+        self.df_electron = self.df[(self.df['name'] == 'e-') & (self.df['Volume'] == 'LAr_phys')]
+        self.df_electron = self.keep_1st(self.df_electron)
+        self.df_electron_gamma = pd.merge(self.df_electron, self.gamma_Scint_column, on=['Event', 'Parent ID'],
+                                          how='inner')
+        print("gamma filter 2", len(self.df_electron_gamma["Event"].unique()))
+        print(self.df_electron_gamma.head(10))
+        # double check gamma
+
+        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
+        print(summed_values.head(20))
+
+        # add gamma up
+        self.electron_recoiled_list = summed_values["Recoiled/MeV"].to_list()
+        self.electron_recoiled_event_list = summed_values["Recoiled/MeV"].to_list()
+        p_observed = [0]
+        for i in range(len(self.electron_recoiled_list)):
+            # 40 /MeV 0.03 and 0.2 PCE and PDE
+            if i > 1E-6:
+                p_observed.append(self.electron_recoiled_list[i] * 1E6 * 40 * 0.03 * 0.2 / (1000))
+
+        num = 0
+        for i in p_observed:
+            if i >= 1:
+                num += 1
+        print("photon observed number ", num, len(p_observed))
+        print("max", max(p_observed), "\n", "min", min(p_observed))
+        # plt.hist(self.electron_recoiled_list, bins=100)
+        self.p_observed += p_observed
+        with open(self.false_3_path, 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(self.electron_recoiled_event_list)
         plt.hist(p_observed, bins=100)
         plt.xlabel("Obeserved Photon per Event")
 
@@ -1243,6 +1434,7 @@ class ReadRoot():
 
         # add gamma up
         self.electron_recoiled_list = summed_values["Recoiled/MeV"].to_list()
+        self.electron_recoiled_event_list = summed_values["Event"].to_list()
 
         p_observed = [self.NR_num] # the first digit is always the NR number
         for i in range(len(self.electron_recoiled_list)):
@@ -1256,6 +1448,10 @@ class ReadRoot():
         with open(self.false_1_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(p_observed)
+
+        with open(self.false_1_new_path, 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(self.electron_recoiled_event_list)
 
 
 
@@ -1322,8 +1518,10 @@ class ReadRoot():
     def Huge_scatter_event(self):
         # single scatter spectrum
         # self.Huge_scatter_spectrum()
-        self.Huge_scatter_wt_inelastic_spectrum()
+        # self.Huge_scatter_wt_inelastic_spectrum()
+        self.Huge_scatter_wt_inelastic_spectrum_xcheck()
         # self.inelastic_gamma()
+        self.inelastic_gamma_xcheck()
         # self.Huge_scatter_spectrum_CF()
         # self.Huge_scatter_spectrum_CF_fake()
 
@@ -1332,7 +1530,8 @@ class ReadRoot():
         # if already run 1st 2 steps and obtained output csv file, one can directly run 3rd function
         self.LAr_compare()
         self.LAr_Capture_spectrum()
-        self.LAr_find_gamma_e()
+        # self.LAr_find_gamma_e()
+        self.LAr_find_gamma_e_xcheck()
 
     def single_e_n_capture_event(self):
         # loop and without loop is just to test the algrorithms, the result should be same
@@ -1342,7 +1541,8 @@ class ReadRoot():
         self.Capture_n_scatter_spectrum_loop()
         # self.single_n_find_gamma_e_loop()
         # get the photon number per event
-        self.single_n_find_gamma_e()
+        # self.single_n_find_gamma_e()
+        self.single_n_find_gamma_e_xcheck()
 
     def bubbleNR_n_ER(self):
         self.kNR()
@@ -1474,6 +1674,58 @@ class ReadRoot():
         plt.hist(p_observed, bins=100)
         plt.xlabel("Obeserved Photon per Event")
         # plt.show()
+
+    def single_n_find_gamma_e_xcheck(self):
+        self.df_gamma_rw = pd.read_csv(self.false_1_path_mid)
+        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
+        # we need to do severalthings:
+        # gamma only in LAr or CF4
+        # in 1 event number, only the first series of gammas, avoi
+        # ding over-countting
+        # self.gamma_Scint = self.df_gamma_rw[
+        #     (self.df_gamma_rw['Volume'] == 'LAr_phys') | (self.df_gamma_rw['Volume'] == 'hydraulic_fluid_phys')]
+        self.gamma_Scint = self.df_gamma_rw[
+            (self.df_gamma_rw['Volume'] == 'LAr_phys') ]
+        gamma_list = self.gamma_Scint["Event"].unique()
+        print("gamma filter", len(gamma_list))
+        self.gamma_Scint = self.keep_1st(self.gamma_Scint)
+        print("scint",self.gamma_Scint)
+        # print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]!=1])
+        self.gamma_Scint_column = self.gamma_Scint[['Event',"Track ID"]]
+        self.gamma_Scint_column.columns = ['Event',"Parent ID"]
+        self.df_electron = self.df[(self.df['name']=='e-')&(self.df['Volume']=='LAr_phys')]
+        self.df_electron = self.keep_1st(self.df_electron)
+        self.df_electron_gamma = pd.merge(self.df_electron,self.gamma_Scint_column,on=['Event','Parent ID'], how='inner')
+        print("gamma filter 2",len(self.df_electron_gamma["Event"].unique()))
+        print(self.df_electron_gamma.head(10))
+        # double check gamma
+
+        summed_values = self.df_electron_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
+        print(summed_values.head(20))
+
+        # add gamma up
+        self.electron_recoiled_list  = summed_values["Recoiled/MeV"].to_list()
+        self.electron_recoiled_event_list = summed_values["Event"].to_list()
+        p_observed = [0]
+        for i in range(len(self.electron_recoiled_list)):
+            # 40 /MeV 0.03 and 0.2 PCE and PDE
+            if i> 1E-6:
+                p_observed.append(self.electron_recoiled_list[i]*1E6*40*0.03*0.2/(1000))
+
+        num = 0
+        for i in p_observed:
+            if i >= 1:
+                num += 1
+        print("photon observed number ", num, len(p_observed))
+        print("max", max(p_observed), "\n", "min", min(p_observed))
+        # plt.hist(self.electron_recoiled_list, bins=100)
+        with open(self.false_1_path, 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(self.electron_recoiled_event_list)
+        plt.hist(p_observed, bins=100)
+        plt.xlabel("Obeserved Photon per Event")
+        # plt.show()
+
     def single_n_find_gamma_e_loop(self):
         self.df_gamma_rw = pd.read_csv(self.base_path2 + "dmx_single_n_gamma_AmLi_neutron_list_loop.csv")
         print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
@@ -1581,6 +1833,70 @@ class ReadRoot():
             wr.writerow(p_observed)
         plt.xlabel("Obeserved Photon per Event")
         # plt.show()
+
+    def LAr_find_gamma_e_xcheck(self):
+        self.df_gamma_rw = pd.read_csv(self.signal_path_mid)
+        print(self.df_gamma_rw[["PreKinetic/MeV"]].head(20))
+        # we need to do severalthings:
+        # gamma only in LAr or CF4
+        # in 1 event number, only the first series of gammas, avoiding over-countting
+
+        self.gamma_Scint = self.df_gamma_rw[self.df_gamma_rw['Volume'] == 'LAr_phys']
+        print("gamma scint overcount", len(self.gamma_Scint["Event"].unique()),
+              self.gamma_Scint["Event"].unique()[:20])
+        self.gamma_Scint = self.keep_1st(self.gamma_Scint)
+        print("gamma scint", len(self.gamma_Scint["Event"].unique()),
+              self.gamma_Scint["Event"].unique()[:20])
+        print("scint",self.gamma_Scint)
+        # print("scint2",self.gamma_Scint[self.gamma_Scint["Parent ID"]!=1])
+        self.gamma_Scint_column = self.gamma_Scint[['Event',"Track ID"]]
+        self.gamma_Scint_column.columns = ['Event',"Parent ID"]
+        self.df_electron = self.df[(self.df['name']=='e-')&(self.df['Volume']=='LAr_phys')]
+        print("electron first", len(self.df_electron["Event"].unique()),
+              self.df_electron["Event"].unique()[:20])
+        self.df_electron = self.keep_1st(self.df_electron)
+        print("electron afterward", len(self.df_electron["Event"].unique()),
+              self.df_electron["Event"].unique()[:20])
+        self.df_electron_gamma_merged = pd.merge(self.df_electron,self.gamma_Scint_column,on=['Event','Parent ID'], how='inner')
+        print("gamma scint merged", len(self.df_electron_gamma_merged["Event"].unique()),
+              self.df_electron_gamma_merged["Event"].unique()[:20])
+        lost_event = list(set(self.gamma_Scint["Event"].unique()) - set(self.df_electron_gamma_merged["Event"].unique()))
+        print("lost", lost_event)
+        print(self.df_electron_gamma_merged.head(10))
+        # double check gamma
+
+        # summed_values = self.df_electron_gamma_merged.groupby(['Event', 'Parent ID'])["Recoiled/MeV"].sum().reset_index()
+        summed_values = self.df_electron_gamma_merged.groupby(['Event'])[
+            "Recoiled/MeV"].sum().reset_index()
+        print("summed values", len(summed_values["Event"].unique()),
+              summed_values["Event"].unique()[:20])
+        print(summed_values.head(20))
+
+        # add gamma up
+        self.electron_recoiled_list  = summed_values["Recoiled/MeV"].to_list()
+        self.electron_recoiled_event_list = summed_values["Event"].to_list()
+        p_observed = [0]
+        print("recoil list", len(self.electron_recoiled_list))
+        for i in range(len(self.electron_recoiled_list)):
+            # 40 /MeV 0.03 and 0.2 PCE and PDE
+            p_observed.append(self.electron_recoiled_list[i]*1E6*40*0.03*0.2/(1000))
+        print("p observed list len",len(p_observed))
+
+        num = 0
+        for i in p_observed:
+            if i >= 1:
+                num += 1
+        print("photon observed number ", num)
+        print("max", max(p_observed), "\n", "min", min(p_observed))
+        # plt.hist(self.electron_recoiled_list, bins=100)
+        plt.hist(p_observed, bins=100)
+        print("output len",len(p_observed))
+        with open(self.signal_path, 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(self.electron_recoiled_event_list)
+        plt.xlabel("Obeserved Photon per Event")
+        # plt.show()
+
     def check_capture(self):
         self.df_gamma_rw = pd.read_csv(self.base_path + "dmx_gamma.csv")
 
