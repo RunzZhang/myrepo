@@ -2092,14 +2092,14 @@ class ReadRoot():
         print("sing", filtered_df_sing.head(10))
         return (filtered_df_sing,filtered_df_multi)
 
-    def distinguish_single_all(self, df, Event="Event", Parent="Parent ID"):
+    def distinguish_single_all(self, df, column1="Event", column2="Parent ID"):
 
         # find only elastic or only inelastic once
 
         # if an entry has same event and parent ID but has different Track ID
-        # df = self.keep_1st(df, ['Event', 'Track ID'])
+        df = self.keep_1st(df, [column1, column2])
 
-        df['combined_tuple'] = list(zip(df.iloc[:][Event], df.iloc[:][Parent]))
+        df['combined_tuple'] = list(zip(df.iloc[:][column1], df.iloc[:][column2]))
         multi_appearance_mask = df['combined_tuple'].duplicated(keep=False)
         sing_appearance_mask = ~df['combined_tuple'].duplicated(keep=False)
         # find the duplicated
