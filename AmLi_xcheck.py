@@ -34,29 +34,45 @@ class SN():
         self.false_1 = f"AmLi_1E7_false1_part{i}.csv"
         self.false_2 = f"AmLi_1E7_false2_part{i}.csv"
         self.false_3 = f"AmLi_1E7_false3_part{i}.csv"
+        self.false_1_old = f"AmLi_1E7_false1_old_part{i}.csv"
+        self.false_2_old = f"AmLi_1E7_false2_old_part{i}.csv"
+        self.false_3_old = f"AmLi_1E7_false3_old_part{i}.csv"
         self.false_1_new = f"AmLi_1E7_false1_new_part{i}.csv"
         self.false_2_new = f"AmLi_1E7_false2_new_part{i}.csv"
         self.signal = f"AmLi_1E7_sig_part{i}.csv"
+        self.signal_old = f"AmLi_1E7_sig_old_part{i}.csv"
         self.signal_new = f"AmLi_1E7_sig_new_part{i}.csv"
         self.false_1_mid = f"AmLi_1E7_false1_mid_part{i}.csv"
         self.false_2_mid = f"AmLi_1E7_false2_mid_part{i}.csv"
         self.false_3_mid = f"AmLi_1E7_false3_mid_part{i}.csv"
         self.signal_mid = f"AmLi_1E7_sig_mid_part{i}.csv"
+        self.false_1_old_mid = f"AmLi_1E7_false1_old_mid_part{i}.csv"
+        self.false_2_old_mid = f"AmLi_1E7_false2_old_mid_part{i}.csv"
+        self.false_3_old_mid = f"AmLi_1E7_false3_old_mid_part{i}.csv"
+        self.signal_old_mid = f"AmLi_1E7_sig_old_mid_part{i}.csv"
         self.false_1_new_mid = f"AmLi_1E7_false1_new_mid_part{i}.csv"
         self.false_2_new_mid = f"AmLi_1E7_false2_new_mid_part{i}.csv"
         self.signal_new_mid = f"AmLi_1E7_sig_new_mid_part{i}.csv"
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
         self.false_3_path = self.base_path + self.false_3
+        self.false_1_old_path = self.base_path + self.false_1_old
+        self.false_2_old_path = self.base_path + self.false_2_old
+        self.false_3_old_path = self.base_path + self.false_3_old
         self.false_1_new_path = self.base_path + self.false_1_new
         self.false_2_new_path = self.base_path + self.false_2_new
         self.false_1_path_mid = self.base_path + self.false_1_mid
         self.false_2_path_mid = self.base_path + self.false_2_mid
         self.false_3_path_mid = self.base_path + self.false_3_mid
+        self.false_1_old_path_mid = self.base_path + self.false_1_old_mid
+        self.false_2_old_path_mid = self.base_path + self.false_2_old_mid
+        self.false_3_old_path_mid = self.base_path + self.false_3_old_mid
         self.false_1_new_path_mid = self.base_path + self.false_1_new_mid
         self.false_2_new_path_mid = self.base_path + self.false_2_new_mid
         self.signal_path_mid = self.base_path + self.signal_mid
         self.signal_path = self.base_path + self.signal
+        self.signal_old_path_mid = self.base_path + self.signal_old_mid
+        self.signal_old_path = self.base_path + self.signal_old
         self.signal_new_path_mid = self.base_path + self.signal_new_mid
         self.signal_new_path = self.base_path + self.signal_new
 
@@ -69,7 +85,7 @@ class SN():
 # main funtion we use
     def read_files(self):
 
-        with open(self.signal_path, 'r') as file:
+        with open(self.signal_old_path, 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
@@ -78,7 +94,7 @@ class SN():
         self.signal_final_list = self.signal_final_list + self.sig_raw_list
         self.signal_final_list = list(dict.fromkeys(self.signal_final_list))
 
-        with open(self.false_1_path, 'r') as file:
+        with open(self.false_1_old_path, 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
@@ -87,7 +103,7 @@ class SN():
         self.noise1_final_list +=  self.noise1_raw_list
         self.noise1_final_list = list(dict.fromkeys(self.noise1_final_list))
 
-        with open(self.false_2_path, 'r') as file:
+        with open(self.false_2_old_path, 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
@@ -96,7 +112,7 @@ class SN():
         self.noise2_final_list +=  self.noise2_raw_list
         self.noise2_final_list = list(dict.fromkeys(self.noise2_final_list))
 
-        with open(self.false_3_path, 'r') as file:
+        with open(self.false_3_old_path, 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
             number_list = next(reader)
