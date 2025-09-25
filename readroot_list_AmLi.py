@@ -909,13 +909,13 @@ class ReadRoot():
               summed_values["Event"].unique()[:20])
         print(summed_values.head(20))
 
-        print("ER", summed_values[summed_values["Event"] == 13821])
+        # print("ER", summed_values[summed_values["Event"] == 13821])
 
         # add ER up
         self.highER = summed_values[summed_values["Recoiled/MeV"]>=0.042]
 
         high_ER_event_list = self.highER["Event"].to_list()
-        all_list = self.df["Event"].unique().to_list()
+        all_list = self.df["Event"].unique()
         low_none_ER= list(set(all_list)-set(high_ER_event_list))
 
         # Huge elastic only exclude these ER, and we need to include ER=0 which won't appear
