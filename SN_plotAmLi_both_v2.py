@@ -8,8 +8,8 @@ class SN():
         # then choose the correct signal/noise of with clause in read files.
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_v2/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_v2/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_cross_check_1k/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_cross_check_1k/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
         self.false_1 = "AmLi_false1.csv"
         self.false_2 = "AmLi_false2.csv"
@@ -35,10 +35,12 @@ class SN():
 
     def main_body(self,i):
         print(i)
-        self.false_1 = f"AmLi_1E7_false1_part{i}.csv"
-        self.false_2 = f"AmLi_1E7_false2_part{i}.csv"
+
+
+        self.false_1 = f"AmLi_1E7_false1_new_part{i}.csv"
+        self.false_2 = f"AmLi_1E7_false2_new_part{i}.csv"
         self.false_3 = f"AmLi_1E7_false3_part{i}.csv"
-        self.signal = f"AmLi_1E7_sig_part{i}.csv"
+        self.signal = f"AmLi_1E7_sig_new_part{i}.csv"
 
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
