@@ -837,7 +837,7 @@ class ReadRoot():
                     self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
 
-        
+
         self.df_LAr_NR = self.df[
             ((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (
                     self.df["Volume"] == 'LAr_phys') & (self.df["Recoiled/MeV"] >= 0.016)][
@@ -911,6 +911,7 @@ class ReadRoot():
 
         # add ER up
         self.lowER = summed_values[summed_values["Recoiled/MeV"]<=0.042]
+        print("lowER",self.lowER[self.lowER["Event"]==49016])
         low_ER_event_list = self.lowER["Event"].to_list()
 
         # Huge elastic exclude these ER
