@@ -211,10 +211,10 @@ class ReadRoot():
 
 
         # signal rate, caputre in liquid argon
-        self.LAr_gamma_event()
+        # self.LAr_gamma_event()
 
         # single elastic scatter and capture false signal 1
-        self.single_e_n_capture_event()
+        # self.single_e_n_capture_event()
 
         # false noise 2, need to relocate directory
         # including inelastic
@@ -955,7 +955,6 @@ class ReadRoot():
         with open(self.false_2_new_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(self.Ar_recoiled_event_list)
-
 
 
     def inelastic_gamma(self):
