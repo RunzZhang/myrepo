@@ -837,7 +837,7 @@ class ReadRoot():
                     self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
 
-        print("specialevent",self.df_el_scatter[self.df_el_scatter["Event"] == 117251.0])
+        
         self.df_LAr_NR = self.df[
             ((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (
                     self.df["Volume"] == 'LAr_phys') & (self.df["Recoiled/MeV"] >= 0.016)][
