@@ -861,6 +861,7 @@ class ReadRoot():
         # combine Ela and inelastic
 
         print("check columns", self.df_el_scatter_clean.columns)
+        print(self.df_el_scatter_clean[self.df_el_scatter_clean["Event"]==117251.0])
         (self.df_el_scatter_clean_sing, self.df_el_scatter_clean_multi) = self.distinguish_single_all(
             self.df_el_scatter_clean)
         #is multiscattering here?
