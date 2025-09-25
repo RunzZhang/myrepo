@@ -915,9 +915,11 @@ class ReadRoot():
         self.highER = summed_values[summed_values["Recoiled/MeV"]>=0.042]
 
         high_ER_event_list = self.highER["Event"].to_list()
+        all_list = self.df["Event"].unique().to_list()
+        low_none_ER= list(set(all_list)-set(high_ER_event_list))
 
-        # Huge elastic only include these ER
-        self.single_scattering_wo_ncapER_wt_NR= self.single_scattering_wo_ncap_wt_NR[~self.single_scattering_wo_ncap_wt_NR["Event"].isin(high_ER_event_list)]
+        # Huge elastic only exclude these ER, and we need to include ER=0 which won't appear
+        self.single_scattering_wo_ncapER_wt_NR= self.single_scattering_wo_ncap_wt_NR[self.single_scattering_wo_ncap_wt_NR["Event"].isin(low_none_ER)]
         # check the difference to previous list
         print("huge scatter without ER", self.single_scattering_wo_ncapER_wt_NR["Event"].unique(),"\n",len(self.single_scattering_wo_ncapER_wt_NR["Event"].unique()))
         # in 1 chunked files excluded 2 events out of 63 events
