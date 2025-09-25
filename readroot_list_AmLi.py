@@ -909,7 +909,7 @@ class ReadRoot():
               summed_values["Event"].unique()[:20])
         print(summed_values.head(20))
 
-        print("ER", summed_values[summed_values["Event"] == 31901])
+        print("ER", summed_values[summed_values["Event"] == 10292])
 
         # add ER up
         self.highER = summed_values[summed_values["Recoiled/MeV"]>=0.042]
