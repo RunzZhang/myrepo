@@ -107,6 +107,7 @@ class SN():
             self.noise3_raw_list = [float(value) for value in number_list]
         # decide if include the noise3
         self.noise3_final_list = self.noise3_final_list+ self.noise3_raw_list
+        print("inelastic noise",len(self.noise3_raw_list))
 
     def combine_data(self):
         # get rate vs diff threshold
