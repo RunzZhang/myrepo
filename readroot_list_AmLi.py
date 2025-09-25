@@ -837,6 +837,7 @@ class ReadRoot():
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (
                     self.df["Volume"] == 'LAr_phys')&(self.df["Kinetic diff/MeV"] <-self.bubble_threshold)][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
+        print("specialevent", self.df[self.df["Event"] == 117251.0])
         print("specialevent",self.df_el_scatter[self.df_el_scatter["Event"] == 117251.0])
         self.df_LAr_NR = self.df[
             ((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (
