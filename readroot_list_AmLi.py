@@ -1001,7 +1001,7 @@ class ReadRoot():
         self.p_observed += p_observed
         with open(self.false_3_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
-            wr.writerow(self.p_observed)
+            wr.writerow(p_observed)
         plt.hist(p_observed, bins=100)
         plt.xlabel("Obeserved Photon per Event")
 
