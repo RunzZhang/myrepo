@@ -914,8 +914,8 @@ class ReadRoot():
         print("lowER",self.lowER[self.lowER["Event"]==49016])
         low_ER_event_list = self.lowER["Event"].to_list()
 
-        # Huge elastic exclude these ER
-        self.single_scattering_wo_ncapER_wt_NR= self.single_scattering_wo_ncap_wt_NR[~self.single_scattering_wo_ncap_wt_NR["Event"].isin(low_ER_event_list)]
+        # Huge elastic only include these ER
+        self.single_scattering_wo_ncapER_wt_NR= self.single_scattering_wo_ncap_wt_NR[self.single_scattering_wo_ncap_wt_NR["Event"].isin(low_ER_event_list)]
         # check the difference to previous list
         print("huge scatter without ER", self.single_scattering_wo_ncapER_wt_NR["Event"].unique(),"\n",len(self.single_scattering_wo_ncapER_wt_NR["Event"].unique()))
         # in 1 chunked files excluded 2 events out of 63 events
