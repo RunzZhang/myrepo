@@ -827,16 +827,14 @@ class ReadRoot():
 
         # first save reference data
 
-        self.df["Kinetic diff/MeV"] = self.df["PreKinetic/MeV"].diff()
-        print("specialevent", self.df[self.df["Event"] == 117251.0])
-        self.df["Kinetic diff/MeV"] = self.df["Kinetic diff/MeV"].fillna(0)
+
 
         self.df_Ncapture = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
         self.df_el_scatter = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (
-                    self.df["Volume"] == 'LAr_phys')&(self.df["Kinetic diff/MeV"] <-self.bubble_threshold)][
+                    self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
 
         print("specialevent",self.df_el_scatter[self.df_el_scatter["Event"] == 117251.0])
@@ -847,7 +845,7 @@ class ReadRoot():
 
         self.df_in_el_scatter = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
-                    self.df["Volume"] == 'LAr_phys')&(self.df["Kinetic diff/MeV"] <-self.bubble_threshold)][
+                    self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
         # elastic but no inelastic, mayhave capture, maybe have multiple scattering
         self.df_el_scatter_clean = pd.merge(self.df_el_scatter, self.df_in_el_scatter, on=['Event'], how='left',
@@ -2101,24 +2099,43 @@ class ReadRoot():
         print("sing", filtered_df_sing.head(10))
         return (filtered_df_sing,filtered_df_multi)
 
-    def distinguish_single_all(self, df, column1="Event", column2="Parent ID"):
+    def distinguish_single_all(self, df, column1="Event", column2="Track ID"):
 
-        # find only elastic or only inelastic once
+        df_LAr_bubble_NR = self.df[
+            ((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (
+                    self.df["Volume"] == 'LAr_phys') & (self.df["Recoiled/MeV"] >= self.bubble_threshold)][
+            ['Event', 'Volume', 'Track ID',
+             'Parent ID']]  # this to judgge whether multi bubbles. if two different TrackID > bubble threhosld in one event
+        df_LAr_bubble_NR = self.keep_1st(df_LAr_bubble_NR)
 
-        # if an entry has same event and parent ID but has different Track ID
-        # df = self.keep_1st(df, [column1, column2])
+        # Count distinct Track IDs per Event
+        track_counts = df_LAr_bubble_NR.groupby("Event")["Track ID"].nunique()
 
-        df['combined_tuple'] = list(zip(df.iloc[:][column1], df.iloc[:][column2]))
-        multi_appearance_mask = df['combined_tuple'].duplicated(keep=False)
-        sing_appearance_mask = ~df['combined_tuple'].duplicated(keep=False)
-        # find the duplicated
-        filtered_df_sing = df[sing_appearance_mask]
-        filtered_df_multi = df[multi_appearance_mask]
-        filtered_df_sing = filtered_df_sing.drop(columns=['combined_tuple'])
-        filtered_df_multi = filtered_df_multi.drop(columns=['combined_tuple'])
-        print("multi", filtered_df_multi.head(10))
-        print("sing", filtered_df_sing.head(10))
-        return (filtered_df_sing, filtered_df_multi)
+        # 1. Events with multiple Track IDs
+        multi_track_events = track_counts[track_counts > 1].index
+        df_multi = df_LAr_bubble_NR[df_LAr_bubble_NR["Event"].isin(multi_track_events)]
+
+        # 2. Events with exactly 1 Track ID
+        single_track_events = track_counts[track_counts == 1].index
+        df_single = df_LAr_bubble_NR[df_LAr_bubble_NR["Event"].isin(single_track_events)]
+
+        single_list = df_single["Event"].unique().tolist()
+        multi_list = df_multi["Event"].unique().tolist()
+
+
+
+        # df['combined_tuple'] = list(zip(df_LAr_bubble_NR.iloc[:][column1], df_LAr_bubble_NR.iloc[:][column2]))
+        # multi_appearance_mask = df['combined_tuple'].duplicated(keep=False)
+        # sing_appearance_mask = ~df['combined_tuple'].duplicated(keep=False)
+        # # find the duplicated
+        # filtered_df_sing = df[sing_appearance_mask]
+        # filtered_df_multi = df[multi_appearance_mask]
+        # filtered_df_sing = filtered_df_sing.drop(columns=['combined_tuple'])
+        # filtered_df_multi = filtered_df_multi.drop(columns=['combined_tuple'])
+        # print("multi", filtered_df_multi.head(10))
+        # print("sing", filtered_df_sing.head(10))
+        # return (filtered_df_sing, filtered_df_multi)
+        return(df[df["Event"].isin(single_list)],df[df["Event"].isin(multi_list)])
 
 
     def Check_inelastic(self):
