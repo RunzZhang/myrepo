@@ -1463,7 +1463,9 @@ class ReadRoot():
         # double check gamma
 
         summed_values = self.tagged_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
+
         print(summed_values.head(20))
+        print(summed_values[summed_values["Event"]==105600])
 
         # add gamma up
         self.electron_recoiled_list = summed_values["Recoiled/MeV"].to_list()
