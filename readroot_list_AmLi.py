@@ -227,12 +227,12 @@ class ReadRoot():
         # the single bubble can be inelastic or elastic, but must be single bubbles
         # the ER can caused by either capture somewhere else, or inelastic inside or outside the LAr
         # Also we need to count all single bubble NR>1keV number, even without any photons, this decide the activity of the source
-        # self.bubbleNR_n_ER()
+        self.bubbleNR_n_ER()
 
 
 
         #same still big scattering signals because only NR can cause both photon and bubbles, single bubbles only
-        self.Huge_NR()
+        # self.Huge_NR()
         #
 
 
