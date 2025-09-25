@@ -908,10 +908,11 @@ class ReadRoot():
         print("summed values", len(summed_values["Event"].unique()),
               summed_values["Event"].unique()[:20])
         print(summed_values.head(20))
+        print("ER", summed_values[summed_values["Event"] == 13821])
 
         # add ER up
         self.lowER = summed_values[summed_values["Recoiled/MeV"]<=0.042]
-        print("lowER",self.lowER[self.lowER["Event"]==13821])
+
         low_ER_event_list = self.lowER["Event"].to_list()
 
         # Huge elastic only include these ER
