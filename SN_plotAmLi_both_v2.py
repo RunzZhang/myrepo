@@ -8,8 +8,8 @@ class SN():
         # then choose the correct signal/noise of with clause in read files.
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_v2/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_v2/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_cross_check_1k/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_cross_check_1k/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
         self.false_1 = "AmLi_false1.csv"
         self.false_2 = "AmLi_false2.csv"
