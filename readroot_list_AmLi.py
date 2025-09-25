@@ -837,6 +837,7 @@ class ReadRoot():
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (
                     self.df["Volume"] == 'LAr_phys')&(self.df["Kinetic diff/MeV"] <-self.bubble_threshold)][
             ['Event', 'Volume', 'Track ID', 'Parent ID']]
+        print("specialevent",self.df_el_scatter[self.df_el_scatter["Event"] == 117251.0])
         self.df_LAr_NR = self.df[
             ((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (
                     self.df["Volume"] == 'LAr_phys') & (self.df["Recoiled/MeV"] >= 0.016)][
@@ -861,7 +862,7 @@ class ReadRoot():
         # combine Ela and inelastic
 
         print("check columns", self.df_el_scatter_clean.columns)
-        print(self.df_el_scatter_clean[self.df_el_scatter_clean["Event"]==117251.0])
+
         (self.df_el_scatter_clean_sing, self.df_el_scatter_clean_multi) = self.distinguish_single_all(
             self.df_el_scatter_clean)
         #is multiscattering here?
