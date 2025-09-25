@@ -134,15 +134,15 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_cross_check_1h/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_cross_check_1h/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_v3/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_v3/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        self.main_body(1)
-        # for i in range(1,101):
+        # self.main_body(1)
+        for i in range(1,101):
         # # for i in range(1, 34):
-        #     self.main_body(i)
+            self.main_body(i)
     def main_body(self,i):
         print(i)
         self.false_1 = f"AmLi_1E7_false1_part{i}.csv"
@@ -211,10 +211,10 @@ class ReadRoot():
 
 
         # signal rate, caputre in liquid argon
-        # self.LAr_gamma_event()
+        self.LAr_gamma_event()
 
         # single elastic scatter and capture false signal 1
-        # self.single_e_n_capture_event()
+        self.single_e_n_capture_event()
 
         # false noise 2, need to relocate directory
         # including inelastic
@@ -1555,10 +1555,10 @@ class ReadRoot():
     def Huge_scatter_event(self):
         # single scatter spectrum
         # self.Huge_scatter_spectrum()
-        # self.Huge_scatter_wt_inelastic_spectrum()
-        self.Huge_scatter_wt_inelastic_spectrum_xcheck()
-        # self.inelastic_gamma()
-        self.inelastic_gamma_xcheck()
+        self.Huge_scatter_wt_inelastic_spectrum()
+        # self.Huge_scatter_wt_inelastic_spectrum_xcheck()
+        self.inelastic_gamma()
+        # self.inelastic_gamma_xcheck()
         # self.Huge_scatter_spectrum_CF()
         # self.Huge_scatter_spectrum_CF_fake()
 
@@ -1567,8 +1567,8 @@ class ReadRoot():
         # if already run 1st 2 steps and obtained output csv file, one can directly run 3rd function
         self.LAr_compare()
         self.LAr_Capture_spectrum()
-        # self.LAr_find_gamma_e()
-        self.LAr_find_gamma_e_xcheck()
+        self.LAr_find_gamma_e()
+        # self.LAr_find_gamma_e_xcheck()
 
     def single_e_n_capture_event(self):
         # loop and without loop is just to test the algrorithms, the result should be same
@@ -1578,8 +1578,8 @@ class ReadRoot():
         self.Capture_n_scatter_spectrum_loop()
         # self.single_n_find_gamma_e_loop()
         # get the photon number per event
-        # self.single_n_find_gamma_e()
-        self.single_n_find_gamma_e_xcheck()
+        self.single_n_find_gamma_e()
+        # self.single_n_find_gamma_e_xcheck()
 
     def bubbleNR_n_ER(self):
         self.kNR()

@@ -7,8 +7,9 @@ class SN():
         # after generate new files, you need to select the capture ratio/source for different configs in read_files function.
         # then choose the correct signal/noise of with clause in read files.
         # at last change the self.name and plot_name in plot function
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ/"
+        # v3 change multibubble generation definition and still run original 3 backgrounds
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_v3/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_v3/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
         self.false_1 = "AmLi_false1.csv"
         self.false_2 = "AmLi_false2.csv"
@@ -17,7 +18,7 @@ class SN():
         self.name2 = "Hard Scatter Background"
         self.name3 = "Inelastic Background"
         self.name = "Backgrounds"
-        self.plot_name = self.name+"AmLi_1E7_total_LZ_updated.pdf"
+        self.plot_name = self.name+"AmLi_1E7_total_LZ_updated_v3.pdf"
         self.pho_threshold = 100
         self.signal_final_list = []
         self.noise1_final_list =[]
