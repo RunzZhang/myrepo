@@ -1557,8 +1557,8 @@ class ReadRoot():
         # self.Huge_scatter_spectrum()
         # self.Huge_scatter_wt_inelastic_spectrum()
         self.Huge_scatter_wt_inelastic_spectrum_xcheck()
-        self.inelastic_gamma()
-        # self.inelastic_gamma_xcheck()
+        # self.inelastic_gamma()
+        self.inelastic_gamma_xcheck()
         # self.Huge_scatter_spectrum_CF()
         # self.Huge_scatter_spectrum_CF_fake()
 
