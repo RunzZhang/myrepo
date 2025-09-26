@@ -139,10 +139,10 @@ class ReadRoot():
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        self.main_body(1)
-        # for i in range(1,101):
+        # self.main_body(1)
+        for i in range(1,101):
         # # for i in range(1, 34):
-        #     self.main_body(i)
+            self.main_body(i)
     def main_body(self,i):
         print(i)
         self.false_1 = f"AmLi_1E7_false1_part{i}.csv"
