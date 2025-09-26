@@ -1482,7 +1482,7 @@ class ReadRoot():
             # 40 /MeV 0.03 and 0.2 PCE and PDE
             if self.electron_recoiled_list[i] > 1E-6:
                 p_observed.append(self.electron_recoiled_list[i] * 1E6 * 40 * 0.03 * 0.2 / (1000))
-            if self.electron_recoiled_list[i]>300*1000/(1E6 * 40 * 0.03 * 0.2):
+            if self.electron_recoiled_list[i]>350*1000/(1E6 * 40 * 0.03 * 0.2):
                 high_NRER.append(self.electron_recoiled_event_list[i])
 
 
