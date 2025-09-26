@@ -1456,7 +1456,8 @@ class ReadRoot():
     def combine_NRnER(self):
 
         self.sing_NR_ER  = pd.merge(self.single_scattering_wo_ncap_wt_NR, self.df_electron_gamma, on=['Event'],
-                                          how='inner').drop_duplicates()
+                                          how='inner').drop(columns = ['Track ID_x',"Volume_x", "Parent ID_x"])
+        self.sing_NR_ER=self.sing_NR_ER.drop_duplicates(subset=["Event", "name", "Parent ID_y", "Track ID_y"]) # when to drop, when not, apply to all events
         self.sing_NR_ER.to_csv(self.false_1_path_mid, index=False) # overcount
         print("Final Event list", len(self.sing_NR_ER["Event"].unique()))
         self.tagged_gamma = self.sing_NR_ER[self.sing_NR_ER["name"]=="e-"]
