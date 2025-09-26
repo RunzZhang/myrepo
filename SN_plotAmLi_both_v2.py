@@ -249,7 +249,7 @@ class SN():
         # Create another y-axis for SNR
         ax2 = ax1.twinx()
         line3, = ax2.plot(pho1, sn1, 'r-', label='SNR')
-        print(pho1,"\n",sn1)
+        print(pho1[300:],"\n",sn1[300:])
         ax2.set_ylabel('Signal to noise ratio', color='black', fontsize=16)
         # ax2.set_ylim([0, 120])
         ax2.set_ylim(right_axis_range)
