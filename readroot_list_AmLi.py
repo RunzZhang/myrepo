@@ -549,7 +549,7 @@ class ReadRoot():
         scatter_ene = [] # in eV
         for i in range(len(self.Ar_recoiled_list)):
             # 40 /MeV 0.03 and 0.2 PCE and PDE
-            if i > 1E-6:
+            if self.Ar_recoiled_list[i] > 1E-6:
                 pho_num = self.Ar_recoiled_list[i] * 1E6 * 10 * 0.03 * 0.2 / (1000)
                 scatter_ene.append(self.Ar_recoiled_list[i] * 1E6)
                 if pho_num > 1:
@@ -659,7 +659,7 @@ class ReadRoot():
         scatter_ene = []  # in eV
         for i in range(len(self.Ar_recoiled_list)):
             # 10 /MeV 0.03 and 0.2 PCE and PDE
-            if i > 1E-6:
+            if self.Ar_recoiled_list[i] > 1E-6:
                 pho_num = self.Ar_recoiled_list[i] * 1E6 * 10 * 0.03 * 0.2 / (1000)
                 scatter_ene.append(self.Ar_recoiled_list[i] * 1E6)
                 if pho_num > 1:
@@ -780,7 +780,7 @@ class ReadRoot():
         scatter_ene = []  # in eV
         for i in range(len(self.Ar_recoiled_list)):
             # 10 /keV 0.03 and 0.2 PCE and PDE
-            if i > 1E-6:
+            if self.Ar_recoiled_list[i] > 1E-6:
                 pho_num = self.Ar_recoiled_list[i] * 1E6 * 10 * 0.03 * 0.2 / (1000)
                 scatter_ene.append(self.Ar_recoiled_list[i] * 1E6)
                 if pho_num > 1:
@@ -938,7 +938,7 @@ class ReadRoot():
         scatter_ene = []  # in eV
         for i in range(len(self.Ar_recoiled_list)):
             # 10 /MeV 0.03 and 0.2 PCE and PDE
-            if i > 1E-6:
+            if self.Ar_recoiled_list[i] > 1E-6:
                 pho_num = self.Ar_recoiled_list[i] * 1E6 * 10 * 0.03 * 0.2 / (1000)
                 scatter_ene.append(self.Ar_recoiled_list[i] * 1E6)
                 if pho_num > 1:
@@ -987,7 +987,7 @@ class ReadRoot():
         p_observed = [0]
         for i in range(len(self.electron_recoiled_list)):
             # 40 /MeV 0.03 and 0.2 PCE and PDE
-            if i > 1E-6:
+            if self.electron_recoiled_list[i] > 1E-6:
                 p_observed.append(self.electron_recoiled_list[i] * 1E6 * 40 * 0.03 * 0.2 / (1000))
 
         num = 0
@@ -1034,7 +1034,7 @@ class ReadRoot():
         p_observed = [0]
         for i in range(len(self.electron_recoiled_list)):
             # 40 /MeV 0.03 and 0.2 PCE and PDE
-            if i > 1E-6:
+            if self.electron_recoiled_list[i] > 1E-6:
                 p_observed.append(self.electron_recoiled_list[i] * 1E6 * 40 * 0.03 * 0.2 / (1000))
 
         num = 0
@@ -1105,7 +1105,7 @@ class ReadRoot():
         p_observed = [0]
         for i in range(len(self.Ar_recoiled_list)):
             # 40 /MeV 0.03 and 0.2 PCE and PDE
-            if i > 1E-6:
+            if self.Ar_recoiled_list[i] > 1E-6:
                 pho_num = self.Ar_recoiled_list[i] * 1E6 * 10 * 0.03 * 0.2 / (1000)
                 if pho_num > 1:
                     p_observed.append(pho_num)
@@ -1182,7 +1182,7 @@ class ReadRoot():
         p_observed = [0]
         for i in range(len(self.Ar_recoiled_list)):
             # 40 /MeV 0.03 and 0.2 PCE and PDE
-            if i > 1E-6:
+            if self.Ar_recoiled_list[i] > 1E-6:
                 pho_num = self.Ar_recoiled_list[i] * 1E6 * 10 * 0.03 * 0.2 / (1000)
                 if pho_num > 1:
                     p_observed.append(pho_num)
@@ -1476,8 +1476,9 @@ class ReadRoot():
         p_observed = [self.NR_num] # the first digit is always the NR number
         for i in range(len(self.electron_recoiled_list)):
             # 40 /MeV 0.03 and 0.2 PCE and PDE
-            if i > 1E-6:
+            if self.electron_recoiled_list[i] > 1E-6:
                 p_observed.append(self.electron_recoiled_list[i] * 1E6 * 40 * 0.03 * 0.2 / (1000))
+            if self.electron_recoiled_list[i]>300*1000/(1E6 * 40 * 0.03 * 0.2):
                 high_NRER.append(self.electron_recoiled_event_list[i])
 
 
@@ -1697,7 +1698,7 @@ class ReadRoot():
         p_observed = [0]
         for i in range(len(self.electron_recoiled_list)):
             # 40 /MeV 0.03 and 0.2 PCE and PDE
-            if i> 1E-6:
+            if self.electron_recoiled_list[i]> 1E-6:
                 p_observed.append(self.electron_recoiled_list[i]*1E6*40*0.03*0.2/(1000))
 
         num = 0
@@ -1748,7 +1749,7 @@ class ReadRoot():
         p_observed = [0]
         for i in range(len(self.electron_recoiled_list)):
             # 40 /MeV 0.03 and 0.2 PCE and PDE
-            if i> 1E-6:
+            if self.electron_recoiled_list[i]> 1E-6:
                 p_observed.append(self.electron_recoiled_list[i]*1E6*40*0.03*0.2/(1000))
 
         num = 0
@@ -1795,7 +1796,7 @@ class ReadRoot():
         p_observed = [0]
         for i in range(len(self.electron_recoiled_list)):
             # 40 /MeV 0.03 and 0.2 PCE and PDE
-            if i> 1E-6:
+            if self.electron_recoiled_list[i]> 1E-6:
                 p_observed.append(self.electron_recoiled_list[i]*1E6*40*0.03*0.2/(1000))
 
         num = 0
