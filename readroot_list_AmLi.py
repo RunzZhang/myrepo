@@ -1451,13 +1451,13 @@ class ReadRoot():
         self.df_electron = self.keep_1st(self.df_electron)
         self.df_electron_gamma = pd.merge(self.df_electron, self.gamma_Scint_column, on=['Event', 'Parent ID'],
                                           how='inner')
-        print("electron gamma",self.df_electron_gamma.head(10))
+        print("electron gamma",self.df_electron_gamma.head(20))
 
     def combine_NRnER(self):
 
         self.sing_NR_ER  = pd.merge(self.single_scattering_wo_ncap_wt_NR, self.df_electron_gamma, on=['Event'],
                                           how='inner')
-        self.sing_NR_ER.to_csv(self.false_1_path_mid, index=False)
+        self.sing_NR_ER.to_csv(self.false_1_path_mid, index=False) # overcount
         print("Final Event list", len(self.sing_NR_ER["Event"].unique()))
         self.tagged_gamma = self.sing_NR_ER[self.sing_NR_ER["name"]=="e-"]
         # double check gamma
