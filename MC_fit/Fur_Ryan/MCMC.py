@@ -599,7 +599,7 @@ class multi_MC():
         # for Cf 252 0.0358microC
         # t = 2E5/0.94 # updated 2E5 events capture rate is 4.06 for 50 bubbles 0.032 microcure t
         # t = 2E5 / 2.22  # updated 2E5 events capture rate LZ bare is 4.23 , the capture rate is 2.22
-        t = 2E5 / 0.95  # updated 2E5 events capture rate LZ bare is 4.17 , the capture rate is 0.95
+        t = 2E5 / 0.95  # updated 2E5 events capture rate LZ bare is 4.17 , the capture rate is 0.94
 
         # veto analyze
         # t equals the event number in G4 devided by the signal rate after vetoing
@@ -1186,7 +1186,7 @@ class multi_MC():
         modeErrPN = 0.05
         binsize = 1
         sourceErr = .01 # change to 0.12 ~ 0.02
-        background = 75
+        background = 51
         backErr = np.round(background ** (1 / 2))
         # energies=[75,100,115,120,140]
         # efficiencies=[0,.2,.50,.8,1]
