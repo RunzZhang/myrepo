@@ -139,10 +139,10 @@ class ReadRoot():
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        # self.main_body(1)
-        for i in range(1,101):
+        self.main_body(1)
+        # for i in range(1,101):
         # # for i in range(1, 34):
-            self.main_body(i)
+        #     self.main_body(i)
     def main_body(self,i):
         print(i)
         self.false_1 = f"AmLi_1E7_false1_part{i}.csv"
@@ -218,7 +218,7 @@ class ReadRoot():
 
         # false noise 2, need to relocate directory
         # including inelastic
-        self.Huge_scatter_event()
+        # self.Huge_scatter_event()
 
         # update signals
         # self.single_ncap()
@@ -227,7 +227,7 @@ class ReadRoot():
         # the single bubble can be inelastic or elastic, but must be single bubbles
         # the ER can caused by either capture somewhere else, or inelastic inside or outside the LAr
         # Also we need to count all single bubble NR>1keV number, even without any photons, this decide the activity of the source
-        # self.bubbleNR_n_ER()
+        self.bubbleNR_n_ER()
 
 
 
@@ -1471,15 +1471,18 @@ class ReadRoot():
         event_id = 151044
         print("event ", event_id, summed_values[summed_values["Event"]==event_id])
         self.electron_recoiled_event_list = summed_values["Event"].to_list()
+        high_NRER = []
 
         p_observed = [self.NR_num] # the first digit is always the NR number
         for i in range(len(self.electron_recoiled_list)):
             # 40 /MeV 0.03 and 0.2 PCE and PDE
             if i > 1E-6:
                 p_observed.append(self.electron_recoiled_list[i] * 1E6 * 40 * 0.03 * 0.2 / (1000))
+                high_NRER.append(self.electron_recoiled_event_list[i])
 
 
         print("max", max(p_observed), "\n", "min", min(p_observed))
+        print("exclusive ER", high_NRER)
         # p_observe only contains ER, if one event only has NR, it still produce bubbles that we need to compress
         with open(self.false_1_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
