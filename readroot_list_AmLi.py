@@ -1475,7 +1475,7 @@ class ReadRoot():
         # print("event ", event_id, summed_values[summed_values["Event"]==event_id])
         print("event ", event_id, summed_values[(summed_values["Event"] == event_id)])
         print(self.df[(self.df["Event"]==event_id)&((self.df["Track ID"]==75)|(self.df["Track ID"]==76))])
-        self.df[self.df["Event"]==event_id].to_csv(self.base_path+"event"+str(event_id)+".csv")
+        # self.df[self.df["Event"]==event_id].to_csv(self.base_path+"event"+str(event_id)+".csv")
         self.electron_recoiled_event_list = summed_values["Event"].to_list()
         high_NRER = []
 
