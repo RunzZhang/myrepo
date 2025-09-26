@@ -1451,6 +1451,7 @@ class ReadRoot():
         self.df_electron = self.keep_1st(self.df_electron)
         self.df_electron_gamma = pd.merge(self.df_electron, self.gamma_Scint_column, on=['Event', 'Parent ID'],
                                           how='inner')
+        print("electron gamma",self.df_electron_gamma.head(10))
 
     def combine_NRnER(self):
 
