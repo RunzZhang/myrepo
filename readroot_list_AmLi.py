@@ -1468,7 +1468,7 @@ class ReadRoot():
 
         # add gamma up
         self.electron_recoiled_list = summed_values["Recoiled/MeV"].to_list()
-        event_id = 151044
+        event_id = 77
         print("event ", event_id, summed_values[summed_values["Event"]==event_id])
         self.electron_recoiled_event_list = summed_values["Event"].to_list()
         high_NRER = []
