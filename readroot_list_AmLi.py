@@ -139,10 +139,10 @@ class ReadRoot():
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        # self.main_body(1)
-        for i in range(1,101):
+        self.main_body(1)
+        # for i in range(1,101):
         # # for i in range(1, 34):
-            self.main_body(i)
+        #     self.main_body(i)
     def main_body(self,i):
         print(i)
         self.false_1 = f"AmLi_1E7_false1_part{i}.csv"
@@ -221,7 +221,7 @@ class ReadRoot():
         # self.Huge_scatter_event()
 
         # update signals
-        self.single_ncap()
+        # self.single_ncap()
         #updated noises
         # Signal 1 is all single bubble signal that cause NR>1keV and ER in LAr
         # the single bubble can be inelastic or elastic, but must be single bubbles
@@ -232,7 +232,7 @@ class ReadRoot():
 
 
         #same still big scattering signals because only NR can cause both photon and bubbles, single bubbles only
-        self.Huge_NR()
+        # self.Huge_NR()
         #
 
 
@@ -1471,8 +1471,9 @@ class ReadRoot():
         # add gamma up
         self.electron_recoiled_list = summed_values["Recoiled/MeV"].to_list()
         event_id = 77
-        print("event ", event_id, summed_values[summed_values["Event"]==event_id])
-        print(self.df[(self.df["Event"]==event_id)&(self.df["name"]=="e-")])
+        # print("event ", event_id, summed_values[summed_values["Event"]==event_id])
+        print("event ", event_id, summed_values[(summed_values["Event"] == event_id)])
+        print(self.df[(self.df["Event"]==event_id)&((self.df["Track ID"]==75)|(self.df["Track ID"]==76))])
         self.electron_recoiled_event_list = summed_values["Event"].to_list()
         high_NRER = []
 
