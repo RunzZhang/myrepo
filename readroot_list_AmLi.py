@@ -1470,6 +1470,7 @@ class ReadRoot():
         self.electron_recoiled_list = summed_values["Recoiled/MeV"].to_list()
         event_id = 77
         print("event ", event_id, summed_values[summed_values["Event"]==event_id])
+        print(self.df[(self.df["Event"]==event_id)&(self.df["name"]=="e-")])
         self.electron_recoiled_event_list = summed_values["Event"].to_list()
         high_NRER = []
 
