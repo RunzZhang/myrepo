@@ -8,6 +8,7 @@ class SN():
         # then choose the correct signal/noise of with clause in read files.
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
+        # v4 kill duplicated NRERs
         self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_v3/"
         self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_v3/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
@@ -17,7 +18,7 @@ class SN():
         self.name1 = "NR ER Background"
         self.name2 = "Hard Scatter Background"
         self.name = "Backgrounds"
-        self.plot_name = self.name+"AmLi_1E7_total_LZ_updated_v2_1h.pdf"
+        self.plot_name = self.name+"AmLi_1E7_total_LZ_updated_v4.pdf"
         self.pho_threshold = 200
         self.signal_final_list = []
         self.noise1_final_list =[]
