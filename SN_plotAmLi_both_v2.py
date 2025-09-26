@@ -234,7 +234,7 @@ class SN():
         line1, = ax1.plot(pho1, sig1, 'g-', label='Neutron Capture Signal')
         line2, = ax1.plot(pho1, noise1, 'b-', label='Background')
         ax1.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
-        ax1.set_xlim([0, 600])
+        ax1.set_xlim([0, 500])
         ax1.set_ylim(left_axis_range)
         # print("pho",pho1)
         # print("noise1", noise1)
@@ -249,6 +249,7 @@ class SN():
         # Create another y-axis for SNR
         ax2 = ax1.twinx()
         line3, = ax2.plot(pho1, sn1, 'r-', label='SNR')
+        print(pho1,"\n",sn1)
         ax2.set_ylabel('Signal to noise ratio', color='black', fontsize=16)
         # ax2.set_ylim([0, 120])
         ax2.set_ylim(right_axis_range)
@@ -266,7 +267,7 @@ class SN():
         line4, = ax3.plot(pho2, sig2, 'g-', label='Neutron Capture Signal')
         line5, = ax3.plot(pho2, noise2, 'b-', label='Background')
         ax3.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
-        ax3.set_xlim([0, 600])
+        ax3.set_xlim([0, 500])
         ax3.set_ylim(left_axis_range)
 
         ax3.set_xlabel('Photon Number Threshold (number)', fontsize=16)
