@@ -226,7 +226,7 @@ class SN():
 
     def plot_sn(self, sig1, sig2,pho1, pho2, noise1, noise2,  sn1, sn2):
         fig, (ax1, ax3) = plt.subplots(1, 2, figsize=(12, 5))  # ax1 for first plot, ax3 for second plot
-        left_axis_range=[4e-2,3e1]
+        left_axis_range=[4e-3,3e1]
         right_axis_range=[1e-1,1e3]
 
         # left_axis_range = [1e-1, 3e4]
