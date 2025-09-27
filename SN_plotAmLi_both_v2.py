@@ -227,7 +227,7 @@ class SN():
     def plot_sn(self, sig1, sig2,pho1, pho2, noise1, noise2,  sn1, sn2):
         fig, (ax1, ax3) = plt.subplots(1, 2, figsize=(12, 5))  # ax1 for first plot, ax3 for second plot
         x_range = [0,430]
-        left_axis_range=[4e-3,3e1]
+        left_axis_range=[3.7e-3,3e1]
         right_axis_range=[1e-1,1e3]
 
         # left_axis_range = [1e-1, 3e4]
@@ -253,7 +253,7 @@ class SN():
         # Create another y-axis for SNR
         ax2 = ax1.twinx()
         line3, = ax2.plot(pho1, sn1, 'r-', label='SNR')
-        print(pho1[300:],"\n",noise1[300:],"\n",sn1[300:])
+        # print(pho1[300:],"\n",noise1[300:],"\n",sn1[300:])
         ax2.set_ylabel('Signal to noise ratio', color='black', fontsize=16)
         # ax2.set_ylim([0, 120])
         ax2.set_ylim(right_axis_range)
