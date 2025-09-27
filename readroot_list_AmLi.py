@@ -1063,6 +1063,7 @@ class ReadRoot():
             (self.df["name"] == 'neutron') & (self.df["Volume"] == 'LAr_phys')][
             ['Event', 'Volume', 'Track ID', 'Parent ID',"PreKinetic/MeV"]]
         self.df_ke = self.keep_1st(self.df_ke)
+        self.df_ke= self.df_ke.drop_duplicates(subset=["Event"],keep="first")
         print(self.df_ke.head(20))
         ini_list = self.df_ini["PreKinetic/MeV"].to_list()
         ke_list = self.df_ke["PreKinetic/MeV"].to_list()
