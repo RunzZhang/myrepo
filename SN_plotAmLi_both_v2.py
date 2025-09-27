@@ -15,8 +15,8 @@ class SN():
         self.false_1 = "AmLi_false1.csv"
         self.false_2 = "AmLi_false2.csv"
         self.signal = "AmLi_sig.csv"
-        self.name1 = "NR ER Background"
-        self.name2 = "Hard Scatter Background"
+        self.name1 = "ER Scintillation Background"
+        self.name2 = "NR Scintillation Background"
         self.name = "Backgrounds"
         self.plot_name = self.name+"AmLi_1E7_total_LZ_updated_1h.pdf"
         self.pho_threshold = 200
