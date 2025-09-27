@@ -24,14 +24,20 @@ class SN():
         self.noise1_final_list =[]
         self.noise2_final_list = []
         self.untagged_bubble_list =[]
+        self.neutron_ini_list = []
+        self.neutron_ar_ke_list =[]
 
 
         #982 statics false 1
         for i in range(1,101):
             self.main_body(i)
-        self.untagged_bubble_rate()
-        (result1, result2)=self.combine_data()
-        self.plot_sn(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
+        # for ploting AmLi background tagging and SNR
+        # self.untagged_bubble_rate()
+        # (result1, result2)=self.combine_data()
+        # self.plot_sn(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
+
+        # for ploting AmLi spectrum and SBC detector thermalizing effect
+        self.plot_neutron_spectrum()
 
 
     def main_body(self,i):
@@ -46,8 +52,12 @@ class SN():
         self.false_3_path = self.base_path + self.false_3
         self.signal_path = self.base_path + self.signal
 
+        self.ini_path = self.base_path+ f"AmLi_1E7_ini_part{i}.csv"
+        self.ar_ke_path = self.base_path + f"AmLi_1E7_ke_part{i}.csv"
+
 
         self.read_files()
+
 
         # self.read_files_s_to_N1()
 
@@ -101,6 +111,27 @@ class SN():
             self.noise2_raw_list = [float(value) for value in number_list]
             # self.noise_raw_list = [float(value)  for value in number_list]
         self.noise2_final_list = self.noise2_final_list + self.noise2_raw_list
+
+        # Initial amli spectrm
+        with open(self.ini_path, 'r') as file:
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            self.neutron_ini_raw_list = [float(value)*1e6 for value in number_list]
+
+
+            # the [0] is NR number and [1:] is the photon numbers
+        self.neutron_ini_list +=  self.neutron_ini_raw_list
+        # Noise 2
+        with open(self.ar_ke_path, 'r') as file:
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            self.ar_ke_raw_list = [float(value)*1e6 for value in number_list] # in eV
+            # self.noise_raw_list = [float(value)  for value in number_list]
+        self.neutron_ar_ke_list += self.ar_ke_raw_list
 
 
     def combine_data(self):
@@ -304,7 +335,29 @@ class SN():
         plt.savefig(self.plot_path + self.plot_name)
         # plt.show()
 
-
+    def plot_neutron_spectrum(self):
+        from matplotlib.ticker import LogLocator
+        log_bins =  np.logspace(-3,7,100)
+        counts_ini, bin_edges_ini, patches_ini = plt.hist(self.neutron_ini_list, bins=log_bins)
+        counts_ke, bin_edges_ke, patches_ke = plt.hist(self.neutron_ar_ke_list, bins=log_bins)
+        plt.clf()
+        normalized  = sum(counts_ini)
+        print("norma fact", normalized)
+        Rate_ini = counts_ini*self.rate/normalized # rate in Hz
+        Rate_ke = counts_ke * self.rate / normalized  # rate in Hz
+        bin_factor = bin_edges_ke[1]/bin_edges_ke[0]
+        bins_ini = bin_edges_ini[:-1]*bin_factor**0.5
+        bins_ke = bin_edges_ke[:-1]*bin_factor**0.5
+        plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="LZ AmLi Escaping Neutron")
+        plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="First Enter LAr Neutron")
+        plt.xscale("log")
+        plt.yscale("log")
+        plt.xlabel("Energy (eV)", fontsize=16)
+        plt.ylabel(r"Rate (Hz)", fontsize=16)
+        plt.gca().xaxis.set_major_locator(LogLocator(base=10.0, numticks=15))
+        plt.xlim([1e-3, 1e7])
+        plt.legend()
+        plt.savefig(self.plot_path + "AmLi_specturm.pdf", bbox_inches='tight')
 
 class test_csv():
     def __init__(self):
