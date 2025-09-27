@@ -190,14 +190,17 @@ class SN():
             noise_rate_list.append(3600*self.Activity*noise_num/(2.135*self.G4_noise_time))
             signal_num_list.append(sig_num)
             noise_num_list.append(noise_num)
-            if noise_num !=0:
-                SN_ratio.append((sig_num*self.capture_ratio/self.G4_sig_time)/(noise_num/self.G4_noise_time))
+            if sig_num ==0:
+                SN_ratio.append(0)
             else:
+                if noise_num !=0:
+                    SN_ratio.append((sig_num*self.capture_ratio/self.G4_sig_time)/(noise_num/self.G4_noise_time))
+                else:
 
-                point.append(i)
+                    point.append(i)
                 # print("point", point)
                 # SN_ratio.append(max(SN_ratio)) # append line in the graph
-                SN_ratio.append(max(SN_ratio)*1E5)  # append inf line in the graph
+                    SN_ratio.append(max(SN_ratio)*1E5)  # append inf line in the graph
         for j in range(len(signal_rate_list)):
             if photon_n_list[j]>self.pho_threshold:
                 print("output",j,signal_rate_list[j],noise_rate_list[j])
