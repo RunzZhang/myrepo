@@ -338,8 +338,8 @@ class SN():
 
     def plot_neutron_spectrum(self):
         from matplotlib.ticker import LogLocator
-        self.read_original_spectrum()
-
+        ene_list, possibility_list = self.read_original_spectrum()
+        possibility_list  = possibility_list*self.rate
         log_bins =  np.logspace(-3,7,50)
         counts_ini, bin_edges_ini, patches_ini = plt.hist(self.neutron_ini_list, bins=log_bins)
         counts_ke, bin_edges_ke, patches_ke = plt.hist(self.neutron_ar_ke_list, bins=log_bins)
@@ -349,10 +349,11 @@ class SN():
         Rate_ini = counts_ini*self.rate/normalized # rate in Hz
         Rate_ke = counts_ke * self.rate / normalized  # rate in Hz
         bin_factor = bin_edges_ke[1]/bin_edges_ke[0]
-        # bins_ini = bin_edges_ini[:-1]*bin_factor**0.5
-        bins_ini = bin_edges_ini[:-1] * bin_factor
+        bins_ini = bin_edges_ini[:-1]*bin_factor**0.5
+        # bins_ini = bin_edges_ini[:-1] * bin_factor
         # print("bin edges", bin_edges_ini)
         bins_ke = bin_edges_ke[:-1]*bin_factor**0.5
+
         plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="LZ AmLi Escaping Neutron")
         point = 0
         for i in range(len(Rate_ini)):
@@ -361,6 +362,7 @@ class SN():
                 break
         print(bins_ini[point:],"\n", Rate_ini[point:]) # print no-zero first bins
         plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="First Enter LAr Neutron")
+        plt.plot(ene_list, possibility_list, drawstyle="steps-mid", label="Original Spectrum dat")
         # plt.plot(bins_ini, Rate_ini, label="LZ AmLi Escaping Neutron")
         # plt.plot(bins_ke, Rate_ke,  label="First Enter LAr Neutron")
         plt.xscale("log")
@@ -382,8 +384,7 @@ class SN():
                 list1.append(float(a))
                 list2.append(float(b))
 
-        print(list1[:5])
-        print(list2[:5])
+        return(list2, list1)
 
 
 class test_csv():
