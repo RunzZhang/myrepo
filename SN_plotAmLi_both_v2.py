@@ -349,10 +349,11 @@ class SN():
         bin_factor = bin_edges_ke[1]/bin_edges_ke[0]
         bins_ini = bin_edges_ini[:-1]*bin_factor**0.5
         bins_ke = bin_edges_ke[:-1]*bin_factor**0.5
-        # plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="LZ AmLi Escaping Neutron")
-        # plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="First Enter LAr Neutron")
-        plt.plot(bins_ini, Rate_ini, label="LZ AmLi Escaping Neutron")
-        plt.plot(bins_ke, Rate_ke,  label="First Enter LAr Neutron")
+        plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="LZ AmLi Escaping Neutron")
+        print(bins_ini,"\n", Rate_ini)
+        plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="First Enter LAr Neutron")
+        # plt.plot(bins_ini, Rate_ini, label="LZ AmLi Escaping Neutron")
+        # plt.plot(bins_ke, Rate_ke,  label="First Enter LAr Neutron")
         plt.xscale("log")
         plt.yscale("log")
         plt.xlabel("Energy (eV)", fontsize=16)
