@@ -338,6 +338,7 @@ class SN():
 
     def plot_neutron_spectrum(self):
         from matplotlib.ticker import LogLocator
+        self.read_original_spectrum()
 
         log_bins =  np.logspace(-3,7,50)
         counts_ini, bin_edges_ini, patches_ini = plt.hist(self.neutron_ini_list, bins=log_bins)
@@ -370,6 +371,20 @@ class SN():
         plt.xlim([1e-3, 1e7])
         plt.legend()
         plt.savefig(self.plot_path + "AmLi_specturm.pdf", bbox_inches='tight')
+
+
+    def read_original_spectrum(self):
+        list1, list2 = [], []
+
+        with open("./AmLiNO3_simulated_prob_MeV_raw.txt") as f:
+            for line in f:
+                a, b = line.split()
+                list1.append(float(a))
+                list2.append(float(b))
+
+        print(list1[:5])
+        print(list2[:5])
+
 
 class test_csv():
     def __init__(self):
