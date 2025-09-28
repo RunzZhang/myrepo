@@ -339,7 +339,7 @@ class SN():
     def plot_neutron_spectrum(self):
         from matplotlib.ticker import LogLocator
 
-        log_bins =  np.logspace(-3,7,200)
+        log_bins =  np.logspace(-3,7,50)
         counts_ini, bin_edges_ini, patches_ini = plt.hist(self.neutron_ini_list, bins=log_bins)
         counts_ke, bin_edges_ke, patches_ke = plt.hist(self.neutron_ar_ke_list, bins=log_bins)
         plt.clf()
