@@ -338,7 +338,7 @@ class SN():
     def plot_neutron_spectrum(self):
         from matplotlib.ticker import LogLocator
 
-        log_bins =  np.logspace(-3,7,100)
+        log_bins =  np.logspace(-3,7,200)
         counts_ini, bin_edges_ini, patches_ini = plt.hist(self.neutron_ini_list, bins=log_bins)
         counts_ke, bin_edges_ke, patches_ke = plt.hist(self.neutron_ar_ke_list, bins=log_bins)
         plt.clf()
@@ -349,10 +349,10 @@ class SN():
         bin_factor = bin_edges_ke[1]/bin_edges_ke[0]
         # bins_ini = bin_edges_ini[:-1]*bin_factor**0.5
         bins_ini = bin_edges_ini[:-1] * bin_factor
-        print("bin edges", bin_edges_ini)
+        # print("bin edges", bin_edges_ini)
         bins_ke = bin_edges_ke[:-1]*bin_factor**0.5
         plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="LZ AmLi Escaping Neutron")
-        print(bins_ini,"\n", Rate_ini)
+        # print(bins_ini,"\n", Rate_ini)
         plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="First Enter LAr Neutron")
         # plt.plot(bins_ini, Rate_ini, label="LZ AmLi Escaping Neutron")
         # plt.plot(bins_ke, Rate_ke,  label="First Enter LAr Neutron")
