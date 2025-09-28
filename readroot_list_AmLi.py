@@ -1057,7 +1057,7 @@ class ReadRoot():
     def AmLi_spectrum(self):
         # initial neutrons
         self.df_ini = self.df[
-            (self.df["name"] == 'neutron') &  (self.df["Parent ID"] ==0)&  (self.df["Step ID"] ==1)][
+            (self.df["name"] == 'neutron') &  (self.df["Parent ID"] ==0)&  (self.df["Step ID"] ==0)][
             ['Event', 'Volume', 'Track ID', 'Parent ID',"PreKinetic/MeV"]]
         self.df_ke = self.df[
             (self.df["name"] == 'neutron') & (self.df["Volume"] == 'LAr_phys')][
