@@ -352,7 +352,12 @@ class SN():
         # print("bin edges", bin_edges_ini)
         bins_ke = bin_edges_ke[:-1]*bin_factor**0.5
         plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="LZ AmLi Escaping Neutron")
-        # print(bins_ini,"\n", Rate_ini)
+        point = 0
+        for i in range(len(Rate_ini)):
+            if Rate_ini[i] !=0:
+                point = i
+                break
+        print(bins_ini[point:],"\n", Rate_ini[point:]) # print no-zero first bins  
         plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="First Enter LAr Neutron")
         # plt.plot(bins_ini, Rate_ini, label="LZ AmLi Escaping Neutron")
         # plt.plot(bins_ke, Rate_ke,  label="First Enter LAr Neutron")
