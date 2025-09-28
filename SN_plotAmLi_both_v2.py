@@ -29,7 +29,8 @@ class SN():
 
 
         #982 statics false 1
-        for i in range(1,101):
+        # for i in range(1,101):
+        for i in range(1, 11):
             self.main_body(i)
         # for ploting AmLi background tagging and SNR
         # self.untagged_bubble_rate()
@@ -357,7 +358,7 @@ class SN():
             if Rate_ini[i] !=0:
                 point = i
                 break
-        print(bins_ini[point:],"\n", Rate_ini[point:]) # print no-zero first bins  
+        print(bins_ini[point:],"\n", Rate_ini[point:]) # print no-zero first bins
         plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="First Enter LAr Neutron")
         # plt.plot(bins_ini, Rate_ini, label="LZ AmLi Escaping Neutron")
         # plt.plot(bins_ke, Rate_ke,  label="First Enter LAr Neutron")
