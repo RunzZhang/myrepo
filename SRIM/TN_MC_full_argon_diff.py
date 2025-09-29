@@ -506,7 +506,7 @@ class MC_sim_full_argon():
         x_bin_length = x_bins[1] - x_bins[0]
         for i in range(len(hist_result_full[0])):
             y_bins_full.append(hist_result_full[0][i] / x_bin_length)
-            y_bins_full_cdf.append(sum(hist_result_full[0][:i] * 0.025))
+            y_bins_full_cdf.append(sum(hist_result_full[0][:i]))
 
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
