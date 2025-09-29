@@ -493,20 +493,20 @@ class MC_sim_full_argon():
         y_bins_41_cdf =[]
         x_bin_length = x_bins[1] - x_bins[0]
         for i in range(len(hist_result_41[0])):
-            y_bins_41.append(hist_result_41[0][i] *0.974/ x_bin_length)# with argon isotope contribtuion
-            y_bins_41_cdf.append(sum(hist_result_41[0][:i] *0.974)/ x_bin_length)
+            y_bins_41.append(hist_result_41[0][i] *0.974)# with argon isotope contribtuion
+            y_bins_41_cdf.append(sum(hist_result_41[0][:i] *0.974*x_bin_length))
         y_bins_37 = []
         y_bins_37_cdf = []
         x_bin_length = x_bins[1] - x_bins[0]
         for i in range(len(hist_result_37[0])):
-            y_bins_37.append(hist_result_37[0][i]*0.025 / x_bin_length)
-            y_bins_37_cdf.append(sum(hist_result_37[0][:i] *0.025)/ x_bin_length)
+            y_bins_37.append(hist_result_37[0][i]*0.025 )
+            y_bins_37_cdf.append(sum(hist_result_37[0][:i] *0.025*x_bin_length))
         y_bins_full = []
         y_bins_full_cdf = []
         x_bin_length = x_bins[1] - x_bins[0]
         for i in range(len(hist_result_full[0])):
-            y_bins_full.append(hist_result_full[0][i] / x_bin_length)
-            y_bins_full_cdf.append(sum(hist_result_full[0][:i])/ x_bin_length)
+            y_bins_full.append(hist_result_full[0][i] )
+            y_bins_full_cdf.append(sum(hist_result_full[0][:i])*x_bin_length)
 
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
