@@ -134,14 +134,14 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_clean_point/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_clean_point/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_test_1E6/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_test_1E6/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.main_body(1)
-        for i in range(1,101):
-        # for i in range(1, 10):
+        # for i in range(1,101):
+        for i in range(1, 10):
             self.main_body(i)
     def main_body(self,i):
         print(i)
@@ -194,7 +194,8 @@ class ReadRoot():
 
 
 
-        self.filepath = self.base_path + f"dmx_AmLi_1E7_{i}.root"
+        # self.filepath = self.base_path + f"dmx_AmLi_1E7_{i}.root"
+        self.filepath = self.base_path + f"dmx_AmLi_LZ_test_1E6.root" # test
         self.file = uproot.open(self.filepath)["tree"]
         # print("columns: ", self.file.keys())
         # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
@@ -238,7 +239,7 @@ class ReadRoot():
         #
 
         # calculate initial AmLi neutron energy and 1st enter LAr energy
-        # self.AmLi_spectrum()
+        self.AmLi_spectrum()
 
 
 
