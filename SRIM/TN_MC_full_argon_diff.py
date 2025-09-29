@@ -122,7 +122,7 @@ class MC_sim_full_argon():
         # self.gamma_sim(10000)
         # self.MC_sim(self.runtime)
         # plot cdf
-        # self.data_analysis_v3()
+        self.data_analysis_v3()
         # self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
@@ -138,12 +138,12 @@ class MC_sim_full_argon():
         # self.spectrum_uncertainty()
         # self.plot_spectrums_sigma()
 
-        self.plot_spectrums_sigma_LSS()
-        self.predicted_bubble_events_LSS()
+        # self.plot_spectrums_sigma_LSS()
+        # self.predicted_bubble_events_LSS()
         # self.LSS_introduced_uncertainty()
 
-        self.plot_spectrums_sigma_t()
-        self.predicted_bubble_events_t()
+        # self.plot_spectrums_sigma_t()
+        # self.predicted_bubble_events_t()
     def data_preparation(self):
 
         for i in range(len(self.argon_list)):# for each chain
@@ -460,7 +460,7 @@ class MC_sim_full_argon():
 
     def data_analysis_v3(self):
         # plot pdf cdf and all isotope in same picture
-        y1_limit = [1e-5,8e-2]
+        y1_limit = [1e-5,1e-1]
         y2_limit = [0,1.1]
         start = 0
         end = 1200
