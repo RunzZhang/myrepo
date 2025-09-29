@@ -121,14 +121,15 @@ class MC_sim_full_argon():
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
         # self.MC_sim(self.runtime)
-        self.data_analysis_v3()
+        # plot cdf
+        # self.data_analysis_v3()
         # self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
         # predict bubble events ratio with different energy threshold
         # also plot how it changes with threshold
         # self.predicted_bubble_events(self.address)
-        # self.predicted_bubble_events_LSS()
+        self.predicted_bubble_events_LSS()
         # self.source_uncertainty(0.5)
         # self.source_uncertainty_w_background(0.3, 500)
         # self.bubble_event_with_sigma(0.5)
@@ -141,7 +142,7 @@ class MC_sim_full_argon():
         # self.predicted_bubble_events_LSS()
         # self.LSS_introduced_uncertainty()
 
-        # self.plot_spectrums_sigma_t()
+        self.plot_spectrums_sigma_t()
         # self.predicted_bubble_events_t()
     def data_preparation(self):
 
@@ -616,9 +617,9 @@ class MC_sim_full_argon():
         y_high = []
         y_low = []
         for i in range(len(hist_result[0])):
-            y_mid.append(hist_result[0][i] / bin_width)
-            y_high.append(hist_result_high[0][i] / bin_width)
-            y_low.append(hist_result_low[0][i] / bin_width)
+            y_mid.append(hist_result[0][i] )
+            y_high.append(hist_result_high[0][i] )
+            y_low.append(hist_result_low[0][i] )
 
         plt.plot(x_bins, y_mid, color="blue", label='LSS Nominal')
         # plt.plot(x_bins, hist_result_low[0], color="green", label="0.5 LSS scaling")
@@ -666,9 +667,9 @@ class MC_sim_full_argon():
         y_high = []
         y_low = []
         for i in range(len(hist_result[0])):
-            y_mid.append(hist_result[0][i] / bin_width)
-            y_high.append(hist_result_high[0][i] / bin_width)
-            y_low.append(hist_result_low[0][i] / bin_width)
+            y_mid.append(hist_result[0][i] )
+            y_high.append(hist_result_high[0][i] )
+            y_low.append(hist_result_low[0][i] )
 
         plt.plot(x_bins, y_mid, color="blue", label='Original Spectrum')
         plt.fill_between(x_bins, y_high, y_low, color='dimgray', alpha=0.5, label='Stopping Time Variation Band')
@@ -798,7 +799,7 @@ class MC_sim_full_argon():
         return x_bins, hist_result[0], bubble_event
     def predicted_bubble_events(self, address):
         # given energy threshold in function generate_hist_and_CDF, plot the bubble numbers
-        x_bins, hist_result, bubble_event  = self.generate_hist_and_CDF(address=address)
+        x_bins, hist_result, bubble_event  = self.generate_hist_and_CDF(N=94,address=address)
 
 
         fig, ax1 = plt.subplots()
@@ -902,9 +903,9 @@ class MC_sim_full_argon():
         address05 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS05_2E5"
         address08 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS08_2E5"
         address07 = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS07_2E5"
-        x_bins_05, hist_result_05, bubble_event_05 = self.generate_hist_and_CDF(address=address05)
-        x_bins_08, hist_result_08, bubble_event_08 = self.generate_hist_and_CDF(address=address08)
-        x_bins_07, hist_result_07, bubble_event_07 = self.generate_hist_and_CDF(address=address07)
+        x_bins_05, hist_result_05, bubble_event_05 = self.generate_hist_and_CDF(event_N=94,address=address05)
+        x_bins_08, hist_result_08, bubble_event_08 = self.generate_hist_and_CDF(event_N=94,address=address08)
+        x_bins_07, hist_result_07, bubble_event_07 = self.generate_hist_and_CDF(event_N=94,address=address07)
 
         # check 400eV uncerntatinty
         for i in range(len(x_bins_05)):
