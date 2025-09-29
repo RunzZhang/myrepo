@@ -510,13 +510,16 @@ class MC_sim_full_argon():
 
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
+
+
+        ax1.plot(x_bins, y_bins_full, color="blue", label="$^{36}$Ar+$^{41}$Ar", lw= 2.5)
         ax1.plot(x_bins, y_bins_37, color="brown", label="$^{36}$Ar")
         ax1.plot(x_bins, y_bins_41, color="green", label="$^{40}$Ar")
-        ax1.plot(x_bins, y_bins_full, color="blue", label="$^{36}$Ar+$^{41}$Ar")
 
+
+        ax2.plot(x_bins, y_bins_full_cdf, color="blue", label="$^{36}$Ar+$^{41}$Ar")
         ax2.plot(x_bins, y_bins_37_cdf, color="brown", label="$^{36}$Ar")
         ax2.plot(x_bins, y_bins_41_cdf, color="green", label="$^{40}$Ar")
-        ax2.plot(x_bins, y_bins_full_cdf, color="blue", label="$^{36}$Ar+$^{41}$Ar")
 
         # plt.grid(True, which='both', linestyle='-', linewidth=1)
         ax1.minorticks_on()
