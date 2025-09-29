@@ -7,7 +7,7 @@ import numpy as np
 from scipy.optimize import fsolve
 #variable declaration
 #energy in MeV, MeV to SI
-
+# plot CDF and PDF for Ar37 Ar 41 and total
 random.seed(10)
 PI = scipy.pi
 # import warnings
@@ -121,7 +121,7 @@ class MC_sim_full_argon():
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
         # self.MC_sim(self.runtime)
-        self.data_analysis()
+        self.data_analysis_v3()
         # self.plot_spectrum(self.address)
 
         # self.plot_pile_up()
@@ -337,6 +337,7 @@ class MC_sim_full_argon():
         return E_deposit_list
 
     def data_analysis(self):
+        #
         start = 0
         end = 1200
         x_bins = []
@@ -455,6 +456,92 @@ class MC_sim_full_argon():
         plt.legend()
         plt.savefig(self.plot_address+plot_name, bbox_inches='tight')
         # plt.show()
+
+    def data_analysis_v3(self):
+        # plot pdf cdf and all isotope in same picture
+        y1_limit = [1e-5,4e-2]
+        y2_limit = [0,1]
+        start = 0
+        end = 1200
+        x_bins = []
+        with open(self.address_41, "rb") as fp:  # Unpickling
+            MC_41 = pickle.load(fp)
+            print("read 41", MC_41)
+        bin_n = 500
+
+        hist_result_41 = plt.hist(MC_41, bins=bin_n, range=(start, end), density=True)
+
+        plt.clf()
+        for i in range(len(hist_result_41[1]) - 1):
+            x_bins.append((hist_result_41[1][i] + hist_result_41[1][i + 1]) / 2)
+
+        with open(self.address_37, "rb") as fp:  # Unpickling
+            MC_37 = pickle.load(fp)
+            print("read 37", MC_37)
+        hist_result_37 = plt.hist(MC_37, bins=bin_n, range=(start, end), density=True)
+
+        plt.clf()
+
+        MC_full = MC_41 + MC_37
+
+        hist_result_full = plt.hist(MC_full, bins=bin_n, range=(start, end), density=True)
+
+        plt.clf()
+
+        # change y unit from probablity /bin to probability /ev
+        y_bins_41 = []
+        y_bins_41_cdf =[]
+        x_bin_length = x_bins[1] - x_bins[0]
+        for i in range(len(hist_result_41[0])):
+            y_bins_41.append(hist_result_41[0][i] *0.974/ x_bin_length)# with argon isotope contribtuion
+            y_bins_41_cdf.append(sum(hist_result_41[0][:i] *0.974))
+        y_bins_37 = []
+        y_bins_37_cdf = []
+        x_bin_length = x_bins[1] - x_bins[0]
+        for i in range(len(hist_result_37[0])):
+            y_bins_37.append(hist_result_37[0][i]*0.025 / x_bin_length)
+            y_bins_37_cdf.append(sum(hist_result_37[0][:i] *0.025))
+        y_bins_full = []
+        y_bins_full_cdf = []
+        x_bin_length = x_bins[1] - x_bins[0]
+        for i in range(len(hist_result_full[0])):
+            y_bins_full.append(hist_result_full[0][i] / x_bin_length)
+            y_bins_full_cdf.append(sum(hist_result_full[0][:i] * 0.025))
+
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5), sharey=True)
+
+        ax1.plot(x_bins, y_bins_37, color="brown", label="$^{36}$Ar")
+        ax1.plot(x_bins, y_bins_41, color="green", label="$^{40}$Ar")
+        ax1.plot(x_bins, y_bins_full, color="blue", label="$^{36}$Ar+$^{41}$Ar")
+
+        ax2.plot(x_bins, y_bins_37_cdf, color="brown", label="$^{36}$Ar")
+        ax2.plot(x_bins, y_bins_41_cdf, color="green", label="$^{40}$Ar")
+        ax2.plot(x_bins, y_bins_full_cdf, color="blue", label="$^{36}$Ar+$^{41}$Ar")
+
+        # plt.grid(True, which='both', linestyle='-', linewidth=1)
+        ax1.minorticks_on()
+        ax1.set_xlabel("NR Energy (eV)", fontsize=18)
+        ax1.set_ylabel("Probability (1/eV)", fontsize=18)
+        ax1.set_yscale("log")
+        ax1.tick_params(axis='both', labelsize=18)
+        ax1.set_xlim([0, 1200])
+        ax1.set_ylim(y1_limit)
+        ax1.legend(loc='upper right')
+        ax1.set_title("Ar NR PDF", fontsize=16)
+
+        ax2.minorticks_on()
+        ax2.set_xlabel("NR Energy (eV)", fontsize=18)
+        ax2.set_ylabel("Probability", fontsize=18)
+        ax2.set_yscale("log")
+        ax2.tick_params(axis='both', labelsize=18)
+        ax2.set_xlim([0, 1200])
+        ax2.set_ylim(y2_limit)
+        ax2.yaxis.set_tick_params(labelleft=True)
+        ax2.legend(loc='upper right')
+        ax2.set_title("Ar NR CDF", fontsize=16)
+
+        plt.tight_layout()
+        plt.savefig(self.plot_address + "spectrum_diff_CDF.pdf", bbox_inches='tight')
 
     def plot_spectrum(self, address):
         start = 0
