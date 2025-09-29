@@ -508,7 +508,7 @@ class MC_sim_full_argon():
             y_bins_full.append(hist_result_full[0][i] / x_bin_length)
             y_bins_full_cdf.append(sum(hist_result_full[0][:i] * 0.025))
 
-        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5), sharey=True)
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))
 
         ax1.plot(x_bins, y_bins_37, color="brown", label="$^{36}$Ar")
         ax1.plot(x_bins, y_bins_41, color="green", label="$^{40}$Ar")
