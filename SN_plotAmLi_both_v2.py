@@ -80,16 +80,16 @@ class SN():
         # self.G4_events= 1E7
         self.G4_events = 2E7
         self.G4_sig_time=(self.G4_events / self.rate)
-        with open(self.signal_path, 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.sig_raw_list = [float(value) for value in number_list]
-        self.signal_final_list = self.signal_final_list + self.sig_raw_list
-
-        print("capture event number", len(self.sig_raw_list))
-        self.G4_noise_time = self.G4_events / self.rate
+        # with open(self.signal_path, 'r') as file:
+        #     reader = csv.reader(file)
+        #     # Read the first row (assuming single row for simplicity)
+        #     number_list = next(reader)
+        #     # Convert the strings to floats
+        #     self.sig_raw_list = [float(value) for value in number_list]
+        # self.signal_final_list = self.signal_final_list + self.sig_raw_list
+        #
+        # print("capture event number", len(self.sig_raw_list))
+        # self.G4_noise_time = self.G4_events / self.rate
         # with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'r') as file:
         # # Noise 1,
         # with open(self.false_1_path, 'r') as file:
