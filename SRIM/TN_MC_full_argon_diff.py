@@ -568,7 +568,7 @@ class MC_sim_full_argon():
         plt.minorticks_on()
         plt.xlabel("NR Energy (eV)",fontsize=18)
         plt.ylabel("Probability (1/eV)",fontsize=18)
-        plt.yscale("log")
+        # plt.yscale("log")
         plt.yticks(fontsize=18)
         plt.xticks(fontsize=18)
         plt.xlim([0, 1200])
