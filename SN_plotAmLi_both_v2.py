@@ -9,8 +9,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_test_1E6/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_test_1E6/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_LZ_bare_clean_point/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_LZ_bare_clean_point/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
         self.false_1 = "AmLi_false1.csv"
         self.false_2 = "AmLi_false2.csv"
@@ -18,7 +18,7 @@ class SN():
         self.name1 = "ER Scintillation Background"
         self.name2 = "NR Scintillation Background"
         self.name = "Backgrounds"
-        self.plot_name = self.name+"AmLi_1E7_total_LZ_test.pdf"
+        self.plot_name = self.name+"AmLi_1E7_total_LZ_updated_100.pdf"
         self.pho_threshold = 200
         self.signal_final_list = []
         self.noise1_final_list =[]
@@ -80,38 +80,38 @@ class SN():
         # self.G4_events= 1E7
         self.G4_events = 2E7
         self.G4_sig_time=(self.G4_events / self.rate)
-        # with open(self.signal_path, 'r') as file:
-        #     reader = csv.reader(file)
-        #     # Read the first row (assuming single row for simplicity)
-        #     number_list = next(reader)
-        #     # Convert the strings to floats
-        #     self.sig_raw_list = [float(value) for value in number_list]
-        # self.signal_final_list = self.signal_final_list + self.sig_raw_list
-        #
-        # print("capture event number", len(self.sig_raw_list))
-        # self.G4_noise_time = self.G4_events / self.rate
+        with open(self.signal_path, 'r') as file:
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            self.sig_raw_list = [float(value) for value in number_list]
+        self.signal_final_list = self.signal_final_list + self.sig_raw_list
+
+        print("capture event number", len(self.sig_raw_list))
+        self.G4_noise_time = self.G4_events / self.rate
         # with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'r') as file:
-        # # Noise 1,
-        # with open(self.false_1_path, 'r') as file:
-        #     reader = csv.reader(file)
-        #     # Read the first row (assuming single row for simplicity)
-        #     number_list = next(reader)
-        #     # Convert the strings to floats
-        #     self.noise1_raw_list = [float(value) for value in number_list[1:]]
-        #     bubble_num =  number_list[0]
-        #
-        #     # the [0] is NR number and [1:] is the photon numbers
-        # self.noise1_final_list = self.noise1_final_list + self.noise1_raw_list
-        # self.untagged_bubble_list.append(float(bubble_num))
-        # # Noise 2
-        # with open(self.false_2_path, 'r') as file:
-        #     reader = csv.reader(file)
-        #     # Read the first row (assuming single row for simplicity)
-        #     number_list = next(reader)
-        #     # Convert the strings to floats
-        #     self.noise2_raw_list = [float(value) for value in number_list]
-        #     # self.noise_raw_list = [float(value)  for value in number_list]
-        # self.noise2_final_list = self.noise2_final_list + self.noise2_raw_list
+        # Noise 1,
+        with open(self.false_1_path, 'r') as file:
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            self.noise1_raw_list = [float(value) for value in number_list[1:]]
+            bubble_num =  number_list[0]
+
+            # the [0] is NR number and [1:] is the photon numbers
+        self.noise1_final_list = self.noise1_final_list + self.noise1_raw_list
+        self.untagged_bubble_list.append(float(bubble_num))
+        # Noise 2
+        with open(self.false_2_path, 'r') as file:
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            self.noise2_raw_list = [float(value) for value in number_list]
+            # self.noise_raw_list = [float(value)  for value in number_list]
+        self.noise2_final_list = self.noise2_final_list + self.noise2_raw_list
 
         # Initial amli spectrm
         with open(self.ini_path, 'r') as file:
@@ -347,8 +347,8 @@ class SN():
         plt.clf()
         normalized  = sum(counts_ini)
         print("norma fact", normalized)
-        Rate_ini = counts_ini*self.rate/normalized # rate in Hz
-        Rate_ke = counts_ke * self.rate / normalized  # rate in Hz
+        Rate_ini = counts_ini*self.rate*3600/normalized # rate in /h
+        Rate_ke = counts_ke * self.rate*3600 / normalized  # rate in /h
         bin_factor = bin_edges_ke[1]/bin_edges_ke[0]
         bins_ini = bin_edges_ini[:-1]*bin_factor**0.5
         # bins_ini = bin_edges_ini[:-1] * bin_factor
@@ -369,7 +369,7 @@ class SN():
         plt.xscale("log")
         plt.yscale("log")
         plt.xlabel("Energy (eV)", fontsize=16)
-        plt.ylabel(r"Rate (Hz)", fontsize=16)
+        plt.ylabel(r"Rate (event/hr/eV)", fontsize=16)
         plt.gca().xaxis.set_major_locator(LogLocator(base=10.0, numticks=15))
         plt.xlim([1e-3, 1e7])
         plt.legend()
