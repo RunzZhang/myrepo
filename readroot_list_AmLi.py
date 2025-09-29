@@ -194,8 +194,7 @@ class ReadRoot():
 
 
 
-        # self.filepath = self.base_path + f"dmx_AmLi_1E7_{i}.root"
-        self.filepath = self.base_path + f"dmx_AmLi_LZ_test_1E6.root" # test
+        self.filepath = self.base_path + f"dmx_AmLi_1E7_{i}.root"
         self.file = uproot.open(self.filepath)["tree"]
         # print("columns: ", self.file.keys())
         # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
