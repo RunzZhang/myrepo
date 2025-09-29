@@ -347,8 +347,8 @@ class SN():
         plt.clf()
         normalized  = sum(counts_ini)
         print("norma fact", normalized)
-        Rate_ini = counts_ini*self.rate*3600/normalized # rate in /h
-        Rate_ke = counts_ke * self.rate*3600 / normalized  # rate in /h
+        Rate_ini = counts_ini*self.rate # rate in /h
+        Rate_ke = counts_ke * self.rate  # rate in /h
         bin_factor = bin_edges_ke[1]/bin_edges_ke[0]
         bins_ini = bin_edges_ini[:-1]*bin_factor**0.5
         # bins_ini = bin_edges_ini[:-1] * bin_factor
