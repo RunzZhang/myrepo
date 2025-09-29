@@ -460,7 +460,7 @@ class MC_sim_full_argon():
     def data_analysis_v3(self):
         # plot pdf cdf and all isotope in same picture
         y1_limit = [1e-5,4e-2]
-        y2_limit = [0,1]
+        y2_limit = [0,1.1]
         start = 0
         end = 1200
         x_bins = []
@@ -512,12 +512,12 @@ class MC_sim_full_argon():
 
 
 
-        ax1.plot(x_bins, y_bins_full, color="blue", label="$^{36}$Ar+$^{41}$Ar", lw= 2.5)
+        ax1.plot(x_bins, y_bins_full, color="blue", label="$^{36}$Ar+$^{41}$Ar", lw= 3.5)
         ax1.plot(x_bins, y_bins_37, color="brown", label="$^{36}$Ar")
         ax1.plot(x_bins, y_bins_41, color="green", label="$^{40}$Ar")
 
 
-        ax2.plot(x_bins, y_bins_full_cdf, color="blue", label="$^{36}$Ar+$^{41}$Ar")
+        ax2.plot(x_bins, y_bins_full_cdf, color="blue", label="$^{36}$Ar+$^{41}$Ar", lw= 3.5)
         ax2.plot(x_bins, y_bins_37_cdf, color="brown", label="$^{36}$Ar")
         ax2.plot(x_bins, y_bins_41_cdf, color="green", label="$^{40}$Ar")
 
