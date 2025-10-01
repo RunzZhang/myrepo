@@ -360,10 +360,10 @@ class SN():
         print("norma fact", normalized_ini, normalized_ke)
         escaping_ratio = len(self.neutron_ar_ke_list) / len(self.neutron_ini_list)
 
-        Rate_ini = counts_ini*3600*self.rate # rate in /h
+        Rate_ini = counts_ini*3600/self.G4_sig_time # rate in /h
 
-        print(escaping_ratio)
-        Rate_ke = counts_ke * self.rate*3600*escaping_ratio  # rate in /h
+        print(escaping_ratio,sum(Rate_ini), self.Activity)
+        Rate_ke = counts_ke *3600/self.G4_sig_time  # rate in /h
         bin_factor = bin_edges_ke[1]/bin_edges_ke[0]
         bins_ini = bin_edges_ini[:-1]*bin_factor**0.5
         # bins_ini = bin_edges_ini[:-1] * bin_factor
@@ -384,7 +384,7 @@ class SN():
         plt.xscale("log")
         plt.yscale("log")
         plt.xlabel("Energy (eV)", fontsize=16)
-        plt.ylabel(r"Rate (event/hr/eV)", fontsize=16)
+        plt.ylabel(r"Rate (event/hr)", fontsize=16)
         plt.gca().xaxis.set_major_locator(LogLocator(base=10.0, numticks=15))
         plt.xlim([1e-3, 1e7])
         # plt.ylim([1e-1, 1e4])
