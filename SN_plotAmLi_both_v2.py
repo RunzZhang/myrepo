@@ -349,6 +349,12 @@ class SN():
         counts_ke, bin_edges_ke, patches_ke = plt.hist(self.neutron_ar_ke_list, bins=log_bins)
         plt.clf()
 
+        point = 0
+        for i in range(len(counts_ini)):
+            if counts_ini[i] != 0:
+                point = i
+                break
+                # find 1st none zero counts in initial energy spectrum
         normalized_ini  = 0
         normalized_ke =0
 
@@ -369,6 +375,8 @@ class SN():
         print("ini", bins_ini[:10])
         print("ke",
         bins_ke[:10])
+        print("before density bins_ini, rate ini, counts ini,counts ke", bins_ini[point:], "\n", Rate_ini[point:], "\n",
+              counts_ini[point:], "\n", counts_ke[point:],"\n", bins_ini[point:],"\n", bins_ke[point:])  # print no-zero first bins
 
         # make the y value /h/eV
         for i in range(len(Rate_ini)):
@@ -377,12 +385,8 @@ class SN():
 
 
         plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="LZ AmLi Escaping Neutron")
-        point = 0
-        for i in range(len(Rate_ini)):
-            if Rate_ini[i] !=0:
-                point = i
-                break
-        print(bins_ini[point:],"\n", Rate_ini[point:],"\n", counts_ini[point:],"\n", counts_ke[point:]) # print no-zero first bins
+
+        print("after density bins_ini, rate ini, counts ini,counts ke",bins_ini[point:],"\n", Rate_ini[point:],"\n", counts_ini[point:],"\n", counts_ke[point:],"\n", bins_ini[point:],"\n", bins_ke[point:]) # print no-zero first bins
         plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="First Enter LAr Neutron")
         plt.plot(ene_list, possibility_list, drawstyle="steps-mid", label="Original Spectrum dat")
         # plt.plot(bins_ini, Rate_ini, label="LZ AmLi Escaping Neutron")
