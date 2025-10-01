@@ -79,8 +79,8 @@ class SN():
         # self.rate = 0.1968 #AmLi neutron rate /s
         # self.rate = 2.52e4  # AmLi neutron rate /s PNNL
         self.rate = 21  # AmLi neutron rate /s LZ
-        self.G4_events= 1E7
-        # self.G4_events = 2E7
+        # self.G4_events= 1E7
+        self.G4_events = 2E7
         self.G4_sig_time=(self.G4_events / self.rate)
         with open(self.signal_path, 'r') as file:
             reader = csv.reader(file)
