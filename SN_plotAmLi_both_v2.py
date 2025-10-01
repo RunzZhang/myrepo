@@ -358,7 +358,7 @@ class SN():
 
         Rate_ini = counts_ini*self.rate # rate in /h
         print("total rate", sum(Rate_ini))
-        Rate_ke = counts_ke * self.rate*normalized_ke/normalized_ini  # rate in /h
+        Rate_ke = counts_ke * self.rate*len(self.neutron_ar_ke_list)/len(self.neutron_ini_list)  # rate in /h
         bin_factor = bin_edges_ke[1]/bin_edges_ke[0]
         bins_ini = bin_edges_ini[:-1]*bin_factor**0.5
         # bins_ini = bin_edges_ini[:-1] * bin_factor
