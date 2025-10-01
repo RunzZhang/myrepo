@@ -362,7 +362,7 @@ class SN():
 
         Rate_ini = counts_ini*3600/self.G4_sig_time # rate in /h
 
-        print("escapitng ratio",escaping_ratio,"sum of initial rate",sum(Rate_ini),"sum of initial count", sum(counts_ini),"activity",self.Activity)
+        print("escapitng ratio",escaping_ratio,"sum of initial rate",sum(Rate_ini)/3600,"sum of initial count", sum(counts_ini),"activity",self.rate)
         Rate_ke = counts_ke *3600/self.G4_sig_time  # rate in /h
         bin_factor = bin_edges_ke[1]/bin_edges_ke[0]
         bins_ini = bin_edges_ini[:-1]*bin_factor**0.5
