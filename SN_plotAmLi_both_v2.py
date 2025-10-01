@@ -15,8 +15,8 @@ class SN():
         self.false_1 = "AmLi_false1.csv"
         self.false_2 = "AmLi_false2.csv"
         self.signal = "AmLi_sig.csv"
-        self.name1 = "ER Scintillation Background"
-        self.name2 = "NR Scintillation Background"
+        self.name1 = "Correlated ER Background"
+        self.name2 = "Hard Scatter Background"
         self.name = "Backgrounds"
         self.plot_name = self.name+"AmLi_1E7_total_LZ_updated_100.pdf"
         self.pho_threshold = 200
@@ -29,16 +29,16 @@ class SN():
 
 
         #982 statics false 1
-        for i in range(1,101):
-        # for i in range(1, 11):
+        # for i in range(1,101):
+        for i in range(1, 11):
             self.main_body(i)
         # for ploting AmLi background tagging and SNR
-        self.untagged_bubble_rate()
-        (result1, result2)=self.combine_data()
-        self.plot_sn(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
+        # self.untagged_bubble_rate()
+        # (result1, result2)=self.combine_data()
+        # self.plot_sn(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
 
         # for ploting AmLi spectrum and SBC detector thermalizing effect
-        # self.plot_neutron_spectrum()
+        self.plot_neutron_spectrum()
 
 
     def main_body(self,i):
@@ -388,7 +388,7 @@ class SN():
 
         print("after density bins_ini, rate ini, counts ini,counts ke",Rate_ini[point:],"\n", Rate_ke[point:],"\n", counts_ini[point:],"\n", counts_ke[point:],"\n", bins_ini[point:],"\n", bins_ke[point:]) # print no-zero first bins
         plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="First Enter LAr Neutron")
-        plt.plot(ene_list, possibility_list, drawstyle="steps-mid", label="Original Spectrum dat")
+        # plt.plot(ene_list, possibility_list, drawstyle="steps-mid", label="Original Spectrum dat")
         # plt.plot(bins_ini, Rate_ini, label="LZ AmLi Escaping Neutron")
         # plt.plot(bins_ke, Rate_ke,  label="First Enter LAr Neutron")
         plt.xscale("log")
