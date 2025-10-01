@@ -351,11 +351,7 @@ class SN():
 
         normalized_ini  = 0
         normalized_ke =0
-        for i in range(len(counts_ini)):
-            possibility_ini = counts_ini[i]*(bin_edges_ini[i+1]-bin_edges_ini[i])
-            possibility_ke = counts_ke[i] * (bin_edges_ke[i + 1] - bin_edges_ke[i])
-            normalized_ini+= possibility_ini
-            normalized_ke += possibility_ke
+
 
         print("norma fact", normalized_ini, normalized_ke)
         escaping_ratio = len(self.neutron_ar_ke_list) / len(self.neutron_ini_list)
@@ -369,6 +365,12 @@ class SN():
         # bins_ini = bin_edges_ini[:-1] * bin_factor
         # print("bin edges", bin_edges_ini)
         bins_ke = bin_edges_ke[:-1]*bin_factor**0.5
+
+        # make the y value /h/eV
+        for i in range(len(Rate_ini)):
+            Rate_ini[i] = Rate_ini[i]/(bin_edges_ini[i+1]-bin_edges_ini[i])
+            Rate_ke[i] = Rate_ke[i] / (bin_edges_ke[i + 1] - bin_edges_ke[i])
+
 
         plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="LZ AmLi Escaping Neutron")
         point = 0
@@ -384,7 +386,7 @@ class SN():
         plt.xscale("log")
         plt.yscale("log")
         plt.xlabel("Energy (eV)", fontsize=16)
-        plt.ylabel(r"Rate (event/hr)", fontsize=16)
+        plt.ylabel(r"Rate (event/hr/eV)", fontsize=16)
         plt.gca().xaxis.set_major_locator(LogLocator(base=10.0, numticks=15))
         plt.xlim([1e-3, 1e7])
         # plt.ylim([1e-1, 1e4])
