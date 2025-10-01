@@ -29,8 +29,8 @@ class SN():
 
 
         #982 statics false 1
-        for i in range(1,101):
-        # for i in range(1, 11):
+        # for i in range(1,101):
+        for i in range(1, 11):
             self.main_body(i)
         # # for ploting AmLi background tagging and SNR
         # self.untagged_bubble_rate()
@@ -365,6 +365,10 @@ class SN():
         # bins_ini = bin_edges_ini[:-1] * bin_factor
         # print("bin edges", bin_edges_ini)
         bins_ke = bin_edges_ke[:-1]*bin_factor**0.5
+
+        print("ini" bins_ini[:10])
+        print("ke"
+        bins_ke[:10])
 
         # make the y value /h/eV
         for i in range(len(Rate_ini)):
