@@ -32,13 +32,13 @@ class SN():
         for i in range(1,101):
         # for i in range(1, 11):
             self.main_body(i)
-        # for ploting AmLi background tagging and SNR
-        self.untagged_bubble_rate()
-        (result1, result2)=self.combine_data()
-        self.plot_sn(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
+        # # for ploting AmLi background tagging and SNR
+        # self.untagged_bubble_rate()
+        # (result1, result2)=self.combine_data()
+        # self.plot_sn(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
 
         # for ploting AmLi spectrum and SBC detector thermalizing effect
-        # self.plot_neutron_spectrum()
+        self.plot_neutron_spectrum()
 
 
     def main_body(self,i):
@@ -355,11 +355,12 @@ class SN():
             normalized_ke += possibility_ke
 
         print("norma fact", normalized_ini, normalized_ke)
+        escaping_ratio = len(self.neutron_ar_ke_list) / len(self.neutron_ini_list)
+        
+        Rate_ini = counts_ini*self.rate *escaping_ratio# rate in /h
 
-        Rate_ini = counts_ini*self.rate # rate in /h
-        escaping_ratio = len(self.neutron_ar_ke_list)/len(self.neutron_ini_list)
         print(escaping_ratio)
-        Rate_ke = counts_ke * self.rate*escaping_ratio  # rate in /h
+        Rate_ke = counts_ke * self.rate  # rate in /h
         bin_factor = bin_edges_ke[1]/bin_edges_ke[0]
         bins_ini = bin_edges_ini[:-1]*bin_factor**0.5
         # bins_ini = bin_edges_ini[:-1] * bin_factor
