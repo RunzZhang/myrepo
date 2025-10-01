@@ -366,8 +366,8 @@ class SN():
         # print("bin edges", bin_edges_ini)
         bins_ke = bin_edges_ke[:-1]*bin_factor**0.5
 
-        print("ini" bins_ini[:10])
-        print("ke"
+        print("ini", bins_ini[:10])
+        print("ke",
         bins_ke[:10])
 
         # make the y value /h/eV
