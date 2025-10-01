@@ -32,13 +32,13 @@ class SN():
         for i in range(1,101):
         # for i in range(1, 11):
             self.main_body(i)
-        # # for ploting AmLi background tagging and SNR
-        # self.untagged_bubble_rate()
-        # (result1, result2)=self.combine_data()
-        # self.plot_sn(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
+        # for ploting AmLi background tagging and SNR
+        self.untagged_bubble_rate()
+        (result1, result2)=self.combine_data()
+        self.plot_sn(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
 
         # for ploting AmLi spectrum and SBC detector thermalizing effect
-        self.plot_neutron_spectrum()
+        # self.plot_neutron_spectrum()
 
 
     def main_body(self,i):
@@ -259,7 +259,7 @@ class SN():
     def plot_sn(self, sig1, sig2,pho1, pho2, noise1, noise2,  sn1, sn2):
         fig, (ax1, ax3) = plt.subplots(1, 2, figsize=(12, 5))  # ax1 for first plot, ax3 for second plot
         x_range = [0,430]
-        left_axis_range=[3.7e-3,3e1]
+        left_axis_range=[3.7e-3,3e2]
         right_axis_range=[1e-1,1e3]
 
         # left_axis_range = [1e-1, 3e4]
@@ -356,7 +356,7 @@ class SN():
 
         print("norma fact", normalized_ini, normalized_ke)
         escaping_ratio = len(self.neutron_ar_ke_list) / len(self.neutron_ini_list)
-        
+
         Rate_ini = counts_ini*self.rate *escaping_ratio# rate in /h
 
         print(escaping_ratio)
