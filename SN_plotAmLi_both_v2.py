@@ -10,7 +10,7 @@ class SN():
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
         self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_clean_point_log/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_clean_point_log/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_clean_point/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
         self.false_1 = "AmLi_false1.csv"
         self.false_2 = "AmLi_false2.csv"
@@ -26,6 +26,7 @@ class SN():
         self.untagged_bubble_list =[]
         self.neutron_ini_list = []
         self.neutron_ar_ke_list =[]
+        self.neutron_ar_ke_alter_list = []
 
 
         #982 statics false 1
@@ -55,6 +56,7 @@ class SN():
 
         self.ini_path = self.base_path+ f"AmLi_1E7_ini_part{i}.csv"
         self.ar_ke_path = self.base_path + f"AmLi_1E7_ke_part{i}.csv"
+        self.ar_ke_alter_path = self.base_path2 + f"AmLi_1E7_ke_part{i}.csv"
 
 
         self.read_files()
@@ -124,7 +126,7 @@ class SN():
 
             # the [0] is NR number and [1:] is the photon numbers
         self.neutron_ini_list +=  self.neutron_ini_raw_list
-        # Noise 2
+
         with open(self.ar_ke_path, 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
@@ -133,6 +135,15 @@ class SN():
             self.ar_ke_raw_list = [float(value)*1e6 for value in number_list] # in eV
             # self.noise_raw_list = [float(value)  for value in number_list]
         self.neutron_ar_ke_list += self.ar_ke_raw_list
+
+        with open(self.ar_ke_alter_path, 'r') as file:
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            self.ar_ke_alter_raw_list = [float(value)*1e6 for value in number_list] # in eV
+            # self.noise_raw_list = [float(value)  for value in number_list]
+        self.neutron_ar_ke_alter_list += self.ar_ke_raw_list
 
 
     def combine_data(self):
@@ -347,6 +358,7 @@ class SN():
 
         counts_ini, bin_edges_ini, patches_ini = plt.hist(self.neutron_ini_list, bins=log_bins)
         counts_ke, bin_edges_ke, patches_ke = plt.hist(self.neutron_ar_ke_list, bins=log_bins)
+        counts_ke_alter, bin_edges_ke_alter, patches_ke_alter = plt.hist(self.neutron_ar_ke_alter_list, bins=log_bins)
         plt.clf()
 
         point = 0
@@ -366,6 +378,7 @@ class SN():
 
         print("escapitng ratio",escaping_ratio,"sum of initial rate",sum(Rate_ini)/3600,"sum of initial count", sum(counts_ini),"activity",self.rate)
         Rate_ke = counts_ke *3600/self.G4_sig_time  # rate in /h
+        Rate_ke_alter = counts_ke_alter * 3600 / self.G4_sig_time
         bin_factor = bin_edges_ke[1]/bin_edges_ke[0]
         bins_ini = bin_edges_ini[:-1]*bin_factor**0.5
         # bins_ini = bin_edges_ini[:-1] * bin_factor
@@ -387,14 +400,15 @@ class SN():
         plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="LZ AmLi Escaping Neutron")
 
         print("after density bins_ini, rate ini, counts ini,counts ke",Rate_ini[point:],"\n", Rate_ke[point:],"\n", counts_ini[point:],"\n", counts_ke[point:],"\n", bins_ini[point:],"\n", bins_ke[point:]) # print no-zero first bins
-        plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="First Enter LAr Neutron")
+        plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="First Enter LAr Neutron log")
+        plt.plot(bins_ke, Rate_ke_alter, drawstyle="steps-mid", label="First Enter LAr Neutron lin")
         # plt.plot(ene_list, possibility_list, drawstyle="steps-mid", label="Original Spectrum dat")
         # plt.plot(bins_ini, Rate_ini, label="LZ AmLi Escaping Neutron")
         # plt.plot(bins_ke, Rate_ke,  label="First Enter LAr Neutron")
         plt.xscale("log")
         plt.yscale("log")
         plt.xlabel("Energy (eV)", fontsize=16)
-        plt.ylabel(r"Rate (event/hr/eV)", fontsize=16)
+        plt.ylabel(r"Rate (event/hr)", fontsize=16)
         plt.gca().xaxis.set_major_locator(LogLocator(base=10.0, numticks=15))
         plt.xlim([1e-3, 1e7])
         # plt.ylim([1e-1, 1e4])
