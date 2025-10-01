@@ -30,15 +30,15 @@ class SN():
 
         #982 statics false 1
         for i in range(1,101):
-        # for i in range(1, 11):
-            self.main_body(i)
-        # for ploting AmLi background tagging and SNR
-        self.untagged_bubble_rate()
-        (result1, result2)=self.combine_data()
-        self.plot_sn(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
+        # # for i in range(1, 11):
+        #     self.main_body(i)
+        # # for ploting AmLi background tagging and SNR
+        # self.untagged_bubble_rate()
+        # (result1, result2)=self.combine_data()
+        # self.plot_sn(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
 
         # for ploting AmLi spectrum and SBC detector thermalizing effect
-        # self.plot_neutron_spectrum()
+        self.plot_neutron_spectrum()
 
 
     def main_body(self,i):
@@ -357,10 +357,10 @@ class SN():
         print("norma fact", normalized_ini, normalized_ke)
         escaping_ratio = len(self.neutron_ar_ke_list) / len(self.neutron_ini_list)
 
-        Rate_ini = counts_ini*self.rate # rate in /h
+        Rate_ini = counts_ini*3600*self.rate # rate in /h
 
         print(escaping_ratio)
-        Rate_ke = counts_ke * self.rate*escaping_ratio  # rate in /h
+        Rate_ke = counts_ke * self.rate*3600*escaping_ratio  # rate in /h
         bin_factor = bin_edges_ke[1]/bin_edges_ke[0]
         bins_ini = bin_edges_ini[:-1]*bin_factor**0.5
         # bins_ini = bin_edges_ini[:-1] * bin_factor
@@ -375,7 +375,7 @@ class SN():
                 break
         print(bins_ini[point:],"\n", Rate_ini[point:]) # print no-zero first bins
         plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="First Enter LAr Neutron")
-        # plt.plot(ene_list, possibility_list, drawstyle="steps-mid", label="Original Spectrum dat")
+        plt.plot(ene_list, possibility_list, drawstyle="steps-mid", label="Original Spectrum dat")
         # plt.plot(bins_ini, Rate_ini, label="LZ AmLi Escaping Neutron")
         # plt.plot(bins_ke, Rate_ke,  label="First Enter LAr Neutron")
         plt.xscale("log")
@@ -384,6 +384,7 @@ class SN():
         plt.ylabel(r"Rate (event/hr/eV)", fontsize=16)
         plt.gca().xaxis.set_major_locator(LogLocator(base=10.0, numticks=15))
         plt.xlim([1e-3, 1e7])
+        # plt.ylim([1e-1, 1e4])
         plt.legend()
         plt.savefig(self.plot_path + "AmLi_specturm.pdf", bbox_inches='tight')
 
