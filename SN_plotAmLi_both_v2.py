@@ -357,10 +357,10 @@ class SN():
         print("norma fact", normalized_ini, normalized_ke)
         escaping_ratio = len(self.neutron_ar_ke_list) / len(self.neutron_ini_list)
 
-        Rate_ini = counts_ini*self.rate *escaping_ratio# rate in /h
+        Rate_ini = counts_ini*self.rate # rate in /h
 
         print(escaping_ratio)
-        Rate_ke = counts_ke * self.rate  # rate in /h
+        Rate_ke = counts_ke * self.rate*escaping_ratio  # rate in /h
         bin_factor = bin_edges_ke[1]/bin_edges_ke[0]
         bins_ini = bin_edges_ini[:-1]*bin_factor**0.5
         # bins_ini = bin_edges_ini[:-1] * bin_factor
