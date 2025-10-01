@@ -532,7 +532,7 @@ class MC_sim_full_argon():
         ax1.set_xlim([0, 1200])
         ax1.set_ylim(y1_limit)
         ax1.legend(loc='upper right')
-        ax1.set_title("Ar NR PDF", fontsize=16)
+        ax1.set_title("Ar NR \n Probability Density Function", fontsize=16)
 
         ax2.minorticks_on()
         ax2.set_xlabel("NR Energy (eV)", fontsize=18)
@@ -543,7 +543,7 @@ class MC_sim_full_argon():
         ax2.set_ylim(y2_limit)
         ax2.yaxis.set_tick_params(labelleft=True)
         ax2.legend(loc='upper right')
-        ax2.set_title("Ar NR CDF", fontsize=16)
+        ax2.set_title("Ar NR \n Cumulative Distribution Function", fontsize=16)
 
         plt.tight_layout()
         plt.savefig(self.plot_address + "spectrum_diff_CDF.pdf", bbox_inches='tight')
