@@ -238,7 +238,7 @@ class ReadRoot():
         #
 
         # calculate initial AmLi neutron energy and 1st enter LAr energy
-        self.AmLi_spectrum()
+        # self.AmLi_spectrum()
 
 
 
