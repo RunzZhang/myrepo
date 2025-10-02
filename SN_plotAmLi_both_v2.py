@@ -34,12 +34,12 @@ class SN():
         # for i in range(1, 11):
             self.main_body(i)
         # for ploting AmLi background tagging and SNR
-        self.untagged_bubble_rate()
-        (result1, result2)=self.combine_data()
-        self.plot_sn(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
+        # self.untagged_bubble_rate()
+        # (result1, result2)=self.combine_data()
+        # self.plot_sn(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
 
         # for ploting AmLi spectrum and SBC detector thermalizing effect
-        # self.plot_neutron_spectrum()
+        self.plot_neutron_spectrum()
 
 
     def main_body(self,i):
@@ -415,6 +415,73 @@ class SN():
         plt.legend()
         plt.savefig(self.plot_path + "AmLi_specturm.pdf", bbox_inches='tight')
 
+    def plot_neutron_spectrum_lin(self):
+        from matplotlib.ticker import LogLocator
+        ene_list, possibility_list = self.read_original_spectrum()
+        ene_list = [value * 1e6 for value in ene_list]
+        possibility_list  = [ value * self.rate for value in possibility_list]
+        lin_bins =  np.arrange(0,7e6,100)
+        # counts_ini, bin_edges_ini, patches_ini = plt.hist(self.neutron_ini_list, bins=log_bins, density= True)
+        # counts_ke, bin_edges_ke, patches_ke = plt.hist(self.neutron_ar_ke_list, bins=log_bins, density= True)
+
+        counts_ini, bin_edges_ini, patches_ini = plt.hist(self.neutron_ini_list, bins=lin_bins)
+        counts_ke, bin_edges_ke, patches_ke = plt.hist(self.neutron_ar_ke_list, bins=lin_bins)
+        counts_ke_alter, bin_edges_ke_alter, patches_ke_alter = plt.hist(self.neutron_ar_ke_alter_list, bins=lin_bins)
+        plt.clf()
+
+        point = 0
+        for i in range(len(counts_ini)):
+            if counts_ini[i] != 0:
+                point = i
+                break
+                # find 1st none zero counts in initial energy spectrum
+        normalized_ini  = 0
+        normalized_ke =0
+
+
+        print("norma fact", normalized_ini, normalized_ke)
+        escaping_ratio = len(self.neutron_ar_ke_list) / len(self.neutron_ini_list)
+
+        Rate_ini = counts_ini*3600/self.G4_sig_time # rate in /h
+
+        print("escapitng ratio",escaping_ratio,"sum of initial rate",sum(Rate_ini)/3600,"sum of initial count", sum(counts_ini),"activity",self.rate)
+        Rate_ke = counts_ke *3600/self.G4_sig_time  # rate in /h
+        Rate_ke_alter = counts_ke_alter * 3600 / self.G4_sig_time
+        bin_factor = bin_edges_ke[1]-bin_edges_ke[0]
+        bins_ini = bin_edges_ini[:-1]+bin_factor/2
+        # bins_ini = bin_edges_ini[:-1] * bin_factor
+        # print("bin edges", bin_edges_ini)
+        bins_ke = bin_edges_ke[:-1]+bin_factor/2
+
+        print("ini", bins_ini[:10])
+        print("ke",
+        bins_ke[:10])
+        print("before density bins_ini, rate ini, counts ini,counts ke", Rate_ini[point:],"\n", Rate_ke[point:], "\n",
+              counts_ini[point:], "\n", counts_ke[point:],"\n", bins_ini[point:],"\n", bins_ke[point:])  # print no-zero first bins
+
+        # make the y value /h/eV
+        # for i in range(len(Rate_ini)):
+        #     Rate_ini[i] = Rate_ini[i]/(bin_edges_ini[i+1]-bin_edges_ini[i])
+        #     Rate_ke[i] = Rate_ke[i] / (bin_edges_ke[i + 1] - bin_edges_ke[i])
+
+
+        plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="LZ AmLi Escaping Neutron")
+
+        print("after density bins_ini, rate ini, counts ini,counts ke",Rate_ini[point:],"\n", Rate_ke[point:],"\n", counts_ini[point:],"\n", counts_ke[point:],"\n", bins_ini[point:],"\n", bins_ke[point:]) # print no-zero first bins
+        plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="First Enter LAr Neutron log", lw=4)
+        plt.plot(bins_ke, Rate_ke_alter, drawstyle="steps-mid", label="First Enter LAr Neutron lin")
+        # plt.plot(ene_list, possibility_list, drawstyle="steps-mid", label="Original Spectrum dat")
+        # plt.plot(bins_ini, Rate_ini, label="LZ AmLi Escaping Neutron")
+        # plt.plot(bins_ke, Rate_ke,  label="First Enter LAr Neutron")
+        # plt.xscale("log")
+        plt.yscale("log")
+        plt.xlabel("Energy (eV)", fontsize=16)
+        plt.ylabel(r"Rate (event/hr)", fontsize=16)
+        plt.gca().xaxis.set_major_locator(LogLocator(base=10.0, numticks=15))
+        plt.xlim([0, 1e7])
+        # plt.ylim([1e-1, 1e4])
+        plt.legend()
+        plt.savefig(self.plot_path + "AmLi_specturm_lin.pdf", bbox_inches='tight')
 
     def read_original_spectrum(self):
         list1, list2, list3 = [], [], []
