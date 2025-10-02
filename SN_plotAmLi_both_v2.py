@@ -39,7 +39,9 @@ class SN():
         # self.plot_sn(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
 
         # for ploting AmLi spectrum and SBC detector thermalizing effect
-        self.plot_neutron_spectrum()
+        # self.plot_neutron_spectrum()
+
+        self.plot_neutron_spectrum_lin()
 
 
     def main_body(self,i):
