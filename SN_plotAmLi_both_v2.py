@@ -422,7 +422,7 @@ class SN():
         ene_list, possibility_list = self.read_original_spectrum()
         ene_list = [value * 1e6 for value in ene_list]
         possibility_list  = [ value * self.rate for value in possibility_list]
-        lin_bins =  np.arrange(0,7e6,100)
+        lin_bins =  np.arange(0,7e6,100)
         # counts_ini, bin_edges_ini, patches_ini = plt.hist(self.neutron_ini_list, bins=log_bins, density= True)
         # counts_ke, bin_edges_ke, patches_ke = plt.hist(self.neutron_ar_ke_list, bins=log_bins, density= True)
 
