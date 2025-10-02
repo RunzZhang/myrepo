@@ -38,7 +38,7 @@ class ReadRoot:
 
     def chunk_and_write_root(self, num_chunks=20, output_dir=None):
         if output_dir is None:
-            output_dir = os.path.join(self.base_path, "chunked_root_files_AmLi_LZ_bare_plane_log_1E6")
+            output_dir = os.path.join(self.base_path, "chunked_root_files_AmLi_LZ_bare_plane_testiso_log_1E6")
         os.makedirs(output_dir, exist_ok=True)
 
         with uproot.open(self.filepath) as file:

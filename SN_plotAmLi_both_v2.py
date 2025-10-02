@@ -9,8 +9,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_clean_point_log/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_clean_point_log/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_plane_testiso_log_1E6/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_plane_testiso_log_1E6/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
         self.false_1 = "AmLi_false1.csv"
         self.false_2 = "AmLi_false2.csv"
