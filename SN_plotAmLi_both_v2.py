@@ -9,8 +9,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_clean_point_log_1E5_z45_x70/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_clean_point_log_1E5_z45_x70/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_clean_point_log_2E7_z45_x71/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_clean_point_log_2E7_z45_x71/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
         self.false_1 = "AmLi_false1.csv"
         self.false_2 = "AmLi_false2.csv"
@@ -30,10 +30,10 @@ class SN():
 
 
         #982 statics false 1
-        # for i in range(1,101):
+        for i in range(1,101):
         # for i in range(1, 11):
-        #     self.main_body(i)
-        self.main_body(1)
+            self.main_body(i)
+        # self.main_body(1)
         # for ploting AmLi background tagging and SNR
         self.untagged_bubble_rate()
         (result1, result2)=self.combine_data()
@@ -82,8 +82,8 @@ class SN():
         # self.rate = 0.1968 #AmLi neutron rate /s
         # self.rate = 2.52e4  # AmLi neutron rate /s PNNL
         self.rate = 21  # AmLi neutron rate /s LZ
-        self.G4_events= 1E5
-        # self.G4_events = 2E7
+        # self.G4_events= 1E5
+        self.G4_events = 2E7
         self.G4_sig_time=(self.G4_events / self.rate)
         with open(self.signal_path, 'r') as file:
             reader = csv.reader(file)
