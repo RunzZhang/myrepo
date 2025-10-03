@@ -542,7 +542,7 @@ class MC_sim_full_argon():
         ax2.set_xlim([0, 1200])
         ax2.set_ylim(y2_limit)
         ax2.yaxis.set_tick_params(labelleft=True)
-        ax2.legend(loc='upper right')
+        ax2.legend(loc='right')
         ax2.set_title("Ar Neutron Capture Recoil \n Cumulative Distribution Function", fontsize=16)
 
         plt.tight_layout()
