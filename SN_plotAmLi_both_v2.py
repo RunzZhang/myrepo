@@ -35,12 +35,12 @@ class SN():
             self.main_body(i)
         # self.main_body(1)
         # for ploting AmLi background tagging and SNR
-        self.untagged_bubble_rate()
-        (result1, result2)=self.combine_data()
-        self.plot_sn(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
+        # self.untagged_bubble_rate()
+        # (result1, result2)=self.combine_data()
+        # self.plot_sn(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
 
         # for ploting AmLi spectrum and SBC detector thermalizing effect
-        # self.plot_neutron_spectrum()
+        self.plot_neutron_spectrum()
 
         # self.plot_neutron_spectrum_lin()
 
@@ -463,28 +463,28 @@ class SN():
         #       counts_ini[point:], "\n", counts_ke[point:],"\n", bins_ini[point:],"\n", bins_ke[point:])  # print no-zero first bins
 
         # make the y value /h/eV
-        # for i in range(len(Rate_ini)):
-        #     Rate_ini[i] = Rate_ini[i]/(bin_edges_ini[i+1]-bin_edges_ini[i])
-        #     Rate_ke[i] = Rate_ke[i] / (bin_edges_ke[i + 1] - bin_edges_ke[i])
+        for i in range(len(Rate_ini)):
+            Rate_ini[i] = Rate_ini[i]/(bin_edges_ini[i+1]-bin_edges_ini[i])
+            Rate_ke[i] = Rate_ke[i] / (bin_edges_ke[i + 1] - bin_edges_ke[i])
 
 
         plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="LZ AmLi Escaping Neutron")
 
         # print("after density bins_ini, rate ini, counts ini,counts ke",Rate_ini[point:],"\n", Rate_ke[point:],"\n", counts_ini[point:],"\n", counts_ke[point:],"\n", bins_ini[point:],"\n", bins_ke[point:]) # print no-zero first bins
-        # plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="First Enter LAr Neutron log", lw=4)
+        plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="First Enter LAr Neutron log")
         # plt.plot(bins_ke, Rate_ke_alter, drawstyle="steps-mid", label="First Enter LAr Neutron lin")
         # plt.plot(ene_list, possibility_list, drawstyle="steps-mid", label="Original Spectrum dat")
         # plt.plot(bins_ini, Rate_ini, label="LZ AmLi Escaping Neutron")
         # plt.plot(bins_ke, Rate_ke,  label="First Enter LAr Neutron")
-        # plt.xscale("log")
+        plt.xscale("log")
         plt.yscale("log")
         plt.xlabel("Energy (eV)", fontsize=16)
-        plt.ylabel(r"Rate (event/hr)", fontsize=16)
+        plt.ylabel(r"Rate (event/hr/eV)", fontsize=16)
         # plt.gca().xaxis.set_major_locator(LogLocator(base=10.0, numticks=15))
         plt.xlim([-1e6, 1e7])
         # plt.ylim([1e-1, 1e4])
         plt.legend()
-        plt.savefig(self.plot_path + "AmLi_specturm_lin.pdf", bbox_inches='tight')
+        plt.savefig(self.plot_path + "AmLi_specturm_log.pdf", bbox_inches='tight')
 
     def read_original_spectrum(self):
         list1, list2, list3 = [], [], []
