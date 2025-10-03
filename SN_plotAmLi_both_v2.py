@@ -9,8 +9,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_plane_testiso_log_1E6_v2/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_plane_testiso_log_1E6_v2/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_clean_point_log_2E7_z45/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_clean_point_log_2E7_z45/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
         self.false_1 = "AmLi_false1.csv"
         self.false_2 = "AmLi_false2.csv"
@@ -480,7 +480,7 @@ class SN():
         plt.xlabel("Energy (eV)", fontsize=16)
         plt.ylabel(r"Rate (event/hr)", fontsize=16)
         # plt.gca().xaxis.set_major_locator(LogLocator(base=10.0, numticks=15))
-        plt.xlim([0, 1e7])
+        plt.xlim([-1e6, 1e7])
         # plt.ylim([1e-1, 1e4])
         plt.legend()
         plt.savefig(self.plot_path + "AmLi_specturm_lin.pdf", bbox_inches='tight')
