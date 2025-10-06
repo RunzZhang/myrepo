@@ -18,7 +18,7 @@ class SN():
         self.name1 = "Correlated ER Background"
         self.name2 = "Hard Scatter Background"
         self.name = "Backgrounds"
-        self.plot_name = self.name+"AmLi_1E7_total_LZ_bare_plane_log_1E6.pdf"
+        self.plot_name = self.name+"BackgroundsAmLi_1E7_total_LZ_combined_100.odf"
         self.pho_threshold = 200
         self.signal_final_list = []
         self.noise1_final_list =[]
