@@ -515,13 +515,13 @@ class MC_sim_full_argon():
 
         ax1.plot(x_bins, y_bins_full, color="blue", label="$^{36}$Ar+$^{40}$Ar", lw= 3.5)
         # ax1.fill_between(x_bins, y_bins_full, alpha=0.3)
-        ax1.plot(x_bins, y_bins_37, color="orange", label="$^{36}$Ar", lw= 1.5)
-        ax1.plot(x_bins, y_bins_41, color="red", label="$^{40}$Ar", lw= 1.5)
+        ax1.plot(x_bins, y_bins_37, color="orange", label="$^{36}$Ar",linestyle='dashed', lw= 1.5)
+        ax1.plot(x_bins, y_bins_41, color="red", label="$^{40}$Ar", linestyle='dashed',lw= 1.5)
 
 
         ax2.plot(x_bins, y_bins_full_cdf, color="blue", label="$^{36}$Ar+$^{40}$Ar", lw= 3.5)
-        ax2.plot(x_bins, y_bins_37_cdf, color="orange", label="$^{36}$Ar", lw= 1.5)
-        ax2.plot(x_bins, y_bins_41_cdf, color="red", label="$^{40}$Ar", lw= 1.5)
+        ax2.plot(x_bins, y_bins_37_cdf, color="orange", label="$^{36}$Ar", linestyle='dashed',lw= 1.5)
+        ax2.plot(x_bins, y_bins_41_cdf, color="red", label="$^{40}$Ar", linestyle='dashed',lw= 1.5)
 
         # plt.grid(True, which='both', linestyle='-', linewidth=1)
         ax1.minorticks_on()
@@ -531,7 +531,7 @@ class MC_sim_full_argon():
         ax1.tick_params(axis='both', labelsize=18)
         ax1.set_xlim([0, 1200])
         ax1.set_ylim(y1_limit)
-        ax1.legend(loc='upper right')
+        ax1.legend(loc='upper right',fontsize=14)
         ax1.set_title("Ar Neutron Capture Recoil \n Probability Density Function", fontsize=16)
 
         ax2.minorticks_on()
@@ -542,7 +542,7 @@ class MC_sim_full_argon():
         ax2.set_xlim([0, 1200])
         ax2.set_ylim(y2_limit)
         ax2.yaxis.set_tick_params(labelleft=True)
-        ax2.legend(loc='right')
+        ax2.legend(loc='right',fontsize=14)
         ax2.set_title("Ar Neutron Capture Recoil \n Cumulative Distribution Function", fontsize=16)
 
         plt.tight_layout()
