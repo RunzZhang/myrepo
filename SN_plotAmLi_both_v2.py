@@ -352,7 +352,7 @@ class SN():
 
     def plot_sn_v2(self, sig1, sig2,pho1, pho2, noise1, noise2,  sn1, sn2):
         # plot sn in same graph and no SNR
-        fig, ax1 = plt.subplots(1, 1, figsize=(9, 8))  # ax1 for first plot, ax3 for second plot
+        fig, ax1 = plt.subplots(1, 1, figsize=(6, 5))  # ax1 for first plot, ax3 for second plot
         x_range = [0,430]
         left_axis_range=[3.7e-3,3e2]
 
