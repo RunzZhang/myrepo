@@ -35,12 +35,12 @@ class SN():
             self.main_body(i)
         # self.main_body(1)
         # for ploting AmLi background tagging and SNR
-        # self.untagged_bubble_rate()
-        # (result1, result2)=self.combine_data()
-        # self.plot_sn(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
+        self.untagged_bubble_rate()
+        (result1, result2)=self.combine_data()
+        self.plot_sn_v2(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
 
         # for ploting AmLi spectrum and SBC detector thermalizing effect
-        self.plot_neutron_spectrum()
+        # self.plot_neutron_spectrum()
 
         # self.plot_neutron_spectrum_lin()
 
@@ -340,6 +340,46 @@ class SN():
         ax3.legend(lines_group2, labels_group2, loc='upper right')
 
         ax3.set_title(self.name2, fontsize=16)
+
+
+        # Adjust spacing so plots don’t overlap
+        # fig.set_size_inches(20, 6)
+        plt.tight_layout()
+
+        # Save or show
+        plt.savefig(self.plot_path + self.plot_name)
+        # plt.show()
+
+    def plot_sn_v2(self, sig1, sig2,pho1, pho2, noise1, noise2,  sn1, sn2):
+        # plot sn in same graph and no SNR
+        fig, ax1 = plt.subplots(1, 1, figsize=(12, 5))  # ax1 for first plot, ax3 for second plot
+        x_range = [0,430]
+        left_axis_range=[3.7e-3,3e2]
+
+        # left_axis_range = [1e-1, 3e4]
+        # right_axis_range = [1e-1, 1e5]
+
+        # ======== FIRST PLOT (your original one) ========
+        # Plot dataset 1 and dataset 2 on the left y-axis
+        line1, = ax1.plot(pho1, sig1, 'r-', label='Neutron Capture Signal')
+        line2, = ax1.plot(pho1, noise1, 'b-', label='Correlated ER Background')
+        line5, = ax1.plot(pho2, noise2, 'g-', label='Hard Scatter Background')
+        ax1.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
+        ax1.set_xlim(x_range)
+        ax1.set_ylim(left_axis_range)
+        # print("pho",pho1)
+        # print("noise1", noise1)
+
+        ax1.set_xlabel('Photon Number Threshold (number)', fontsize=16)
+        ax1.set_ylabel('Rate (event/hr)', color='black', fontsize=16)
+        ax1.axvline(x=self.pho_threshold, color='black', linestyle='dotted')
+        ax1.set_yscale('log')
+        # ax1.set_aspect('equal', adjustable="datalim")
+        # Legend for first plot
+        lines_group1 = [line1, line2, line5]
+        labels_group1 = [line.get_label() for line in lines_group1]
+        ax1.legend(lines_group1, labels_group1, loc='upper right')
+
 
 
         # Adjust spacing so plots don’t overlap
