@@ -354,7 +354,7 @@ class SN():
         # plot sn in same graph and no SNR
         fig, ax1 = plt.subplots(1, 1, figsize=(6, 5))  # ax1 for first plot, ax3 for second plot
         x_range = [0,430]
-        left_axis_range=[3.7e-3,3e2]
+        left_axis_range=[1e-2,1e2]
 
         # left_axis_range = [1e-1, 3e4]
         # right_axis_range = [1e-1, 1e5]
