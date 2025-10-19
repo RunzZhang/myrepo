@@ -91,6 +91,10 @@ def plot_distribution(df):
     print("y", counts_y, bins_y)
     print("z", counts_z, bins_z)
     print("ke",counts_ke, bins_ke)
+    bins_ke_updated = (bins_ke[:-1]+bins_ke[1:])*0.001/2 # change to MeV
+    for i in range(len(counts_ke)):
+        print(bins_ke_updated[i],"MeV",counts_ke[i])
+
 
     # first 25 increasing
 
