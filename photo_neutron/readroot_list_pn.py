@@ -134,14 +134,14 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_tube_1E7/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_tube_1E7/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.main_body(1)
-        # for i in range(1,101):
-        for i in range(1, 11):
+        for i in range(1,101):
+        # for i in range(1, 11):
             self.main_body(i)
     def main_body(self,i):
         print(i)

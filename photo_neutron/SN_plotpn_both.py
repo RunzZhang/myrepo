@@ -9,8 +9,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_tube_1E7/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_tube_1E7/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
         self.false_1 = "PN_false1.csv"
         self.false_2 = "PN_false2.csv"
@@ -18,7 +18,7 @@ class SN():
         self.name1 = "Correlated ER Background"
         self.name2 = "Hard Scatter Background"
         self.name = "Backgrounds"
-        self.plot_name = self.name+"PN_1E7_total_LZ_combined_100.pdf"
+        self.plot_name = self.name+"PN_1E7.pdf"
         self.pho_threshold = 200
         self.signal_final_list = []
         self.noise1_final_list =[]
