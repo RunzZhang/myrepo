@@ -71,7 +71,7 @@ class ReadRoot:
                 arrays['Process'] = arrays['Process'].astype(str)
 
                 chunk_num += 1
-                output_filename = os.path.join(output_dir, f"dmx_AmLi_1E7_{chunk_num}.root")
+                output_filename = os.path.join(output_dir, f"dmx_PN_1E7_{chunk_num}.root")
 
                 print(f"Processing chunk {chunk_num} (entries {start_entry} to {start_entry + len(arrays) - 1})")
 
