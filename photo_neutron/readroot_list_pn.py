@@ -218,7 +218,7 @@ class ReadRoot():
         # self.source_geometry()
 
         # update signals
-        # self.single_ncap()
+        self.single_ncap()
         #updated noises
         # Signal 1 is all single bubble signal that cause NR>1keV and ER in LAr
         # the single bubble can be inelastic or elastic, but must be single bubbles
