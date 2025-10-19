@@ -2,7 +2,7 @@ import uproot
 import pandas as pd
 import os, time
 
-# cp /data/runzezhang/Geant4Simulaions/g411_TN/TN_source_AmLi_LZ.mac /data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_clean_point_log_1E5_z45_x70
+# cp /data/runzezhang/Geant4Simulaions/g411_TN/TN_source_AmLi_LZ.mac /data/runzezhang/result/TN_sims_D/chunked_root_files_pn_tube_1E7
 # change the mac name and chunk folder to save the macro configuration
 class ReadRoot:
     def __init__(self):
