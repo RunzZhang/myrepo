@@ -460,8 +460,8 @@ class SN():
 
     def plot_neutron_spectrum_lin(self):
         from matplotlib.ticker import LogLocator
-        
-        lin_bins =  np.arange(0,7e6,100)
+
+        lin_bins =  np.arange(0,1e6,50)
         # counts_ini, bin_edges_ini, patches_ini = plt.hist(self.neutron_ini_list, bins=log_bins, density= True)
         # counts_ke, bin_edges_ke, patches_ke = plt.hist(self.neutron_ar_ke_list, bins=log_bins, density= True)
 
@@ -519,7 +519,7 @@ class SN():
         plt.xlabel("Energy (eV)", fontsize=16)
         plt.ylabel(r"Rate (event/hr)", fontsize=16)
         # plt.gca().xaxis.set_major_locator(LogLocator(base=10.0, numticks=15))
-        plt.xlim([-1e6, 1e7])
+        plt.xlim([0, 1e6])
         # plt.ylim([1e-1, 1e4])
         plt.legend()
         plt.savefig(self.plot_path + "PN_specturm_lin.pdf", bbox_inches='tight')
