@@ -198,7 +198,7 @@ class ReadRoot():
         self.file = uproot.open(self.filepath)["tree"]
         # print("columns: ", self.file.keys())
         # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
-        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "Y/mm","Z/mm","PreKinetic/MeV","PostKinetic/MeV",
+        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm","PreKinetic/MeV","PostKinetic/MeV",
                                  "Recoiled/MeV", "Volume", "Process"]
 
         self.bubble_threshold = 0.0001 # MeV bubble generate threshold
@@ -298,10 +298,10 @@ class ReadRoot():
         self.z_range = [0,0]
         self.x_range[0] = min(self.x_range[0],self.df["X/mm"].min())
         self.x_range[1] = max(self.x_range[1], self.df["X/mm"].max())
-        self.y_range[0] = min(self.y_range[0], self.df["Y/mm"].min())
-        self.y_range[1] = max(self.y_range[1], self.df["Y/mm"].max())
-        self.z_range[0] = min(self.z_range[0], self.df["Z/mm"].min())
-        self.z_range[1] = max(self.z_range[1], self.df["Z/mm"].max())
+        # self.y_range[0] = min(self.y_range[0], self.df["Y/mm"].min())
+        # self.y_range[1] = max(self.y_range[1], self.df["Y/mm"].max())
+        # self.z_range[0] = min(self.z_range[0], self.df["Z/mm"].min())
+        # self.z_range[1] = max(self.z_range[1], self.df["Z/mm"].max())
         print("x",self.x_range)
         print("y", self.y_range)
         print("z", self.z_range)
