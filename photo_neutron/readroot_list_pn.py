@@ -195,7 +195,7 @@ class ReadRoot():
         self.x_range = [0, 0]
         self.y_range = [0, 0]
         self.z_range = [0, 0]
-        
+
         self.filepath = self.base_path + f"dmx_PN_1E7_{i}.root"
         self.file = uproot.open(self.filepath)["tree"]
         # print("columns: ", self.file.keys())
@@ -295,7 +295,7 @@ class ReadRoot():
         # this make event number correct
         self.reidx_event()
     def source_geometry(self):
-
+        print(self.df[(self.df["name"]=="neutron")&(self.df["Step ID"]==1)]["X/mm"])
         self.x_range[0] = min(self.x_range[0],self.df[(self.df["name"]=="neutron")&(self.df["Step ID"]==1)]["X/mm"].min())
         self.x_range[1] = max(self.x_range[1], self.df[(self.df["name"]=="neutron")&(self.df["Step ID"]==1)]["X/mm"].max())
         # self.y_range[0] = min(self.y_range[0], self.df["Y/mm"].min())
