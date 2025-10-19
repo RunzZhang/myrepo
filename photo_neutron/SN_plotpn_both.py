@@ -9,16 +9,16 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_clean_point_log_2E7_z45_x71/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_clean_point_log_2E7_z45_x71/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
-        self.false_1 = "AmLi_false1.csv"
-        self.false_2 = "AmLi_false2.csv"
-        self.signal = "AmLi_sig.csv"
+        self.false_1 = "PN_false1.csv"
+        self.false_2 = "PN_false2.csv"
+        self.signal = "PN_sig.csv"
         self.name1 = "Correlated ER Background"
         self.name2 = "Hard Scatter Background"
         self.name = "Backgrounds"
-        self.plot_name = self.name+"AmLi_1E7_total_LZ_combined_100.pdf"
+        self.plot_name = self.name+"PN_1E7_total_LZ_combined_100.pdf"
         self.pho_threshold = 200
         self.signal_final_list = []
         self.noise1_final_list =[]
@@ -30,36 +30,36 @@ class SN():
 
 
         #982 statics false 1
-        for i in range(1,101):
-        # for i in range(1, 11):
+        # for i in range(1,101):
+        for i in range(1, 11):
             self.main_body(i)
         # self.main_body(1)
-        # for ploting AmLi background tagging and SNR
-        self.untagged_bubble_rate()
-        (result1, result2)=self.combine_data()
-        self.plot_sn_v2(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
+        # for ploting PN background tagging and SNR
+        # self.untagged_bubble_rate()
+        # (result1, result2)=self.combine_data()
+        # self.plot_sn_v2(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
 
-        # for ploting AmLi spectrum and SBC detector thermalizing effect
+        # for ploting PN spectrum and SBC detector thermalizing effect
         # self.plot_neutron_spectrum()
 
-        # self.plot_neutron_spectrum_lin()
+        self.plot_neutron_spectrum_lin()
 
 
     def main_body(self,i):
         print(i)
-        self.false_1 = f"AmLi_1E7_false1_part{i}.csv"
-        self.false_2 = f"AmLi_1E7_false2_part{i}.csv"
-        self.false_3 = f"AmLi_1E7_false3_part{i}.csv"
-        self.signal = f"AmLi_1E7_sig_part{i}.csv"
+        self.false_1 = f"PN_1E7_false1_part{i}.csv"
+        self.false_2 = f"PN_1E7_false2_part{i}.csv"
+        self.false_3 = f"PN_1E7_false3_part{i}.csv"
+        self.signal = f"PN_1E7_sig_part{i}.csv"
 
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
         self.false_3_path = self.base_path + self.false_3
         self.signal_path = self.base_path + self.signal
 
-        self.ini_path = self.base_path+ f"AmLi_1E7_ini_part{i}.csv"
-        self.ar_ke_path = self.base_path + f"AmLi_1E7_ke_part{i}.csv"
-        self.ar_ke_alter_path = self.base_path2 + f"AmLi_1E7_ke_part{i}.csv"
+        self.ini_path = self.base_path+ f"PN_1E7_ini_part{i}.csv"
+        self.ar_ke_path = self.base_path + f"PN_1E7_ke_part{i}.csv"
+        self.ar_ke_alter_path = self.base_path2 + f"PN_1E7_ke_part{i}.csv"
 
 
         self.read_files()
@@ -79,9 +79,9 @@ class SN():
         # self.capture_ratio = 6.52E-3  # 700 eV
         # self.capture_ratio = 1.158E-3  # 1125 eV
         # self.rate = 435.6 #/s # CF neutron rate 9 mucurie
-        # self.rate = 0.1968 #AmLi neutron rate /s
-        # self.rate = 2.52e4  # AmLi neutron rate /s PNNL
-        self.rate = 21  # AmLi neutron rate /s LZ
+        # self.rate = 0.1968 #PN neutron rate /s
+        # self.rate = 2.52e4  # PN neutron rate /s PNNL
+        self.rate = 21  # PN neutron rate /s LZ
         # self.G4_events= 1E5
         self.G4_events = 2E7
         self.G4_sig_time=(self.G4_events / self.rate)
@@ -440,13 +440,13 @@ class SN():
             Rate_ke[i] = Rate_ke[i] / (bin_edges_ke[i + 1] - bin_edges_ke[i])
 
 
-        plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="LZ AmLi Escaping Neutron")
+        plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="LZ PN Escaping Neutron")
 
         print("after density bins_ini, rate ini, counts ini,counts ke",Rate_ini[point:],"\n", Rate_ke[point:],"\n", counts_ini[point:],"\n", counts_ke[point:],"\n", bins_ini[point:],"\n", bins_ke[point:]) # print no-zero first bins
         plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="Neutron Entering Liquid Argon")
         # plt.plot(bins_ke, Rate_ke_alter, drawstyle="steps-mid", label="First Enter LAr Neutron lin")
         # plt.plot(ene_list, possibility_list, drawstyle="steps-mid", label="Original Spectrum dat")
-        # plt.plot(bins_ini, Rate_ini, label="LZ AmLi Escaping Neutron")
+        # plt.plot(bins_ini, Rate_ini, label="LZ PN Escaping Neutron")
         # plt.plot(bins_ke, Rate_ke,  label="First Enter LAr Neutron")
         plt.xscale("log")
         plt.yscale("log")
@@ -456,7 +456,7 @@ class SN():
         plt.xlim([1e-3, 1e7])
         # plt.ylim([1e-1, 1e4])
         plt.legend()
-        plt.savefig(self.plot_path + "AmLi_specturm_log.pdf", bbox_inches='tight')
+        plt.savefig(self.plot_path + "PN_specturm_log.pdf", bbox_inches='tight')
 
     def plot_neutron_spectrum_lin(self):
         from matplotlib.ticker import LogLocator
@@ -508,13 +508,13 @@ class SN():
         #     Rate_ke[i] = Rate_ke[i] / (bin_edges_ke[i + 1] - bin_edges_ke[i])
 
 
-        plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="LZ AmLi Escaping Neutron")
+        plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="LZ PN Escaping Neutron")
 
         # print("after density bins_ini, rate ini, counts ini,counts ke",Rate_ini[point:],"\n", Rate_ke[point:],"\n", counts_ini[point:],"\n", counts_ke[point:],"\n", bins_ini[point:],"\n", bins_ke[point:]) # print no-zero first bins
         plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="First Enter LAr Neutron log")
         plt.plot(bins_ke, Rate_ke_alter, drawstyle="steps-mid", label="First Enter LAr Neutron lin")
         # plt.plot(ene_list, possibility_list, drawstyle="steps-mid", label="Original Spectrum dat")
-        # plt.plot(bins_ini, Rate_ini, label="LZ AmLi Escaping Neutron")
+        # plt.plot(bins_ini, Rate_ini, label="LZ PN Escaping Neutron")
         # plt.plot(bins_ke, Rate_ke,  label="First Enter LAr Neutron")
         # plt.xscale("log")
         plt.yscale("log")
@@ -524,7 +524,7 @@ class SN():
         plt.xlim([-1e6, 1e7])
         # plt.ylim([1e-1, 1e4])
         plt.legend()
-        plt.savefig(self.plot_path + "AmLi_specturm_lin.pdf", bbox_inches='tight')
+        plt.savefig(self.plot_path + "PN_specturm_lin.pdf", bbox_inches='tight')
 
     def read_original_spectrum(self):
         list1, list2, list3 = [], [], []

@@ -141,7 +141,7 @@ class ReadRoot():
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.main_body(1)
         # for i in range(1,101):
-        for i in range(1, 10):
+        for i in range(1, 11):
             self.main_body(i)
     def main_body(self,i):
         print(i)
@@ -215,7 +215,7 @@ class ReadRoot():
 
 
         #find source tube
-        self.source_geometry()
+        # self.source_geometry()
 
         # update signals
         # self.single_ncap()
@@ -224,16 +224,16 @@ class ReadRoot():
         # the single bubble can be inelastic or elastic, but must be single bubbles
         # the ER can caused by either capture somewhere else, or inelastic inside or outside the LAr
         # Also we need to count all single bubble NR>1keV number, even without any photons, this decide the activity of the source
-        # self.bubbleNR_n_ER()
+        self.bubbleNR_n_ER()
 
 
 
         #same still big scattering signals because only NR can cause both photon and bubbles, single bubbles only
-        # self.Huge_NR()
+        self.Huge_NR()
         #
 
         # calculate initial PN neutron energy and 1st enter LAr energy
-        # self.PN_spectrum()
+        self.PN_spectrum()
 
 
 
