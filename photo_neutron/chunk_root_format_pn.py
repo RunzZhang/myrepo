@@ -3,21 +3,6 @@ import pandas as pd
 import os, time
 
 
-class ReadRoot:
-    def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/"
-        self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
-
-        # self.false_1 = "Cf_1E7_false1.csv"
-        # self.false_2 = "Cf_1E7_false2.csv"
-        # self.signal = "Cf_1E7_sig.csv"
-        # self.false_1_mid = "Cf_1E7_false1_mid.csv"
-        # self.false_2_mid = "Cf_1E7_false2_mid.csv"
-        # self.signal_mid = "Cf_1E7_sig_mid.csv"
-        #import uproot
-import pandas as pd
-import os, time
-
 # cp /data/runzezhang/Geant4Simulaions/g411_TN/TN_source_AmLi_LZ.mac /data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_clean_point_log_1E5_z45_x70
 # change the mac name and chunk folder to save the macro configuration
 class ReadRoot:
