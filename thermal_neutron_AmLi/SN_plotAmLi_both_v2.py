@@ -529,7 +529,7 @@ class SN():
     def read_original_spectrum(self):
         list1, list2, list3 = [], [], []
         b_older = 0
-        with open("./AmLiNO3_simulated_prob_MeV_raw.txt") as f:
+        with open("../AmLiNO3_simulated_prob_MeV_raw.txt") as f:
             for line in f:
                 a, b = line.split()
                 list1.append(float(a))
