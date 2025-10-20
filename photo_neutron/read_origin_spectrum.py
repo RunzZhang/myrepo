@@ -87,7 +87,7 @@ def plot_distribution(df):
     axes[6].set_ylabel("Count")
 
 
-    print("x", counts_x, bins_x)
+    print("x", len(x_list),counts_x, bins_x)
     print("y", counts_y, bins_y)
     print("z", counts_z, bins_z)
     print("ke",counts_ke, bins_ke)
