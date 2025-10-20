@@ -35,14 +35,14 @@ class SN():
             self.main_body(i)
         # self.main_body(1)
         # for ploting PN background tagging and SNR
-        self.untagged_bubble_rate()
-        (result1, result2)=self.combine_data()
-        self.plot_sn_v2(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
+        # self.untagged_bubble_rate()
+        # (result1, result2)=self.combine_data()
+        # self.plot_sn_v2(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
 
         # for ploting PN spectrum and SBC detector thermalizing effect
         # self.plot_neutron_spectrum()
 
-        # self.plot_neutron_spectrum_lin()
+        self.plot_neutron_spectrum_lin()
 
 
     def main_body(self,i):
