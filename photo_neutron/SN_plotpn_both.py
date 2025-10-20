@@ -9,8 +9,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_tube_1E7/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_tube_1E7/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
         self.false_1 = "PN_false1.csv"
         self.false_2 = "PN_false2.csv"
@@ -30,8 +30,8 @@ class SN():
 
 
         #982 statics false 1
-        # for i in range(1,101):
-        for i in range(1, 11):
+        for i in range(1,101):
+        # for i in range(1, 11):
             self.main_body(i)
         # self.main_body(1)
         # for ploting PN background tagging and SNR
@@ -83,7 +83,7 @@ class SN():
         # self.rate = 2.52e4  # PN neutron rate /s PNNL
         self.rate = 21  # PN neutron rate /s LZ
         # self.G4_events= 1E5
-        self.G4_events = 2E7
+        self.G4_events = 1E7
         self.G4_sig_time=(self.G4_events / self.rate)
         with open(self.signal_path, 'r') as file:
             reader = csv.reader(file)
