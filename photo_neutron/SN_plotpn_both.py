@@ -23,6 +23,7 @@ class SN():
         self.signal_final_list = []
         self.noise1_final_list =[]
         self.noise2_final_list = []
+        self.noisegamma1_final_list = []
         self.untagged_bubble_list =[]
         self.neutron_ini_list = []
         self.neutron_ar_ke_list =[]
@@ -36,7 +37,7 @@ class SN():
         # self.main_body(1)
         # for ploting PN background tagging and SNR
         self.untagged_bubble_rate()
-        (result1, result2)=self.combine_data()
+        (result1, result2,resultgamma1)=self.combine_data()
         self.plot_sn_v2(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
 
         # for ploting PN spectrum and SBC detector thermalizing effect
@@ -50,11 +51,13 @@ class SN():
         self.false_1 = f"PN_1E7_false1_part{i}.csv"
         self.false_2 = f"PN_1E7_false2_part{i}.csv"
         self.false_3 = f"PN_1E7_false3_part{i}.csv"
+        self.false_gamma_1 = f"PN_1E7_false3_part{i}.csv"
         self.signal = f"PN_1E7_sig_part{i}.csv"
 
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
         self.false_3_path = self.base_path + self.false_3
+        self.false_gamma_1_path = self.base_path + self.false_gamma_1
         self.signal_path = self.base_path + self.signal
 
         self.ini_path = self.base_path+ f"PN_1E7_ini_part{i}.csv"
@@ -84,6 +87,8 @@ class SN():
         self.rate = 21  # PN neutron rate /s LZ
         # self.G4_events= 1E5
         self.G4_events = 1E7
+        self.summed_bubble_rate = 0
+        self.T = 1e-3
         self.G4_sig_time=(self.G4_events / self.rate)
         with open(self.signal_path, 'r') as file:
             reader = csv.reader(file)
@@ -118,6 +123,15 @@ class SN():
             # self.noise_raw_list = [float(value)  for value in number_list]
         self.noise2_final_list = self.noise2_final_list + self.noise2_raw_list
 
+        with open(self.false_gamma_1_path, 'r') as file:
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            self.noisegamma1_raw_list = [float(value) for value in number_list]
+            # self.noise_raw_list = [float(value)  for value in number_list]
+        self.noisegamma1_final_list = self.noisegamma1_final_list + self.noisegamma1_raw_list
+
         # Initial amli spectrm
         with open(self.ini_path, 'r') as file:
             reader = csv.reader(file)
@@ -149,7 +163,7 @@ class SN():
         self.neutron_ar_ke_alter_list += self.ar_ke_raw_list
 
 
-    def combine_data(self):
+    def combine_data(self,gamma=False):
         # get rate vs diff threshold
         print(len(self.noise1_final_list))
         max_noise1_photon = round(max(self.noise1_final_list))
@@ -184,7 +198,27 @@ class SN():
         # plot the S/N ratio picture
         result1 = self.unit_transfer( self.noise1_final_list,threshold1_list)
         result2 = self.unit_transfer(self.noise2_final_list, threshold2_list)
-        return (result1, result2)
+        if gamma==True: # turn on gamma read function
+
+            print(len(self.noisegamma1_final_list))
+            max_noisegamma1_photon = round(max(self.noisegamma1_final_list))
+            print("max", max_noisegamma1_photon)
+            # form the threshold function
+            threshold_noisegamma1_list = []
+            bin_size = round(
+                max_noisegamma1_photon / 10)  # if the max noise photon is too large, then we need to modity this bc of RAM
+            for i in range(0, max_noisegamma1_photon):
+                # for i in range(0,round(max_noise_photon*0.1)):
+                if i % bin_size == 0:
+                    percentage = (i / max_noisegamma1_photon) * 100
+                    print(f"noisegamma1  Progress: {percentage:.0f}%")
+                threshold_noisegamma1_list.append(i)
+            resultgamma1 = self.gamma_unit_transfer(self.noisegamma1_final_list, threshold_noisegamma1_list)
+        else:
+            resultgamma1 = None
+
+
+        return (result1, result2, resultgamma1)
 
     def hist_info(self):
         sig_counts, sig_bin_edges = np.histogram(self.signal_final_list, bins=100)
@@ -261,14 +295,61 @@ class SN():
         print("SN",max(SN_ratio),SN_ratio[:20])
         print("noise uncetainty", 1.29*max(noise_rate_list)/len(noise_list))
         print("sig_stats", signal_num_list[0], "noise_stats", noise_num_list[0])
+        self.summed_bubble_rate = self.summed_bubble_rate-max(noise_rate_list)
+
+        return(signal_rate_list, photon_n_list, noise_rate_list,  SN_ratio)
+    def gamma_unit_transfer(self, noise_list, threshold_list):
+        signal_rate_list = []
+        noise_rate_list =[]
+        signal_num_list = []
+        noise_num_list = []
+        SN_ratio = []
+        photon_n_list = []
+
+        print("cut",max(noise_list))
+        length = round(max(self.signal_final_list))
+        point = [] # threshold cut?
+        for i in range(length):
+            photon_n_list.append(i)
+            (sig_num,noise_num)= self.prepare(noise_list,i)
+            # change signal_number form /s to /h
+            signal_rate_list.append(self.Activity*3600*sig_num*self.capture_ratio/(2.135*self.G4_sig_time))
+            noise_rate_list.append(3600*self.Activity*noise_num/(2.135*self.G4_noise_time))
+            signal_num_list.append(sig_num)
+            noise_num_list.append(noise_num)
+            if sig_num ==0:
+                SN_ratio.append(0)
+            else:
+                if noise_num !=0:
+                    SN_ratio.append((sig_num*self.capture_ratio/self.G4_sig_time)/(noise_num/self.G4_noise_time))
+                else:
+
+                    point.append(i)
+                # print("point", point)
+                #     SN_ratio.append(max(SN_ratio)) # append line in the graph
+                    SN_ratio.append(max(SN_ratio)*1E3)  # append inf line in the graph
+        for j in range(len(signal_rate_list)):
+            if photon_n_list[j]>self.pho_threshold:
+                print("output",j,signal_rate_list[j],noise_rate_list[j])
+                print("stat num", noise_num_list[j])
+                break
+        print("sig rate",max(signal_rate_list))
+        if point != []:
+            print("sig rate after cut",point ,signal_rate_list[point[0]])
+        print("noise stat N", len(noise_list))
+        print("noise rate",max(noise_rate_list))
+
+        print("SN",max(SN_ratio),SN_ratio[:20])
+        print("noise uncetainty", 1.29*max(noise_rate_list)/len(noise_list))
+        print("sig_stats", signal_num_list[0], "noise_stats", noise_num_list[0])
 
         return(signal_rate_list, photon_n_list, noise_rate_list,  SN_ratio)
     def untagged_bubble_rate(self):
         summed_bubble_num = sum(self.untagged_bubble_list)
 
-        summed_bubble_rate = self.Activity * 3600 * summed_bubble_num / (2.135 * self.G4_sig_time)
+        self.summed_bubble_rate = self.Activity * 3600 * summed_bubble_num / (2.135 * self.G4_sig_time)
         # untagged total bubble rate in /h
-        print("untagged total bubble rate /h", summed_bubble_rate)
+        print("untagged total bubble rate /h", self.summed_bubble_rate)
 
     def plot_sn(self, sig1, sig2,pho1, pho2, noise1, noise2,  sn1, sn2):
         fig, (ax1, ax3) = plt.subplots(1, 2, figsize=(12, 5))  # ax1 for first plot, ax3 for second plot
