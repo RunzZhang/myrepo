@@ -327,6 +327,7 @@ class ReadRoot():
         print("max", max(p_observed), "\n", "min", min(p_observed))
         print("exclusive ER", high_NRER)
         # p_observe only contains ER, if one event only has NR, it still produce bubbles that we need to compress
+        print("path",self.false_gamma_1_path)
         with open(self.false_gamma_1_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(p_observed)
