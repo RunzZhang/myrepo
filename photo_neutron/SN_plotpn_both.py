@@ -501,7 +501,7 @@ class SN():
         line1, = ax1.plot(pho1, sig1, 'r-', label='Neutron Capture Signal')
         line2, = ax1.plot(pho1, noise1, 'b-', label='Correlated ER Background')
         line5, = ax1.plot(pho2, noise2, 'g-', label='Hard Scatter Background')
-        line6, = ax1.plot(pho3, noise3, 'brown-', label='Uncorrelated Gamma Background')
+        line6, = ax1.plot(pho3, noise3, 'br-', label='Uncorrelated Gamma Background')
         ax1.ticklabel_format(style='sci', scilimits=(-2, 3), axis='y')
         ax1.set_xlim(x_range)
         ax1.set_ylim(left_axis_range)
