@@ -492,7 +492,7 @@ class SN():
         fig, ax1 = plt.subplots(1, 1, figsize=(6, 5))  # ax1 for first plot, ax3 for second plot
         x_range = [0,430]
         left_axis_range=[1e-3,1e0]
-
+        print("noise2",noise2)
         # left_axis_range = [1e-1, 3e4]
         # right_axis_range = [1e-1, 1e5]
 
