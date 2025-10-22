@@ -366,7 +366,7 @@ class SN():
         self.summed_bubble_only_rate = self.Activity * 3600 * (summed_bubble_num-summed_tagged_bubble_num) / (self.original_Activity* self.G4_sig_time)
         # untagged total bubble rate in /h
         print("untagged total bubble rate /h", self.summed_bubble_rate)
-        print("bubble only event/h",self.summed_bubble_rate)
+        print("bubble only event/h",self.summed_bubble_only_rate)
 
     def plot_sn(self, sig1, sig2,pho1, pho2, noise1, noise2,  sn1, sn2):
         fig, (ax1, ax3) = plt.subplots(1, 2, figsize=(12, 5))  # ax1 for first plot, ax3 for second plot
