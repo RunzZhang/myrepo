@@ -525,6 +525,7 @@ class SN():
         plt.tight_layout()
 
         # Save or show
+        print("path",self.plot_path + self.plot_name)
         plt.savefig(self.plot_path + self.plot_name)
         # plt.show()
 
