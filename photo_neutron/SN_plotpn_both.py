@@ -9,8 +9,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/" # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_tube_1E6/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_tube_gamma/" # for gamma path
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
         self.false_1 = "PN_false1.csv"
         self.false_2 = "PN_false2.csv"
@@ -18,7 +18,7 @@ class SN():
         self.name1 = "Correlated ER Background"
         self.name2 = "Hard Scatter Background"
         self.name = "Backgrounds"
-        self.plot_name = self.name+"PN_1E7_wt_gamma.pdf"
+        self.plot_name = self.name+"PN_1E7_wt_gamma_tube.pdf"
         self.pho_threshold = 200
         self.signal_final_list = []
         self.noise1_final_list =[]
@@ -95,7 +95,7 @@ class SN():
         self.rate = 0.86  # PN neutron rate /s LZ 5micro Bismuth
         self.gamma_rate = 1.27e4 # PN gamma rate/s
         # self.G4_events= 1E5
-        self.G4_events = 1E7
+        self.G4_events = 1E6
         self.G4_events_gamma =  1E7
 
         self.T = 1e-3
