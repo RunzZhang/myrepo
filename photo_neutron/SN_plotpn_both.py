@@ -196,7 +196,7 @@ class SN():
                 print(f"Noise 1 Progress: {percentage:.0f}%")
             threshold1_list.append(i)
 
-        print(len(self.noise2_final_list))
+        print(len(self.noise2_final_list),self.noise2_final_list)
         max_noise2_photon = round(max(self.noise2_final_list))
         print("max", max_noise2_photon)
         # form the threshold function
