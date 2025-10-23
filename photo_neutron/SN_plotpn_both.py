@@ -355,7 +355,7 @@ class SN():
             print("sig rate after cut",point ,signal_rate_list[point[0]])
         print("noise stat N", len(noise_list))
         print("gamma accidental noise rate",max(noise_rate_list))
-        print("gamma rate only rate /h", max(noise_rate_gamma_only_list))
+        print("gamma rate only rate /s", max(noise_rate_gamma_only_list))
 
         print("SN",max(SN_ratio),SN_ratio[:20])
         print("noise uncetainty", 1.29*max(noise_rate_list)/len(noise_list))
