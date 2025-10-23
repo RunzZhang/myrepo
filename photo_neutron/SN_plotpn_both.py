@@ -305,6 +305,7 @@ class SN():
             print("sig rate after cut",point ,signal_rate_list[point[0]])
         print("noise stat N", len(noise_list))
         print("noise rate",max(noise_rate_list))
+        self.gamma_only_num = max(noise_rate_list)
 
         print("SN",max(SN_ratio),SN_ratio[:20])
         print("noise uncetainty", 1.29*max(noise_rate_list)/len(noise_list))
@@ -329,7 +330,7 @@ class SN():
             # change signal_number form /s to /h
             signal_rate_list.append(self.Activity*3600*sig_num*self.capture_ratio/(self.original_Activity*self.G4_sig_time))
             noise_rate_list.append(self.T*self.Activity*noise_num*self.summed_bubble_only_rate/(self.original_Activity*self.G4_gamma_time))
-            noise_rate_gamma_only_list.append(self.Activity*3600*noise_num/(self.original_Activity*self.G4_gamma_time))
+            noise_rate_gamma_only_list.append(self.Activity*noise_num/(self.original_Activity*self.G4_gamma_time))
             # for gamma T(s)*R_gamma_photon(/s)*R_bubble(/h)
             signal_num_list.append(sig_num)
             noise_num_list.append(noise_num)
@@ -354,7 +355,7 @@ class SN():
             print("sig rate after cut",point ,signal_rate_list[point[0]])
         print("noise stat N", len(noise_list))
         print("gamma accidental noise rate",max(noise_rate_list))
-        print("gamma rate only rate", max(noise_rate_gamma_only_list))
+        print("gamma rate only rate /h", max(noise_rate_gamma_only_list))
 
         print("SN",max(SN_ratio),SN_ratio[:20])
         print("noise uncetainty", 1.29*max(noise_rate_list)/len(noise_list))
