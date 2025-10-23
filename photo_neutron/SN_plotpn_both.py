@@ -314,6 +314,7 @@ class SN():
     def gamma_unit_transfer(self, noise_list, threshold_list):
         signal_rate_list = []
         noise_rate_list =[]
+        noise_rate_gamma_only_list =[]
         signal_num_list = []
         noise_num_list = []
         SN_ratio = []
@@ -328,6 +329,7 @@ class SN():
             # change signal_number form /s to /h
             signal_rate_list.append(self.Activity*3600*sig_num*self.capture_ratio/(self.original_Activity*self.G4_sig_time))
             noise_rate_list.append(self.T*self.Activity*noise_num*self.summed_bubble_only_rate/(self.original_Activity*self.G4_gamma_time))
+            noise_rate_gamma_only_list.append(self.Activity*3600*noise_num/(self.original_Activity*self.G4_gamma_time))
             # for gamma T(s)*R_gamma_photon(/s)*R_bubble(/h)
             signal_num_list.append(sig_num)
             noise_num_list.append(noise_num)
@@ -351,7 +353,8 @@ class SN():
         if point != []:
             print("sig rate after cut",point ,signal_rate_list[point[0]])
         print("noise stat N", len(noise_list))
-        print("gamma noise rate",max(noise_rate_list))
+        print("gamma accidental noise rate",max(noise_rate_list))
+        print("gamma rate only rate", max(noise_rate_gamma_only_list))
 
         print("SN",max(SN_ratio),SN_ratio[:20])
         print("noise uncetainty", 1.29*max(noise_rate_list)/len(noise_list))
@@ -364,11 +367,10 @@ class SN():
 
         self.summed_bubble_rate = self.Activity * 3600 * summed_bubble_num / (self.original_Activity* self.G4_sig_time)
         self.summed_bubble_only_rate = self.Activity * 3600 * (summed_bubble_num-summed_tagged_bubble_num) / (self.original_Activity* self.G4_sig_time)
-        self.gamma_ER_rate = self.Activity * 3600 * summed_bubble_num / (self.original_Activity* self.G4_sig_time)
+
         # untagged total bubble rate in /h
         print("untagged total bubble rate /h", self.summed_bubble_rate)
         print("bubble only event/h",self.summed_bubble_only_rate)
-        print("gamma rate/h", se)
 
     def plot_sn(self, sig1, sig2,pho1, pho2, noise1, noise2,  sn1, sn2):
         fig, (ax1, ax3) = plt.subplots(1, 2, figsize=(12, 5))  # ax1 for first plot, ax3 for second plot
