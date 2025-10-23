@@ -139,10 +139,10 @@ class ReadRoot():
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        self.main_body(1)
-        # for i in range(1,101):
+        # self.main_body(1)
+        for i in range(1,101):
         # for i in range(1, 11):
-        #     self.main_body(i)
+            self.main_body(i)
     def main_body(self,i):
         print(i)
         self.ini_path = self.base_path+ f"PN_1E7_ini_part{i}.csv"
@@ -218,13 +218,13 @@ class ReadRoot():
         # self.source_geometry()
 
         # update signals
-        # self.single_ncap()
+        self.single_ncap()
         #updated noises
         # Signal 1 is all single bubble signal that cause NR>1keV and ER in LAr
         # the single bubble can be inelastic or elastic, but must be single bubbles
         # the ER can caused by either capture somewhere else, or inelastic inside or outside the LAr
         # Also we need to count all single bubble NR>1keV number, even without any photons, this decide the activity of the source
-        # self.bubbleNR_n_ER()
+        self.bubbleNR_n_ER()
 
 
 
@@ -233,7 +233,7 @@ class ReadRoot():
         #
 
         # calculate initial PN neutron energy and 1st enter LAr energy
-        # self.PN_spectrum()
+        self.PN_spectrum()
 
 
 
