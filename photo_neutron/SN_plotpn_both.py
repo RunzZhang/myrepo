@@ -305,7 +305,7 @@ class SN():
         if point != []:
             print("sig rate after cut",point ,signal_rate_list[point[0]])
         print("noise stat N", len(noise_list))
-        print("noise rate",max(noise_rate_list))
+        print("noise rate",max(noise_rate_list), noise_rate_list[:10])
         self.gamma_only_num = max(noise_rate_list)
 
         print("SN",max(SN_ratio),SN_ratio[:20])
@@ -355,7 +355,7 @@ class SN():
         if point != []:
             print("sig rate after cut",point ,signal_rate_list[point[0]])
         print("noise stat N", len(noise_list))
-        print("gamma accidental noise rate",max(noise_rate_list))
+        print("gamma accidental noise rate",max(noise_rate_list), noise_rate_list[:10])
         print("gamma rate only rate /s", max(noise_rate_gamma_only_list))
 
         print("SN",max(SN_ratio),SN_ratio[:20])
