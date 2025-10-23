@@ -97,6 +97,7 @@ class SN():
         # self.G4_events= 1E5
         self.G4_events = 1E6
         self.G4_events_gamma =  1E7
+        self.ambient_bubble = 5 # /h
 
         self.T = 1e-3
         self.G4_sig_time=(self.G4_events / self.rate)
@@ -375,7 +376,7 @@ class SN():
 
     def plot_sn(self, sig1, sig2,pho1, pho2, noise1, noise2,  sn1, sn2):
         fig, (ax1, ax3) = plt.subplots(1, 2, figsize=(12, 5))  # ax1 for first plot, ax3 for second plot
-        x_range = [0,430]
+        x_range = [-1,430]
         left_axis_range=[3.7e-3,3e2]
         right_axis_range=[1e-1,1e3]
 
