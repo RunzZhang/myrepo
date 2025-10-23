@@ -196,7 +196,7 @@ class SN():
                 print(f"Noise 1 Progress: {percentage:.0f}%")
             threshold1_list.append(i)
 
-        print(len(self.noise2_final_list),self.noise2_final_list)
+        print("noise2",len(self.noise2_final_list),self.noise2_final_list)
         max_noise2_photon = round(max(self.noise2_final_list))
         print("max", max_noise2_photon)
         # form the threshold function
@@ -281,6 +281,8 @@ class SN():
         for i in range(length):
             photon_n_list.append(i)
             (sig_num,noise_num)= self.prepare(noise_list,i)
+            if max(noise_list)==0:
+                print((sig_num,noise_num))
             # change signal_number form /s to /h
             signal_rate_list.append(self.Activity*3600*sig_num*self.capture_ratio/(self.original_Activity*self.G4_sig_time))
             noise_rate_list.append(3600*self.Activity*noise_num/(self.original_Activity*self.G4_noise_time))
