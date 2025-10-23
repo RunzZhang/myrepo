@@ -137,6 +137,7 @@ class SN():
             self.noise2_raw_list = [float(value) for value in number_list]
             # self.noise_raw_list = [float(value)  for value in number_list]
         self.noise2_final_list = self.noise2_final_list + self.noise2_raw_list
+        print(self.noise2_raw_list)
         self.tagged_bubble_list.append(len(self.noise2_raw_list))
         # tagged number for noise2
 
