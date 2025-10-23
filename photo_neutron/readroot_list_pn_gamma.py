@@ -302,7 +302,7 @@ class ReadRoot():
         print("electron gamma",self.df_electron_gamma.head(20)) #ok
     def gamma_ER(self):
 
-        self.tagged_gamma = self.df_electron[self.df_electron["name"] == "e-"]
+        self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-")&(self.df_electron["Event"] != 1)]
         # double check gamma
 
         summed_values = self.tagged_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
