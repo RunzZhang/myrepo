@@ -281,11 +281,12 @@ class SN():
         SN_ratio = []
         photon_n_list = []
 
-        print("cut",max(noise_list))
+
         length = round(max(self.signal_final_list))
         point = [] # threshold cut?
         if len(noise_list)==0:
             noise_list.append(0)
+            print("cut", max(noise_list))
 
         for i in range(length):
             photon_n_list.append(i)
