@@ -95,7 +95,7 @@ class SN():
         self.rate = 0.86  # PN neutron rate /s LZ 5micro Bismuth
         self.gamma_rate = 1.27e4 # PN gamma rate/s
         # self.G4_events= 1E5
-        self.G4_events = 1E6
+        self.G4_events = 1E7
         self.G4_events_gamma =  1E7
         self.ambient_bubble = 5 # /h
 
