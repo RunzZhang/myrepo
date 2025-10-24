@@ -123,6 +123,7 @@ class SN():
             self.noise1_raw_list = [float(value) for value in number_list[1:]]
             bubble_num =  number_list[0]
 
+
             # the [0] is NR number and [1:] is the photon numbers
         self.noise1_final_list = self.noise1_final_list + self.noise1_raw_list
         self.untagged_bubble_list.append(float(bubble_num))
@@ -136,6 +137,7 @@ class SN():
             # Convert the strings to floats
             self.noise2_raw_list = [float(value) for value in number_list]
             # self.noise_raw_list = [float(value)  for value in number_list]
+        self.noise2_raw_list = list(filter(lambda x: x != 0, self.noise2_raw_list))
         self.noise2_final_list = self.noise2_final_list + self.noise2_raw_list
         print(self.noise2_raw_list)
         self.tagged_bubble_list.append(len(self.noise2_raw_list))
@@ -201,14 +203,17 @@ class SN():
         print("max", max_noise2_photon)
         # form the threshold function
         threshold2_list = []
-        bin_size = round(
-            max_noise2_photon / 10)  # if the max noise photon is too large, then we need to modity this bc of RAM
-        for i in range(0, max_noise2_photon):
-            # for i in range(0,round(max_noise_photon*0.1)):
-            if i % bin_size == 0:
-                percentage = (i / max_noise2_photon) * 100
-                print(f"Noise 2 Progress: {percentage:.0f}%")
-            threshold2_list.append(i)
+        if len(self.noise2_final_list) !=0:
+            bin_size = round(
+                max_noise2_photon / 10)  # if the max noise photon is too large, then we need to modity this bc of RAM
+            for i in range(0, max_noise2_photon):
+                # for i in range(0,round(max_noise_photon*0.1)):
+                if i % bin_size == 0:
+                    percentage = (i / max_noise2_photon) * 100
+                    print(f"Noise 2 Progress: {percentage:.0f}%")
+                threshold2_list.append(i)
+
+
 
 
 
@@ -278,11 +283,14 @@ class SN():
         print("cut",max(noise_list))
         length = round(max(self.signal_final_list))
         point = [] # threshold cut?
+        if len(noise_list)==0:
+            noise_list.append(0)
+
         for i in range(length):
             photon_n_list.append(i)
             (sig_num,noise_num)= self.prepare(noise_list,i)
-            if max(noise_list)==0:
-                print((sig_num,noise_num))
+            # if max(noise_list)==0:
+            #     print((sig_num,noise_num))
             # change signal_number form /s to /h
             signal_rate_list.append(self.Activity*3600*sig_num*self.capture_ratio/(self.original_Activity*self.G4_sig_time))
             noise_rate_list.append(3600*self.Activity*noise_num/(self.original_Activity*self.G4_noise_time))
