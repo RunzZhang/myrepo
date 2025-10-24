@@ -377,7 +377,8 @@ class SN():
 
         return(signal_rate_list, photon_n_list, noise_rate_list,  SN_ratio)
     def untagged_bubble_rate(self):
-        summed_bubble_num = sum(self.untagged_bubble_list)
+        summed_bubble_num = sum(self.untagged_bubble_list)+self.ambient_bubble
+        # considering background bubble
         summed_tagged_bubble_num = sum(self.tagged_bubble_list)
 
         self.summed_bubble_rate = self.Activity * 3600 * summed_bubble_num / (self.original_Activity* self.G4_sig_time)
