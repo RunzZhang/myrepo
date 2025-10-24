@@ -139,7 +139,7 @@ class SN():
             # self.noise_raw_list = [float(value)  for value in number_list]
         self.noise2_raw_list = list(filter(lambda x: x != 0, self.noise2_raw_list))
         self.noise2_final_list = self.noise2_final_list + self.noise2_raw_list
-        print(self.noise2_raw_list)
+        # print(self.noise2_raw_list)
         self.tagged_bubble_list.append(len(self.noise2_raw_list))
         # tagged number for noise2
 
@@ -198,12 +198,13 @@ class SN():
                 print(f"Noise 1 Progress: {percentage:.0f}%")
             threshold1_list.append(i)
 
-        print("noise2",len(self.noise2_final_list),self.noise2_final_list)
-        max_noise2_photon = round(max(self.noise2_final_list))
-        print("max", max_noise2_photon)
+
         # form the threshold function
         threshold2_list = []
         if len(self.noise2_final_list) !=0:
+            print("noise2", len(self.noise2_final_list), self.noise2_final_list)
+            max_noise2_photon = round(max(self.noise2_final_list))
+            print("max", max_noise2_photon)
             bin_size = round(
                 max_noise2_photon / 10)  # if the max noise photon is too large, then we need to modity this bc of RAM
             for i in range(0, max_noise2_photon):
