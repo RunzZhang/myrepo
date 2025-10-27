@@ -9,7 +9,7 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_lead_gamma/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
@@ -37,8 +37,8 @@ class SN():
 
 
         #982 statics false 1
-        # for i in range(1,101):
-        for i in range(1, 11):
+        for i in range(1,101):
+        # for i in range(1, 11):
             self.main_body(i)
         # self.main_body(1)
         # for ploting PN background tagging and SNR
@@ -99,8 +99,8 @@ class SN():
         self.rate = 0.86  # PN neutron rate /s LZ 5micro Bismuth
         self.gamma_rate = 1.27e4 # PN gamma rate/s
         # self.G4_events= 1E5
-        self.G4_events = 1E6
-        self.G4_events_gamma =  1E6
+        self.G4_events = 1E7
+        self.G4_events_gamma =  1E7
         self.ambient_bubble = 5 # /h
 
         self.T = 1e-3
