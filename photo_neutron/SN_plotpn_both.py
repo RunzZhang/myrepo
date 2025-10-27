@@ -22,7 +22,7 @@ class SN():
         self.name1 = "Correlated ER Background"
         self.name2 = "Hard Scatter Background"
         self.name = "Backgrounds"
-        self.plot_name = self.name+"PN_1E7_wt_gamma_outside.pdf"
+        self.plot_name = self.name+"PN_1E6_wt_gamma_outside.pdf"
         self.pho_threshold = 200
         self.signal_final_list = []
         self.noise1_final_list =[]
@@ -37,8 +37,8 @@ class SN():
 
 
         #982 statics false 1
-        for i in range(1,101):
-        # for i in range(1, 11):
+        # for i in range(1,101):
+        for i in range(1, 11):
             self.main_body(i)
         # self.main_body(1)
         # for ploting PN background tagging and SNR
@@ -99,8 +99,8 @@ class SN():
         self.rate = 0.86  # PN neutron rate /s LZ 5micro Bismuth
         self.gamma_rate = 1.27e4 # PN gamma rate/s
         # self.G4_events= 1E5
-        self.G4_events = 1E7
-        self.G4_events_gamma =  1E7
+        self.G4_events = 1E6
+        self.G4_events_gamma =  1E6
         self.ambient_bubble = 5 # /h
 
         self.T = 1e-3
