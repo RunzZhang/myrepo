@@ -140,8 +140,8 @@ class ReadRoot():
 
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.main_body(1)
-        for i in range(1,101):
-        # for i in range(1, 11):
+        # for i in range(1,101):
+        for i in range(1, 11):
             self.main_body(i)
     def main_body(self,i):
         print(i)
@@ -1461,15 +1461,15 @@ class ReadRoot():
         self.single_scattering_wo_ncap.columns= ["index",'Event', 'Volume', 'Track ID', 'Parent ID']
 
         # common LAR NR >1keV
-        try:
-            self.single_scattering_wo_ncap_wt_NR = pd.merge(self.single_scattering_wo_ncap, self.df_LAr_NR,
-                                                            on=['Event'], how='inner')
-            self.single_scattering_wo_ncap_wt_NR = self.single_scattering_wo_ncap_wt_NR.drop(
-                columns=['Track ID_y', "Volume_y", "Parent ID_y"])
-            self.single_scattering_wo_ncap_wt_NR.columns = ["index", 'Event', 'Volume', 'Track ID', 'Parent ID']
-            print("final list", self.single_scattering_wo_ncap_wt_NR.head(20))
-            self.NR_num = len(self.single_scattering_wo_ncap_wt_NR["Event"].unique())
-        except:
+
+        self.single_scattering_wo_ncap_wt_NR = pd.merge(self.single_scattering_wo_ncap, self.df_LAr_NR,
+                                                        on=['Event'], how='inner')
+        self.single_scattering_wo_ncap_wt_NR = self.single_scattering_wo_ncap_wt_NR.drop(
+            columns=['Track ID_y', "Volume_y", "Parent ID_y"])
+        self.single_scattering_wo_ncap_wt_NR.columns = ["index", 'Event', 'Volume', 'Track ID', 'Parent ID']
+        print("final list", self.single_scattering_wo_ncap_wt_NR.head(20))
+        self.NR_num = len(self.single_scattering_wo_ncap_wt_NR["Event"].unique())
+
 
 
 
