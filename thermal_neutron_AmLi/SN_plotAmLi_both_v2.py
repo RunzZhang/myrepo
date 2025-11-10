@@ -370,7 +370,7 @@ class SN():
         # print("pho",pho1)
         # print("noise1", noise1)
 
-        ax1.set_xlabel('Photon Number Threshold (number)', fontsize=16)
+        ax1.set_xlabel('Threshold (number of photons detected)', fontsize=16)
         ax1.set_ylabel('Rate (event/hr)', color='black', fontsize=16)
         ax1.axvline(x=self.pho_threshold, color='black', linestyle='dotted')
         ax1.set_yscale('log')
