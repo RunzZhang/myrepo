@@ -137,7 +137,7 @@ class MC_sim_full_argon():
         # self.predicted_bubble_events_LSS()
         # self.LSS_introduced_uncertainty()
 
-        # self.plot_spectrums_sigma_t()
+        self.plot_spectrums_sigma_t()
         # self.predicted_bubble_events_t()
     def data_preparation(self):
 
@@ -522,7 +522,7 @@ class MC_sim_full_argon():
             y_low.append(hist_result_low[0][i] / bin_width)
 
         plt.plot(x_bins, y_mid, color="blue", label='Original Spectrum')
-        plt.fill_between(x_bins, y_high, y_low, color='dimgray', alpha=0.5, label='Stopping Time Variation Band')
+        plt.fill_between(x_bins, y_high, y_low, color='dimgray', alpha=0.5, label='Gamma De-excitation Times Variation Band')
         # plt.plot(x_bins, hist_result_low[0], color="green", label="0.5x decay time spectrum")
         # plt.plot(x_bins, hist_result_high[0], color="orange", label='2x decay time spectrum')
         # plt.grid(True, which='both', linestyle='-', linewidth=1)
