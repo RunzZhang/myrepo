@@ -224,10 +224,10 @@ class SN():
         plt.ylabel(r"Rate (event/hr)", fontsize=16)
         plt.title("initial energy")
         # plt.gca().xaxis.set_major_locator(LogLocator(base=10.0, numticks=15))
-        plt.xlim([0, 1e5])
-        # plt.ylim([1e-1, 1e4])
+        plt.xlim([8e4, 1e5])
+        plt.ylim([0, 35])
         plt.legend()
-        plt.savefig(self.plot_path + "PN_ini_ke_x.pdf", bbox_inches='tight')
+        plt.savefig(self.plot_path + "PN_ini_ini.pdf", bbox_inches='tight')
         plt.clf()
 
     def plot_neutron_spectrum_Ar_lin(self):
@@ -263,7 +263,7 @@ class SN():
         plt.title("first entering energy")
         # plt.gca().xaxis.set_major_locator(LogLocator(base=10.0, numticks=15))
         plt.xlim([0, 1e5])
-        # plt.ylim([1e-1, 1e4])
+        plt.ylim([0, 10])
         plt.legend()
         plt.savefig(self.plot_path + "PN_ini_ke_ar.pdf", bbox_inches='tight')
         plt.clf()
@@ -274,7 +274,7 @@ class SN():
 
         lin_bins =  np.arange(0,500,50)
 
-
+        print(min(self.neutron_x_list),max(self.neutron_x_list))
         counts_ini, bin_edges_ini, patches_ini = plt.hist(self.neutron_x_list, bins=lin_bins)
         counts_ini2, bin_edges_ini2, patches_ini2 = plt.hist(self.neutron_x_list2, bins=lin_bins)
 
@@ -301,7 +301,7 @@ class SN():
         plt.xlim([0, 1e5])
         # plt.ylim([1e-1, 1e4])
         plt.legend()
-        plt.savefig(self.plot_path + "PN_ini_x_ar.pdf", bbox_inches='tight')
+        plt.savefig(self.plot_path + "PN_ini_x.pdf", bbox_inches='tight')
         plt.clf()
 
     def read_original_spectrum(self):
