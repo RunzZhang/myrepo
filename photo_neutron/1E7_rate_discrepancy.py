@@ -275,6 +275,7 @@ class SN():
         lin_bins =  np.arange(0,500,50)
 
         print(min(self.neutron_x_list),max(self.neutron_x_list))
+        print(min(self.neutron_x_list2), max(self.neutron_x_list2))
         counts_ini, bin_edges_ini, patches_ini = plt.hist(self.neutron_x_list, bins=lin_bins)
         counts_ini2, bin_edges_ini2, patches_ini2 = plt.hist(self.neutron_x_list2, bins=lin_bins)
 
