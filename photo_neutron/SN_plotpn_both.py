@@ -9,7 +9,7 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside_x71_nolead/"
         self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
@@ -685,7 +685,7 @@ class SN():
         plt.xlim([0, 1e5])
         # plt.ylim([1e-1, 1e4])
         plt.legend()
-        plt.savefig(self.plot_path + "PN_specturm_lin_1E7.pdf", bbox_inches='tight')
+        plt.savefig(self.plot_path + "PN_specturm_lin_1E6.pdf", bbox_inches='tight')
 
     def read_original_spectrum(self):
         list1, list2, list3 = [], [], []
