@@ -685,7 +685,7 @@ class SN():
         plt.xlim([0, 1e5])
         # plt.ylim([1e-1, 1e4])
         plt.legend()
-        plt.savefig(self.plot_path + "PN_specturm_lin_1E6.pdf", bbox_inches='tight')
+        plt.savefig(self.plot_path + "PN_specturm_lin_1E7.pdf", bbox_inches='tight')
 
     def read_original_spectrum(self):
         list1, list2, list3 = [], [], []
