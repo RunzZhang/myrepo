@@ -219,7 +219,7 @@ class SN():
         plt.plot(bins_ini2, Rate_ini2, drawstyle="steps-mid", label="'normal' rate")
 
 
-        plt.yscale("log")
+        # plt.yscale("log")
         plt.xlabel("Energy (eV)", fontsize=16)
         plt.ylabel(r"Rate (event/hr)", fontsize=16)
         plt.title("initial energy")
@@ -257,7 +257,7 @@ class SN():
         plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="Abnormal rate")
         plt.plot(bins_ke2, Rate_ke2, drawstyle="steps-mid", label="'normal' rate")
 
-        plt.yscale("log")
+        # plt.yscale("log")
         plt.xlabel("Energy (eV)", fontsize=16)
         plt.ylabel(r"Rate (event/hr)", fontsize=16)
         plt.title("first entering energy")
@@ -294,7 +294,7 @@ class SN():
         plt.plot(bins_ini2, Rate_ini2, drawstyle="steps-mid", label="'Normal' Rate")
 
 
-        plt.yscale("log")
+        # plt.yscale("log")
         plt.xlabel("x (mm)", fontsize=16)
         plt.ylabel(r"Rate (event/hr)", fontsize=16)
         # plt.gca().xaxis.set_major_locator(LogLocator(base=10.0, numticks=15))
