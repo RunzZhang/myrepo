@@ -43,19 +43,19 @@ class SN():
         # self.main_body(1)
         # for ploting PN background tagging and SNR
         self.untagged_bubble_rate()
-        if self.gamma:
-            (result1, result2, resultgamma1) = self.combine_data(self.gamma)
-            self.plot_sn_gamma_v2(result1[0], result2[0], resultgamma1[0],result1[1], result2[1], resultgamma1[1],result1[2], result2[2], resultgamma1[2], result1[3],
-                            result2[3],resultgamma1[3])
-        else:
-            (result1, result2) = self.combine_data(self.gamma)
-            self.plot_sn_v2(result1[0], result2[0], result1[1], result2[1], result1[2], result2[2], result1[3],
-                            result2[3])
+        # if self.gamma:
+        #     (result1, result2, resultgamma1) = self.combine_data(self.gamma)
+        #     self.plot_sn_gamma_v2(result1[0], result2[0], resultgamma1[0],result1[1], result2[1], resultgamma1[1],result1[2], result2[2], resultgamma1[2], result1[3],
+        #                     result2[3],resultgamma1[3])
+        # else:
+        #     (result1, result2) = self.combine_data(self.gamma)
+        #     self.plot_sn_v2(result1[0], result2[0], result1[1], result2[1], result1[2], result2[2], result1[3],
+        #                     result2[3])
 
         # for ploting PN spectrum and SBC detector thermalizing effect
         # self.plot_neutron_spectrum()
 
-        # self.plot_neutron_spectrum_lin()
+        self.plot_neutron_spectrum_lin()
 
 
     def main_body(self,i):
@@ -672,10 +672,10 @@ class SN():
         plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="LZ PN Escaping Neutron")
 
         # print("after density bins_ini, rate ini, counts ini,counts ke",Rate_ini[point:],"\n", Rate_ke[point:],"\n", counts_ini[point:],"\n", counts_ke[point:],"\n", bins_ini[point:],"\n", bins_ke[point:]) # print no-zero first bins
-        plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="First Enter LAr Neutron log")
+        # plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="First Enter LAr Neutron log")
         plt.plot(bins_ke, Rate_ke_alter, drawstyle="steps-mid", label="First Enter LAr Neutron lin")
         # plt.plot(ene_list, possibility_list, drawstyle="steps-mid", label="Original Spectrum dat")
-        # plt.plot(bins_ini, Rate_ini, label="LZ PN Escaping Neutron")
+        plt.plot(bins_ini, Rate_ini, label="LZ PN Escaping Neutron")
         # plt.plot(bins_ke, Rate_ke,  label="First Enter LAr Neutron")
         # plt.xscale("log")
         plt.yscale("log")
@@ -685,7 +685,7 @@ class SN():
         plt.xlim([0, 1e5])
         # plt.ylim([1e-1, 1e4])
         plt.legend()
-        plt.savefig(self.plot_path + "PN_specturm_lin.pdf", bbox_inches='tight')
+        plt.savefig(self.plot_path + "PN_specturm_lin_1E6.pdf", bbox_inches='tight')
 
     def read_original_spectrum(self):
         list1, list2, list3 = [], [], []
