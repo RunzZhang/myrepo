@@ -272,7 +272,7 @@ class SN():
     def plot_neutron_spectrum_x_lin(self):
         from matplotlib.ticker import LogLocator
 
-        lin_bins =  np.arange(-80e6,0,50)
+        lin_bins =  np.arange(-80,0,50)
 
         print(min(self.neutron_x_list),max(self.neutron_x_list))
         print(min(self.neutron_x_list2), max(self.neutron_x_list2))
@@ -287,8 +287,8 @@ class SN():
         Rate_ini2 = counts_ini2 * 3600 / self.G4_sig_time  # rate in /h
 
 
-        bins_ini = bin_edges_ini[:-1]
-        bins_ini2 = bin_edges_ini2[:-1]
+        bins_ini = bin_edges_ini[:-1]/1e7
+        bins_ini2 = bin_edges_ini2[:-1]/1e7
 
 
         plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="Abnorml Rate")
@@ -296,10 +296,10 @@ class SN():
 
 
         # plt.yscale("log")
-        plt.xlabel("x (mm)", fontsize=16)
+        plt.xlabel("x (cm)", fontsize=16)
         plt.ylabel(r"Rate (event/hr)", fontsize=16)
         # plt.gca().xaxis.set_major_locator(LogLocator(base=10.0, numticks=15))
-        plt.xlim([-80e6, 0])
+        plt.xlim([-80, 0])
         # plt.ylim([1e-1, 1e4])
         plt.legend()
         plt.savefig(self.plot_path + "PN_ini_x.pdf", bbox_inches='tight')
