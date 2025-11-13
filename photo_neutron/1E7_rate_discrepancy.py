@@ -272,7 +272,7 @@ class SN():
     def plot_neutron_spectrum_x_lin(self):
         from matplotlib.ticker import LogLocator
 
-        lin_bins =  np.arange(0,500,50)
+        lin_bins =  np.arange(-80e6,0,50)
 
         print(min(self.neutron_x_list),max(self.neutron_x_list))
         print(min(self.neutron_x_list2), max(self.neutron_x_list2))
@@ -299,7 +299,7 @@ class SN():
         plt.xlabel("x (mm)", fontsize=16)
         plt.ylabel(r"Rate (event/hr)", fontsize=16)
         # plt.gca().xaxis.set_major_locator(LogLocator(base=10.0, numticks=15))
-        plt.xlim([0, 1e5])
+        plt.xlim([-80e6, 0])
         # plt.ylim([1e-1, 1e4])
         plt.legend()
         plt.savefig(self.plot_path + "PN_ini_x.pdf", bbox_inches='tight')
