@@ -291,8 +291,8 @@ class SN():
         Rate_ini2 = counts_ini2 * 3600 / self.G4_sig_time  # rate in /h
 
 
-        bins_ini = bin_edges_ini[:-1]/1e7
-        bins_ini2 = bin_edges_ini2[:-1]/1e7
+        bins_ini = bin_edges_ini[:-1]
+        bins_ini2 = bin_edges_ini2[:-1]
 
 
 
