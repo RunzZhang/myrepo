@@ -300,6 +300,7 @@ class SN():
         plt.plot(bins_ini2, Rate_ini2, drawstyle="steps-mid", label="'Normal' Rate")
 
         print(min(Rate_ini), max(Rate_ini))
+        print(bins_ini)
         # plt.yscale("log")
         plt.xlabel("x (cm)", fontsize=16)
         plt.ylabel(r"Rate (event/hr)", fontsize=16)
