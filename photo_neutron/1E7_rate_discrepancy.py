@@ -271,13 +271,17 @@ class SN():
 
     def plot_neutron_spectrum_x_lin(self):
         from matplotlib.ticker import LogLocator
-
-        lin_bins =  np.arange(-80e7,0,50)
-
-        print(min(self.neutron_x_list),max(self.neutron_x_list))
-        print(min(self.neutron_x_list2), max(self.neutron_x_list2))
-        counts_ini, bin_edges_ini, patches_ini = plt.hist(self.neutron_x_list, bins=lin_bins)
-        counts_ini2, bin_edges_ini2, patches_ini2 = plt.hist(self.neutron_x_list2, bins=lin_bins)
+        x1_list = []
+        x2_list = []
+        lin_bins =  np.arange(-80,0,50)
+        for i in range(len(self.neutron_x_list)):
+            x1_list.append(round(self.neutron_x_list[i]/1e7,2))
+        for i in range(len(self.neutron_x_list2)):
+            x2_list.append(round(self.neutron_x_list2[i]/1e7,2))
+        print(min(x1_list),max(x1_list))
+        print(min(x2_list), max(x2_list))
+        counts_ini, bin_edges_ini, patches_ini = plt.hist(x1_list, bins=lin_bins)
+        counts_ini2, bin_edges_ini2, patches_ini2 = plt.hist(x2_list, bins=lin_bins)
 
         plt.clf()
 
