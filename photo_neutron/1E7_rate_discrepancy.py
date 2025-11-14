@@ -273,7 +273,7 @@ class SN():
         from matplotlib.ticker import LogLocator
         x1_list = []
         x2_list = []
-        lin_bins =  np.arange(-80,0,80)
+        lin_bins =  np.arange(-80,0,1)
         for i in range(len(self.neutron_x_list)):
             x1_list.append(round(self.neutron_x_list[i]/1e7,4))
         for i in range(len(self.neutron_x_list2)):
@@ -291,16 +291,18 @@ class SN():
         Rate_ini2 = counts_ini2 * 3600 / self.G4_sig_time  # rate in /h
 
 
+
         bins_ini = bin_edges_ini[:-1]
         bins_ini2 = bin_edges_ini2[:-1]
 
+        print(bins_ini)
+        print(min(Rate_ini), max(Rate_ini))
 
 
         plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="Abnorml Rate")
         plt.plot(bins_ini2, Rate_ini2, drawstyle="steps-mid", label="'Normal' Rate")
 
-        print(min(Rate_ini), max(Rate_ini))
-        print(bins_ini)
+
         # plt.yscale("log")
         plt.xlabel("x (cm)", fontsize=16)
         plt.ylabel(r"Rate (event/hr)", fontsize=16)
