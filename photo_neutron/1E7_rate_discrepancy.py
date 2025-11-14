@@ -273,7 +273,7 @@ class SN():
         from matplotlib.ticker import LogLocator
         x1_list = []
         x2_list = []
-        lin_bins =  np.arange(-80,0,50)
+        lin_bins =  np.arange(-80,0,80)
         for i in range(len(self.neutron_x_list)):
             x1_list.append(round(self.neutron_x_list[i]/1e7,4))
         for i in range(len(self.neutron_x_list2)):
