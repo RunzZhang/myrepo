@@ -134,8 +134,8 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside_x71_lead/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside_x71_lead/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
@@ -325,6 +325,11 @@ class ReadRoot():
         lead_phys_list  = self.df_neutron_into_lead["Process"].unique()
         print(lead_phys_list)
         lead_event_list = self.df_neutron_into_lead["Event"].unique()
+        print("total event num", len(lead_event_list))
+        self.df_neutron_into_lead_capture = self.df_neutron_into_lead[
+            (self.df["Process"] == 'nCapture')]
+        lead_event_capture_list = self.df_neutron_into_lead_capture["Event"].unique()
+        print("lead capture num", len(lead_event_capture_list),"\n", "ratio",len(lead_event_capture_list)/ len(lead_event_list))
         self.example_event = self.df[
             (self.df["name"] == 'neutron') & (self.df["Event"].isin(lead_event_list))]
         lead_sample_path = self.base_path+"neutron_lead_track.csv"
