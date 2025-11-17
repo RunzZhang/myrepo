@@ -134,15 +134,15 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside_x71_nolead/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside_x71_nolead/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside_x71_lead/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside_x71_lead/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        # self.main_body(1)
+        self.main_body(1)
         # for i in range(1,101):
-        for i in range(1, 11):
-            self.main_body(i)
+        # for i in range(1, 11):
+        #     self.main_body(i)
     def main_body(self,i):
         print(i)
         self.ini_path = self.base_path+ f"PN_1E7_ini_part{i}.csv"
@@ -234,7 +234,7 @@ class ReadRoot():
         #
 
         # calculate initial PN neutron energy and 1st enter LAr energy
-        self.PN_spectrum()
+        # self.PN_spectrum()
 
 
         # learn neutron and lead reaction
@@ -244,6 +244,9 @@ class ReadRoot():
 
         # self.find_multiplicity()
         # self.Check_inelastic()
+
+        # check lead interaction
+        self.lead_interaction()
 
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
@@ -311,7 +314,18 @@ class ReadRoot():
         self.nCapture_NR()
         self.nCapture_gamma()
         self.nCapture_ER()
+    def lead_interaction(self):
+        event_slice_num =100
+        self.df_neutron_into_lead = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Volume"] == 'physlead')][
+            ['Event', 'Track ID']]
 
+        lead_event_list = self.df_neutron_into_lead.unique()
+        self.example_event = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Event"].isin(lead_event_list[:event_slice_num]))]
+        lead_sample_path = self.base_path+"neutron_lead_track.csv"
+        print(lead_sample_path)
+        self.example_event.to_csv(lead_sample_path)
     def nCapture_NR(self):
 
 
