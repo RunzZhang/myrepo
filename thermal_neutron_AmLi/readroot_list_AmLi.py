@@ -139,10 +139,10 @@ class ReadRoot():
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        # self.main_body(1)
-        for i in range(1,101):
+        self.main_body(1)
+        # for i in range(1,101):
         # for i in range(1, 10):
-            self.main_body(i)
+        #     self.main_body(i)
     def main_body(self,i):
         print(i)
         self.ini_path = self.base_path+ f"AmLi_1E7_ini_part{i}.csv"
@@ -223,22 +223,22 @@ class ReadRoot():
         # self.Huge_scatter_event()
 
         # update signals
-        self.single_ncap()
+        # self.single_ncap()
         #updated noises
         # Signal 1 is all single bubble signal that cause NR>1keV and ER in LAr
         # the single bubble can be inelastic or elastic, but must be single bubbles
         # the ER can caused by either capture somewhere else, or inelastic inside or outside the LAr
         # Also we need to count all single bubble NR>1keV number, even without any photons, this decide the activity of the source
-        self.bubbleNR_n_ER()
+        # self.bubbleNR_n_ER()
 
 
 
         #same still big scattering signals because only NR can cause both photon and bubbles, single bubbles only
-        self.Huge_NR()
+        # self.Huge_NR()
         #
 
         # calculate initial AmLi neutron energy and 1st enter LAr energy
-        self.AmLi_spectrum()
+        # self.AmLi_spectrum()
 
 
 
@@ -247,6 +247,8 @@ class ReadRoot():
 
         # self.find_multiplicity()
         # self.Check_inelastic()
+
+        self.HDPE_castle_thermalization()
 
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
@@ -303,6 +305,28 @@ class ReadRoot():
         self.nCapture_NR()
         self.nCapture_gamma()
         self.nCapture_ER()
+
+
+    def HDPE_castle_thermalization(self):
+        # check if the HDPE is thermailzation source
+        self.df_Ncapture = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Track ID']]
+        capture_event_list = self.df_Ncapture["Event"].unique()
+
+        self.df_HDPE_track = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Event"].isin(capture_event_list)) & (self.df["Volume"] == 'HDPE_pressure_vessel_phys')]
+        # how much go across HDPE castle
+        HDPE_event_list = self.df_HDPE_track["Event"].unique()
+        print("ratio that went through HDPE", len(HDPE_event_list)/len(capture_event_list))
+        # find Kinetic of minimum step ID and maximum step ID
+        df_min = self.df_HDPE_track.loc[self.df_HDPE_track.groupby("Event")["Step ID"].idxmin()]
+
+        df_max = self.df_HDPE_track.loc[self.df_HDPE_track.groupby("Event")["Step ID"].idxmax()]
+        print("length match", len(df_min), len(df_max))
+        if len(df_min)== len(df_max):
+            print(True)
+
 
     def nCapture_NR(self):
 
