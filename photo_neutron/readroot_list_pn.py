@@ -315,17 +315,21 @@ class ReadRoot():
         self.nCapture_gamma()
         self.nCapture_ER()
     def lead_interaction(self):
+
+        # different interaction than Hadealstic transporation
+        # change kinetic energy
+        # angle scattered
         event_slice_num =100
         self.df_neutron_into_lead = self.df[
-            (self.df["name"] == 'neutron') & (self.df["Volume"] == 'physlead')][
-            ['Event', 'Track ID']]
-
+            (self.df["name"] == 'neutron') & (self.df["Volume"] == 'physlead')]
+        lead_phys_list  = self.df_neutron_into_lead["Process"].unique()
+        print(lead_phys_list)
         lead_event_list = self.df_neutron_into_lead["Event"].unique()
         self.example_event = self.df[
-            (self.df["name"] == 'neutron') & (self.df["Event"].isin(lead_event_list[:event_slice_num]))]
+            (self.df["name"] == 'neutron') & (self.df["Event"].isin(lead_event_list))]
         lead_sample_path = self.base_path+"neutron_lead_track.csv"
         print(lead_sample_path)
-        self.example_event.to_csv(lead_sample_path)
+        # self.example_event.to_csv(lead_sample_path)
     def nCapture_NR(self):
 
 
