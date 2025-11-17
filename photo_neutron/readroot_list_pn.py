@@ -320,7 +320,7 @@ class ReadRoot():
             (self.df["name"] == 'neutron') & (self.df["Volume"] == 'physlead')][
             ['Event', 'Track ID']]
 
-        lead_event_list = self.df_neutron_into_lead.unique()
+        lead_event_list = self.df_neutron_into_lead["Event"].unique()
         self.example_event = self.df[
             (self.df["name"] == 'neutron') & (self.df["Event"].isin(lead_event_list[:event_slice_num]))]
         lead_sample_path = self.base_path+"neutron_lead_track.csv"
