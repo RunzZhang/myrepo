@@ -327,9 +327,9 @@ class ReadRoot():
         if len(df_min)== len(df_max):
             print(True)
             # if min are all thermalized
-            df_tn_out = df_min[df_min["PreKinetic/MeV"]<1e-7].to_list()
+            df_tn_out = df_min[df_min["PreKinetic/MeV"]<1e-7]["PreKinetic/MeV"].to_list()
             print(len(df_tn_out))
-            df_neutron_in = df_max[df_max["PreKinetic/MeV"]>1e-7].to_list()
+            df_neutron_in = df_max[df_max["PreKinetic/MeV"]>1e-7]["PreKinetic/MeV"].to_list()
             print(len(df_neutron_in))
 
 
