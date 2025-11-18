@@ -470,10 +470,10 @@ class SN():
             Rate_ke[i] = Rate_ke[i] / (bin_edges_ke[i + 1] - bin_edges_ke[i])
 
 
-        plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="Neutron Escaping the LZ AmLi Source")
+        plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="Neutrons Escaping the LZ AmLi Source")
 
         print("after density bins_ini, rate ini, counts ini,counts ke",Rate_ini[point:],"\n", Rate_ke[point:],"\n", counts_ini[point:],"\n", counts_ke[point:],"\n", bins_ini[point:],"\n", bins_ke[point:]) # print no-zero first bins
-        plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="Neutron Entering Liquid Argon")
+        plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="Neutrons Entering Liquid Argon")
         # plt.plot(bins_ke, Rate_ke_alter, drawstyle="steps-mid", label="First Enter LAr Neutron lin")
         # plt.plot(ene_list, possibility_list, drawstyle="steps-mid", label="Original Spectrum dat")
         # plt.plot(bins_ini, Rate_ini, label="LZ AmLi Escaping Neutron")
