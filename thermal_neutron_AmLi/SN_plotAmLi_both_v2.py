@@ -557,8 +557,11 @@ class SN():
         plt.savefig(self.plot_path + "AmLi_specturm_lin.pdf", bbox_inches='tight')
 
     def HDPE_analysis(self):
-        plt.hist(self.HDPE_in_energy,label="entering HDPE")
-        plt.hist(self.HDPE_out_energy, label="leaving HDPE")
+        log_bins = np.logspace(-3, 7, 100)
+
+
+        plt.hist(self.HDPE_in_energy,label="entering HDPE", bins=log_bins, histtype='step', fill=False)
+        plt.hist(self.HDPE_out_energy, label="leaving HDPE", bins=log_bins,histtype='step', fill=False)
         plt.xlabel("energy/ev")
         plt.ylabel("counts")
         plt.xscale("log")
