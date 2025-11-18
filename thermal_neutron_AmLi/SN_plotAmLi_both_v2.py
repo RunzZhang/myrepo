@@ -33,8 +33,8 @@ class SN():
 
 
         #982 statics false 1
-        # for i in range(1,101):
-        for i in range(1, 10):
+        for i in range(1,101):
+        # for i in range(1, 10):
             self.main_body(i)
         # self.main_body(1)
         # for ploting AmLi background tagging and SNR
@@ -43,12 +43,12 @@ class SN():
         # self.plot_sn_v2(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
 
         # for ploting AmLi spectrum and SBC detector thermalizing effect
-        # self.plot_neutron_spectrum()
+        self.plot_neutron_spectrum()
 
         # self.plot_neutron_spectrum_lin()
 
 
-        self.HDPE_analysis()
+        # self.HDPE_analysis()
 
 
     def main_body(self,i):
@@ -470,7 +470,7 @@ class SN():
             Rate_ke[i] = Rate_ke[i] / (bin_edges_ke[i + 1] - bin_edges_ke[i])
 
 
-        plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="LZ AmLi Escaping Neutron")
+        plt.plot(bins_ini, Rate_ini, drawstyle="steps-mid", label="Neutron Escaping the LZ AmLi Source")
 
         print("after density bins_ini, rate ini, counts ini,counts ke",Rate_ini[point:],"\n", Rate_ke[point:],"\n", counts_ini[point:],"\n", counts_ke[point:],"\n", bins_ini[point:],"\n", bins_ke[point:]) # print no-zero first bins
         plt.plot(bins_ke, Rate_ke, drawstyle="steps-mid", label="Neutron Entering Liquid Argon")
