@@ -9,8 +9,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside_x37_lead_gamma/" # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside_nolead/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside_x37_nolead_gamma/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -389,7 +389,9 @@ class SN():
         self.summed_bubble_only_rate = self.Activity * 3600 * (summed_bubble_num-summed_tagged_bubble_num) / (self.original_Activity* self.G4_sig_time)+self.ambient_bubble
 
         # untagged total bubble rate in /h
-        print("untagged total bubble rate /h", self.summed_bubble_rate)
+        # background bubble rate before tagging
+        print("untagged total bubble rate /h (non-signal bubble rate/h)", self.summed_bubble_rate)
+        # rate that scintilation is absent. Used for later coincidence gamma tagging
         print("bubble only event/h",self.summed_bubble_only_rate)
 
     def plot_sn(self, sig1, sig2,pho1, pho2, noise1, noise2,  sn1, sn2):
