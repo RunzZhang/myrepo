@@ -34,7 +34,7 @@ class SN():
 
         #982 statics false 1
         # for i in range(1,101):
-        for i in range(1, 11):
+        for i in range(1, 10):
             self.main_body(i)
         # self.main_body(1)
         # for ploting AmLi background tagging and SNR
