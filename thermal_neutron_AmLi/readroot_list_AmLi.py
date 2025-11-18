@@ -328,9 +328,9 @@ class ReadRoot():
             print(True)
             # if min are all thermalized
             df_tn_out = df_min[df_min["PreKinetic/MeV"]<1e-7]["PreKinetic/MeV"].to_list()
-            print(len(df_tn_out))
+            print(len(df_tn_out), df_tn_out)
             df_neutron_in = df_max[df_max["PreKinetic/MeV"]>1e-7]["PreKinetic/MeV"].to_list()
-            print(len(df_neutron_in))
+            print(len(df_neutron_in), df_neutron_in)
 
 
     def nCapture_NR(self):
