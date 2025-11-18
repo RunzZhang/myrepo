@@ -561,6 +561,7 @@ class SN():
         plt.hist(self.HDPE_out_energy, label="leaving HDPE")
         plt.xlabel("energy/ev")
         plt.ylabel("counts")
+        plt.xscale("log")
         plt.legend()
         plt.savefig(self.plot_path + "AmLi_HDPE.pdf", bbox_inches='tight')
     def read_original_spectrum(self):
