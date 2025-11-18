@@ -138,11 +138,13 @@ class ReadRoot():
         self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_AmLi_LZ_bare_clean_point_log_2E7_z45_x71/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
+
         # self.filepath = self.base_path +"dmx_lr.root"
-        self.main_body(1)
+        # self.main_body(1)
         # for i in range(1,101):
-        # for i in range(1, 10):
-        #     self.main_body(i)
+        for i in range(1, 10):
+            self.main_body(i)
+
     def main_body(self,i):
         print(i)
         self.ini_path = self.base_path+ f"AmLi_1E7_ini_part{i}.csv"
@@ -191,6 +193,11 @@ class ReadRoot():
         self.signal_old_path = self.base_path + self.signal_old
         self.signal_new_path_mid = self.base_path + self.signal_new_mid
         self.signal_new_path = self.base_path + self.signal_new
+
+        self.HDPE_in = f"AmLi_1E7_HDPE_in_part{i}.csv"
+        self.HDPE_out = f"AmLi_1E7_HDPE_out_part{i}.csv"
+        self.HDPE_in_path = self.base_path + self.HDPE_in
+        self.HDPE_out_path = self.base_path + self.HDPE_out
 
 
 
@@ -250,6 +257,7 @@ class ReadRoot():
 
         self.HDPE_castle_thermalization()
 
+
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
     def reidx_event(self):
@@ -308,6 +316,7 @@ class ReadRoot():
 
 
     def HDPE_castle_thermalization(self):
+
         # check if the HDPE is thermailzation source
         self.df_Ncapture = self.df[
             (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
@@ -326,12 +335,15 @@ class ReadRoot():
         print("length match", len(df_min), len(df_max))
         if len(df_min)== len(df_max):
             print(True)
-            e_threshold  = 1
-            # if min are all thermalized
-            df_tn_out = df_min[df_min["PreKinetic/MeV"]<e_threshold]["PreKinetic/MeV"].to_list()
-            print(len(df_tn_out), df_tn_out)
-            df_neutron_in = df_max[df_max["PreKinetic/MeV"]>e_threshold]["PreKinetic/MeV"].to_list()
-            print(len(df_neutron_in), df_neutron_in)
+            min_energy = df_min["PreKinetic/MeV"].to_list()
+            max_energy = df_max["PreKinetic/MeV"].to_list()
+            with open(self.HDPE_in_path, 'w', newline='') as myfile:
+                wr = csv.writer(myfile)
+                wr.writerow(min_energy)
+
+            with open(self.HDPE_out_path, 'w', newline='') as myfile:
+                wr = csv.writer(myfile)
+                wr.writerow(max_energy)
 
 
     def nCapture_NR(self):

@@ -28,21 +28,27 @@ class SN():
         self.neutron_ar_ke_list =[]
         self.neutron_ar_ke_alter_list = []
 
+        self.HDPE_in_energy = []
+        self.HDPE_out_energy = []
+
 
         #982 statics false 1
-        for i in range(1,101):
-        # for i in range(1, 11):
+        # for i in range(1,101):
+        for i in range(1, 11):
             self.main_body(i)
         # self.main_body(1)
         # for ploting AmLi background tagging and SNR
-        self.untagged_bubble_rate()
-        (result1, result2)=self.combine_data()
-        self.plot_sn_v2(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
+        # self.untagged_bubble_rate()
+        # (result1, result2)=self.combine_data()
+        # self.plot_sn_v2(result1[0],result2[0], result1[1],result2[1],result1[2],result2[2],result1[3],result2[3])
 
         # for ploting AmLi spectrum and SBC detector thermalizing effect
         # self.plot_neutron_spectrum()
 
         # self.plot_neutron_spectrum_lin()
+
+
+        self.HDPE_analysis()
 
 
     def main_body(self,i):
@@ -60,6 +66,11 @@ class SN():
         self.ini_path = self.base_path+ f"AmLi_1E7_ini_part{i}.csv"
         self.ar_ke_path = self.base_path + f"AmLi_1E7_ke_part{i}.csv"
         self.ar_ke_alter_path = self.base_path2 + f"AmLi_1E7_ke_part{i}.csv"
+
+        self.HDPE_in = f"AmLi_1E7_HDPE_in_part{i}.csv"
+        self.HDPE_out = f"AmLi_1E7_HDPE_out_part{i}.csv"
+        self.HDPE_in_path = self.base_path + self.HDPE_in
+        self.HDPE_out_path = self.base_path + self.HDPE_out
 
 
         self.read_files()
@@ -147,6 +158,25 @@ class SN():
             self.ar_ke_alter_raw_list = [float(value)*1e6 for value in number_list] # in eV
             # self.noise_raw_list = [float(value)  for value in number_list]
         self.neutron_ar_ke_alter_list += self.ar_ke_raw_list
+
+
+        with open(self.HDPE_in_path, 'r') as file:
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            self.HDPE_in_raw_list = [float(value)*1e6 for value in number_list] # in eV
+            # self.noise_raw_list = [float(value)  for value in number_list]
+        self.HDPE_in_energy += self.HDPE_in_raw_list
+
+        with open(self.HDPE_out_path, 'r') as file:
+            reader = csv.reader(file)
+            # Read the first row (assuming single row for simplicity)
+            number_list = next(reader)
+            # Convert the strings to floats
+            self.HDPE_out_raw_list = [float(value) * 1e6 for value in number_list]  # in eV
+            # self.noise_raw_list = [float(value)  for value in number_list]
+        self.HDPE_out_energy += self.HDPE_out_raw_list
 
 
     def combine_data(self):
@@ -526,6 +556,13 @@ class SN():
         plt.legend()
         plt.savefig(self.plot_path + "AmLi_specturm_lin.pdf", bbox_inches='tight')
 
+    def HDPE_analysis(self):
+        plt.hist(self.HDPE_in_energy,label="entering HDPE")
+        plt.hist(self.HDPE_out_energy, label="leaving HDPE")
+        plt.xlabel("energy/ev")
+        plt.ylabel("counts")
+        plt.legend()
+        plt.savefig(self.plot_path + "AmLi_HDPE.pdf", bbox_inches='tight')
     def read_original_spectrum(self):
         list1, list2, list3 = [], [], []
         b_older = 0
