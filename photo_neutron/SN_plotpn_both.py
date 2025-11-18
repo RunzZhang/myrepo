@@ -9,8 +9,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside_x71_nolead/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/" # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside_x37_lead_gamma/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -43,19 +43,19 @@ class SN():
         # self.main_body(1)
         # for ploting PN background tagging and SNR
         self.untagged_bubble_rate()
-        # if self.gamma:
-        #     (result1, result2, resultgamma1) = self.combine_data(self.gamma)
-        #     self.plot_sn_gamma_v2(result1[0], result2[0], resultgamma1[0],result1[1], result2[1], resultgamma1[1],result1[2], result2[2], resultgamma1[2], result1[3],
-        #                     result2[3],resultgamma1[3])
-        # else:
-        #     (result1, result2) = self.combine_data(self.gamma)
-        #     self.plot_sn_v2(result1[0], result2[0], result1[1], result2[1], result1[2], result2[2], result1[3],
-        #                     result2[3])
+        if self.gamma:
+            (result1, result2, resultgamma1) = self.combine_data(self.gamma)
+            self.plot_sn_gamma_v2(result1[0], result2[0], resultgamma1[0],result1[1], result2[1], resultgamma1[1],result1[2], result2[2], resultgamma1[2], result1[3],
+                            result2[3],resultgamma1[3])
+        else:
+            (result1, result2) = self.combine_data(self.gamma)
+            self.plot_sn_v2(result1[0], result2[0], result1[1], result2[1], result1[2], result2[2], result1[3],
+                            result2[3])
 
         # for ploting PN spectrum and SBC detector thermalizing effect
         # self.plot_neutron_spectrum()
 
-        self.plot_neutron_spectrum_lin()
+        # self.plot_neutron_spectrum_lin()
 
 
     def main_body(self,i):
