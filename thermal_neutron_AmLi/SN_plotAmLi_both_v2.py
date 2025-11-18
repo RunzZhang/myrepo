@@ -160,23 +160,23 @@ class SN():
         self.neutron_ar_ke_alter_list += self.ar_ke_raw_list
 
 
-        with open(self.HDPE_in_path, 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.HDPE_in_raw_list = [float(value)*1e6 for value in number_list] # in eV
-            # self.noise_raw_list = [float(value)  for value in number_list]
-        self.HDPE_in_energy += self.HDPE_in_raw_list
-
-        with open(self.HDPE_out_path, 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.HDPE_out_raw_list = [float(value) * 1e6 for value in number_list]  # in eV
-            # self.noise_raw_list = [float(value)  for value in number_list]
-        self.HDPE_out_energy += self.HDPE_out_raw_list
+        # with open(self.HDPE_in_path, 'r') as file:
+        #     reader = csv.reader(file)
+        #     # Read the first row (assuming single row for simplicity)
+        #     number_list = next(reader)
+        #     # Convert the strings to floats
+        #     self.HDPE_in_raw_list = [float(value)*1e6 for value in number_list] # in eV
+        #     # self.noise_raw_list = [float(value)  for value in number_list]
+        # self.HDPE_in_energy += self.HDPE_in_raw_list
+        #
+        # with open(self.HDPE_out_path, 'r') as file:
+        #     reader = csv.reader(file)
+        #     # Read the first row (assuming single row for simplicity)
+        #     number_list = next(reader)
+        #     # Convert the strings to floats
+        #     self.HDPE_out_raw_list = [float(value) * 1e6 for value in number_list]  # in eV
+        #     # self.noise_raw_list = [float(value)  for value in number_list]
+        # self.HDPE_out_energy += self.HDPE_out_raw_list
 
 
     def combine_data(self):
