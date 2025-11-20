@@ -9,8 +9,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside_x37_lead_gamma/" # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_tube_1E6/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_tube_gamma/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -37,8 +37,8 @@ class SN():
 
 
         #982 statics false 1
-        # for i in range(1,101):
-        for i in range(1, 11):
+        for i in range(1,101):
+        # for i in range(1, 11):
             self.main_body(i)
         # self.main_body(1)
         # for ploting PN background tagging and SNR
@@ -100,7 +100,7 @@ class SN():
         self.gamma_rate = 1.27e4 # PN gamma rate/s
         # self.G4_events= 1E5
         self.G4_events = 1E6
-        self.G4_events_gamma =  1E6
+        self.G4_events_gamma =  1E7
         self.ambient_bubble = 5 # /h
 
         self.T = 1e-3
@@ -390,8 +390,10 @@ class SN():
 
         # untagged total bubble rate in /h
         # background bubble rate before tagging
+        # ambient + ER correlated + huge scatter + bubble NR> 100 eV before tagging
         print("untagged total bubble rate /h (non-signal bubble rate/h)", self.summed_bubble_rate)
         # rate that scintilation is absent. Used for later coincidence gamma tagging
+        # ambient + bubble only NR > 100eV before tagging
         print("bubble only event/h",self.summed_bubble_only_rate)
 
     def plot_sn(self, sig1, sig2,pho1, pho2, noise1, noise2,  sn1, sn2):
