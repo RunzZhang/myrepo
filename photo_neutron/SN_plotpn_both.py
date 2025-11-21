@@ -3,14 +3,14 @@ import matplotlib.pyplot as plt
 import csv
 import numpy as np
 class SN():
-    def __init__(self,gamma=False):
+    def __init__(self,gamma=False,full_gamma = False):
         # after generate new files, you need to select the capture ratio/source for different configs in read_files function.
         # then choose the correct signal/noise of with clause in read files.
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_tube_1E6/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_tube_gamma/" # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside_x37_lead_full_gamma/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -34,11 +34,12 @@ class SN():
         self.neutron_ar_ke_list =[]
         self.neutron_ar_ke_alter_list = []
         self.gamma = gamma
+        self.full_gamma = full_gamma
 
 
         #982 statics false 1
-        for i in range(1,101):
-        # for i in range(1, 11):
+        # for i in range(1,101):
+        for i in range(1, 11):
             self.main_body(i)
         # self.main_body(1)
         # for ploting PN background tagging and SNR
@@ -85,7 +86,7 @@ class SN():
 # main funtion we use
     def read_files(self):
         self.original_Activity = 5 # original activity in the paper
-        self.Activity = 5  # source practical activity in mivro curie for 50 bubbles/hour
+        self.Activity = 50  # source practical activity in mivro curie for 50 bubbles/hour
         # self.Activity = 0.0416  # source activity in mivro curie
         # self.capture_ratio = 1.164E-3 # 1125eV 1.4g/cm Ar
         # self.capture_ratio = 0.121 # 400 eV 1.4g/cm3 Ar
@@ -97,16 +98,20 @@ class SN():
         # self.rate = 0.1968 #PN neutron rate /s
         # self.rate = 2.52e4  # PN neutron rate /s PNNL
         self.rate = 0.86  # PN neutron rate /s LZ 5micro Bismuth
-        self.gamma_rate = 1.27e4 # PN gamma rate/s
+        self.gamma_rate = 1.27e4 # 1.77MeV PN gamma rate/s for 5 microCurie
+        self.gamma_BR = 0.0687
         # self.G4_events= 1E5
         self.G4_events = 1E6
-        self.G4_events_gamma =  1E7
+        self.G4_events_gamma =  1E6
         self.ambient_bubble = 5 # /h
 
         self.T = 1e-3
         self.G4_sig_time=(self.G4_events / self.rate)
         self.G4_noise_time = self.G4_events / self.rate
         self.G4_gamma_time = self.G4_events_gamma/self.gamma_rate
+        self.G4_full_gamma_time = self.G4_events_gamma*self.gamma_BR/self.gamma_rate # gamma time for whole gamma spectrum
+        if self.full_gamma:
+            self.G4_gamma_time =  self.G4_full_gamma_time
         with open(self.signal_path, 'r') as file:
             reader = csv.reader(file)
             # Read the first row (assuming single row for simplicity)
@@ -721,5 +726,5 @@ class test_csv():
         print(number_list)
 
 if __name__=="__main__":
-    sn = SN(gamma=True)
+    sn = SN(gamma=True,full_gamma=True)
     # test = test_csv()
