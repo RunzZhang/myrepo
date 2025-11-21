@@ -10,7 +10,7 @@ class SN():
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
         self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside_x37_lead_full_gamma/" # for gamma path
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside_x37_lead_gamma/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -23,7 +23,7 @@ class SN():
         self.name2 = "Hard Scatter Background"
         self.name = "Backgrounds"
         self.plot_name = self.name+"PN_1E6_wt_gamma_outside.pdf"
-        self.pho_threshold = 200
+        self.pho_threshold = 100
         self.signal_final_list = []
         self.noise1_final_list =[]
         self.noise2_final_list = []
@@ -726,5 +726,5 @@ class test_csv():
         print(number_list)
 
 if __name__=="__main__":
-    sn = SN(gamma=True,full_gamma=True)
+    sn = SN(gamma=True,full_gamma=False)
     # test = test_csv()
