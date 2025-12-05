@@ -142,7 +142,7 @@ class ReadRoot():
         self.main_body(1)
         # for i in range(1,101):
         # for i in range(1, 11):
-            self.main_body(i)
+        #     self.main_body(i)
     def main_body(self,i):
         print(i)
         self.ini_path = self.base_path+ f"Cs_gamma_1E7_ini_part{i}.csv"
