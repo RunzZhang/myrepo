@@ -214,11 +214,11 @@ class ReadRoot():
         self.modify_df()
 
         # find all ER and save ER into csv
-        self.allER()
-        self.gamma_ER()
+        # self.allER()
+        # self.gamma_ER()
 
         # find all NR
-        # self.allNR()
+        self.allNR()
 
 
 
@@ -290,9 +290,11 @@ class ReadRoot():
         self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))&(self.df["Recoiled/MeV"]>0) ]
         self.LAr_recoiled_event_list = self.LAr_recoiled["Event"].unique().tolist()
 
+        print(self.LAr_recoiled_event_list)
+
         # sample the first 10 event to see what caused the NR
-        self.LAr_NR_sample = self.df[(self.df["Event"].isin(self.LAr_recoiled_event_list))]
-        self.LAr_NR_sample.to_csv(self.base_path+"LAr_NR_sample.csv")
+        # self.LAr_NR_sample = self.df[(self.df["Event"].isin(self.LAr_recoiled_event_list))]
+        # self.LAr_NR_sample.to_csv(self.base_path+"LAr_NR_sample.csv")
 
     def allER(self):
         # we need to do several things:
