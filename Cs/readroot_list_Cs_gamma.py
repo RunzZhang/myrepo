@@ -212,7 +212,7 @@ class ReadRoot():
         # self.df = self.file.arrays(self.selected_columns, library="pd", entry_start=0,entry_stop=10000)
         self.df = self.file.arrays(self.selected_columns, library="pd")
         self.modify_df()
-        
+
         # find all ER and save ER into csv
         # self.allER()
         # self.gamma_ER()
