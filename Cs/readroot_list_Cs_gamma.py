@@ -139,10 +139,10 @@ class ReadRoot():
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        # self.main_body(1)
+        self.main_body(1)
         # for i in range(1,101):
-        for i in range(1, 11):
-            self.main_body(i)
+        # for i in range(1, 11):
+        #     self.main_body(i)
     def main_body(self,i):
         print(i)
         self.ini_path = self.base_path+ f"Cs_gamma_1E7_ini_part{i}.csv"
@@ -214,11 +214,11 @@ class ReadRoot():
         self.modify_df()
 
         # find all ER and save ER into csv
-        # self.allER()
-        # self.gamma_ER()
+        self.allER()
+        self.gamma_ER()
 
         # find all NR
-        self.allNR()
+        # self.allNR()
 
 
 
@@ -301,10 +301,12 @@ class ReadRoot():
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
         self.gamma_Scint = self.df[
-            (self.df['Volume'] == 'LAr_phys') & (self.df['Process'] == "compt")]
+            ((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys')) & (self.df['Process'] == "compt")& (self.df['Parent ID'] == 0)]
+        # record the positions and multiplicity
+
         gamma_list = self.gamma_Scint["Event"].unique()
         print("gamma filter", len(gamma_list))
-        self.gamma_Scint = self.keep_1st(self.gamma_Scint)
+        # self.gamma_Scint = self.keep_1st(self.gamma_Scint)
         print("scint", self.gamma_Scint)
         # find electrons are daughter of those gammas
         self.gamma_Scint_column = self.gamma_Scint[['Event', "Track ID"]]
@@ -342,15 +344,12 @@ class ReadRoot():
         print("exclusive ER", high_NRER)
         # p_observe only contains ER, if one event only has NR, it still produce bubbles that we need to compress
         print("path",self.false_gamma_1_path)
+        # Cs, just save the total ER in MeV
         with open(self.false_gamma_1_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
-            wr.writerow(p_observed)
+            wr.writerow(self.electron_recoiled_list)
 
-
-
-
-
-
+        self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample.csv")
 
     def exclude_common(self,df1, df2): # exclude same ["Event"]
         common_events = set(df1["Event"]) & set(df2["Event"])
