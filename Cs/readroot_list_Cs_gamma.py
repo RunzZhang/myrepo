@@ -300,8 +300,9 @@ class ReadRoot():
         # we need to do several things:
         # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
+        # including phot - Xray excited the electrons
         self.gamma_Scint = self.df[
-            ((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys')) & (self.df['Process'] == "compt")& (self.df['Parent ID'] == 0)]
+            ((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys')) &( (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))& (self.df['Parent ID'] == 0)]
         # record the positions and multiplicity
 
         gamma_list = self.gamma_Scint["Event"].unique()
