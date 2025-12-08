@@ -274,6 +274,9 @@ class ReadRoot():
         self.df['Process'] = self.df['Process'].astype(str)
         # this make event number correct
         self.reidx_event()
+
+    def modify_gamma_process(self):
+        print("modify gamma, make gamma volume to be pre-volume consistently")
     def source_geometry(self):
         print(self.df[(self.df["name"]=="neutron")&(self.df["Step ID"]==1)&(self.df["Parent ID"]==0)]["X/mm"])
         self.x_range[0] = min(self.x_range[0],self.df[(self.df["name"]=="neutron")&(self.df["Step ID"]==1)&(self.df["Parent ID"]==0)]["X/mm"].min())
