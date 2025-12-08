@@ -201,7 +201,7 @@ class ReadRoot():
         self.file = uproot.open(self.filepath)["tree"]
         # print("columns: ", self.file.keys())
         # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
-        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm","PreKinetic/MeV","PostKinetic/MeV",
+        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm",'Y/mm', 'Z/mm',"PreKinetic/MeV","PostKinetic/MeV",
                                  "Recoiled/MeV", "Volume", "Process"]
 
         self.bubble_threshold = 0.0001 # MeV bubble generate threshold
