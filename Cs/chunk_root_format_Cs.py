@@ -33,7 +33,7 @@ class ReadRoot:
         # Define the columns you want to read and write
         # self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV","PostKinetic/MeV"
         #                          "Recoiled/MeV", "Volume", "Process"]
-        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV",
+        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm",'Y/mm', 'Z/mm', "PreKinetic/MeV",
                                  "PostKinetic/MeV",
                                  "Recoiled/MeV", "Volume", "Process"]
 
