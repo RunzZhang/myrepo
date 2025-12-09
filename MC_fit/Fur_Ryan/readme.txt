@@ -27,3 +27,4 @@ python3 fitPhoto5.py $1 $2  ${WORKDIR}/"
 -Makes the style of plot with CEvNS or WIMP spectra in it.
 -How to run: python readWIMP.py <output_directory> <threshold> <one_sigma>, example: "python readWIMP.py Quick_Test 160 20"
 -This file is cursed. Do not try to figure out what numbers it regurgitates or you will lose your mind. I am sorry.
+python readWIMP_v2.py /home/runze/Documents/results/TN_sims_2E5_pn_lead_low 400 50
