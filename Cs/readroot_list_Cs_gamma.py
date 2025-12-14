@@ -272,7 +272,7 @@ class ReadRoot():
         self.df['name'] = self.df['name'].astype(str)
         self.df['Volume'] = self.df['Volume'].astype(str)
         self.df['Process'] = self.df['Process'].astype(str)
-        self.df.loc[self.df['Process'].isna(),"Process"]="init"
+        self.df.loc[self.df['Process']=="","Process"]="init"
         # this make event number correct
         self.reidx_event()
 
