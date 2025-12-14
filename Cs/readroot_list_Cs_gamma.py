@@ -134,8 +134,8 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E5/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E5/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E6/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E6/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
@@ -272,6 +272,7 @@ class ReadRoot():
         self.df['name'] = self.df['name'].astype(str)
         self.df['Volume'] = self.df['Volume'].astype(str)
         self.df['Process'] = self.df['Process'].astype(str)
+        self.df[self.df['Process'].isna()]["Process"]="init"
         # this make event number correct
         self.reidx_event()
 
