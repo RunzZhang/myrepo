@@ -310,7 +310,10 @@ class ReadRoot():
         # in 1 event number, only the first series of gammas, avoiding over-countting
         # including phot - Xray excited the electrons
         # fetch the location/multiplicity/ER
-        #output matrix[[(x,y,z),ER],]
+        # output matrix to [event1_data, event2_data]
+        # in each eventi_data, it is matrix [(x1,y1,z1),ER1], [(x2,y2,z2),ER2,,,] including the bubble multiplicity and ER and position
+
+        print(self.df['name'].unique())
         self.gamma_Scint = self.df[
             ((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys')) &( (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))& (self.df['Parent ID'] == 0)]
         # record the positions and multiplicity
