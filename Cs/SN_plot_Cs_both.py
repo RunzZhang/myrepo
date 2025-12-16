@@ -123,19 +123,17 @@ class SN():
 
         self.cmap =  plt.cm.plasma
         fig, ax = plt.subplots()
-        for i in range(len(self.mutiplicity_list)):
-            ax.scatter(
-                self.mutiplicity_list[i][:,0],
-                self.mutiplicity_list[i][:,1],
-                s=5,
-                color=self.cmap(i / max(len(self.mutiplicity_list), 1)),
-                label=f"Order {i+1}",
-                alpha=0.7
-            )
+
+        sc=ax.scatter(self.merged_df["R/mm"],self.merged_df["Z/mm"],
+        c=self.merged_df["Multiplicity"],   # color comes from data
+        cmap="viridis",
+        s=5,
+        alpha=0.7)
 
         ax.set_xlabel("R [mm]")
         ax.set_ylabel("Z [mm]")
-        ax.legend()
+        cbar = plt.colorbar(sc, ax=ax)
+        cbar.set_label("Scatter Order")
         plt.savefig(self.gamma_bkg_path)
 
 
