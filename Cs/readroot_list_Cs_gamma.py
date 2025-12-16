@@ -348,6 +348,7 @@ class ReadRoot():
         # save info
 
         self.electron_recoiled_event_list = summed_values["Event"].to_list()
+        print(self.electron_recoiled_event_list[:3])
         high_NRER = []
 
         self.mom_gamma = self.df[
