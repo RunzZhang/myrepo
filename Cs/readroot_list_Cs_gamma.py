@@ -134,8 +134,8 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E6/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E6/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E5/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E5/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
@@ -363,7 +363,7 @@ class ReadRoot():
             wr = csv.writer(myfile)
             wr.writerow(self.electron_recoiled_list)
 
-        self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess.csv")
+        self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep.csv")
 
     def exclude_common(self,df1, df2): # exclude same ["Event"]
         common_events = set(df1["Event"]) & set(df2["Event"])
