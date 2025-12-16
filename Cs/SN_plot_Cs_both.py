@@ -107,7 +107,7 @@ class SN():
         #position distributions histogram, dependisng on step number
         # self.read_positions()
         #mulitipliciy distribtuion depending on events
-        self.read_multiplicity()
+        # self.read_multiplicity()
         # ER distribution per row
         self.read_ER()
 
@@ -151,7 +151,7 @@ class SN():
 
     def read_ER(self):
         ER = self.merged_df["ER_near/eV"]
-        ax, fig = plt.subplots()
+        fig, ax = plt.subplots()
         ax.hist(ER, align="left", rwidth=0.9)
         ax.set_xlabel("ER/eV per scattering")
         ax.set_ylabel("Counts")
