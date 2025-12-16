@@ -397,8 +397,13 @@ class ReadRoot():
         print(first3_events)
         print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
 
+        self.mom_gamma["Multiplicity"] = (self.mom_gamma.groupby("Event")["Step ID"].rank(method="dense", ascending=True).astype(int))
 
-        self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
+
+        # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
+
+
+
     def gamma_ER(self):
 
         self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-")&(self.df_electron["Event"] != 1)]
