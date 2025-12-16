@@ -109,6 +109,7 @@ class SN():
         #mulitipliciy distribtuion depending on events
         self.read_multiplicity()
         # ER distribution per row
+        self.read_ER()
 
 
 
@@ -147,6 +148,15 @@ class SN():
         ax.set_xlabel("Multiplicity")
         ax.set_ylabel("Counts")
         plt.savefig(self.plot_path+"Cs_1E5_multi.pdf")
+
+    def read_ER(self):
+        ER = self.merged_df["ER_near/eV"]
+        ax, fig = plt.subplots()
+        ax.hist(ER, align="left", rwidth=0.9)
+        ax.set_xlabel("ER/eV per scattering")
+        ax.set_ylabel("Counts")
+        plt.savefig(self.plot_path + "Cs_1E5_ER.pdf")
+
 
 
 
