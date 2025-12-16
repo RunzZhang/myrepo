@@ -144,7 +144,7 @@ class SN():
         print(max_m)
         bins = np.arange(1, max_m + 2)
         fig,ax = plt.subplots()
-        ax.hist(multiplicity, bins= bins, align="left", rwidth=0.9)
+        ax.hist(multiplicity, bins= bins, align="left", rwidth=0.9, density=True)
         ax.set_xlabel("Multiplicity")
         ax.set_ylabel("Counts")
         plt.savefig(self.plot_path+"Cs_1E5_multi.pdf")
@@ -152,7 +152,7 @@ class SN():
     def read_ER(self):
         ER = self.merged_df["ER_near/eV"]
         fig, ax = plt.subplots()
-        ax.hist(ER, align="left", rwidth=0.9)
+        ax.hist(ER, align="left", rwidth=0.9, density=True)
         ax.set_xlabel("ER/eV per scattering")
         ax.set_ylabel("Counts")
         plt.savefig(self.plot_path + "Cs_1E5_ER.pdf")
