@@ -675,5 +675,5 @@ class test_csv():
         print(number_list)
 
 if __name__=="__main__":
-    sn = SN(gamma=True,full_gamma=False)
+    sn = SN()
     # test = test_csv()
