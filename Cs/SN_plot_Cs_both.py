@@ -23,6 +23,7 @@ class SN():
         self.name2 = "Hard Scatter Background"
         self.name = "Backgrounds"
         self.plot_name = self.name+"PN_1E6_wt_gamma_outside.pdf"
+        self.gamma_bkg_path = self.plot_path+"Cs_gamma position_distribution.pdf"
         self.pho_threshold = 100
 
         cols = ["Event","name", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]
@@ -36,21 +37,8 @@ class SN():
         for i in range(1, 11):
             self.main_body(i)
         # self.main_body(1)
-        # for ploting PN background tagging and SNR
-        self.untagged_bubble_rate()
-        if self.gamma:
-            (result1, result2, resultgamma1) = self.combine_data(self.gamma)
-            self.plot_sn_gamma_v2(result1[0], result2[0], resultgamma1[0],result1[1], result2[1], resultgamma1[1],result1[2], result2[2], resultgamma1[2], result1[3],
-                            result2[3],resultgamma1[3])
-        else:
-            (result1, result2) = self.combine_data(self.gamma)
-            self.plot_sn_v2(result1[0], result2[0], result1[1], result2[1], result1[2], result2[2], result1[3],
-                            result2[3])
-
-        # for ploting PN spectrum and SBC detector thermalizing effect
-        # self.plot_neutron_spectrum()
-
-        # self.plot_neutron_spectrum_lin()
+        self.combine_df()
+        self.data_analysis()
 
 
     def main_body(self,i):
@@ -125,7 +113,32 @@ class SN():
 
 
     def read_positions(self):
-        self.firststep = self.merged_df[self.merged_df["Multiplicity"==1]]
+        max_multi_num = self.merged_df["Multiplicity"].max()
+        print(max_multi_num)
+        self.mutiplicity_list =[]
+        for i in range(1,max_multi_num+1,1):
+            temp_df = self.merged_df[self.merged_df["Multiplicity"]==i][["R/mm","Z/mm"]]
+            temp_list = temp_df.to_numpy()
+            self.mutiplicity_list.append(temp_list)
+
+        self.cmap =  plt.cm.plasma
+        fig, ax = plt.subplots()
+        for i in range(len(self.mutiplicity_list)):
+            ax.scatter(
+                self.mutiplicity_list[i][:,0],
+                self.mutiplicity_list[i][:,1],
+                s=5,
+                color=self.cmap(i / max(len(self.mutiplicity_list), 1)),
+                label=f"Order {i+1}",
+                alpha=0.7
+            )
+
+        ax.set_xlabel("R [mm]")
+        ax.set_ylabel("Z [mm]")
+        ax.legend()
+        plt.savefig(self.gamma_bkg_path)
+
+
 
 
     def combine_data(self,gamma=False):
