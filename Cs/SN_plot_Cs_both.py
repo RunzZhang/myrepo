@@ -107,9 +107,9 @@ class SN():
         #position distributions histogram, dependisng on step number
         # self.read_positions()
         #mulitipliciy distribtuion depending on events
-        # self.read_multiplicity()
+        self.read_multiplicity()
         # ER distribution per row
-        self.read_ER()
+        # self.read_ER()
 
 
 
