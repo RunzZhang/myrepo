@@ -3,14 +3,14 @@ import matplotlib.pyplot as plt
 import csv
 import numpy as np
 class SN():
-    def __init__(self,gamma=False,full_gamma = False):
+    def __init__(self):
         # after generate new files, you need to select the capture ratio/source for different configs in read_files function.
         # then choose the correct signal/noise of with clause in read files.
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside_x37_lead_gamma/" # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E5/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E5/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -24,17 +24,11 @@ class SN():
         self.name = "Backgrounds"
         self.plot_name = self.name+"PN_1E6_wt_gamma_outside.pdf"
         self.pho_threshold = 100
-        self.signal_final_list = []
-        self.noise1_final_list =[]
-        self.noise2_final_list = []
-        self.noisegamma1_final_list = []
-        self.untagged_bubble_list =[]
-        self.tagged_bubble_list = []
-        self.neutron_ini_list = []
-        self.neutron_ar_ke_list =[]
-        self.neutron_ar_ke_alter_list = []
-        self.gamma = gamma
-        self.full_gamma = full_gamma
+
+        cols = ["Event","name", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]
+
+        self.df_list =[]
+
 
 
         #982 statics false 1
@@ -66,6 +60,8 @@ class SN():
         self.false_3 = f"PN_1E7_false3_part{i}.csv"
         self.false_gamma_1 = f"PN_gamma_1E7_false1_part{i}.csv"
         self.signal = f"PN_1E7_sig_part{i}.csv"
+
+        self.info_path = self.base_path + f"Cs_gamma_1E6_info_part{i}.csv"
 
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
@@ -110,86 +106,26 @@ class SN():
         self.G4_noise_time = self.G4_events / self.rate
         self.G4_gamma_time = self.G4_events_gamma/self.gamma_rate
         self.G4_full_gamma_time = self.G4_events_gamma*self.gamma_BR/self.gamma_rate # gamma time for whole gamma spectrum
-        if self.full_gamma:
-            self.G4_gamma_time =  self.G4_full_gamma_time
-        with open(self.signal_path, 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.sig_raw_list = [float(value) for value in number_list]
-        self.signal_final_list = self.signal_final_list + self.sig_raw_list
 
-        print("capture event number", len(self.sig_raw_list))
+        temp_df = pd.read_csv(self.info_path)
 
-        # with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'r') as file:
-        # Noise 1,
-        with open(self.false_1_path, 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.noise1_raw_list = [float(value) for value in number_list[1:]]
-            bubble_num =  number_list[0]
+        self.df_list.append(temp_df)
 
 
-            # the [0] is NR number and [1:] is the photon numbers
-        self.noise1_final_list = self.noise1_final_list + self.noise1_raw_list
-        self.untagged_bubble_list.append(float(bubble_num))
-        self.tagged_bubble_list.append(len(self.noise1_raw_list))
-        # tagged number for noise1
-        # Noise 2
-        with open(self.false_2_path, 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.noise2_raw_list = [float(value) for value in number_list]
-            # self.noise_raw_list = [float(value)  for value in number_list]
-        self.noise2_raw_list = list(filter(lambda x: x != 0, self.noise2_raw_list))
-        self.noise2_final_list = self.noise2_final_list + self.noise2_raw_list
-        # print(self.noise2_raw_list)
-        self.tagged_bubble_list.append(len(self.noise2_raw_list))
-        # tagged number for noise2
+    def combine_df(self):
+        self.merged_df = pd.concat(self.df_list, ignore_index=True)
 
-        with open(self.false_gamma_1_path, 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.noisegamma1_raw_list = [float(value) for value in number_list]
-            # self.noise_raw_list = [float(value)  for value in number_list]
-        self.noisegamma1_final_list = self.noisegamma1_final_list + self.noisegamma1_raw_list
+    def data_analysis(self):
+        #position distributions histogram, dependisng on step number
+        self.read_positions()
+        #mulitipliciy distribtuion depending on events
 
-        # Initial amli spectrm
-        with open(self.ini_path, 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.neutron_ini_raw_list = [float(value)*1e6 for value in number_list]
+        # ER distribution per row
 
 
-            # the [0] is NR number and [1:] is the photon numbers
-        self.neutron_ini_list +=  self.neutron_ini_raw_list
 
-        with open(self.ar_ke_path, 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.ar_ke_raw_list = [float(value)*1e6 for value in number_list] # in eV
-            # self.noise_raw_list = [float(value)  for value in number_list]
-        self.neutron_ar_ke_list += self.ar_ke_raw_list
-
-        with open(self.ar_ke_alter_path, 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.ar_ke_alter_raw_list = [float(value)*1e6 for value in number_list] # in eV
-            # self.noise_raw_list = [float(value)  for value in number_list]
-        self.neutron_ar_ke_alter_list += self.ar_ke_raw_list
+    def read_positions(self):
+        self.firststep = self.merged_df[self.merged_df["Multiplicity"==1]]
 
 
     def combine_data(self,gamma=False):

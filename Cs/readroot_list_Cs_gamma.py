@@ -169,6 +169,7 @@ class ReadRoot():
         self.false_gamma_1_new_mid = f"Cs_gamma_1E7_false1_new_mid_part{i}.csv"
         self.false_gamma_2_new_mid = f"Cs_gamma_1E7_false2_new_mid_part{i}.csv"
         self.signal_new_mid = f"Cs_gamma_1E7_sig_new_mid_part{i}.csv"
+        self.info_path = self.base_path+ f"Cs_gamma_1E6_info_part{i}.csv"
         self.false_gamma_1_path = self.base_path + self.false_gamma_1
         self.false_gamma_2_path = self.base_path + self.false_gamma_2
         self.false_gamma_3_path = self.base_path + self.false_gamma_3
@@ -398,6 +399,16 @@ class ReadRoot():
         print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
 
         self.mom_gamma["Multiplicity"] = (self.mom_gamma.groupby("Event")["Step ID"].rank(method="dense", ascending=True).astype(int))
+        self.mom_gamma["R/mm"] = np.sqrt(self.mom_gamma["X/mm"]**2+self.mom_gamma["Y/mm"]**2 )
+
+        self.mom_gamma["ER_near/eV"]= self.mom_gamma["ER_near"]*1e6
+
+        first3_events = self.mom_gamma["Event"].unique()[:3]
+        print(first3_events)
+        print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
+
+        self.output_df = self.mom_gamma[["Event","name", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
+        self.output_df.to_csv(self.info_path, index=False)
 
 
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
