@@ -105,9 +105,9 @@ class SN():
 
     def data_analysis(self):
         #position distributions histogram, dependisng on step number
-        self.read_positions()
+        # self.read_positions()
         #mulitipliciy distribtuion depending on events
-
+        self.read_multiplicity()
         # ER distribution per row
 
 
@@ -134,7 +134,21 @@ class SN():
         ax.set_ylabel("Z [mm]")
         cbar = plt.colorbar(sc, ax=ax)
         cbar.set_label("Scatter Order")
-        plt.savefig(self.gamma_bkg_path)
+        plt.savefig(self.plot_path+"Cs_1E5_position.pdf")
+
+
+    def read_multiplicity(self):
+        multiplicity= self.merged_df.groupby("Event")["Multiplicity"].max()
+        max_m = max(multiplicity)
+        bins = np.arange(1, max_m + 2)
+        fig,ax = plt.subplots()
+        ax.hist(multiplicity, bins= bins, align="left", rwidth=0.9)
+        ax.set_xlabel("Multiplicity")
+        ax.set_ylabel("Counts")
+        plt.savefig(self.plot_path+"Cs_1E5_multi.pdf")
+
+
+
 
 
 
