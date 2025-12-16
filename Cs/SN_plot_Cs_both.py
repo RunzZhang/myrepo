@@ -121,12 +121,12 @@ class SN():
             temp_list = temp_df.to_numpy()
             self.mutiplicity_list.append(temp_list)
 
-        self.cmap =  plt.cm.plasma
+        # self.cmap =  plt.cm.plasma
         fig, ax = plt.subplots()
 
         sc=ax.scatter(self.merged_df["R/mm"],self.merged_df["Z/mm"],
         c=self.merged_df["Multiplicity"],   # color comes from data
-        cmap="viridis",
+        cmap="plasma",
         s=5,
         alpha=0.7)
 
