@@ -140,6 +140,7 @@ class SN():
     def read_multiplicity(self):
         multiplicity= self.merged_df.groupby("Event")["Multiplicity"].max()
         max_m = self.merged_df["Multiplicity"].max()
+        print(max_m)
         bins = np.arange(1, max_m + 2)
         fig,ax = plt.subplots()
         ax.hist(multiplicity, bins= bins, align="left", rwidth=0.9)
