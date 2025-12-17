@@ -159,7 +159,7 @@ class SN():
         ER_sum = self.merged_df.groupby("Event")["ER_near/eV"].sum()/1000
         fig, ax = plt.subplots(1,2, figsize=(10, 4))
         ax[0].hist(ER, align="left", rwidth=0.9)
-        ax[0].set_xlabel("ER/eV per scattering")
+        ax[0].set_xlabel("ER/keV per scattering")
         ax[0].set_ylabel("Counts")
 
         ax[1].hist(ER_sum, align="left", rwidth=0.9)
@@ -173,7 +173,7 @@ class SN():
         ER_sum = self.merged_df.groupby("Event")["ER_near/eV"].sum()/1000
         fig, ax = plt.subplots(1, 2, figsize=(10, 4))
         ax[0].hist(ER, align="left", rwidth=0.9)
-        ax[0].set_xlabel("ER/eV per scattering")
+        ax[0].set_xlabel("ER/keV per scattering")
         ax[0].set_ylabel("Counts")
 
         ax[1].hist(ER_sum, align="left", rwidth=0.9)
