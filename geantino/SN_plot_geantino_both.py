@@ -107,6 +107,7 @@ class SN():
         #postion of geantino trans in sbc
         # to check the volume distribution
         self.read_positions_CF4_n_Ar()
+        self.find_boundary()
 
 
 
@@ -128,6 +129,27 @@ class SN():
         ax.set_ylabel("Z [mm]")
         plt.legend()
         plt.savefig(self.plot_path+"geantino_CF4_Ar.pdf")
+
+    def find_boundary(self):
+        # find anchors
+        ceiling_1st = self.merged_df[(self.merged_df["Volume"]=='hydraulic_fluid_phys')&(self.merged_df["Z/mm"]>650)]
+        ceiling_1st_idxmax = ceiling_1st["R/mm"].idxmax()
+        ceiling_1st_idxmin = ceiling_1st["R/mm"].idxmin()
+        print("1st celing", self.merged_df.loc[ceiling_1st_idxmax, ["R/mm", "Z/mm"]], self.merged_df.loc[ceiling_1st_idxmin, ["R/mm", "Z/mm"]])
+
+        ceiling_2nd = self.merged_df[
+            (self.merged_df["Volume"] == 'LAr_phys') & (self.merged_df["Z/mm"] < 650)& (self.merged_df["Z/mm"] > 550)]
+        ceiling_2nd_idxmax = ceiling_2nd["R/mm"].idxmax()
+        ceiling_2nd_idxmin = ceiling_2nd["R/mm"].idxmin()
+        print("ceiling_2nd celing", self.merged_df.loc[ceiling_2nd_idxmax, ["R/mm", "Z/mm"]],self.merged_df.loc[ceiling_2nd_idxmin, ["R/mm", "Z/mm"]] )
+
+        ceiling_3rd = self.merged_df[
+            (self.merged_df["Volume"] == 'hydraulic_fluid_phys') & (self.merged_df["Z/mm"] < 550) & (self.merged_df["Z/mm"] > 450)& (self.merged_df["R/mm"] < 110)]
+        ceiling_3rd_idxmax = ceiling_3rd["R/mm"].idxmax()
+        ceiling_3rd_idxmin = ceiling_3rd["R/mm"].idxmin()
+        print("ceiling_3rd celing", self.merged_df.loc[ceiling_3rd_idxmax, ["R/mm", "Z/mm"]], self.merged_df.loc[ceiling_3rd_idxmin, ["R/mm", "Z/mm"]])
+
+
 
     def read_multiplicity(self):
         multiplicity= self.merged_df.groupby("Event")["Multiplicity"].max()
