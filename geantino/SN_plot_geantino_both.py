@@ -106,26 +106,24 @@ class SN():
     def data_analysis(self):
         #postion of geantino trans in sbc
         # to check the volume distribution
-        self.read_positions_CF4()
-        self.read_positions_Ar()
+        self.read_positions_CF4_n_Ar()
 
 
 
-    def read_positions_CF4(self):
-        self.df_CF4=self.merged_df[self.merged_df["Volume"]=='hydraulic_fluid_phys']
+    def read_positions_CF4_n_Ar(self):
+        self.df_CF4=self.merged_df[self.merged_df["Volume"]=='hydraulic_fluid_phys'].iloc[:1000]
         fig, ax = plt.subplots()
         ax.scatter(self.df_CF4["R/mm"],self.df_CF4["Z/mm"],s = 5,
-        alpha = 0.7)
+        alpha = 0.7, color= "red", label="CF4 boundary")
 
         ax.set_xlabel("R [mm]")
         ax.set_ylabel("Z [mm]")
         plt.savefig(self.plot_path+"geantino_CF4.pdf")
 
-    def read_positions_Ar(self):
-        self.df_Ar=self.merged_df[self.merged_df["Volume"]=='LAr_phys']
-        fig, ax = plt.subplots()
+
+        self.df_Ar=self.merged_df[self.merged_df["Volume"]=='LAr_phys'].iloc[:1000]
         ax.scatter(self.df_Ar["R/mm"],self.df_Ar["Z/mm"],s = 5,
-        alpha = 0.7)
+        alpha = 0.7,color= "blue", label="Ar boundary")
 
         ax.set_xlabel("R [mm]")
         ax.set_ylabel("Z [mm]")
