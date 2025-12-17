@@ -169,7 +169,7 @@ class ReadRoot():
         self.false_gamma_1_new_mid = f"Cs_gamma_1E7_false1_new_mid_part{i}.csv"
         self.false_gamma_2_new_mid = f"Cs_gamma_1E7_false2_new_mid_part{i}.csv"
         self.signal_new_mid = f"Cs_gamma_1E7_sig_new_mid_part{i}.csv"
-        self.info_path = self.base_path+ f"Cs_gamma_1E6_info_part{i}.csv"
+        self.info_path = self.base_path+ f"Cs_gamma_1E6_info_scube_part{i}.csv"
         self.false_gamma_1_path = self.base_path + self.false_gamma_1
         self.false_gamma_2_path = self.base_path + self.false_gamma_2
         self.false_gamma_3_path = self.base_path + self.false_gamma_3
