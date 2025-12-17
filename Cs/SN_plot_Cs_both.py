@@ -165,15 +165,15 @@ class SN():
         print(filtered_df.head(20))
 
         fig, ax = plt.subplots(1,3, figsize=(14, 4))
-        ax[0].hist(ER_Ar, bins=20,align="left")
+        ax[0].hist(ER_Ar, bins=40,align="left")
         ax[0].set_xlabel("ER/keV per scattering LAr")
         ax[0].set_ylabel("Counts")
 
-        ax[1].hist(ER_CF4, bins=20,align="left")
+        ax[1].hist(ER_CF4, bins=40,align="left")
         ax[1].set_xlabel("ER/keV per scattering CF4")
         ax[1].set_ylabel("Counts")
 
-        ax[2].hist(ER_sum, bins=20, align="left")
+        ax[2].hist(ER_sum, bins=40, align="left")
         ax[2].set_xlabel("ER/keV per event")
         ax[2].set_ylabel("Counts")
 
