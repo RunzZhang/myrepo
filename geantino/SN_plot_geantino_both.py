@@ -124,7 +124,7 @@ class SN():
     def read_positions_Ar(self):
         self.df_Ar=self.merged_df[self.merged_df["Volume"]=='LAr_phys']
         fig, ax = plt.subplots()
-        ax.scatter(self.df_CF4["R/mm"],self.df_CF4["Z/mm"],s = 5,
+        ax.scatter(self.df_Ar["R/mm"],self.df_Ar["Z/mm"],s = 5,
         alpha = 0.7)
 
         ax.set_xlabel("R [mm]")
