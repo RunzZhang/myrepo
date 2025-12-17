@@ -158,11 +158,11 @@ class SN():
         ER = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["ER_near/eV"]
         ER_sum = self.merged_df.groupby("Event")["ER_near/eV"].sum()
         fig, ax = plt.subplots(1,2, figsize=(10, 4))
-        ax[0].hist(ER, align="left", rwidth=0.9, density=True)
+        ax[0].hist(ER, align="left", rwidth=0.9)
         ax[0].set_xlabel("ER/eV per scattering")
         ax[0].set_ylabel("Counts")
 
-        ax[1].hist(ER_sum, align="left", rwidth=0.9, density=True)
+        ax[1].hist(ER_sum, align="left", rwidth=0.9)
         ax[1].set_xlabel("ER/eV per event")
         ax[1].set_ylabel("Counts")
         plt.savefig(self.plot_path + "Cs_1E5_ER_Ar.pdf")
@@ -172,11 +172,11 @@ class SN():
         ER = self.merged_df[self.merged_df["Volume"]=="hydraulic_fluid_phys"]["ER_near/eV"]
         ER_sum = self.merged_df.groupby("Event")["ER_near/eV"].sum()
         fig, ax = plt.subplots(1, 2, figsize=(10, 4))
-        ax[0].hist(ER, align="left", rwidth=0.9, density=True)
+        ax[0].hist(ER, align="left", rwidth=0.9)
         ax[0].set_xlabel("ER/eV per scattering")
         ax[0].set_ylabel("Counts")
 
-        ax[1].hist(ER_sum, align="left", rwidth=0.9, density=True)
+        ax[1].hist(ER_sum, align="left", rwidth=0.9)
         ax[1].set_xlabel("ER/eV per event")
         ax[1].set_ylabel("Counts")
         plt.savefig(self.plot_path + "Cs_1E5_ER_CF4.pdf")
