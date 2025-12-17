@@ -408,10 +408,10 @@ class ReadRoot():
         print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
 
         self.output_df = self.mom_gamma[["Event","name", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
-        print(self.df[self.df["Event"]==3154])
+
         self.output_df.to_csv(self.info_path, index=False)
 
-
+        self.df[self.df["Event"] == 3154].to_csv(self.base_path+"LAr_ER_abnormalER.csv")
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
 
 
