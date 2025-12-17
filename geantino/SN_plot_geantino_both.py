@@ -126,6 +126,7 @@ class SN():
 
         ax.set_xlabel("R [mm]")
         ax.set_ylabel("Z [mm]")
+        plt.legend()
         plt.savefig(self.plot_path+"geantino_CF4_Ar.pdf")
 
     def read_multiplicity(self):
