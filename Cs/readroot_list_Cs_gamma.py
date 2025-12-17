@@ -362,7 +362,7 @@ class ReadRoot():
 
         self.mom_gamma = self.mom_gamma.copy()
         self.mom_gamma["ER_near"] = 0.0
-        half = 0.05 # mm from original cube 2*2*2 mm
+        half = 0.00 # mm from original cube 2*2*2 mm
 
 
         for event_id, g_evt in self.mom_gamma_group:
