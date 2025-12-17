@@ -105,9 +105,9 @@ class SN():
 
     def data_analysis(self):
         #position distributions histogram, dependisng on step number
-        # self.read_positions()
+        self.read_positions()
         #mulitipliciy distribtuion depending on events
-        self.read_multiplicity()
+        # self.read_multiplicity()
         # ER distribution per row
         # self.read_ER()
 
@@ -130,6 +130,10 @@ class SN():
         cmap="plasma",
         s=5,
         alpha=0.7)
+
+        ax.plot([189.95, 0.8485], [663.22, 714.03], color="red")
+        ax.plot([114.98, 0.75575], [587.01, 617.78], color="blue")
+        ax.plot([99.01, 4.34], [366.49, 399.82], color="red")
 
         ax.set_xlabel("R [mm]")
         ax.set_ylabel("Z [mm]")
