@@ -118,7 +118,6 @@ class SN():
 
         ax.set_xlabel("R [mm]")
         ax.set_ylabel("Z [mm]")
-        plt.savefig(self.plot_path+"geantino_CF4.pdf")
 
 
         self.df_Ar=self.merged_df[self.merged_df["Volume"]=='LAr_phys'].iloc[:1000]
@@ -127,7 +126,7 @@ class SN():
 
         ax.set_xlabel("R [mm]")
         ax.set_ylabel("Z [mm]")
-        plt.savefig(self.plot_path+"geantino_Ar.pdf")
+        plt.savefig(self.plot_path+"geantino_CF4_Ar.pdf")
 
     def read_multiplicity(self):
         multiplicity= self.merged_df.groupby("Event")["Multiplicity"].max()
