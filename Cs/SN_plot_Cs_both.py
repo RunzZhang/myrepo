@@ -49,7 +49,7 @@ class SN():
         self.false_gamma_1 = f"PN_gamma_1E7_false1_part{i}.csv"
         self.signal = f"PN_1E7_sig_part{i}.csv"
 
-        self.info_path = self.base_path + f"Cs_gamma_1E6_info_part{i}.csv"
+        self.info_path = self.base_path + f"Cs_gamma_1E6_info_scube_part{i}.csv"
 
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
