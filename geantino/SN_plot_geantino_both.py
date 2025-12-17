@@ -111,7 +111,7 @@ class SN():
 
 
     def read_positions_CF4_n_Ar(self):
-        self.df_CF4=self.merged_df[self.merged_df["Volume"]=='hydraulic_fluid_phys'].iloc[:1000]
+        self.df_CF4=self.merged_df[self.merged_df["Volume"]=='hydraulic_fluid_phys'].iloc[:10000]
         fig, ax = plt.subplots()
         ax.scatter(self.df_CF4["R/mm"],self.df_CF4["Z/mm"],s = 5,
         alpha = 0.7, color= "red", label="CF4 boundary")
