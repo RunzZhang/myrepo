@@ -109,8 +109,7 @@ class SN():
         #mulitipliciy distribtuion depending on events
         # self.read_multiplicity()
         # ER distribution per row
-        self.read_ER_Ar()
-        self.read_ER_CF4()
+        self.read_ER_Ar_CF()
 
 
 
@@ -154,32 +153,34 @@ class SN():
         ax.set_ylabel("Counts")
         plt.savefig(self.plot_path+"Cs_1E5_multi.pdf")
 
-    def read_ER_Ar(self):
-        ER = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
+    def read_ER_Ar_CF(self):
+        ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
+        ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
         ER_sum = self.merged_df.groupby("Event")["ER_near/eV"].sum()/1000
-        fig, ax = plt.subplots(1,2, figsize=(10, 4))
-        ax[0].hist(ER, align="left", rwidth=0.9)
-        ax[0].set_xlabel("ER/keV per scattering")
+
+        ER_huge = self.merged_df.groupby("Event")["ER_near/eV"].sum()
+        events_keep = ER_huge[ER_huge>9e5].index
+        filtered_df = self.merged_df[self.merged_df["Event"].isin(events_keep)]
+
+        print(filtered_df.head(20))
+
+        fig, ax = plt.subplots(1,3, figsize=(10, 4))
+        ax[0].hist(ER_Ar, bins=20,align="left")
+        ax[0].set_xlabel("ER/keV per scattering LAr")
         ax[0].set_ylabel("Counts")
 
-        ax[1].hist(ER_sum, align="left", rwidth=0.9)
+        ax[1].hist(ER_CF4, bins=20,align="left")
+        ax[1].set_xlabel("ER/keV per scattering CF4")
+        ax[1].set_ylabel("Counts")
+
+        ax[1].hist(ER_sum, bins=20, align="left")
         ax[1].set_xlabel("ER/keV per event")
         ax[1].set_ylabel("Counts")
-        plt.savefig(self.plot_path + "Cs_1E5_ER_Ar.pdf")
+
+        plt.savefig(self.plot_path + "Cs_1E5_ER_all.pdf")
 
 
-    def read_ER_CF4(self):
-        ER = self.merged_df[self.merged_df["Volume"]=="hydraulic_fluid_phys"]["ER_near/eV"]/1000
-        ER_sum = self.merged_df.groupby("Event")["ER_near/eV"].sum()/1000
-        fig, ax = plt.subplots(1, 2, figsize=(10, 4))
-        ax[0].hist(ER, align="left", rwidth=0.9)
-        ax[0].set_xlabel("ER/keV per scattering")
-        ax[0].set_ylabel("Counts")
 
-        ax[1].hist(ER_sum, align="left", rwidth=0.9)
-        ax[1].set_xlabel("ER/keV per event")
-        ax[1].set_ylabel("Counts")
-        plt.savefig(self.plot_path + "Cs_1E5_ER_CF4.pdf")
 
 
     def combine_data(self,gamma=False):
