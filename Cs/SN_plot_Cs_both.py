@@ -155,9 +155,7 @@ class SN():
         fig, ax = plt.subplots()
 
         sc=ax.hist2d(self.merged_df["R/mm"],self.merged_df["Z/mm"],
-        cmap="plasma",norm="log",
-        s=5,
-        alpha=0.7)
+        cmap="plasma",norm="log",alpha=0.7)
 
         ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
         ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
