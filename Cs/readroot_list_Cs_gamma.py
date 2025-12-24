@@ -407,7 +407,7 @@ class ReadRoot():
         print(first3_events)
         print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
 
-        self.output_df = self.mom_gamma[["Event","name", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
+        self.output_df = self.mom_gamma[["Event","name", "X/mm","Y/mm","R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
 
         self.output_df.to_csv(self.info_path, index=False)
 
