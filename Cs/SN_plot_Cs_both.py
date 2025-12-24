@@ -214,8 +214,8 @@ class SN():
         ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
         ER_sum = self.merged_df.groupby("Event")["ER_near/eV"].sum()/1000
 
-        ER_Ar_sum = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["ER_near/eV"].groupby("Event").sum()/1000
-        ER_CF4_sum = self.merged_df[self.merged_df["Volume"]=="hydraulic_fluid_phys"]["ER_near/eV"].groupby("Event").sum()/1000
+        ER_Ar_sum = self.merged_df[self.merged_df["Volume"]=="LAr_phys"].groupby("Event")["ER_near/eV"].sum()/1000
+        ER_CF4_sum = self.merged_df[self.merged_df["Volume"]=="hydraulic_fluid_phys"].groupby("Event")["ER_near/eV"].sum()/1000
 
 
 
