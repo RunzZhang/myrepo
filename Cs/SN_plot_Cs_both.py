@@ -107,12 +107,13 @@ class SN():
         #position distributions histogram, dependisng on step number
         # self.read_positions()
         # self.read_positions_2d_hist()
+        self.read_positions_zslice()
         #mulitipliciy distribtuion depending on events
         # self.read_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
         # self.read_ER_Ar_CF_1d_sum()
-        self.read_ER_Ar_CF_2d_sum()
+        # self.read_ER_Ar_CF_2d_sum()
 
 
 
@@ -143,6 +144,23 @@ class SN():
         cbar = plt.colorbar(sc, ax=ax)
         cbar.set_label("Scatter Order")
         plt.savefig(self.plot_path+"Cs_1E5_position.pdf")
+
+    def read_positions_zslice(self):
+        z_slice = self.merged_df[(self.merged_df["Z/mm"]>=450)&(self.merged_df["Z/mm"]<=550)]
+
+        fig, ax = plt.subplots()
+        # self.cmap =  plt.cm.plasma
+        sc = ax.hist2d(z_slice["R/mm"], z_slice["Z/mm"], bins=50,
+                       cmap="plasma", norm="log", alpha=0.7)
+
+
+
+        ax.set_xlabel("X [mm]")
+        ax.set_ylabel("Y [mm]")
+
+        cbar = plt.colorbar(sc[3], ax=ax)
+        cbar.set_label("Counts(log)")
+        plt.savefig(self.plot_path + "Cs_1E5_zslice_position_density.pdf")
 
     def read_positions_2d_hist(self):
         max_multi_num = self.merged_df["Multiplicity"].max()
