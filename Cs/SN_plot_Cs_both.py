@@ -165,7 +165,7 @@ class SN():
         ax.set_ylabel("Z [mm]")
         ax.set_xlim(0,200)
         ax.set_ylim(-100,800)
-        cbar = plt.colorbar(sc, ax=ax)
+        cbar = plt.colorbar(sc[3], ax=ax)
         cbar.set_label("Counts(log)")
         plt.savefig(self.plot_path+"Cs_1E5_position_density.pdf")
 
