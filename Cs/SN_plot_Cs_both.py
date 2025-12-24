@@ -105,7 +105,8 @@ class SN():
 
     def data_analysis(self):
         #position distributions histogram, dependisng on step number
-        self.read_positions()
+        # self.read_positions()
+        self.read_positions_2d_hist()
         #mulitipliciy distribtuion depending on events
         # self.read_multiplicity()
         # ER distribution per row
@@ -140,6 +141,35 @@ class SN():
         cbar = plt.colorbar(sc, ax=ax)
         cbar.set_label("Scatter Order")
         plt.savefig(self.plot_path+"Cs_1E5_position.pdf")
+
+    def read_positions_2d_hist(self):
+        max_multi_num = self.merged_df["Multiplicity"].max()
+        print(max_multi_num)
+        self.mutiplicity_list =[]
+        for i in range(1,max_multi_num+1,1):
+            temp_df = self.merged_df[self.merged_df["Multiplicity"]==i][["R/mm","Z/mm"]]
+            temp_list = temp_df.to_numpy()
+            self.mutiplicity_list.append(temp_list)
+
+        # self.cmap =  plt.cm.plasma
+        fig, ax = plt.subplots()
+
+        sc=ax.hist2d(self.merged_df["R/mm"],self.merged_df["Z/mm"],
+        cmap="plasma",norm="log",
+        s=5,
+        alpha=0.7)
+
+        ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
+        ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
+        ax.plot([99.01,99.01, 4.34], [0,366.49, 399.82], color="red")
+
+        ax.set_xlabel("R [mm]")
+        ax.set_ylabel("Z [mm]")
+        ax.set_xlim(0,200)
+        ax.set_ylim(-100,800)
+        cbar = plt.colorbar(sc, ax=ax)
+        cbar.set_label("Counts(log)")
+        plt.savefig(self.plot_path+"Cs_1E5_position_density.pdf")
 
 
     def read_multiplicity(self):
