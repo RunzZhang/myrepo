@@ -106,11 +106,12 @@ class SN():
     def data_analysis(self):
         #position distributions histogram, dependisng on step number
         # self.read_positions()
-        self.read_positions_2d_hist()
+        # self.read_positions_2d_hist()
         #mulitipliciy distribtuion depending on events
         # self.read_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
+        self.read_ER_Ar_CF_1d_sum()
 
 
 
@@ -207,7 +208,28 @@ class SN():
 
         plt.savefig(self.plot_path + "Cs_1E5_ER_all.pdf")
 
+    def read_ER_Ar_CF_1d_sum(self):
+        # calcualte sum of ER classified in Ar and CF4
+        ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
+        ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
+        ER_sum = self.merged_df.groupby("Event")["ER_near/eV"].sum()/1000
 
+        ER_Ar_sum = ER_Ar.groupby("Event").sum()
+        ER_CF4_sum = ER_CF4.groupby("Event").sum()
+
+
+
+        fig, ax = plt.subplots(1,2, figsize=(14, 4))
+        ax[0].hist(ER_Ar_sum, bins=40,align="left")
+        ax[0].set_xlabel("ER/keV per event in LAr")
+        ax[0].set_ylabel("Counts")
+
+        ax[1].hist(ER_CF4_sum, bins=40,align="left")
+        ax[1].set_xlabel("ER/keV per event in CF4")
+        ax[1].set_ylabel("Counts")
+
+
+        plt.savefig(self.plot_path + "Cs_1E5_ER_sum_volume.pdf")
 
 
 
