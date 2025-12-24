@@ -154,7 +154,7 @@ class SN():
         # self.cmap =  plt.cm.plasma
         fig, ax = plt.subplots()
 
-        sc=ax.hist2d(self.merged_df["R/mm"],self.merged_df["Z/mm"],bins=40,
+        sc=ax.hist2d(self.merged_df["R/mm"],self.merged_df["Z/mm"],bins=50,
         cmap="plasma",norm="log",alpha=0.7)
 
         ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
