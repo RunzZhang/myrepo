@@ -150,7 +150,7 @@ class SN():
 
         fig, ax = plt.subplots()
         # self.cmap =  plt.cm.plasma
-        sc = ax.hist2d(z_slice["R/mm"], z_slice["Z/mm"], bins=50,
+        sc = ax.hist2d(z_slice["X/mm"], z_slice["Y/mm"], bins=50,
                        cmap="plasma", norm="log", alpha=0.7)
 
 
