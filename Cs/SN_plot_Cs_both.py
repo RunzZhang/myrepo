@@ -111,7 +111,8 @@ class SN():
         # self.read_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
-        self.read_ER_Ar_CF_1d_sum()
+        # self.read_ER_Ar_CF_1d_sum()
+        self.read_ER_Ar_CF_2d_sum()
 
 
 
@@ -210,9 +211,6 @@ class SN():
 
     def read_ER_Ar_CF_1d_sum(self):
         # calcualte sum of ER classified in Ar and CF4
-        ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
-        ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
-        ER_sum = self.merged_df.groupby("Event")["ER_near/eV"].sum()/1000
 
         ER_Ar_sum = self.merged_df[self.merged_df["Volume"]=="LAr_phys"].groupby("Event")["ER_near/eV"].sum()/1000
         ER_CF4_sum = self.merged_df[self.merged_df["Volume"]=="hydraulic_fluid_phys"].groupby("Event")["ER_near/eV"].sum()/1000
@@ -230,6 +228,31 @@ class SN():
 
 
         plt.savefig(self.plot_path + "Cs_1E5_ER_sum_volume.pdf")
+
+
+    def read_ER_Ar_CF_2d_sum(self):
+        # calcualte sum of ER classified in Ar and CF4
+
+
+        ER_Ar_sum = self.merged_df[self.merged_df["Volume"]=="LAr_phys"].groupby("Event")["ER_near/eV"].sum()/1000
+        ER_CF4_sum = self.merged_df[self.merged_df["Volume"]=="hydraulic_fluid_phys"].groupby("Event")["ER_near/eV"].sum()/1000
+
+        evt = pd.concat([ER_Ar_sum, ER_CF4_sum], axis=1)
+        evt.columns = ["ER_Ar_keV", "ER_CF4_keV"]  # <-- you create these names
+        evt = evt.fillna(0)
+
+        fig, ax = plt.subplots()
+
+        sc = ax.hist2d(evt["ER_Ar_keV"], evt["ER_CF4_keV"], bins=50,
+                       cmap="plasma", norm="log", alpha=0.7)
+
+        ax.set_xlabel("ER_Ar/keV")
+        ax.set_ylabel("ER_CF4/keV")
+        # ax.set_xlim(0, 200)
+        # ax.set_ylim(-100, 800)
+        cbar = plt.colorbar(sc[3], ax=ax)
+        cbar.set_label("Counts(log)")
+        plt.savefig(self.plot_path + "Cs_1E5_ER_density.pdf")
 
 
 
