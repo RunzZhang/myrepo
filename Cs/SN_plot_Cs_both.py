@@ -251,17 +251,25 @@ class SN():
         ax[0].plot(hist_array[0][1][:-1], Rate_factor*hist_array[0][0])
         ax[0].set_xlabel("ER/keV per event in LAr")
         ax[0].set_ylabel("Rate/h")
-        ax[0].grid(True)
+        ax[0].minorticks_on()
+        ax[0].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
+        ax[0].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
         ax[1].plot(hist_array[1][1][:-1], Rate_factor*hist_array[1][0])
         ax[1].set_xlabel("ER/keV per event in CF4")
         ax[1].set_ylabel("Rate/h")
         ax[1].grid(True)
+        ax[1].minorticks_on()
+        ax[1].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
+        ax[1].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
         ax[2].plot(hist_array[2][1][:-1], Rate_factor*hist_array[2][0])
         ax[2].set_xlabel("ER/keV per event ")
         ax[2].set_ylabel("Rate/h")
         ax[2].grid(True)
+        ax[2].minorticks_on()
+        ax[2].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
+        ax[2].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
 
 
