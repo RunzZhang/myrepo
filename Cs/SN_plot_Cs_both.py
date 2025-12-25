@@ -236,21 +236,27 @@ class SN():
     def read_ER_Ar_CF_1d_sum_rate(self):
         # calcualte sum of ER classified in Ar and CF4
         Rate_factor = self.gamma_rate / (3600*self.G4_events_gamma) # /h per geant run file
-        ER_Ar_sum = Rate_factor*self.merged_df[self.merged_df["Volume"]=="LAr_phys"].groupby("Event")["ER_near/eV"].sum()/1000
-        ER_CF4_sum = Rate_factor*self.merged_df[self.merged_df["Volume"]=="hydraulic_fluid_phys"].groupby("Event")["ER_near/eV"].sum()/1000
+        ER_Ar_sum = self.merged_df[self.merged_df["Volume"]=="LAr_phys"].groupby("Event")["ER_near/eV"].sum()/1000
+        ER_CF4_sum = self.merged_df[self.merged_df["Volume"]=="hydraulic_fluid_phys"].groupby("Event")["ER_near/eV"].sum()/1000
 
-        ER_sum = Rate_factor*self.merged_df.groupby("Event")["ER_near/eV"].sum() / 1000
+        ER_sum = self.merged_df.groupby("Event")["ER_near/eV"].sum() / 1000
+
+        hist_array = [None] * 3
+
+        hist_array[0] = np.histogram(ER_Ar_sum, bins=50)
+        hist_array[1] = np.histogram(ER_CF4_sum, bins=50)
+        hist_array[2] = np.histogram(ER_sum, bins=50)
 
         fig, ax = plt.subplots(1,3, figsize=(14, 4))
-        ax[0].hist(ER_Ar_sum, bins=50,align="left")
+        ax[0].plt(hist_array[0][1], hist_array[0][0][:-1])
         ax[0].set_xlabel("ER/keV per event in LAr")
         ax[0].set_ylabel("Rate/h")
 
-        ax[1].hist(ER_CF4_sum, bins=50,align="left")
+        ax[1].plt(hist_array[1][1], hist_array[1][0][:-1])
         ax[1].set_xlabel("ER/keV per event in CF4")
         ax[1].set_ylabel("Rate/h")
 
-        ax[2].hist(ER_sum, bins=50, align="left")
+        ax[2].plt(hist_array[2][1], hist_array[2][0][:-1])
         ax[2].set_xlabel("ER/keV per event ")
         ax[2].set_ylabel("Rate/h")
 
