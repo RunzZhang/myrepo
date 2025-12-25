@@ -251,7 +251,7 @@ class SN():
         ax[1].set_ylabel("Rate/h")
 
         ax[2].hist(ER_sum, bins=50, align="left")
-        ax[2].set_xlabel("ER/keV per event in LAr")
+        ax[2].set_xlabel("ER/keV per event ")
         ax[2].set_ylabel("Rate/h")
 
 
