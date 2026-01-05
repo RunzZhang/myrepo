@@ -98,7 +98,8 @@ class SN():
         # self.read_ER_Ar_CF()
         # self.read_ER_Ar_CF_1d_sum()
         # self.read_ER_Ar_CF_2d_sum()
-        self.read_ER_Ar_CF_1d_sum_rate()
+        # self.read_ER_Ar_CF_1d_sum_rate()
+        self.read_ER_Ar_CF_1d_sum_rate_cummulative()
 
 
 
@@ -235,6 +236,8 @@ class SN():
 
     def read_ER_Ar_CF_1d_sum_rate(self):
         # calcualte sum of ER classified in Ar and CF4
+        # and sum rate is over both volume in Ar and CF4
+
         Rate_factor = self.gamma_rate / (3600*self.G4_events_gamma) # /h per geant run file
         ER_Ar_sum = self.merged_df[self.merged_df["Volume"]=="LAr_phys"].groupby("Event")["ER_near/eV"].sum()/1000
         ER_CF4_sum = self.merged_df[self.merged_df["Volume"]=="hydraulic_fluid_phys"].groupby("Event")["ER_near/eV"].sum()/1000
@@ -282,6 +285,7 @@ class SN():
 
     def read_ER_Ar_CF_1d_sum_rate_cummulative(self):
         # calcualte sum of ER classified in Ar and CF4
+        # cumulative, event rate above NR threshold
         Rate_factor = self.gamma_rate / (3600*self.G4_events_gamma) # /h per geant run file
         ER_Ar_sum = self.merged_df[self.merged_df["Volume"]=="LAr_phys"].groupby("Event")["ER_near/eV"].sum()/1000
         ER_CF4_sum = self.merged_df[self.merged_df["Volume"]=="hydraulic_fluid_phys"].groupby("Event")["ER_near/eV"].sum()/1000
@@ -295,7 +299,7 @@ class SN():
         hist_array[2] = np.histogram(ER_sum, bins=50)
 
         cumulative_threshold_array = [None]*3
-        
+
         cumulative_threshold_array[0] = [sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))]
         cumulative_threshold_array[1] = [sum(hist_array[1][0][i:]) for i in range(len(hist_array[1][0]))]
         cumulative_threshold_array[2] = [sum(hist_array[2][0][i:]) for i in range(len(hist_array[2][0]))]
@@ -337,6 +341,7 @@ class SN():
 
     def read_ER_Ar_CF_2d_sum(self):
         # calcualte sum of ER classified in Ar and CF4
+        # 2d histogram
 
 
         ER_Ar_sum = self.merged_df[self.merged_df["Volume"]=="LAr_phys"].groupby("Event")["ER_near/eV"].sum()/1000
