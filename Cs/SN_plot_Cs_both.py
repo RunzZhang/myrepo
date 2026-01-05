@@ -250,7 +250,7 @@ class SN():
 
         fig, ax = plt.subplots(1,3, figsize=(14, 4))
         ax[0].plot(hist_array[0][1][:-1], Rate_factor*hist_array[0][0])
-        bin0_len = hist_array[0][1][1]-hist_array[0][1][0]
+        bin0_len = int(hist_array[0][1][1]-hist_array[0][1][0])
         ax[0].set_xlabel("ER/keV per event in LAr")
         ax[0].set_ylabel("Rate/(h*"+str(bin0_len)+" keV)")
         ax[0].minorticks_on()
@@ -259,7 +259,7 @@ class SN():
 
         ax[1].plot(hist_array[1][1][:-1], Rate_factor*hist_array[1][0])
         ax[1].set_xlabel("ER/keV per event in CF4")
-        bin1_len = hist_array[1][1][1] - hist_array[1][1][0]
+        bin1_len = int(hist_array[1][1][1] - hist_array[1][1][0])
         ax[1].set_ylabel("Rate/(h*"+str(bin1_len)+" keV)")
         ax[1].grid(True)
         ax[1].minorticks_on()
@@ -268,7 +268,7 @@ class SN():
 
         ax[2].plot(hist_array[2][1][:-1], Rate_factor*hist_array[2][0])
         ax[2].set_xlabel("ER/keV per event ")
-        bin2_len = hist_array[2][1][1] - hist_array[2][1][0]
+        bin2_len = int(hist_array[2][1][1] - hist_array[2][1][0])
         ax[2].set_ylabel("Rate/(h*"+str(bin2_len)+" keV)")
         ax[2].grid(True)
         ax[2].minorticks_on()
