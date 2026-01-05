@@ -300,9 +300,9 @@ class SN():
 
         cumulative_threshold_array = [None]*3
 
-        cumulative_threshold_array[0] = [sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))]
-        cumulative_threshold_array[1] = [sum(hist_array[1][0][i:]) for i in range(len(hist_array[1][0]))]
-        cumulative_threshold_array[2] = [sum(hist_array[2][0][i:]) for i in range(len(hist_array[2][0]))]
+        cumulative_threshold_array[0] = np.array([sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))])
+        cumulative_threshold_array[1] = np.array([sum(hist_array[1][0][i:]) for i in range(len(hist_array[1][0]))])
+        cumulative_threshold_array[2] = np.array([sum(hist_array[2][0][i:]) for i in range(len(hist_array[2][0]))])
 
 
 
