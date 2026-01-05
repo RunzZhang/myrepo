@@ -278,7 +278,7 @@ class SN():
 
 
 
-        plt.savefig(self.plot_path + "Cs_1E5_ER_hotrate.pdf")
+        plt.savefig(self.plot_path + "Cs_1E5_ER_coldrate.pdf")
 
 
     def read_ER_Ar_CF_2d_sum(self):
