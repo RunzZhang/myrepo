@@ -9,8 +9,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E5/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E5/" # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E7/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E7/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -33,10 +33,10 @@ class SN():
 
 
         #982 statics false 1
-        # for i in range(1,101):
+        for i in range(1,101):
         # for i in range(1, 11):
-        #     self.main_body(i)
-        self.main_body(1)
+            self.main_body(i)
+        # self.main_body(1)
         self.combine_df()
         self.data_analysis()
 
