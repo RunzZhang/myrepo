@@ -219,7 +219,7 @@ class SN():
 
     def read_ER_Ar_CF_per_deposit_rate(self):
         # per energy deposition and total
-        Rate_factor = self.gamma_rate / (3600 * self.G4_events_gamma)
+        Rate_factor = self.gamma_rate / (3.6 * self.G4_events_gamma)
         ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
         ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
         ER_sum = self.merged_df["ER_near/eV"]/1000
@@ -234,7 +234,7 @@ class SN():
         ax[0].plot(hist_array[0][1][:-1], Rate_factor * hist_array[0][0])
         bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
         ax[0].set_xlabel("ER/keV per event in LAr")
-        ax[0].set_ylabel("Rate/(h*" + str(bin0_len) + " keV)")
+        ax[0].set_ylabel(" Rate mHz/(bin[" + str(bin0_len) + " keV])")
         ax[0].minorticks_on()
         ax[0].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         ax[0].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
@@ -242,7 +242,7 @@ class SN():
         ax[1].plot(hist_array[1][1][:-1], Rate_factor * hist_array[1][0])
         ax[1].set_xlabel("ER/keV per event in CF4")
         bin1_len = int(hist_array[1][1][1] - hist_array[1][1][0])
-        ax[1].set_ylabel("Rate/(h*" + str(bin1_len) + " keV)")
+        ax[1].set_ylabel("Rate mHz/([" + str(bin1_len) + " keV])")
         ax[1].grid(True)
         ax[1].minorticks_on()
         ax[1].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
@@ -251,7 +251,7 @@ class SN():
         ax[2].plot(hist_array[2][1][:-1], Rate_factor * hist_array[2][0])
         ax[2].set_xlabel("ER/keV per event ")
         bin2_len = int(hist_array[2][1][1] - hist_array[2][1][0])
-        ax[2].set_ylabel("Rate/(h*" + str(bin2_len) + " keV)")
+        ax[2].set_ylabel("Rate mHz/([" + str(bin2_len) + " keV])")
         ax[2].grid(True)
         ax[2].minorticks_on()
         ax[2].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
@@ -261,7 +261,8 @@ class SN():
 
 
     def read_ER_Ar_CF_per_deposit_rate_cumulative(self):
-        Rate_factor = self.gamma_rate / (3600 * self.G4_events_gamma)
+        # rate factor in mHz
+        Rate_factor = self.gamma_rate / (3.6 * self.G4_events_gamma)
         ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000
         ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
         ER_sum = self.merged_df["ER_near/eV"] / 1000
@@ -284,7 +285,7 @@ class SN():
         ax[0].plot(hist_array[0][1][:-1], Rate_factor*cumulative_threshold_array[0])
         bin0_len = int(hist_array[0][1][1]-hist_array[0][1][0])
         ax[0].set_xlabel("ER/keV threshold in LAr")
-        ax[0].set_ylabel("Rate/(h)")
+        ax[0].set_ylabel("Rate [mHz]")
         ax[0].minorticks_on()
         ax[0].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         ax[0].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
@@ -292,7 +293,7 @@ class SN():
         ax[1].plot(hist_array[1][1][:-1], Rate_factor*cumulative_threshold_array[1])
         ax[1].set_xlabel("ER/keV threshold in CF4")
         bin1_len = int(hist_array[1][1][1] - hist_array[1][1][0])
-        ax[1].set_ylabel("Rate/(h)")
+        ax[1].set_ylabel("Rate [mHz]")
         ax[1].grid(True)
         ax[1].minorticks_on()
         ax[1].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
@@ -301,7 +302,7 @@ class SN():
         ax[2].plot(hist_array[2][1][:-1], Rate_factor*cumulative_threshold_array[2])
         ax[2].set_xlabel("ER/keV threshold ")
         bin2_len = int(hist_array[2][1][1] - hist_array[2][1][0])
-        ax[2].set_ylabel("Rate/(h)")
+        ax[2].set_ylabel("Rate [mHz]")
         ax[2].grid(True)
         ax[2].minorticks_on()
         ax[2].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
