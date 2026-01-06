@@ -95,11 +95,13 @@ class SN():
         #mulitipliciy distribtuion depending on events
         # self.read_multiplicity()
         # ER distribution per row
-        # self.read_ER_Ar_CF()
+        self.read_ER_Ar_CF()
+        self.read_ER_Ar_CF_per_deposit_rate()
+        self.read_ER_Ar_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
         # self.read_ER_Ar_CF_2d_sum()
         # self.read_ER_Ar_CF_1d_sum_rate()
-        self.read_ER_Ar_CF_1d_sum_rate_cummulative()
+        # self.read_ER_Ar_CF_1d_sum_rate_cummulative()
 
 
 
@@ -188,6 +190,8 @@ class SN():
         plt.savefig(self.plot_path+"Cs_1E5_multi.pdf")
 
     def read_ER_Ar_CF(self):
+        # per energy deposition
+        # the sum is per event
         ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
         ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
         ER_sum = self.merged_df.groupby("Event")["ER_near/eV"].sum()/1000
@@ -213,8 +217,103 @@ class SN():
 
         plt.savefig(self.plot_path + "Cs_1E5_ER_all.pdf")
 
+    def read_ER_Ar_CF_per_deposit_rate(self):
+        # per energy deposition and total
+        Rate_factor = self.gamma_rate / (3600 * self.G4_events_gamma)
+        ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
+        ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
+        ER_sum = self.merged_df["ER_near/eV"]/1000
+
+        hist_array = [None] * 3
+
+        hist_array[0] = np.histogram(ER_Ar, bins=50)
+        hist_array[1] = np.histogram(ER_CF4, bins=50)
+        hist_array[2] = np.histogram(ER_sum, bins=50)
+
+        fig, ax = plt.subplots(1, 3, figsize=(14, 4))
+        ax[0].plot(hist_array[0][1][:-1], Rate_factor * hist_array[0][0])
+        bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
+        ax[0].set_xlabel("ER/keV per event in LAr")
+        ax[0].set_ylabel("Rate/(h*" + str(bin0_len) + " keV)")
+        ax[0].minorticks_on()
+        ax[0].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
+        ax[0].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
+
+        ax[1].plot(hist_array[1][1][:-1], Rate_factor * hist_array[1][0])
+        ax[1].set_xlabel("ER/keV per event in CF4")
+        bin1_len = int(hist_array[1][1][1] - hist_array[1][1][0])
+        ax[1].set_ylabel("Rate/(h*" + str(bin1_len) + " keV)")
+        ax[1].grid(True)
+        ax[1].minorticks_on()
+        ax[1].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
+        ax[1].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
+
+        ax[2].plot(hist_array[2][1][:-1], Rate_factor * hist_array[2][0])
+        ax[2].set_xlabel("ER/keV per event ")
+        bin2_len = int(hist_array[2][1][1] - hist_array[2][1][0])
+        ax[2].set_ylabel("Rate/(h*" + str(bin2_len) + " keV)")
+        ax[2].grid(True)
+        ax[2].minorticks_on()
+        ax[2].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
+        ax[2].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
+
+        plt.savefig(self.plot_path + "Cs_1E7_ER_perdepostion_coldrate.pdf")
+
+
+    def read_ER_Ar_CF_per_deposit_rate_cumulative(self):
+        Rate_factor = self.gamma_rate / (3600 * self.G4_events_gamma)
+        ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000
+        ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
+        ER_sum = self.merged_df["ER_near/eV"] / 1000
+
+        hist_array = [None] * 3
+
+        hist_array[0] = np.histogram(ER_Ar, bins=50)
+        hist_array[1] = np.histogram(ER_CF4, bins=50)
+        hist_array[2] = np.histogram(ER_sum, bins=50)
+        cumulative_threshold_array = [None]*3
+
+        cumulative_threshold_array[0] = np.array([sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))])
+        cumulative_threshold_array[1] = np.array([sum(hist_array[1][0][i:]) for i in range(len(hist_array[1][0]))])
+        cumulative_threshold_array[2] = np.array([sum(hist_array[2][0][i:]) for i in range(len(hist_array[2][0]))])
+
+
+
+
+        fig, ax = plt.subplots(1,3, figsize=(14, 4))
+        ax[0].plot(hist_array[0][1][:-1], Rate_factor*cumulative_threshold_array[0])
+        bin0_len = int(hist_array[0][1][1]-hist_array[0][1][0])
+        ax[0].set_xlabel("ER/keV threshold in LAr")
+        ax[0].set_ylabel("Rate/(h)")
+        ax[0].minorticks_on()
+        ax[0].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
+        ax[0].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
+
+        ax[1].plot(hist_array[1][1][:-1], Rate_factor*cumulative_threshold_array[1])
+        ax[1].set_xlabel("ER/keV threshold in CF4")
+        bin1_len = int(hist_array[1][1][1] - hist_array[1][1][0])
+        ax[1].set_ylabel("Rate/(h)")
+        ax[1].grid(True)
+        ax[1].minorticks_on()
+        ax[1].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
+        ax[1].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
+
+        ax[2].plot(hist_array[2][1][:-1], Rate_factor*cumulative_threshold_array[2])
+        ax[2].set_xlabel("ER/keV threshold ")
+        bin2_len = int(hist_array[2][1][1] - hist_array[2][1][0])
+        ax[2].set_ylabel("Rate/(h)")
+        ax[2].grid(True)
+        ax[2].minorticks_on()
+        ax[2].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
+        ax[2].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
+
+
+
+
+        plt.savefig(self.plot_path + "Cs_1E7_ER_coldrate_per_deposit_cumulative.pdf")
+
     def read_ER_Ar_CF_1d_sum(self):
-        # calcualte sum of ER classified in Ar and CF4
+        # calcualte sum of ER classified in Ar and CF4 per event per
 
 
         ER_Ar_sum = self.merged_df[self.merged_df["Volume"]=="LAr_phys"].groupby("Event")["ER_near/eV"].sum()/1000
@@ -235,7 +334,7 @@ class SN():
         plt.savefig(self.plot_path + "Cs_1E5_ER_sum_volume.pdf")
 
     def read_ER_Ar_CF_1d_sum_rate(self):
-        # calcualte sum of ER classified in Ar and CF4
+        # calcualte sum of ER classified in Ar and CF4 per event
         # and sum rate is over both volume in Ar and CF4
 
         Rate_factor = self.gamma_rate / (3600*self.G4_events_gamma) # /h per geant run file
@@ -284,7 +383,7 @@ class SN():
         plt.savefig(self.plot_path + "Cs_1E5_ER_coldrate.pdf")
 
     def read_ER_Ar_CF_1d_sum_rate_cummulative(self):
-        # calcualte sum of ER classified in Ar and CF4
+        # calcualte sum of ER classified in Ar and CF4 per event
         # cumulative, event rate above NR threshold
         Rate_factor = self.gamma_rate / (3600*self.G4_events_gamma) # /h per geant run file
         ER_Ar_sum = self.merged_df[self.merged_df["Volume"]=="LAr_phys"].groupby("Event")["ER_near/eV"].sum()/1000
@@ -340,7 +439,7 @@ class SN():
         plt.savefig(self.plot_path + "Cs_1E5_ER_coldrate_cumulative.pdf")
 
     def read_ER_Ar_CF_2d_sum(self):
-        # calcualte sum of ER classified in Ar and CF4
+        # calcualte sum of ER classified in Ar and CF4 per event
         # 2d histogram
 
 
