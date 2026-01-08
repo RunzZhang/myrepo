@@ -226,36 +226,42 @@ class SN():
 
         hist_array = [None] * 3
 
-        hist_array[0] = np.histogram(ER_Ar, bins=50)
-        hist_array[1] = np.histogram(ER_CF4, bins=50)
-        hist_array[2] = np.histogram(ER_sum, bins=50)
+        hist_array[0] = np.histogram(ER_Ar, bins=50,range=(0, 660))
+        hist_array[1] = np.histogram(ER_CF4, bins=50,range=(0, 660))
+        hist_array[2] = np.histogram(ER_sum, bins=50,range=(0, 660))
 
         fig, ax = plt.subplots(1, 3, figsize=(16, 4))
-        ax[0].plot(hist_array[0][1][:-1], Rate_factor * hist_array[0][0])
+        ax[0].barplot(hist_array[0][1][:-1], Rate_factor * hist_array[0][0],width=np.diff(hist_array[0][1][:-1]),
+        align="edge",
+        edgecolor="black")
         bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
         ax[0].set_xlabel("ER/keV per deposition in LAr")
         ax[0].set_ylabel(" Rate mHz/(bin[" + str(bin0_len) + " keV])")
-        ax[0].minorticks_on()
-        ax[0].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
-        ax[0].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
+        # ax[0].minorticks_on()
+        # ax[0].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
+        # ax[0].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
-        ax[1].plot(hist_array[1][1][:-1], Rate_factor * hist_array[1][0])
+        ax[1].barplot(hist_array[1][1][:-1], Rate_factor * hist_array[1][0],width=np.diff(hist_array[1][1][:-1]),
+        align="edge",
+        edgecolor="black")
         ax[1].set_xlabel("ER/keV per deposition in CF4")
         bin1_len = int(hist_array[1][1][1] - hist_array[1][1][0])
         ax[1].set_ylabel("Rate mHz/([" + str(bin1_len) + " keV])")
-        ax[1].grid(True)
+        # ax[1].grid(True)
         ax[1].minorticks_on()
-        ax[1].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
-        ax[1].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
+        # ax[1].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
+        # ax[1].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
-        ax[2].plot(hist_array[2][1][:-1], Rate_factor * hist_array[2][0])
+        ax[2].barplot(hist_array[2][1][:-1], Rate_factor * hist_array[2][0],width=np.diff(hist_array[2][1][:-1]),
+        align="edge",
+        edgecolor="black")
         ax[2].set_xlabel("ER/keV per deposition ")
         bin2_len = int(hist_array[2][1][1] - hist_array[2][1][0])
         ax[2].set_ylabel("Rate mHz/([" + str(bin2_len) + " keV])")
-        ax[2].grid(True)
+        # ax[2].grid(True)
         ax[2].minorticks_on()
-        ax[2].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
-        ax[2].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
+        # ax[2].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
+        # ax[2].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
         plt.savefig(self.plot_path + "Cs_1E7_ER_perdepostion_coldrate.pdf")
 
