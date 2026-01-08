@@ -93,10 +93,10 @@ class SN():
         # self.read_positions_2d_hist()
         # self.read_positions_zslice()
         #mulitipliciy distribtuion depending on events
-        self.read_multiplicity()
+        # self.read_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
-        # self.read_ER_Ar_CF_per_deposit_rate()
+        self.read_ER_Ar_CF_per_deposit_rate()
         # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
         # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
@@ -221,7 +221,7 @@ class SN():
 
     def read_ER_Ar_CF_per_deposit_rate(self):
         # per energy deposition and total
-        Rate_factor = self.gamma_rate / (self.G4_events_gamma)
+        Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
         ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
         ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
         ER_sum = self.merged_df["ER_near/eV"]/1000
@@ -273,7 +273,7 @@ class SN():
 
     def read_ER_Ar_CF_per_deposit_rate_cumulative(self):
         # rate factor in mHz
-        Rate_factor = self.gamma_rate / (self.G4_events_gamma)
+        Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
         ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000
         ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
         ER_sum = self.merged_df["ER_near/eV"] / 1000
@@ -328,7 +328,7 @@ class SN():
         plt.savefig(self.plot_path + "Cs_1E5_ER_perdepostion_cumulative_coldrate.pdf")
     def read_ER_CF_per_deposit_rate_cumulative(self):
         # rate factor in mHz
-        Rate_factor = self.gamma_rate / (self.G4_events_gamma)
+        Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
         ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000
         ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
         ER_sum = self.merged_df["ER_near/eV"] / 1000
