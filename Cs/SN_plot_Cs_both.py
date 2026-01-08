@@ -96,9 +96,9 @@ class SN():
         # self.read_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
-        # self.read_ER_Ar_CF_per_deposit_rate()
+        self.read_ER_Ar_CF_per_deposit_rate()
         # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
-        self.read_ER_Ar_CF_1d_sum()
+        # self.read_ER_Ar_CF_1d_sum()
         # self.read_ER_Ar_CF_2d_sum()
         # self.read_ER_Ar_CF_1d_sum_rate()
         # self.read_ER_Ar_CF_1d_sum_rate_cummulative()
@@ -230,7 +230,7 @@ class SN():
         hist_array[1] = np.histogram(ER_CF4, bins=50)
         hist_array[2] = np.histogram(ER_sum, bins=50)
 
-        fig, ax = plt.subplots(1, 3, figsize=(14, 4))
+        fig, ax = plt.subplots(1, 3, figsize=(16, 4))
         ax[0].plot(hist_array[0][1][:-1], Rate_factor * hist_array[0][0])
         bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
         ax[0].set_xlabel("ER/keV per event in LAr")
