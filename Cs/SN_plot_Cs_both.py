@@ -97,8 +97,8 @@ class SN():
         # ER distribution per row
         # self.read_ER_Ar_CF()
         # self.read_ER_Ar_CF_per_deposit_rate()
-        self.read_ER_Ar_CF_per_deposit_rate_cumulative()
-        # self.read_ER_CF_per_deposit_rate_cumulative()
+        # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
+        self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
         # self.read_ER_Ar_CF_2d_sum()
         # self.read_ER_Ar_CF_1d_sum_rate()
