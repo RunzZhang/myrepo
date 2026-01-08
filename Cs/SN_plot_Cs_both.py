@@ -96,9 +96,9 @@ class SN():
         # self.read_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
-        self.read_ER_Ar_CF_per_deposit_rate()
+        # self.read_ER_Ar_CF_per_deposit_rate()
         # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
-        # self.read_ER_CF_per_deposit_rate_cumulative()
+        self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
         # self.read_ER_Ar_CF_2d_sum()
         # self.read_ER_Ar_CF_1d_sum_rate()
@@ -336,7 +336,7 @@ class SN():
 
         hist_array = [None]
 
-        hist_array[0] = np.histogram(ER_CF4, bins=50,range=(0, 660))
+        hist_array[0] = np.histogram(ER_CF4, bins=100,range=(0, 660))
 
 
 
