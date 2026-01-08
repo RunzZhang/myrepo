@@ -349,7 +349,7 @@ class SN():
         cumulative_threshold_array[0] = np.array([sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))])
         # find if compton edge exist in CF4 cumulative spectrum
         for j in range(len(cumulative_threshold_array[0])):
-            if hist_array[0][1][j] > 480:
+            if hist_array[0][1][j] > 500:
                 print("480keV edge", cumulative_threshold_array[0][j])
                 break
 
