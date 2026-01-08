@@ -231,7 +231,7 @@ class SN():
         hist_array[2] = np.histogram(ER_sum, bins=50,range=(0, 660))
 
         fig, ax = plt.subplots(1, 3, figsize=(16, 4))
-        ax[0].bar(hist_array[0][1][:-1], Rate_factor * hist_array[0][0],width=np.diff(hist_array[0][1][:-1]),
+        ax[0].bar(hist_array[0][1][:-1], Rate_factor * hist_array[0][0],width=np.diff(hist_array[0][1]),
         align="edge",
         edgecolor="black")
         bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
@@ -241,7 +241,7 @@ class SN():
         # ax[0].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         # ax[0].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
-        ax[1].bar(hist_array[1][1][:-1], Rate_factor * hist_array[1][0],width=np.diff(hist_array[1][1][:-1]),
+        ax[1].bar(hist_array[1][1][:-1], Rate_factor * hist_array[1][0],width=np.diff(hist_array[1][1]),
         align="edge",
         edgecolor="black")
         ax[1].set_xlabel("ER/keV per deposition in CF4")
@@ -252,7 +252,7 @@ class SN():
         # ax[1].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         # ax[1].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
-        ax[2].bar(hist_array[2][1][:-1], Rate_factor * hist_array[2][0],width=np.diff(hist_array[2][1][:-1]),
+        ax[2].bar(hist_array[2][1][:-1], Rate_factor * hist_array[2][0],width=np.diff(hist_array[2][1]),
         align="edge",
         edgecolor="black")
         ax[2].set_xlabel("ER/keV per deposition ")
