@@ -96,9 +96,9 @@ class SN():
         # self.read_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
-        # self.read_ER_Ar_CF_per_deposit_rate()
+        self.read_ER_Ar_CF_per_deposit_rate()
         # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
-        self.read_ER_CF_per_deposit_rate_cumulative()
+        # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
         # self.read_ER_Ar_CF_2d_sum()
         # self.read_ER_Ar_CF_1d_sum_rate()
@@ -232,6 +232,12 @@ class SN():
         hist_array[0] = np.histogram(ER_Ar, bins=50,range=(0, 660))
         hist_array[1] = np.histogram(ER_CF4, bins=50,range=(0, 660))
         hist_array[2] = np.histogram(ER_sum, bins=50,range=(0, 660))
+
+        # find if compton edge exist in CF4 cumulative spectrum
+        for j in range(len(hist_array[1][0])):
+            if hist_array[0][1][j] > 480:
+                print("400keV edge", hist_array[1][0][j])
+                break
 
         fig, ax = plt.subplots(1, 3, figsize=(16, 4))
         ax[0].bar(hist_array[0][1][:-1], Rate_factor * hist_array[0][0],width=np.diff(hist_array[0][1]),
