@@ -186,8 +186,9 @@ class SN():
         bins = np.arange(1, max_m + 2)
         fig,ax = plt.subplots()
         ax.hist(multiplicity, bins= bins, align="left", rwidth=0.9, density=True)
+
         ax.set_xlabel("Multiplicity")
-        ax.set_ylabel("Counts")
+        ax.set_ylabel("Probability")
         plt.savefig(self.plot_path+"Cs_1E7_multi.pdf")
 
     def read_ER_Ar_CF(self):
