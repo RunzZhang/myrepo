@@ -322,13 +322,17 @@ class SN():
 
         ER_sum = self.merged_df.groupby("Event")["ER_near/eV"].sum() / 1000
 
-        fig, ax = plt.subplots(1,2, figsize=(9, 4))
+        fig, ax = plt.subplots(1,3, figsize=(14, 4))
         ax[0].hist(ER_Ar_sum, bins=50,align="left")
         ax[0].set_xlabel("ER/keV per event in LAr")
         ax[0].set_ylabel("Counts")
 
         ax[1].hist(ER_CF4_sum, bins=50,align="left")
         ax[1].set_xlabel("ER/keV per event in CF4")
+        ax[1].set_ylabel("Counts")
+
+        ax[1].hist(ER_sum, bins=50, align="left")
+        ax[1].set_xlabel("ER/keV per event ")
         ax[1].set_ylabel("Counts")
 
 
