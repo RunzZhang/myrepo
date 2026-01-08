@@ -323,7 +323,7 @@ class SN():
         # ax[2].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         # ax[2].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
-        plt.savefig(self.plot_path + "Cs_1E5_ER_sum_volume.pdf")
+        plt.savefig(self.plot_path + "Cs_1E7_ER_perdepostion_cumulative_coldrate.pdf")
 
     def read_ER_Ar_CF_1d_sum_rate(self):
         # calcualte sum of ER classified in Ar and CF4 per event
