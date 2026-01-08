@@ -235,7 +235,7 @@ class SN():
 
         # find if compton edge exist in CF4 cumulative spectrum
         for j in range(len(hist_array[1][0])):
-            if hist_array[0][1][j] > 480:
+            if hist_array[1][1][j] > 480:
                 print("400keV edge", hist_array[1][0][j])
                 break
 
