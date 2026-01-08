@@ -90,8 +90,8 @@ class SN():
     def data_analysis(self):
         #position distributions histogram, dependisng on step number
         # self.read_positions()
-        self.read_positions_2d_hist()
-        # self.read_positions_zslice()
+        # self.read_positions_2d_hist()
+        self.read_positions_zslice()
         #mulitipliciy distribtuion depending on events
         # self.read_multiplicity()
         # ER distribution per row
