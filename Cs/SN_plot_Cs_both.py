@@ -229,9 +229,9 @@ class SN():
 
         hist_array = [None] * 3
 
-        hist_array[0] = np.histogram(ER_Ar, bins=50,range=(0, 660))
-        hist_array[1] = np.histogram(ER_CF4, bins=50,range=(0, 660))
-        hist_array[2] = np.histogram(ER_sum, bins=50,range=(0, 660))
+        hist_array[0] = np.histogram(ER_Ar, bins=100,range=(0, 660))
+        hist_array[1] = np.histogram(ER_CF4, bins=100,range=(0, 660))
+        hist_array[2] = np.histogram(ER_sum, bins=100,range=(0, 660))
 
         # find if compton edge exist in CF4 cumulative spectrum
         for j in range(len(hist_array[1][0])):
