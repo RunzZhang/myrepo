@@ -9,8 +9,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E7/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E7/" # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E5/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E5/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -33,10 +33,10 @@ class SN():
 
 
         #982 statics false 1
-        for i in range(1,51):
+        # for i in range(1,51):
         # for i in range(1, 11):
-            self.main_body(i)
-        # self.main_body(1)
+        #     self.main_body(i)
+        self.main_body(1)
         self.combine_df()
         self.data_analysis()
 
@@ -75,7 +75,7 @@ class SN():
         self.gamma_rate = 2.44e6 # /s
 
 
-        self.G4_events_gamma =  5E6 # only 50 chunks
+        self.G4_events_gamma =  1E5 # only 50 chunks
         self.ambient_bubble = 5 # /h
 
 
@@ -323,7 +323,7 @@ class SN():
         # ax[2].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         # ax[2].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
-        plt.savefig(self.plot_path + "Cs_1E7_ER_perdepostion_cumulative_coldrate.pdf")
+        plt.savefig(self.plot_path + "Cs_1E5_ER_perdepostion_cumulative_coldrate.pdf")
 
     def read_ER_Ar_CF_1d_sum_rate(self):
         # calcualte sum of ER classified in Ar and CF4 per event
