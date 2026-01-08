@@ -96,8 +96,8 @@ class SN():
         # self.read_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
-        # self.read_ER_Ar_CF_per_deposit_rate()
-        self.read_ER_Ar_CF_per_deposit_rate_cumulative()
+        self.read_ER_Ar_CF_per_deposit_rate()
+        # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
         # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
         # self.read_ER_Ar_CF_2d_sum()
@@ -236,7 +236,7 @@ class SN():
         # find if compton edge exist in CF4 cumulative spectrum
         for j in range(len(hist_array[1][0])):
             if hist_array[1][1][j] > 500:
-                print("400keV edge", hist_array[1][0][j])
+                print("500 keV edge", hist_array[1][0][j])
                 break
 
         fig, ax = plt.subplots(1, 3, figsize=(16, 4))
