@@ -355,7 +355,7 @@ class SN():
         ax.set_xlabel("ER/keV threshold per deposition in LAr")
         ax.set_ylabel(" Rate mHz")
         ax.set_yscale("log")
-        ax.ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
+        # ax.ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
         ax.minorticks_on()
         # ax[0].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         # ax[0].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
