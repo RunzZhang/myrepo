@@ -346,15 +346,16 @@ class SN():
         for i in range(len(cumulative_threshold_array[0])):
             if cumulative_threshold_array[0][i]*Rate_factor<150:
                 print(cumulative_threshold_array[0][i],i,"is the threshold")
+                break
         fig, ax = plt.subplots(1, 1, figsize=(5, 4))
-        ax[0].bar(hist_array[0][1][i:-1], Rate_factor * cumulative_threshold_array[0][i:], width=np.diff(hist_array[0][1][i:]),
+        ax.bar(hist_array[0][1][i:-1], Rate_factor * cumulative_threshold_array[0][i:], width=np.diff(hist_array[0][1][i:]),
                   align="edge",
                   edgecolor="black")
         bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
-        ax[0].set_xlabel("ER/keV threshold per deposition in LAr")
-        ax[0].set_ylabel(" Rate mHz")
-        ax[0].ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
-        ax[0].minorticks_on()
+        ax.set_xlabel("ER/keV threshold per deposition in LAr")
+        ax.set_ylabel(" Rate mHz")
+        ax.ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
+        ax.minorticks_on()
         # ax[0].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         # ax[0].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
