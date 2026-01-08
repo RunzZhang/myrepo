@@ -9,8 +9,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E5/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E5/" # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E7/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E7/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -33,10 +33,10 @@ class SN():
 
 
         #982 statics false 1
-        # for i in range(1,51):
+        for i in range(1,51):
         # for i in range(1, 11):
-        #     self.main_body(i)
-        self.main_body(1)
+            self.main_body(i)
+        # self.main_body(1)
         self.combine_df()
         self.data_analysis()
 
@@ -75,7 +75,7 @@ class SN():
         self.gamma_rate = 2.44e6 # /s
 
 
-        self.G4_events_gamma =  1E5 # only 50 chunks
+        self.G4_events_gamma =  5E6 # only 50 chunks
         self.ambient_bubble = 5 # /h
 
 
@@ -97,7 +97,8 @@ class SN():
         # ER distribution per row
         # self.read_ER_Ar_CF()
         # self.read_ER_Ar_CF_per_deposit_rate()
-        self.read_ER_Ar_CF_per_deposit_rate_cumulative()
+        # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
+        self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
         # self.read_ER_Ar_CF_2d_sum()
         # self.read_ER_Ar_CF_1d_sum_rate()
@@ -324,7 +325,41 @@ class SN():
         # ax[2].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
         plt.savefig(self.plot_path + "Cs_1E5_ER_perdepostion_cumulative_coldrate.pdf")
+    def read_ER_CF_per_deposit_rate_cumulative(self):
+        # rate factor in mHz
+        Rate_factor = self.gamma_rate / (self.G4_events_gamma)
+        ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000
+        ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
+        ER_sum = self.merged_df["ER_near/eV"] / 1000
 
+        hist_array = [None]
+
+        hist_array[0] = np.histogram(ER_CF4, bins=50,range=(0, 660))
+
+
+
+        cumulative_threshold_array = [None]
+
+        cumulative_threshold_array[0] = np.array([sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))])
+
+        # find what bin first reach 150mHz
+        for i in range(len(cumulative_threshold_array[0])):
+            if cumulative_threshold_array[0][i]*Rate_factor<150:
+                print(cumulative_threshold_array[0][i],i,"is the threshold")
+        fig, ax = plt.subplots(1, 1, figsize=(5, 4))
+        ax[0].bar(hist_array[0][1][i:-1], Rate_factor * cumulative_threshold_array[0][i:], width=np.diff(hist_array[0][1][i:]),
+                  align="edge",
+                  edgecolor="black")
+        bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
+        ax[0].set_xlabel("ER/keV threshold per deposition in LAr")
+        ax[0].set_ylabel(" Rate mHz")
+        ax[0].ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
+        ax[0].minorticks_on()
+        # ax[0].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
+        # ax[0].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
+
+
+        plt.savefig(self.plot_path + "Cs_1E5_CF4_ER_perdepostion_cumulative_coldrate.pdf")
     def read_ER_Ar_CF_1d_sum_rate(self):
         # calcualte sum of ER classified in Ar and CF4 per event
         # and sum rate is over both volume in Ar and CF4
