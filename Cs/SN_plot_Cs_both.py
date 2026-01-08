@@ -97,8 +97,8 @@ class SN():
         # ER distribution per row
         # self.read_ER_Ar_CF()
         # self.read_ER_Ar_CF_per_deposit_rate()
-        # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
-        self.read_ER_CF_per_deposit_rate_cumulative()
+        self.read_ER_Ar_CF_per_deposit_rate_cumulative()
+        # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
         # self.read_ER_Ar_CF_2d_sum()
         # self.read_ER_Ar_CF_1d_sum_rate()
@@ -289,7 +289,11 @@ class SN():
         cumulative_threshold_array[0] = np.array([sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))])
         cumulative_threshold_array[1] = np.array([sum(hist_array[1][0][i:]) for i in range(len(hist_array[1][0]))])
         cumulative_threshold_array[2] = np.array([sum(hist_array[2][0][i:]) for i in range(len(hist_array[2][0]))])
-
+        # find if compton edge exist in LAr cumulative spectrum
+        for j in range(len(cumulative_threshold_array[0])):
+            if hist_array[0][1][j]>400:
+                print("400keV edge",cumulative_threshold_array[0][j])
+                break
         fig, ax = plt.subplots(1, 3, figsize=(16, 4))
         ax[0].bar(hist_array[0][1][:-1], Rate_factor * cumulative_threshold_array[0], width=np.diff(hist_array[0][1]),
                   align="edge",
