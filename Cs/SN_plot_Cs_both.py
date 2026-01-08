@@ -96,8 +96,8 @@ class SN():
         # self.read_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
-        self.read_ER_Ar_CF_per_deposit_rate()
-        # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
+        # self.read_ER_Ar_CF_per_deposit_rate()
+        self.read_ER_Ar_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
         # self.read_ER_Ar_CF_2d_sum()
         # self.read_ER_Ar_CF_1d_sum_rate()
@@ -278,72 +278,50 @@ class SN():
 
         hist_array = [None] * 3
 
-        hist_array[0] = np.histogram(ER_Ar, bins=50)
-        hist_array[1] = np.histogram(ER_CF4, bins=50)
-        hist_array[2] = np.histogram(ER_sum, bins=50)
+        hist_array[0] = np.histogram(ER_Ar, bins=50,range=(0, 660))
+        hist_array[1] = np.histogram(ER_CF4, bins=50,range=(0, 660))
+        hist_array[2] = np.histogram(ER_sum, bins=50,range=(0, 660))
         cumulative_threshold_array = [None]*3
 
         cumulative_threshold_array[0] = np.array([sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))])
         cumulative_threshold_array[1] = np.array([sum(hist_array[1][0][i:]) for i in range(len(hist_array[1][0]))])
         cumulative_threshold_array[2] = np.array([sum(hist_array[2][0][i:]) for i in range(len(hist_array[2][0]))])
 
-
-
-
-        fig, ax = plt.subplots(1,3, figsize=(14, 4))
-        ax[0].plot(hist_array[0][1][:-1], Rate_factor*cumulative_threshold_array[0])
-        bin0_len = int(hist_array[0][1][1]-hist_array[0][1][0])
-        ax[0].set_xlabel("ER/keV threshold in LAr")
-        ax[0].set_ylabel("Rate [mHz]")
+        fig, ax = plt.subplots(1, 3, figsize=(16, 4))
+        ax[0].bar(hist_array[0][1][:-1], Rate_factor * cumulative_threshold_array[0], width=np.diff(hist_array[0][1]),
+                  align="edge",
+                  edgecolor="black")
+        bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
+        ax[0].set_xlabel("ER/keV per deposition in LAr")
+        ax[0].set_ylabel(" Rate mHz/(bin[" + str(bin0_len) + " keV])")
+        ax[0].ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
         ax[0].minorticks_on()
-        ax[0].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
-        ax[0].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
+        # ax[0].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
+        # ax[0].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
-        ax[1].plot(hist_array[1][1][:-1], Rate_factor*cumulative_threshold_array[1])
-        ax[1].set_xlabel("ER/keV threshold in CF4")
+        ax[1].bar(hist_array[1][1][:-1], Rate_factor * cumulative_threshold_array[1], width=np.diff(hist_array[1][1]),
+                  align="edge",
+                  edgecolor="black")
+        ax[1].set_xlabel("ER/keV per deposition in CF4")
         bin1_len = int(hist_array[1][1][1] - hist_array[1][1][0])
-        ax[1].set_ylabel("Rate [mHz]")
-        ax[1].grid(True)
+        ax[1].set_ylabel("Rate mHz/([" + str(bin1_len) + " keV])")
+        ax[1].ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
+        # ax[1].grid(True)
         ax[1].minorticks_on()
-        ax[1].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
-        ax[1].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
+        # ax[1].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
+        # ax[1].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
-        ax[2].plot(hist_array[2][1][:-1], Rate_factor*cumulative_threshold_array[2])
-        ax[2].set_xlabel("ER/keV threshold ")
+        ax[2].bar(hist_array[2][1][:-1], Rate_factor * cumulative_threshold_array[2], width=np.diff(hist_array[2][1]),
+                  align="edge",
+                  edgecolor="black")
+        ax[2].set_xlabel("ER/keV per deposition ")
         bin2_len = int(hist_array[2][1][1] - hist_array[2][1][0])
-        ax[2].set_ylabel("Rate [mHz]")
-        ax[2].grid(True)
+        ax[2].set_ylabel("Rate mHz/([" + str(bin2_len) + " keV])")
+        ax[2].ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
+        # ax[2].grid(True)
         ax[2].minorticks_on()
-        ax[2].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
-        ax[2].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
-
-
-
-
-        plt.savefig(self.plot_path + "Cs_1E7_ER_coldrate_per_deposit_cumulative.pdf")
-
-    def read_ER_Ar_CF_1d_sum(self):
-        # calcualte sum of ER classified in Ar and CF4 per event per
-
-
-        ER_Ar_sum = self.merged_df[self.merged_df["Volume"]=="LAr_phys"].groupby("Event")["ER_near/eV"].sum()/1000
-        ER_CF4_sum = self.merged_df[self.merged_df["Volume"]=="hydraulic_fluid_phys"].groupby("Event")["ER_near/eV"].sum()/1000
-
-        ER_sum = self.merged_df.groupby("Event")["ER_near/eV"].sum() / 1000
-
-        fig, ax = plt.subplots(1,3, figsize=(14, 4))
-        ax[0].hist(ER_Ar_sum, bins=50,align="left")
-        ax[0].set_xlabel("ER/keV per event in LAr")
-        ax[0].set_ylabel("Counts")
-
-        ax[1].hist(ER_CF4_sum, bins=50,align="left")
-        ax[1].set_xlabel("ER/keV per event in CF4")
-        ax[1].set_ylabel("Counts")
-
-        ax[2].hist(ER_sum, bins=50, align="left")
-        ax[2].set_xlabel("ER/keV per event ")
-        ax[2].set_ylabel("Counts")
-
+        # ax[2].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
+        # ax[2].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
         plt.savefig(self.plot_path + "Cs_1E5_ER_sum_volume.pdf")
 
