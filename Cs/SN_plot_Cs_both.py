@@ -91,7 +91,7 @@ class SN():
         #position distributions histogram, dependisng on step number
         # self.read_positions()
         # self.read_positions_2d_hist()
-        self.read_positions_zslice()
+        # self.read_positions_zslice()
         #mulitipliciy distribtuion depending on events
         # self.read_multiplicity()
         # ER distribution per row
@@ -99,7 +99,7 @@ class SN():
         # self.read_ER_Ar_CF_per_deposit_rate()
         # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
-        # self.read_ER_Ar_CF_2d_sum()
+        self.read_ER_Ar_CF_2d_sum()
         # self.read_ER_Ar_CF_1d_sum_rate()
         # self.read_ER_Ar_CF_1d_sum_rate_cummulative()
 
