@@ -350,7 +350,7 @@ class SN():
                 print(cumulative_threshold_array[0][i],i,"is the threshold")
                 break
         fig, ax = plt.subplots(1, 1, figsize=(5, 4))
-        ax.bar(hist_array[0][1][i-4:-1], Rate_factor * cumulative_threshold_array[0][i-4:], width=np.diff(hist_array[0][1][i-4:]),
+        ax.bar(hist_array[0][1][i-2:-1], Rate_factor * cumulative_threshold_array[0][i-2:], width=np.diff(hist_array[0][1][i-2:]),
                   align="edge",
                   edgecolor="black")
         bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
