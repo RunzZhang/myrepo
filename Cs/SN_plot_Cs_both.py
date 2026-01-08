@@ -96,9 +96,9 @@ class SN():
         # self.read_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
-        # self.read_ER_Ar_CF_per_deposit_rate()
+        self.read_ER_Ar_CF_per_deposit_rate()
         # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
-        self.read_ER_CF_per_deposit_rate_cumulative()
+        # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
         # self.read_ER_Ar_CF_2d_sum()
         # self.read_ER_Ar_CF_1d_sum_rate()
@@ -224,6 +224,7 @@ class SN():
         Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
         ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
         ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
+        print("ER CF4 counts", len(ER_CF4))
         ER_sum = self.merged_df["ER_near/eV"]/1000
 
         hist_array = [None] * 3
