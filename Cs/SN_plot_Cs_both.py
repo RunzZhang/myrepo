@@ -331,9 +331,9 @@ class SN():
         ax[1].set_xlabel("ER/keV per event in CF4")
         ax[1].set_ylabel("Counts")
 
-        ax[1].hist(ER_sum, bins=50, align="left")
-        ax[1].set_xlabel("ER/keV per event ")
-        ax[1].set_ylabel("Counts")
+        ax[2].hist(ER_sum, bins=50, align="left")
+        ax[2].set_xlabel("ER/keV per event ")
+        ax[2].set_ylabel("Counts")
 
 
         plt.savefig(self.plot_path + "Cs_1E5_ER_sum_volume.pdf")
