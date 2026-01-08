@@ -93,12 +93,12 @@ class SN():
         # self.read_positions_2d_hist()
         # self.read_positions_zslice()
         #mulitipliciy distribtuion depending on events
-        # self.read_multiplicity()
+        self.read_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
         # self.read_ER_Ar_CF_per_deposit_rate()
         # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
-        self.read_ER_CF_per_deposit_rate_cumulative()
+        # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
         # self.read_ER_Ar_CF_2d_sum()
         # self.read_ER_Ar_CF_1d_sum_rate()
@@ -188,7 +188,7 @@ class SN():
         ax.hist(multiplicity, bins= bins, align="left", rwidth=0.9, density=True)
         ax.set_xlabel("Multiplicity")
         ax.set_ylabel("Counts")
-        plt.savefig(self.plot_path+"Cs_1E5_multi.pdf")
+        plt.savefig(self.plot_path+"Cs_1E7_multi.pdf")
 
     def read_ER_Ar_CF(self):
         # per energy deposition
