@@ -260,7 +260,7 @@ class SN():
         ax[2].set_xlabel("ER/keV per deposition ")
         bin2_len = int(hist_array[2][1][1] - hist_array[2][1][0])
         ax[2].set_ylabel("Rate mHz/([" + str(bin2_len) + " keV])")
-        ax[1].ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
+        ax[2].ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
         # ax[2].grid(True)
         ax[2].minorticks_on()
         # ax[2].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
