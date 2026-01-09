@@ -97,8 +97,8 @@ class SN():
         # self.read_Ar_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
-        self.read_ER_Ar_CF_per_deposit_rate()
-        # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
+        # self.read_ER_Ar_CF_per_deposit_rate()
+        self.read_ER_Ar_CF_per_deposit_rate_cumulative()
         # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
         # self.read_ER_Ar_CF_2d_sum()
@@ -311,12 +311,15 @@ class SN():
         cumulative_threshold_array[0] = np.array([sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))])
         cumulative_threshold_array[1] = np.array([sum(hist_array[1][0][i:]) for i in range(len(hist_array[1][0]))])
         cumulative_threshold_array[2] = np.array([sum(hist_array[2][0][i:]) for i in range(len(hist_array[2][0]))])
+        # find first 2 bins and rate for argon
+        print("argon bin", hist_array[0][1][:4])
+        print("argon rate", Rate_factor * cumulative_threshold_array[0][:3])
         # find if compton edge exist in LAr cumulative spectrum
         for j in range(len(cumulative_threshold_array[0])):
             if hist_array[0][1][j]>500:
                 print("500 keV edge Ar",cumulative_threshold_array[0][j])
                 break
-                #CF4
+        #CF4
         for j in range(len(cumulative_threshold_array[1])):
             if hist_array[1][1][j]>500:
                 print("500 keV edge CF4",cumulative_threshold_array[1][j])
@@ -328,7 +331,8 @@ class SN():
         bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
         ax[0].set_xlabel("ER/keV threshold per deposition in LAr")
         ax[0].set_ylabel(" Rate mHz")
-        ax[0].ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
+        # ax[0].ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
+        ax[0].set_yscale("log")
         ax[0].minorticks_on()
         # ax[0].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         # ax[0].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
@@ -339,8 +343,9 @@ class SN():
         ax[1].set_xlabel("ER/keV threshold per deposition in CF4")
         bin1_len = int(hist_array[1][1][1] - hist_array[1][1][0])
         ax[1].set_ylabel("Rate mHz")
-        ax[1].ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
+        # ax[1].ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
         # ax[1].grid(True)
+        ax[1].set_yscale("log")
         ax[1].minorticks_on()
         # ax[1].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         # ax[1].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
@@ -351,7 +356,8 @@ class SN():
         ax[2].set_xlabel("ER/keV threshold per deposition ")
         bin2_len = int(hist_array[2][1][1] - hist_array[2][1][0])
         ax[2].set_ylabel("Rate mHz")
-        ax[2].ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
+        # ax[2].ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
+        ax[2].set_yscale("log")
         # ax[2].grid(True)
         ax[2].minorticks_on()
         # ax[2].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
