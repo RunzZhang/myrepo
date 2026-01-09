@@ -94,7 +94,7 @@ class SN():
         # self.read_positions_zslice()
         #mulitipliciy distribtuion depending on events
         # self.read_multiplicity()
-        self.read_Ar_multiplicity()
+        # self.read_Ar_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
         self.read_ER_Ar_CF_per_deposit_rate()
@@ -233,6 +233,7 @@ class SN():
 
     def read_ER_Ar_CF_per_deposit_rate(self):
         # per energy deposition and total
+        # MHz
         Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
         ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
         ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
@@ -269,7 +270,8 @@ class SN():
         ax[1].set_xlabel("ER/keV per deposition in CF4")
         bin1_len = int(hist_array[1][1][1] - hist_array[1][1][0])
         ax[1].set_ylabel("Rate mHz/([" + str(bin1_len) + " keV])")
-        ax[1].ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
+        ax[1].set_yscale("log")
+        # ax[1].ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
         # ax[1].grid(True)
         ax[1].minorticks_on()
         # ax[1].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
