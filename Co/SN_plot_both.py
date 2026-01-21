@@ -105,8 +105,9 @@ class SN():
         # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
         # self.read_ER_Ar_CF_2d_sum()
-        self.read_ER_Ar_CF_1d_sum_rate()
+        # self.read_ER_Ar_CF_1d_sum_rate()
         # self.read_ER_Ar_CF_1d_sum_rate_cummulative()
+        self.read_ER_Ar_CF_1d_sum_counts()
 
 
 
@@ -457,6 +458,51 @@ class SN():
 
 
         plt.savefig(self.plot_path + "Co_1E5_ER_coldrate.pdf")
+    def read_ER_Ar_CF_1d_sum_counts(self):
+        # calcualte sum counts of ER classified in Ar and CF4 per event
+        # and sum rate is over both volume in Ar and CF4
+
+        Rate_factor = self.gamma_rate / (3600*self.G4_events_gamma) # /h per geant run file
+        ER_Ar_sum = self.merged_df[self.merged_df["Volume"]=="LAr_phys"].groupby("Event")["ER_near/eV"].sum()/1000
+        ER_CF4_sum = self.merged_df[self.merged_df["Volume"]=="hydraulic_fluid_phys"].groupby("Event")["ER_near/eV"].sum()/1000
+
+        ER_sum = self.merged_df.groupby("Event")["ER_near/eV"].sum() / 1000
+
+        hist_array = [None] * 3
+
+
+
+
+        fig, ax = plt.subplots(1,3, figsize=(14, 4))
+        ax[0].hist(ER_Ar_sum, bins=50, range=(0,1400))
+        bin_len = 1400/50
+        ax[0].set_xlabel("ER/keV per event in LAr")
+        ax[0].set_ylabel("Rate/(h*"+str(bin_len)+" keV)")
+        ax[0].minorticks_on()
+        # ax[0].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
+        # ax[0].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
+
+        ax[1].hist(ER_CF4_sum, bins=50, range=(0,1400))
+        ax[1].set_xlabel("ER/keV per event in CF4")
+
+        ax[1].set_ylabel("Rate/(h*"+str(bin_len)+" keV)")
+        # ax[1].grid(True)
+        ax[1].minorticks_on()
+        # ax[1].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
+        # ax[1].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
+
+        ax[2].hist(ER_sum, bins=50, range=(0,1400))
+        ax[2].set_xlabel("ER/keV per event ")
+        ax[2].set_ylabel("Rate/(h*"+str(bin_len)+" keV)")
+        # ax[2].grid(True)
+        ax[2].minorticks_on()
+        # ax[2].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
+        # ax[2].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
+
+
+
+
+        plt.savefig(self.plot_path + "Co_1E5_ER_counts.pdf")
 
     def read_ER_Ar_CF_1d_sum_rate_cummulative(self):
         # calcualte sum of ER classified in Ar and CF4 per event
