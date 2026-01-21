@@ -61,7 +61,7 @@ class ReadRoot:
             # Convert to dictionary format as required by uproot.recreate
             branch_types = {col: tree[col].interpretation.numpy_dtype for col in self.selected_columns}
 
-            chunk_num = 26
+            chunk_num = 27
             start_entry = 0
             # Iterate through the ROOT file in chunks
             for arrays in tree.iterate(expressions=self.selected_columns, library="pd", entry_start=0,
