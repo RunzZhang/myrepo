@@ -26,7 +26,7 @@ class ReadRoot:
         # self.signal_path_mid = self.base_path + self.signal_mid
         # self.signal_path = self.base_path + self.signal
 
-        self.filepath = self.base_path + "dmx_Co_gamma_25E5_1173.root"
+        self.filepath = self.base_path + "dmx_Co_gamma_25E5_1332.root"
         # self.filepath = self.base_path + "dmx_AmLi.root" # test
         self.tree_name = "tree"  # Assuming your TTree is named "tree"
 
@@ -61,7 +61,7 @@ class ReadRoot:
             # Convert to dictionary format as required by uproot.recreate
             branch_types = {col: tree[col].interpretation.numpy_dtype for col in self.selected_columns}
 
-            chunk_num = 0
+            chunk_num = 26
             start_entry = 0
             # Iterate through the ROOT file in chunks
             for arrays in tree.iterate(expressions=self.selected_columns, library="pd", entry_start=0,
