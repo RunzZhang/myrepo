@@ -134,42 +134,45 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E7/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E7/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_5E6/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_5E6/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.main_body(1)
-        for i in range(1,51):
+        for i in range(1,53):
+            try:
         # for i in range(1, 11):
-            self.main_body(i)
+                self.main_body(i)
+            except:
+                continue
     def main_body(self,i):
         print(i)
-        self.ini_path = self.base_path+ f"Cs_gamma_1E7_ini_part{i}.csv"
-        self.ar_ke_path = self.base_path+ f"Cs_gamma_1E7_ke_part{i}.csv"
-        self.false_gamma_1 = f"Cs_gamma_1E7_false1_part{i}.csv"
-        self.false_gamma_2 = f"Cs_gamma_1E7_false2_part{i}.csv"
-        self.false_gamma_3 = f"Cs_gamma_1E7_false3_part{i}.csv"
-        self.false_gamma_1_old = f"Cs_gamma_1E7_false1_old_part{i}.csv"
-        self.false_gamma_2_old = f"Cs_gamma_1E7_false2_old_part{i}.csv"
-        self.false_gamma_3_old = f"Cs_gamma_1E7_false3_old_part{i}.csv"
-        self.false_gamma_1_new = f"Cs_gamma_1E7_false1_new_part{i}.csv"
-        self.false_gamma_2_new = f"Cs_gamma_1E7_false2_new_part{i}.csv"
-        self.signal = f"Cs_gamma_1E7_sig_part{i}.csv"
-        self.signal_old = f"Cs_gamma_1E7_sig_old_part{i}.csv"
-        self.signal_new = f"Cs_gamma_1E7_sig_new_part{i}.csv"
-        self.false_gamma_1_mid = f"Cs_gamma_1E7_false1_mid_part{i}.csv"
-        self.false_gamma_2_mid = f"Cs_gamma_1E7_false2_mid_part{i}.csv"
-        self.false_gamma_3_mid = f"Cs_gamma_1E7_false3_mid_part{i}.csv"
-        self.signal_mid = f"Cs_gamma_1E7_sig_mid_part{i}.csv"
-        self.false_gamma_1_old_mid = f"Cs_gamma_1E7_false1_old_mid_part{i}.csv"
-        self.false_gamma_2_old_mid = f"Cs_gamma_1E7_false2_old_mid_part{i}.csv"
-        self.false_gamma_3_old_mid = f"Cs_gamma_1E7_false3_old_mid_part{i}.csv"
-        self.signal_old_mid = f"Cs_gamma_1E7_sig_old_mid_part{i}.csv"
-        self.false_gamma_1_new_mid = f"Cs_gamma_1E7_false1_new_mid_part{i}.csv"
-        self.false_gamma_2_new_mid = f"Cs_gamma_1E7_false2_new_mid_part{i}.csv"
-        self.signal_new_mid = f"Cs_gamma_1E7_sig_new_mid_part{i}.csv"
-        self.info_path = self.base_path+ f"Cs_gamma_1E6_info_scube_part{i}.csv"
+        self.ini_path = self.base_path+ f"Co_gamma_1E7_ini_part{i}.csv"
+        self.ar_ke_path = self.base_path+ f"Co_gamma_1E7_ke_part{i}.csv"
+        self.false_gamma_1 = f"Co_gamma_1E7_false1_part{i}.csv"
+        self.false_gamma_2 = f"Co_gamma_1E7_false2_part{i}.csv"
+        self.false_gamma_3 = f"Co_gamma_1E7_false3_part{i}.csv"
+        self.false_gamma_1_old = f"Co_gamma_1E7_false1_old_part{i}.csv"
+        self.false_gamma_2_old = f"Co_gamma_1E7_false2_old_part{i}.csv"
+        self.false_gamma_3_old = f"Co_gamma_1E7_false3_old_part{i}.csv"
+        self.false_gamma_1_new = f"Co_gamma_1E7_false1_new_part{i}.csv"
+        self.false_gamma_2_new = f"Co_gamma_1E7_false2_new_part{i}.csv"
+        self.signal = f"Co_gamma_1E7_sig_part{i}.csv"
+        self.signal_old = f"Co_gamma_1E7_sig_old_part{i}.csv"
+        self.signal_new = f"Co_gamma_1E7_sig_new_part{i}.csv"
+        self.false_gamma_1_mid = f"Co_gamma_1E7_false1_mid_part{i}.csv"
+        self.false_gamma_2_mid = f"Co_gamma_1E7_false2_mid_part{i}.csv"
+        self.false_gamma_3_mid = f"Co_gamma_1E7_false3_mid_part{i}.csv"
+        self.signal_mid = f"Co_gamma_1E7_sig_mid_part{i}.csv"
+        self.false_gamma_1_old_mid = f"Co_gamma_1E7_false1_old_mid_part{i}.csv"
+        self.false_gamma_2_old_mid = f"Co_gamma_1E7_false2_old_mid_part{i}.csv"
+        self.false_gamma_3_old_mid = f"Co_gamma_1E7_false3_old_mid_part{i}.csv"
+        self.signal_old_mid = f"Co_gamma_1E7_sig_old_mid_part{i}.csv"
+        self.false_gamma_1_new_mid = f"Co_gamma_1E7_false1_new_mid_part{i}.csv"
+        self.false_gamma_2_new_mid = f"Co_gamma_1E7_false2_new_mid_part{i}.csv"
+        self.signal_new_mid = f"Co_gamma_1E7_sig_new_mid_part{i}.csv"
+        self.info_path = self.base_path+ f"Co_gamma_1E6_info_scube_part{i}.csv"
         self.false_gamma_1_path = self.base_path + self.false_gamma_1
         self.false_gamma_2_path = self.base_path + self.false_gamma_2
         self.false_gamma_3_path = self.base_path + self.false_gamma_3
@@ -197,7 +200,7 @@ class ReadRoot():
         self.y_range = [0, 0]
         self.z_range = [0, 0]
 
-        self.filepath = self.base_path + f"dmx_Cs_1E7_{i}.root"
+        self.filepath = self.base_path + f"dmx_Co_1E7_{i}.root"
         self.file = uproot.open(self.filepath)["tree"]
         # print("columns: ", self.file.keys())
         # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
@@ -444,7 +447,7 @@ class ReadRoot():
         print("exclusive ER", high_NRER)
         # p_observe only contains ER, if one event only has NR, it still produce bubbles that we need to compress
         print("path",self.false_gamma_1_path)
-        # Cs, just save the total ER in MeV
+        # Co, just save the total ER in MeV
         with open(self.false_gamma_1_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(self.electron_recoiled_list)
