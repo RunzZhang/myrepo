@@ -105,10 +105,10 @@ class SN():
         # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
         # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
-        # self.read_ER_Ar_CF_2d_sum()
+        self.read_ER_Ar_CF_2d_sum()
         # self.read_ER_Ar_CF_1d_sum_rate()
         # self.read_ER_Ar_CF_1d_sum_rate_cummulative()
-        self.read_ER_Ar_CF_1d_sum_counts()
+        # self.read_ER_Ar_CF_1d_sum_counts()
 
 
 
@@ -574,7 +574,7 @@ class SN():
         evt = evt.fillna(0)
 
         fig, ax = plt.subplots()
-
+        print("max x and y", max(evt["ER_Ar_keV"]),max(evt["ER_CF4_keV"]))
         sc = ax.hist2d(evt["ER_Ar_keV"], evt["ER_CF4_keV"], bins=50,
                        cmap="plasma", norm="log", alpha=0.7)
 
