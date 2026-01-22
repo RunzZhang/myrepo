@@ -244,6 +244,7 @@ class SN():
         ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
         ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
         print("ER CF4 counts", len(ER_CF4))
+        print("max ER Lar", max(ER_Ar))
         ER_sum = self.merged_df["ER_near/eV"]/1000
 
         hist_array = [None] * 3
