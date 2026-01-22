@@ -102,8 +102,8 @@ class SN():
         # self.read_Ar_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
-        self.read_ER_Ar_CF_per_deposit_rate()
-        # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
+        # self.read_ER_Ar_CF_per_deposit_rate()
+        self.read_ER_Ar_CF_per_deposit_rate_cumulative()
         # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
         # self.read_ER_Ar_CF_2d_sum()
@@ -310,9 +310,9 @@ class SN():
 
         hist_array = [None] * 3
 
-        hist_array[0] = np.histogram(ER_Ar, bins=100,range=(0, 660))
-        hist_array[1] = np.histogram(ER_CF4, bins=100,range=(0, 660))
-        hist_array[2] = np.histogram(ER_sum, bins=100,range=(0, 660))
+        hist_array[0] = np.histogram(ER_Ar, bins=100,range=(0, 1200))
+        hist_array[1] = np.histogram(ER_CF4, bins=100,range=(0, 1200))
+        hist_array[2] = np.histogram(ER_sum, bins=100,range=(0, 1200))
         cumulative_threshold_array = [None]*3
 
         cumulative_threshold_array[0] = np.array([sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))])
@@ -370,7 +370,7 @@ class SN():
         # ax[2].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         # ax[2].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
-        plt.savefig(self.plot_path + "Co_1E7_ER_perdepostion_cumulative_coldrate.pdf")
+        plt.savefig(self.plot_path + "Co_1E7_ER_perdepostion_cumulative.pdf")
     def read_ER_CF_per_deposit_rate_cumulative(self):
         # rate factor in mHz
         Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
