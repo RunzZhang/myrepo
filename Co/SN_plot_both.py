@@ -33,8 +33,9 @@ class SN():
 
 
         #982 statics false 1
-        for i in range(1,54):
-        # for i in range(1, 26):
+        # for i in range(1,54):
+        for i in range(1, 26):
+        # for i in range(26, 54):
             try:
         # for i in range(1, 11):
                 self.main_body(i)
@@ -101,11 +102,11 @@ class SN():
         # self.read_Ar_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
-        # self.read_ER_Ar_CF_per_deposit_rate()
+        self.read_ER_Ar_CF_per_deposit_rate()
         # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
         # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
-        self.read_ER_Ar_CF_2d_sum()
+        # self.read_ER_Ar_CF_2d_sum()
         # self.read_ER_Ar_CF_1d_sum_rate()
         # self.read_ER_Ar_CF_1d_sum_rate_cummulative()
         # self.read_ER_Ar_CF_1d_sum_counts()
