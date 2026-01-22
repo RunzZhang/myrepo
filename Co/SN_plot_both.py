@@ -34,7 +34,7 @@ class SN():
 
         #982 statics false 1
         # for i in range(1,54):
-        for i in range(26, 54):
+        for i in range(1, 26):
             try:
         # for i in range(1, 11):
                 self.main_body(i)
