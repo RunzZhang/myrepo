@@ -134,8 +134,8 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
@@ -216,7 +216,7 @@ class ReadRoot():
 
 
         #find source tube
-        # self.source_geometry()
+        self.source_geometry()
 
         # update signals
         # self.single_ncap()
@@ -303,10 +303,7 @@ class ReadRoot():
         print(self.df[(self.df["name"]=="neutron")&(self.df["Step ID"]==1)&(self.df["Parent ID"]==0)]["X/mm"])
         self.x_range[0] = min(self.x_range[0],self.df[(self.df["name"]=="neutron")&(self.df["Step ID"]==1)&(self.df["Parent ID"]==0)]["X/mm"].min())
         self.x_range[1] = max(self.x_range[1], self.df[(self.df["name"]=="neutron")&(self.df["Step ID"]==1)&(self.df["Parent ID"]==0)]["X/mm"].max())
-        # self.y_range[0] = min(self.y_range[0], self.df["Y/mm"].min())
-        # self.y_range[1] = max(self.y_range[1], self.df["Y/mm"].max())
-        # self.z_range[0] = min(self.z_range[0], self.df["Z/mm"].min())
-        # self.z_range[1] = max(self.z_range[1], self.df["Z/mm"].max())
+
         print("x",self.x_range)
         print("y", self.y_range)
         print("z", self.z_range)
