@@ -117,86 +117,86 @@ class SN():
 
         self.df_geo_list.append(temp_geo_df)
 
-        if self.full_gamma:
-            self.G4_gamma_time =  self.G4_full_gamma_time
-        with open(self.signal_path, 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.sig_raw_list = [float(value) for value in number_list]
-        self.signal_final_list = self.signal_final_list + self.sig_raw_list
-
-        print("capture event number", len(self.sig_raw_list))
-
-        # with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'r') as file:
-        # Noise 1,
-        with open(self.false_1_path, 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.noise1_raw_list = [float(value) for value in number_list[1:]]
-            bubble_num =  number_list[0]
-
-
-            # the [0] is NR number and [1:] is the photon numbers
-        self.noise1_final_list = self.noise1_final_list + self.noise1_raw_list
-        self.untagged_bubble_list.append(float(bubble_num))
-        self.tagged_bubble_list.append(len(self.noise1_raw_list))
-        # tagged number for noise1
-        # Noise 2
-        with open(self.false_2_path, 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.noise2_raw_list = [float(value) for value in number_list]
-            # self.noise_raw_list = [float(value)  for value in number_list]
-        self.noise2_raw_list = list(filter(lambda x: x != 0, self.noise2_raw_list))
-        self.noise2_final_list = self.noise2_final_list + self.noise2_raw_list
-        # print(self.noise2_raw_list)
-        self.tagged_bubble_list.append(len(self.noise2_raw_list))
-        # tagged number for noise2
-
-        with open(self.false_gamma_1_path, 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.noisegamma1_raw_list = [float(value) for value in number_list]
-            # self.noise_raw_list = [float(value)  for value in number_list]
-        self.noisegamma1_final_list = self.noisegamma1_final_list + self.noisegamma1_raw_list
-
-        # Initial amli spectrm
-        with open(self.ini_path, 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.neutron_ini_raw_list = [float(value)*1e6 for value in number_list]
-
-
-            # the [0] is NR number and [1:] is the photon numbers
-        self.neutron_ini_list +=  self.neutron_ini_raw_list
-
-        with open(self.ar_ke_path, 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.ar_ke_raw_list = [float(value)*1e6 for value in number_list] # in eV
-            # self.noise_raw_list = [float(value)  for value in number_list]
-        self.neutron_ar_ke_list += self.ar_ke_raw_list
-
-        with open(self.ar_ke_alter_path, 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            self.ar_ke_alter_raw_list = [float(value)*1e6 for value in number_list] # in eV
-            # self.noise_raw_list = [float(value)  for value in number_list]
-        self.neutron_ar_ke_alter_list += self.ar_ke_raw_list
+        # if self.full_gamma:
+        #     self.G4_gamma_time =  self.G4_full_gamma_time
+        # with open(self.signal_path, 'r') as file:
+        #     reader = csv.reader(file)
+        #     # Read the first row (assuming single row for simplicity)
+        #     number_list = next(reader)
+        #     # Convert the strings to floats
+        #     self.sig_raw_list = [float(value) for value in number_list]
+        # self.signal_final_list = self.signal_final_list + self.sig_raw_list
+        #
+        # print("capture event number", len(self.sig_raw_list))
+        #
+        # # with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'r') as file:
+        # # Noise 1,
+        # with open(self.false_1_path, 'r') as file:
+        #     reader = csv.reader(file)
+        #     # Read the first row (assuming single row for simplicity)
+        #     number_list = next(reader)
+        #     # Convert the strings to floats
+        #     self.noise1_raw_list = [float(value) for value in number_list[1:]]
+        #     bubble_num =  number_list[0]
+        #
+        #
+        #     # the [0] is NR number and [1:] is the photon numbers
+        # self.noise1_final_list = self.noise1_final_list + self.noise1_raw_list
+        # self.untagged_bubble_list.append(float(bubble_num))
+        # self.tagged_bubble_list.append(len(self.noise1_raw_list))
+        # # tagged number for noise1
+        # # Noise 2
+        # with open(self.false_2_path, 'r') as file:
+        #     reader = csv.reader(file)
+        #     # Read the first row (assuming single row for simplicity)
+        #     number_list = next(reader)
+        #     # Convert the strings to floats
+        #     self.noise2_raw_list = [float(value) for value in number_list]
+        #     # self.noise_raw_list = [float(value)  for value in number_list]
+        # self.noise2_raw_list = list(filter(lambda x: x != 0, self.noise2_raw_list))
+        # self.noise2_final_list = self.noise2_final_list + self.noise2_raw_list
+        # # print(self.noise2_raw_list)
+        # self.tagged_bubble_list.append(len(self.noise2_raw_list))
+        # # tagged number for noise2
+        #
+        # with open(self.false_gamma_1_path, 'r') as file:
+        #     reader = csv.reader(file)
+        #     # Read the first row (assuming single row for simplicity)
+        #     number_list = next(reader)
+        #     # Convert the strings to floats
+        #     self.noisegamma1_raw_list = [float(value) for value in number_list]
+        #     # self.noise_raw_list = [float(value)  for value in number_list]
+        # self.noisegamma1_final_list = self.noisegamma1_final_list + self.noisegamma1_raw_list
+        #
+        # # Initial amli spectrm
+        # with open(self.ini_path, 'r') as file:
+        #     reader = csv.reader(file)
+        #     # Read the first row (assuming single row for simplicity)
+        #     number_list = next(reader)
+        #     # Convert the strings to floats
+        #     self.neutron_ini_raw_list = [float(value)*1e6 for value in number_list]
+        #
+        #
+        #     # the [0] is NR number and [1:] is the photon numbers
+        # self.neutron_ini_list +=  self.neutron_ini_raw_list
+        #
+        # with open(self.ar_ke_path, 'r') as file:
+        #     reader = csv.reader(file)
+        #     # Read the first row (assuming single row for simplicity)
+        #     number_list = next(reader)
+        #     # Convert the strings to floats
+        #     self.ar_ke_raw_list = [float(value)*1e6 for value in number_list] # in eV
+        #     # self.noise_raw_list = [float(value)  for value in number_list]
+        # self.neutron_ar_ke_list += self.ar_ke_raw_list
+        #
+        # with open(self.ar_ke_alter_path, 'r') as file:
+        #     reader = csv.reader(file)
+        #     # Read the first row (assuming single row for simplicity)
+        #     number_list = next(reader)
+        #     # Convert the strings to floats
+        #     self.ar_ke_alter_raw_list = [float(value)*1e6 for value in number_list] # in eV
+        #     # self.noise_raw_list = [float(value)  for value in number_list]
+        # self.neutron_ar_ke_alter_list += self.ar_ke_raw_list
 
 
     def combine_data(self,gamma=False):
