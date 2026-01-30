@@ -299,7 +299,7 @@ class ReadRoot():
         self.event206 = self.df[self.df["Event"]==206]
         self.event206.to_csv(self.base_path+"event206.csv", index= False)
 
-        self.inelastic= self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="LAr_phys")&(self.df['Process'].isin(['neutronInelastic'])) ]
+        self.inelastic= self.df[(self.df['Process'].isin(['neutronInelastic'])) ]
         inelastic_list =self.inelastic["Event"].to_list()
         print(inelastic_list)
         self.inelastic_1st = self.df[self.df["Event"]==inelastic_list[0]]
