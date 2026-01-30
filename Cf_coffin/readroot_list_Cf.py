@@ -287,18 +287,23 @@ class ReadRoot():
 
         self.LAr = self.df[(self.df["name"].isin(["Ar36","Ar38", "Ar40"]))&(self.df["Recoiled/MeV"]>0)]
         self.LAr = self.keep_1st(self.LAr)
-
-        self.NR_scatter_column = self.NR_scatter[['Event', "Track ID","Process"]]
-        self.NR_scatter_column.columns = ['Event', "Parent ID", "N_Process"]
-        self.LAr_scatter = pd.merge(self.LAr, self.NR_scatter_column, on=['Event', 'Parent ID'],
-                                          how='inner')
-        # distinguish the process
-        print(self.LAr_scatter)
-
+        self.LAr = self.LAr.drop(columns=["Process"])
 
         # collect Ar recoiled by Elastic and inelastic
+        self.NR_scatter_column = self.NR_scatter[['Event', "Track ID","Process"]]
+        self.NR_scatter_column.columns = ['Event', "Parent ID", "Process"]
+        self.LAr_scatter = pd.merge(self.LAr, self.NR_scatter_column, on=['Event', 'Parent ID'],
+                                          how='inner')
+        self.LAr_scatter = self.LAr_scatter[["Event", "Track ID","Process","Recoiled/MeV"]]
+        print(self.LAr_scatter)
+        #capture
+        self.LAr_capture = self.keep_1st(self.LAr_capture)
+        self.LAr_capture = self.NR_capture[["Event", "Process","Recoiled/MeV"]]
 
-        self.neutron_elastic =  self.NR[self.NR["Process"]=='hadElastic']
+
+
+
+
 
         # for capture, it is determined by the recoil spectrum
         self.NR.to_csv(self.signal_path, index= False)
