@@ -735,6 +735,7 @@ class SN():
         ax[1].set_ylabel("Counts")
 
         plt.savefig(self.plot_path+"Cf_1E7_position_density.pdf")
+        print(self.plot_path)
 
     def read_original_spectrum(self):
         list1, list2, list3 = [], [], []
