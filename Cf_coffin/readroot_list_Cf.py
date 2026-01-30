@@ -299,9 +299,11 @@ class ReadRoot():
         self.LAr_scatter = self.LAr_scatter[["Event", "Process","Recoiled/MeV"]]
 
         #capture
-        self.LAr_capture = self.keep_1st(self.LAr_capture)
-        self.LAr_capture = self.NR_capture[["Event", "Process","Recoiled/MeV"]]
+        self.LAr_capture = self.keep_1st(self.NR_capture)
+        self.LAr_capture = self.LAr_capture[["Event", "Process","Recoiled/MeV"]]
 
+
+        self.NR = pd.concat([self.LAr_scatter,self.LAr_capture], axis=1)
 
 
 
