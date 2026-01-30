@@ -287,6 +287,7 @@ class ReadRoot():
 
         self.LAr = self.df[(self.df["name"].isin(["Ar36","Ar38", "Ar40"]))&(self.df["Recoiled/MeV"]>0)]
         self.LAr = self.keep_1st(self.LAr)
+        print(self.LAr["Event"]==3510)
         self.LAr = self.LAr.drop(columns=["Process"])
 
         # collect Ar recoiled by Elastic and inelastic
