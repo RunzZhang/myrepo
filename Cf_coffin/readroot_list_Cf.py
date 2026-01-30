@@ -282,11 +282,12 @@ class ReadRoot():
         self.geometry.to_csv(self.geometry_path, index = False)
 
     def collect_NR(self):
-        self.NR= self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="LAr_phys")&(self.df['Process'].isin(['hadElastic', 'nCapture','neutronInelastic'])) ]
-        print(self.NR)
-        self.LAr = self.df[(self.df["name"].isin(["Ar36","Ar37","Ar38","Ar39", "Ar40","Ar41"]))&(self.df["Recoiled/MeV"]>0)]
+        self.NR_scattering= self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="LAr_phys")&(self.df['Process'].isin(['hadElastic', 'neutronInelastic'])) ]
+        self.NR_capture = self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="LAr_phys")&(self.df['Process'].isin(['nCapture'])) ]
+
+        self.LAr = self.df[(self.df["name"].isin(["Ar36","Ar38", "Ar40"]))&(self.df["Recoiled/MeV"]>0)]
         self.LAr = self.keep_1st(self.LAr)
-        print(self.LAr)
+
 
         # collect Ar recoiled by Elastic and inelastic
 
@@ -296,8 +297,12 @@ class ReadRoot():
         self.NR.to_csv(self.signal_path, index= False)
     def check_NR(self):
         self.event206 = self.df[self.df["Event"]==206]
-        self.event206.to_csv(self.base_path+"event206", index= False)
+        self.event206.to_csv(self.base_path+"event206.csv", index= False)
 
+        self.inelastic= self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="LAr_phys")&(self.df['Process'].isin(['neutronInelastic'])) ]
+        inelastic_list =self.inelastic["Event"].to_list()
+        self.inelastic_1st = self.df[self.df["Event"]==inelastic_list[0]]
+        self.inelastic_1st.to_csv(self.base_path+"eventinelastic.csv", index= False)
 
     def keep_1st(self, df, columns=['Event','Track ID']):
         # Assuming df is your DataFrame and column1, column2 are the column names
