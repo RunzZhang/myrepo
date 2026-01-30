@@ -289,11 +289,11 @@ class ReadRoot():
         self.LAr = self.keep_1st(self.LAr)
 
         self.NR_scatter_column = self.NR_scatter[['Event', "Track ID","Process"]]
-        self.NR_scatter_column.columns = ['Event', "Parent ID", "Process"]
+        self.NR_scatter_column.columns = ['Event', "Parent ID", "N_Process"]
         self.LAr_scatter = pd.merge(self.LAr, self.NR_scatter_column, on=['Event', 'Parent ID'],
                                           how='inner')
         # distinguish the process
-        print(self.LAr_scatter.columns)
+        print(self.LAr_scatter)
 
 
         # collect Ar recoiled by Elastic and inelastic
