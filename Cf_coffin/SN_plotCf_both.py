@@ -118,6 +118,8 @@ class SN():
 
         self.df_geo_list.append(temp_geo_df)
 
+        self.df_geo = pd.concat(self.df_geo_list, ignore_index=True)
+
         # if self.full_gamma:
         #     self.G4_gamma_time =  self.G4_full_gamma_time
         # with open(self.signal_path, 'r') as file:
@@ -704,16 +706,16 @@ class SN():
         plt.legend()
         plt.savefig(self.plot_path + "PN_specturm_lin_1E6.pdf", bbox_inches='tight')
     def check_geometry(self):
-        print(self.df_geo_list)
-        self.coffin = self.df_geo_list[self.df_geo_list["Volume"]=="cf_source_phys"]
+
+        self.coffin = self.df_geo[self.df_geo["Volume"]=="cf_source_phys"]
         self.coffin["PreKinetic/keV"] = self.coffin["PreKinetic/MeV"]*1000
-        self.argon = self.df_geo_list[self.df_geo_list["Volume"]=="LAr_phys"]
-        self.df_geo_list["R/mm"]=  np.sqrt(self.df_geo_list["X/mm"]**2+self.df_geo_list["Y/mm"]**2 )
+        self.argon = self.df_geo[self.df_geo["Volume"]=="LAr_phys"]
+        self.df_geo["R/mm"]=  np.sqrt(self.df_geo["X/mm"]**2+self.df_geo["Y/mm"]**2 )
 
 
         ffig, ax = plt.subplots(1,2)
 
-        sc=ax[0].hist2d(self.df_geo_list["R/mm"],self.df_geo_list["Z/mm"],bins=50,
+        sc=ax[0].hist2d(self.df_geo["R/mm"],self.df_geo["Z/mm"],bins=50,
         cmap="plasma",norm="log",alpha=0.7)
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
