@@ -192,6 +192,7 @@ class ReadRoot():
         self.signal_old_path = self.base_path + self.signal_old
         self.signal_new_path_mid = self.base_path + self.signal_new_mid
         self.signal_new_path = self.base_path + self.signal_new
+        self.geometry_path = self.base_path+f"PN_1E7_geo_part{i}.csv"
 
         self.x_range = [0, 0]
         self.y_range = [0, 0]
@@ -246,7 +247,7 @@ class ReadRoot():
         # self.Check_inelastic()
 
         # check lead interaction
-        self.lead_interaction()
+        # self.lead_interaction()
 
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
@@ -300,13 +301,12 @@ class ReadRoot():
         # this make event number correct
         self.reidx_event()
     def source_geometry(self):
-        print(self.df[(self.df["name"]=="neutron")&(self.df["Step ID"]==1)&(self.df["Parent ID"]==0)]["X/mm"])
-        self.x_range[0] = min(self.x_range[0],self.df[(self.df["name"]=="neutron")&(self.df["Step ID"]==1)&(self.df["Parent ID"]==0)]["X/mm"].min())
-        self.x_range[1] = max(self.x_range[1], self.df[(self.df["name"]=="neutron")&(self.df["Step ID"]==1)&(self.df["Parent ID"]==0)]["X/mm"].max())
+        # also include initial energy
+        self.initial_position = self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="cf_source_phys")&(self.df['Step ID'] == 1)]["X/mm", "Y/mm","Z/mm", "Volume"]
+        self.argon_position = self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="LAr_phys")]["X/mm", "Y/mm","Z/mm", "Volume"]
+        self.geometry = self.initial_position+self.argon_position
+        self.geometry.to_csv(self.geometry_path, index = False)
 
-        print("x",self.x_range)
-        print("y", self.y_range)
-        print("z", self.z_range)
     def single_ncap(self):
         self.nCapture_NR()
         self.nCapture_gamma()

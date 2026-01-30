@@ -35,6 +35,7 @@ class SN():
         self.neutron_ar_ke_alter_list = []
         self.gamma = gamma
         self.full_gamma = full_gamma
+        self.df_geo_list = []
 
 
         #982 statics false 1
@@ -76,6 +77,7 @@ class SN():
         self.ini_path = self.base_path+ f"PN_1E7_ini_part{i}.csv"
         self.ar_ke_path = self.base_path + f"PN_1E7_ke_part{i}.csv"
         self.ar_ke_alter_path = self.base_path + f"PN_1E7_ke_part{i}.csv"
+        self.geometry_path = self.base_path+f"PN_1E7_geo_part{i}.csv"
 
 
         self.read_files()
@@ -110,6 +112,11 @@ class SN():
         self.G4_noise_time = self.G4_events / self.rate
         self.G4_gamma_time = self.G4_events_gamma/self.gamma_rate
         self.G4_full_gamma_time = self.G4_events_gamma*self.gamma_BR/self.gamma_rate # gamma time for whole gamma spectrum
+
+        temp_geo_df = pd.read_csv(self.geometry_path)
+
+        self.df_geo_list.append(temp_geo_df)
+
         if self.full_gamma:
             self.G4_gamma_time =  self.G4_full_gamma_time
         with open(self.signal_path, 'r') as file:
@@ -695,6 +702,39 @@ class SN():
         # plt.ylim([1e-1, 1e4])
         plt.legend()
         plt.savefig(self.plot_path + "PN_specturm_lin_1E6.pdf", bbox_inches='tight')
+    def check_geometry(self):
+        self.coffin = self.df_geo_list[self.df_geo_list["Volume"]=="cf_source_phys"]
+        self.coffin["PreKinetic/keV"] = self.coffin["PreKinetic/MeV"]*1000
+        self.argon = self.df_geo_list[self.df_geo_list["Volume"]=="LAr_phys"]
+        self.df_geo_list["R/mm"]=  np.sqrt(self.df_geo_list["X/mm"]**2+self.df_geo_list["Y/mm"]**2 )
+
+
+        ffig, ax = plt.subplots(1,2)
+
+        sc=ax[0].hist2d(self.df_geo_list["R/mm"],self.df_geo_list["Z/mm"],bins=50,
+        cmap="plasma",norm="log",alpha=0.7)
+
+        # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
+        # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
+        # ax.plot([99.01,99.01, 4.34], [0,366.49, 399.82], color="red")
+
+        ax[0].set_xlabel("R [mm]")
+        ax[0].set_ylabel("Z [mm]")
+        ax[0].set_xlim(0,400)
+        ax[0].set_ylim(-100,800)
+        cbar = plt.colorbar(sc[3], ax=ax)
+        cbar.set_label("Counts(log)")
+
+        ax[1].hist(self.coffin["PreKinetic/keV"], bins=50, alpha=0.7)
+
+        # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
+        # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
+        # ax.plot([99.01,99.01, 4.34], [0,366.49, 399.82], color="red")
+
+        ax[1].set_xlabel("Energy [keV]")
+        ax[1].set_ylabel("Counts")
+
+        plt.savefig(self.plot_path+"Cf_1E7_position_density.pdf")
 
     def read_original_spectrum(self):
         list1, list2, list3 = [], [], []
