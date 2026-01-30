@@ -220,8 +220,8 @@ class ReadRoot():
         # self.source_geometry()
 
 
-        # self.collect_NR()
-        self.check_NR()
+        self.collect_NR()
+        # self.check_NR()
 
     def reidx_event(self):
         event_number = self.df[:]["Event"].to_list()
@@ -282,11 +282,18 @@ class ReadRoot():
         self.geometry.to_csv(self.geometry_path, index = False)
 
     def collect_NR(self):
-        self.NR_scattering= self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="LAr_phys")&(self.df['Process'].isin(['hadElastic', 'neutronInelastic'])) ]
+        self.NR_scatter= self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="LAr_phys")&(self.df['Process'].isin(['hadElastic', 'neutronInelastic'])) ]
         self.NR_capture = self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="LAr_phys")&(self.df['Process'].isin(['nCapture'])) ]
 
         self.LAr = self.df[(self.df["name"].isin(["Ar36","Ar38", "Ar40"]))&(self.df["Recoiled/MeV"]>0)]
         self.LAr = self.keep_1st(self.LAr)
+
+        self.NR_scatter_column = self.NR_scatter[['Event', "Track ID","Process"]]
+        self.NR_scatter_column.columns = ['Event', "Parent ID", "Process"]
+        self.LAr_scatter = pd.merge(self.LAr, self.NR_scatter_column, on=['Event', 'Parent ID'],
+                                          how='inner')
+        # distinguish the process
+        print(self.LAr_scatter.columns)
 
 
         # collect Ar recoiled by Elastic and inelastic
