@@ -711,6 +711,7 @@ class SN():
         self.coffin["PreKinetic/keV"] = self.coffin["PreKinetic/MeV"]*1000
         self.argon = self.df_geo[self.df_geo["Volume"]=="LAr_phys"]
         self.df_geo["R/mm"]=  np.sqrt(self.df_geo["X/mm"]**2+self.df_geo["Y/mm"]**2 )
+        self.coffin["R/mm"] = np.sqrt(self.coffin["X/mm"] ** 2 + self.coffin["Y/mm"] ** 2)
 
 
         ffig, ax = plt.subplots(1,2)
