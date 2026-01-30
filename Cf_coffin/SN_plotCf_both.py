@@ -716,7 +716,7 @@ class SN():
 
         ffig, ax = plt.subplots(1,2)
 
-        sc=ax[0].hist2d(self.coffin["R/mm"],self.coffin["Z/mm"],bins=50,
+        sc=ax[0].hist2d(self.df_geo["R/mm"],self.df_geo["Z/mm"],bins=50,
         cmap="plasma",norm="log",alpha=0.7)
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
