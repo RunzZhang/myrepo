@@ -294,8 +294,9 @@ class ReadRoot():
         self.NR_scatter_column.columns = ['Event', "Parent ID", "Process"]
         self.LAr_scatter = pd.merge(self.LAr, self.NR_scatter_column, on=['Event', 'Parent ID'],
                                           how='inner')
-        self.LAr_scatter = self.LAr_scatter[["Event", "Track ID","Process","Recoiled/MeV"]]
         print(self.LAr_scatter)
+        self.LAr_scatter = self.LAr_scatter[["Event", "Process","Recoiled/MeV"]]
+
         #capture
         self.LAr_capture = self.keep_1st(self.LAr_capture)
         self.LAr_capture = self.NR_capture[["Event", "Process","Recoiled/MeV"]]
