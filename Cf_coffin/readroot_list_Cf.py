@@ -305,10 +305,6 @@ class ReadRoot():
 
         self.NR = pd.concat([self.LAr_scatter,self.LAr_capture], axis=1)
 
-
-
-
-
         # for capture, it is determined by the recoil spectrum
         self.NR.to_csv(self.signal_path, index= False)
     def check_NR(self):

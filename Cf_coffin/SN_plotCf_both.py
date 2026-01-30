@@ -2,6 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import csv
 import numpy as np
+import math
 class SN():
     def __init__(self,gamma=False,full_gamma = False):
         # after generate new files, you need to select the capture ratio/source for different configs in read_files function.
@@ -89,7 +90,7 @@ class SN():
 
 # main funtion we use
     def read_files(self):
-        self.original_Activity = 5 # original activity in the paper
+        self.original_Activity = 1 # original activity in the paper
         self.Activity = 50  # source practical activity in mivro curie for 50 bubbles/hour
         # self.Activity = 0.0416  # source activity in mivro curie
         # self.capture_ratio = 1.164E-3 # 1125eV 1.4g/cm Ar
@@ -101,7 +102,7 @@ class SN():
         # self.rate = 435.6 #/s # CF neutron rate 9 mucurie
         # self.rate = 0.1968 #PN neutron rate /s
         # self.rate = 2.52e4  # PN neutron rate /s PNNL
-        self.rate = 0.86  # PN neutron rate /s LZ 5micro Bismuth
+        self.rate = 4.4e3  # Cf neutron rate for 1 micro Cuire
         self.gamma_rate = 1.27e4 # 1.77MeV PN gamma rate/s for 5 microCurie
         self.gamma_BR = 0.0687
         # self.G4_events= 1E5
@@ -750,7 +751,21 @@ class SN():
         print(self.plot_path)
 
     def NR_spectrum(self):
-        (elastic_counts, elastic_bin) = np.hist(self.df_energy[self.df_energy["PreKinetic/MeV"]])
+        rate_factor = self.rate*self.Activity/(self.original_Activity*self.G4_events)
+        self.scatter = self.df_energy[self.df_energy["Process"].isin(['hadElastic', 'neutronInelastic'])]
+        self.capture = self.df_energy[self.df_energy["Process"].isin(['nCapture'])]
+
+        # bin info and maybe same for both category
+        bin_num = 50
+        bin_range= (0,50)
+        (scatter_counts, scatter_edge) = np.hist(self.scatter["PreKinetic/MeV"])
+        capture_counts = len(self.scatter["PreKinetic/MeV"])
+        capture_spectrum = 1
+
+        for i in range(0,50,1):
+        scatter_rate = scatter_counts[i]
+
+
         self.coffin = self.df_geo[self.df_geo["Volume"]=="cf_source_phys"]
         self.coffin["PreKinetic/keV"] = self.coffin["PreKinetic/MeV"]*1000
         self.argon = self.df_geo[self.df_geo["Volume"]=="LAr_phys"]
@@ -785,6 +800,13 @@ class SN():
 
         plt.savefig(self.plot_path+"Cf_1E7_position_density.pdf")
         print(self.plot_path)
+
+    def NucleationEfficiencyTrue(self, r, T, sigLow, sigUp):
+        if r < T:
+            R = 1 / 2 * (1 + math.erf((r - T) / (sigLow * 2 ** (1 / 2))))
+        else:
+            R = 1 / 2 * (1 + math.erf((r - T) / (sigUp * 2 ** (1 / 2))))
+        return R
     def read_original_spectrum(self):
         list1, list2, list3 = [], [], []
         b_older = 0
