@@ -52,6 +52,9 @@
                           'Sensor_Covere_phys', 'Bottom_Spacer16_phys', 'SiPM_PCB_Out55_phys', 'Screw1_phys', 'Nanoguide_phys',
                            'SiPM_PCB_Out54_phys', 'Camera_spring1_phys', 'Sensor_Plate_phys', 'Peak_Rod1_phys', 'Screw3_phys', 
                            'Screw2_phys']"""
+
+"""inelastic fix: in previous version 2025 summer, huge scattering didn't consider inelastic, which one scattering but with strong 
+gamma ray that doesn't come from NR light yield. """
 import pandas as pd
 import uproot
 import matplotlib.pyplot as plt

@@ -36,6 +36,7 @@ class SN():
         self.gamma = gamma
         self.full_gamma = full_gamma
         self.df_geo_list = []
+        self.df_energy_list = []
 
 
         #982 statics false 1
@@ -119,6 +120,12 @@ class SN():
         self.df_geo_list.append(temp_geo_df)
 
         self.df_geo = pd.concat(self.df_geo_list, ignore_index=True)
+
+        temp_energy_df = pd.read_csv(self.signal_path)
+
+        self.df_energy_list.append(temp_energy_df)
+
+        self.df_energy = pd.concat(self.df_energy_list, ignore_index=True)
 
         # if self.full_gamma:
         #     self.G4_gamma_time =  self.G4_full_gamma_time
@@ -742,6 +749,42 @@ class SN():
         plt.savefig(self.plot_path+"Cf_1E7_position_density.pdf")
         print(self.plot_path)
 
+    def NR_spectrum(self):
+        (elastic_counts, elastic_bin) = np.hist(self.df_energy[self.df_energy["PreKinetic/MeV"]])
+        self.coffin = self.df_geo[self.df_geo["Volume"]=="cf_source_phys"]
+        self.coffin["PreKinetic/keV"] = self.coffin["PreKinetic/MeV"]*1000
+        self.argon = self.df_geo[self.df_geo["Volume"]=="LAr_phys"]
+        self.df_geo["R/mm"]=  np.sqrt(self.df_geo["X/mm"]**2+self.df_geo["Y/mm"]**2 )
+        self.coffin["R/mm"] = np.sqrt(self.coffin["X/mm"] ** 2 + self.coffin["Y/mm"] ** 2)
+
+
+        ffig, ax = plt.subplots(1,2)
+
+        sc=ax[0].hist2d(self.df_geo["R/mm"],self.df_geo["Z/mm"],bins=50,
+        cmap="plasma",norm="log",alpha=0.7)
+
+        # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
+        # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
+        # ax.plot([99.01,99.01, 4.34], [0,366.49, 399.82], color="red")
+
+        ax[0].set_xlabel("R [mm]")
+        ax[0].set_ylabel("Z [mm]")
+        # ax[0].set_xlim(0,400)
+        # ax[0].set_ylim(-100,800)
+        cbar = plt.colorbar(sc[3], ax=ax)
+        cbar.set_label("Counts(log)")
+
+        ax[1].hist(self.coffin["PreKinetic/keV"], bins=50, alpha=0.7)
+
+        # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
+        # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
+        # ax.plot([99.01,99.01, 4.34], [0,366.49, 399.82], color="red")
+
+        ax[1].set_xlabel("Energy [keV]")
+        ax[1].set_ylabel("Counts")
+
+        plt.savefig(self.plot_path+"Cf_1E7_position_density.pdf")
+        print(self.plot_path)
     def read_original_spectrum(self):
         list1, list2, list3 = [], [], []
         b_older = 0
