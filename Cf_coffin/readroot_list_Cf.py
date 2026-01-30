@@ -220,7 +220,8 @@ class ReadRoot():
         # self.source_geometry()
 
 
-        self.collect_NR()
+        # self.collect_NR()
+        self.check_NR()
 
     def reidx_event(self):
         event_number = self.df[:]["Event"].to_list()
@@ -286,12 +287,16 @@ class ReadRoot():
         self.LAr = self.df[(self.df["name"].isin(["Ar36","Ar37","Ar38","Ar39", "Ar40","Ar41"]))&(self.df["Recoiled/MeV"]>0)]
         self.LAr = self.keep_1st(self.LAr)
         print(self.LAr)
+
         # collect Ar recoiled by Elastic and inelastic
 
         self.neutron_elastic =  self.NR[self.NR["Process"]=='hadElastic']
 
         # for capture, it is determined by the recoil spectrum
         self.NR.to_csv(self.signal_path, index= False)
+    def check_NR(self):
+        self.event206 = self.df[self.df["Event"]==206]
+        self.event206.to_csv(self.base_path+"event206", index= False)
 
 
     def keep_1st(self, df, columns=['Event','Track ID']):
