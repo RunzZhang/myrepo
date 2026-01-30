@@ -306,6 +306,7 @@ class ReadRoot():
         self.argon_position = self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="LAr_phys")][["X/mm", "Y/mm","Z/mm", "Volume"]]
         self.geometry = self.initial_position+self.argon_position
         print(self.geometry)
+        print(self.initial_position)
         self.geometry.to_csv(self.geometry_path, index = False)
 
     def single_ncap(self):
