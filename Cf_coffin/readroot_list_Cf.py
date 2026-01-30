@@ -287,10 +287,10 @@ class ReadRoot():
 
         self.LAr = self.df[(self.df["name"].isin(["Ar36","Ar38", "Ar40"]))&(self.df["Recoiled/MeV"]>0)]
         self.LAr = self.keep_1st(self.LAr)
-        print(self.LAr[self.LAr["Event"]==3510])
         self.LAr = self.LAr.drop(columns=["Process"])
 
         # collect Ar recoiled by Elastic and inelastic
+        self.NR_scatter =self.keep_1st(self.NR_scatter)
         self.NR_scatter_column = self.NR_scatter[['Event', "Track ID","Process"]]
         self.NR_scatter_column.columns = ['Event', "Parent ID", "Process"]
         self.LAr_scatter = pd.merge(self.LAr, self.NR_scatter_column, on=['Event', 'Parent ID'],
