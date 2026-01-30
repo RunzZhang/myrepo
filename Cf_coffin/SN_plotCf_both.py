@@ -725,8 +725,8 @@ class SN():
 
         ax[0].set_xlabel("R [mm]")
         ax[0].set_ylabel("Z [mm]")
-        ax[0].set_xlim(0,400)
-        ax[0].set_ylim(-100,800)
+        # ax[0].set_xlim(0,400)
+        # ax[0].set_ylim(-100,800)
         cbar = plt.colorbar(sc[3], ax=ax)
         cbar.set_label("Counts(log)")
 
