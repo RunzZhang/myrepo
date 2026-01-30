@@ -704,6 +704,7 @@ class SN():
         plt.legend()
         plt.savefig(self.plot_path + "PN_specturm_lin_1E6.pdf", bbox_inches='tight')
     def check_geometry(self):
+        print(self.df_geo_list)
         self.coffin = self.df_geo_list[self.df_geo_list["Volume"]=="cf_source_phys"]
         self.coffin["PreKinetic/keV"] = self.coffin["PreKinetic/MeV"]*1000
         self.argon = self.df_geo_list[self.df_geo_list["Volume"]=="LAr_phys"]
