@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import csv
 import numpy as np
-import math
+import math, pickle
 class SN():
     def __init__(self,gamma=False,full_gamma = False):
         # after generate new files, you need to select the capture ratio/source for different configs in read_files function.
@@ -17,6 +17,7 @@ class SN():
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
 
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
+        self.TN_spectrum_path = './MC_argon_full_20250701_LSS07_2E5'
         self.false_1 = "PN_false1.csv"
         self.false_2 = "PN_false2.csv"
         self.signal = "PN_sig.csv"
@@ -751,54 +752,52 @@ class SN():
         print(self.plot_path)
 
     def NR_spectrum(self):
-        rate_factor = self.rate*self.Activity/(self.original_Activity*self.G4_events)
+        rate_factor = self.rate*self.Activity/(self.original_Activity*self.G4_events) # /s
         self.scatter = self.df_energy[self.df_energy["Process"].isin(['hadElastic', 'neutronInelastic'])]
         self.capture = self.df_energy[self.df_energy["Process"].isin(['nCapture'])]
-
+        print("maximum scatter recoil energy",max(self.scatter["Recoiled/MeV"]*1e6))
         # bin info and maybe same for both category
-        bin_num = 50
-        bin_range= (0,50)
-        (scatter_counts, scatter_edge) = np.hist(self.scatter["PreKinetic/MeV"])
-        capture_counts = len(self.scatter["PreKinetic/MeV"])
-        capture_spectrum = 1
+        bin_num = 100
+        bin_range= (0,2000)
+        (scatter_counts, scatter_edge) = np.hist(self.scatter["Recoiled/MeV"]*1e6, bins=bin_num, range=bin_range)
+        capture_counts = len(self.capture["Recoiled/MeV"])
+        # read thermal neutron recoiled spectrum by MCMC
+        self.read_TN_R_spectrum()# in eV
+        (capture_counts, capture_edge) = np.hist(self.TN_recoil_list, density=True,bins=bin_num, range=bin_range)
+        width = capture_edge[1]-capture_edge[0]
+        #0th order just a threshold
 
-        for i in range(0,50,1):
-        scatter_rate = scatter_counts[i]
+        scatter_rate_list = []
+        capture_rate_list = []
+        total_rate_list = []
+        for threshold in scatter_edge:
+            Efficiency_array = np.array([self.NucleationEfficiencyTrue(edge, threshold,threshold/8,threshold/8) for edge in scatter_edge] )
+            scatter_rate = sum(rate_factor*(Efficiency_array[1:]+Efficiency_array[:-1])*scatter_counts/2)
+            # capture is different becasue density is true means is normalized also by bin width
+            capture_rate = sum(rate_factor*capture_counts*(Efficiency_array[1:]+Efficiency_array[:-1])*width*capture_counts/2)
+            scatter_rate_list.append(scatter_rate)
+            capture_rate_list.append(capture_rate)
+            total_rate_list.append(scatter_rate+capture_rate)
 
 
-        self.coffin = self.df_geo[self.df_geo["Volume"]=="cf_source_phys"]
-        self.coffin["PreKinetic/keV"] = self.coffin["PreKinetic/MeV"]*1000
-        self.argon = self.df_geo[self.df_geo["Volume"]=="LAr_phys"]
-        self.df_geo["R/mm"]=  np.sqrt(self.df_geo["X/mm"]**2+self.df_geo["Y/mm"]**2 )
-        self.coffin["R/mm"] = np.sqrt(self.coffin["X/mm"] ** 2 + self.coffin["Y/mm"] ** 2)
 
 
-        ffig, ax = plt.subplots(1,2)
+        fig, ax = plt.subplots(1,3,figsize=(14, 4))
+        
+        ax[0].bar(scatter_edge[1:], scatter_rate_list, width=width, align="edge")
+        ax[0].set_xlabel("Energy threshold [eV]")
+        ax[0].set_ylabel("Rate [Hz]")
 
-        sc=ax[0].hist2d(self.df_geo["R/mm"],self.df_geo["Z/mm"],bins=50,
-        cmap="plasma",norm="log",alpha=0.7)
+        ax[1].bar(capture_edge[1:], capture_rate_list, width=width, align="edge")
+        ax[1].set_xlabel("Energy threshold [eV]")
+        ax[1].set_ylabel("Rate [Hz]")
 
-        # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
-        # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
-        # ax.plot([99.01,99.01, 4.34], [0,366.49, 399.82], color="red")
+        ax[2].bar(capture_edge[1:], total_rate_list, width=width, align="edge")
+        ax[2].set_xlabel("Energy threshold [eV]")
+        ax[2].set_ylabel("Rate [Hz]")
 
-        ax[0].set_xlabel("R [mm]")
-        ax[0].set_ylabel("Z [mm]")
-        # ax[0].set_xlim(0,400)
-        # ax[0].set_ylim(-100,800)
-        cbar = plt.colorbar(sc[3], ax=ax)
-        cbar.set_label("Counts(log)")
 
-        ax[1].hist(self.coffin["PreKinetic/keV"], bins=50, alpha=0.7)
-
-        # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
-        # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
-        # ax.plot([99.01,99.01, 4.34], [0,366.49, 399.82], color="red")
-
-        ax[1].set_xlabel("Energy [keV]")
-        ax[1].set_ylabel("Counts")
-
-        plt.savefig(self.plot_path+"Cf_1E7_position_density.pdf")
+        plt.savefig(self.plot_path+"Cf_1E7_energy_density.pdf")
         print(self.plot_path)
 
     def NucleationEfficiencyTrue(self, r, T, sigLow, sigUp):
@@ -807,6 +806,10 @@ class SN():
         else:
             R = 1 / 2 * (1 + math.erf((r - T) / (sigUp * 2 ** (1 / 2))))
         return R
+    def read_TN_R_spectrum(self):
+        with open(self.TN_spectrum_path, "rb") as fp:  # Unpickling
+            self.TN_recoil_list = pickle.load(fp)
+            print("read", self.TN_recoil_list)
     def read_original_spectrum(self):
         list1, list2, list3 = [], [], []
         b_older = 0
