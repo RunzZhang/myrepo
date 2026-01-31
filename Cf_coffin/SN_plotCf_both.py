@@ -753,13 +753,13 @@ class SN():
         print(self.plot_path)
 
     def NR_spectrum(self):
-        rate_factor = self.rate*self.Activity/(self.original_Activity*self.G4_events) # /s
+        rate_factor = 1000*self.rate*self.Activity/(self.original_Activity*self.G4_events) # /ms
         self.scatter = self.df_energy[self.df_energy["Process"].isin(['hadElastic', 'neutronInelastic'])]
         self.capture = self.df_energy[self.df_energy["Process"].isin(['nCapture'])]
         print("maximum scatter recoil energy",max(self.scatter["Recoiled/MeV"]*1e6))
         # bin info and maybe same for both category
-        bin_num = 100
-        bin_range= (0,2000)
+        bin_num = 1000
+        bin_range= (0,10000)
         (scatter_counts, scatter_edge) = np.histogram(self.scatter["Recoiled/MeV"]*1e6, bins=bin_num, range=bin_range)
         capture_counts = len(self.capture["Recoiled/MeV"])
         # read thermal neutron recoiled spectrum by MCMC
@@ -787,15 +787,19 @@ class SN():
 
         ax[0].bar(scatter_edge, scatter_rate_list, width=width, align="edge")
         ax[0].set_xlabel("Energy threshold [eV]")
-        ax[0].set_ylabel("Rate [Hz]")
+        ax[0].set_ylabel("Rate [mHz]")
+        ax[0].set_xlim(0,2000)
+
 
         ax[1].bar(capture_edge, capture_rate_list, width=width, align="edge")
         ax[1].set_xlabel("Energy threshold [eV]")
-        ax[1].set_ylabel("Rate [Hz]")
+        ax[1].set_ylabel("Rate [mHz]")
+        ax[1].set_xlim(0, 2000)
 
         ax[2].bar(capture_edge, total_rate_list, width=width, align="edge")
         ax[2].set_xlabel("Energy threshold [eV]")
-        ax[2].set_ylabel("Rate [Hz]")
+        ax[2].set_ylabel("Rate [mHz]")
+        ax[2].set_xlim(0, 2000)
 
 
         plt.savefig(self.plot_path+"Cf_1E7_energy_density.pdf")
