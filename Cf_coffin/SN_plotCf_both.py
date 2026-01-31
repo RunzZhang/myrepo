@@ -92,8 +92,8 @@ class SN():
 
 # main funtion we use
     def read_files(self):
-        self.original_Activity = 1 # original activity in the paper
-        self.Activity = 50  # source practical activity in mivro curie for 50 bubbles/hour
+        self.original_Activity = 1 # original activity in the paper in micro Curie
+        self.Activity = 0.02515  # source practical activity in mivro curie for 50 bubbles/hour
         # self.Activity = 0.0416  # source activity in mivro curie
         # self.capture_ratio = 1.164E-3 # 1125eV 1.4g/cm Ar
         # self.capture_ratio = 0.121 # 400 eV 1.4g/cm3 Ar
