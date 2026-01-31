@@ -785,15 +785,15 @@ class SN():
 
         fig, ax = plt.subplots(1,3,figsize=(14, 4))
 
-        ax[0].bar(scatter_edge[1:], scatter_rate_list, width=width, align="edge")
+        ax[0].bar(scatter_edge, scatter_rate_list, width=width, align="edge")
         ax[0].set_xlabel("Energy threshold [eV]")
         ax[0].set_ylabel("Rate [Hz]")
 
-        ax[1].bar(capture_edge[1:], capture_rate_list, width=width, align="edge")
+        ax[1].bar(capture_edge, capture_rate_list, width=width, align="edge")
         ax[1].set_xlabel("Energy threshold [eV]")
         ax[1].set_ylabel("Rate [Hz]")
 
-        ax[2].bar(capture_edge[1:], total_rate_list, width=width, align="edge")
+        ax[2].bar(capture_edge, total_rate_list, width=width, align="edge")
         ax[2].set_xlabel("Energy threshold [eV]")
         ax[2].set_ylabel("Rate [Hz]")
 
