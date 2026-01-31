@@ -118,11 +118,11 @@ class SN():
         self.G4_gamma_time = self.G4_events_gamma/self.gamma_rate
         self.G4_full_gamma_time = self.G4_events_gamma*self.gamma_BR/self.gamma_rate # gamma time for whole gamma spectrum
 
-        # temp_geo_df = pd.read_csv(self.geometry_path)
-        #
-        # self.df_geo_list.append(temp_geo_df)
-        #
-        # self.df_geo = pd.concat(self.df_geo_list, ignore_index=True)
+        temp_geo_df = pd.read_csv(self.geometry_path)
+
+        self.df_geo_list.append(temp_geo_df)
+
+        self.df_geo = pd.concat(self.df_geo_list, ignore_index=True)
 
         temp_energy_df = pd.read_csv(self.signal_path)
 

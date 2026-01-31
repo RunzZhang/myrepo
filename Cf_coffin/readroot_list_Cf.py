@@ -217,10 +217,10 @@ class ReadRoot():
 
 
         #find source tube
-        # self.source_geometry()
+        self.source_geometry()
 
 
-        self.collect_NR()
+        # self.collect_NR()
         # self.check_NR()
 
     def reidx_event(self):
