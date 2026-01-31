@@ -46,7 +46,8 @@ class SN():
         # for i in range(1, 11):
         #     self.main_body(i)
         self.main_body(1)
-        self.check_geometry()
+        # self.check_geometry()
+        self.NR_spectrum()
         # for ploting PN background tagging and SNR
         # self.untagged_bubble_rate()
         # if self.gamma:
