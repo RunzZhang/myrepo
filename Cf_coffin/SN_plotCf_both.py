@@ -747,7 +747,7 @@ class SN():
 
         ax[1].set_xlabel("Energy [keV]")
         ax[1].set_ylabel("Counts")
-
+        print(self.coffin["PreKinetic/keV"])
         plt.savefig(self.plot_path+"Cf_1E7_position_density.pdf")
         print(self.plot_path)
 
@@ -783,7 +783,7 @@ class SN():
 
 
         fig, ax = plt.subplots(1,3,figsize=(14, 4))
-        
+
         ax[0].bar(scatter_edge[1:], scatter_rate_list, width=width, align="edge")
         ax[0].set_xlabel("Energy threshold [eV]")
         ax[0].set_ylabel("Rate [Hz]")
