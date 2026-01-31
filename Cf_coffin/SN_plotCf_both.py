@@ -760,11 +760,11 @@ class SN():
         # bin info and maybe same for both category
         bin_num = 100
         bin_range= (0,2000)
-        (scatter_counts, scatter_edge) = np.hist(self.scatter["Recoiled/MeV"]*1e6, bins=bin_num, range=bin_range)
+        (scatter_counts, scatter_edge) = np.histogram(self.scatter["Recoiled/MeV"]*1e6, bins=bin_num, range=bin_range)
         capture_counts = len(self.capture["Recoiled/MeV"])
         # read thermal neutron recoiled spectrum by MCMC
         self.read_TN_R_spectrum()# in eV
-        (capture_counts, capture_edge) = np.hist(self.TN_recoil_list, density=True,bins=bin_num, range=bin_range)
+        (capture_counts, capture_edge) = np.histogram(self.TN_recoil_list, density=True,bins=bin_num, range=bin_range)
         width = capture_edge[1]-capture_edge[0]
         #0th order just a threshold
 
