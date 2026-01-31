@@ -810,7 +810,7 @@ class SN():
     def read_TN_R_spectrum(self):
         with open(self.TN_spectrum_path, "rb") as fp:  # Unpickling
             self.TN_recoil_list = pickle.load(fp)
-            print("read", self.TN_recoil_list)
+            # print("read", self.TN_recoil_list)
     def read_original_spectrum(self):
         list1, list2, list3 = [], [], []
         b_older = 0
