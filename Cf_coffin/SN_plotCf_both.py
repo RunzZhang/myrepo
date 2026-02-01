@@ -92,8 +92,8 @@ class SN():
 
 # main funtion we use
     def read_files(self):
-        self.original_Activity = 1 # original activity in the paper in micro Curie
-        self.Activity = 0.02515  # source practical activity in mivro curie for 50 bubbles/hour
+        self.original_Activity = 1 #
+        self.Activity = 1  # unit one, the number is calculated by SBC paper
         # self.Activity = 0.0416  # source activity in mivro curie
         # self.capture_ratio = 1.164E-3 # 1125eV 1.4g/cm Ar
         # self.capture_ratio = 0.121 # 400 eV 1.4g/cm3 Ar
@@ -104,7 +104,7 @@ class SN():
         # self.rate = 435.6 #/s # CF neutron rate 9 mucurie
         # self.rate = 0.1968 #PN neutron rate /s
         # self.rate = 2.52e4  # PN neutron rate /s PNNL
-        self.rate = 4.4e3  # Cf neutron rate for 1 micro Cuire
+        self.rate = 149.952  # Cf neutron rate for SBC in 2026 Dec
         self.gamma_rate = 1.27e4 # 1.77MeV PN gamma rate/s for 5 microCurie
         self.gamma_BR = 0.0687
         # self.G4_events= 1E5
@@ -756,10 +756,14 @@ class SN():
         rate_factor = 1000*self.rate*self.Activity/(self.original_Activity*self.G4_events) # /ms
         self.scatter = self.df_energy[self.df_energy["Process"].isin(['hadElastic', 'neutronInelastic'])]
         self.capture = self.df_energy[self.df_energy["Process"].isin(['nCapture'])]
-        print("maximum scatter recoil energy",max(self.scatter["Recoiled/MeV"]*1e6))
+        max_NR_limit = max(self.scatter["Recoiled/MeV"]*1e6)
+        print("maximum scatter recoil energy",max_NR_limit)
         # bin info and maybe same for both category
-        bin_num = 1000
-        bin_range= (0,10000)
+        # 100 ev per bin
+        bin_num= int(max_NR_limit/100)+1
+        max_bin_range= bin_num*100
+
+        bin_range= (0,max_bin_range)
         (scatter_counts, scatter_edge) = np.histogram(self.scatter["Recoiled/MeV"]*1e6, bins=bin_num, range=bin_range)
         capture_counts = len(self.capture["Recoiled/MeV"])
         # read thermal neutron recoiled spectrum by MCMC
@@ -788,18 +792,21 @@ class SN():
         ax[0].bar(scatter_edge, scatter_rate_list, width=width, align="edge")
         ax[0].set_xlabel("Energy threshold [eV]")
         ax[0].set_ylabel("Rate [mHz]")
-        ax[0].set_xlim(0,2000)
+        ax[0].set_yscale("log")
+        # ax[0].set_xlim(0,2000)
 
 
         ax[1].bar(capture_edge, capture_rate_list, width=width, align="edge")
         ax[1].set_xlabel("Energy threshold [eV]")
         ax[1].set_ylabel("Rate [mHz]")
-        ax[1].set_xlim(0, 2000)
+        ax[1].set_yscale("log")
+        # ax[1].set_xlim(0, 2000)
 
         ax[2].bar(capture_edge, total_rate_list, width=width, align="edge")
         ax[2].set_xlabel("Energy threshold [eV]")
         ax[2].set_ylabel("Rate [mHz]")
-        ax[2].set_xlim(0, 2000)
+        ax[1].set_yscale("log")
+        # ax[2].set_xlim(0, 2000)
 
 
         plt.savefig(self.plot_path+"Cf_1E7_energy_density.pdf")
