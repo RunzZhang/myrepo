@@ -805,7 +805,7 @@ class SN():
         ax[2].bar(capture_edge, total_rate_list, width=width, align="edge")
         ax[2].set_xlabel("Energy threshold [eV]")
         ax[2].set_ylabel("Rate [mHz]")
-        ax[1].set_yscale("log")
+        ax[2].set_yscale("log")
         # ax[2].set_xlim(0, 2000)
 
 
