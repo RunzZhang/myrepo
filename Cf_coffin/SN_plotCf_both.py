@@ -819,7 +819,7 @@ class SN():
         # edges are in eV and rates in mHz
         # edges is always 100eV per bin
         fig, ax = plt.subplots()
-        ax.plt(edges[:20], rates[:20])
+        ax.plot(edges[:20], rates[:20])
         ax.set_xlabel("Energy threshold [eV]")
         ax.set_ylabel("Rate [mHz]")
         plt.savefig(self.plot_path + "Cf_1E7_NR_zoomed.pdf")
