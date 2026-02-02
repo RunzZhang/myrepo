@@ -811,6 +811,16 @@ class SN():
 
         plt.savefig(self.plot_path+"Cf_1E7_energy_density.pdf")
         print(self.plot_path)
+    def NR_rate_zoomed(self, edges, rates):
+        # edges are in eV and rates in mHz
+        # edges is always 100eV per bin
+        fig, ax = plt.subplots(1, 3)
+        ax.plot(edges[:20], rates[:20])
+        ax.set_xlabel("Energy threshold [eV]")
+        ax.set_ylabel("Rate [mHz]")
+        plt.savefig(self.plot_path + "Cf_1E7_NR_zoomed.pdf")
+
+
 
     def NucleationEfficiencyTrue(self, r, T, sigLow, sigUp):
         if r < T:
