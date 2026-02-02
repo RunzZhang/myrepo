@@ -752,6 +752,7 @@ class SN():
         plt.savefig(self.plot_path+"Cf_1E7_position_density.pdf")
         print(self.plot_path)
 
+
     def NR_spectrum(self):
         rate_factor = 1000*self.rate*self.Activity/(self.original_Activity*self.G4_events) # /ms
         self.scatter = self.df_energy[self.df_energy["Process"].isin(['hadElastic', 'neutronInelastic'])]
@@ -811,6 +812,9 @@ class SN():
 
         plt.savefig(self.plot_path+"Cf_1E7_energy_density.pdf")
         print(self.plot_path)
+
+
+        self.NR_rate_zoomed(capture_edge, total_rate_list)
     def NR_rate_zoomed(self, edges, rates):
         # edges are in eV and rates in mHz
         # edges is always 100eV per bin
