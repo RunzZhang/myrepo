@@ -12,7 +12,10 @@ random.seed(10)
 PI = scipy.pi
 # import warnings
 # warnings.filterwarnings("ignore")
-
+# argon36 cross/ 40 = 7.65 argon 38/argon 40 = 1.22 argon
+# abundance still 0.3%, 0.1% and 99.6%
+# contribution ii percentage [0.02249625062489585, 0.0011958791181861847, 0.9763078702569179]
+# constribution
 class MC_sim_full_argon():
     def __init__(self):
 
@@ -23,8 +26,8 @@ class MC_sim_full_argon():
         # to change LSS factor, change the Eq LSS_modify/
         # change the self.plot_address/plot name in the self. plot_data function
         self.runtime = 200000
-        self.argon40_weight =97.4/0.93
-        self.argon36_weight = 2.5
+        self.argon40_weight =97.6/0.93
+        self.argon36_weight = 2.2
         self.Energy_factor = 10 ** 3 * 1.602 * 10 ** (-19)
         self.ev=1.60218e-19
         self.c = 3 * 10 ** 8  # in m/s
@@ -36,8 +39,8 @@ class MC_sim_full_argon():
         # orginal time factor is 10E-3 and we modify it from 0.5 to 2
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_el_full_20231107"
         # self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231129_6299_-01"
-        self.old_address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20231206_full"
-        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS05_2E5"
+        self.old_address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS05_2E5"
+        self.address = "/data/runzezhang/result/SRIM_MC/MC_argon_full_20250701_LSS05_2E5_ENDF"
         self.plot_address = "/data/runzezhang/result/New_density_MC/"
 
 
@@ -132,6 +135,7 @@ class MC_sim_full_argon():
         # self.spectrum_uncertainty()
         # self.plot_spectrums_sigma()
         # self.plot_spectrums_sigma_LSS()
+        self.plot_spectrum_ENDF()
     def data_preparation(self):
 
         for i in range(len(self.argon_list)):# for each chain
@@ -416,6 +420,40 @@ class MC_sim_full_argon():
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
         plt.savefig(self.plot_address+"New_D_L_spectrum_07LSS.png", bbox_inches='tight')
+    def plot_spectrum_ENDF(self, address):
+        start = 0
+        end = 1200
+        x_bins = []
+        x_bins0 =[]
+        with open(self.address, "rb") as fp:  # Unpickling
+            MC_full = pickle.load(fp)
+        with open(self.old_address, "rb") as fp:  # Unpickling
+            MC_old = pickle.load(fp)
+        bin_n =500
+
+        hist_result = plt.hist(MC_full, bins =bin_n, range=(start, end) ,density = True)
+        plt.clf()
+        for i in range(len(hist_result[1]) - 1):
+            x_bins.append((hist_result[1][i] + hist_result[1][i + 1]) / 2)
+
+        hist_result0 = plt.hist(MC_old, bins=bin_n, range=(start, end), density=True)
+        plt.clf()
+        for i in range(len(hist_result0[1]) - 1):
+            x_bins0.append((hist_result0[1][i] + hist_result0[1][i + 1]) / 2)
+
+        plt.plot(x_bins, hist_result[0], color="blue", label="ENDF")
+        plt.plot(x_bins0, hist_result0[0], color="red", label="Daniel/paper")
+        plt.grid(True, which='both', linestyle='-', linewidth=1)
+        plt.minorticks_on()
+        plt.xlabel("Energy/eV",fontsize=18)
+        plt.ylabel("Possibility/bin",fontsize=18)
+        plt.yscale("log")
+        plt.yticks(fontsize=18)
+        plt.xticks(fontsize=18)
+        plt.legend()
+        plt.xlim([0, 1200])
+        plt.ylim([1E-5,0.1])
+        plt.savefig(self.plot_address+"New_D_L_spectrum_07LSS_ENDF.png", bbox_inches='tight')
 
     def plot_spectrums_sigma_LSS(self):
         # plot spectrum with LSS 0.7 scaling factor and the upper and lower limit of scaling factor 0.5 /0.8 as band
