@@ -441,8 +441,9 @@ class MC_sim_full_argon():
         for i in range(len(hist_result0[1]) - 1):
             x_bins0.append((hist_result0[1][i] + hist_result0[1][i + 1]) / 2)
 
-        plt.plot(x_bins, hist_result[0], color="blue", label="ENDF")
+
         plt.plot(x_bins0, hist_result0[0], color="red", label="Daniel/paper")
+        plt.plot(x_bins, hist_result[0], color="blue", label="ENDF")
         plt.grid(True, which='both', linestyle='-', linewidth=1)
         plt.minorticks_on()
         plt.xlabel("Energy/eV",fontsize=18)
