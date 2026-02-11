@@ -118,7 +118,7 @@ class MC_sim_full_argon():
         self.gamma_emission_list_1d = []
         self.gamma_emission_list_2d = []
         # self.gamma_sim(10000)
-        self.MC_sim(self.runtime)
+        # self.MC_sim(self.runtime)
         # self.data_analysis_v2(self.address)
         # self.plot_spectrum(self.address)
 
@@ -420,7 +420,7 @@ class MC_sim_full_argon():
         plt.xlim([0, 1200])
         plt.ylim([1E-5,0.1])
         plt.savefig(self.plot_address+"New_D_L_spectrum_07LSS.png", bbox_inches='tight')
-    def plot_spectrum_ENDF(self, address):
+    def plot_spectrum_ENDF(self):
         start = 0
         end = 1200
         x_bins = []
