@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import csv
 import numpy as np
 import math, pickle
+import matplotlib.ticker as ticker
 class SN():
     def __init__(self,gamma=False,full_gamma = False):
         # after generate new files, you need to select the capture ratio/source for different configs in read_files function.
@@ -870,11 +871,13 @@ class SN():
 
         fig, ax = plt.subplots()
         for i in range(len(multiplicity_list)):
-            ax.bar(multiplicity_list[i][1][:-1], multiplicity_list[i][0], width=multiplicity_list[i][2], align="edge", label="threshold "+str(multiplicity_list[i][3])+" eV" )
+            ax.plot(multiplicity_list[i][1][:-1], multiplicity_list[i][0], width=multiplicity_list[i][2], align="edge", label="threshold "+str(multiplicity_list[i][3])+" eV" )
         ax.set_xlabel("Multiplicity")
         ax.set_ylabel("Rate [mHz]")
         ax.set_yscale("log")
-        ax.legend()
+        ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
+        # ax.legend()
+        print("threshold range", min_edge, max_edge)
         # ax[0].set_xlim(0,2000)
 
 
