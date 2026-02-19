@@ -880,7 +880,7 @@ class SN():
         ax.set_ylabel("Rate [mHz]")
         # ax.set_yscale("log")
         ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
-        ax.legend()
+        ax.legend(fontsize='small')
         print("threshold range", min_edge, max_edge)
         # ax[0].set_xlim(0,2000)
 
