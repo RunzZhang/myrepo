@@ -852,7 +852,7 @@ class SN():
             energy_mask = self.df_energy["Recoiled/eV"]>= energy_threshold
             df = self.df_energy.loc[energy_mask,:]
             # calculate the multiplicity and rate
-            multiplicity = df.groupby("EventID").size().tolist()
+            multiplicity = df.groupby("Event").size().tolist()
             # make histogram
             # all bins are int
             multiplicity_min = min(multiplicity)
