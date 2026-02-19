@@ -297,7 +297,7 @@ class ReadRoot():
                                           how='inner')
         print(self.LAr_scatter)
         duplicates = self.LAr_scatter[self.LAr_scatter.duplicated(keep=False)]
-        print(duplicates)
+        print("duplicate",duplicates)
         self.LAr_scatter = self.LAr_scatter[["Event", "Process","Recoiled/MeV"]]
 
         #capture
