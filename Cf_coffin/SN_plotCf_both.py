@@ -859,7 +859,7 @@ class SN():
             multiplicity_min = min(multiplicity)
             multiplicity_max = max(multiplicity)
             bin_num = multiplicity_max-multiplicity_min+1
-            bin_range = (multiplicity_min, multiplicity_max)
+            bin_range = (multiplicity_min, multiplicity_max+2)
             print("energy threshold", energy_threshold, "min", multiplicity_min, "max", multiplicity_max, "bin_num", bin_num, "bin_range", bin_range)
             (multiplicity_counts, multiplicity_edges)= np.histogram(multiplicity, bins=bin_num, range=bin_range)
             print("edges", multiplicity_edges)
