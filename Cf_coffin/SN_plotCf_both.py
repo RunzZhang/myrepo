@@ -871,7 +871,9 @@ class SN():
 
         fig, ax = plt.subplots()
         for i in range(len(multiplicity_list)):
-            ax.plot(multiplicity_list[i][1][:-1], multiplicity_list[i][0], width=multiplicity_list[i][2], align="edge", label="threshold "+str(multiplicity_list[i][3])+" eV" )
+            ax.plot(multiplicity_list[i][1][:-1], multiplicity_list[i][0],
+                   label="threshold " + str(multiplicity_list[i][3]) + " eV")
+            # ax.bar(multiplicity_list[i][1][:-1], multiplicity_list[i][0], width=multiplicity_list[i][2], align="edge", label="threshold "+str(multiplicity_list[i][3])+" eV" )
         ax.set_xlabel("Multiplicity")
         ax.set_ylabel("Rate [mHz]")
         ax.set_yscale("log")
