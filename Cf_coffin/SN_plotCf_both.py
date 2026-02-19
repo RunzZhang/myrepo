@@ -848,7 +848,7 @@ class SN():
         bin_n = int((max_edge-min_edge)/100)
 
         multiplicity_list = []
-        for i in range(0,bin_n):
+        for i in range(0,3):
             energy_threshold = min_edge+ i*100
             energy_mask = self.df_energy["Recoiled/eV"]>= energy_threshold
             df = self.df_energy.loc[energy_mask,:]
@@ -860,7 +860,7 @@ class SN():
             multiplicity_max = max(multiplicity)
             bin_num = multiplicity_max-multiplicity_min+1
             bin_range = (multiplicity_min, multiplicity_max)
-            # print("energy threshold", energy_threshold, "min", multiplicity_min, "max", multiplicity_max, "bin_num", bin_num, "bin_range", bin_range)
+            print("energy threshold", energy_threshold, "min", multiplicity_min, "max", multiplicity_max, "bin_num", bin_num, "bin_range", bin_range)
             (multiplicity_counts, multiplicity_edges)= np.histogram(multiplicity, bins=bin_num, range=bin_range)
             multiplicity_rates = multiplicity_counts*rate_factor
             multiplicity_width = multiplicity_edges[1]-multiplicity_edges[0]
