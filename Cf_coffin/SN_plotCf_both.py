@@ -859,7 +859,7 @@ class SN():
             multiplicity_max = max(multiplicity)
             bin_num = multiplicity_max-multiplicity_min+1
             bin_range = (multiplicity_min, multiplicity_max)
-            print("energy threshold", energy_threshold, "min", multiplicity_min, "max", multiplicity_max, "bin_num", bin_num, "bin_range", bin_range)
+            # print("energy threshold", energy_threshold, "min", multiplicity_min, "max", multiplicity_max, "bin_num", bin_num, "bin_range", bin_range)
             (multiplicity_counts, multiplicity_edges)= np.histogram(multiplicity, bins=bin_num, range=bin_range)
             multiplicity_rates = multiplicity_counts*rate_factor
             multiplicity_width = multiplicity_edges[1]-multiplicity_edges[0]
@@ -870,7 +870,7 @@ class SN():
 
         fig, ax = plt.subplots()
         for i in range(len(multiplicity_list)):
-            ax.bar(multiplicity_list[i][1], multiplicity_list[i][0], width=multiplicity_list[i][2], align="edge", label="threshold "+str(multiplicity_list[i][3])+" eV" )
+            ax.bar(multiplicity_list[i][1][:-1], multiplicity_list[i][0], width=multiplicity_list[i][2], align="edge", label="threshold "+str(multiplicity_list[i][3])+" eV" )
         ax.set_xlabel("Multiplicity")
         ax.set_ylabel("Rate [mHz]")
         ax.set_yscale("log")
