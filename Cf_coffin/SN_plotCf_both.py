@@ -877,7 +877,7 @@ class SN():
             # ax.bar(multiplicity_list[i][1][:-1], multiplicity_list[i][0], width=multiplicity_list[i][2], align="edge", label="threshold "+str(multiplicity_list[i][3])+" eV" )
         ax.set_xlabel("Multiplicity")
         ax.set_ylabel("Rate [mHz]")
-        ax.set_yscale("log")
+        # ax.set_yscale("log")
         ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
         # ax.legend()
         print("threshold range", min_edge, max_edge)
