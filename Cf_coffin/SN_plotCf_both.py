@@ -118,18 +118,23 @@ class SN():
         self.G4_gamma_time = self.G4_events_gamma/self.gamma_rate
         self.G4_full_gamma_time = self.G4_events_gamma*self.gamma_BR/self.gamma_rate # gamma time for whole gamma spectrum
 
-        temp_geo_df = pd.read_csv(self.geometry_path)
+        try:
 
-        self.df_geo_list.append(temp_geo_df)
+            temp_geo_df = pd.read_csv(self.geometry_path)
 
-        self.df_geo = pd.concat(self.df_geo_list, ignore_index=True)
+            self.df_geo_list.append(temp_geo_df)
 
-        temp_energy_df = pd.read_csv(self.signal_path)
+            self.df_geo = pd.concat(self.df_geo_list, ignore_index=True)
+        except:
+            print("Fail to read geometry")
+        try:
+            temp_energy_df = pd.read_csv(self.signal_path)
 
-        self.df_energy_list.append(temp_energy_df)
+            self.df_energy_list.append(temp_energy_df)
 
-        self.df_energy = pd.concat(self.df_energy_list, ignore_index=True)
-
+            self.df_energy = pd.concat(self.df_energy_list, ignore_index=True)
+        except:
+            print("failed to read energy")
         # if self.full_gamma:
         #     self.G4_gamma_time =  self.G4_full_gamma_time
         # with open(self.signal_path, 'r') as file:
@@ -755,6 +760,7 @@ class SN():
 
     def NR_spectrum(self):
         rate_factor = 1000*self.rate*self.Activity/(self.original_Activity*self.G4_events) # /ms
+
         self.scatter = self.df_energy[self.df_energy["Process"].isin(['hadElastic', 'neutronInelastic'])]
         self.capture = self.df_energy[self.df_energy["Process"].isin(['nCapture'])]
         max_NR_limit = max(self.scatter["Recoiled/MeV"]*1e6)

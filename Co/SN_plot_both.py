@@ -371,6 +371,86 @@ class SN():
         # ax[2].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
         plt.savefig(self.plot_path + "Co_1E7_ER_perdepostion_cumulative.pdf")
+
+    def gamma_rejection_rate_vs_Setiz(self):
+        # rate factor in mHz
+        Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
+        ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000 # in keV
+
+
+        hist_array = [None]
+
+        hist_array[0] = np.histogram(ER_Ar, bins=100,range=(0, 1200))
+        cumulative_threshold_array = [None]
+
+        cumulative_threshold_array[0] = np.array([sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))])
+        Setiz =[1,2,4,5] # in keV
+        exp_rate =[1,1,1,1] # in mHz
+        rejection_list = []
+        # interpolation rate
+
+        for j in range(len(Setiz)):
+            threshold = Setiz[j]
+            for i in range(len(hist_array[0][1])):
+                if threshold>= hist_array[0][1][i]:
+                    rate = (threshold-hist_array[0][1][i])*Rate_factor*(cumulative_threshold_array[0][i]-cumulative_threshold_array[0][i-1])/(hist_array[0][1][i]-hist_array[0][1][i-1])
+                    rejection = exp_rate[j]/rate
+                    rejection_list.append(rejection)
+                    break
+
+
+
+
+        fig, ax = plt.subplots()
+        ax.scatter(Setiz, rejection_list)
+        ax.set_xlabel("Seitz Threshold/keV")
+        ax.set_ylabel(" Rejection Rate")
+        ax.set_yscale("log")
+        ax.minorticks_on()
+
+
+        plt.savefig(self.plot_path + "Co_1E7_ER_rejection_vs_Setiz.pdf")
+
+
+    def gamma_rejection_rate_per_keV_vs_Setiz(self):
+        # rate factor in mHz
+        Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
+        ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000 # in keV
+
+
+        hist_array = [None]
+
+        hist_array[0] = np.histogram(ER_Ar, bins=100,range=(0, 1200))
+        cumulative_threshold_array = [None]
+        energy_deposit_list = [hist_array[0][0][i]*hist_array[0][1][i] for i in range(len(hist_array[0][0]))]
+        cumulative_threshold_array[0] = np.array([sum(energy_deposit_list[i:]) for i in range(len(energy_deposit_list))])
+        Setiz =[1,2,4,5] # in keV
+        exp_rate =[1,1,1,1] # in mHz
+        rejection_list = []
+        # interpolation rate
+
+        for j in range(len(Setiz)):
+            threshold = Setiz[j]
+            for i in range(len(hist_array[0][1])):
+                if threshold>= hist_array[0][1][i]:
+                    rate = (threshold-hist_array[0][1][i])*Rate_factor*(cumulative_threshold_array[0][i]-cumulative_threshold_array[0][i-1])/(hist_array[0][1][i]-hist_array[0][1][i-1])
+                    rejection = exp_rate[j]/(rate*threshold)
+                    rejection_list.append(rejection)
+                    break
+
+
+
+
+        fig, ax = plt.subplots()
+        ax.scatter(Setiz, rejection_list)
+        ax.set_xlabel("Seitz Threshold/keV")
+        ax.set_ylabel(" Rejection Rate per keV")
+        ax.set_yscale("log")
+        ax.minorticks_on()
+
+
+        plt.savefig(self.plot_path + "Co_1E7_ER_rejection_vs_Setiz.pdf")
+
     def read_ER_CF_per_deposit_rate_cumulative(self):
         # rate factor in mHz
         Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
