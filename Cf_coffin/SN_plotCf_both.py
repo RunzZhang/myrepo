@@ -774,7 +774,7 @@ class SN():
         (scatter_counts, scatter_edge) = np.histogram(self.scatter["Recoiled/MeV"]*1e6, bins=bin_num, range=bin_range)
         capture_counts = len(self.capture["Recoiled/MeV"])
         # read thermal neutron recoiled spectrum by MCMC
-        self.read_TN_R_spectrum()# in eV
+        self.TN_recoil_list = self.read_TN_R_spectrum()# in eV
         (capture_counts, capture_edge) = np.histogram(self.TN_recoil_list, density=True,bins=bin_num, range=bin_range)
         width = capture_edge[1]-capture_edge[0]
         #0th order just a threshold
@@ -821,6 +821,65 @@ class SN():
 
 
         self.NR_rate_zoomed(capture_edge, total_rate_list)
+
+
+    def NR_multiplicity(self):
+        rate_factor = 1000*self.rate*self.Activity/(self.original_Activity*self.G4_events) # /ms
+
+        # fill capture event energy
+        self.TN_recoil_list = self.read_TN_R_spectrum()
+        TN_array = np.array(self.TN_recoil_list)
+        capture_mask = self.df_energy["Process"].isin(['nCapture'])
+        n = capture_mask.sum()
+
+        self.df_energy.loc[capture_mask, 'Recoiled/MeV'] = TN_array[
+            np.random.randint(0, len(TN_array), size=n)/1e6
+        ]
+
+        self.df_energy.loc[:,"Recoiled/eV"] = self.df_energy.loc[:,"Recoiled/MeV"]*1e6
+
+        # generate filter for different threshold every 100 eV
+        max_energy = max(self.df_energy["Recoiled/eV"])
+        min_energy = min(self.df_energy["Recoiled/eV"])
+        min_edge = round(min_energy/100,0)*100
+        max_edge = (round(max_energy / 100, 0)+1) * 100
+        bin_n = int((max_edge-min_edge)/100)
+
+        multiplicity_list = []
+        for i in range(0,bin_n):
+            energy_threshold = min_edge+ i*100
+            energy_mask = self.df_energy["Recoiled/eV"]>= energy_threshold
+            df = self.df_energy.loc[energy_mask,:]
+            # calculate the multiplicity and rate
+            multiplicity = df.groupby("EventID").size().tolist()
+            # make histogram
+            # all bins are int
+            multiplicity_min = min(multiplicity)
+            multiplicity_max = max(multiplicity)
+            bin_num = multiplicity_max-multiplicity_min
+            bin_range = (multiplicity_min, multiplicity_max)
+            (multiplicity_counts, multiplicity_edges)= np.histogram(multiplicity, bins=bin_num, range=bin_range)
+            multiplicity_rates = multiplicity_counts*rate_factor
+            multiplicity_width = multiplicity_edges[1]-multiplicity_edges[0]
+            multiplicity_list.append((multiplicity_rates,multiplicity_edges,multiplicity_width,energy_threshold))
+
+
+
+
+        fig, ax = plt.subplots()
+        for i in range(len(multiplicity_list)):
+            ax.bar(multiplicity_list[i][1], multiplicity_list[i][0], width=multiplicity_list[i][2], align="edge", label="threshold "+str(multiplicity_list[i][3]+" eV") )
+        ax.set_xlabel("Multiplicity")
+        ax.set_ylabel("Rate [mHz]")
+        ax.set_yscale("log")
+        ax.legend()
+        # ax[0].set_xlim(0,2000)
+
+
+
+
+        plt.savefig(self.plot_path+"Cf_1E7_multiplicity.pdf")
+        print(self.plot_path)
     def NR_rate_zoomed(self, edges, rates):
         # edges are in eV and rates in mHz
         # edges is always 100eV per bin
@@ -841,8 +900,9 @@ class SN():
         return R
     def read_TN_R_spectrum(self):
         with open(self.TN_spectrum_path, "rb") as fp:  # Unpickling
-            self.TN_recoil_list = pickle.load(fp)
+            TN_recoil_list = pickle.load(fp)
             # print("read", self.TN_recoil_list)
+        return TN_recoil_list
     def read_original_spectrum(self):
         list1, list2, list3 = [], [], []
         b_older = 0
