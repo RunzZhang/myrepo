@@ -139,10 +139,10 @@ class ReadRoot():
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        self.main_body(1)
+        # self.main_body(1)
         # for i in range(1,101):
-        # for i in range(1, 11):
-        #     self.main_body(i)
+        for i in range(1, 11):
+            self.main_body(i)
     def main_body(self,i):
         print(i)
         self.ini_path = self.base_path+ f"PN_1E7_ini_part{i}.csv"
@@ -296,13 +296,13 @@ class ReadRoot():
         self.LAr_scatter = pd.merge(self.LAr, self.NR_scatter_column, on=['Event', 'Parent ID'],
                                           how='inner')
         print(self.LAr_scatter)
-        duplicates = self.LAr_scatter[self.LAr_scatter.duplicated(subset='Event',keep=False)]
-        print("duplicate",duplicates)
-        self.LAr_scatter = self.LAr_scatter[["Event", "Process","Recoiled/MeV"]]
+        # duplicates = self.LAr_scatter[self.LAr_scatter.duplicated(subset='Event',keep=False)]
+        # print("duplicate",duplicates)
+        self.LAr_scatter = self.LAr_scatter[["Event","Parent ID", "Process","Recoiled/MeV"]]
 
         #capture
         self.LAr_capture = self.keep_1st(self.NR_capture)
-        self.LAr_capture = self.LAr_capture[["Event", "Process","Recoiled/MeV"]]
+        self.LAr_capture = self.LAr_capture[["Event","Parent ID", "Process","Recoiled/MeV"]]
 
 
         self.NR = pd.concat([self.LAr_scatter,self.LAr_capture], axis=1)
