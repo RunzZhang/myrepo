@@ -834,8 +834,8 @@ class SN():
         n = capture_mask.sum()
 
         self.df_energy.loc[capture_mask, 'Recoiled/MeV'] = TN_array[
-            np.random.randint(0, len(TN_array), size=n)/1e6
-        ]
+            np.random.randint(0, len(TN_array), size=n)
+        ]/1e6
 
         self.df_energy.loc[:,"Recoiled/eV"] = self.df_energy.loc[:,"Recoiled/MeV"]*1e6
 
