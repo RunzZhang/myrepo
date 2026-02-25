@@ -103,13 +103,17 @@ class SN():
         # ER distribution per row
         # self.read_ER_Ar_CF()
         # self.read_ER_Ar_CF_per_deposit_rate()
-        self.read_ER_Ar_CF_per_deposit_rate_cumulative()
+        # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
         # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
         # self.read_ER_Ar_CF_2d_sum()
         # self.read_ER_Ar_CF_1d_sum_rate()
         # self.read_ER_Ar_CF_1d_sum_rate_cummulative()
         # self.read_ER_Ar_CF_1d_sum_counts()
+
+
+        self.gamma_rejection_rate_per_keV_vs_Setiz()
+        self.gamma_rejection_rate_vs_Setiz()
 
 
 
@@ -424,8 +428,11 @@ class SN():
         cumulative_threshold_array = [None]
         energy_deposit_list = [hist_array[0][0][i]*hist_array[0][1][i] for i in range(len(hist_array[0][0]))]
         cumulative_threshold_array[0] = np.array([sum(energy_deposit_list[i:]) for i in range(len(energy_deposit_list))])
-        Setiz =[1,2,4,5] # in keV
-        exp_rate =[1,1,1,1] # in mHz
+        Setiz =[1.3445287166423177, 1.4677096307281403, 1.6077252261931916, 1.7676644948295235, 2.163478457894038, 2.698514892785409, 3.038557782566206, 3.44261366411884] # in keV
+        exp_life_time = [1.73e1,1.76e1,6.92,3.12e1,4.78e1,1.08e2,6.93,1.22] # in s
+        exp_rate =[] # in mHz
+        for time in exp_life_time:
+            exp_rate.append(1000/time)
         rejection_list = []
         # interpolation rate
 
