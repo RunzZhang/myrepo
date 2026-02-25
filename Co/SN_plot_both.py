@@ -402,6 +402,7 @@ class SN():
             for i in range(len(hist_array[0][1])):
                 if threshold>= hist_array[0][1][i]:
                     rate = Rate_factor*(hist_array[0][1][i]+(threshold-hist_array[0][1][i])*(cumulative_threshold_array[0][i+1]-cumulative_threshold_array[0][i])/(hist_array[0][1][i+1]-hist_array[0][1][i]))
+                    print(threshold,rate)
                     rejection = exp_rate[j]/rate
                     rejection_list.append(rejection)
                     break
