@@ -395,7 +395,7 @@ class SN():
         exp_rate = []  # in mHz
         for i in range(len(exp_life_time)):
             clean_rate = 1000/exp_life_time[i] - 1000/background_time[i]
-            exp_rate.append(1000 / clean_rate)
+            exp_rate.append(clean_rate)
         rejection_list = []
         # interpolation rate
 
@@ -442,7 +442,7 @@ class SN():
         exp_rate = []  # in mHz
         for i in range(len(exp_life_time)):
             clean_rate = 1000 / exp_life_time[i] - 1000 / background_time[i]
-            exp_rate.append(1000 / clean_rate)
+            exp_rate.append(clean_rate)
         rejection_list = []
         # interpolation rate
 
