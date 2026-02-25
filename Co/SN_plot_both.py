@@ -461,7 +461,7 @@ class SN():
         ax.minorticks_on()
 
 
-        plt.savefig(self.plot_path + "Co_1E7_ER_rejection_vs_Setiz.pdf")
+        plt.savefig(self.plot_path + "Co_1E7_ER_rejection_vs_Setiz_perkeV.pdf")
 
     def read_ER_CF_per_deposit_rate_cumulative(self):
         # rate factor in mHz
