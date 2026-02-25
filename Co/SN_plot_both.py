@@ -391,9 +391,11 @@ class SN():
         Setiz = [1.3445287166423177, 1.4677096307281403, 1.6077252261931916, 1.7676644948295235, 2.163478457894038,
                  2.698514892785409, 3.038557782566206, 3.44261366411884]  # in keV
         exp_life_time = [1.73e1, 1.76e1, 6.92, 3.12e1, 4.78e1, 1.08e2, 6.93, 1.22e2]  # in s
+        background_time = [5.34e1,5.06e1,6.92,5.72e1,6.93,6.90e1,6.92,8.58e1,1.01e2,6.93]
         exp_rate = []  # in mHz
-        for time in exp_life_time:
-            exp_rate.append(1000 / time)
+        for i in range(len(exp_life_time)):
+            clean_rate = 1000/exp_life_time[i] - 1000/background_time[i]
+            exp_rate.append(1000 / clean_rate)
         rejection_list = []
         # interpolation rate
 
@@ -433,11 +435,14 @@ class SN():
         cumulative_threshold_array = [None]
         energy_deposit_list = [hist_array[0][0][i]*hist_array[0][1][i] for i in range(len(hist_array[0][0]))]
         cumulative_threshold_array[0] = np.array([sum(energy_deposit_list[i:]) for i in range(len(energy_deposit_list))])
-        Setiz =[1.3445287166423177, 1.4677096307281403, 1.6077252261931916, 1.7676644948295235, 2.163478457894038, 2.698514892785409, 3.038557782566206, 3.44261366411884] # in keV
-        exp_life_time = [1.73e1,1.76e1,6.92,3.12e1,4.78e1,1.08e2,6.93,1.22e2] # in s
-        exp_rate =[] # in mHz
-        for time in exp_life_time:
-            exp_rate.append(1000/time)
+        Setiz = [1.3445287166423177, 1.4677096307281403, 1.6077252261931916, 1.7676644948295235, 2.163478457894038,
+                 2.698514892785409, 3.038557782566206, 3.44261366411884]  # in keV
+        exp_life_time = [1.73e1, 1.76e1, 6.92, 3.12e1, 4.78e1, 1.08e2, 6.93, 1.22e2]  # in s
+        background_time = [5.34e1, 5.06e1, 6.92, 5.72e1, 6.93, 6.90e1, 6.92, 8.58e1, 1.01e2, 6.93]
+        exp_rate = []  # in mHz
+        for i in range(len(exp_life_time)):
+            clean_rate = 1000 / exp_life_time[i] - 1000 / background_time[i]
+            exp_rate.append(1000 / clean_rate)
         rejection_list = []
         # interpolation rate
 
