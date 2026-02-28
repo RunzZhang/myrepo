@@ -114,7 +114,7 @@ class SN():
 
 
         self.gamma_rejection_rate_per_keV_vs_Setiz()
-        self.gamma_rejection_rate_vs_Setiz()
+        # self.gamma_rejection_rate_vs_Setiz()
 
 
 
