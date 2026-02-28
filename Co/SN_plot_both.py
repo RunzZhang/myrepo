@@ -520,6 +520,7 @@ class SN():
             except:
                 print("source pressure is not found in background ", src_pressure)
                 source_bkg_pressure_match = False
+                # only get pressure entries that shows in both src and bkg
             if source_bkg_pressure_match:
                 updated_Setiz_list.append(Setiz[i])
                 exp_rate = 1000 / exp_life_time[i]
