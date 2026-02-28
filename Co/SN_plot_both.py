@@ -579,7 +579,7 @@ class SN():
         output_dict = {
             'Src Pressure [bara]': source_pressure_list,
             'Bkg Pressure [bara]': bkg_pressure_recon_list,
-            'Src Setiz [keV]': Setiz,
+            'Updated Setiz [keV]': updated_Setiz_list,
             "Exp Rate [mHz]": exp_rate_list,
             "Bkg Rate [mHz]": background_rate_list,
             "Clean Rate [mHz]": clean_rate_list,
