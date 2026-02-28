@@ -542,7 +542,9 @@ class SN():
 
     def gamma_rejection_rate_per_keV_vs_Setiz(self):
         # rate factor in mHz
-        expfile_name = "Cold-Cs-12_10-11_exposures"
+        expfile_name = "Cold-Cs-11_17-18_exposures"
+        # expfile_name = "Cold-Cs-12_01_exposures"
+        # expfile_name = "Cold-Cs-12_10-11_exposures"
         bkgfile_name = "Background-11_26-30_exposures"
 
         Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
@@ -566,9 +568,13 @@ class SN():
         source_exposure_df = self.read_exposure(expfile_name + ".txt")
         print(source_exposure_df.loc[:, 0])
         background_exposure_df = self.read_exposure(bkgfile_name + ".txt")
-
-        Setiz = [1.3445287166423177, 1.4677096307281403, 1.6077252261931916, 1.7676644948295235, 2.163478457894038,
-                 2.698514892785409, 3.038557782566206, 3.44261366411884]  # in keV
+        Seitz_pressure_list=np.arange(2.25, 6.5, 0.25)
+        Setiz = [np.float64(1.3445287166423177), np.float64(1.4677096307281403), np.float64(1.6077252261931916),
+                 np.float64(1.7676644948295235), np.float64(1.9513368144218666), np.float64(2.163478457894038),
+                 np.float64(2.41003021032974), np.float64(2.698514892785409), np.float64(3.038557782566206),
+                 np.float64(3.44261366411884), np.float64(3.9269986461894346), np.float64(4.513378617028501),
+                 np.float64(5.230956628311766), np.float64(6.119753114689943), np.float64(7.235636873731044),
+                 np.float64(8.658238672578), np.float64(10.503756197125261)]  # in keV
         source_pressure_list = source_exposure_df.loc[:, 0].to_list()
         print(source_pressure_list)
         bkg_pressure_list = background_exposure_df.loc[:, 0].to_list()
@@ -588,11 +594,13 @@ class SN():
         background_sigma_list = []
         clean_sigma_list = []
         updated_Setiz_list = []
+
         for i in range(len(source_pressure_list)):
             src_pressure = source_pressure_list[i]
             source_bkg_pressure_match = True
             try:
                 pressure_index = bkg_pressure_list.index(src_pressure)
+                pressure_index_seitz = Seitz_pressure_list.index(src_pressure)
                 print(src_pressure, pressure_index)
                 source_bkg_pressure_match = True
             except:
@@ -600,7 +608,7 @@ class SN():
                 source_bkg_pressure_match = False
                 # only get pressure entries that shows in both src and bkg
             if source_bkg_pressure_match:
-                updated_Setiz_list.append(Setiz[i])
+                updated_Setiz_list.append(Setiz[pressure_index_seitz])
                 exp_rate = 1000 / exp_life_time[i]
                 background_rate = 1000 / background_time[pressure_index]
                 clean_rate = exp_rate - background_rate
