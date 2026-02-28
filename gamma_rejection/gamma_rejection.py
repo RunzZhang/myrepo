@@ -18,10 +18,15 @@ fig, ax = plt.subplots(1,3, figsize=(22, 4))
 for i in range(len(df_list)):
     path = os.path.join(plot_path, df_list[i] + "_output.txt")
     df = pd.read_csv(path)
-    print(df.columns)
+    # print(df.columns)
     doc_label = df_list[i].rstrip("_exposures")
     # signal
-    
+    # drop 2.75,3.25, 3.75 bara pressure
+    pressure_drop_list = [2.75,3.25,3.75]
+    for i in pressure_drop_list:
+        df.drop(df[df['Pressure [bara]'] == i].index)
+
+
     # ax[0].errorbar(df['Pressure [bara]'],df["Exp Rate [mHz]"],
     #                yerr = df["Exp Sigma [mHz]"],label=doc_label+"signal",fmt=fmt_list[i],color = colors[i][0])
     ax[0].errorbar(df['Pressure [bara]'], df[ "Bkg Rate [mHz]"],
