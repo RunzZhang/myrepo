@@ -814,7 +814,7 @@ class SN():
 
         # Read the file
         # sep='\s+' handles any number of spaces or tabs as delimiters
-        df = pd.read_csv(file_path, sep='\s+', skiprows=1, header=None,index=False)
+        df = pd.read_csv(file_path, sep='\s+', skiprows=1, header=None,index_col=0)
 
         return df
 
