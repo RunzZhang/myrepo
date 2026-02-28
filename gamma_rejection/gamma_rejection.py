@@ -22,11 +22,11 @@ for i in range(len(df_list)):
     doc_label = df_list[i].rstrip("_exposures")
     # signal
     
-    # ax[0].errorbar(df['Updated Setiz [keV]'],df["Exp Rate [mHz]"],
+    # ax[0].errorbar(df['Pressure [bara]'],df["Exp Rate [mHz]"],
     #                yerr = df["Exp Sigma [mHz]"],label=doc_label+"signal",fmt=fmt_list[i],color = colors[i][0])
-    ax[0].errorbar(df[ 'Updated Setiz [keV]'], df[ "Bkg Rate [mHz]"],
+    ax[0].errorbar(df[ 'Pressure [bara]'], df[ "Bkg Rate [mHz]"],
                    yerr=df[ "Bkg Sigma [mHz]"], label=doc_label + "bkg",fmt=fmt_list[i],color = colors[i][1])
-    # ax[0].errorbar(df[ 'Updated Setiz [keV]'], df[ "Clean Rate [mHz]"],
+    # ax[0].errorbar(df[ 'Pressure [bara]'], df[ "Clean Rate [mHz]"],
     #                yerr=df[ "Clean Sigma [mHz]"], label=doc_label + "clean", fmt=fmt_list[i],color = colors[i][2])
 
     ax[1].errorbar(df[ 'Updated Setiz [keV]'], df[ "Rejection Rate Scattering[mHz]"],
@@ -35,7 +35,7 @@ for i in range(len(df_list)):
     ax[2].errorbar(df[ 'Updated Setiz [keV]'], df[ "Rejection Rate KeV[mHz]"],
                    yerr=df[ "Rejection Sigma KeV[mHz]"], label=doc_label,fmt=fmt_list[i])
 
-ax[0].set_xlabel("Setiz [keV]")
+ax[0].set_xlabel("Pressure [bara]")
 ax[0].set_ylabel("Rate [mHz]")
 ax[0].set_title("Signal/BKG Rates ")
 ax[0].legend(loc='upper right', bbox_to_anchor=(-0.1, 1.0))
