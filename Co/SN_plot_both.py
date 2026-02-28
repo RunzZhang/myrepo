@@ -492,7 +492,9 @@ class SN():
         Setiz = [1.3445287166423177, 1.4677096307281403, 1.6077252261931916, 1.7676644948295235, 2.163478457894038,
                  2.698514892785409, 3.038557782566206, 3.44261366411884]  # in keV
         source_pressure_list = source_exposure_df.loc[:, 0].to_list()
+        print(source_pressure_list)
         bkg_pressure_list = background_exposure_df.loc[:, 0].to_list()
+        print(bkg_pressure_list)
         exp_life_time = source_exposure_df.loc[:, 1].to_list()
 
         background_time = background_exposure_df.loc[:, 1].to_list()
