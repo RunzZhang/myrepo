@@ -37,7 +37,7 @@ for i in range(len(df_list)):
 ax[0].set_xlabel("Setiz [keV]")
 ax[0].set_ylabel("Rate [mHz]")
 ax[0].set_title("Signal/BKG Rates ")
-ax[0].legend()
+ax[0].legend(loc='upper right', bbox_to_anchor=(-0.1, 1.0))
 
 ax[1].set_xlabel("Setiz [keV]")
 ax[1].set_ylabel("Gamma Rejection Per Scattering []")
