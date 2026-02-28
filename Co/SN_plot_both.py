@@ -559,8 +559,7 @@ class SN():
                         (exp_sigma_list[i] / rate_PK) ** 2 + (exp_rate_list[i] * rate_PK_sigma / rate_PK ** 2) ** 2)
                     rejection_PK_sigma_list.append(rejection_sigma)
                     break
-
-        df = pd.DataFrame({
+        output_dict = {
             'Src Pressure [bara]': source_pressure_list,
             'Bkg Pressure [bara]': bkg_pressure_list,
             'Src Setiz [keV]': Setiz,
@@ -573,8 +572,9 @@ class SN():
             "Rejection Rate Scattering[mHz]": rejection_PS_list,
             "Rejection Sigma Scattering[mHz]": rejection_PS_sigma_list,
             "Rejection Rate KeV[mHz]": rejection_PK_list,
-            "Rejection Sigma KeV[mHz]": rejection_PK_sigma_list
-        })
+            "Rejection Sigma KeV[mHz]": rejection_PK_sigma_list}
+        print(output_dict)
+        df = pd.DataFrame(output_dict)
         print(df)
         save_path = os.path.join(self.plot_path, expfile_name + "_output.txt")
         df.to_csv(save_path, index=False)
