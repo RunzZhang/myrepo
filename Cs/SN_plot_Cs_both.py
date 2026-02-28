@@ -542,7 +542,7 @@ class SN():
 
     def gamma_rejection_rate_per_keV_vs_Setiz(self):
         # rate factor in mHz
-        expfile_name = "Cold-Cs-11_17-18_exposures"
+        expfile_name = "Cold-Cs-12_01_exposures"
         bkgfile_name = "Background-11_26-30_exposures"
 
         Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
