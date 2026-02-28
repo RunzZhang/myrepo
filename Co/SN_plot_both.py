@@ -490,15 +490,15 @@ class SN():
 
         Setiz = [1.3445287166423177, 1.4677096307281403, 1.6077252261931916, 1.7676644948295235, 2.163478457894038,
                  2.698514892785409, 3.038557782566206, 3.44261366411884]  # in keV
-        source_pressure_list = source_exposure_df.iloc[:, "Pressure [bara]"]
-        bkg_pressure_list = background_exposure_df.iloc[:, "Pressure [bara]"]
-        exp_life_time = source_exposure_df.iloc[:, "Lifetime [s]"]
+        source_pressure_list = source_exposure_df.loc[:, "Pressure [bara]"]
+        bkg_pressure_list = background_exposure_df.loc[:, "Pressure [bara]"]
+        exp_life_time = source_exposure_df.loc[:, "Lifetime [s]"]
 
-        background_time = background_exposure_df[:, "Lifetime [s]"]
+        background_time = background_exposure_df.loc[:, "Lifetime [s]"]
 
-        exp_life_time_sig = source_exposure_df.iloc[:, "Lifetime Error [s]"]
+        exp_life_time_sig = source_exposure_df.loc[:, "Lifetime Error [s]"]
 
-        background_time_sig = background_exposure_df[:, "Lifetime Error [s]"]
+        background_time_sig = background_exposure_df.loc[:, "Lifetime Error [s]"]
 
         exp_rate_list = []  # in mHz
         background_rate_list = []
