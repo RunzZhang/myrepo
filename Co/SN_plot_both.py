@@ -529,7 +529,8 @@ class SN():
                 back_sigma = background_time_sig[pressure_index] * 1000 / (background_time[pressure_index]) ** 2
                 clean_sigma = np.sqrt(exp_sigma ** 2 + back_sigma ** 2)
                 exp_rate_list.append(exp_rate)
-                bkg_pressure_recon_list.append(background_rate)
+                bkg_pressure_recon_list.append(src_pressure)
+                background_rate_list.append(background_rate)
                 clean_rate_list.append(clean_rate)
                 exp_sigma_list.append(exp_sigma)
                 background_sigma_list.append(back_sigma)
