@@ -47,3 +47,4 @@ ax[1].ylabel("Gamma Rejection Per keV [/keV]")
 ax[1].title("Gamma Rejection Per keV ")
 
 plt.legend()
+plt.savefig(plot_path + "gamma_rejection.pdf")
