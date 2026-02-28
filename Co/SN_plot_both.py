@@ -500,7 +500,7 @@ class SN():
         exp_life_time_sig = source_exposure_df.loc[:, 2].to_list()
 
         background_time_sig = background_exposure_df.loc[:, 2].to_list()
-
+        bkg_pressure_list = []
         exp_rate_list = []  # in mHz
         background_rate_list = []
         clean_rate_list = []
@@ -508,18 +508,29 @@ class SN():
         background_sigma_list = []
         clean_sigma_list = []
         for i in range(len(exp_life_time)):
-            exp_rate = 1000 / exp_life_time[i]
-            background_rate = 1000 / background_time[i]
-            clean_rate = exp_rate - background_rate
-            exp_sigma = exp_life_time_sig[i] * 1000 / (exp_life_time[i]) ** 2
-            back_sigma = background_time_sig[i] * 1000 / (background_time[i]) ** 2
-            clean_sigma = np.sqrt(exp_sigma ** 2 + back_sigma ** 2)
-            exp_rate_list.append(exp_rate)
-            background_rate_list.append(background_rate)
-            clean_rate_list.append(clean_rate)
-            exp_sigma_list.append(exp_sigma)
-            background_sigma_list.append(back_sigma)
-            clean_sigma_list.append(clean_sigma)
+            src_pressure = source_pressure_list[i]
+            source_bkg_pressure_match = True
+            try:
+                pressure_index = bkg_pressure_list.index(src_pressure)
+                source_bkg_pressure_match = True
+            except:
+                print("source pressure is not found in background ", src_pressure)
+                source_bkg_pressure_match = False
+            if source_bkg_pressure_match:
+                exp_rate = 1000 / exp_life_time[i]
+                background_rate = 1000 / background_time[pressure_index]
+                clean_rate = exp_rate - background_rate
+                exp_sigma = exp_life_time_sig[i] * 1000 / (exp_life_time[i]) ** 2
+                back_sigma = background_time_sig[pressure_index] * 1000 / (background_time[pressure_index]) ** 2
+                clean_sigma = np.sqrt(exp_sigma ** 2 + back_sigma ** 2)
+                exp_rate_list.append(exp_rate)
+                background_rate_list.append(background_rate)
+                clean_rate_list.append(clean_rate)
+                exp_sigma_list.append(exp_sigma)
+                background_sigma_list.append(back_sigma)
+                clean_sigma_list.append(clean_sigma)
+
+
 
         rejection_PS_list = []
         rejection_PS_sigma_list = []
