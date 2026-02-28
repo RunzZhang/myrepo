@@ -17,7 +17,7 @@ fig, ax = plt.subplots(1,3, figsize=(22, 4))
 # 3 graphs, one for original plot(Gray) about rate, 2 and 3 for rejections
 for i in range(len(df_list)):
     path = os.path.join(plot_path, df_list[i] + "_output.txt")
-    df = pd.read_csv(path,index_col=0)
+    df = pd.read_csv(path)
     print(df.columns)
     doc_label = df_list[i].rstrip("_exposures")
     # signal
