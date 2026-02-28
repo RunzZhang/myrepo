@@ -509,6 +509,7 @@ class SN():
         exp_sigma_list = []
         background_sigma_list = []
         clean_sigma_list = []
+        updated_Setiz_list = []
         for i in range(len(source_pressure_list)):
             src_pressure = source_pressure_list[i]
             source_bkg_pressure_match = True
@@ -520,6 +521,7 @@ class SN():
                 print("source pressure is not found in background ", src_pressure)
                 source_bkg_pressure_match = False
             if source_bkg_pressure_match:
+                updated_Setiz_list.append(Setiz[i])
                 exp_rate = 1000 / exp_life_time[i]
                 background_rate = 1000 / background_time[pressure_index]
                 clean_rate = exp_rate - background_rate
@@ -543,8 +545,8 @@ class SN():
 
         # interpolation rate
 
-        for j in range(len(Setiz)):
-            threshold = Setiz[j]
+        for j in range(len(updated_Setiz_list)):
+            threshold = updated_Setiz_list[j]
             for i in range(len(hist_array[0][1])):
                 if threshold>= hist_array[0][1][i]:
                     # rejection per scattering, PS meaning perscattering
