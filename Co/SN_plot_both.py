@@ -403,9 +403,9 @@ class SN():
 
         source_exposure_df = self.read_exposure(expfile_name + ".txt")
         # print(source_exposure_df.loc[:, 0])
-        print(source_exposure_df)
+        print("txt read source",source_exposure_df)
         background_exposure_df = self.read_exposure(bkgfile_name + ".txt")
-        print(background_exposure_df)
+        print("txt read bkg",background_exposure_df)
         Seitz_pressure_list = np.arange(2.25, 6.5, 0.25)
         print(Seitz_pressure_list)
         Setiz = [np.float64(1.3445287166423177), np.float64(1.4677096307281403), np.float64(1.6077252261931916),
