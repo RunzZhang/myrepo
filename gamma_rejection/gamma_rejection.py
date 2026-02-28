@@ -20,7 +20,7 @@ for i in range(len(df_list)):
     df = pd.read_csv(path,index_col=0)
     doc_label = df_list[i].rstrip("_exposures")
     # signal
-    print(df_list)
+    
     ax[0].errorbar(df['Updated Setiz [keV]'],df["Exp Rate [mHz]"],
                    yerr = df["Exp Sigma [mHz]"],label=doc_label+"signal",fmt=fmt_list[i],color = colors[i][0])
     ax[0].errorbar(df[ 'Updated Setiz [keV]'], df[ "Bkg Rate [mHz]"],
@@ -34,18 +34,18 @@ for i in range(len(df_list)):
     ax[2].errorbar(df[ 'Updated Setiz [keV]'], df[ "Rejection Rate KeV[mHz]"],
                    yerr=df[ "Rejection Sigma KeV[mHz]"], label=doc_label,fmt=fmt_list[i])
 
-ax[0].xlabel("Setiz [keV]")
-ax[0].ylabel("Rate [mHz]")
-ax[0].title("Signal/BKG Rates ")
+ax[0].set_xlabel("Setiz [keV]")
+ax[0].set_ylabel("Rate [mHz]")
+ax[0].set_title("Signal/BKG Rates ")
 
-ax[1].xlabel("Setiz [keV]")
-ax[1].ylabel("Gamma Rejection Per Scattering []")
-ax[1].title("Gamma Rejection Per Scattering ")
+ax[1].set_xlabel("Setiz [keV]")
+ax[1].set_ylabel("Gamma Rejection Per Scattering []")
+ax[1].set_title("Gamma Rejection Per Scattering ")
 
 
-ax[1].xlabel("Setiz [keV]")
-ax[1].ylabel("Gamma Rejection Per keV [/keV]")
-ax[1].title("Gamma Rejection Per keV ")
+ax[1].set_xlabel("Setiz [keV]")
+ax[1].set_ylabel("Gamma Rejection Per keV [/keV]")
+ax[1].set_title("Gamma Rejection Per keV ")
 
 plt.legend()
 plt.savefig(plot_path + "gamma_rejection.pdf")
