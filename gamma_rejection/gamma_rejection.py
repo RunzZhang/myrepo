@@ -37,15 +37,16 @@ for i in range(len(df_list)):
 ax[0].set_xlabel("Setiz [keV]")
 ax[0].set_ylabel("Rate [mHz]")
 ax[0].set_title("Signal/BKG Rates ")
+ax[0].legend()
 
 ax[1].set_xlabel("Setiz [keV]")
 ax[1].set_ylabel("Gamma Rejection Per Scattering []")
 ax[1].set_title("Gamma Rejection Per Scattering ")
+ax[1].legend()
 
+ax[2].set_xlabel("Setiz [keV]")
+ax[2].set_ylabel("Gamma Rejection Per keV [/keV]")
+ax[2].set_title("Gamma Rejection Per keV ")
+ax[2].legend()
 
-ax[1].set_xlabel("Setiz [keV]")
-ax[1].set_ylabel("Gamma Rejection Per keV [/keV]")
-ax[1].set_title("Gamma Rejection Per keV ")
-
-plt.legend()
 plt.savefig(plot_path + "gamma_rejection.pdf")
