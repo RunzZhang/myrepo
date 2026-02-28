@@ -514,7 +514,13 @@ class SN():
             exp_sigma = exp_life_time_sig[i] * 1000 / (exp_life_time[i]) ** 2
             back_sigma = background_time_sig[i] * 1000 / (background_time[i]) ** 2
             clean_sigma = np.sqrt(exp_sigma ** 2 + back_sigma ** 2)
-            exp_rate_list.append(clean_rate)
+            exp_rate_list.append(exp_rate)
+            background_rate_list.append(background_rate)
+            clean_rate_list.append(clean_rate)
+            exp_sigma_list.append(exp_sigma)
+            background_sigma_list.append(back_sigma)
+            clean_sigma_list.append(clean_sigma)
+
         rejection_PS_list = []
         rejection_PS_sigma_list = []
 
@@ -569,7 +575,7 @@ class SN():
             "Rejection Rate KeV[mHz]": rejection_PK_list,
             "Rejection Sigma KeV[mHz]": rejection_PK_sigma_list
         })
-
+        print(df)
         save_path = os.path.join(self.plot_path, expfile_name + "_output.txt")
         df.to_csv(save_path, index=False)
 
