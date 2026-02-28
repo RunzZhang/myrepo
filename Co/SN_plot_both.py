@@ -578,8 +578,7 @@ class SN():
                     rejection_PK_sigma_list.append(rejection_sigma)
                     break
         output_dict = {
-            'Src Pressure [bara]': bkg_pressure_recon_list,
-            'Bkg Pressure [bara]': bkg_pressure_recon_list,
+            'Pressure [bara]': bkg_pressure_recon_list,
             'Updated Setiz [keV]': updated_Setiz_list,
             "Exp Rate [mHz]": exp_rate_list,
             "Bkg Rate [mHz]": background_rate_list,
