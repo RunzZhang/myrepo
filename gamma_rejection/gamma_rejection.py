@@ -13,7 +13,7 @@ colors = [
      ['#006400', '#228B22', '#90EE90'],        #'green'
      ['#00008B', '#0000FF', '#ADD8E6'],        #'blue'
      ['#3E2723', '#795548', '#D7CCC8']]        #'brown'
-fig, ax = plt.subplots(1,3, figsize=(18, 4))
+fig, ax = plt.subplots(1,3, figsize=(22, 4))
 # 3 graphs, one for original plot(Gray) about rate, 2 and 3 for rejections
 for i in range(len(df_list)):
     path = os.path.join(plot_path, df_list[i] + "_output.txt")
