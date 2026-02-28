@@ -509,11 +509,12 @@ class SN():
         exp_sigma_list = []
         background_sigma_list = []
         clean_sigma_list = []
-        for i in range(len(exp_life_time)):
+        for i in range(len(source_pressure_list)):
             src_pressure = source_pressure_list[i]
             source_bkg_pressure_match = True
             try:
                 pressure_index = bkg_pressure_list.index(src_pressure)
+                print(src_pressure, pressure_index)
                 source_bkg_pressure_match = True
             except:
                 print("source pressure is not found in background ", src_pressure)
