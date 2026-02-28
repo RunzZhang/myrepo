@@ -18,6 +18,7 @@ fig, ax = plt.subplots(1,3, figsize=(22, 4))
 for i in range(len(df_list)):
     path = os.path.join(plot_path, df_list[i] + "_output.txt")
     df = pd.read_csv(path,index_col=0)
+    print(df)
     doc_label = df_list[i].rstrip("_exposures")
     # signal
     
