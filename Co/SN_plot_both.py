@@ -486,7 +486,7 @@ class SN():
         cumulative_threshold_array[0] = np.array([sum(energy_deposit_list[i:]) for i in range(len(energy_deposit_list))])
 
         source_exposure_df = self.read_exposure(expfile_name + ".txt")
-        print(source_exposure_df.columns)
+        print(source_exposure_df.loc[:, 0])
         background_exposure_df = self.read_exposure(bkgfile_name + ".txt")
 
         Setiz = [1.3445287166423177, 1.4677096307281403, 1.6077252261931916, 1.7676644948295235, 2.163478457894038,
