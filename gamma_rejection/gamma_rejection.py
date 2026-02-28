@@ -25,7 +25,7 @@ for i in range(len(df_list)):
     pressure_drop_list = [2.75,3.25,3.75]
     for j in pressure_drop_list:
         df.drop(df[df['Pressure [bara]'] == j].index)
-
+    print(df['Pressure [bara]'])
 
     # ax[0].errorbar(df['Pressure [bara]'],df["Exp Rate [mHz]"],
     #                yerr = df["Exp Sigma [mHz]"],label=doc_label+"signal",fmt=fmt_list[i],color = colors[i][0])
