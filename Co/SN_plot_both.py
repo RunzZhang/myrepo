@@ -500,7 +500,7 @@ class SN():
         exp_life_time_sig = source_exposure_df.loc[:, 2].to_list()
 
         background_time_sig = background_exposure_df.loc[:, 2].to_list()
-        bkg_pressure_list = []
+        bkg_pressure_recon_list = []
         exp_rate_list = []  # in mHz
         background_rate_list = []
         clean_rate_list = []
@@ -524,7 +524,7 @@ class SN():
                 back_sigma = background_time_sig[pressure_index] * 1000 / (background_time[pressure_index]) ** 2
                 clean_sigma = np.sqrt(exp_sigma ** 2 + back_sigma ** 2)
                 exp_rate_list.append(exp_rate)
-                background_rate_list.append(background_rate)
+                bkg_pressure_recon_list.append(background_rate)
                 clean_rate_list.append(clean_rate)
                 exp_sigma_list.append(exp_sigma)
                 background_sigma_list.append(back_sigma)
@@ -572,7 +572,7 @@ class SN():
                     break
         output_dict = {
             'Src Pressure [bara]': source_pressure_list,
-            'Bkg Pressure [bara]': bkg_pressure_list,
+            'Bkg Pressure [bara]': bkg_pressure_recon_list,
             'Src Setiz [keV]': Setiz,
             "Exp Rate [mHz]": exp_rate_list,
             "Bkg Rate [mHz]": background_rate_list,
