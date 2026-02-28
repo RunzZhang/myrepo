@@ -601,7 +601,7 @@ class SN():
             source_bkg_pressure_match = True
             try:
                 pressure_index = bkg_pressure_list.index(src_pressure)
-                pressure_index_seitz = np.where(Seitz_pressure_list == src_pressure)[0]
+                pressure_index_seitz = int(np.where(Seitz_pressure_list == src_pressure)[0])
                 # pressure_index_seitz = Seitz_pressure_list.index(src_pressure)
                 print(src_pressure, pressure_index)
                 source_bkg_pressure_match = True
