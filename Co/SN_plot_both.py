@@ -485,7 +485,7 @@ class SN():
         energy_deposit_list = [hist_array[0][0][i]*hist_array[0][1][i] for i in range(len(hist_array[0][0]))]
         cumulative_threshold_array[0] = np.array([sum(energy_deposit_list[i:]) for i in range(len(energy_deposit_list))])
 
-        source_exposure_df = self.read_exposure(expfile_name + ".txt",sep='\s+', skiprows=1, header=None)
+        source_exposure_df = self.read_exposure(expfile_name + ".txt")
         print(source_exposure_df.loc[:, 0])
         background_exposure_df = self.read_exposure(bkgfile_name + ".txt")
 
@@ -814,7 +814,7 @@ class SN():
 
         # Read the file
         # sep='\s+' handles any number of spaces or tabs as delimiters
-        df = pd.read_csv(file_path, sep='\s+')
+        df = pd.read_csv(file_path, sep='\s+', skiprows=1, header=None)
 
         return df
 
