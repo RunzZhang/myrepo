@@ -514,7 +514,7 @@ class SN():
             exp_sigma = exp_life_time_sig[i] * 1000 / (exp_life_time[i]) ** 2
             back_sigma = background_time_sig[i] * 1000 / (background_time[i]) ** 2
             clean_sigma = np.sqrt(exp_sigma ** 2 + back_sigma ** 2)
-            exp_rate.append(clean_rate)
+            exp_rate_list.append(clean_rate)
         rejection_PS_list = []
         rejection_PS_sigma_list = []
 
