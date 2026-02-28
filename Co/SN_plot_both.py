@@ -509,7 +509,7 @@ class SN():
         exp_sigma_list = []
         background_sigma_list = []
         clean_sigma_list = []
-        for i in range(len(source_pressure_list)+1):
+        for i in range(len(source_pressure_list)):
             src_pressure = source_pressure_list[i]
             source_bkg_pressure_match = True
             try:
@@ -533,7 +533,7 @@ class SN():
                 background_sigma_list.append(back_sigma)
                 clean_sigma_list.append(clean_sigma)
 
-
+        print(exp_rate_list)
 
         rejection_PS_list = []
         rejection_PS_sigma_list = []
