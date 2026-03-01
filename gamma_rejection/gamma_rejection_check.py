@@ -15,7 +15,7 @@ colors = [
      ['#006400', '#228B22', '#90EE90'],        #'green'
      ['#00008B', '#0000FF', '#ADD8E6'],        #'blue'
      ['#3E2723', '#795548', '#D7CCC8']]        #'brown'
-fig, ax = plt.subplots(1,3, figsize=(22, 4))
+fig, ax = plt.subplots()
 # 3 graphs, one for original plot(Gray) about rate, 2 and 3 for rejections
 # df_list = df_co_list
 # df_list = df_cs_list
@@ -35,16 +35,16 @@ for i in range(len(df_list)):
 
     # ax[0].errorbar(df['Pressure [bara]'],df["Exp Rate [mHz]"],
     #                yerr = df["Exp Sigma [mHz]"],label=doc_label+"signal",fmt=fmt_list[i],color = colors[i][0])
-    ax[0].errorbar(df['Pressure [bara]'], df[ "Bkg Rate [mHz]"],
+    ax.errorbar(df['Pressure [bara]'], df[ "Bkg Rate [mHz]"],
                    yerr=df[ "Bkg Sigma [mHz]"], label=doc_label + "bkg",fmt=fmt_list[i],color = colors[i][1])
     # ax[0].errorbar(df[ 'Pressure [bara]'], df[ "Clean Rate [mHz]"],
     #                yerr=df[ "Clean Sigma [mHz]"], label=doc_label + "clean", fmt=fmt_list[i],color = colors[i][2])
 
 
-ax[0].set_xlabel("Pressure [bara]")
-ax[0].set_ylabel("Rate [mHz]")
-ax[0].set_title("Signal/BKG Rates ")
-ax[0].legend()
+ax.set_xlabel("Pressure [bara]")
+ax.set_ylabel("Rate [mHz]")
+ax.set_title("Signal/BKG Rates ")
+ax.legend()
 
 
 
