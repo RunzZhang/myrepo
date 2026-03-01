@@ -526,6 +526,7 @@ class SN():
             print(df)
             save_path = os.path.join(self.plot_path, expfile_name + "_output.txt")
             df.to_csv(save_path, index=False)
+            print("save to path", save_path)
 
     def gamma_rejection_rate_per_keV_vs_Setiz(self):
         # rate factor in mHz
