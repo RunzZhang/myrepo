@@ -680,7 +680,7 @@ class SN():
             save_path = os.path.join(self.plot_path, expfile_name + "_output.txt")
             df.to_csv(save_path, index=False)
         # check the shape of two array
-        fig, ax = plt.subplots(1, 2, figsize=(22, 4))
+        fig, ax = plt.subplots(1, 2, figsize=(10, 4))
         ax[0].plot(hist_array[0][1][:-1], cumulative_threshold_per_scatter_array[0])
         ax[0].set_xlabel("thershold [keV]")
         ax[0].set_ylabel("Counts")
