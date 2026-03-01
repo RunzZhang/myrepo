@@ -685,11 +685,13 @@ class SN():
         ax[0].set_xlabel("thershold [keV]")
         ax[0].set_ylabel("Counts")
         ax[0].set_title("Cumulative counts vs threshold")
+        ax[0].set_yscale("log")
 
         ax[1].plot(hist_array[0][1][:-1], cumulative_threshold_array[0])
         ax[1].set_xlabel("thershold [keV]")
         ax[1].set_ylabel("Counts*energy [KeV]")
         ax[1].set_title("Cumulative counts*energy vs threshold")
+        ax[1].set_yscale("log")
 
         plt.savefig(self.plot_path + "Co_cumulative_counts_function.pdf")
 
