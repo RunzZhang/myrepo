@@ -548,7 +548,7 @@ class SN():
         # expfile_name = "Cold-Cs-11_17-18_exposures_zoom"
         # expfile_name = "Cold-Cs-12_01_exposures_zoom"
         # expfile_name = "Cold-Cs-12_10-11_exposures_zoom"
-        exp_file_list  = ["Cold-Cs-11_17-18_exposures_zoom","Cold-Cs-12_01_exposures_zoom","Cold-Cs-12_10-11_exposures_zoom"]
+        exp_file_list  = ["Cold-Cs-11_17-18_exposures_mix","Cold-Cs-12_01_exposures_mix","Cold-Cs-12_10-11_exposures_mix"]
         bkgfile_name = "Background-11_26-30_exposures"
 
         Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
