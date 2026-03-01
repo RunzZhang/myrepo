@@ -709,7 +709,9 @@ class SN():
         ax[1].set_yscale("log")
         ax[1].set_xlim(0, 5)
         print(hist_array[0][1][1] - hist_array[0][1][0], "keV width")
-        print(hist_array[0][1][:20])
+        print("energy keV",hist_array[0][1][:20])
+        print("counts",hist_array[0][0][:20])
+        print("cumulative counts", cumulative_threshold_per_scatter_array[0][:20])
         plt.savefig(self.plot_path + "Cs_cumulative_counts_function.pdf")
 
 
