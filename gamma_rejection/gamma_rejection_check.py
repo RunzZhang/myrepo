@@ -6,7 +6,9 @@ import numpy as np
 import pandas as pd
 
 plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
-df_list = ["Cold-Cs-11_17-18_exposures","Cold-Cs-12_01_exposures","Cold-Cs-12_10-11_exposures","60Co-12_15-16_exposures"]
+df_co_list = ["60Co-12_15-16_exposures"]
+df_cs_list = ["Cold-Cs-11_17-18_exposures","Cold-Cs-12_01_exposures","Cold-Cs-12_10-11_exposures"]
+df_full_list = df_co_list+df_cs_list
 fmt_list = ['o','s','^','d']
 colors = [
     ['#8B0000', '#FF0000', '#FF7F7F'],         #'red'
@@ -15,6 +17,9 @@ colors = [
      ['#3E2723', '#795548', '#D7CCC8']]        #'brown'
 fig, ax = plt.subplots(1,3, figsize=(22, 4))
 # 3 graphs, one for original plot(Gray) about rate, 2 and 3 for rejections
+df_list = df_co_list
+# df_list = df_cs_list
+# df_list = df_full_list
 for i in range(len(df_list)):
     path = os.path.join(plot_path, df_list[i] + "_output.txt")
     df = pd.read_csv(path)
@@ -35,25 +40,12 @@ for i in range(len(df_list)):
     # ax[0].errorbar(df[ 'Pressure [bara]'], df[ "Clean Rate [mHz]"],
     #                yerr=df[ "Clean Sigma [mHz]"], label=doc_label + "clean", fmt=fmt_list[i],color = colors[i][2])
 
-    ax[1].errorbar(df[ 'Updated Setiz [keV]'], df[ "Rejection Rate Scattering[mHz]"],
-                   yerr=df[ "Rejection Sigma Scattering[mHz]"], label=doc_label,fmt=fmt_list[i])
-
-    ax[2].errorbar(df[ 'Updated Setiz [keV]'], df[ "Rejection Rate KeV[mHz]"],
-                   yerr=df[ "Rejection Sigma KeV[mHz]"], label=doc_label,fmt=fmt_list[i])
 
 ax[0].set_xlabel("Pressure [bara]")
 ax[0].set_ylabel("Rate [mHz]")
 ax[0].set_title("Signal/BKG Rates ")
-ax[0].legend(loc='upper right', bbox_to_anchor=(-0.1, 1.0))
+ax[0].legend()
 
-ax[1].set_xlabel("Setiz [keV]")
-ax[1].set_ylabel("Gamma Rejection Per Scattering []")
-ax[1].set_title("Gamma Rejection Per Scattering ")
-ax[1].legend()
 
-ax[2].set_xlabel("Setiz [keV]")
-ax[2].set_ylabel("Gamma Rejection Per keV [/keV]")
-ax[2].set_title("Gamma Rejection Per keV ")
-ax[2].legend()
 
-plt.savefig(plot_path + "gamma_rejection.pdf")
+plt.savefig(plot_path + "gamma_rejection_background.pdf")
