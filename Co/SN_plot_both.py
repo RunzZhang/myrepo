@@ -530,149 +530,152 @@ class SN():
 
     def gamma_rejection_rate_per_keV_vs_Setiz(self):
         # rate factor in mHz
+
         expfile_name = "60Co-12_15-16_exposures"
+        exp_file_list = ["60Co-12_15-16_exposures_zoom"]
         bkgfile_name = "Background-11_26-30_exposures"
 
         Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
         ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000  # in keV
 
-        hist_array = [None]
-        hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
+        for expfile_name in exp_file_list:
+            hist_array = [None]
+            hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
 
-        # get probablity per scattering and the statistics
-        cumulative_threshold_per_scatter_array = [None]
+            # get probablity per scattering and the statistics
+            cumulative_threshold_per_scatter_array = [None]
 
-        cumulative_threshold_per_scatter_array[0] = np.array(
-            [sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))])
+            cumulative_threshold_per_scatter_array[0] = np.array(
+                [sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))])
 
-        # histogram per scattering per keV
-        cumulative_threshold_array = [None]
-        energy_deposit_list = [hist_array[0][0][i] * hist_array[0][1][i] for i in range(len(hist_array[0][0]))]
-        cumulative_threshold_array[0] = np.array(
-            [sum(energy_deposit_list[i:]) for i in range(len(energy_deposit_list))])
+            # histogram per scattering per keV
+            cumulative_threshold_array = [None]
+            energy_deposit_list = [hist_array[0][0][i] * hist_array[0][1][i] for i in range(len(hist_array[0][0]))]
+            cumulative_threshold_array[0] = np.array(
+                [sum(energy_deposit_list[i:]) for i in range(len(energy_deposit_list))])
 
-        source_exposure_df = self.read_exposure(expfile_name + ".txt")
-        # print(source_exposure_df.loc[:, 0])
-        print("txt read source", source_exposure_df)
-        background_exposure_df = self.read_exposure(bkgfile_name + ".txt")
-        print("txt read bkg", background_exposure_df)
-        Seitz_pressure_list = np.arange(2.25, 6.5, 0.25)
-        print(Seitz_pressure_list)
-        Setiz = [np.float64(1.3445287166423177), np.float64(1.4677096307281403), np.float64(1.6077252261931916),
-                 np.float64(1.7676644948295235), np.float64(1.9513368144218666), np.float64(2.163478457894038),
-                 np.float64(2.41003021032974), np.float64(2.698514892785409), np.float64(3.038557782566206),
-                 np.float64(3.44261366411884), np.float64(3.9269986461894346), np.float64(4.513378617028501),
-                 np.float64(5.230956628311766), np.float64(6.119753114689943), np.float64(7.235636873731044),
-                 np.float64(8.658238672578), np.float64(10.503756197125261)]  # in keV
-        source_pressure_list = source_exposure_df.loc[:, 0].to_list()
-        print(source_pressure_list)
-        bkg_pressure_list = background_exposure_df.loc[:, 0].to_list()
-        print(bkg_pressure_list)
-        exp_life_time = source_exposure_df.loc[:, 1].to_list()
+            source_exposure_df = self.read_exposure(expfile_name + ".txt")
+            # print(source_exposure_df.loc[:, 0])
+            print("txt read source", source_exposure_df)
+            background_exposure_df = self.read_exposure(bkgfile_name + ".txt")
+            print("txt read bkg", background_exposure_df)
+            Seitz_pressure_list = np.arange(2.25, 6.5, 0.25)
+            print(Seitz_pressure_list)
+            Setiz = [np.float64(1.3445287166423177), np.float64(1.4677096307281403), np.float64(1.6077252261931916),
+                     np.float64(1.7676644948295235), np.float64(1.9513368144218666), np.float64(2.163478457894038),
+                     np.float64(2.41003021032974), np.float64(2.698514892785409), np.float64(3.038557782566206),
+                     np.float64(3.44261366411884), np.float64(3.9269986461894346), np.float64(4.513378617028501),
+                     np.float64(5.230956628311766), np.float64(6.119753114689943), np.float64(7.235636873731044),
+                     np.float64(8.658238672578), np.float64(10.503756197125261)]  # in keV
+            source_pressure_list = source_exposure_df.loc[:, 0].to_list()
+            print(source_pressure_list)
+            bkg_pressure_list = background_exposure_df.loc[:, 0].to_list()
+            print(bkg_pressure_list)
+            exp_life_time = source_exposure_df.loc[:, 1].to_list()
 
-        background_time = background_exposure_df.loc[:, 1].to_list()
+            background_time = background_exposure_df.loc[:, 1].to_list()
 
-        exp_life_time_sig = source_exposure_df.loc[:, 2].to_list()
+            exp_life_time_sig = source_exposure_df.loc[:, 2].to_list()
 
-        background_time_sig = background_exposure_df.loc[:, 2].to_list()
-        bkg_pressure_recon_list = []
-        exp_rate_list = []  # in mHz
-        background_rate_list = []
-        clean_rate_list = []
-        exp_sigma_list = []
-        background_sigma_list = []
-        clean_sigma_list = []
-        updated_Setiz_list = []
+            background_time_sig = background_exposure_df.loc[:, 2].to_list()
+            bkg_pressure_recon_list = []
+            exp_rate_list = []  # in mHz
+            background_rate_list = []
+            clean_rate_list = []
+            exp_sigma_list = []
+            background_sigma_list = []
+            clean_sigma_list = []
+            updated_Setiz_list = []
 
-        for i in range(len(source_pressure_list)):
-            src_pressure = source_pressure_list[i]
-            source_bkg_pressure_match = True
-            try:
-                pressure_index = bkg_pressure_list.index(src_pressure)
-                pressure_index_seitz = int(np.where(Seitz_pressure_list == src_pressure)[0])
-                # pressure_index_seitz = Seitz_pressure_list.index(src_pressure)
-                print(src_pressure, pressure_index)
+            for i in range(len(source_pressure_list)):
+                src_pressure = source_pressure_list[i]
                 source_bkg_pressure_match = True
-            except:
-                print("source pressure is not found in background ", src_pressure)
-                source_bkg_pressure_match = False
-                # only get pressure entries that shows in both src and bkg
-            if source_bkg_pressure_match:
-                updated_Setiz_list.append(Setiz[pressure_index_seitz])
-                exp_rate = 1000 / exp_life_time[i]
-                background_rate = 1000 / background_time[pressure_index]
-                clean_rate = exp_rate - background_rate
-                exp_sigma = exp_life_time_sig[i] * 1000 / (exp_life_time[i]) ** 2
-                back_sigma = background_time_sig[pressure_index] * 1000 / (background_time[pressure_index]) ** 2
-                clean_sigma = np.sqrt(exp_sigma ** 2 + back_sigma ** 2)
-                exp_rate_list.append(exp_rate)
-                bkg_pressure_recon_list.append(src_pressure)
-                background_rate_list.append(background_rate)
-                clean_rate_list.append(clean_rate)
-                exp_sigma_list.append(exp_sigma)
-                background_sigma_list.append(back_sigma)
-                clean_sigma_list.append(clean_sigma)
+                try:
+                    pressure_index = bkg_pressure_list.index(src_pressure)
+                    pressure_index_seitz = int(np.where(Seitz_pressure_list == src_pressure)[0])
+                    # pressure_index_seitz = Seitz_pressure_list.index(src_pressure)
+                    print(src_pressure, pressure_index)
+                    source_bkg_pressure_match = True
+                except:
+                    print("source pressure is not found in background ", src_pressure)
+                    source_bkg_pressure_match = False
+                    # only get pressure entries that shows in both src and bkg
+                if source_bkg_pressure_match:
+                    updated_Setiz_list.append(Setiz[pressure_index_seitz])
+                    exp_rate = 1000 / exp_life_time[i]
+                    background_rate = 1000 / background_time[pressure_index]
+                    clean_rate = exp_rate - background_rate
+                    exp_sigma = exp_life_time_sig[i] * 1000 / (exp_life_time[i]) ** 2
+                    back_sigma = background_time_sig[pressure_index] * 1000 / (background_time[pressure_index]) ** 2
+                    clean_sigma = np.sqrt(exp_sigma ** 2 + back_sigma ** 2)
+                    exp_rate_list.append(exp_rate)
+                    bkg_pressure_recon_list.append(src_pressure)
+                    background_rate_list.append(background_rate)
+                    clean_rate_list.append(clean_rate)
+                    exp_sigma_list.append(exp_sigma)
+                    background_sigma_list.append(back_sigma)
+                    clean_sigma_list.append(clean_sigma)
 
-        print(exp_rate_list)
+            print(exp_rate_list)
 
-        rejection_PS_list = []
-        rejection_PS_sigma_list = []
+            rejection_PS_list = []
+            rejection_PS_sigma_list = []
 
-        rejection_PK_list = []
-        rejection_PK_sigma_list = []
+            rejection_PK_list = []
+            rejection_PK_sigma_list = []
 
-        # interpolation rate
+            # interpolation rate
 
-        for j in range(len(updated_Setiz_list)):
-            threshold = updated_Setiz_list[j]
-            for i in range(len(hist_array[0][1])):
-                if threshold >= hist_array[0][1][i]:
-                    # rejection per scattering, PS meaning perscattering
-                    counts = cumulative_threshold_per_scatter_array[0][i] + (threshold - hist_array[0][1][i]) * (
-                            cumulative_threshold_per_scatter_array[0][i + 1] -
-                            cumulative_threshold_per_scatter_array[0][i]) / (
-                                     hist_array[0][1][i + 1] - hist_array[0][1][i])
-                    rate_PS = Rate_factor * (counts)
+            for j in range(len(updated_Setiz_list)):
+                threshold = updated_Setiz_list[j]
+                for i in range(len(hist_array[0][1])):
+                    if threshold >= hist_array[0][1][i]:
+                        # rejection per scattering, PS meaning perscattering
+                        counts = cumulative_threshold_per_scatter_array[0][i] + (threshold - hist_array[0][1][i]) * (
+                                cumulative_threshold_per_scatter_array[0][i + 1] -
+                                cumulative_threshold_per_scatter_array[0][i]) / (
+                                         hist_array[0][1][i + 1] - hist_array[0][1][i])
+                        rate_PS = Rate_factor * (counts)
 
-                    rate_PS_sigma = rate_PS / np.sqrt(counts)
+                        rate_PS_sigma = rate_PS / np.sqrt(counts)
 
-                    rejection_PS = exp_rate_list[j] / rate_PS
-                    rejection_PS_list.append(rejection_PS)
-                    rejection_PS_sigma = np.sqrt(
-                        (exp_sigma_list[i] / rate_PS) ** 2 + (exp_rate_list[i] * rate_PS_sigma / rate_PS ** 2) ** 2)
-                    rejection_PS_sigma_list.append(rejection_PS_sigma)
+                        rejection_PS = exp_rate_list[j] / rate_PS
+                        rejection_PS_list.append(rejection_PS)
+                        rejection_PS_sigma = np.sqrt(
+                            (exp_sigma_list[i] / rate_PS) ** 2 + (exp_rate_list[i] * rate_PS_sigma / rate_PS ** 2) ** 2)
+                        rejection_PS_sigma_list.append(rejection_PS_sigma)
 
-                    # rejection per keV, PK meaning Per keV Per scattering
-                    counts_times_keV = cumulative_threshold_array[0][i] + (threshold - hist_array[0][1][i]) * (
-                            cumulative_threshold_array[0][i + 1] - cumulative_threshold_array[0][i]) / (
-                                               hist_array[0][1][i + 1] - hist_array[0][1][i])
+                        # rejection per keV, PK meaning Per keV Per scattering
+                        counts_times_keV = cumulative_threshold_array[0][i] + (threshold - hist_array[0][1][i]) * (
+                                cumulative_threshold_array[0][i + 1] - cumulative_threshold_array[0][i]) / (
+                                                   hist_array[0][1][i + 1] - hist_array[0][1][i])
 
-                    rate_PK = Rate_factor * (counts_times_keV)
-                    rate_PK_sigma = rate_PK / np.sqrt(counts)
-                    rejection_PK = exp_rate_list[j] / rate_PK
-                    rejection_PK_list.append(rejection_PK)
-                    rejection_sigma = np.sqrt(
-                        (exp_sigma_list[i] / rate_PK) ** 2 + (exp_rate_list[i] * rate_PK_sigma / rate_PK ** 2) ** 2)
-                    rejection_PK_sigma_list.append(rejection_sigma)
-                    break
-        output_dict = {
-            'Pressure [bara]': bkg_pressure_recon_list,
-            'Updated Setiz [keV]': updated_Setiz_list,
-            "Exp Rate [mHz]": exp_rate_list,
-            "Bkg Rate [mHz]": background_rate_list,
-            "Clean Rate [mHz]": clean_rate_list,
-            "Exp Sigma [mHz]": exp_sigma_list,
-            "Bkg Sigma [mHz]": background_sigma_list,
-            "Clean Sigma [mHz]": clean_sigma_list,
-            "Rejection Rate Scattering[mHz]": rejection_PS_list,
-            "Rejection Sigma Scattering[mHz]": rejection_PS_sigma_list,
-            "Rejection Rate KeV[mHz]": rejection_PK_list,
-            "Rejection Sigma KeV[mHz]": rejection_PK_sigma_list}
-        print(output_dict)
-        df = pd.DataFrame(output_dict)
-        print(df)
-        save_path = os.path.join(self.plot_path, expfile_name + "_output.txt")
-        df.to_csv(save_path, index=False)
+                        rate_PK = Rate_factor * (counts_times_keV)
+                        rate_PK_sigma = rate_PK / np.sqrt(counts)
+                        rejection_PK = exp_rate_list[j] / rate_PK
+                        rejection_PK_list.append(rejection_PK)
+                        rejection_sigma = np.sqrt(
+                            (exp_sigma_list[i] / rate_PK) ** 2 + (exp_rate_list[i] * rate_PK_sigma / rate_PK ** 2) ** 2)
+                        rejection_PK_sigma_list.append(rejection_sigma)
+                        break
+            output_dict = {
+                'Pressure [bara]': bkg_pressure_recon_list,
+                'Updated Setiz [keV]': updated_Setiz_list,
+                "Exp Rate [mHz]": exp_rate_list,
+                "Bkg Rate [mHz]": background_rate_list,
+                "Clean Rate [mHz]": clean_rate_list,
+                "Exp Sigma [mHz]": exp_sigma_list,
+                "Bkg Sigma [mHz]": background_sigma_list,
+                "Clean Sigma [mHz]": clean_sigma_list,
+                "Rejection Rate Scattering[mHz]": rejection_PS_list,
+                "Rejection Sigma Scattering[mHz]": rejection_PS_sigma_list,
+                "Rejection Rate KeV[mHz]": rejection_PK_list,
+                "Rejection Sigma KeV[mHz]": rejection_PK_sigma_list}
+            print(output_dict)
+            df = pd.DataFrame(output_dict)
+            print(df)
+            save_path = os.path.join(self.plot_path, expfile_name + "_output.txt")
+            df.to_csv(save_path, index=False)
 
     def read_ER_CF_per_deposit_rate_cumulative(self):
         # rate factor in mHz
