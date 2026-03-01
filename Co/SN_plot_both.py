@@ -671,9 +671,10 @@ class SN():
                 "Rejection Sigma Scattering[mHz]": rejection_PS_sigma_list,
                 "Rejection Rate KeV[mHz]": rejection_PK_list,
                 "Rejection Sigma KeV[mHz]": rejection_PK_sigma_list}
-            print(output_dict)
+
             df = pd.DataFrame(output_dict)
-            print(df)
+            print(df["Rejection Rate Scattering[mHz]"])
+            print(df["Rejection Rate KeV[mHz]"])
             save_path = os.path.join(self.plot_path, expfile_name + "_output.txt")
             df.to_csv(save_path, index=False)
 
