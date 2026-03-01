@@ -556,7 +556,8 @@ class SN():
 
 
         hist_array = [None]
-        hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
+        # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
+        hist_array[0] = np.histogram(ER_Ar, bins=4800, range=(0, 1200))
 
         # get probablity per scattering and the statistics
         cumulative_threshold_per_scatter_array = [None]
@@ -692,7 +693,20 @@ class SN():
             print(df)
             save_path = os.path.join(self.plot_path, expfile_name + "_output.txt")
             df.to_csv(save_path, index=False)
+        fig, ax = plt.subplots(1, 2, figsize=(10, 4))
+        ax[0].plot(hist_array[0][1][:-1], cumulative_threshold_per_scatter_array[0])
+        ax[0].set_xlabel("thershold [keV]")
+        ax[0].set_ylabel("Counts")
+        ax[0].set_title("Cumulative counts vs threshold")
+        ax[0].set_yscale("log")
 
+        ax[1].plot(hist_array[0][1][:-1], cumulative_threshold_array[0])
+        ax[1].set_xlabel("thershold [keV]")
+        ax[1].set_ylabel("Counts*energy [KeV]")
+        ax[1].set_title("Cumulative counts*energy vs threshold")
+        ax[1].set_yscale("log")
+        print(hist_array[0][1][1] - hist_array[0][1][0], "keV width")
+        plt.savefig(self.plot_path + "Cs_cumulative_counts_function.pdf")
 
 
 
