@@ -538,22 +538,24 @@ class SN():
         Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
         ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000  # in keV
 
+
+        hist_array = [None]
+        hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
+
+        # get probablity per scattering and the statistics
+        cumulative_threshold_per_scatter_array = [None]
+
+        cumulative_threshold_per_scatter_array[0] = np.array(
+            [sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))])
+
+        # histogram per scattering per keV
+        cumulative_threshold_array = [None]
+        energy_deposit_list = [hist_array[0][0][i] * hist_array[0][1][i] for i in range(len(hist_array[0][0]))]
+        cumulative_threshold_array[0] = np.array(
+            [sum(energy_deposit_list[i:]) for i in range(len(energy_deposit_list))])
+
+
         for expfile_name in exp_file_list:
-            hist_array = [None]
-            hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
-
-            # get probablity per scattering and the statistics
-            cumulative_threshold_per_scatter_array = [None]
-
-            cumulative_threshold_per_scatter_array[0] = np.array(
-                [sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))])
-
-            # histogram per scattering per keV
-            cumulative_threshold_array = [None]
-            energy_deposit_list = [hist_array[0][0][i] * hist_array[0][1][i] for i in range(len(hist_array[0][0]))]
-            cumulative_threshold_array[0] = np.array(
-                [sum(energy_deposit_list[i:]) for i in range(len(energy_deposit_list))])
-
             source_exposure_df = self.read_exposure(expfile_name + ".txt")
             # print(source_exposure_df.loc[:, 0])
             print("txt read source", source_exposure_df)
@@ -677,6 +679,19 @@ class SN():
             print(df["Rejection Rate KeV[mHz]"])
             save_path = os.path.join(self.plot_path, expfile_name + "_output.txt")
             df.to_csv(save_path, index=False)
+        # check the shape of two array
+        fig, ax = plt.subplots(1, 2, figsize=(22, 4))
+        ax[0].plot(hist_array[0][1][:-1], cumulative_threshold_per_scatter_array[0])
+        ax[0].set_xlabel("thershold [keV]")
+        ax[0].set_ylabel("Counts")
+        ax[0].set_title("Cumulative counts vs threshold")
+
+        ax[1].plot(hist_array[0][1][:-1], cumulative_threshold_array[0])
+        ax[1].set_xlabel("thershold [keV]")
+        ax[1].set_ylabel("Counts*energy [KeV]")
+        ax[1].set_title("Cumulative counts*energy vs threshold")
+
+        plt.savefig(self.plot_path + "Co_cumulative_counts_function.pdf")
 
     def read_ER_CF_per_deposit_rate_cumulative(self):
         # rate factor in mHz
