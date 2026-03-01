@@ -17,8 +17,8 @@ colors = [
      ['#3E2723', '#795548', '#D7CCC8']]        #'brown'
 fig, ax = plt.subplots()
 # 3 graphs, one for original plot(Gray) about rate, 2 and 3 for rejections
-# df_list = df_co_list
-df_list = df_cs_list
+df_list = df_co_list
+# df_list = df_cs_list
 # df_list = df_full_list
 for i in range(len(df_list)):
     path = os.path.join(plot_path, df_list[i] + "_output.txt")
