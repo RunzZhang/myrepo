@@ -540,7 +540,12 @@ class SN():
 
 
         hist_array = [None]
-        hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
+        # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
+        hist_array[0] = np.histogram(ER_Ar, bins=4800, range=(0, 1200))
+        # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
+        # we need 0.25 keV, and this gives us 4800 bins
+
+
 
         # get probablity per scattering and the statistics
         cumulative_threshold_per_scatter_array = [None]
