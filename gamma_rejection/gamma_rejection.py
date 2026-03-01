@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 
 plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
-df_list = ["Cold-Cs-11_17-18_exposures","Cold-Cs-12_01_exposures","Cold-Cs-12_10-11_exposures","60Co-12_15-16_exposures"]
+df_list = ["Cold-Cs-11_17-18_exposures_mix","Cold-Cs-12_01_exposures_mix","Cold-Cs-12_10-11_exposures_mix","60Co-12_15-16_exposures"]
 fmt_list = ['o','s','^','d']
 colors = [
     ['#8B0000', '#FF0000', '#FF7F7F'],         #'red'
@@ -28,12 +28,12 @@ for i in range(len(df_list)):
     #     df.drop(df[df['Pressure [bara]'] == j].index)
     print(df['Pressure [bara]'])
 
-    ax[0].errorbar(df['Pressure [bara]'],df["Exp Rate [mHz]"],
-                   yerr = df["Exp Sigma [mHz]"],label=doc_label+"signal",fmt=fmt_list[i],color = colors[i][0])
+    # ax[0].errorbar(df['Pressure [bara]'],df["Exp Rate [mHz]"],
+    #                yerr = df["Exp Sigma [mHz]"],label=doc_label+"signal",fmt=fmt_list[i],color = colors[i][0])
     # ax[0].errorbar(df['Pressure [bara]'], df[ "Bkg Rate [mHz]"],
     #                yerr=df[ "Bkg Sigma [mHz]"], label=doc_label + "bkg",fmt=fmt_list[i],color = colors[i][1])
-    # ax[0].errorbar(df[ 'Pressure [bara]'], df[ "Clean Rate [mHz]"],
-    #                yerr=df[ "Clean Sigma [mHz]"], label=doc_label + "clean", fmt=fmt_list[i],color = colors[i][2])
+    ax[0].errorbar(df[ 'Pressure [bara]'], df[ "Clean Rate [mHz]"],
+                   yerr=df[ "Clean Sigma [mHz]"], label=doc_label + "clean", fmt=fmt_list[i],color = colors[i][2])
 
     ax[1].errorbar(df[ 'Updated Setiz [keV]'], df[ "Rejection Rate Scattering[mHz]"],
                    yerr=df[ "Rejection Sigma Scattering[mHz]"], label=doc_label,fmt=fmt_list[i])
@@ -44,7 +44,7 @@ for i in range(len(df_list)):
 ax[0].set_xlabel("Pressure [bara]")
 ax[0].set_ylabel("Rate [mHz]")
 ax[0].set_title("Signal/BKG Rates ")
-ax[0].legend(loc='upper right', bbox_to_anchor=(-0.1, 1.0))
+ax[0].legend()
 
 ax[1].set_xlabel("Setiz [keV]")
 ax[1].set_ylabel("Gamma Rejection Per Scattering []")
