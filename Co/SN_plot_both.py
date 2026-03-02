@@ -696,7 +696,7 @@ class SN():
         ax[0].set_ylabel("Counts")
         ax[0].set_title("Cumulative counts vs threshold")
         ax[0].set_xlim(0, 5)
-        ax[0].set_ylim(3e5, 3.5e6)
+        ax[0].set_ylim(3e5, 3.5e5)
         # ax[0].set_yscale("log")
 
         ax[1].plot(hist_array[0][1][:-1], cumulative_threshold_array[0])
@@ -704,7 +704,7 @@ class SN():
         ax[1].set_ylabel("Counts*energy [KeV]")
         ax[1].set_title("Cumulative counts*energy vs threshold")
         ax[1].set_xlim(0, 5)
-        ax[1].set_ylim(3e7, 3.5e7)
+        ax[1].set_ylim(3.1e7, 3.12e7)
 
         for k in range(20):
             print(cumulative_threshold_array[0][k]/cumulative_threshold_per_scatter_array[0][k])
