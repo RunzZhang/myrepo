@@ -523,9 +523,7 @@ class SN():
                 "Rejection Sigma KeV[mHz]": rejection_PK_sigma_list}
             print(output_dict)
             df = pd.DataFrame(output_dict)
-            print(df["Exp Rate [mHz]"])
-            print(df["Bkg Rate [mHz]"])
-            print(df["Clean Rate [mHz]"])
+
 
             save_path = os.path.join(self.plot_path, expfile_name + "_output.txt")
             df.to_csv(save_path, index=False)
@@ -684,8 +682,11 @@ class SN():
                 "Rejection Sigma KeV[mHz]": rejection_PK_sigma_list}
 
             df = pd.DataFrame(output_dict)
-            print(df["Rejection Rate Scattering[mHz]"])
-            print(df["Rejection Rate KeV[mHz]"])
+            # print(df["Rejection Rate Scattering[mHz]"])
+            # print(df["Rejection Rate KeV[mHz]"])
+            print(df["Exp Rate [mHz]"])
+            print(df["Bkg Rate [mHz]"])
+            print(df["Clean Rate [mHz]"])
             save_path = os.path.join(self.plot_path, expfile_name + "_output.txt")
             df.to_csv(save_path, index=False)
         # check the shape of two array
