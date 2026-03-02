@@ -33,12 +33,12 @@ for i in range(len(df_list)):
     #     df.drop(df[df['Pressure [bara]'] == j].index)
     print(df['Pressure [bara]'])
 
-    ax.errorbar(df['Pressure [bara]'],df["Exp Rate [mHz]"],
-                   yerr = df["Exp Sigma [mHz]"],label=doc_label+"signal",fmt=fmt_list[i],color = colors[i][0])
+    # ax.errorbar(df['Pressure [bara]'],df["Exp Rate [mHz]"],
+    #                yerr = df["Exp Sigma [mHz]"],label=doc_label+"signal",fmt=fmt_list[i],color = colors[i][0])
     # ax.errorbar(df['Pressure [bara]'], df[ "Bkg Rate [mHz]"],
     #                yerr=df[ "Bkg Sigma [mHz]"], label=doc_label + "bkg",fmt=fmt_list[i],color = colors[i][1])
-    # ax.errorbar(df[ 'Pressure [bara]'], df[ "Clean Rate [mHz]"],
-    #                yerr=df[ "Clean Sigma [mHz]"], label=doc_label + "clean", fmt=fmt_list[i],color = colors[i][2])
+    ax.errorbar(df[ 'Pressure [bara]'], df[ "Clean Rate [mHz]"],
+                   yerr=df[ "Clean Sigma [mHz]"], label=doc_label + "clean", fmt=fmt_list[i],color = colors[i][2])
 
 
 ax.set_xlabel("Pressure [bara]")
