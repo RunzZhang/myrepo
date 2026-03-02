@@ -32,6 +32,7 @@ for i in range(len(df_list)):
     # for j in pressure_drop_list:
     #     df.drop(df[df['Pressure [bara]'] == j].index)
     print(df['Pressure [bara]'])
+    print(df["Rejection Rate Scattering[mHz]"])
     print(df["Rejection Rate KeV[mHz]"])
 
     ax.errorbar(df['Updated Setiz [keV]'], df["Rejection Rate Scattering[mHz]"],
