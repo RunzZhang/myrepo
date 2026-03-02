@@ -32,10 +32,12 @@ for i in range(len(df_list)):
     # for j in pressure_drop_list:
     #     df.drop(df[df['Pressure [bara]'] == j].index)
     print(df['Pressure [bara]'])
+    rejection_scattering = df["Rejection Rate Scattering[mHz]"].to_list()
+    rejection_ER = df["Rejection Rate KeV[mHz]"].to_list()
     print(df["Rejection Rate Scattering[mHz]"])
     print(df["Rejection Rate KeV[mHz]"])
-    for i in range(len(df["Rejection Rate Scattering[mHz]"])):
-        print(df["Rejection Rate Scattering[mHz]"][1][i]/df["Rejection Rate KeV[mHz]"][1][i])
+    for i in range(len(rejection_scattering)):
+        print(rejection_scattering[i]/rejection_ER[i])
 
     ax.errorbar(df['Updated Setiz [keV]'], df["Rejection Rate Scattering[mHz]"],
                    yerr=df["Rejection Sigma Scattering[mHz]"], label=doc_label+ "per scattering",fmt=fmt_list[i], c = "b")
