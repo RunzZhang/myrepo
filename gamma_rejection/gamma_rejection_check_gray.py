@@ -48,4 +48,4 @@ ax.legend()
 
 
 
-plt.savefig(plot_path + "gamma_rejection_Cs.pdf")
+plt.savefig(plot_path + "gamma_rate_Cs.pdf")

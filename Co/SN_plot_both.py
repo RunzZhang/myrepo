@@ -545,6 +545,7 @@ class SN():
         # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
         # we need 0.25 keV, and this gives us 4800 bins
 
+        # transfer edge to mid point per bin
 
 
         # get probablity per scattering and the statistics
