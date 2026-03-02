@@ -37,7 +37,7 @@ for i in range(len(df_list)):
     ax.errorbar(df['Updated Setiz [keV]'], df["Rejection Rate Scattering[mHz]"],
                    yerr=df["Rejection Sigma Scattering[mHz]"], label=doc_label+ "per scattering",fmt=fmt_list[i])
     ax2 = ax.twinx()
-    ax.errorbar(df['Updated Setiz [keV]'], df["Rejection Rate KeV[mHz]"],
+    ax2.errorbar(df['Updated Setiz [keV]'], df["Rejection Rate KeV[mHz]"],
                 yerr=df["Rejection Sigma KeV[mHz]"], label=doc_label+"per ER",fmt=fmt_list[i])
     # ax.errorbar(df['Pressure [bara]'], df[ "Bkg Rate [mHz]"],
     #                yerr=df[ "Bkg Sigma [mHz]"], label=doc_label + "bkg",fmt=fmt_list[i],color = colors[i][1])
