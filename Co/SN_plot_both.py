@@ -701,8 +701,8 @@ class SN():
         ax[1].set_xlim(0, 5)
 
         for k in range(10):
-            print(cumulative_threshold_array[0][i]/cumulative_threshold_per_scatter_array[0][i])
-            print(hist_array[0][1][i])
+            print(cumulative_threshold_array[0][k]/cumulative_threshold_per_scatter_array[0][k])
+            print(hist_array[0][1][k])
         # ax[1].set_yscale("log")
         print(hist_array[0][1][1]-hist_array[0][1][0],"keV width")
         plt.savefig(self.plot_path + "Co_cumulative_counts_function.pdf")
