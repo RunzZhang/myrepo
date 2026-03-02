@@ -551,13 +551,16 @@ class SN():
         exp_file_list  = ["Cold-Cs-11_17-18_exposures_mix","Cold-Cs-12_01_exposures_mix","Cold-Cs-12_10-11_exposures_mix"]
         bkgfile_name = "Background-11_26-30_exposures"
 
-        Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
-        ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000 # in keV
-
+        Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
+        ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000  # in keV
 
         hist_array = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
         hist_array[0] = np.histogram(ER_Ar, bins=4800, range=(0, 1200))
+        # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
+        # we need 0.25 keV, and this gives us 4800 bins
+
+        # transfer edge to mid point per bin
 
         # get probablity per scattering and the statistics
         cumulative_threshold_per_scatter_array = [None]
@@ -571,11 +574,12 @@ class SN():
         cumulative_threshold_array[0] = np.array(
             [sum(energy_deposit_list[i:]) for i in range(len(energy_deposit_list))])
 
-
         for expfile_name in exp_file_list:
             source_exposure_df = self.read_exposure(expfile_name + ".txt")
-            print(source_exposure_df.loc[:, 0])
+            # print(source_exposure_df.loc[:, 0])
+            print("txt read source", source_exposure_df)
             background_exposure_df = self.read_exposure(bkgfile_name + ".txt")
+            print("txt read bkg", background_exposure_df)
             Seitz_pressure_list = np.arange(2.25, 6.5, 0.25)
             print(Seitz_pressure_list)
             Setiz = [np.float64(1.3445287166423177), np.float64(1.4677096307281403), np.float64(1.6077252261931916),
@@ -656,23 +660,25 @@ class SN():
 
                         rate_PS_sigma = rate_PS / np.sqrt(counts)
 
-                        rejection_PS = exp_rate_list[j] / rate_PS
+                        rejection_PS = clean_rate_list[j] / rate_PS
                         rejection_PS_list.append(rejection_PS)
                         rejection_PS_sigma = np.sqrt(
-                            (exp_sigma_list[i] / rate_PS) ** 2 + (exp_rate_list[i] * rate_PS_sigma / rate_PS ** 2) ** 2)
+                            (clean_sigma_list[i] / rate_PS) ** 2 + (
+                                        clean_rate_list[i] * rate_PS_sigma / rate_PS ** 2) ** 2)
                         rejection_PS_sigma_list.append(rejection_PS_sigma)
 
                         # rejection per keV, PK meaning Per keV Per scattering
                         counts_times_keV = cumulative_threshold_array[0][i] + (threshold - hist_array[0][1][i]) * (
-                                    cumulative_threshold_array[0][i + 1] - cumulative_threshold_array[0][i]) / (
-                                                       hist_array[0][1][i + 1] - hist_array[0][1][i])
+                                cumulative_threshold_array[0][i + 1] - cumulative_threshold_array[0][i]) / (
+                                                   hist_array[0][1][i + 1] - hist_array[0][1][i])
 
                         rate_PK = Rate_factor * (counts_times_keV)
                         rate_PK_sigma = rate_PK / np.sqrt(counts)
-                        rejection_PK = exp_rate_list[j] / rate_PK
+                        rejection_PK = clean_rate_list[j] / rate_PK
                         rejection_PK_list.append(rejection_PK)
                         rejection_sigma = np.sqrt(
-                            (exp_sigma_list[i] / rate_PK) ** 2 + (exp_rate_list[i] * rate_PK_sigma / rate_PK ** 2) ** 2)
+                            (clean_sigma_list[i] / rate_PK) ** 2 + (
+                                        clean_rate_list[i] * rate_PK_sigma / rate_PK ** 2) ** 2)
                         rejection_PK_sigma_list.append(rejection_sigma)
                         break
             output_dict = {
@@ -688,35 +694,38 @@ class SN():
                 "Rejection Sigma Scattering[mHz]": rejection_PS_sigma_list,
                 "Rejection Rate KeV[mHz]": rejection_PK_list,
                 "Rejection Sigma KeV[mHz]": rejection_PK_sigma_list}
-            print(output_dict)
+
             df = pd.DataFrame(output_dict)
-            print(df)
+            # print(df["Rejection Rate Scattering[mHz]"])
+            # print(df["Rejection Rate KeV[mHz]"])
+            print(df["Exp Rate [mHz]"])
+            print(df["Bkg Rate [mHz]"])
+            print(df["Clean Rate [mHz]"])
             save_path = os.path.join(self.plot_path, expfile_name + "_output.txt")
             df.to_csv(save_path, index=False)
+        # check the shape of two array
         fig, ax = plt.subplots(1, 2, figsize=(10, 4))
         ax[0].plot(hist_array[0][1][:-1], cumulative_threshold_per_scatter_array[0])
         ax[0].set_xlabel("thershold [keV]")
         ax[0].set_ylabel("Counts")
         ax[0].set_title("Cumulative counts vs threshold")
+        ax[0].set_xlim(0, 5)
+        # ax[0].set_ylim(3e5, 3.5e5)
         # ax[0].set_yscale("log")
-        ax[0].set_xlim(0,5)
-
 
         ax[1].plot(hist_array[0][1][:-1], cumulative_threshold_array[0])
         ax[1].set_xlabel("thershold [keV]")
         ax[1].set_ylabel("Counts*energy [KeV]")
         ax[1].set_title("Cumulative counts*energy vs threshold")
-        # ax[1].set_yscale("log")
         ax[1].set_xlim(0, 5)
+        # ax[1].set_ylim(3.1e7, 3.12e7)
+
+        for k in range(20):
+            print(cumulative_threshold_array[0][k] / cumulative_threshold_per_scatter_array[0][k])
+            print(hist_array[0][1][k])
+        # ax[1].set_yscale("log")
         print(hist_array[0][1][1] - hist_array[0][1][0], "keV width")
-        print("energy keV",hist_array[0][1][:20])
-        print("counts",hist_array[0][0][:20])
-        print("cumulative counts", cumulative_threshold_per_scatter_array[0][:20])
-        print("cumulative counts * keV", cumulative_threshold_array[0][:20])
         plt.savefig(self.plot_path + "Cs_cumulative_counts_function.pdf")
-
-
-
 
     def read_exposure(self,filename):
         # Define your path (we'll use a relative path)
