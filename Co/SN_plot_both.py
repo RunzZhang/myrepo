@@ -648,10 +648,10 @@ class SN():
 
                         rate_PS_sigma = rate_PS / np.sqrt(counts)
 
-                        rejection_PS = exp_rate_list[j] / rate_PS
+                        rejection_PS = clean_rate_list[j] / rate_PS
                         rejection_PS_list.append(rejection_PS)
                         rejection_PS_sigma = np.sqrt(
-                            (exp_sigma_list[i] / rate_PS) ** 2 + (exp_rate_list[i] * rate_PS_sigma / rate_PS ** 2) ** 2)
+                            (clean_sigma_list[i] / rate_PS) ** 2 + (clean_rate_list[i] * rate_PS_sigma / rate_PS ** 2) ** 2)
                         rejection_PS_sigma_list.append(rejection_PS_sigma)
 
                         # rejection per keV, PK meaning Per keV Per scattering
@@ -661,10 +661,10 @@ class SN():
 
                         rate_PK = Rate_factor * (counts_times_keV)
                         rate_PK_sigma = rate_PK / np.sqrt(counts)
-                        rejection_PK = exp_rate_list[j] / rate_PK
+                        rejection_PK = clean_rate_list[j] / rate_PK
                         rejection_PK_list.append(rejection_PK)
                         rejection_sigma = np.sqrt(
-                            (exp_sigma_list[i] / rate_PK) ** 2 + (exp_rate_list[i] * rate_PK_sigma / rate_PK ** 2) ** 2)
+                            (clean_sigma_list[i] / rate_PK) ** 2 + (clean_rate_list[i] * rate_PK_sigma / rate_PK ** 2) ** 2)
                         rejection_PK_sigma_list.append(rejection_sigma)
                         break
             output_dict = {
