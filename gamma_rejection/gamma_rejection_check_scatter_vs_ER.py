@@ -68,4 +68,4 @@ ax.legend(lines1 + lines2, labels1 + labels2, loc='upper right', frameon=True)
 
 
 
-plt.savefig(plot_path + "gamma_rejection_Co.pdf")
+plt.savefig(plot_path + "gamma_rejection_Cs.pdf")
