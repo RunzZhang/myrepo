@@ -50,7 +50,8 @@ ax.set_ylabel("Ratio [1]")
 ax.set_title("Rejection compare")
 
 ax2.set_ylabel("Ratio [1/keV]")
-ax.legend()
+plt.legend()
+
 
 
 
