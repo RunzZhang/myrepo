@@ -55,7 +55,7 @@ lines2, labels2 = ax2.get_legend_handles_labels()
 
 # 3. Combine the lists and create one legend
 # You can call this on either ax1 or ax2
-ax.legend(lines1 + lines2, labels1 + labels2, loc='upper left', frameon=True)
+ax.legend(lines1 + lines2, labels1 + labels2, loc='upper right', frameon=True)
 
 
 
