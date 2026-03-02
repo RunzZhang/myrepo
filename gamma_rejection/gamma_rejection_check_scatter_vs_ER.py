@@ -50,7 +50,12 @@ ax.set_ylabel("Ratio [1]")
 ax.set_title("Rejection compare")
 
 ax2.set_ylabel("Ratio [1/keV]")
-plt.legend()
+lines1, labels1 = ax.get_legend_handles_labels()
+lines2, labels2 = ax2.get_legend_handles_labels()
+
+# 3. Combine the lists and create one legend
+# You can call this on either ax1 or ax2
+ax.legend(lines1 + lines2, labels1 + labels2, loc='upper left', frameon=True)
 
 
 
