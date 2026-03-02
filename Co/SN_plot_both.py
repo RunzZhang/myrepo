@@ -533,7 +533,7 @@ class SN():
         # rate factor in mHz
 
         expfile_name = "60Co-12_15-16_exposures"
-        exp_file_list = ["60Co-12_15-16_exposures_zoom"]
+        exp_file_list = ["60Co-12_15-16_exposures"]
         bkgfile_name = "Background-11_26-30_exposures"
 
         Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
