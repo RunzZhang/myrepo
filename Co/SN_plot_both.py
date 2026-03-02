@@ -700,7 +700,7 @@ class SN():
         ax[1].set_title("Cumulative counts*energy vs threshold")
         ax[1].set_xlim(0, 5)
 
-        for k in range(10):
+        for k in range(20):
             print(cumulative_threshold_array[0][k]/cumulative_threshold_per_scatter_array[0][k])
             print(hist_array[0][1][k])
         # ax[1].set_yscale("log")
