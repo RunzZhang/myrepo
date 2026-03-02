@@ -37,6 +37,7 @@ for i in range(len(df_list)):
     print(df["Rejection Rate Scattering[mHz]"])
     print(df["Rejection Rate KeV[mHz]"])
     for k in range(len(rejection_scattering)):
+        print(df['Updated Setiz [keV]'].to_list()[k])
         print(rejection_scattering[k]/rejection_ER[k])
 
     ax.errorbar(df['Updated Setiz [keV]'], df["Rejection Rate Scattering[mHz]"],
