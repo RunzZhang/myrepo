@@ -54,8 +54,10 @@ for i in range(len(df_list)):
 ax.set_xlabel("Setiz [keV]")
 ax.set_ylabel("Ratio [1]")
 ax.set_title("Rejection compare")
+ax.set_yscale("log")
 
 ax2.set_ylabel("Ratio [1/keV]")
+ax2.set_yscale("log")
 lines1, labels1 = ax.get_legend_handles_labels()
 lines2, labels2 = ax2.get_legend_handles_labels()
 
