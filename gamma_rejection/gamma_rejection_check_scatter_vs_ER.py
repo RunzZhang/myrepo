@@ -8,7 +8,7 @@ import pandas as pd
 plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 df_co_list = ["60Co-12_15-16_exposures"]
 df_cs_list = ["Cold-Cs-11_17-18_exposures_mix","Cold-Cs-12_01_exposures_mix","Cold-Cs-12_10-11_exposures_mix"]
-df_cs_list = ["Cold-Cs-11_17-18_exposures_mix"]
+# df_cs_list = ["Cold-Cs-11_17-18_exposures_mix"]
 df_full_list = df_co_list+df_cs_list
 fmt_list = ['o','s','^','d']
 colors = [
