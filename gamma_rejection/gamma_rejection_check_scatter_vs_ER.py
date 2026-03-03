@@ -17,6 +17,7 @@ colors = [
      ['#00008B', '#0000FF', '#ADD8E6'],        #'blue'
      ['#3E2723', '#795548', '#D7CCC8']]        #'brown'
 fig, ax = plt.subplots()
+ax2 = ax.twinx()
 # 3 graphs, one for original plot(Gray) about rate, 2 and 3 for rejections
 # df_list = df_co_list
 df_list = df_cs_list
@@ -43,7 +44,7 @@ for i in range(len(df_list)):
 
     ax.errorbar(df['Updated Setiz [keV]'], df["Rejection Rate Scattering[mHz]"],
                    yerr=df["Rejection Sigma Scattering[mHz]"], label=doc_label+ "per scattering",fmt=fmt_list[i], c = "b")
-    ax2 = ax.twinx()
+
     ax2.errorbar(df['Updated Setiz [keV]'], df["Rejection Rate KeV[mHz]"],
                 yerr=df["Rejection Sigma KeV[mHz]"], label=doc_label+"per ER",fmt=fmt_list[i], c="red")
     # ax.errorbar(df['Pressure [bara]'], df[ "Bkg Rate [mHz]"],
