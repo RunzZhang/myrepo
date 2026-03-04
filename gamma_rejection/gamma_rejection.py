@@ -9,9 +9,9 @@ plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 df_co_list = ["60Co-12_15-16_exposures"]
 df_cs_list = ["Cold-Cs-11_17-18_exposures_mix","Cold-Cs-12_01_exposures_mix","Cold-Cs-12_10-11_exposures_mix"]
 df_full_list = df_co_list+df_cs_list
-df_list = df_co_list
+# df_list = df_co_list
 # df_list = df_cs_list
-# df_list = df_full_list
+df_list = df_full_list
 fmt_list = ['o','s','^','d']
 colors = [
     ['#8B0000', '#FF0000', '#FF7F7F'],         #'red'
@@ -57,13 +57,16 @@ ax[0].legend()
 ax[1].set_xlabel("Setiz [keV]")
 ax[1].set_ylabel("Gamma Rejection Per Scattering []")
 ax[1].set_title("Gamma Rejection Per Scattering ")
+ax[1].set_ylim(1.0e-9,1.0e-5)
 ax[1].set_yscale("log")
+
 ax[1].legend()
 
 
 ax[2].set_xlabel("Eion_rl-1_rhol-1 [10GeVcm**2 g-1]")
 ax[2].set_ylabel("Gamma Rejection Per keV [/keV]")
 ax[2].set_title("Gamma Rejection Per keV ")
+ax[2].set_ylim(1.0e-9,1.0e-5)
 ax[2].set_yscale("log")
 ax[2].legend()
 
