@@ -570,6 +570,32 @@ class SN():
             print("txt read bkg", background_exposure_df)
             Seitz_pressure_list = np.arange(2.25, 6.5, 0.25)
             print(Seitz_pressure_list)
+            # keV
+            Q_setiz = [1.3445287166423177, 1.4677096307281403, 1.6077252261931916, 1.7676644948295235,
+                       1.9513368144218666, 2.163478457894038, 2.41003021032974, 2.698514892785409, 3.038557782566206,
+                       3.44261366411884, 3.9269986461894346, 4.513378617028501, 5.230956628311766, 6.119753114689943,
+                       7.235636873731044, 8.658238672578, 10.503756197125261]
+            # keV
+            E_ion = [0.6935170594033994, 0.7463906266235716, 0.8055756681017613, 0.8721142361762, 0.9472715210586028,
+                     1.0325954589172766, 1.12999567281159, 1.2418491587814853, 1.371143722549567, 1.5216750993325374,
+                     1.6983220883949837, 1.907436620175941, 2.1574068879170554, 2.459486450041476, 2.829041931492084,
+                     3.2874775552634508, 3.865286624630827]
+            # g / cc
+            rho_l = [1.190713998903872, 1.190901456615719, 1.1910886308789765, 1.1912755227862943, 1.191462133423365,
+                     1.1916484638689993, 1.1918345151951764, 1.192020288467111, 1.192205784743309, 1.1923910050756303,
+                     1.1925759505093436, 1.1927606220831863, 1.1929450208294252, 1.1931291477739037, 1.1933130039361075,
+                     1.193496590329213, 1.1936799079601481]
+            # nm
+            Rl = [5.609511255785613, 5.807717275806958, 6.020272497298806, 6.248793390358893, 6.495148643090569,
+                  6.761510412830444, 7.050418580730343, 7.364861891716328, 7.70838179881121, 8.085206324999868,
+                  8.500425035138141, 8.960220171784458, 9.472176544801727, 10.0457032178012, 10.69261696165673,
+                  11.427965165560835, 12.271210788702833]
+
+            compound_x = []
+            for i in range(len(E_ion)):
+                x = E_ion[i] / (rho_l[i] * Rl[i])
+                compound_x.append(x)
+
             Setiz = [np.float64(1.3445287166423177), np.float64(1.4677096307281403), np.float64(1.6077252261931916),
                      np.float64(1.7676644948295235), np.float64(1.9513368144218666), np.float64(2.163478457894038),
                      np.float64(2.41003021032974), np.float64(2.698514892785409), np.float64(3.038557782566206),
@@ -595,6 +621,8 @@ class SN():
             background_sigma_list = []
             clean_sigma_list = []
             updated_Setiz_list = []
+            updated_compoundx_list = []
+            updated_Eion_list = []
 
             for i in range(len(source_pressure_list)):
                 src_pressure = source_pressure_list[i]
@@ -611,6 +639,8 @@ class SN():
                     # only get pressure entries that shows in both src and bkg
                 if source_bkg_pressure_match:
                     updated_Setiz_list.append(Setiz[pressure_index_seitz])
+                    updated_compoundx_list.append(compound_x[pressure_index_seitz])
+                    updated_Eion_list.append(E_ion[pressure_index_seitz])
                     exp_rate = 1000 / exp_life_time[i]
                     background_rate = 1000 / background_time[pressure_index]
                     clean_rate = exp_rate - background_rate
@@ -637,6 +667,7 @@ class SN():
 
             for j in range(len(updated_Setiz_list)):
                 threshold = updated_Setiz_list[j]
+                threshold_Eion = updated_Eion_list[j]
                 for i in range(len(hist_array[0][1])):
                     if threshold >= hist_array[0][1][i]:
                         # rejection per scattering, PS meaning perscattering
@@ -653,14 +684,18 @@ class SN():
                         rejection_PS_sigma = np.sqrt(
                             (clean_sigma_list[i] / rate_PS) ** 2 + (clean_rate_list[i] * rate_PS_sigma / rate_PS ** 2) ** 2)
                         rejection_PS_sigma_list.append(rejection_PS_sigma)
-
+                    if threshold_Eion>= hist_array[0][1][i]:
                         # rejection per keV, PK meaning Per keV Per scattering
-                        counts_times_keV = cumulative_threshold_array[0][i] + (threshold - hist_array[0][1][i]) * (
+                        counts_times_keV = cumulative_threshold_array[0][i] + (threshold_Eion - hist_array[0][1][i]) * (
                                 cumulative_threshold_array[0][i + 1] - cumulative_threshold_array[0][i]) / (
                                                    hist_array[0][1][i + 1] - hist_array[0][1][i])
+                        counts_Eion = cumulative_threshold_per_scatter_array[0][i] + (threshold_Eion - hist_array[0][1][i]) * (
+                                cumulative_threshold_per_scatter_array[0][i + 1] -
+                                cumulative_threshold_per_scatter_array[0][i]) / (
+                                         hist_array[0][1][i + 1] - hist_array[0][1][i])
 
                         rate_PK = Rate_factor * (counts_times_keV)
-                        rate_PK_sigma = rate_PK / np.sqrt(counts)
+                        rate_PK_sigma = rate_PK / np.sqrt(counts_Eion)
                         rejection_PK = clean_rate_list[j] / rate_PK
                         rejection_PK_list.append(rejection_PK)
                         rejection_sigma = np.sqrt(
@@ -670,6 +705,7 @@ class SN():
             output_dict = {
                 'Pressure [bara]': bkg_pressure_recon_list,
                 'Updated Setiz [keV]': updated_Setiz_list,
+                'Eion_rl-1_rhol-1 [10GeVcm**2 g-1]': updated_Setiz_list,
                 "Exp Rate [mHz]": exp_rate_list,
                 "Bkg Rate [mHz]": background_rate_list,
                 "Clean Rate [mHz]": clean_rate_list,
