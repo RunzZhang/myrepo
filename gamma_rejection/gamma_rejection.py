@@ -66,7 +66,7 @@ ax[1].legend()
 ax[2].set_xlabel("Eion_rl-1_rhol-1 [10GeVcm**2 g-1]")
 ax[2].set_ylabel("Gamma Rejection Per keV [/keV]")
 ax[2].set_title("Gamma Rejection Per keV ")
-ax[2].set_ylim(1.0e-9,1.0e-5)
+ax[2].set_ylim(1.0e-11,1.0e-7)
 ax[2].set_yscale("log")
 ax[2].legend()
 
