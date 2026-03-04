@@ -43,11 +43,11 @@ for i in range(len(df_list)):
     ax[1].errorbar(df[ 'Updated Setiz [keV]'], df[ "Rejection Rate Scattering[mHz]"],
                    yerr=df[ "Rejection Sigma Scattering[mHz]"], label=doc_label,fmt=fmt_list[i])
 
-    # ax[2].errorbar(df[ 'Eion_rl-1_rhol-1 [10GeVcm**2 g-1]'], df[ "Rejection Rate KeV[mHz]"],
-    #                yerr=df[ "Rejection Sigma KeV[mHz]"], label=doc_label,fmt=fmt_list[i])
+    ax[2].errorbar(df[ 'Eion_rl-1_rhol-1 [10GeVcm**2 g-1]'], df[ "Rejection Rate KeV[mHz]"],
+                   yerr=df[ "Rejection Sigma KeV[mHz]"], label=doc_label,fmt=fmt_list[i])
 
-    ax[2].errorbar(df['Eion_rl-1_rhol-1 [10GeVcm**2 g-1]'], df["Rejection Rate Scattering[mHz]"],
-                   yerr=df["Rejection Sigma Scattering[mHz]"], label=doc_label, fmt=fmt_list[i])
+    # ax[2].errorbar(df['Eion_rl-1_rhol-1 [10GeVcm**2 g-1]'], df["Rejection Rate Scattering[mHz]"],
+    #                yerr=df["Rejection Sigma Scattering[mHz]"], label=doc_label, fmt=fmt_list[i])
 
 ax[0].set_xlabel("Pressure [bara]")
 ax[0].set_ylabel("Rate [mHz]")
