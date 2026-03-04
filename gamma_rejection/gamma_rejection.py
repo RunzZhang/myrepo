@@ -9,9 +9,9 @@ plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 df_co_list = ["60Co-12_15-16_exposures"]
 df_cs_list = ["Cold-Cs-11_17-18_exposures_mix","Cold-Cs-12_01_exposures_mix","Cold-Cs-12_10-11_exposures_mix"]
 df_full_list = df_co_list+df_cs_list
-df_list = df_co_list
+# df_list = df_co_list
 # df_list = df_cs_list
-# df_list = df_full_list
+df_list = df_full_list
 fmt_list = ['o','s','^','d']
 colors = [
     ['#8B0000', '#FF0000', '#FF7F7F'],         #'red'
@@ -40,11 +40,11 @@ for i in range(len(df_list)):
     ax[0].errorbar(df[ 'Pressure [bara]'], df[ "Clean Rate [mHz]"],
                    yerr=df[ "Clean Sigma [mHz]"], label=doc_label + "clean", fmt=fmt_list[i],color = colors[i][2])
 
-    ax[1].errorbar(df[ 'Updated Setiz [keV]'], df[ "Rejection Rate Scattering[mHz]"],
-                   yerr=df[ "Rejection Sigma Scattering[mHz]"], label=doc_label,fmt=fmt_list[i])
+    ax[1].errorbar(df[ 'Updated Setiz [keV]'], df[ "Rejection Rate Scattering[]"],
+                   yerr=df[ "Rejection Sigma Scattering[]"], label=doc_label,fmt=fmt_list[i])
 
-    ax[2].errorbar(df[ 'Eion_rl-1_rhol-1 [10GeVcm**2 g-1]'], df[ "Rejection Rate KeV[mHz]"],
-                   yerr=df[ "Rejection Sigma KeV[mHz]"], label=doc_label,fmt=fmt_list[i])
+    ax[2].errorbar(df[ 'Eion_rl-1_rhol-1 [10GeVcm**2 g-1]'], df[ "Rejection Rate KeV[/keV]"],
+                   yerr=df[ "Rejection Sigma KeV[/keV]"], label=doc_label,fmt=fmt_list[i])
 
     # ax[2].errorbar(df['Eion_rl-1_rhol-1 [10GeVcm**2 g-1]'], df["Rejection Rate Scattering[mHz]"],
     #                yerr=df["Rejection Sigma Scattering[mHz]"], label=doc_label, fmt=fmt_list[i])
