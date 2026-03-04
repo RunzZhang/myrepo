@@ -43,7 +43,7 @@ for i in range(len(df_list)):
     ax[1].errorbar(df[ 'Updated Setiz [keV]'], df[ "Rejection Rate Scattering[mHz]"],
                    yerr=df[ "Rejection Sigma Scattering[mHz]"], label=doc_label,fmt=fmt_list[i])
 
-    ax[2].errorbar(df[ 'Eion_rl-1_rhol-1 [10GeVcm**2 g-1]'], df[ "Rejection Rate Scattering[mHz]"],
+    ax[2].errorbar(df[ 'Eion_rl-1_rhol-1 [10GeVcm**2 g-1]'], df[ "Rejection Rate KeV[mHz]"],
                    yerr=df[ "Rejection Sigma KeV[mHz]"], label=doc_label,fmt=fmt_list[i])
 
 ax[0].set_xlabel("Pressure [bara]")
@@ -54,11 +54,15 @@ ax[0].legend()
 ax[1].set_xlabel("Setiz [keV]")
 ax[1].set_ylabel("Gamma Rejection Per Scattering []")
 ax[1].set_title("Gamma Rejection Per Scattering ")
+ax[1].set_yscale("log")
 ax[1].legend()
+
 
 ax[2].set_xlabel("Eion_rl-1_rhol-1 [10GeVcm**2 g-1]")
 ax[2].set_ylabel("Gamma Rejection Per keV [/keV]")
 ax[2].set_title("Gamma Rejection Per keV ")
+ax[2].set_yscale("log")
 ax[2].legend()
+
 
 plt.savefig(plot_path + "gamma_rejection.pdf")
