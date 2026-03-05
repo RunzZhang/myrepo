@@ -559,7 +559,7 @@ class SN():
 
         cumulative_threshold_array[0] = np.array(
             [sum(energy_deposit_list[i:]) for i in range(len(energy_deposit_list))])
-        print("total count* energy Co", cumulative_threshold_array[0][0])
+        print("total count* energy Co", cumulative_threshold_per_scatter_array[0][0]/cumulative_threshold_array[0][0])
 
         for expfile_name in exp_file_list:
             source_exposure_df = self.read_exposure(expfile_name + ".txt")
