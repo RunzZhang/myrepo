@@ -20,6 +20,7 @@ colors = [
      ['#3E2723', '#795548', '#D7CCC8']]        #'brown'
 fig, ax = plt.subplots(1,3, figsize=(22, 4))
 # 3 graphs, one for original plot(Gray) about rate, 2 and 3 for rejections
+
 for i in range(len(df_list)):
     path = os.path.join(plot_path, df_list[i] + "_output.txt")
     df = pd.read_csv(path)
@@ -46,9 +47,14 @@ for i in range(len(df_list)):
     ax[2].errorbar(df[ 'Eion_rl-1_rhol-1 [10GeVcm**2 g-1]'], df[ "Rejection Rate KeV[/keV]"],
                    yerr=df[ "Rejection Sigma KeV[/keV]"], label=doc_label,fmt=fmt_list[i])
 
+    print("count", doc_label, df[ "Rejection Rate Scattering[]"])
+    print("count*energy", doc_label, df[ "Rejection Rate KeV[/keV]"])
     # ax[2].errorbar(df['Eion_rl-1_rhol-1 [10GeVcm**2 g-1]'], df["Rejection Rate Scattering[mHz]"],
     #                yerr=df["Rejection Sigma Scattering[mHz]"], label=doc_label, fmt=fmt_list[i])
 
+count_rate =
+
+print()
 ax[0].set_xlabel("Pressure [bara]")
 ax[0].set_ylabel("Rate [mHz]")
 ax[0].set_title("Signal/BKG Rates ")
