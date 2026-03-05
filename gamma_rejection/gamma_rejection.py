@@ -52,7 +52,7 @@ for i in range(len(df_list)):
     # ax[2].errorbar(df['Eion_rl-1_rhol-1 [10GeVcm**2 g-1]'], df["Rejection Rate Scattering[mHz]"],
     #                yerr=df["Rejection Sigma Scattering[mHz]"], label=doc_label, fmt=fmt_list[i])
 
-count_rate =
+
 
 print()
 ax[0].set_xlabel("Pressure [bara]")
