@@ -31,7 +31,7 @@ for i in range(len(df_list)):
     doc_label = df_list[i].rstrip("_exposures")
     # signal
     # drop 2.75,3.25, 3.75 bara pressure
-    pressure_drop_list = [2.75,3.25,3.75]
+    # pressure_drop_list = [2.75,3.25,3.75]
     df = df[~df['Pressure [bara]'].isin(pressure_drop_list )]
     # for j in pressure_drop_list:
     #     df.drop(df[df['Pressure [bara]'] == j].index)
