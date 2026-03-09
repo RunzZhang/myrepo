@@ -72,7 +72,7 @@ ax[1].set_title("Gamma Rejection Per Scattering ")
 # ax[1].set_xlim(0,6)
 # ax[1].set_xlim(0.8,1.5)
 # ax[1].set_ylim(1.0e-12,1.0e-2)
-ax[1].set_yscale("log")
+# ax[1].set_yscale("log")
 
 ax[1].legend()
 
@@ -83,7 +83,7 @@ ax[2].set_title("Gamma Rejection Per keV ")
 # ax[2].set_ylim(1.0e-14,1.0e-4)
 # ax[2].set_xlim(0.08,0.15)
 # ax[2].set_xlim(0.8,1.1)
-ax[2].set_yscale("log")
+# ax[2].set_yscale("log")
 ax[2].legend()
 
 
