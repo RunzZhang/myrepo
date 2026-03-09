@@ -548,8 +548,11 @@ class SN():
         # expfile_name = "Cold-Cs-11_17-18_exposures_zoom"
         # expfile_name = "Cold-Cs-12_01_exposures_zoom"
         # expfile_name = "Cold-Cs-12_10-11_exposures_zoom"
-        exp_file_list  = ["Cold-Cs-11_17-18_exposures_mix","Cold-Cs-12_01_exposures_mix","Cold-Cs-12_10-11_exposures_mix"]
-        bkgfile_name = "Background-11_26-30_exposures"
+        # exp_file_list  = ["Cold-Cs-11_17-18_exposures_mix","Cold-Cs-12_01_exposures_mix","Cold-Cs-12_10-11_exposures_mix"]
+        # bkgfile_name = "Background-11_26-30_exposures"
+        exp_file_list = ["Cold-Cs-1_20-21_exposures",
+                         "Cold-Cs-2_2-3_exposures"]
+        bkgfile_name = "Background-1_30-2_2_exposures"
 
         Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
         ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000  # in keV
@@ -583,7 +586,7 @@ class SN():
             print("txt read source", source_exposure_df)
             background_exposure_df = self.read_exposure(bkgfile_name + ".txt")
             print("txt read bkg", background_exposure_df)
-            Seitz_pressure_list = np.arange(2.25, 6.5, 0.25)
+            Seitz_pressure_list = np.arange(1.0, 6.5, 0.25)
             print(Seitz_pressure_list)
             # keV
             Q_setiz = [1.3445287166423177, 1.4677096307281403, 1.6077252261931916, 1.7676644948295235,
