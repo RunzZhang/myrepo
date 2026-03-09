@@ -32,6 +32,7 @@ for i in range(len(df_list)):
     # signal
     # drop 2.75,3.25, 3.75 bara pressure
     # pressure_drop_list = [2.75,3.25,3.75]
+    pressure_drop_list = []
     df = df[~df['Pressure [bara]'].isin(pressure_drop_list )]
     # for j in pressure_drop_list:
     #     df.drop(df[df['Pressure [bara]'] == j].index)
