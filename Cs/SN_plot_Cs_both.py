@@ -615,7 +615,7 @@ class SN():
 
             compound_x = []
             for i in range(len(E_ion)):
-                x = E_ion[i] / (rho_l[i] * Rl[i])
+                x = E_ion[i]*10 / (rho_l[i] * Rl[i]) # fit unit
                 compound_x.append(x)
 
 
@@ -723,7 +723,7 @@ class SN():
             output_dict = {
                 'Pressure [bara]': bkg_pressure_recon_list,
                 'Updated Setiz [keV]': updated_Setiz_list,
-                'Eion_rl-1_rhol-1 [10GeVcm**2 g-1]': updated_compoundx_list,
+                'Eion_rl-1_rhol-1 [GeVcm**2 g-1]': updated_compoundx_list,
                 "Exp Rate [mHz]": exp_rate_list,
                 "Bkg Rate [mHz]": background_rate_list,
                 "Clean Rate [mHz]": clean_rate_list,

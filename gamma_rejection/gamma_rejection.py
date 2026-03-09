@@ -12,8 +12,8 @@ df_cs_list = ["Cold-Cs-1_20-21_exposures",
                          "Cold-Cs-2_2-3_exposures"]
 df_full_list = df_co_list+df_cs_list
 # df_list = df_co_list
-# df_list = df_cs_list
-df_list = df_full_list
+df_list = df_cs_list
+# df_list = df_full_list
 fmt_list = ['o','s','^','d']
 colors = [
     ['#8B0000', '#FF0000', '#FF7F7F'],         #'red'
@@ -46,7 +46,7 @@ for i in range(len(df_list)):
     ax[1].errorbar(df[ 'Updated Setiz [keV]'], df[ "Rejection Rate Scattering[]"],
                    yerr=df[ "Rejection Sigma Scattering[]"], label=doc_label,fmt=fmt_list[i])
 
-    ax[2].errorbar(df[ 'Eion_rl-1_rhol-1 [10GeVcm**2 g-1]'], df[ "Rejection Rate KeV[/keV]"],
+    ax[2].errorbar(df[ 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df[ "Rejection Rate KeV[/keV]"],
                    yerr=df[ "Rejection Sigma KeV[/keV]"], label=doc_label,fmt=fmt_list[i])
 
     print("count", doc_label, df[ "Rejection Rate Scattering[]"])
@@ -65,18 +65,21 @@ ax[0].legend()
 ax[1].set_xlabel("Setiz [keV]")
 ax[1].set_ylabel("Gamma Rejection Per Scattering []")
 ax[1].set_title("Gamma Rejection Per Scattering ")
-ax[1].set_ylim(1.0e-12,1.0e-2)
-ax[1].set_xlim(0,6)
+# ax[1].set_ylim(1.0e-12,1.0e-2)
+# ax[1].set_xlim(0,6)
+ax[1].set_xlim(0.8,1.5)
+# ax[1].set_ylim(1.0e-12,1.0e-2)
 ax[1].set_yscale("log")
 
 ax[1].legend()
 
 
-ax[2].set_xlabel("Eion_rl-1_rhol-1 [10GeVcm**2 g-1]")
+ax[2].set_xlabel("Eion_rl-1_rhol-1 [GeVcm**2 g-1]")
 ax[2].set_ylabel("Gamma Rejection Per keV [/keV]")
 ax[2].set_title("Gamma Rejection Per keV ")
-ax[2].set_ylim(1.0e-14,1.0e-4)
-ax[2].set_xlim(0.08,0.15)
+# ax[2].set_ylim(1.0e-14,1.0e-4)
+# ax[2].set_xlim(0.08,0.15)
+ax[2].set_xlim(0.8,1.1)
 ax[2].set_yscale("log")
 ax[2].legend()
 
