@@ -36,10 +36,10 @@ for i in range(len(df_list)):
     # for j in pressure_drop_list:
     #     df.drop(df[df['Pressure [bara]'] == j].index)
     print(df['Pressure [bara]'])
-    rejection_scattering = df["Rejection Rate Scattering[mHz]"].to_list()
-    rejection_ER = df["Rejection Rate KeV[mHz]"].to_list()
-    print(df["Rejection Rate Scattering[mHz]"])
-    print(df["Rejection Rate KeV[mHz]"])
+    rejection_scattering = df["Rejection Rate Scattering[]"].to_list()
+    rejection_ER = df["Rejection Rate KeV[/keV]"].to_list()
+    print(df["Rejection Rate Scattering[]"])
+    print(df["Rejection Rate KeV[/keV]"])
     for k in range(len(rejection_scattering)):
         print("energy", df['Updated Setiz [keV]'].to_list()[k],"keV")
         print("counts",rejection_scattering[k]/rejection_ER[k] )
@@ -47,7 +47,7 @@ for i in range(len(df_list)):
     ax.errorbar(df['Updated Setiz [keV]'], df["Rejection Rate Scattering[]"],
                    yerr=df["Rejection Sigma Scattering[]"], label=doc_label+ "per scattering",fmt=fmt_list[i], c = "b")
 
-    ax2.errorbar(df['Updated Setiz [keV]'], df["Rejection Rate KeV[/keV]"],
+    ax2.errorbar(df['Eion_rl-1_rhol-1 [10GeVcm**2 g-1]'], df["Rejection Rate KeV[/keV]"],
                 yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label+"per ER",fmt=fmt_list[i], c="red")
     # ax.errorbar(df['Pressure [bara]'], df[ "Bkg Rate [mHz]"],
     #                yerr=df[ "Bkg Sigma [mHz]"], label=doc_label + "bkg",fmt=fmt_list[i],color = colors[i][1])
