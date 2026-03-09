@@ -686,9 +686,11 @@ class SN():
                         rejection_PS_sigma_list.append(rejection_PS_sigma)
                     if threshold_Eion >= hist_array[0][1][i]:
                         # rejection per keV, PK meaning Per keV Per scattering
-                        counts_times_keV = cumulative_threshold_array[0][i] + (threshold_Eion - hist_array[0][1][i]) * (
-                                cumulative_threshold_array[0][i + 1] - cumulative_threshold_array[0][i]) / (
-                                                   hist_array[0][1][i + 1] - hist_array[0][1][i])
+
+                        # counts_times_keV = cumulative_threshold_array[0][i] + (threshold_Eion - hist_array[0][1][i]) * (
+                        #         cumulative_threshold_array[0][i + 1] - cumulative_threshold_array[0][i]) / (
+                        #                            hist_array[0][1][i + 1] - hist_array[0][1][i]) # interpolation
+                        counts_times_keV = cumulative_threshold_array[0][0]  # all energy
                         counts_Eion = cumulative_threshold_per_scatter_array[0][i] + (
                                     threshold_Eion - hist_array[0][1][i]) * (
                                               cumulative_threshold_per_scatter_array[0][i + 1] -
