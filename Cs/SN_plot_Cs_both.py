@@ -985,6 +985,7 @@ class SN():
         plt.savefig(self.plot_path + "Cs_cumulative_counts_function.pdf")
 
     def gamma_rejection_rate_per_keV_vs_Setiz_v1(self):
+        print(1)
         # # rate factor in mHz
         # # expfile_name = "Cold-Cs-11_17-18_exposures"
         # # expfile_name = "Cold-Cs-12_01_exposures"
