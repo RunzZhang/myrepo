@@ -608,6 +608,7 @@ class SN():
             bkg_pressure_list = background_exposure_df.loc[:, 0].to_list()
             print("bkg_pressure_list",bkg_pressure_list)
             exp_life_time = source_exposure_df.loc[:, 1].to_list()
+            print("exp_life_time",exp_life_time)
 
             background_time = background_exposure_df.loc[:, 1].to_list()
 
