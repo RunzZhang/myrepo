@@ -604,9 +604,9 @@ class SN():
 
 
             source_pressure_list = source_exposure_df.loc[:, 0].to_list()
-            print(source_pressure_list)
+            print("source pressure list",source_pressure_list)
             bkg_pressure_list = background_exposure_df.loc[:, 0].to_list()
-            print(bkg_pressure_list)
+            print("bkg_pressure_list",bkg_pressure_list)
             exp_life_time = source_exposure_df.loc[:, 1].to_list()
 
             background_time = background_exposure_df.loc[:, 1].to_list()
@@ -656,7 +656,7 @@ class SN():
                     background_sigma_list.append(back_sigma)
                     clean_sigma_list.append(clean_sigma)
 
-            print(exp_rate_list)
+            print("exp_rate_list",exp_rate_list)
 
             rejection_PS_list = []
             rejection_PS_sigma_list = []
