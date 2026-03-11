@@ -70,6 +70,7 @@ ax[0].set_xlabel("Setiz [keV]")
 ax[0].set_ylabel("Rate [mHz]")
 ax[0].set_title("Signal/BKG Rates ")
 ax[0].set_xlim(0.8,1.5)
+ax[0].set_xlim(0,800)
 ax[0].legend()
 
 ax[1].set_xlabel("Setiz [keV]")
