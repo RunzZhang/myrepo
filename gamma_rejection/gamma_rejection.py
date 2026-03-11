@@ -10,7 +10,7 @@ df_co_list = ["60Co-12_15-16_exposures"]
 # df_cs_list = ["Cold-Cs-11_17-18_exposures_mix","Cold-Cs-12_01_exposures_mix","Cold-Cs-12_10-11_exposures_mix"]
 df_cs_list = ["Cold-Cs-1_20-21_exposures_mix",
                          "Cold-Cs-2_2-3_exposures_zoom"]
-df_cs_list = ["Cold-Cs-1_20-21_exposures_mix"]
+# df_cs_list = ["Cold-Cs-1_20-21_exposures_mix"]
 df_full_list = df_co_list+df_cs_list
 # df_list = df_co_list
 df_list = df_cs_list
@@ -72,7 +72,7 @@ ax[1].set_ylabel("Gamma Rejection Per Scattering []")
 ax[1].set_title("Gamma Rejection Per Scattering ")
 # ax[1].set_ylim(1.0e-12,1.0e-2)
 # ax[1].set_xlim(0,6)
-# ax[1].set_xlim(0.8,1.5)
+ax[1].set_xlim(0.8,1.5)
 # ax[1].set_ylim(1.0e-12,1.0e-2)
 # ax[1].set_yscale("log")
 
@@ -84,7 +84,7 @@ ax[2].set_ylabel("Gamma Rejection Per keV [/keV]")
 ax[2].set_title("Gamma Rejection Per keV ")
 # ax[2].set_ylim(1.0e-14,1.0e-4)
 # ax[2].set_xlim(0.08,0.15)
-# ax[2].set_xlim(0.8,1.1)
+ax[2].set_xlim(0.8,1.1)
 # ax[2].set_yscale("log")
 ax[2].legend()
 
