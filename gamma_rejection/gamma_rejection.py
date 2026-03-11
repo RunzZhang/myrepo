@@ -48,7 +48,7 @@ for i in range(len(df_list)):
     #                yerr=df[ "Bkg Sigma [mHz]"], label=doc_label + "bkg",fmt=fmt_list[i],color = colors[i][1])
     # ax[0].errorbar(df[ 'Pressure [bara]'], df[ "Clean Rate [mHz]"],
     #                yerr=df[ "Clean Sigma [mHz]"], label=doc_label + "clean", fmt=fmt_list[i],color = colors[i][2])
-    ax[0].errorbar(df['Updated Setiz [keV]'], df["Exp Rate [mHz]"],
+    ax[0].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Exp Rate [mHz]"],
                    yerr=df["Exp Sigma [mHz]"], label=doc_label, fmt=fmt_list[i], color=colors[i][2])
 
     ax[1].errorbar(df[ 'Updated Setiz [keV]'], df[ "Rejection Rate Scattering[]"],
@@ -64,12 +64,11 @@ for i in range(len(df_list)):
 
 
 
-print()
 # ax[0].set_xlabel("Pressure [bara]")
-ax[0].set_xlabel("Setiz [keV]")
+ax[0].set_xlabel("'Eion_rl-1_rhol-1 [GeVcm**2 g-1]'")
 ax[0].set_ylabel("Rate [mHz]")
 ax[0].set_title("Signal/BKG Rates ")
-ax[0].set_xlim(0.8,1.5)
+ax[0].set_xlim(0.8,1.1)
 ax[0].set_ylim(0,800)
 ax[0].legend()
 
