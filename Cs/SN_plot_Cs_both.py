@@ -798,7 +798,7 @@ class SN():
             print("txt read source", source_exposure_df)
             background_exposure_df = self.read_exposure(bkgfile_name + ".txt")
             print("txt read bkg", background_exposure_df)
-            Seitz_pressure_list = np.arange(1.0, 6.5, 0.25)
+            Seitz_pressure_list = np.arange(1.25, 6.5, 0.25)
             print(Seitz_pressure_list)
             # keV
             Setiz = [0.8318354532105874, 0.8940418766838347, 0.9631954092292087, 1.0403343615139717, 1.1266932576571842,
