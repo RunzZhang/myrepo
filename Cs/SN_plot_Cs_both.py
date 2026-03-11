@@ -1235,8 +1235,17 @@ class SN():
         # Read the file
         # sep='\s+' handles any number of spaces or tabs as delimiters
         df = pd.read_csv(file_path, sep='\s+', skiprows=1, header=None)
-        df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]',
-                      'Exponential Fit 2xNLL',	'N.d.o.f.',	'Time Cut High [s]',	'Time Cut Low [s]']
+
+
+        return df
+
+    def read_exposure_with_header(self, filename):
+        # Define your path (we'll use a relative path)
+        file_path = os.path.join('..', 'exp_exposure', filename)
+
+        # Read the file
+        # sep='\s+' handles any number of spaces or tabs as delimiters
+        df = pd.read_csv(file_path, sep='\s+', skiprows=1, header=None)
 
         return df
 
