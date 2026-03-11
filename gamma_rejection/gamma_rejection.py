@@ -36,7 +36,7 @@ for i in range(len(df_list)):
     pressure_drop_list = []
     df = df[~df['Pressure [bara]'].isin(pressure_drop_list )]
     print('df["Exp Rate [mHz]"]',df["Exp Rate [mHz]"])
-    df = df[(df["Exp Rate [mHz]"] >= 1000/6.92e-1) or (df["Exp Rate [mHz]"] <= 1000/6.94e-1)]
+    df = df[(df["Exp Rate [mHz]"] >= 1000/6.92e-1) | (df["Exp Rate [mHz]"] <= 1000/6.94e-1)]
 
     # for j in pressure_drop_list:
     #     df.drop(df[df['Pressure [bara]'] == j].index)
