@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import csv
 import numpy as np
 import os
+import pickle
 class SN():
     def __init__(self):
         # after generate new files, you need to select the capture ratio/source for different configs in read_files function.
@@ -113,8 +114,10 @@ class SN():
         # self.read_ER_Ar_CF_1d_sum_counts()
 
 
-        self.gamma_rejection_rate_per_keV_vs_Setiz()
+        # self.gamma_rejection_rate_per_keV_vs_Setiz()
         # self.gamma_rejection_rate_vs_Setiz()
+
+        self.write_sims_results()
 
 
 
@@ -752,6 +755,38 @@ class SN():
         # ax[1].set_yscale("log")
         print(hist_array[0][1][1] - hist_array[0][1][0], "keV width")
         plt.savefig(self.plot_path + "Co_cumulative_counts_function.pdf")
+    def write_sims_results(self):
+        # rate factor in mHz
+
+        Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
+        ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000  # in keV
+
+        hist_array = [None]
+        # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
+        hist_array[0] = np.histogram(ER_Ar, bins=12000, range=(0, 1200))
+        # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
+        # we need 0.1 keV, and this gives us 4800 bins
+
+        # transfer edge to mid point per bin
+
+        # get probablity per scattering and the statistics
+        cumulative_threshold_per_scatter_array = [None]
+
+        cumulative_threshold_per_scatter_array[0] = np.array(
+            [sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))])
+
+        # histogram per scattering per keV
+        cumulative_threshold_array = [None]
+        energy_deposit_list = [hist_array[0][0][i] * hist_array[0][1][i] for i in range(len(hist_array[0][0]))]
+
+        cumulative_threshold_array[0] = np.array(
+            [sum(energy_deposit_list[i:]) for i in range(len(energy_deposit_list))])
+        print("total count* energy Co", cumulative_threshold_per_scatter_array[0][0],cumulative_threshold_per_scatter_array[0][0]/cumulative_threshold_array[0][0])
+
+        output_list = [Rate_factor ,hist_array, cumulative_threshold_per_scatter_array[0], cumulative_threshold_array[0]]
+        # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
+        with open("/data/runzezhang/result/TN_sims_D/Co_output.pkl", "wb") as f:
+            pickle.dump(output_list, f)
 
     def read_ER_CF_per_deposit_rate_cumulative(self):
         # rate factor in mHz
