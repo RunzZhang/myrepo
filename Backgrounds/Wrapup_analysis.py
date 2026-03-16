@@ -58,6 +58,11 @@ class integrated_analysis():
         self.gamma_rejection_calculation()
 
 
+
+        # plot
+        self.bkg_plot()
+
+
     def generate_path(self):
         self.Co_exp_sorted_path = []
         self.Cs_exp_sorted_path = []
