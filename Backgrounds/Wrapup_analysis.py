@@ -341,9 +341,13 @@ class integrated_analysis():
             print("NA sources")
 
         self.Rate_factor = self.sim_list[0]
+        print("self.Rate_factor",self.Rate_factor)
         self.energy_edges = self.sim_list[1]
+        print("self.energy_edges", self.energy_edges)
         self.counts_cum_bin = self.sim_list[2]
+        print("self.counts_cum_bin", self.counts_cum_bin)
         self.counts_energy_cum_bin = self.sim_list[3]
+        print("self.counts_energy_cum_bin", self.counts_energy_cum_bin)
         rejection_PS = 0
         rejection_PS_sigma = 0
         rejection_PK = 0
