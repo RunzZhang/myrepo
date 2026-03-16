@@ -148,7 +148,7 @@ class integrated_analysis():
             'Lifetime [s]': 'mean',  # Simple average
             'Lifetime Error [s]': self.calculate_rss  # Custom square root math
         }).reset_index()
-        print(result_df_116)
+        print('result_df_116',result_df_116)
         result_df_116.to_csv(self.Bkg_average_116_path, index=False)
 
         #119
@@ -161,7 +161,7 @@ class integrated_analysis():
             'Lifetime [s]': 'mean',  # Simple average
             'Lifetime Error [s]': self.calculate_rss  # Custom square root math
         }).reset_index()
-        print(result_df_119)
+        print('result_df_119',result_df_119)
         result_df_119.to_csv(self.Bkg_average_119_path, index=False)
 
     def clean_signal_analysis(self):
@@ -390,20 +390,6 @@ class integrated_analysis():
 
 
 
-class test_csv():
-    def __init__(self):
-        list1 = [1,3,4.5,6.7,8.9]
-        with open("/data/runzezhang/test.csv", 'w', newline='') as myfile:
-            wr = csv.writer(myfile)
-            wr.writerow(list1)
-        with open("/data/runzezhang/test.csv", 'r') as file:
-            reader = csv.reader(file)
-            # Read the first row (assuming single row for simplicity)
-            number_list = next(reader)
-            # Convert the strings to floats
-            number_list = [float(value) for value in number_list]
-
-        print(number_list)
 
 
 if __name__=="__main__":
