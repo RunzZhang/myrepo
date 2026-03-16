@@ -161,7 +161,7 @@ class integrated_analysis():
         combined_df_119 = pd.concat(bkg_df_119_list, ignore_index=True)
         result_df_119 = combined_df_119.groupby('Pressure [bara]').agg({
             'Lifetime [s]': 'mean',  # Simple average
-            'Lifetime Error [s]': self.calculate_rss  # Custom square root math
+            'Lifetime Error [s]': self.calculate_rss,  # Custom square root math
             'Bkg Rate [mHz]': 'mean',
             'Bkg Rate Sigma [mHz]': self.calculate_rss
         }).reset_index()
