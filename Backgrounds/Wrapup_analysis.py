@@ -412,9 +412,9 @@ class integrated_analysis():
 
         fig, ax = plt.subplots()
         ax.errorbar(self.df_bkg_116['Setiz [keV]'],self.df_bkg_116["Bkg Rate [mHz]"],
-                   yerr = self.df_bkg_116["Bkg Rate Sigma [mHz]"],label="combined bkg 116.7 K ",color = 'r')
+                   yerr = self.df_bkg_116["Bkg Rate Sigma [mHz]"],label="combined bkg 116.7 K ",fmt = 'o',color = 'r')
         ax.errorbar(self.df_bkg_119['Setiz [keV]'], self.df_bkg_119["Bkg Rate [mHz]"],
-                    yerr=self.df_bkg_119["Bkg Rate Sigma [mHz]"], label="combined bkg 119.6 K ", color='b')
+                    yerr=self.df_bkg_119["Bkg Rate Sigma [mHz]"], label="combined bkg 119.6 K ",fmt = 'o', color='b')
         ax.set_xlim(0.4,3.6)
         ax.set_ylim(5,55)
         ax.set_xlabel("Setiz [keV]")
