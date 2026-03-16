@@ -342,7 +342,7 @@ class integrated_analysis():
 
         self.Rate_factor = self.sim_list[0]
         print("self.Rate_factor",self.Rate_factor)
-        self.energy_edges = self.sim_list[1][0]
+        self.energy_edges = self.sim_list[1][0][1]
         print("self.energy_edges", self.energy_edges)
         self.counts_cum_bin = self.sim_list[2]
         print("self.counts_cum_bin", self.counts_cum_bin)
