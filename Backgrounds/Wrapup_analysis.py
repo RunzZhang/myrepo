@@ -317,12 +317,14 @@ class integrated_analysis():
             exp_df = pd.read_csv(self.Cs_exp_rate_path[i])
             columns_added  =exp_df.apply(self.calculate_rejection_by_row,axis=1,args=("Cs",))
             merged_df = pd.concat([exp_df, columns_added], axis=1)
+            print('Cs print(merged_df)',self.Cs_exp_rate_path[i],'\n',merged_df)
             merged_df.to_csv(self.Cs_exp_rejection_path[i], index= False)
 
         for i in range(len(self.Co_exp_rate_path)):
             exp_df = pd.read_csv(self.Co_exp_rate_path[i])
             columns_added  =exp_df.apply(self.calculate_rejection_by_row,axis=1,args=("Co",))
             merged_df = pd.concat([exp_df, columns_added], axis=1)
+            print('Co print(merged_df)',self.Co_exp_rate_path[i],'\n',merged_df)
             merged_df.to_csv(self.Co_exp_rejection_path[i], index= False)
             
 
