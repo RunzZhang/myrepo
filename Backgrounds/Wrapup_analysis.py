@@ -14,14 +14,18 @@ class integrated_analysis():
 
         self.Cs_exp_116_raw_path = ["Cold-Cs-11_17-18_exposures_mix","Cold-Cs-12_01_exposures_mix",
                                     "Cold-Cs-12_10-11_exposures_mix","Cold-Cs-1_20-21_exposures_mix"]
+
         self.Cs_exp_116_raw_len = len(self.Cs_exp_116_raw_path)
         self.Cs_exp_119_raw_path = ["Cold-Cs-2_2-3_exposures_zoom"]
         self.Co_exp_116_raw_path = ["60Co-12_15-16_exposures"]
         self.Co_exp_116_raw_len = len(self.Co_exp_116_raw_path)
         self.Co_exp_119_raw_path = []
-        self.background_116_sorted_path = ["Background-11_26-30_exposures","QUIET-Background-1_13_exposures_zoom"]
+        self.background_116_sorted_path = ['Background-11_7-8_exposures',"Background-11_15-17_exposures",
+                                    "Background-11_26-30_exposures", "Background-12_5-8_exposures",
+                                    'Background-1_12-13_exposures','Background-1_17-20_exposures']
         self.background_exp_116_raw_len = len(self.background_116_sorted_path)
-        self.background_119_sorted_path = ["Background-2_6-12_exposures","Background-1_30-2_2_exposures"]
+        self.background_119_sorted_path = ["Background-1_30-2_2_exposures","Background-2_17-20_exposures",
+                                           "Background-2_6-12_exposures","Background-2_28-3_2_exposures"]
 
         self.Co_exp_raw_path = self.Co_exp_116_raw_path+self.Co_exp_119_raw_path
         self.Cs_exp_raw_path = self.Cs_exp_116_raw_path+self.Cs_exp_119_raw_path
