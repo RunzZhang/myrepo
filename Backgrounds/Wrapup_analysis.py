@@ -84,7 +84,7 @@ class integrated_analysis():
             self.Bkg_exp_sorted_path.append(self.output_path + exp_name+"_sorted.csv")
 
     def read_sims(self):
-        #output form, [rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge]
+        #output form, [rate facotr to mHz, (counts per bin,enenrgy edges), counts above the bin edge, counts* counts above the bin edge]
         with open(self.Co_sim_path, "rb") as f:
             self.Co_sims = pickle.load(f)
         print("self.Co_sims",self.Co_sims)
@@ -342,7 +342,7 @@ class integrated_analysis():
 
         self.Rate_factor = self.sim_list[0]
         print("self.Rate_factor",self.Rate_factor)
-        self.energy_edges = self.sim_list[1]
+        self.energy_edges = self.sim_list[1][1]
         print("self.energy_edges", self.energy_edges)
         self.counts_cum_bin = self.sim_list[2]
         print("self.counts_cum_bin", self.counts_cum_bin)
