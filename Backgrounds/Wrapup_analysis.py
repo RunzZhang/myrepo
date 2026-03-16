@@ -146,7 +146,9 @@ class integrated_analysis():
         combined_df_116 = pd.concat(bkg_df_116_list, ignore_index=True)
         result_df_116 = combined_df_116.groupby('Pressure [bara]').agg({
             'Lifetime [s]': 'mean',  # Simple average
-            'Lifetime Error [s]': self.calculate_rss  # Custom square root math
+            'Lifetime Error [s]': self.calculate_rss,  # Custom square root math,
+            'Bkg Rate [mHz]':'mean',
+            'Bkg Rate Sigma [mHz]':self.calculate_rss
         }).reset_index()
         print('result_df_116',result_df_116)
         result_df_116.to_csv(self.Bkg_average_116_path, index=False)
@@ -160,6 +162,8 @@ class integrated_analysis():
         result_df_119 = combined_df_119.groupby('Pressure [bara]').agg({
             'Lifetime [s]': 'mean',  # Simple average
             'Lifetime Error [s]': self.calculate_rss  # Custom square root math
+            'Bkg Rate [mHz]': 'mean',
+            'Bkg Rate Sigma [mHz]': self.calculate_rss
         }).reset_index()
         print('result_df_119',result_df_119)
         result_df_119.to_csv(self.Bkg_average_119_path, index=False)
