@@ -192,7 +192,7 @@ class integrated_analysis():
 
             merged_df.to_csv(self.Cs_exp_rate_path[i], index=False)
 
-        for i in range(self.Cs_exp_116_raw_len+1,len(self.Cs_exp_raw_path) ):
+        for i in range(self.Cs_exp_116_raw_len+1,len(self.Cs_exp_raw_path)+1 ):
             print("Cs 119K", self.Cs_exp_rate_path[i])
             exposure_df = pd.read_csv(self.Cs_exp_sorted_path[i])
             # merge both has the pressure value, on pressure
@@ -221,7 +221,7 @@ class integrated_analysis():
 
             merged_df.to_csv(self.Co_exp_rate_path[i], index=False)
 
-        for i in range(self.Co_exp_116_raw_len + 1, len(self.Co_exp_raw_path)):
+        for i in range(self.Co_exp_116_raw_len + 1, len(self.Co_exp_raw_path)+1):
             print("Co 119K", self.Co_exp_rate_path[i])
             exposure_df = pd.read_csv(self.Co_exp_sorted_path[i])
             # merge both has the pressure value, on pressure
