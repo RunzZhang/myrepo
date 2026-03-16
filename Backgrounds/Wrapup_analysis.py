@@ -8,6 +8,7 @@ class integrated_analysis():
     def __init__(self):
 
         self.output_path = '/data/runzezhang/result/gamma_rejection/'
+        self.plot_path = '/data/runzezhang/result/gamma_rejection/plot/'
         self.Co_sim_path  ='/data/runzezhang/result/TN_sims_D/Co_output.pkl'
         self.Cs_sim_path = '/data/runzezhang/result/TN_sims_D/Cs_output.pkl'
 
@@ -317,14 +318,14 @@ class integrated_analysis():
             exp_df = pd.read_csv(self.Cs_exp_rate_path[i])
             columns_added  =exp_df.apply(self.calculate_rejection_by_row,axis=1,args=("Cs",))
             merged_df = pd.concat([exp_df, columns_added], axis=1)
-            print('Cs print(merged_df)',self.Cs_exp_rate_path[i],'\n',merged_df)
+            # print('Cs print(merged_df)',self.Cs_exp_rate_path[i],'\n',merged_df)
             merged_df.to_csv(self.Cs_exp_rejection_path[i], index= False)
 
         for i in range(len(self.Co_exp_rate_path)):
             exp_df = pd.read_csv(self.Co_exp_rate_path[i])
             columns_added  =exp_df.apply(self.calculate_rejection_by_row,axis=1,args=("Co",))
             merged_df = pd.concat([exp_df, columns_added], axis=1)
-            print('Co print(merged_df)',self.Co_exp_rate_path[i],'\n',merged_df)
+            # print('Co print(merged_df)',self.Co_exp_rate_path[i],'\n',merged_df)
             merged_df.to_csv(self.Co_exp_rejection_path[i], index= False)
             
 
@@ -397,6 +398,27 @@ class integrated_analysis():
                 "Rejection Rate KeV[/keV]": rejection_PK,
                 "Rejection Sigma KeV[/keV]": rejection_PK_sigma})
         return output
+
+    def bkg_plot(self):
+        self.df_bkg_116 = pd.read_csv(self.Bkg_average_116_path)
+        self.df_bkg_116 = pd.merge(self.df_bkg_116, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
+        self.df_bkg_119 = pd.read_csv(self.Bkg_average_119_path)
+        self.df_bkg_119 = pd.merge(self.df_bkg_119, self.df_energy_119_tab, on='Pressure [bara]', how="inner")
+
+        fig, ax = plt.subplots()
+        ax.errorbar(self.df_bkg_116['Setiz [keV]'],self.df_bkg_116["Bkg Rate [mHz]"],
+                   yerr = self.df_bkg_116["Bkg Rate Sigma [mHz]"],label="combined bkg 116.7 K ",color = 'r')
+        ax.errorbar(self.df_bkg_119['Setiz [keV]'], self.df_bkg_119["Bkg Rate [mHz]"],
+                    yerr=self.df_bkg_119["Bkg Rate Sigma [mHz]"], label="combined bkg 119.6 K ", color='b')
+        ax.set_xlim(0.4,3.6)
+        ax.set_ylim(5,55)
+        ax.set_xlabel("Setiz [keV]")
+        ax.set_ylabel("Bkg Rate [mHz]")
+        ax.legend()
+
+        plt.savefig(self.plot_path + "average_bkg_rate.pdf")
+
+
 
 
     def calculate_rss(self, series):
