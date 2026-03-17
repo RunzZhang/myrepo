@@ -484,7 +484,7 @@ class integrated_analysis():
         [(a_fit_scatter, b_fit_scatter,x_fitted_scatter,y_fitted_scatter),(a_fit_keV, b_fit_keV,x_fitted_keV,y_fitted_keV)] = self.fitting_gamma_rejection()
 
         # plot the fitting function
-        ax[0].plot(x_fitted_scatter,y_fitted_scatter,label = "a,b = "+str(a_fit_scatter)+", "+str(b_fit_scatter))
+        ax[0].plot(x_fitted_scatter,y_fitted_scatter,label = f"a,b = {a_fit_scatter:.2e} , {b_fit_scatter:.2e}")
 
         ax[0].set_xlabel("Setiz [keV]")
         ax[0].set_ylabel("Gamma Rejection Per Scattering []")
@@ -497,7 +497,7 @@ class integrated_analysis():
 
         ax[0].legend(loc='upper right', fontsize=7)
 
-        ax[1].plot(x_fitted_keV, y_fitted_keV, label="a,b = " + str(a_fit_keV) + ", " + str(b_fit_keV))
+        ax[1].plot(x_fitted_keV, y_fitted_keV, label=f"a,b = {a_fit_keV:.2e} , {b_fit_keV:.2e}")
         ax[1].set_xlabel("Eion_rl-1_rhol-1 [GeVcm**2 g-1]")
         ax[1].set_ylabel("Gamma Rejection Per keV [/keV]")
         ax[1].set_title("Gamma Rejection Per keV ")
