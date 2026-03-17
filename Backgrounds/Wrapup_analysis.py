@@ -4,6 +4,7 @@ import csv
 import numpy as np
 import os
 import pickle
+from scipy.optimize import curve_fit
 class integrated_analysis():
     def __init__(self):
 
@@ -432,6 +433,7 @@ class integrated_analysis():
 
     def gamma_rejection_plot(self):
         fig, ax = plt.subplots(1, 2, figsize=(10, 4))
+        self.fitting_list = []
 
         for i in range(len(self.Cs_exp_rejection_path)):
             df = pd.read_csv(self.Cs_exp_rejection_path[i])
@@ -444,6 +446,9 @@ class integrated_analysis():
             df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
             # only positive rate
             df =  df[df['Clean Rate [mHz]']>0]
+
+            df_fit = df[['Setiz [keV]',"Rejection Rate Scattering[]",'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',"Rejection Rate KeV[/keV]"]]
+            self.fitting_list.append(df_fit)
 
 
 
@@ -464,11 +469,22 @@ class integrated_analysis():
             df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
             df = df[df['Clean Rate [mHz]'] > 0]
 
+            df_fit = df[['Setiz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+                         "Rejection Rate KeV[/keV]"]]
+            self.fitting_list.append(df_fit)
+
             ax[0].errorbar(df['Setiz [keV]'], df["Rejection Rate Scattering[]"],
                            yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
 
             ax[1].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate KeV[/keV]"],
                            yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
+
+
+        self.fitting_df =  pd.concat(self.fitting_list, ignore_index=True)
+        [(a_fit_scatter, b_fit_scatter,x_fitted_scatter,y_fitted_scatter),(a_fit_keV, b_fit_keV,x_fitted_keV,y_fitted_keV)] = self.fitting_gamma_rejection()
+
+        # plot the fitting function
+        ax[0].plot(x_fitted_scatter,y_fitted_scatter,label = "a,b = "+str(a_fit_scatter)+", "+str(b_fit_scatter))
 
         ax[0].set_xlabel("Setiz [keV]")
         ax[0].set_ylabel("Gamma Rejection Per Scattering []")
@@ -481,6 +497,7 @@ class integrated_analysis():
 
         ax[0].legend(loc='upper right', fontsize=7)
 
+        ax[1].plot(x_fitted_keV, y_fitted_keV, label="a,b = " + str(a_fit_keV) + ", " + str(b_fit_keV))
         ax[1].set_xlabel("Eion_rl-1_rhol-1 [GeVcm**2 g-1]")
         ax[1].set_ylabel("Gamma Rejection Per keV [/keV]")
         ax[1].set_title("Gamma Rejection Per keV ")
@@ -493,11 +510,57 @@ class integrated_analysis():
         plt.savefig(self.plot_path + "gamma_rejection.pdf")
 
 
+    def fitting_gamma_rejection(self):
+        #
+        x_per_scatter = self.fitting_df["Setiz [keV]"].values
+        y_per_scatter = self.fitting_df["Gamma Rejection Per Scattering []"].values
+        # dealing with guess
+        x_min_per_scattering= min(x_per_scatter)
+        x_max_per_scattering = max(x_per_scatter)
+        y_min_per_scattering = min(y_per_scatter)
+        y_max_per_scattering = max(y_per_scatter)
+         # b is negative
+        b_guess_per_scattering=-(np.log(y_max_per_scattering)-np.log(y_min_per_scattering))/(x_max_per_scattering-x_min_per_scattering)
+        a_guess_scattering = y_max_per_scattering
+        initial_guess_scatter = [a_guess_scattering, b_guess_per_scattering]
+        popt_scatter, pcov_scatter = curve_fit(self.exp_func, x_per_scatter, y_per_scatter, p0=initial_guess_scatter)
+        a_fit_scatter, b_fit_scatter= popt_scatter
+        print('a_fit_scatter, b_fit_scatter',a_fit_scatter, b_fit_scatter)
+        x_fitted_scatter = np.linspace(min(x_per_scatter), max(x_per_scatter), 100)
+        y_fitted_scatter = self.exp_func(x_fitted_scatter, *popt_scatter)
+
+
+
+
+
+        x_per_keV = self.fitting_df["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"].values
+        y_per_keV = self.fitting_df["Gamma Rejection Per keV [/keV]"].values
+        # dealing with guess
+        x_min_per_keV = min(x_per_keV)
+        x_max_per_keV = max(x_per_keV)
+        y_min_per_keV = min(y_per_keV)
+        y_max_per_keV = max(y_per_keV)
+        # b is negative
+        b_guess_per_keV = -(np.log(y_max_per_keV) - np.log(y_min_per_keV)) / (
+                    x_max_per_keV - x_min_per_keV)
+        a_guess_scattering = y_max_per_keV
+        initial_guess_keV = [a_guess_scattering, b_guess_per_keV]
+        popt_keV, pcov_keV = curve_fit(self.exp_func, x_per_keV, y_per_keV, p0=initial_guess_keV)
+        a_fit_keV, b_fit_keV = popt_keV
+        print('a_fit_keV, b_fit_keV', a_fit_keV, b_fit_keV)
+        x_fitted_keV = np.linspace(min(x_per_keV), max(x_per_keV), 100)
+        y_fitted_keV = self.exp_func(x_fitted_keV, *popt_keV)
+
+        return [(a_fit_scatter, b_fit_scatter,x_fitted_scatter,y_fitted_scatter),(a_fit_keV, b_fit_keV,x_fitted_keV,y_fitted_keV)]
+
 
 
     def calculate_rss(self, series):
         """Calculates sqrt(a^2 + b^2 + ...)"""
         return np.sqrt(np.sum(series ** 2))
+
+    def exp_func(self, x, a, b):
+        return a * np.exp(-b * x)
 
 
 
