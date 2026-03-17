@@ -512,6 +512,7 @@ class integrated_analysis():
 
     def fitting_gamma_rejection(self):
         #
+        print('self.fitting_df',self.fitting_df)
         x_per_scatter = self.fitting_df["Setiz [keV]"].values
         y_per_scatter = self.fitting_df["Gamma Rejection Per Scattering []"].values
         # dealing with guess
