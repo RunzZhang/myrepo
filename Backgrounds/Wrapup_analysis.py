@@ -512,9 +512,8 @@ class integrated_analysis():
 
     def fitting_gamma_rejection(self):
         #
-        print('self.fitting_df',self.fitting_df)
         x_per_scatter = self.fitting_df["Setiz [keV]"].values
-        y_per_scatter = self.fitting_df["Gamma Rejection Per Scattering []"].values
+        y_per_scatter = self.fitting_df["Rejection Rate Scattering[]"].values
         # dealing with guess
         x_min_per_scattering= min(x_per_scatter)
         x_max_per_scattering = max(x_per_scatter)
@@ -535,7 +534,7 @@ class integrated_analysis():
 
 
         x_per_keV = self.fitting_df["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"].values
-        y_per_keV = self.fitting_df["Gamma Rejection Per keV [/keV]"].values
+        y_per_keV = self.fitting_df["Rejection Rate KeV[/keV]"].values
         # dealing with guess
         x_min_per_keV = min(x_per_keV)
         x_max_per_keV = max(x_per_keV)
