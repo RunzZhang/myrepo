@@ -442,6 +442,8 @@ class integrated_analysis():
             # pressure_drop_list = [2.75,3.25,3.75]
             pressure_drop_list = []
             df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
+            # only positive rate
+            df =  df[df['Clean Rate [mHz]']>0]
 
 
 
@@ -460,6 +462,7 @@ class integrated_analysis():
             # pressure_drop_list = [2.75,3.25,3.75]
             pressure_drop_list = []
             df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
+            df = df[df['Clean Rate [mHz]'] > 0]
 
             ax[0].errorbar(df['Setiz [keV]'], df["Rejection Rate Scattering[]"],
                            yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
