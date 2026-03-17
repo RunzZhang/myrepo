@@ -64,7 +64,8 @@ class integrated_analysis():
 
 
         # plot
-        self.bkg_plot()
+        # self.bkg_plot()
+        self.gamma_rejection_plot()
 
 
     def generate_path(self):
@@ -428,6 +429,65 @@ class integrated_analysis():
         ax.legend()
 
         plt.savefig(self.plot_path + "average_bkg_rate.pdf")
+
+    def gamma_rejection_plot(self):
+        fig, ax = plt.subplots(1, 2, figsize=(10, 4))
+
+        for i in range(len(self.Cs_exp_rejection_path)):
+            df = pd.read_csv(self.Cs_exp_rejection_path[i])
+            # print(df.columns)
+            doc_label = self.Cs_exp_raw_path[i].rstrip("_exposures")
+            # signal
+            # drop 2.75,3.25, 3.75 bara pressure
+            # pressure_drop_list = [2.75,3.25,3.75]
+            pressure_drop_list = []
+            df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
+
+
+
+            ax[0].errorbar(df['Setiz [keV]'], df["Rejection Rate Scattering[]"],
+                           yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
+
+            ax[1].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate KeV[/keV]"],
+                           yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
+
+        for i in range(len(self.Co_exp_rejection_path)):
+            df = pd.read_csv(self.Co_exp_rejection_path[i])
+            # print(df.columns)
+            doc_label = self.Co_exp_raw_path[i].rstrip("_exposures")
+            # signal
+            # drop 2.75,3.25, 3.75 bara pressure
+            # pressure_drop_list = [2.75,3.25,3.75]
+            pressure_drop_list = []
+            df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
+
+            ax[0].errorbar(df['Setiz [keV]'], df["Rejection Rate Scattering[]"],
+                           yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
+
+            ax[1].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate KeV[/keV]"],
+                           yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
+
+        ax[0].set_xlabel("Setiz [keV]")
+        ax[0].set_ylabel("Gamma Rejection Per Scattering []")
+        ax[0].set_title("Gamma Rejection Per Scattering ")
+        # ax[0].set_ylim(1.0e-12,1.0e-2)
+        # ax[0].set_xlim(0,6)
+        # ax[0].set_xlim(0.8,1.5)
+        # ax[0].set_ylim(1.0e-12,1.0e-2)
+        # ax[0].set_yscale("log")
+
+        ax[0].legend()
+
+        ax[1].set_xlabel("Eion_rl-1_rhol-1 [GeVcm**2 g-1]")
+        ax[1].set_ylabel("Gamma Rejection Per keV [/keV]")
+        ax[1].set_title("Gamma Rejection Per keV ")
+        # ax[1].set_ylim(1.0e-14,1.0e-4)
+        # ax[1].set_xlim(0.08,0.15)
+        # ax[1].set_xlim(0.8,1.1)
+        # ax[1].set_yscale("log")
+        ax[1].legend()
+
+        plt.savefig(self.plot_path + "gamma_rejection.pdf")
 
 
 
