@@ -479,7 +479,7 @@ class integrated_analysis():
         # ax[0].set_ylim(1.0e-12,1.0e-2)
         ax[0].set_yscale("log")
 
-        ax[0].legend()
+        ax[0].legend(loc='upper left', bbox_to_anchor=(1, 1),fontsize=5)
 
         ax[1].set_xlabel("Eion_rl-1_rhol-1 [GeVcm**2 g-1]")
         ax[1].set_ylabel("Gamma Rejection Per keV [/keV]")
@@ -488,7 +488,7 @@ class integrated_analysis():
         # ax[1].set_xlim(0.08,0.15)
         # ax[1].set_xlim(0.8,1.1)
         ax[1].set_yscale("log")
-        ax[1].legend()
+        ax[1].legend(loc='upper left', bbox_to_anchor=(1, 1),fontsize=5)
 
         plt.savefig(self.plot_path + "gamma_rejection.pdf")
 
