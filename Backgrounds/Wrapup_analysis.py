@@ -432,7 +432,7 @@ class integrated_analysis():
         plt.savefig(self.plot_path + "average_bkg_rate.pdf")
 
     def gamma_rejection_plot(self):
-        fig, ax = plt.subplots(1, 2, figsize=(10, 4))
+        fig, ax = plt.subplots(2, 1, figsize=(10, 4))
         self.fitting_list = []
 
         for i in range(len(self.Cs_exp_rejection_path)):
