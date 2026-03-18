@@ -433,7 +433,7 @@ class integrated_analysis():
 
     def gamma_rejection_plot(self):
         fig, ax = plt.subplots(1, 2, figsize=(10, 4))
-        fig, ax = plt.subplots(2, 1, figsize=(4, 10))
+        fig, ax = plt.subplots(2, 1, figsize=(6, 10))
         self.fitting_list = []
 
         for i in range(len(self.Cs_exp_rejection_path)):
