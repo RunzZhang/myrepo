@@ -524,25 +524,25 @@ class integrated_analysis():
         self.Co_counts_energy_cum_bin = self.Co_sims[3]
 
         fig, ax = plt.subplots(2, 2, figsize=(12, 12))
-        ax[0,0].plot(self.Cs_energy_edges,self.Cs_counts_cum_bin)
+        ax[0,0].plot(self.Cs_energy_edges[:-1],self.Cs_counts_cum_bin)
         ax[0, 0].set_xlabel("ER Deposition [keV]")
         ax[0, 0].set_ylabel("Cumulative Counts []")
         ax[0, 0].set_title("Cs Cumulative Spectrum (Counts)")
         ax[0, 0].set_yscale("log")
 
-        ax[0, 1].plot(self.Cs_energy_edges, self.Cs_counts_energy_cum_bin)
+        ax[0, 1].plot(self.Cs_energy_edges[:-1], self.Cs_counts_energy_cum_bin)
         ax[0, 1].set_xlabel("ER Deposition [keV]")
         ax[0, 1].set_ylabel("Cumulative Energy Deposited[keV]")
         ax[0, 1].set_title("Cs Cumulative Spectrum(Counts*energy)")
         ax[0, 1].set_yscale("log")
 
-        ax[1, 0].plot(self.Co_energy_edges, self.Co_counts_cum_bin)
+        ax[1, 0].plot(self.Co_energy_edges[:-1], self.Co_counts_cum_bin)
         ax[1, 0].set_xlabel("ER Deposition [keV]")
         ax[1, 0].set_ylabel("Cumulative Counts []")
         ax[1, 0].set_title("Co Cumulative Spectrum (Counts)")
         ax[1, 0].set_yscale("log")
 
-        ax[1, 1].plot(self.Co_energy_edges, self.Co_counts_energy_cum_bin)
+        ax[1, 1].plot(self.Co_energy_edges[:-1], self.Co_counts_energy_cum_bin)
         ax[1, 1].set_xlabel("ER Deposition [keV]")
         ax[1, 1].set_ylabel("Cumulative Energy Deposited[keV]")
         ax[1, 1].set_title("Co Cumulative Spectrum(Counts*energy)")
