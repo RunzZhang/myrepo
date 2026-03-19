@@ -524,7 +524,7 @@ class integrated_analysis():
         self.Co_counts_energy_cum_bin = self.Co_sims[3]
 
         fig, ax = plt.subplots(2, 2, figsize=(12, 12))
-        ax[0,0].bar(self.Cs_energy_edges[:-1],self.Cs_counts_cum_bin,width=np.diff(self.Cs_energy_edges[:-1]),
+        ax[0,0].bar(self.Cs_energy_edges[:-1],self.Cs_counts_cum_bin,width=np.diff(self.Cs_energy_edges),
         align="edge",
         edgecolor="black")
         ax[0, 0].set_xlabel("ER Deposition [keV]")
@@ -532,7 +532,7 @@ class integrated_analysis():
         ax[0, 0].set_title("Cs Cumulative Spectrum (Counts)")
         ax[0, 0].set_yscale("log")
 
-        ax[0, 1].bar(self.Cs_energy_edges[:-1], self.Cs_counts_energy_cum_bin,width=np.diff(self.Cs_energy_edges[:-1]),
+        ax[0, 1].bar(self.Cs_energy_edges[:-1], self.Cs_counts_energy_cum_bin,width=np.diff(self.Cs_energy_edges),
         align="edge",
         edgecolor="black")
         ax[0, 1].set_xlabel("ER Deposition [keV]")
@@ -540,7 +540,7 @@ class integrated_analysis():
         ax[0, 1].set_title("Cs Cumulative Spectrum(Counts*energy)")
         ax[0, 1].set_yscale("log")
 
-        ax[1, 0].bar(self.Co_energy_edges[:-1], self.Co_counts_cum_bin,width=np.diff(self.Co_energy_edges[:-1]),
+        ax[1, 0].bar(self.Co_energy_edges[:-1], self.Co_counts_cum_bin,width=np.diff(self.Co_energy_edges),
         align="edge",
         edgecolor="black")
         ax[1, 0].set_xlabel("ER Deposition [keV]")
@@ -548,7 +548,7 @@ class integrated_analysis():
         ax[1, 0].set_title("Co Cumulative Spectrum (Counts)")
         ax[1, 0].set_yscale("log")
 
-        ax[1, 1].bar(self.Co_energy_edges[:-1], self.Co_counts_energy_cum_bin,width=np.diff(self.Co_energy_edges[:-1]),
+        ax[1, 1].bar(self.Co_energy_edges[:-1], self.Co_counts_energy_cum_bin,width=np.diff(self.Co_energy_edges),
         align="edge",
         edgecolor="black")
         ax[1, 1].set_xlabel("ER Deposition [keV]")
