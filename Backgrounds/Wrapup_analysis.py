@@ -67,6 +67,7 @@ class integrated_analysis():
         # plot
         # self.bkg_plot()
         self.gamma_rejection_plot()
+        self.spectrums_plot()
 
 
     def generate_path(self):
@@ -439,7 +440,7 @@ class integrated_analysis():
         for i in range(len(self.Cs_exp_rejection_path)):
             df = pd.read_csv(self.Cs_exp_rejection_path[i])
             # print(df.columns)
-            doc_label = self.Cs_exp_raw_path[i].rstrip("_exposures")
+            doc_label = self.Cs_exp_raw_path[i].replace('_exposures', '')
             print('doc_label',doc_label)
             # signal
             # drop 2.75,3.25, 3.75 bara pressure
@@ -510,7 +511,44 @@ class integrated_analysis():
         ax[1].legend(loc='upper right', fontsize=7)
 
         plt.savefig(self.plot_path + "gamma_rejection.pdf")
+    def spectrums_plot(self):
 
+        self.Cs_Rate_factor = self.Cs_sims[0]
+        self.Cs_energy_edges = self.Cs_sims[1][0][1]
+        self.Cs_counts_cum_bin = self.Cs_sims[2]
+        self.Cs_counts_energy_cum_bin = self.Cs_sims[3]
+
+        self.Co_Rate_factor = self.Co_sims[0]
+        self.Co_energy_edges = self.Co_sims[1][0][1]
+        self.Co_counts_cum_bin = self.Co_sims[2]
+        self.Co_counts_energy_cum_bin = self.Co_sims[3]
+
+        fig, ax = plt.subplots(2, 2, figsize=(12, 12))
+        ax[0,0].plot(self.Cs_energy_edges,self.Cs_counts_cum_bin)
+        ax[0, 0].set_xlabel("ER Deposition [keV]")
+        ax[0, 0].set_ylabel("Cumulative Counts []")
+        ax[0, 0].set_title("Cs Cumulative Spectrum (Counts)")
+        ax[0, 0].set_yscale("log")
+
+        ax[0, 1].plot(self.Cs_energy_edges, self.Cs_counts_energy_cum_bin)
+        ax[0, 1].set_xlabel("ER Deposition [keV]")
+        ax[0, 1].set_ylabel("Cumulative Energy Deposited[keV]")
+        ax[0, 1].set_title("Cs Cumulative Spectrum(Counts*energy)")
+        ax[0, 1].set_yscale("log")
+
+        ax[1, 0].plot(self.Co_energy_edges, self.Co_counts_cum_bin)
+        ax[1, 0].set_xlabel("ER Deposition [keV]")
+        ax[1, 0].set_ylabel("Cumulative Counts []")
+        ax[1, 0].set_title("Co Cumulative Spectrum (Counts)")
+        ax[1, 0].set_yscale("log")
+
+        ax[1, 1].plot(self.Co_energy_edges, self.Co_counts_energy_cum_bin)
+        ax[1, 1].set_xlabel("ER Deposition [keV]")
+        ax[1, 1].set_ylabel("Cumulative Energy Deposited[keV]")
+        ax[1, 1].set_title("Co Cumulative Spectrum(Counts*energy)")
+        ax[1, 1].set_yscale("log")
+
+        plt.savefig(self.plot_path + "cumulative_spectrums.pdf")
 
     def fitting_gamma_rejection(self):
         #
