@@ -43,6 +43,9 @@ class integrated_analysis():
         # read simulation from Geant4
         self.read_sims()
 
+        # read the Setiz energy thresholds
+        self.read_Setiz_info()
+
         # read experimental txt file, drop the non-sense values, and write to clean dataframe
         self.read_raw_Co_exp()
         self.read_raw_Cs_exp()
@@ -51,8 +54,7 @@ class integrated_analysis():
         # caculate the average background
         self.average_background_analysis()
 
-        # read the Setiz energy thresholds
-        self.read_Setiz_info()
+
         # add the Setiz energy to the exp txt files, and Setiz should have already included all temperature info, so in post-analysis
         # no demands to devide by temperature configurations
         # also caculate the clean signal and signal uncerntainty
