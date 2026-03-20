@@ -612,9 +612,9 @@ class integrated_analysis():
         plt.savefig(self.plot_path + "gamma_rejection.pdf")
     def bkg_floor_plot(self,ax,mode):
         self.df_bkg_116_full_info = pd.read_csv(self.Bkg_average_116_full_info_path)
-        self.df_bkg_116_full_info = pd.merge(self.df_bkg_116_full_info, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
+        # self.df_bkg_116_full_info = pd.merge(self.df_bkg_116_full_info, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
         self.df_bkg_119_full_info = pd.read_csv(self.Bkg_average_119_full_info_path)
-        self.df_bkg_119_full_info = pd.merge(self.df_bkg_119_full_info, self.df_energy_119_tab, on='Pressure [bara]', how="inner")
+        # self.df_bkg_119_full_info = pd.merge(self.df_bkg_119_full_info, self.df_energy_119_tab, on='Pressure [bara]', how="inner")
         print('self.df_bkg_116_full_info.columns',self.df_bkg_116_full_info.columns)
         if mode == "Seitz":
             ax.plot(self.df_bkg_116_full_info['Seitz [keV]'], self.df_bkg_116_full_info['Cs Rejection Uplimit Scattering []'],
