@@ -80,6 +80,10 @@ class integrated_analysis():
         self.Bkg_exp_sorted_path = []
         self.Bkg_average_116_path = self.output_path + "background_116_average" + ".csv"
         self.Bkg_average_119_path = self.output_path + "background_119_average" + ".csv"
+        # bkg table containing seitz infos
+        # separate this from above because of clean signal need to merge only on pressure column
+        self.Bkg_average_116_full_info_path = self.output_path + "background_116_average_full_info" + ".csv"
+        self.Bkg_average_119_full_info_path = self.output_path + "background_119_average_full_info" + ".csv"
 
         for exp_name in self.Co_exp_raw_path:
             self.Co_exp_sorted_path.append(self.output_path + exp_name+"_sorted.csv")
@@ -163,13 +167,17 @@ class integrated_analysis():
             'Bkg Rate [mHz]':'mean',
             'Bkg Rate Sigma [mHz]':self.calculate_rss
         }).reset_index()
+        print('result_df_116',result_df_116)
+        result_df_116.to_csv(self.Bkg_average_116_path, index=False)
 
         # add different source uplimit
         columns_added_Cs = result_df_116.apply(self.calculate_bkg_uplimit_by_row, axis=1, args=("Cs",))
         columns_added_Co = result_df_116.apply(self.calculate_bkg_uplimit_by_row, axis=1, args=("Co",))
-        result_df_116 = pd.concat([result_df_116, columns_added_Cs, columns_added_Co], axis=1)
-        print('result_df_116',result_df_116)
-        result_df_116.to_csv(self.Bkg_average_116_path, index=False)
+
+        result_df_116_full_info = pd.concat([result_df_116, columns_added_Cs, columns_added_Co], axis=1)
+        result_df_116_full_info = pd.merge(result_df_116_full_info, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
+        result_df_116_full_info.to_csv(self.Bkg_average_116_full_info_path, index=False)
+
 
         #119
         bkg_df_119_list = []
@@ -184,13 +192,16 @@ class integrated_analysis():
             'Bkg Rate Sigma [mHz]': self.calculate_rss
         }).reset_index()
 
-        columns_added_Cs = result_df_119.apply(self.calculate_bkg_uplimit_by_row, axis=1, args=("Cs",))
-        columns_added_Co = result_df_119.apply(self.calculate_bkg_uplimit_by_row, axis=1, args=("Co",))
-        result_df_119 = pd.concat([result_df_119, columns_added_Cs, columns_added_Co], axis=1)
-
-
         print('result_df_119',result_df_119)
         result_df_119.to_csv(self.Bkg_average_119_path, index=False)
+
+        columns_added_Cs = result_df_119.apply(self.calculate_bkg_uplimit_by_row, axis=1, args=("Cs",))
+        columns_added_Co = result_df_119.apply(self.calculate_bkg_uplimit_by_row, axis=1, args=("Co",))
+
+        result_df_119_full_info = pd.concat([result_df_119, columns_added_Cs, columns_added_Co], axis=1)
+        result_df_119_full_info = pd.merge(result_df_119_full_info, self.df_energy_119_tab, on='Pressure [bara]',
+                                           how="inner")
+        result_df_119_full_info.to_csv(self.Bkg_average_119_full_info_path, index=False)
 
     def clean_signal_analysis(self):
         self.df_bkg_116 = pd.read_csv(self.Bkg_average_116_path)
@@ -597,30 +608,30 @@ class integrated_analysis():
 
         plt.savefig(self.plot_path + "gamma_rejection.pdf")
     def bkg_floor_plot(self,ax,mode):
-        self.df_bkg_116 = pd.read_csv(self.Bkg_average_116_path)
-        self.df_bkg_116 = pd.merge(self.df_bkg_116, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
-        self.df_bkg_119 = pd.read_csv(self.Bkg_average_119_path)
-        self.df_bkg_119 = pd.merge(self.df_bkg_119, self.df_energy_119_tab, on='Pressure [bara]', how="inner")
+        self.df_bkg_116_full_info = pd.read_csv(self.Bkg_average_116_full_info_path)
+        self.df_bkg_116_full_info = pd.merge(self.df_bkg_116_full_info, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
+        self.df_bkg_119_full_info = pd.read_csv(self.Bkg_average_119_full_info_path)
+        self.df_bkg_119_full_info = pd.merge(self.df_bkg_119_full_info, self.df_energy_119_tab, on='Pressure [bara]', how="inner")
 
         if mode == "Seitz":
-            ax.plot(self.df_bkg_116['Setiz [keV]'], self.df_bkg_116['Cs Rejection Uplimit Scattering []'],
+            ax.plot(self.df_bkg_116_full_info['Setiz [keV]'], self.df_bkg_116_full_info['Cs Rejection Uplimit Scattering []'],
                        color="gray")
-            ax.plot(self.df_bkg_116['Setiz [keV]'], self.df_bkg_116['Co Rejection Uplimit Scattering []'],
+            ax.plot(self.df_bkg_116_full_info['Setiz [keV]'], self.df_bkg_116_full_info['Co Rejection Uplimit Scattering []'],
                        color="gray")
 
-            ax.plot(self.df_bkg_119['Setiz [keV]'], self.df_bkg_119['Cs Rejection Uplimit Scattering []'],
+            ax.plot(self.df_bkg_119_full_info['Setiz [keV]'], self.df_bkg_119_full_info['Cs Rejection Uplimit Scattering []'],
                     color="gray")
-            ax.plot(self.df_bkg_119['Setiz [keV]'], self.df_bkg_119['Co Rejection Uplimit Scattering []'],
+            ax.plot(self.df_bkg_119_full_info['Setiz [keV]'], self.df_bkg_119_full_info['Co Rejection Uplimit Scattering []'],
                     color="gray")
         elif mode =="Eion":
-            ax.plot(self.df_bkg_116['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_bkg_116['Cs Rejection Uplimit KeV [/keV]'],
+            ax.plot(self.df_bkg_116_full_info['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_bkg_116_full_info['Cs Rejection Uplimit KeV [/keV]'],
                     color="gray")
-            ax.plot(self.df_bkg_116['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_bkg_116['Co Rejection Uplimit KeV [/keV]'],
+            ax.plot(self.df_bkg_116_full_info['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_bkg_116_full_info['Co Rejection Uplimit KeV [/keV]'],
                     color="gray")
 
-            ax.plot(self.df_bkg_119['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_bkg_119['Cs Rejection Uplimit KeV [/keV]'],
+            ax.plot(self.df_bkg_119_full_info['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_bkg_119_full_info['Cs Rejection Uplimit KeV [/keV]'],
                     color="gray")
-            ax.plot(self.df_bkg_119['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_bkg_119['Co Rejection Uplimit KeV [/keV]'],
+            ax.plot(self.df_bkg_119_full_info['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_bkg_119_full_info['Co Rejection Uplimit KeV [/keV]'],
                     color="gray")
 
 
