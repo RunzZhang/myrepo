@@ -171,11 +171,12 @@ class integrated_analysis():
         result_df_116.to_csv(self.Bkg_average_116_path, index=False)
 
         # add different source uplimit
-        columns_added_Cs = result_df_116.apply(self.calculate_bkg_uplimit_by_row, axis=1, args=("Cs",))
-        columns_added_Co = result_df_116.apply(self.calculate_bkg_uplimit_by_row, axis=1, args=("Co",))
 
-        result_df_116_full_info = pd.concat([result_df_116, columns_added_Cs, columns_added_Co], axis=1)
-        result_df_116_full_info = pd.merge(result_df_116_full_info, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
+        result_df_116_full_info = pd.merge(result_df_116, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
+        columns_added_Cs = result_df_116_full_info.apply(self.calculate_bkg_uplimit_by_row, axis=1, args=("Cs",))
+        columns_added_Co = result_df_116_full_info.apply(self.calculate_bkg_uplimit_by_row, axis=1, args=("Co",))
+
+        result_df_116_full_info = pd.concat([result_df_116_full_info, columns_added_Cs, columns_added_Co], axis=1)
         result_df_116_full_info.to_csv(self.Bkg_average_116_full_info_path, index=False)
 
 
@@ -195,12 +196,11 @@ class integrated_analysis():
         print('result_df_119',result_df_119)
         result_df_119.to_csv(self.Bkg_average_119_path, index=False)
 
-        columns_added_Cs = result_df_119.apply(self.calculate_bkg_uplimit_by_row, axis=1, args=("Cs",))
-        columns_added_Co = result_df_119.apply(self.calculate_bkg_uplimit_by_row, axis=1, args=("Co",))
+        result_df_119_full_info = pd.merge(result_df_119, self.df_energy_119_tab, on='Pressure [bara]', how="inner")
+        columns_added_Cs = result_df_119_full_info.apply(self.calculate_bkg_uplimit_by_row, axis=1, args=("Cs",))
+        columns_added_Co = result_df_119_full_info.apply(self.calculate_bkg_uplimit_by_row, axis=1, args=("Co",))
 
-        result_df_119_full_info = pd.concat([result_df_119, columns_added_Cs, columns_added_Co], axis=1)
-        result_df_119_full_info = pd.merge(result_df_119_full_info, self.df_energy_119_tab, on='Pressure [bara]',
-                                           how="inner")
+        result_df_119_full_info = pd.concat([result_df_119_full_info, columns_added_Cs, columns_added_Co], axis=1)
         result_df_119_full_info.to_csv(self.Bkg_average_119_full_info_path, index=False)
 
     def clean_signal_analysis(self):
