@@ -43,8 +43,8 @@ class integrated_analysis():
         # read simulation from Geant4
         self.read_sims()
 
-        # read the Setiz energy thresholds
-        self.read_Setiz_info()
+        # read the Seitz energy thresholds
+        self.read_Seitz_info()
 
         # read experimental txt file, drop the non-sense values, and write to clean dataframe
         self.read_raw_Co_exp()
@@ -55,7 +55,7 @@ class integrated_analysis():
         self.average_background_analysis()
 
 
-        # add the Setiz energy to the exp txt files, and Setiz should have already included all temperature info, so in post-analysis
+        # add the Seitz energy to the exp txt files, and Seitz should have already included all temperature info, so in post-analysis
         # no demands to devide by temperature configurations
         # also caculate the clean signal and signal uncerntainty
         self.clean_signal_analysis()
@@ -179,7 +179,7 @@ class integrated_analysis():
         columns_added_Co = result_df_116_full_info.apply(self.calculate_bkg_uplimit_by_row, axis=1, args=("Co",))
 
         result_df_116_full_info = pd.concat([result_df_116_full_info, columns_added_Cs, columns_added_Co], axis=1)
-        print('result_df_116_full_info.columns',result_df_116_full_info.columns)
+        # print('result_df_116_full_info.columns',result_df_116_full_info.columns)
         result_df_116_full_info.to_csv(self.Bkg_average_116_full_info_path, index=False)
 
 
@@ -284,10 +284,10 @@ class integrated_analysis():
             merged_df.to_csv(self.Co_exp_rate_path[i], index=False)
 
 
-    def read_Setiz_info(self):
+    def read_Seitz_info(self):
         Seitz_pressure_list = np.arange(1.25, 6.5, 0.25)
 
-        Setiz_116 = [0.8318354532105874, 0.8940418766838347, 0.9631954092292087, 1.0403343615139717, 1.1266932576571842,
+        Seitz_116 = [0.8318354532105874, 0.8940418766838347, 0.9631954092292087, 1.0403343615139717, 1.1266932576571842,
                  1.2237481550986595, 1.3332743449138087, 1.4574206436587642, 1.5988055614249703, 1.7606432313822162,
                  1.946909785273693, 2.16256537886239, 2.4138541417933888, 2.708714138448383, 3.0573453143201323,
                  3.4730076036964754, 3.973160671933538, 4.5811194010067275, 5.328505251504318, 6.258953124220718,
@@ -317,12 +317,12 @@ class integrated_analysis():
             compound_x_116.append(x)
 
         self.dict_energy_116_tab = {"Pressure [bara]":Seitz_pressure_list,
-                                    "Setiz [keV]": Setiz_116,
+                                    "Seitz [keV]": Seitz_116,
                                     "Eion [keV]": E_ion_116,
                                     "Eion_rl-1_rhol-1 [GeVcm**2 g-1]": compound_x_116}
         self.df_energy_116_tab = pd.DataFrame(self.dict_energy_116_tab)
 
-        Setiz_119 = [0.4336397431016649, 0.45977540397438443, 0.4882700006652598, 0.5194078524821146,
+        Seitz_119 = [0.4336397431016649, 0.45977540397438443, 0.4882700006652598, 0.5194078524821146,
                  0.5535164255731408, 0.5909743032392646, 0.6322208776848458, 0.677768234751849, 0.7282157681331614,
                  0.7842683220836715, 0.8467588127318099, 0.9166765658125957, 0.9952031955105735, 1.08375825146003,
                  1.1840578053726714, 1.2981902707374324, 1.4287154214193478, 1.5787948930230866, 1.7523661419564087,
@@ -352,7 +352,7 @@ class integrated_analysis():
             compound_x_119.append(x)
 
         self.dict_energy_119_tab = {"Pressure [bara]": Seitz_pressure_list,
-                                    "Setiz [keV]": Setiz_119,
+                                    "Seitz [keV]": Seitz_119,
                                     "Eion [keV]": E_ion_119,
                                     "Eion_rl-1_rhol-1 [GeVcm**2 g-1]": compound_x_119}
         self.df_energy_119_tab = pd.DataFrame(self.dict_energy_119_tab)
@@ -406,9 +406,9 @@ class integrated_analysis():
         rejection_uplimit_PS = 0
         rejection_uplimit_PK = 0
         for i in range(len(self.energy_edges)):
-            if row['Setiz [keV]'] >= self.energy_edges[i]:
+            if row['Seitz [keV]'] >= self.energy_edges[i]:
                 # rejection per scattering, PS meaning perscattering
-                counts = self.counts_cum_bin[i] + (row['Setiz [keV]'] - self.energy_edges[i]) * (
+                counts = self.counts_cum_bin[i] + (row['Seitz [keV]'] - self.energy_edges[i]) * (
                         self.counts_cum_bin[i + 1] -
                         self.counts_cum_bin[i]) / (
                                  self.energy_edges[i + 1] - self.energy_edges[i])
@@ -461,9 +461,9 @@ class integrated_analysis():
         rejection_uplimit_PS = 0
         rejection_uplimit_PK = 0
         for i in range(len(self.energy_edges)):
-            if row['Setiz [keV]']>= self.energy_edges[i]:
+            if row['Seitz [keV]']>= self.energy_edges[i]:
                 # rejection per scattering, PS meaning perscattering
-                counts = self.counts_cum_bin[i] + (row['Setiz [keV]'] - self.energy_edges[i]) * (
+                counts = self.counts_cum_bin[i] + (row['Seitz [keV]'] - self.energy_edges[i]) * (
                         self.counts_cum_bin[i + 1] -
                         self.counts_cum_bin[i]) / (
                                  self.energy_edges[i + 1] - self.energy_edges[i])
@@ -510,13 +510,13 @@ class integrated_analysis():
         print('self.df_bkg_119', self.df_bkg_119)
 
         fig, ax = plt.subplots()
-        ax.errorbar(self.df_bkg_116['Setiz [keV]'],self.df_bkg_116["Bkg Rate [mHz]"],
+        ax.errorbar(self.df_bkg_116['Seitz [keV]'],self.df_bkg_116["Bkg Rate [mHz]"],
                    yerr = self.df_bkg_116["Bkg Rate Sigma [mHz]"],label="combined bkg 116.7 K ",fmt = 'o',color = 'r')
-        ax.errorbar(self.df_bkg_119['Setiz [keV]'], self.df_bkg_119["Bkg Rate [mHz]"],
+        ax.errorbar(self.df_bkg_119['Seitz [keV]'], self.df_bkg_119["Bkg Rate [mHz]"],
                     yerr=self.df_bkg_119["Bkg Rate Sigma [mHz]"], label="combined bkg 119.6 K ",fmt = 'o', color='b')
         ax.set_xlim(0.4,3.6)
         ax.set_ylim(5,55)
-        ax.set_xlabel("Setiz [keV]")
+        ax.set_xlabel("Seitz [keV]")
         ax.set_ylabel("Bkg Rate [mHz]")
         ax.legend()
 
@@ -541,12 +541,12 @@ class integrated_analysis():
             # only positive rate
             df =  df[df['Clean Rate [mHz]']>0]
 
-            df_fit = df[['Setiz [keV]',"Rejection Rate Scattering[]",'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',"Rejection Rate KeV[/keV]"]]
+            df_fit = df[['Seitz [keV]',"Rejection Rate Scattering[]",'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',"Rejection Rate KeV[/keV]"]]
             self.fitting_list.append(df_fit)
 
 
 
-            ax[0].errorbar(df['Setiz [keV]'], df["Rejection Rate Scattering[]"],
+            ax[0].errorbar(df['Seitz [keV]'], df["Rejection Rate Scattering[]"],
                            yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
 
             ax[1].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate KeV[/keV]"],
@@ -563,11 +563,11 @@ class integrated_analysis():
             df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
             df = df[df['Clean Rate [mHz]'] > 0]
 
-            df_fit = df[['Setiz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+            df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                          "Rejection Rate KeV[/keV]"]]
             self.fitting_list.append(df_fit)
 
-            ax[0].errorbar(df['Setiz [keV]'], df["Rejection Rate Scattering[]"],
+            ax[0].errorbar(df['Seitz [keV]'], df["Rejection Rate Scattering[]"],
                            yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
 
 
@@ -585,7 +585,7 @@ class integrated_analysis():
         self.bkg_floor_plot(ax[0],"Seitz")
         self.bkg_floor_plot(ax[0], "Eion")
 
-        ax[0].set_xlabel("Setiz [keV]")
+        ax[0].set_xlabel("Seitz [keV]")
         ax[0].set_ylabel("Gamma Rejection Per Scattering []")
         ax[0].set_title("Gamma Rejection Per Scattering ")
         # ax[0].set_ylim(1.0e-12,1.0e-2)
@@ -617,14 +617,14 @@ class integrated_analysis():
         self.df_bkg_119_full_info = pd.merge(self.df_bkg_119_full_info, self.df_energy_119_tab, on='Pressure [bara]', how="inner")
 
         if mode == "Seitz":
-            ax.plot(self.df_bkg_116_full_info['Setiz [keV]'], self.df_bkg_116_full_info['Cs Rejection Uplimit Scattering []'],
+            ax.plot(self.df_bkg_116_full_info['Seitz [keV]'], self.df_bkg_116_full_info['Cs Rejection Uplimit Scattering []'],
                        color="gray")
-            ax.plot(self.df_bkg_116_full_info['Setiz [keV]'], self.df_bkg_116_full_info['Co Rejection Uplimit Scattering []'],
+            ax.plot(self.df_bkg_116_full_info['Seitz [keV]'], self.df_bkg_116_full_info['Co Rejection Uplimit Scattering []'],
                        color="gray")
 
-            ax.plot(self.df_bkg_119_full_info['Setiz [keV]'], self.df_bkg_119_full_info['Cs Rejection Uplimit Scattering []'],
+            ax.plot(self.df_bkg_119_full_info['Seitz [keV]'], self.df_bkg_119_full_info['Cs Rejection Uplimit Scattering []'],
                     color="gray")
-            ax.plot(self.df_bkg_119_full_info['Setiz [keV]'], self.df_bkg_119_full_info['Co Rejection Uplimit Scattering []'],
+            ax.plot(self.df_bkg_119_full_info['Seitz [keV]'], self.df_bkg_119_full_info['Co Rejection Uplimit Scattering []'],
                     color="gray")
         elif mode =="Eion":
             ax.plot(self.df_bkg_116_full_info['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_bkg_116_full_info['Cs Rejection Uplimit KeV [/keV]'],
@@ -687,7 +687,7 @@ class integrated_analysis():
 
     def fitting_gamma_rejection(self):
         #
-        x_per_scatter = self.fitting_df["Setiz [keV]"].values
+        x_per_scatter = self.fitting_df["Seitz [keV]"].values
         y_per_scatter = self.fitting_df["Rejection Rate Scattering[]"].values
         # dealing with guess
         x_min_per_scattering= min(x_per_scatter)
