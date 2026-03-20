@@ -179,6 +179,7 @@ class integrated_analysis():
         columns_added_Co = result_df_116_full_info.apply(self.calculate_bkg_uplimit_by_row, axis=1, args=("Co",))
 
         result_df_116_full_info = pd.concat([result_df_116_full_info, columns_added_Cs, columns_added_Co], axis=1)
+        print('result_df_116_full_info.columns',result_df_116_full_info.columns)
         result_df_116_full_info.to_csv(self.Bkg_average_116_full_info_path, index=False)
 
 
