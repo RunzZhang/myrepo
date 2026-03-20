@@ -69,7 +69,7 @@ class integrated_analysis():
         # plot
         # self.bkg_plot()
         self.gamma_rejection_plot()
-        self.spectrums_plot()
+        # self.spectrums_plot()
 
 
     def generate_path(self):
