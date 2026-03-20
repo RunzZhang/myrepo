@@ -163,6 +163,11 @@ class integrated_analysis():
             'Bkg Rate [mHz]':'mean',
             'Bkg Rate Sigma [mHz]':self.calculate_rss
         }).reset_index()
+
+        # add different source uplimit
+        columns_added_Cs = result_df_116.apply(self.calculate_bkg_uplimit_by_row, axis=1, args=("Cs",))
+        columns_added_Co = result_df_116.apply(self.calculate_bkg_uplimit_by_row, axis=1, args=("Co",))
+        result_df_116 = pd.concat([result_df_116, columns_added_Cs, columns_added_Co], axis=1)
         print('result_df_116',result_df_116)
         result_df_116.to_csv(self.Bkg_average_116_path, index=False)
 
@@ -178,14 +183,28 @@ class integrated_analysis():
             'Bkg Rate [mHz]': 'mean',
             'Bkg Rate Sigma [mHz]': self.calculate_rss
         }).reset_index()
+
+        columns_added_Cs = result_df_119.apply(self.calculate_bkg_uplimit_by_row, axis=1, args=("Cs",))
+        columns_added_Co = result_df_119.apply(self.calculate_bkg_uplimit_by_row, axis=1, args=("Co",))
+        result_df_119 = pd.concat([result_df_119, columns_added_Cs, columns_added_Co], axis=1)
+
+
         print('result_df_119',result_df_119)
         result_df_119.to_csv(self.Bkg_average_119_path, index=False)
 
     def clean_signal_analysis(self):
         self.df_bkg_116 = pd.read_csv(self.Bkg_average_116_path)
-        self.df_bkg_116.columns = ['Pressure [bara]','Bkg Lifetime [s]','Bkg Lifetime Error [s]','Bkg Rate [mHz]', 'Bkg Rate Sigma [mHz]']
+        # self.df_bkg_116.columns = ['Pressure [bara]','Bkg Lifetime [s]','Bkg Lifetime Error [s]','Bkg Rate [mHz]', 'Bkg Rate Sigma [mHz]']
+        self.df_bkg_116 = self.df_bkg_116.rename(columns={
+            'Lifetime [s]': 'Bkg Lifetime [s]',
+            'Lifetime Error [s]': 'Bkg Lifetime Error [s]'
+        })
         self.df_bkg_119 =  pd.read_csv(self.Bkg_average_119_path)
-        self.df_bkg_119.columns = ['Pressure [bara]', 'Bkg Lifetime [s]', 'Bkg Lifetime Error [s]','Bkg Rate [mHz]', 'Bkg Rate Sigma [mHz]']
+        # self.df_bkg_119.columns = ['Pressure [bara]', 'Bkg Lifetime [s]', 'Bkg Lifetime Error [s]','Bkg Rate [mHz]', 'Bkg Rate Sigma [mHz]']
+        self.df_bkg_119 = self.df_bkg_116.rename(columns={
+            'Lifetime [s]': 'Bkg Lifetime [s]',
+            'Lifetime Error [s]': 'Bkg Lifetime Error [s]'
+        })
         # first these are 116
         self.Cs_116_data = []
         self.Cs_119_data = []
@@ -352,6 +371,59 @@ class integrated_analysis():
         df = pd.read_csv(file_path, sep='\s+', skiprows=1, header=None)
 
         return df
+    def calculate_bkg_uplimit_by_row(self, row, source):
+
+        if source == "Co":
+            self.sim_list = self.Co_sims
+        elif source == "Cs":
+            self.sim_list = self.Cs_sims
+        else:
+            print("NA sources")
+
+        self.Rate_factor = self.sim_list[0]
+        # print("self.Rate_factor",self.Rate_factor)
+        self.energy_edges = self.sim_list[1][0][1]
+        # print("self.energy_edges", self.energy_edges)
+        self.counts_cum_bin = self.sim_list[2]
+        # print("self.counts_cum_bin", self.counts_cum_bin)
+        self.counts_energy_cum_bin = self.sim_list[3]
+        # print("self.counts_energy_cum_bin", self.counts_energy_cum_bin)
+
+        rejection_uplimit_PS = 0
+        rejection_uplimit_PK = 0
+        for i in range(len(self.energy_edges)):
+            if row['Setiz [keV]'] >= self.energy_edges[i]:
+                # rejection per scattering, PS meaning perscattering
+                counts = self.counts_cum_bin[i] + (row['Setiz [keV]'] - self.energy_edges[i]) * (
+                        self.counts_cum_bin[i + 1] -
+                        self.counts_cum_bin[i]) / (
+                                 self.energy_edges[i + 1] - self.energy_edges[i])
+                rate_PS = self.Rate_factor * (counts)
+
+                rate_PS_sigma = rate_PS / np.sqrt(counts)
+
+
+                rejection_uplimit_PS = row['Bkg Rate Sigma [mHz]']/rate_PS
+
+
+                break
+        for i in range(len(self.energy_edges)):
+            if row['Eion [keV]'] >= self.energy_edges[i]:
+                counts_times_keV = self.counts_energy_cum_bin[0]  # all energy
+                counts_Eion = self.counts_cum_bin[i] + (row['Eion [keV]'] - self.energy_edges[i]) * (
+                        self.counts_cum_bin[i + 1] -
+                        self.counts_cum_bin[i]) / (
+                                      self.energy_edges[i + 1] - self.energy_edges[i])
+
+                rate_PK = self.Rate_factor * (counts_times_keV)
+                rate_PK_sigma = rate_PK / np.sqrt(counts_Eion)
+
+                rejection_uplimit_PK = row['Bkg Rate Sigma [mHz]'] / rate_PK
+                break
+        output = pd.Series({f"{source} Rejection Uplimit Scattering []":rejection_uplimit_PS,
+        f"{source} Rejection Uplimit KeV [/keV]":rejection_uplimit_PK})
+
+        return output
     def calculate_rejection_by_row(self, row, source):
         if source == "Co":
             self.sim_list = self.Co_sims
@@ -372,6 +444,8 @@ class integrated_analysis():
         rejection_PS_sigma = 0
         rejection_PK = 0
         rejection_PK_sigma = 0
+        rejection_uplimit_PS = 0
+        rejection_uplimit_PK = 0
         for i in range(len(self.energy_edges)):
             if row['Setiz [keV]']>= self.energy_edges[i]:
                 # rejection per scattering, PS meaning perscattering
@@ -384,6 +458,7 @@ class integrated_analysis():
                 rate_PS_sigma = rate_PS / np.sqrt(counts)
 
                 rejection_PS = row['Clean Rate [mHz]'] / rate_PS
+                # rejection_uplimit_PS = row['Bkg Rate Sigma [mHz]']/rate_PS
 
                 # will be returned
                 rejection_PS_sigma = np.sqrt(
@@ -404,6 +479,7 @@ class integrated_analysis():
 
                 rejection_PK_sigma = np.sqrt(
                     (row['Clean Rate Sigma [mHz]'] / rate_PK) ** 2 + (row['Clean Rate [mHz]'] * rate_PK_sigma / rate_PK ** 2) ** 2)
+                # rejection_uplimit_PK = row['Bkg Rate Sigma [mHz]'] / rate_PK
                 break
         output = pd.Series({"Rejection Rate Scattering[]": rejection_PS,
                 "Rejection Sigma Scattering[]": rejection_PS_sigma,
@@ -436,6 +512,7 @@ class integrated_analysis():
         fig, ax = plt.subplots(1, 2, figsize=(10, 4))
         fig, ax = plt.subplots(2, 1, figsize=(6, 10))
         self.fitting_list = []
+
 
         for i in range(len(self.Cs_exp_rejection_path)):
             df = pd.read_csv(self.Cs_exp_rejection_path[i])
@@ -479,6 +556,7 @@ class integrated_analysis():
             ax[0].errorbar(df['Setiz [keV]'], df["Rejection Rate Scattering[]"],
                            yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
 
+
             ax[1].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate KeV[/keV]"],
                            yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
 
@@ -488,6 +566,10 @@ class integrated_analysis():
 
         # plot the fitting function
         ax[0].plot(x_fitted_scatter,y_fitted_scatter,label = f"a,b = {a_fit_scatter:.2e} , {b_fit_scatter:.2e}", color="black")
+
+        #gamma rejection up limit
+        self.bkg_floor_plot(ax[0],"Seitz")
+        self.bkg_floor_plot(ax[0], "Eion")
 
         ax[0].set_xlabel("Setiz [keV]")
         ax[0].set_ylabel("Gamma Rejection Per Scattering []")
@@ -501,6 +583,9 @@ class integrated_analysis():
         ax[0].legend(loc='upper right', fontsize=7)
 
         ax[1].plot(x_fitted_keV, y_fitted_keV, label=f"a,b = {a_fit_keV:.2e} , {b_fit_keV:.2e}", color="black")
+
+        self.bkg_floor_plot(ax[1], "Seitz")
+        self.bkg_floor_plot(ax[1], "Eion")
         ax[1].set_xlabel("Eion_rl-1_rhol-1 [GeVcm**2 g-1]")
         ax[1].set_ylabel("Gamma Rejection Per keV [/keV]")
         ax[1].set_title("Gamma Rejection Per keV ")
@@ -511,6 +596,34 @@ class integrated_analysis():
         ax[1].legend(loc='upper right', fontsize=7)
 
         plt.savefig(self.plot_path + "gamma_rejection.pdf")
+    def bkg_floor_plot(self,ax,mode):
+        self.df_bkg_116 = pd.read_csv(self.Bkg_average_116_path)
+        self.df_bkg_116 = pd.merge(self.df_bkg_116, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
+        self.df_bkg_119 = pd.read_csv(self.Bkg_average_119_path)
+        self.df_bkg_119 = pd.merge(self.df_bkg_119, self.df_energy_119_tab, on='Pressure [bara]', how="inner")
+
+        if mode == "Seitz":
+            ax.plot(self.df_bkg_116['Setiz [keV]'], self.df_bkg_116['Cs Rejection Uplimit Scattering []'],
+                       color="gray")
+            ax.plot(self.df_bkg_116['Setiz [keV]'], self.df_bkg_116['Co Rejection Uplimit Scattering []'],
+                       color="gray")
+
+            ax.plot(self.df_bkg_119['Setiz [keV]'], self.df_bkg_119['Cs Rejection Uplimit Scattering []'],
+                    color="gray")
+            ax.plot(self.df_bkg_119['Setiz [keV]'], self.df_bkg_119['Co Rejection Uplimit Scattering []'],
+                    color="gray")
+        elif mode =="Eion":
+            ax.plot(self.df_bkg_116['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_bkg_116['Cs Rejection Uplimit KeV [/keV]'],
+                    color="gray")
+            ax.plot(self.df_bkg_116['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_bkg_116['Co Rejection Uplimit KeV [/keV]'],
+                    color="gray")
+
+            ax.plot(self.df_bkg_119['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_bkg_119['Cs Rejection Uplimit KeV [/keV]'],
+                    color="gray")
+            ax.plot(self.df_bkg_119['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_bkg_119['Co Rejection Uplimit KeV [/keV]'],
+                    color="gray")
+
+
     def spectrums_plot(self):
 
         self.Cs_Rate_factor = self.Cs_sims[0]
