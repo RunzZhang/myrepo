@@ -615,27 +615,27 @@ class integrated_analysis():
         # self.df_bkg_116_full_info = pd.merge(self.df_bkg_116_full_info, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
         self.df_bkg_119_full_info = pd.read_csv(self.Bkg_average_119_full_info_path)
         # self.df_bkg_119_full_info = pd.merge(self.df_bkg_119_full_info, self.df_energy_119_tab, on='Pressure [bara]', how="inner")
-        print('self.df_bkg_116_full_info.columns',self.df_bkg_116_full_info.columns)
+        # print('self.df_bkg_116_full_info.columns',self.df_bkg_116_full_info.columns)
         if mode == "Seitz":
             ax.plot(self.df_bkg_116_full_info['Seitz [keV]'], self.df_bkg_116_full_info['Cs Rejection Uplimit Scattering []'],
                        color="gray")
-            ax.plot(self.df_bkg_116_full_info['Seitz [keV]'], self.df_bkg_116_full_info['Co Rejection Uplimit Scattering []'],
-                       color="gray")
+            # ax.plot(self.df_bkg_116_full_info['Seitz [keV]'], self.df_bkg_116_full_info['Co Rejection Uplimit Scattering []'],
+            #            color="gray")
 
             ax.plot(self.df_bkg_119_full_info['Seitz [keV]'], self.df_bkg_119_full_info['Cs Rejection Uplimit Scattering []'],
                     color="gray")
-            ax.plot(self.df_bkg_119_full_info['Seitz [keV]'], self.df_bkg_119_full_info['Co Rejection Uplimit Scattering []'],
-                    color="gray")
+            # ax.plot(self.df_bkg_119_full_info['Seitz [keV]'], self.df_bkg_119_full_info['Co Rejection Uplimit Scattering []'],
+            #         color="gray")
         elif mode =="Eion":
             ax.plot(self.df_bkg_116_full_info['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_bkg_116_full_info['Cs Rejection Uplimit KeV [/keV]'],
                     color="gray")
-            ax.plot(self.df_bkg_116_full_info['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_bkg_116_full_info['Co Rejection Uplimit KeV [/keV]'],
-                    color="gray")
+            # ax.plot(self.df_bkg_116_full_info['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_bkg_116_full_info['Co Rejection Uplimit KeV [/keV]'],
+            #         color="gray")
 
             ax.plot(self.df_bkg_119_full_info['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_bkg_119_full_info['Cs Rejection Uplimit KeV [/keV]'],
                     color="gray")
-            ax.plot(self.df_bkg_119_full_info['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_bkg_119_full_info['Co Rejection Uplimit KeV [/keV]'],
-                    color="gray")
+            # ax.plot(self.df_bkg_119_full_info['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_bkg_119_full_info['Co Rejection Uplimit KeV [/keV]'],
+            #         color="gray")
 
 
     def spectrums_plot(self):
