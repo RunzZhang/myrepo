@@ -26,7 +26,7 @@ class ReadRoot:
         # self.signal_path_mid = self.base_path + self.signal_mid
         # self.signal_path = self.base_path + self.signal
 
-        self.filepath = self.base_path + "dmx_Co_gamma_25E5_1332.root"
+        self.filepath = self.base_path + "dmx_Co_1172_25E6.root"
         # self.filepath = self.base_path + "dmx_AmLi.root" # test
         self.tree_name = "tree"  # Assuming your TTree is named "tree"
 
@@ -37,9 +37,9 @@ class ReadRoot:
                                  "PostKinetic/MeV",
                                  "Recoiled/MeV", "Volume", "Process"]
 
-    def chunk_and_write_root(self, num_chunks=20, output_dir=None):
+    def chunk_and_write_root(self, start_chunk_cum = 0,num_chunks=20, output_dir=None):
         if output_dir is None:
-            output_dir = os.path.join(self.base_path, "chunked_root_files_Co_5E6")
+            output_dir = os.path.join(self.base_path, "chunked_root_files_Co_50E6")
         os.makedirs(output_dir, exist_ok=True)
 
         with uproot.open(self.filepath) as file:
@@ -61,7 +61,7 @@ class ReadRoot:
             # Convert to dictionary format as required by uproot.recreate
             branch_types = {col: tree[col].interpretation.numpy_dtype for col in self.selected_columns}
 
-            chunk_num = 27
+            chunk_num = start_chunk_cum
             start_entry = 0
             # Iterate through the ROOT file in chunks
             for arrays in tree.iterate(expressions=self.selected_columns, library="pd", entry_start=0,
@@ -95,4 +95,4 @@ class ReadRoot:
 # Example usage:
 if __name__ == "__main__":
     reader = ReadRoot()
-    reader.chunk_and_write_root(num_chunks=25)
+    reader.chunk_and_write_root(start_chunk_cum=0,num_chunks=25)
