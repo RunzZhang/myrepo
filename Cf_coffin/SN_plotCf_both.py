@@ -830,7 +830,7 @@ class SN():
 
     def NR_multiplicity(self):
         rate_factor = 1000*self.rate*self.Activity/(self.original_Activity*self.G4_events) # /ms
-
+        print("initial df ", self.df_energy.head(10))
         # fill capture event energy
         self.TN_recoil_list = self.read_TN_R_spectrum()
         TN_array = np.array(self.TN_recoil_list)
