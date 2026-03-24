@@ -874,6 +874,7 @@ class SN():
             # print("edges", multiplicity_edges)
             multiplicity_rates = multiplicity_counts*rate_factor
             multiplicity_ratios = multiplicity_counts /multiplicity_counts[0]
+            print('multiplicity_ratios',multiplicity_ratios)
             multiplicity_width = multiplicity_edges[1]-multiplicity_edges[0]
             multiplicity_list.append((multiplicity_rates,multiplicity_edges,multiplicity_width,energy_threshold,multiplicity_ratios))
 
@@ -883,18 +884,20 @@ class SN():
 
 
 
-        fig, ax = plt.subplots(1,2, figsize=(10,4))
+        fig, ax = plt.subplots()
         for i in range(len(multiplicity_list)):
-            ax[0].plot(multiplicity_list[i][1][:-1], multiplicity_list[i][0],
+            ax.plot(multiplicity_list[i][1][:-1], multiplicity_list[i][0],
                    label="threshold " + str(multiplicity_list[i][3]) + " eV")
             # ax.bar(multiplicity_list[i][1][:-1], multiplicity_list[i][0], width=multiplicity_list[i][2], align="edge", label="threshold "+str(multiplicity_list[i][3])+" eV" )
-        ax[0].set_xlabel("Multiplicity")
-        ax[0].set_ylabel("Rate [mHz]")
+        ax.set_xlabel("Multiplicity")
+        ax.set_ylabel("Rate [mHz]")
         # ax.set_yscale("log")
-        ax[0].xaxis.set_major_locator(ticker.MultipleLocator(1))
-        ax[0].legend(fontsize='small')
+        ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
+        ax.legend(fontsize='small')
         print("threshold range", min_edge, max_edge)
         # ax[0].set_xlim(0,2000)
+        plt.savefig(self.plot_path + "Cf_1E7_multiplicity.pdf")
+        plt.clf()
 
         for i in range(len(multiplicity_list)):
             ax[0].plot(multiplicity_list[i][1][:-1], multiplicity_list[i][4],
@@ -905,9 +908,10 @@ class SN():
         # ax.set_yscale("log")
         ax[0].xaxis.set_major_locator(ticker.MultipleLocator(1))
         ax[0].legend(fontsize='small')
+        plt.savefig(self.plot_path + "Cf_1E7_ratio.pdf")
 
 
-        plt.savefig(self.plot_path+"Cf_1E7_multiplicity_n_ratio.pdf")
+
         print(self.plot_path)
     def NR_rate_zoomed(self, edges, rates):
         # edges are in eV and rates in mHz
