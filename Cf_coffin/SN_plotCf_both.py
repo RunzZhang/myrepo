@@ -764,6 +764,7 @@ class SN():
         rate_factor = 1000*self.rate*self.Activity/(self.original_Activity*self.G4_events) # /ms
 
         # # filter NR = 0 events
+        print("initial df ", self.df_energy.head(10))
         # self.df_energy = self.df_energy[self.df_energy["Recoiled/MeV"]>0]
         self.scatter = self.df_energy[self.df_energy["Process"].isin(['hadElastic', 'neutronInelastic'])]
         self.capture = self.df_energy[self.df_energy["Process"].isin(['nCapture'])]
