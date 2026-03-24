@@ -843,6 +843,7 @@ class SN():
         ]/1e6
 
         self.df_energy.loc[:,"Recoiled/eV"] = self.df_energy.loc[:,"Recoiled/MeV"]*1e6
+        print('len(self.df_energy)',len(self.df_energy))
         low_NR = self.df_energy[self.df_energy["Recoiled/eV"] <0.1]
         print('low_NR.head(10)',low_NR.head(10))
 
@@ -874,11 +875,10 @@ class SN():
             # print("edges", multiplicity_edges)
             multiplicity_rates = multiplicity_counts*rate_factor
             multiplicity_ratios = multiplicity_counts /multiplicity_counts[0]
-            print('multiplicity_ratios',multiplicity_ratios)
             multiplicity_width = multiplicity_edges[1]-multiplicity_edges[0]
             multiplicity_list.append((multiplicity_rates,multiplicity_edges,multiplicity_width,energy_threshold,multiplicity_ratios))
 
-            # calculate ratio instead of rate
+
 
 
 
