@@ -131,6 +131,7 @@ class SN():
             print("Fail to read geometry")
         try:
             temp_energy_df = pd.read_csv(self.signal_path)
+            print('temp_energy_df',temp_energy_df)
 
             self.df_energy_list.append(temp_energy_df)
 
