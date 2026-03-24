@@ -899,15 +899,16 @@ class SN():
         plt.savefig(self.plot_path + "Cf_1E7_multiplicity.pdf")
         plt.clf()
 
+        fig, ax = plt.subplots()
         for i in range(len(multiplicity_list)):
-            ax[0].plot(multiplicity_list[i][1][:-1], multiplicity_list[i][4],
+            ax.plot(multiplicity_list[i][1][:-1], multiplicity_list[i][4],
                    label="threshold " + str(multiplicity_list[i][3]) + " eV")
             # ax.bar(multiplicity_list[i][1][:-1], multiplicity_list[i][0], width=multiplicity_list[i][2], align="edge", label="threshold "+str(multiplicity_list[i][3])+" eV" )
-        ax[0].set_xlabel("Multiplicity")
-        ax[0].set_ylabel("Ratio []")
-        # ax.set_yscale("log")
-        ax[0].xaxis.set_major_locator(ticker.MultipleLocator(1))
-        ax[0].legend(fontsize='small')
+        ax.set_xlabel("Multiplicity")
+        ax.set_ylabel("Ratio []")
+        # set_yscale("log")
+        ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
+        ax.legend(fontsize='small')
         plt.savefig(self.plot_path + "Cf_1E7_ratio.pdf")
 
 
