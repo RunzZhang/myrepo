@@ -849,7 +849,7 @@ class SN():
 
         multiplicity_list = []
         # for i in range(0,bin_n):
-        for i in range(1, 20,5):
+        for i in range(1, 20,1):
             energy_threshold = min_edge+ i*100
             energy_mask = self.df_energy["Recoiled/eV"]>= energy_threshold
             df = self.df_energy.loc[energy_mask,:]
@@ -867,6 +867,9 @@ class SN():
             multiplicity_rates = multiplicity_counts*rate_factor
             multiplicity_width = multiplicity_edges[1]-multiplicity_edges[0]
             multiplicity_list.append((multiplicity_rates,multiplicity_edges,multiplicity_width,energy_threshold))
+
+            # calculate ratio instead of rate
+
 
 
 
