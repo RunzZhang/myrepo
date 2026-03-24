@@ -856,7 +856,7 @@ class SN():
 
         multiplicity_list = []
         # for i in range(0,bin_n):
-        for i in range(0, 20,1):
+        for i in range(0, 20,3):
             energy_threshold = min_edge+ i*100 # every 100 eV
 
             energy_mask = (self.df_energy["Recoiled/eV"]>= energy_threshold)
