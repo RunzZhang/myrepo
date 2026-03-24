@@ -305,7 +305,7 @@ class ReadRoot():
         self.LAr_capture = self.LAr_capture[["Event","Parent ID", "Process","Recoiled/MeV"]]
 
 
-        self.NR = pd.concat([self.LAr_scatter,self.LAr_capture], axis=1)
+        self.NR = pd.concat([self.LAr_scatter,self.LAr_capture], axis=0)
         print('self.NR',self.NR)
         # for capture, it is determined by the recoil spectrum
         self.NR.to_csv(self.signal_path, index= False)
