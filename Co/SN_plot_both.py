@@ -11,8 +11,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_5E6/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_5E6/" # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_50E6/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_50E6/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -82,7 +82,7 @@ class SN():
         self.gamma_rate = 2*7.31e4 # /s
 
 
-        self.G4_events_gamma =  5E6 # only 50 chunks
+        self.G4_events_gamma =  50E6 # only 50 chunks
         self.ambient_bubble = 5 # /h
 
 
