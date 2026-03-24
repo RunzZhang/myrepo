@@ -10,7 +10,7 @@ class integrated_analysis():
 
         self.output_path = '/data/runzezhang/result/gamma_rejection/'
         self.plot_path = '/data/runzezhang/result/gamma_rejection/plot/'
-        self.Co_sim_path  ='/data/runzezhang/result/TN_sims_D/Co_output.pkl'
+        self.Co_sim_path  ='/data/runzezhang/result/TN_sims_D/Co_output_5E7.pkl'
         self.Cs_sim_path = '/data/runzezhang/result/TN_sims_D/Cs_output.pkl'
 
         self.Cs_exp_116_raw_path = ["Cold-Cs-11_17-18_exposures_mix","Cold-Cs-12_01_exposures_mix",
@@ -68,8 +68,8 @@ class integrated_analysis():
 
         # plot
         # self.bkg_plot()
-        self.gamma_rejection_plot()
-        # self.spectrums_plot()
+        # self.gamma_rejection_plot()
+        self.spectrums_plot()
 
 
     def generate_path(self):
