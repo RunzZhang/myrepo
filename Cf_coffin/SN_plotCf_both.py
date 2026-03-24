@@ -849,6 +849,7 @@ class SN():
         min_edge = round(min_energy/100,0)*100
         max_edge = (round(max_energy / 100, 0)+1) * 100
         bin_n = int((max_edge-min_edge)/100)
+        print('min_edge, max_edge, bin_n',min_edge, max_edge, bin_n)
 
         multiplicity_list = []
         # for i in range(0,bin_n):
