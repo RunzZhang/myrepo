@@ -841,7 +841,8 @@ class SN():
         ]/1e6
 
         self.df_energy.loc[:,"Recoiled/eV"] = self.df_energy.loc[:,"Recoiled/MeV"]*1e6
-        self.df_energy = self.df_energy[self.df_energy["Recoiled/eV"] > 0]
+        low_NR = self.df_energy[self.df_energy["Recoiled/eV"] <0.1]
+        print('low_NR.head(10)',low_NR.head(10))
 
         # generate filter for different threshold every 100 eV
         max_energy = max(self.df_energy["Recoiled/eV"])
@@ -854,9 +855,9 @@ class SN():
         multiplicity_list = []
         # for i in range(0,bin_n):
         for i in range(0, 20,1):
-            # energy_threshold = min_edge+ i*100 # every 100 eV
-            energy_threshold = min_edge + i * 0.1  # every 1 eV
-            energy_mask = (self.df_energy["Recoiled/eV"]> energy_threshold)
+            energy_threshold = min_edge+ i*100 # every 100 eV
+
+            energy_mask = (self.df_energy["Recoiled/eV"]>= energy_threshold)
             df = self.df_energy.loc[energy_mask,:]
             # calculate the multiplicity and rate
             multiplicity = df.groupby("Event").size().tolist()
