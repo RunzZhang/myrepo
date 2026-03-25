@@ -875,8 +875,11 @@ class SN():
             # print("edges", multiplicity_edges)
             multiplicity_rates = multiplicity_counts*rate_factor
             multiplicity_ratios = multiplicity_counts /multiplicity_counts[0]
+            multiplicity_sigma = multiplicity_counts*rate_factor/np.sqrt(multiplicity_counts)
+            ratio_sigma  = (np.sqrt(multiplicity_counts)*multiplicity_counts[0]+multiplicity_counts*np.sqrt(multiplicity_counts[0]))/(multiplicity_counts[0])**2
+            print('len(multiplicity_ratios),len(multiplicity_sigma),len(ratio_sigma)',len(multiplicity_ratios),len(multiplicity_sigma),len(ratio_sigma))
             multiplicity_width = multiplicity_edges[1]-multiplicity_edges[0]
-            multiplicity_list.append((multiplicity_rates,multiplicity_edges,multiplicity_width,energy_threshold,multiplicity_ratios))
+            multiplicity_list.append((multiplicity_rates,multiplicity_edges,multiplicity_width,energy_threshold,multiplicity_ratios,multiplicity_sigma,ratio_sigma))
 
 
 
@@ -886,8 +889,10 @@ class SN():
 
         fig, ax = plt.subplots()
         for i in range(len(multiplicity_list)):
-            ax.plot(multiplicity_list[i][1][:-1], multiplicity_list[i][0],
-                   label="threshold " + str(multiplicity_list[i][3]) + " eV")
+            # ax.plot(multiplicity_list[i][1][:-1], multiplicity_list[i][0],
+            #        label="threshold " + str(multiplicity_list[i][3]) + " eV")
+            ax.errorbar(multiplicity_list[i][1][:-1], multiplicity_list[i][0],
+                           yerr=multiplicity_list[i][5], label="threshold " + str(multiplicity_list[i][3]) + " eV")
             # ax.bar(multiplicity_list[i][1][:-1], multiplicity_list[i][0], width=multiplicity_list[i][2], align="edge", label="threshold "+str(multiplicity_list[i][3])+" eV" )
         ax.set_xlabel("Multiplicity")
         ax.set_ylabel("Rate [mHz]")
@@ -903,6 +908,8 @@ class SN():
         for i in range(len(multiplicity_list)):
             ax.plot(multiplicity_list[i][1][:-1], multiplicity_list[i][4],
                    label="threshold " + str(multiplicity_list[i][3]) + " eV")
+            ax.errorbar(multiplicity_list[i][1][:-1], multiplicity_list[i][4],
+                        yerr=multiplicity_list[i][6], label="threshold " + str(multiplicity_list[i][3]) + " eV")
             # ax.bar(multiplicity_list[i][1][:-1], multiplicity_list[i][0], width=multiplicity_list[i][2], align="edge", label="threshold "+str(multiplicity_list[i][3])+" eV" )
         ax.set_xlabel("Multiplicity")
         ax.set_ylabel("Ratio []")
