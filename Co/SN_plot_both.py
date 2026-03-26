@@ -349,7 +349,7 @@ class SN():
                   edgecolor="black")
         bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
         ax[0].set_xlabel("ER/keV threshold per deposition in LAr")
-        ax[0].set_ylabel(" Rate mHz")
+        ax[0].set_ylabel("ER Rate mHz")
         # ax[0].ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
         ax[0].set_yscale("log")
         ax[0].minorticks_on()
