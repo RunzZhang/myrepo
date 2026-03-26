@@ -315,9 +315,10 @@ class SN():
 
         Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
         ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000
-        print('max(ER_Ar)',max(ER_Ar))
         ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
         ER_sum = self.merged_df["ER_near/eV"] / 1000
+        print('max(ER_Ar)', max(ER_Ar))
+        print('max(ER_CF4)', max(ER_CF4))
 
         hist_array = [None] * 3
 
