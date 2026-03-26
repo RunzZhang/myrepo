@@ -105,7 +105,7 @@ class SN():
         # ER distribution per row
         # self.read_ER_Ar_CF()
         # self.read_ER_Ar_CF_per_deposit_rate()
-        # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
+        self.read_ER_Ar_CF_per_deposit_rate_cumulative()
         # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
         # self.read_ER_Ar_CF_2d_sum()
@@ -117,7 +117,7 @@ class SN():
         # self.gamma_rejection_rate_per_keV_vs_Setiz()
         # self.gamma_rejection_rate_vs_Setiz()
 
-        self.write_sims_results()
+        # self.write_sims_results()
 
 
 
@@ -332,6 +332,7 @@ class SN():
         print("argon bin", hist_array[0][1][:4])
         print("argon rate", Rate_factor * cumulative_threshold_array[0][:3])
         # find if compton edge exist in LAr cumulative spectrum
+        print("argon maximum energy", max(hist_array[0][1][:-1]))
         for j in range(len(cumulative_threshold_array[0])):
             if hist_array[0][1][j]>500:
                 print("500 keV edge Ar",cumulative_threshold_array[0][j])
