@@ -906,8 +906,8 @@ class SN():
 
         fig, ax = plt.subplots()
         for i in range(len(multiplicity_list)):
-            ax.plot(multiplicity_list[i][1][:-1], multiplicity_list[i][4],
-                   label="threshold " + str(multiplicity_list[i][3]) + " eV")
+            # ax.plot(multiplicity_list[i][1][:-1], multiplicity_list[i][4],
+            #        label="threshold " + str(multiplicity_list[i][3]) + " eV")
             ax.errorbar(multiplicity_list[i][1][:-1], multiplicity_list[i][4],
                         yerr=multiplicity_list[i][6], label="threshold " + str(multiplicity_list[i][3]) + " eV")
             # ax.bar(multiplicity_list[i][1][:-1], multiplicity_list[i][0], width=multiplicity_list[i][2], align="edge", label="threshold "+str(multiplicity_list[i][3])+" eV" )
