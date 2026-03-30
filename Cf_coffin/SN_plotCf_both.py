@@ -901,7 +901,7 @@ class SN():
         ax.legend(fontsize='small')
         print("threshold range", min_edge, max_edge)
         # ax[0].set_xlim(0,2000)
-        plt.savefig(self.plot_path + "Cf_1E7_multiplicity.pdf")
+        plt.savefig(self.plot_path + "Cf_1E7_multiplicity_config_A.pdf")
         plt.clf()
 
         fig, ax = plt.subplots()
@@ -916,7 +916,7 @@ class SN():
         # set_yscale("log")
         ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
         ax.legend(fontsize='small')
-        plt.savefig(self.plot_path + "Cf_1E7_ratio.pdf")
+        plt.savefig(self.plot_path + "Cf_1E7_ratio_config_A.pdf")
 
 
 
