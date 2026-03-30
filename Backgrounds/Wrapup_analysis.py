@@ -424,7 +424,7 @@ class integrated_analysis():
         ax[0].set_ylabel("Exp Rate [mHz]")
         ax[0].set_title("Check with exp rate")
         ax[0].set_xlim(1.75,5.25)
-        ax[0].set_ylim(10, 140)
+        ax[0].set_ylim(10, 100)
         ax[0].legend()
 
         ax[1].set_xlabel("Seitz [eV]")
