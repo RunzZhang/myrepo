@@ -12,6 +12,8 @@ class integrated_analysis():
         self.plot_path = '/data/runzezhang/result/gamma_rejection/plot/'
         self.Co_sim_path  ='/data/runzezhang/result/TN_sims_D/Co_output_5E7.pkl'
         self.Cs_sim_path = '/data/runzezhang/result/TN_sims_D/Cs_output.pkl'
+        self.Cf_simA_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_A.pkl'
+        self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_B.pkl'
 
         self.Cs_exp_116_raw_path = ["Cold-Cs-11_17-18_exposures_mix","Cold-Cs-12_01_exposures_mix",
                                     "Cold-Cs-12_10-11_exposures_mix","Cold-Cs-1_20-21_exposures_mix"]
@@ -21,6 +23,12 @@ class integrated_analysis():
         self.Co_exp_116_raw_path = ["60Co-12_15-16_exposures"]
         self.Co_exp_116_raw_len = len(self.Co_exp_116_raw_path)
         self.Co_exp_119_raw_path = []
+        self.Co_exp_119_raw_len = len(self.Co_exp_119_raw_path)
+        self.Cf_exp_116A_raw_path = ['252Cf-Coffin-A-1_7-8_exposures']
+        self.Cf_exp_116A_raw_len = len(self.Cf_exp_116A_raw_path)
+        self.Cf_exp_116B_raw_path = ['252Cf-Coffin-B-1_8-9_exposures']
+        self.Cf_exp_116B_raw_len = len(self.Cf_exp_116B_raw_path)
+
         self.background_116_sorted_path = ['Background-11_7-8_exposures',"Background-11_15-17_exposures",
                                     "Background-11_26-30_exposures", "Background-12_5-8_exposures",
                                     'Background-1_12-13_exposures','Background-1_17-20_exposures']
@@ -49,6 +57,8 @@ class integrated_analysis():
         # read experimental txt file, drop the non-sense values, and write to clean dataframe
         self.read_raw_Co_exp()
         self.read_raw_Cs_exp()
+        self.read_raw_Cf_exp()
+
         self.read_raw_backgrounds_exp()
 
         # caculate the average background
@@ -60,6 +70,8 @@ class integrated_analysis():
         # also caculate the clean signal and signal uncerntainty
         self.clean_signal_analysis()
 
+        # Cf
+        self.clean_NR_signal_analysis()
 
         # based on sims and clean signal rate, calculate gamma rejection
         self.gamma_rejection_calculation()
@@ -75,8 +87,12 @@ class integrated_analysis():
     def generate_path(self):
         self.Co_exp_sorted_path = []
         self.Cs_exp_sorted_path = []
+        self.Cf_expA_sorted_path = []
+        self.Cf_expB_sorted_path = []
         self.Co_exp_rate_path = []
         self.Cs_exp_rate_path = []
+        self.Cf_expA_rate_path = []
+        self.Cf_expB_rate_path = []
         self.Co_exp_rejection_path = []
         self.Cs_exp_rejection_path = []
         self.Bkg_exp_sorted_path = []
@@ -87,14 +103,27 @@ class integrated_analysis():
         self.Bkg_average_116_full_info_path = self.output_path + "background_116_average_full_info" + ".csv"
         self.Bkg_average_119_full_info_path = self.output_path + "background_119_average_full_info" + ".csv"
 
+
         for exp_name in self.Co_exp_raw_path:
             self.Co_exp_sorted_path.append(self.output_path + exp_name+"_sorted.csv")
         for exp_name in self.Cs_exp_raw_path:
             self.Cs_exp_sorted_path.append(self.output_path + exp_name+"_sorted.csv")
+        # Cf
+        for exp_name in self.Cf_exp_116A_raw_path:
+            self.Cf_expA_sorted_path.append(self.output_path + exp_name+"_sorted.csv")
+        for exp_name in self.Cf_exp_116B_raw_path:
+            self.Cf_expB_sorted_path.append(self.output_path + exp_name+"_sorted.csv")
+
         for exp_name in self.Co_exp_raw_path:
             self.Co_exp_rate_path.append(self.output_path + exp_name+"_rate.csv")
         for exp_name in self.Cs_exp_raw_path:
             self.Cs_exp_rate_path.append(self.output_path + exp_name+"_rate.csv")
+
+        for exp_name in self.Cf_exp_116A_raw_path:
+            self.Cf_expA_rate_path.append(self.output_path + exp_name+"_rate.csv")
+        for exp_name in self.Cf_exp_116B_raw_path:
+            self.Cf_expB_rate_path.append(self.output_path + exp_name+"_rate.csv")
+
         for exp_name in self.Co_exp_raw_path:
             self.Co_exp_rejection_path.append(self.output_path + exp_name+"_rejection.csv")
         for exp_name in self.Cs_exp_raw_path:
@@ -110,6 +139,15 @@ class integrated_analysis():
         with open(self.Cs_sim_path, "rb") as f:
             self.Cs_sims = pickle.load(f)
         print("self.Cs_sims",self.Cs_sims)
+
+        with open(self.Cf_simA_path, "rb") as f:
+            self.Cf_simsA = pickle.load(f)
+        print("self.Cf_simsA",self.Cf_simsA)
+
+        with open(self.Cf_simB_path, "rb") as f:
+            self.Cf_simsB = pickle.load(f)
+        print("self.Cf_simsB",self.Cf_simsB)
+
     def read_raw_Cs_exp(self):
         # read file, delete unreasonable rows and rewrite
         for i in range(len(self.Cs_exp_raw_path)):
@@ -139,6 +177,37 @@ class integrated_analysis():
             exposure_df = exposure_df.drop(columns=['Exponential Fit 2xNLL',
                                                     'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]'])
             exposure_df.to_csv(self.Co_exp_sorted_path[i],index=False)
+
+    def read_raw_Cf_exp(self):
+        # read file, delete unreasonable rows and rewrite
+        for i in range(len(self.Cf_exp_116A_raw_path)):
+            exposure_df = self.read_exposure(self.Cf_exp_116A_raw_path[i] + ".txt")
+            exposure_df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]','Exponential Fit 2xNLL','N.d.o.f.','Time Cut High [s]','Time Cut Low [s]']
+            exposure_df = exposure_df[(exposure_df['Lifetime [s]'] <=6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
+            exposure_df = exposure_df[
+                (exposure_df['Lifetime Error [s]']/exposure_df['Lifetime [s]'] <= 0.3)]
+            exposure_df['Exp Rate [mHz]'] = 1000 / exposure_df['Lifetime [s]']
+            exposure_df['Exp Rate Sigma [mHz]'] = exposure_df['Lifetime Error [s]'] * 1000 / (
+            exposure_df['Lifetime [s]']) ** 2
+
+            exposure_df = exposure_df.drop(columns=['Exponential Fit 2xNLL',
+                                                    'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]'])
+            exposure_df.to_csv(self.Cf_expA_sorted_path[i],index=False)
+
+
+        for i in range(len(self.Cf_exp_116B_raw_path)):
+            exposure_df = self.read_exposure(self.Cf_exp_116B_raw_path[i] + ".txt")
+            exposure_df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]','Exponential Fit 2xNLL','N.d.o.f.','Time Cut High [s]','Time Cut Low [s]']
+            exposure_df = exposure_df[(exposure_df['Lifetime [s]'] <=6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
+            exposure_df = exposure_df[
+                (exposure_df['Lifetime Error [s]']/exposure_df['Lifetime [s]'] <= 0.3)]
+            exposure_df['Exp Rate [mHz]'] = 1000 / exposure_df['Lifetime [s]']
+            exposure_df['Exp Rate Sigma [mHz]'] = exposure_df['Lifetime Error [s]'] * 1000 / (
+            exposure_df['Lifetime [s]']) ** 2
+
+            exposure_df = exposure_df.drop(columns=['Exponential Fit 2xNLL',
+                                                    'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]'])
+            exposure_df.to_csv(self.Cf_expB_sorted_path[i],index=False)
 
     def read_raw_backgrounds_exp(self):
         # read file, delete unreasonable rows and rewrite
@@ -283,6 +352,85 @@ class integrated_analysis():
 
             merged_df.to_csv(self.Co_exp_rate_path[i], index=False)
 
+    def clean_NR_signal_analysis(self):
+        self.df_bkg_116 = pd.read_csv(self.Bkg_average_116_path)
+        # self.df_bkg_116.columns = ['Pressure [bara]','Bkg Lifetime [s]','Bkg Lifetime Error [s]','Bkg Rate [mHz]', 'Bkg Rate Sigma [mHz]']
+        self.df_bkg_116 = self.df_bkg_116.rename(columns={
+            'Lifetime [s]': 'Bkg Lifetime [s]',
+            'Lifetime Error [s]': 'Bkg Lifetime Error [s]'
+        })
+        self.df_bkg_119 =  pd.read_csv(self.Bkg_average_119_path)
+        # self.df_bkg_119.columns = ['Pressure [bara]', 'Bkg Lifetime [s]', 'Bkg Lifetime Error [s]','Bkg Rate [mHz]', 'Bkg Rate Sigma [mHz]']
+        self.df_bkg_119 = self.df_bkg_116.rename(columns={
+            'Lifetime [s]': 'Bkg Lifetime [s]',
+            'Lifetime Error [s]': 'Bkg Lifetime Error [s]'
+        })
+        # first these are 116
+        self.Cf_116A_data = []
+        self.Cf_116B_data = []
+        # print('self.Cs_exp_sorted_path',self.Cs_exp_sorted_path)
+        for i in range(0,self.Cf_exp_116A_raw_len):
+            print("Cf 116K A", self.Cf_expA_rate_path[i])
+            exposure_df = pd.read_csv(self.Cf_expA_sorted_path[i])
+            # merge both has the pressure value, on pressure
+            merged_df = pd.merge(self.df_bkg_116,exposure_df,on='Pressure [bara]', how="inner")
+            # clean rate!
+            merged_df['Clean Rate [mHz]'] = merged_df['Exp Rate [mHz]'] - merged_df['Bkg Rate [mHz]']
+            merged_df['Clean Rate Sigma [mHz]'] = np.sqrt(merged_df['Exp Rate Sigma [mHz]']**2 + merged_df['Bkg Rate Sigma [mHz]']**2)
+            # add Seitz and Eion unit
+            merged_df = pd.merge(merged_df, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
+            # add sims analysis to get rejection
+
+            merged_df.to_csv(self.Cf_expA_rate_path[i], index=False)
+
+        for i in range(0,self.Cf_exp_116B_raw_len):
+            print("Cf 116K B", self.Cf_expB_rate_path[i])
+            exposure_df = pd.read_csv(self.Cf_expB_sorted_path[i])
+            # merge both has the pressure value, on pressure
+            merged_df = pd.merge(self.df_bkg_116,exposure_df,on='Pressure [bara]', how="inner")
+            # clean rate!
+            merged_df['Clean Rate [mHz]'] = merged_df['Exp Rate [mHz]'] - merged_df['Bkg Rate [mHz]']
+            merged_df['Clean Rate Sigma [mHz]'] = np.sqrt(merged_df['Exp Rate Sigma [mHz]']**2 + merged_df['Bkg Rate Sigma [mHz]']**2)
+            # add Seitz and Eion unit
+            merged_df = pd.merge(merged_df, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
+            # add sims analysis to get rejection
+
+            merged_df.to_csv(self.Cf_expB_rate_path[i], index=False)
+
+        fig, ax = plt.subplots(1, 2, figsize=(10, 4))
+        # 1 plot to compare with original data Gray had, 2 to plot the spectrum with clean data comparasion
+        for i in range(len(self.Cf_expA_rate_path)):
+            exp_df = pd.read_csv(self.Cf_expA_rate_path[i])
+            if i==0:
+                ax[0].errorbar(exp_df['Pressure [bara]'], exp_df["Bkg Rate [mHz]"],
+                               yerr=exp_df['Bkg Rate Sigma [mHz]'], label="combined bkg 116.7 K ", fmt='o', color='blue')
+            ax[0].errorbar(exp_df['Pressure [bara]'],exp_df["Exp Rate [mHz]"],
+                   yerr = exp_df["Exp Rate Sigma [mHz]"], label=f"Cf config A {i}",fmt = 'o')
+            ax[1].errorbar(exp_df["Seitz [keV]"],exp_df["Clean Rate [mHz]"],
+                   yerr = exp_df["Clean Rate Sigma [mHz]"], label=f"Cf config A {i}",fmt = 'o')
+
+        for i in range(len(self.Cf_expB_rate_path)):
+            exp_df = pd.read_csv(self.Cf_expB_rate_path[i])
+            ax[0].errorbar(exp_df['Pressure [bara]'],exp_df["Exp Rate [mHz]"],
+                   yerr = exp_df["Exp Rate Sigma [mHz]"], label=f"Cf config B {i}",fmt = 'o')
+            ax[1].errorbar(exp_df["Seitz [keV]"],exp_df["Clean Rate [mHz]"],
+                   yerr = exp_df["Clean Rate Sigma [mHz]"], label=f"Cf config B {i}",fmt = 'o')
+
+
+        ax[1].plot(self.Cf_simsA[1][0][1],self.Cf_simsA[0]*self.Cf_simsA[2], labels='Cf confiA spectrum')
+        ax[1].plot(self.Cf_simsB[1][0][1], self.Cf_simsB[0] * self.Cf_simsB[2], labels='Cf confiA spectrum')
+
+        ax[0].set_xlabel('Pressure [bara]')
+        ax[0].set_ylabel("Exp Rate [mHz]")
+        ax[0].set_title("Check with exp rate")
+        ax[0].legend()
+
+        ax[1].set_xlabel("Seitz [keV]")
+        ax[1].set_ylabel("Clean Rate [mHz]")
+        ax[1].set_title("Clean Rate Compare with sims")
+        ax[1].legend()
+
+        plt.savefig(self.plot_path + "Cf_abs_rate_comparison.pdf")
 
     def read_Seitz_info(self):
         Seitz_pressure_list = np.arange(1.25, 6.5, 0.25)

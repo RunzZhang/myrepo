@@ -88,7 +88,7 @@ class SN():
 
 
         self.read_files()
-
+        self.write_sims_results()
 
         # self.read_files_s_to_N1()
 
@@ -833,6 +833,7 @@ class SN():
         rate_factor = 1000*self.rate*self.Activity/(self.original_Activity*self.G4_events) # /ms
         print("initial df ", self.df_energy.head(10))
         # fill capture event energy
+
         self.TN_recoil_list = self.read_TN_R_spectrum()
         TN_array = np.array(self.TN_recoil_list)
         capture_mask = self.df_energy["Process"].isin(['nCapture'])
@@ -881,12 +882,6 @@ class SN():
             multiplicity_width = multiplicity_edges[1]-multiplicity_edges[0]
             multiplicity_list.append((multiplicity_rates,multiplicity_edges,multiplicity_width,energy_threshold,multiplicity_ratios,multiplicity_sigma,ratio_sigma))
 
-
-
-
-
-
-
         fig, ax = plt.subplots()
         for i in range(len(multiplicity_list)):
             # ax.plot(multiplicity_list[i][1][:-1], multiplicity_list[i][0],
@@ -913,6 +908,7 @@ class SN():
             # ax.bar(multiplicity_list[i][1][:-1], multiplicity_list[i][0], width=multiplicity_list[i][2], align="edge", label="threshold "+str(multiplicity_list[i][3])+" eV" )
         ax.set_xlabel("Multiplicity")
         ax.set_ylabel("Ratio []")
+
         # set_yscale("log")
         ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
         ax.legend(fontsize='small')
@@ -931,7 +927,53 @@ class SN():
         ax.set_ylim(0,140)
         plt.savefig(self.plot_path + "Cf_1E7_NR_zoomed.pdf")
 
+    def write_sims_results(self):
+        # rate factor in mHz
 
+
+
+        rate_factor = 1000 * self.rate * self.Activity / (self.original_Activity * self.G4_events)  # /ms
+        print("initial df ", self.df_energy.head(10))
+        # fill capture event energy
+
+        self.TN_recoil_list = self.read_TN_R_spectrum()
+        TN_array = np.array(self.TN_recoil_list)
+        capture_mask = self.df_energy["Process"].isin(['nCapture'])
+        n = capture_mask.sum()
+
+        self.df_energy.loc[capture_mask, 'Recoiled/MeV'] = TN_array[
+                                                               np.random.randint(0, len(TN_array), size=n)
+                                                           ] / 1e6
+
+        self.df_energy.loc[:, "Recoiled/eV"] = self.df_energy.loc[:, "Recoiled/MeV"] * 1e6
+
+        NR_Ar = self.df_energy["Recoiled/eV"]   # in eV
+
+
+        print("max(ER_Ar)", max(NR_Ar))
+        hist_array = [None]
+        hist_array[0] = np.histogram(NR_Ar, bins=350, range=(0, 3500))
+
+        # transfer edge to mid point per bin
+
+        # get probablity per scattering and the statistics
+        cumulative_threshold_per_scatter_array = [None]
+
+        cumulative_threshold_per_scatter_array[0] = np.array(
+            [sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))])
+
+        # histogram per scattering per keV
+        cumulative_threshold_array = [None]
+        energy_deposit_list = [hist_array[0][0][i] * hist_array[0][1][i] for i in range(len(hist_array[0][0]))]
+
+        cumulative_threshold_array[0] = np.array(
+            [sum(energy_deposit_list[i:]) for i in range(len(energy_deposit_list))])
+        print("total count* energy Cf", cumulative_threshold_per_scatter_array[0][0],cumulative_threshold_per_scatter_array[0][0]/cumulative_threshold_array[0][0])
+
+        output_list = [rate_factor ,hist_array, cumulative_threshold_per_scatter_array[0], cumulative_threshold_array[0]]
+        # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* energy above the bin edge
+        with open("/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_A.pkl", "wb") as f:
+            pickle.dump(output_list, f)
 
     def NucleationEfficiencyTrue(self, r, T, sigLow, sigUp):
         if r < T:
