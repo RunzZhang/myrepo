@@ -406,14 +406,14 @@ class integrated_analysis():
                                yerr=exp_df['Bkg Rate Sigma [mHz]'], label="combined bkg 116.7 K ", fmt='o', color='blue')
             ax[0].errorbar(exp_df['Pressure [bara]'],exp_df["Exp Rate [mHz]"],
                    yerr = exp_df["Exp Rate Sigma [mHz]"], label=f"Cf config A {i}",fmt = 'o')
-            ax[1].errorbar(exp_df["Seitz [keV]"],exp_df["Clean Rate [mHz]"],
+            ax[1].errorbar(exp_df["Seitz [keV]"]*1000,exp_df["Clean Rate [mHz]"],
                    yerr = exp_df["Clean Rate Sigma [mHz]"], label=f"Cf config A {i}",fmt = 'o')
 
         for i in range(len(self.Cf_expB_rate_path)):
             exp_df = pd.read_csv(self.Cf_expB_rate_path[i])
             ax[0].errorbar(exp_df['Pressure [bara]'],exp_df["Exp Rate [mHz]"],
                    yerr = exp_df["Exp Rate Sigma [mHz]"], label=f"Cf config B {i}",fmt = 'o')
-            ax[1].errorbar(exp_df["Seitz [keV]"],exp_df["Clean Rate [mHz]"],
+            ax[1].errorbar(exp_df["Seitz [keV]"]*1000,exp_df["Clean Rate [mHz]"],
                    yerr = exp_df["Clean Rate Sigma [mHz]"], label=f"Cf config B {i}",fmt = 'o')
 
 
@@ -423,9 +423,11 @@ class integrated_analysis():
         ax[0].set_xlabel('Pressure [bara]')
         ax[0].set_ylabel("Exp Rate [mHz]")
         ax[0].set_title("Check with exp rate")
+        ax[0].set_xlim(1.75,5.25)
+        ax[0].set_ylim(10, 140)
         ax[0].legend()
 
-        ax[1].set_xlabel("Seitz [keV]")
+        ax[1].set_xlabel("Seitz [eV]")
         ax[1].set_ylabel("Clean Rate [mHz]")
         ax[1].set_title("Clean Rate Compare with sims")
         ax[1].legend()
