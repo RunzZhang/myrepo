@@ -11,6 +11,9 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
+
+        ## change config A to B
+        # replace sourcetube_A and config_A
         self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/"
         self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/" # for gamma path
 
@@ -49,6 +52,7 @@ class SN():
         # self.main_body(1)
         # self.check_geometry()
         # self.NR_spectrum()
+        self.write_sims_results()
         self.NR_multiplicity()
         # for ploting PN background tagging and SNR
         # self.untagged_bubble_rate()
@@ -88,7 +92,7 @@ class SN():
 
 
         self.read_files()
-        self.write_sims_results()
+
 
         # self.read_files_s_to_N1()
 
@@ -951,8 +955,9 @@ class SN():
 
 
         print("max(ER_Ar)", max(NR_Ar))
+        max_Ar = max(NR_Ar)
         hist_array = [None]
-        hist_array[0] = np.histogram(NR_Ar, bins=350, range=(0, 3500))
+        hist_array[0] = np.histogram(NR_Ar, bins=int(max_Ar/10), range=(0, max_Ar))
 
         # transfer edge to mid point per bin
 
