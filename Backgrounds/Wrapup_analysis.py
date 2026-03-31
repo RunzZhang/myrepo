@@ -413,12 +413,12 @@ class integrated_analysis():
             exp_df = pd.read_csv(self.Cf_expB_rate_path[i])
             ax[0].errorbar(exp_df['Pressure [bara]'],exp_df["Exp Rate [mHz]"],
                    yerr = exp_df["Exp Rate Sigma [mHz]"], label=f"Cf config B {i}",fmt = 'o')
-            # ax[1].errorbar(exp_df["Seitz [keV]"]*1000,exp_df["Clean Rate [mHz]"],
-            #        yerr = exp_df["Clean Rate Sigma [mHz]"], label=f"Cf config B {i}",fmt = 'o')
+            ax[1].errorbar(exp_df["Seitz [keV]"]*1000,exp_df["Clean Rate [mHz]"],
+                   yerr = exp_df["Clean Rate Sigma [mHz]"], label=f"Cf config B {i}",fmt = 'o')
 
 
         ax[1].plot(self.Cf_simsA[1][0][1][:-1],self.Cf_simsA[0]*self.Cf_simsA[2], label='Cf configA spectrum')
-        ax[1].plot(self.Cf_simsB[1][0][1][:-1], self.Cf_simsB[0] * self.Cf_simsB[2], label='Cf configB spectrum')
+        # ax[1].plot(self.Cf_simsB[1][0][1][:-1], self.Cf_simsB[0] * self.Cf_simsB[2], label='Cf configB spectrum')
 
         ax[0].set_xlabel('Pressure [bara]')
         ax[0].set_ylabel("Exp Rate [mHz]")
