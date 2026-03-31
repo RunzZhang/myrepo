@@ -955,6 +955,7 @@ class SN():
 
 
         print("max(ER_Ar)", max(NR_Ar))
+        print('self.df_energy[self.df_energy["Recoiled/eV"]>1e5]',self.df_energy[self.df_energy["Recoiled/eV"]>1e5])
         max_Ar = max(NR_Ar)
         hist_array = [None]
         hist_array[0] = np.histogram(NR_Ar, bins=int(max_Ar/100), range=(0, max_Ar))
