@@ -430,7 +430,7 @@ class integrated_analysis():
         ax[1].set_xlabel("Seitz [eV]")
         ax[1].set_ylabel("Clean Rate [mHz]")
         ax[1].set_title("Clean Rate Compare with sims")
-        ax[0].set_xlim(0, 3500)
+        ax[1].set_xlim(0, 3500)
         ax[1].set_ylim(0,600)
         ax[1].legend()
 
