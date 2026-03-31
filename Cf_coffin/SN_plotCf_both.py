@@ -737,7 +737,7 @@ class SN():
         self.coffin["R/mm"] = np.sqrt(self.coffin["X/mm"] ** 2 + self.coffin["Y/mm"] ** 2)
 
 
-        ffig, ax = plt.subplots(1,2,figsize=(14,4))
+        ffig, ax = plt.subplots(1,2,figsize=(12,4))
 
         sc=ax[0].hist2d(self.df_geo["R/mm"],self.df_geo["Z/mm"],bins=50,
         cmap="plasma",norm="log",alpha=0.7)
