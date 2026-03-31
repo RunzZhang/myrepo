@@ -52,7 +52,7 @@ class SN():
         # self.main_body(1)
         # self.check_geometry()
         # self.NR_spectrum()
-        self.write_sims_results()
+        # self.write_sims_results()
         # self.NR_multiplicity()
         # for ploting PN background tagging and SNR
         # self.untagged_bubble_rate()
@@ -93,6 +93,7 @@ class SN():
 
         self.read_files()
 
+        self.write_sims_results()
 
         # self.read_files_s_to_N1()
 
@@ -934,9 +935,7 @@ class SN():
     def write_sims_results(self):
         # rate factor in mHz
 
-
-
-        rate_factor = 1000 * self.rate * self.Activity / (self.original_Activity * self.G4_events)  # /ms
+        rate_factor = 1000 * self.rate * self.Activity / (self.original_Activity * self.G4_events)  # mHz
         print("initial df ", self.df_energy.head(10))
         print("max(ER_Ar)", max(self.df_energy["Recoiled/MeV"]))
         # fill capture event energy
