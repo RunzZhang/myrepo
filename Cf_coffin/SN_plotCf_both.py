@@ -52,8 +52,8 @@ class SN():
         # self.main_body(1)
         self.check_geometry()
         # self.NR_spectrum()
-        self.write_sims_results()
-        # self.NR_multiplicity()
+        # self.write_sims_results()
+        self.NR_multiplicity()
         # for ploting PN background tagging and SNR
         # self.untagged_bubble_rate()
         # if self.gamma:
@@ -863,7 +863,7 @@ class SN():
 
         multiplicity_list = []
         # for i in range(0,bin_n):
-        for i in range(0, 20,3):
+        for i in range(0, 30,5):
             energy_threshold = min_edge+ i*100 # every 100 eV
 
             energy_mask = (self.df_energy["Recoiled/eV"]>= energy_threshold)
