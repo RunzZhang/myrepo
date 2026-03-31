@@ -431,7 +431,7 @@ class integrated_analysis():
         ax[1].set_ylabel("Clean Rate [mHz]")
         ax[1].set_title("Clean Rate Compare with sims")
         # ax[1].set_xlim(-1, 3500)
-        # ax[1].set_ylim(0,600)
+        # ax[1].set_ylim(0,220)
         ax[1].legend()
 
         plt.savefig(self.plot_path + "Cf_abs_rate_comparison.pdf")
