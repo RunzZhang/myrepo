@@ -51,7 +51,7 @@ class SN():
             self.main_body(i)
         # self.main_body(1)
         # self.check_geometry()
-        # self.NR_spectrum()
+        self.NR_spectrum()
         self.write_sims_results()
         self.NR_multiplicity()
         # for ploting PN background tagging and SNR
