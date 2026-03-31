@@ -51,9 +51,9 @@ class SN():
             self.main_body(i)
         # self.main_body(1)
         # self.check_geometry()
-        self.NR_spectrum()
+        # self.NR_spectrum()
         self.write_sims_results()
-        self.NR_multiplicity()
+        # self.NR_multiplicity()
         # for ploting PN background tagging and SNR
         # self.untagged_bubble_rate()
         # if self.gamma:
@@ -938,6 +938,7 @@ class SN():
 
         rate_factor = 1000 * self.rate * self.Activity / (self.original_Activity * self.G4_events)  # /ms
         print("initial df ", self.df_energy.head(10))
+        print("max(ER_Ar)", max(self.df_energy["Recoiled/MeV"]))
         # fill capture event energy
 
         self.TN_recoil_list = self.read_TN_R_spectrum()
