@@ -418,7 +418,7 @@ class integrated_analysis():
 
 
         ax[1].plot(self.Cf_simsA[1][0][1][:-1],self.Cf_simsA[0]*self.Cf_simsA[2], label='Cf configA spectrum')
-        # ax[1].plot(self.Cf_simsB[1][0][1][:-1], self.Cf_simsB[0] * self.Cf_simsB[2], label='Cf configB spectrum')
+        ax[1].plot(self.Cf_simsB[1][0][1][:-1], self.Cf_simsB[0] * self.Cf_simsB[2], label='Cf configB spectrum')
 
         ax[0].set_xlabel('Pressure [bara]')
         ax[0].set_ylabel("Exp Rate [mHz]")
@@ -431,7 +431,7 @@ class integrated_analysis():
         ax[1].set_ylabel("Clean Rate [mHz]")
         ax[1].set_title("Clean Rate Compare with sims")
         ax[1].set_xlim(0, 3500)
-        ax[1].set_ylim(0,600)
+        ax[1].set_ylim(-1,600)
         ax[1].legend()
 
         plt.savefig(self.plot_path + "Cf_abs_rate_comparison.pdf")
