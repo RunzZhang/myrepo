@@ -737,7 +737,7 @@ class SN():
         self.coffin["R/mm"] = np.sqrt(self.coffin["X/mm"] ** 2 + self.coffin["Y/mm"] ** 2)
 
 
-        ffig, ax = plt.subplots(1,2)
+        ffig, ax = plt.subplots(1,2,figsize=(10,4))
 
         sc=ax[0].hist2d(self.df_geo["R/mm"],self.df_geo["Z/mm"],bins=50,
         cmap="plasma",norm="log",alpha=0.7)
@@ -762,7 +762,7 @@ class SN():
         ax[1].set_xlabel("Energy [keV]")
         ax[1].set_ylabel("Counts")
         print(self.coffin["PreKinetic/keV"])
-        plt.savefig(self.plot_path+"Cf_1E7_position_density.pdf")
+        plt.savefig(self.plot_path+"Cf_1E7_position_density_config_B.pdf")
         print(self.plot_path)
 
 
