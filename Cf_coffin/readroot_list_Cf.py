@@ -217,7 +217,7 @@ class ReadRoot():
 
 
         #find source tube
-        # self.source_geometry()
+        self.source_geometry()
 
 
         self.collect_NR()
