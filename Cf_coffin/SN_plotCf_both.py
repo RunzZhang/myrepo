@@ -115,7 +115,7 @@ class SN():
         self.gamma_BR = 0.0687
         # self.G4_events= 1E5
         self.G4_events = 1E7
-        self.G4_events_gamma =  1E6
+        self.G4_events_gamma =  1E7
         self.ambient_bubble = 5 # /h
 
         self.T = 1e-3
@@ -957,7 +957,8 @@ class SN():
         print("max(ER_Ar)", max(NR_Ar))
         max_Ar = max(NR_Ar)
         hist_array = [None]
-        hist_array[0] = np.histogram(NR_Ar, bins=int(max_Ar/10), range=(0, max_Ar))
+        hist_array[0] = np.histogram(NR_Ar, bins=int(max_Ar/100), range=(0, max_Ar))
+        # every 100 eV per bin
 
         # transfer edge to mid point per bin
 
