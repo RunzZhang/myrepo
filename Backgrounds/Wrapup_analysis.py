@@ -397,7 +397,7 @@ class integrated_analysis():
 
             merged_df.to_csv(self.Cf_expB_rate_path[i], index=False)
 
-        fig, ax = plt.subplots(1, 2, figsize=(10, 4))
+        fig, ax = plt.subplots(1, 3, figsize=(15, 4))
         # 1 plot to compare with original data Gray had, 2 to plot the spectrum with clean data comparasion
         for i in range(len(self.Cf_expA_rate_path)):
             exp_df = pd.read_csv(self.Cf_expA_rate_path[i])
@@ -420,6 +420,11 @@ class integrated_analysis():
         ax[1].plot(self.Cf_simsA[1][0][1][:-1],self.Cf_simsA[0]*self.Cf_simsA[2], label='Cf configA spectrum')
         ax[1].plot(self.Cf_simsB[1][0][1][:-1], self.Cf_simsB[0] * self.Cf_simsB[2], label='Cf configB spectrum')
 
+        ax[2].plot(self.Cf_simsA[1][0][1][:-1]/1000, self.Cf_simsA[0] * self.Cf_simsA[2], label='Cf configA spectrum')
+        ax[2].plot(self.Cf_simsB[1][0][1][:-1]/1000, self.Cf_simsB[0] * self.Cf_simsB[2], label='Cf configB spectrum')
+
+
+
         ax[0].set_xlabel('Pressure [bara]')
         ax[0].set_ylabel("Exp Rate [mHz]")
         ax[0].set_title("Check with exp rate")
@@ -430,8 +435,13 @@ class integrated_analysis():
         ax[1].set_xlabel("Seitz [eV]")
         ax[1].set_ylabel("Clean Rate [mHz]")
         ax[1].set_title("Clean Rate Compare with sims")
-        # ax[1].set_xlim(-1, 3500)
-        # ax[1].set_ylim(0,220)
+        ax[1].set_xlim(-1, 3500)
+        ax[1].set_ylim(0,220)
+        ax[1].legend()
+
+        ax[1].set_xlabel("Seitz [keV]")
+        ax[1].set_ylabel("Clean Rate [mHz]")
+        ax[1].set_title("Clean Rate Cumulative Spectrum")
         ax[1].legend()
 
         plt.savefig(self.plot_path + "Cf_abs_rate_comparison.pdf")
