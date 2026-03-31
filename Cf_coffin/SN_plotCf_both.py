@@ -14,8 +14,8 @@ class SN():
 
         ## change config A to B
         # replace sourcetube_A and config_A
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/" # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_A/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_A/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -737,7 +737,7 @@ class SN():
         self.coffin["R/mm"] = np.sqrt(self.coffin["X/mm"] ** 2 + self.coffin["Y/mm"] ** 2)
 
 
-        ffig, ax = plt.subplots(1,2,figsize=(10,4))
+        ffig, ax = plt.subplots(1,2,figsize=(14,4))
 
         sc=ax[0].hist2d(self.df_geo["R/mm"],self.df_geo["Z/mm"],bins=50,
         cmap="plasma",norm="log",alpha=0.7)
@@ -750,7 +750,7 @@ class SN():
         ax[0].set_ylabel("Z [mm]")
         # ax[0].set_xlim(0,400)
         # ax[0].set_ylim(-100,800)
-        cbar = plt.colorbar(sc[3], ax=ax)
+        cbar = plt.colorbar(sc[3], ax=ax[0])
         cbar.set_label("Counts(log)")
 
         ax[1].hist(self.coffin["PreKinetic/keV"], bins=50, alpha=0.7)
@@ -762,7 +762,7 @@ class SN():
         ax[1].set_xlabel("Energy [keV]")
         ax[1].set_ylabel("Counts")
         print(self.coffin["PreKinetic/keV"])
-        plt.savefig(self.plot_path+"Cf_1E7_position_density_config_B.pdf")
+        plt.savefig(self.plot_path+"Cf_1E7_position_density_config_A.pdf")
         print(self.plot_path)
 
 
@@ -901,7 +901,7 @@ class SN():
         ax.legend(fontsize='small')
         print("threshold range", min_edge, max_edge)
         # ax[0].set_xlim(0,2000)
-        plt.savefig(self.plot_path + "Cf_1E7_multiplicity_config_B.pdf")
+        plt.savefig(self.plot_path + "Cf_1E7_multiplicity_config_A.pdf")
         plt.clf()
 
         fig, ax = plt.subplots()
@@ -917,7 +917,7 @@ class SN():
         # set_yscale("log")
         ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
         ax.legend(fontsize='small')
-        plt.savefig(self.plot_path + "Cf_1E7_ratio_config_B.pdf")
+        plt.savefig(self.plot_path + "Cf_1E7_ratio_config_A.pdf")
 
 
 
@@ -980,7 +980,7 @@ class SN():
 
         output_list = [rate_factor ,hist_array, cumulative_threshold_per_scatter_array[0], cumulative_threshold_array[0]]
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* energy above the bin edge
-        with open("/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_B.pkl", "wb") as f:
+        with open("/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_A.pkl", "wb") as f:
             pickle.dump(output_list, f)
 
     def NucleationEfficiencyTrue(self, r, T, sigLow, sigUp):
