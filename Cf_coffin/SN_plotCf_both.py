@@ -52,7 +52,7 @@ class SN():
         # self.main_body(1)
         # self.check_geometry()
         # self.NR_spectrum()
-        # self.write_sims_results()
+        self.write_sims_results()
         # self.NR_multiplicity()
         # for ploting PN background tagging and SNR
         # self.untagged_bubble_rate()
@@ -93,7 +93,7 @@ class SN():
 
         self.read_files()
 
-        self.write_sims_results()
+        # self.write_sims_results()
 
         # self.read_files_s_to_N1()
 
@@ -959,6 +959,7 @@ class SN():
         max_Ar = max(NR_Ar)
         hist_array = [None]
         hist_array[0] = np.histogram(NR_Ar, bins=int(max_Ar/100), range=(0, max_Ar))
+        hist_array[0] = np.histogram(NR_Ar, bins=350, range=(0, 3500))
         # every 100 eV per bin
 
         # transfer edge to mid point per bin
