@@ -71,7 +71,7 @@ class integrated_analysis():
         self.clean_signal_analysis()
 
         # Cf
-        self.clean_NR_signal_analysis()
+        # self.clean_NR_signal_analysis()
 
         # based on sims and clean signal rate, calculate gamma rejection
         # self.gamma_rejection_calculation()
@@ -80,7 +80,7 @@ class integrated_analysis():
 
         # plot
         # self.bkg_plot()
-        # self.gamma_rejection_plot()
+        self.gamma_rejection_plot()
         # self.spectrums_plot()
 
 
@@ -747,7 +747,7 @@ class integrated_analysis():
         self.bkg_floor_plot(ax[0],"Seitz")
 
         ax[0].set_xlabel("Seitz [keV]")
-        ax[0].set_ylabel("Gamma Rejection Per Scattering []")
+        ax[0].set_ylabel("Gamma rejection  [per Scattering]")
         ax[0].set_title("Gamma Rejection Per Scattering ")
         # ax[0].set_ylim(1.0e-12,1.0e-2)
         # ax[0].set_xlim(0,6)
@@ -761,7 +761,7 @@ class integrated_analysis():
 
         self.bkg_floor_plot(ax[1], "Eion")
         ax[1].set_xlabel("Eion_rl-1_rhol-1 [GeVcm**2 g-1]")
-        ax[1].set_ylabel("Gamma Rejection Per keV [/keV]")
+        ax[1].set_ylabel("Gamma rejection per energy deposited [per keV]")
         ax[1].set_title("Gamma Rejection Per keV ")
         # ax[1].set_ylim(1.0e-14,1.0e-4)
         # ax[1].set_xlim(0.08,0.15)
