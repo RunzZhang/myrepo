@@ -744,7 +744,7 @@ class integrated_analysis():
         ax[0].plot(x_fitted_scatter,y_fitted_scatter,label = f"a,b = {a_fit_scatter:.2e} , {b_fit_scatter:.2e}", color="black")
 
         #gamma rejection up limit
-        self.bkg_floor_plot(ax[0],"Seitz")
+        # self.bkg_floor_plot(ax[0],"Seitz")
 
         ax[0].set_xlabel("Seitz [keV]")
         ax[0].set_ylabel("Gamma rejection  [per Scattering]")
