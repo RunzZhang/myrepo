@@ -953,6 +953,7 @@ class SN():
         ax.legend(fontsize='small')
         plt.savefig(self.plot_path + "Cf_1E7_ratio_config_A_threshold.pdf")
 
+        plt.clf()
         for i in range(multiplicity_cut):
             # ax.plot(multiplicity_list[i][1][:-1], multiplicity_list[i][4],
             #        label="threshold " + str(multiplicity_list[i][3]) + " eV")
