@@ -759,7 +759,7 @@ class integrated_analysis():
 
         ax[1].plot(x_fitted_keV, y_fitted_keV, label=f"a,b = {a_fit_keV:.2e} , {b_fit_keV:.2e}", color="black")
 
-        self.bkg_floor_plot(ax[1], "Eion")
+        # self.bkg_floor_plot(ax[1], "Eion")
         ax[1].set_xlabel("Eion_rl-1_rhol-1 [GeVcm**2 g-1]")
         ax[1].set_ylabel("Gamma rejection per energy deposited [per keV]")
         ax[1].set_title("Gamma Rejection Per keV ")
