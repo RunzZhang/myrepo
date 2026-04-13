@@ -928,8 +928,8 @@ class SN():
 
         for i in range(len(multiplicity_list)):
             energy_th.append(multiplicity_list[i][3])
-            ratio_matrix[i]= multiplicity_list[i][4]
-            ratio_err_matrix[i] = multiplicity_list[i][6]
+            ratio_matrix[i]= multiplicity_list[i][4][:multiplicity_cut]
+            ratio_err_matrix[i] = multiplicity_list[i][6][:multiplicity_cut]
         ratio_t = ratio_matrix.T
         ratio_error_t = ratio_err_matrix.T
 
