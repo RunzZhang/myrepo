@@ -762,7 +762,7 @@ class SN():
         ax[1].set_xlabel("Energy [keV]")
         ax[1].set_ylabel("Counts")
         print(self.coffin["PreKinetic/keV"])
-        plt.savefig(self.plot_path+"Cf_1E7_position_density_config_A.pdf")
+        plt.savefig(self.plot_path+"Cf_1E7_position_density_config_B.pdf")
         print(self.plot_path)
 
 
@@ -901,7 +901,7 @@ class SN():
         ax.legend(fontsize='small')
         print("threshold range", min_edge, max_edge)
         # ax[0].set_xlim(0,2000)
-        plt.savefig(self.plot_path + "Cf_1E7_multiplicity_config_A.pdf")
+        plt.savefig(self.plot_path + "Cf_1E7_multiplicity_config_B.pdf")
         plt.clf()
 
         fig, ax = plt.subplots()
@@ -917,7 +917,7 @@ class SN():
         # set_yscale("log")
         ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
         ax.legend(fontsize='small')
-        plt.savefig(self.plot_path + "Cf_1E7_ratio_config_A.pdf")
+        plt.savefig(self.plot_path + "Cf_1E7_ratio_config_B.pdf")
 
         fig, ax = plt.subplots()
         energy_th = []
@@ -951,7 +951,7 @@ class SN():
         # set_yscale("log")
         # ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
         ax.legend(fontsize='small')
-        plt.savefig(self.plot_path + "Cf_1E7_ratio_config_A_threshold.pdf")
+        plt.savefig(self.plot_path + "Cf_1E7_ratio_config_B_threshold.pdf")
 
         plt.clf()
         fig, ax = plt.subplots()
@@ -967,7 +967,7 @@ class SN():
         # set_yscale("log")
         # ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
         ax.legend(fontsize='small')
-        plt.savefig(self.plot_path + "Cf_1E7_rate_config_A_threshold.pdf")
+        plt.savefig(self.plot_path + "Cf_1E7_rate_config_B_threshold.pdf")
 
 
 
@@ -1030,7 +1030,7 @@ class SN():
 
         output_list = [rate_factor ,hist_array, cumulative_threshold_per_scatter_array[0], cumulative_threshold_array[0]]
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* energy above the bin edge
-        with open("/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_A.pkl", "wb") as f:
+        with open("/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_B.pkl", "wb") as f:
             pickle.dump(output_list, f)
 
     def NucleationEfficiencyTrue(self, r, T, sigLow, sigUp):
