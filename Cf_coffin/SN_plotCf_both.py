@@ -943,7 +943,7 @@ class SN():
         ax.set_ylabel("Ratio []")
 
         # set_yscale("log")
-        ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
+        # ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
         ax.legend(fontsize='small')
         plt.savefig(self.plot_path + "Cf_1E7_ratio_config_B_threshold.pdf")
 
