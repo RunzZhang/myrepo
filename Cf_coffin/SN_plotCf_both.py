@@ -924,14 +924,20 @@ class SN():
         multiplicity_cut = 5
         ratio_matrix = np.empty((len(multiplicity_list), multiplicity_cut))
         ratio_err_matrix = np.empty((len(multiplicity_list), multiplicity_cut))
+        rate_matrix = np.empty((len(multiplicity_list), multiplicity_cut))
+        rate_err_matrix = np.empty((len(multiplicity_list), multiplicity_cut))
         # tranverse the matrix but only keep multiplicity <=4
 
         for i in range(len(multiplicity_list)):
             energy_th.append(multiplicity_list[i][3])
             ratio_matrix[i]= multiplicity_list[i][4][:multiplicity_cut]
             ratio_err_matrix[i] = multiplicity_list[i][6][:multiplicity_cut]
+            rate_matrix[i] = multiplicity_list[i][0][:multiplicity_cut]
+            rate_err_matrix[i] = multiplicity_list[i][5][:multiplicity_cut]
         ratio_t = ratio_matrix.T
         ratio_error_t = ratio_err_matrix.T
+        rate_t = rate_matrix.T
+        rate_error_t = rate_err_matrix.T
 
         for i in range(multiplicity_cut):
             # ax.plot(multiplicity_list[i][1][:-1], multiplicity_list[i][4],
@@ -939,13 +945,27 @@ class SN():
             ax.errorbar(energy_th, ratio_t[i],
                         yerr=ratio_error_t[i], label=f"multiplicity = {i+1}")
 
-        ax.set_xlabel("Energy Threshold [keV]")
+        ax.set_xlabel("Energy Threshold [eV]")
         ax.set_ylabel("Ratio []")
 
         # set_yscale("log")
         # ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
         ax.legend(fontsize='small')
         plt.savefig(self.plot_path + "Cf_1E7_ratio_config_A_threshold.pdf")
+
+        for i in range(multiplicity_cut):
+            # ax.plot(multiplicity_list[i][1][:-1], multiplicity_list[i][4],
+            #        label="threshold " + str(multiplicity_list[i][3]) + " eV")
+            ax.errorbar(energy_th, rate_t[i],
+                        yerr=rate_error_t[i], label=f"multiplicity = {i+1}")
+
+        ax.set_xlabel("Energy Threshold [eV]")
+        ax.set_ylabel("Rate [mHz]")
+
+        # set_yscale("log")
+        # ax.xaxis.set_major_locator(ticker.MultipleLocator(1))
+        ax.legend(fontsize='small')
+        plt.savefig(self.plot_path + "Cf_1E7_rate_config_A_threshold.pdf")
 
 
 
