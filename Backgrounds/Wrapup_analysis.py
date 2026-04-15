@@ -71,7 +71,7 @@ class integrated_analysis():
         self.clean_signal_analysis()
 
         # Cf
-        # self.clean_NR_signal_analysis()
+        self.clean_NR_signal_analysis()
 
         # based on sims and clean signal rate, calculate gamma rejection
         # self.gamma_rejection_calculation()
@@ -80,7 +80,7 @@ class integrated_analysis():
 
         # plot
         # self.bkg_plot()
-        self.gamma_rejection_plot()
+        # self.gamma_rejection_plot()
         # self.spectrums_plot()
 
 
