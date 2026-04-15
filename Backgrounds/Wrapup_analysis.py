@@ -441,7 +441,8 @@ class integrated_analysis():
 
         ax[2].set_xlabel("Seitz [keV]")
         ax[2].set_ylabel("Clean Rate [mHz]")
-        ax[2].set_title("Clean Rate Cumulative Spectrum")
+        ax[2].set_title("Clean Rate Cumulative Spectrum zoomed")
+        ax[2].set_xlimit(-1, 200)
         ax[2].legend()
 
         plt.savefig(self.plot_path + "Cf_abs_rate_comparison.pdf")
