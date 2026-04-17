@@ -427,11 +427,13 @@ class integrated_analysis():
         for i in range(len(self.Cf_simsA[0]*self.Cf_simsA[2])):
             if self.Cf_simsA[0]*self.Cf_simsA[2][i]<30:
                 print(self.Cf_simsA[1][0][1][:-1][i],"eV")
+                break
 
         for i in range(len(self.Cf_simsB[0]*self.Cf_simsB[2])):
             if self.Cf_simsB[0]*self.Cf_simsB[2][i]<30:
                 print(self.Cf_simsB[1][0][1][:-1][i],"eV")
-                
+                break
+
         ax[0].set_xlabel('Pressure [bara]')
         ax[0].set_ylabel("Exp Rate [mHz]")
         ax[0].set_title("Check with exp rate")
