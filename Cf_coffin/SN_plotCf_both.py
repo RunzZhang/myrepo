@@ -836,6 +836,7 @@ class SN():
 
     def NR_multiplicity(self):
         rate_factor = 1000*self.rate*self.Activity/(self.original_Activity*self.G4_events) # /ms
+        print("rate_factor",rate_factor)
         print("initial df ", self.df_energy.head(10))
         # fill capture event energy
 
@@ -893,6 +894,7 @@ class SN():
             #        label="threshold " + str(multiplicity_list[i][3]) + " eV")
             ax.errorbar(multiplicity_list[i][1][:-1], multiplicity_list[i][0],
                            yerr=multiplicity_list[i][5], label="threshold " + str(multiplicity_list[i][3]) + " eV")
+            print("threshold " + str(multiplicity_list[i][3]) + " eV", multiplicity_list[i][1][:-1],multiplicity_list[i][0])
             # ax.bar(multiplicity_list[i][1][:-1], multiplicity_list[i][0], width=multiplicity_list[i][2], align="edge", label="threshold "+str(multiplicity_list[i][3])+" eV" )
         ax.set_xlabel("Multiplicity")
         ax.set_ylabel("Rate [mHz]")
