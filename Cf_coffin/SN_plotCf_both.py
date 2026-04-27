@@ -776,7 +776,7 @@ class SN():
         # find first step in Ar and its Kinetic Energy
 
         self.argon["R/mm"]=  np.sqrt(self.argon["X/mm"]**2+self.argon["Y/mm"]**2 )
-
+        self.argon["PreKinetic/keV"] = self.argon["PreKinetic/MeV"] * 1000
         #
         ar_counts,ar_edges = np.histogram(self.argon["PreKinetic/keV"], bins=50)
         ar_rate  = ar_counts*rate_factor
