@@ -220,7 +220,7 @@ class ReadRoot():
         self.source_geometry()
 
 
-        self.collect_NR()
+        # self.collect_NR()
         # self.check_NR()
 
     def reidx_event(self):
@@ -275,7 +275,12 @@ class ReadRoot():
     def source_geometry(self):
         # also include initial energy
         self.initial_position = self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="cf_source_phys")&(self.df['Step ID'] == 1)][["X/mm", "Y/mm","Z/mm", "Volume","PreKinetic/MeV"]]
-        self.argon_position = self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="LAr_phys")][["X/mm", "Y/mm","Z/mm", "Volume","PreKinetic/MeV","PostKinetic/MeV"]]
+        # argon first step info
+        self.first_argon = self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="LAr_phys")]
+        self.first_argon = self.first_argon.loc[self.first_argon.groupby('Event')['Step ID'].idxmin()]
+        self.argon_position = self.first_argon[["X/mm", "Y/mm","Z/mm", "Volume","PreKinetic/MeV","PostKinetic/MeV"]]
+        # all argon info
+        # self.argon_position = self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="LAr_phys")][["X/mm", "Y/mm","Z/mm", "Volume","PreKinetic/MeV","PostKinetic/MeV"]]
         self.geometry =  pd.concat([self.initial_position, self.argon_position], axis=0)
         print(self.geometry)
         print(self.initial_position)
