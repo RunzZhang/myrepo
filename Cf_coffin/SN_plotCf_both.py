@@ -50,7 +50,10 @@ class SN():
         for i in range(1, 11):
             self.main_body(i)
         # self.main_body(1)
-        self.check_geometry()
+        #check the intial neutron postions, argon volume and the intial neutron energy spectrum
+        # self.check_geometry()
+        #check neutron which first entering argon volum's positions and energy
+        self.neutron_spectrum_enteringLAr()
         # self.NR_spectrum()
         # self.write_sims_results()
         self.NR_multiplicity()
@@ -772,13 +775,16 @@ class SN():
         self.argon = self.df_geo[self.df_geo["Volume"]=="LAr_phys"]
         # find first step in Ar and its Kinetic Energy
 
-        self.df_geo["R/mm"]=  np.sqrt(self.df_geo["X/mm"]**2+self.df_geo["Y/mm"]**2 )
-        self.coffin["R/mm"] = np.sqrt(self.coffin["X/mm"] ** 2 + self.coffin["Y/mm"] ** 2)
+        self.argon["R/mm"]=  np.sqrt(self.argon["X/mm"]**2+self.argon["Y/mm"]**2 )
 
+        #
+        ar_counts,ar_edges = np.histogram(self.argon["PreKinetic/keV"], bins=50)
+        ar_rate  = ar_counts*rate_factor
+        width = ar_edges[1]-ar_edges[0]
 
         ffig, ax = plt.subplots(1,2,figsize=(12,4))
 
-        sc=ax[0].hist2d(self.df_geo["R/mm"],self.df_geo["Z/mm"],bins=50,
+        sc=ax[0].hist2d(self.argon["R/mm"],self.argon["Z/mm"],bins=50,
         cmap="plasma",norm="log",alpha=0.7)
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
@@ -792,17 +798,17 @@ class SN():
         cbar = plt.colorbar(sc[3], ax=ax[0])
         cbar.set_label("Counts(log)")
 
-        ax[1].hist(self.coffin["PreKinetic/keV"], bins=50, alpha=0.7)
+        ax[1].bar(ar_edges,ar_rate,width=width, align="edge")
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
         # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
         # ax.plot([99.01,99.01, 4.34], [0,366.49, 399.82], color="red")
 
         ax[1].set_xlabel("Energy [keV]")
-        ax[1].set_ylabel("Counts")
-        print(self.coffin["PreKinetic/keV"])
-        plt.savefig(self.plot_path+"Cf_1E7_position_density_config_B.pdf")
-        print(self.plot_path)
+        ax[1].set_ylabel("Rate[mHz]")
+
+        plt.savefig(self.plot_path+"Cf_1E7_position_density_first_LAr_config_B.pdf")
+
 
     def NR_spectrum(self):
         rate_factor = 1000*self.rate*self.Activity/(self.original_Activity*self.G4_events) # /ms
