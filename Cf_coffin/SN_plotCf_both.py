@@ -806,6 +806,7 @@ class SN():
 
         ax[1].set_xlabel("Energy [keV]")
         ax[1].set_ylabel("Rate[mHz]")
+        ax[1].set_yscale("log")
 
         plt.savefig(self.plot_path+"Cf_1E7_position_density_first_LAr_config_B.pdf")
 
