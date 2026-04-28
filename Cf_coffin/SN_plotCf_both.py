@@ -778,7 +778,7 @@ class SN():
         self.argon["R/mm"]=  np.sqrt(self.argon["X/mm"]**2+self.argon["Y/mm"]**2 )
         self.argon["PreKinetic/keV"] = self.argon["PreKinetic/MeV"] * 1000
         #
-        ar_counts,ar_edges = np.histogram(self.argon["PreKinetic/keV"], bins=50)
+        ar_counts,ar_edges = np.histogram(self.argon["PreKinetic/keV"], bins=100)
         ar_rate  = ar_counts*rate_factor
         width = ar_edges[1]-ar_edges[0]
 
@@ -798,7 +798,7 @@ class SN():
         cbar = plt.colorbar(sc[3], ax=ax[0])
         cbar.set_label("Counts(log)")
 
-        ax[1].bar(ar_edges,ar_rate,width=width, align="edge")
+        ax[1].bar(ar_edges[:-1],ar_rate,width=width, align="edge")
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
         # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
