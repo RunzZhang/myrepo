@@ -958,8 +958,7 @@ class SN():
             #        label="threshold " + str(multiplicity_list[i][3]) + " eV")
             ax.errorbar(multiplicity_list[i][1][:-1], multiplicity_list[i][4],
                         yerr=multiplicity_list[i][6], label="threshold " + str(multiplicity_list[i][3]) + " eV")
-            print("threshold " + str(multiplicity_list[i][3]) + " eV", multiplicity_list[i][1][:-1],
-                  multiplicity_list[i][4])
+
             # ax.bar(multiplicity_list[i][1][:-1], multiplicity_list[i][0], width=multiplicity_list[i][2], align="edge", label="threshold "+str(multiplicity_list[i][3])+" eV" )
         ax.set_xlabel("Multiplicity")
         ax.set_ylabel("Ratio []")
@@ -994,6 +993,8 @@ class SN():
             #        label="threshold " + str(multiplicity_list[i][3]) + " eV")
             ax.errorbar(energy_th, ratio_t[i],
                         yerr=ratio_error_t[i], label=f"multiplicity = {i+1}")
+            print(f"multiplicity = {i+1}", energy_th,
+                  ratio_t[i])
 
         ax.set_xlabel("Energy Threshold [eV]")
         ax.set_ylabel("Ratio []")
