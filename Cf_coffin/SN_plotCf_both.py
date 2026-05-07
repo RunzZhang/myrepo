@@ -778,7 +778,7 @@ class SN():
         self.argon["R/mm"]=  np.sqrt(self.argon["X/mm"]**2+self.argon["Y/mm"]**2 )
         self.argon["PreKinetic/keV"] = self.argon["PreKinetic/MeV"] * 1000
         #
-        ar_counts,ar_edges = np.histogram(self.argon["PreKinetic/keV"], bins=100,range= (0,10))
+        ar_counts,ar_edges = np.histogram(self.argon["PreKinetic/keV"], bins=100,range= (0,5))
         ar_rate  = ar_counts*rate_factor
         width = ar_edges[1]-ar_edges[0]
 
@@ -822,7 +822,7 @@ class SN():
 
         ax[2].set_xlabel("Energy [keV]")
         ax[2].set_ylabel("Rate[mHz]")
-        ax[2].set_xlim(0,10)
+        ax[2].set_xlim(0,1)
         ax[2].set_yscale("log")
 
         plt.savefig(self.plot_path+f"Cf_1E7_position_density_first_LAr_{self.config_string}.pdf")
