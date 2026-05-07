@@ -53,8 +53,8 @@ class SN():
         #check the intial neutron postions, argon volume and the intial neutron energy spectrum
         # self.check_geometry()
         #check neutron which first entering argon volum's positions and energy
-        # self.neutron_spectrum_enteringLAr()
-        self.neutron_source_geometry()
+        self.neutron_spectrum_enteringLAr()
+        # self.neutron_source_geometry()
         # self.NR_spectrum()
         # self.write_sims_results()
         self.NR_multiplicity()
@@ -778,6 +778,10 @@ class SN():
 
         self.argon["R/mm"]=  np.sqrt(self.argon["X/mm"]**2+self.argon["Y/mm"]**2 )
         self.argon["PreKinetic/keV"] = self.argon["PreKinetic/MeV"] * 1000
+
+
+        # slice argon
+        self.argon_zslice = self.argon[self.argon["Z/mm"]<520 & self.argon["Z/mm"]>480]
         #
         ar_counts,ar_edges = np.histogram(self.argon["PreKinetic/keV"], bins=500,range= (0,1))
         ar_rate  = ar_counts*rate_factor
@@ -799,7 +803,7 @@ class SN():
         cbar0 = plt.colorbar(sc0[3], ax=ax[0])
         cbar0.set_label("Counts(log)")
 
-        sc1 = ax[1].hist2d(self.argon["X/mm"], self.argon["Y/mm"], bins=50,
+        sc1 = ax[1].hist2d(self.argon_zslice["X/mm"], self.argon_zslice["Y/mm"], bins=50,
                            cmap="plasma", norm="log", alpha=0.7)
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
