@@ -53,7 +53,8 @@ class SN():
         #check the intial neutron postions, argon volume and the intial neutron energy spectrum
         # self.check_geometry()
         #check neutron which first entering argon volum's positions and energy
-        self.neutron_spectrum_enteringLAr()
+        # self.neutron_spectrum_enteringLAr()
+        self.neutron_source_geometry()
         # self.NR_spectrum()
         # self.write_sims_results()
         self.NR_multiplicity()
@@ -828,6 +829,50 @@ class SN():
         plt.savefig(self.plot_path+f"Cf_1E7_position_density_first_LAr_{self.config_string}.pdf")
 
 
+    def neutron_source_geometry(self):
+
+        rate_factor = 1000 * self.rate * self.Activity / (self.original_Activity * self.G4_events)
+
+        self.coffin = self.df_geo[self.df_geo["Volume"] == "cf_source_phys"]
+        self.coffin["PreKinetic/keV"] = self.coffin["PreKinetic/MeV"] * 1000
+
+
+
+        ffig, ax = plt.subplots(1,2,figsize=(16,4))
+        # X and Y
+        sc0=ax[0].hist2d(self.coffin["X/mm"],self.coffin["Z/mm"],bins=50,
+        cmap="plasma",norm="log",alpha=0.7)
+
+        # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
+        # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
+        # ax.plot([99.01,99.01, 4.34], [0,366.49, 399.82], color="red")
+
+        ax[0].set_xlabel("X [mm]")
+        ax[0].set_ylabel("Z [mm]")
+        # ax[0].set_xlim(0,400)
+        # ax[0].set_ylim(-100,800)
+        cbar0 = plt.colorbar(sc0[3], ax=ax[0])
+        cbar0.set_label("Counts(log)")
+
+        sc1 = ax[1].hist2d(self.coffin["Y/mm"], self.coffin["Z/mm"], bins=50,
+                           cmap="plasma", norm="log", alpha=0.7)
+
+        # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
+        # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
+        # ax.plot([99.01,99.01, 4.34], [0,366.49, 399.82], color="red")
+
+        ax[1].set_xlabel("Y [mm]")
+        ax[1].set_ylabel("Z [mm]")
+        # ax[0].set_xlim(0,400)
+        # ax[0].set_ylim(-100,800)
+        cbar1 = plt.colorbar(sc1[3], ax=ax[1])
+        cbar1.set_label("Counts(log)")
+
+
+
+
+
+        plt.savefig(self.plot_path+f"Cf_1E7_position_density_source_{self.config_string}.pdf")
     def NR_spectrum(self):
         rate_factor = 1000*self.rate*self.Activity/(self.original_Activity*self.G4_events) # /ms
 
