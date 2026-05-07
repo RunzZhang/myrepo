@@ -784,29 +784,29 @@ class SN():
 
         ffig, ax = plt.subplots(1,3,figsize=(20,4))
         # X and Y
-        sc0=ax[0].hist2d(self.argon["X/mm"],self.argon["Z/mm"],bins=50,
+        sc0=ax[0].hist2d(self.argon["R/mm"],self.argon["Z/mm"],bins=50,
         cmap="plasma",norm="log",alpha=0.7)
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
         # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
         # ax.plot([99.01,99.01, 4.34], [0,366.49, 399.82], color="red")
 
-        ax[0].set_xlabel("X [mm]")
+        ax[0].set_xlabel("R [mm]")
         ax[0].set_ylabel("Z [mm]")
         # ax[0].set_xlim(0,400)
         # ax[0].set_ylim(-100,800)
         cbar0 = plt.colorbar(sc0[3], ax=ax[0])
         cbar0.set_label("Counts(log)")
 
-        sc1 = ax[1].hist2d(self.argon["R/mm"], self.argon["Z/mm"], bins=50,
+        sc1 = ax[1].hist2d(self.argon["X/mm"], self.argon["Y/mm"], bins=50,
                            cmap="plasma", norm="log", alpha=0.7)
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
         # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
         # ax.plot([99.01,99.01, 4.34], [0,366.49, 399.82], color="red")
 
-        ax[1].set_xlabel("Y [mm]")
-        ax[1].set_ylabel("Z [mm]")
+        ax[1].set_xlabel("X [mm]")
+        ax[1].set_ylabel("Y [mm]")
         # ax[0].set_xlim(0,400)
         # ax[0].set_ylim(-100,800)
         cbar1 = plt.colorbar(sc1[3], ax=ax[1])
