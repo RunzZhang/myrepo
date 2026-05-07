@@ -778,7 +778,7 @@ class SN():
         self.argon["R/mm"]=  np.sqrt(self.argon["X/mm"]**2+self.argon["Y/mm"]**2 )
         self.argon["PreKinetic/keV"] = self.argon["PreKinetic/MeV"] * 1000
         #
-        ar_counts,ar_edges = np.histogram(self.argon["PreKinetic/keV"], bins=100)
+        ar_counts,ar_edges = np.histogram(self.argon["PreKinetic/keV"], bins=100,range= (0,10))
         ar_rate  = ar_counts*rate_factor
         width = ar_edges[1]-ar_edges[0]
 
