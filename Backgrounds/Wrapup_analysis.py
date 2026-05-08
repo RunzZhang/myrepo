@@ -397,7 +397,7 @@ class integrated_analysis():
 
             merged_df.to_csv(self.Cf_expB_rate_path[i], index=False)
 
-        fig, ax = plt.subplots(1, 3, figsize=(15, 4))
+        fig, ax = plt.subplots(1, 4, figsize=(20, 4))
         # 1 plot to compare with original data Gray had, 2 to plot the spectrum with clean data comparasion
         for i in range(len(self.Cf_expA_rate_path)):
             exp_df = pd.read_csv(self.Cf_expA_rate_path[i])
@@ -422,6 +422,11 @@ class integrated_analysis():
 
         ax[2].plot(self.Cf_simsA[1][0][1][:-1]/1000, self.Cf_simsA[0] * self.Cf_simsA[2], label='Cf configA spectrum')
         ax[2].plot(self.Cf_simsB[1][0][1][:-1]/1000, self.Cf_simsB[0] * self.Cf_simsB[2], label='Cf configB spectrum')
+        # print differential spectrum
+        self.Cf_simsA_diff = self.Cf_simsA[2][:-1]-self.Cf_simsA[2][1:]
+        self.Cf_simsB_diff = self.Cf_simsB[2][:-1] - self.Cf_simsB[2][1:]
+        ax[2].plot(self.Cf_simsA[1][0][1][1:-1] / 1000, self.Cf_simsA[0] * self.Cf_simsA_diff, label='Cf configA spectrum')
+        ax[2].plot(self.Cf_simsB[1][0][1][1:-1] / 1000, self.Cf_simsB[0] * self.Cf_simsB_diff, label='Cf configB spectrum')
 
 
         for i in range(len(self.Cf_simsA[0]*self.Cf_simsA[2])):
@@ -453,6 +458,13 @@ class integrated_analysis():
         ax[2].set_title("Clean Rate Cumulative Spectrum zoomed")
         ax[2].set_xlim(-1, 200)
         ax[2].legend()
+
+        ax[3].set_xlabel("Seitz [keV]")
+        ax[3].set_ylabel("Clean Rate [mHz]")
+        ax[3].set_title("Clean Rate Differential Spectrum")
+        ax[3].set_xlim(-1, 3500)
+        ax[3].set_ylim(0, 220)
+        ax[3].legend()
 
         plt.savefig(self.plot_path + "Cf_abs_rate_comparison.pdf")
 
