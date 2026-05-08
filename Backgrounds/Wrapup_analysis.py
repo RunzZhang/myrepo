@@ -462,6 +462,7 @@ class integrated_analysis():
         ax[3].set_xlabel("Seitz [keV]")
         ax[3].set_ylabel("Clean Rate [mHz]")
         ax[3].set_title("Clean Rate Differential Spectrum")
+        ax[3].set_yscale("log")
         ax[3].set_xlim(-1, 3500)
         ax[3].set_ylim(0, 220)
         ax[3].legend()
