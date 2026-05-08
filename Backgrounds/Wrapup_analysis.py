@@ -425,8 +425,8 @@ class integrated_analysis():
         # print differential spectrum
         self.Cf_simsA_diff = self.Cf_simsA[2][:-1]-self.Cf_simsA[2][1:]
         self.Cf_simsB_diff = self.Cf_simsB[2][:-1] - self.Cf_simsB[2][1:]
-        ax[2].plot(self.Cf_simsA[1][0][1][1:-1] / 1000, self.Cf_simsA[0] * self.Cf_simsA_diff, label='Cf configA spectrum')
-        ax[2].plot(self.Cf_simsB[1][0][1][1:-1] / 1000, self.Cf_simsB[0] * self.Cf_simsB_diff, label='Cf configB spectrum')
+        ax[3].plot(self.Cf_simsA[1][0][1][1:-1] / 1000, self.Cf_simsA[0] * self.Cf_simsA_diff, label='Cf configA spectrum')
+        ax[3].plot(self.Cf_simsB[1][0][1][1:-1] / 1000, self.Cf_simsB[0] * self.Cf_simsB_diff, label='Cf configB spectrum')
 
 
         for i in range(len(self.Cf_simsA[0]*self.Cf_simsA[2])):
