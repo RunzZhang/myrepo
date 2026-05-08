@@ -425,8 +425,16 @@ class integrated_analysis():
         # print differential spectrum
         self.Cf_simsA_diff = self.Cf_simsA[2][:-1]-self.Cf_simsA[2][1:]
         self.Cf_simsB_diff = self.Cf_simsB[2][:-1] - self.Cf_simsB[2][1:]
-        ax[3].plot(self.Cf_simsA[1][0][1][1:-1] / 1000, self.Cf_simsA[0] * self.Cf_simsA_diff, label='Cf configA spectrum')
-        ax[3].plot(self.Cf_simsB[1][0][1][1:-1] / 1000, self.Cf_simsB[0] * self.Cf_simsB_diff, label='Cf configB spectrum')
+        Cf_ene_avgA = self.Cf_simsA[1][0][1][1:-1].reshape(-1, 5).mean(axis=1)/ 1000
+        Cf_count_sumA = self.Cf_simsA[0] * self.Cf_simsA_diff.reshape(-1, 5).sum(axis=1)
+        Cf_ene_avgB = self.Cf_simsB[1][0][1][1:-1].reshape(-1, 5).mean(axis=1) / 1000
+        Cf_count_sumB = self.Cf_simsB[0] * self.Cf_simsB_diff.reshape(-1, 5).sum(axis=1)
+        # ax[3].plot(self.Cf_simsA[1][0][1][1:-1] / 1000, self.Cf_simsA[0] * self.Cf_simsA_diff,
+        #            label='Cf configA spectrum')
+        # ax[3].plot(self.Cf_simsB[1][0][1][1:-1] / 1000, self.Cf_simsB[0] * self.Cf_simsB_diff,
+        #            label='Cf configB spectrum')
+        ax[3].plot(Cf_ene_avgA, Cf_count_sumA, label='Cf configA spectrum')
+        ax[3].plot(Cf_ene_avgB, Cf_count_sumB, label='Cf configB spectrum')
 
 
         for i in range(len(self.Cf_simsA[0]*self.Cf_simsA[2])):
