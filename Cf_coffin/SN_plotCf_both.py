@@ -791,7 +791,7 @@ class SN():
         # slice argon
         self.argon_zslice = self.argon[(self.argon["Z/mm"]<520) & (self.argon["Z/mm"]>480)]
         #
-        ar_counts,ar_edges = np.histogram(self.argon_intact["PreKinetic/keV"], bins=500,range= (0,1))
+        ar_counts,ar_edges = np.histogram(self.argon_intact["PreKinetic/keV"], bins=500,range= (0,2000))
         ar_rate  = ar_counts*rate_factor
         width = ar_edges[1]-ar_edges[0]
 
@@ -835,7 +835,7 @@ class SN():
 
         ax[2].set_xlabel("Energy [keV]")
         ax[2].set_ylabel("Rate[mHz]")
-        ax[2].set_xlim(0,0.4)
+        ax[2].set_xlim(0,2000)
         ax[2].set_yscale("log")
 
         plt.savefig(self.plot_path+f"Cf_1E7_position_density_first_LAr_{self.config_string}.pdf")
