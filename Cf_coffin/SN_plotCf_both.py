@@ -791,7 +791,7 @@ class SN():
         # slice argon
         self.argon_zslice = self.argon[(self.argon["Z/mm"]<520) & (self.argon["Z/mm"]>480)]
         #
-        ar_counts,ar_edges = np.histogram(self.argon_intact["PreKinetic/keV"], bins=500,range= (0,2000))
+        ar_counts,ar_edges = np.histogram(self.argon_intact["PreKinetic/keV"], bins=250,range= (0,2000))
         ar_rate  = ar_counts*rate_factor
         width = ar_edges[1]-ar_edges[0]
 
