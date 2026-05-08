@@ -134,8 +134,8 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_A/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_A/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
@@ -274,11 +274,11 @@ class ReadRoot():
         self.reidx_event()
     def source_geometry(self):
         # also include initial energy
-        self.initial_position = self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="cf_source_phys")&(self.df['Step ID'] == 1)][["X/mm", "Y/mm","Z/mm", "Volume","PreKinetic/MeV"]]
+        self.initial_position = self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="cf_source_phys")&(self.df['Step ID'] == 1)][["Event","X/mm", "Y/mm","Z/mm", "Volume","PreKinetic/MeV"]]
         # argon first step info
         self.first_argon = self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="LAr_phys")]
         self.first_argon = self.first_argon.loc[self.first_argon.groupby('Event')['Step ID'].idxmin()]
-        self.argon_position = self.first_argon[["X/mm", "Y/mm","Z/mm", "Volume","PreKinetic/MeV","PostKinetic/MeV"]]
+        self.argon_position = self.first_argon[["Event","X/mm", "Y/mm","Z/mm", "Volume","PreKinetic/MeV","PostKinetic/MeV"]]
         # all argon info
         # self.argon_position = self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="LAr_phys")][["X/mm", "Y/mm","Z/mm", "Volume","PreKinetic/MeV","PostKinetic/MeV"]]
         self.geometry =  pd.concat([self.initial_position, self.argon_position], axis=0)
