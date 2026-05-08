@@ -780,10 +780,18 @@ class SN():
         self.argon["PreKinetic/keV"] = self.argon["PreKinetic/MeV"] * 1000
 
 
+        #get event number for scatter and capture
+        # only plot energy spectrum from scatter and capture event
+        self.scatter = self.df_energy[self.df_energy["Process"].isin(['hadElastic', 'neutronInelastic'])]
+        self.capture = self.df_energy[self.df_energy["Process"].isin(['nCapture'])]
+        event_list = self.scatter["Event"].tolist() + self.capture["Event"].tolist()
+
+        self.argon_intact = self.argon[self.argon['Event'].isin(event_list)]
+
         # slice argon
         self.argon_zslice = self.argon[(self.argon["Z/mm"]<520) & (self.argon["Z/mm"]>480)]
         #
-        ar_counts,ar_edges = np.histogram(self.argon["PreKinetic/keV"], bins=500,range= (0,1))
+        ar_counts,ar_edges = np.histogram(self.argon_intact["PreKinetic/keV"], bins=500,range= (0,1))
         ar_rate  = ar_counts*rate_factor
         width = ar_edges[1]-ar_edges[0]
 
