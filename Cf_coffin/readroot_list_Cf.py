@@ -274,7 +274,7 @@ class ReadRoot():
         self.reidx_event()
     def source_geometry(self):
         # also include initial energy
-        self.initial_position = self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="cf_active_phys")&(self.df['Step ID'] == 0)][["Event","X/mm", "Y/mm","Z/mm", "Volume","PreKinetic/MeV"]]
+        self.initial_position = self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="cf_active_phys")&(self.df['Step ID'] == 1)][["Event","X/mm", "Y/mm","Z/mm", "Volume","PreKinetic/MeV"]]
 
         print('self.initial_position',self.initial_position)
         # argon first step info
