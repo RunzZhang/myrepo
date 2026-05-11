@@ -418,7 +418,7 @@ class integrated_analysis():
 
 
         ax[1].plot(self.Cf_simsA[1][0][1][:-1],self.Cf_simsA[0]*self.Cf_simsA[2], label='Cf configA spectrum')
-        # ax[1].plot(self.Cf_simsB[1][0][1][:-1], self.Cf_simsB[0] * self.Cf_simsB[2], label='Cf configB spectrum')
+        ax[1].plot(self.Cf_simsB[1][0][1][:-1], self.Cf_simsB[0] * self.Cf_simsB[2], label='Cf configB spectrum')
 
         ax[2].plot(self.Cf_simsA[1][0][1][:-1]/1000, self.Cf_simsA[0] * self.Cf_simsA[2], label='Cf configA spectrum')
         ax[2].plot(self.Cf_simsB[1][0][1][:-1]/1000, self.Cf_simsB[0] * self.Cf_simsB[2], label='Cf configB spectrum')
