@@ -848,6 +848,8 @@ class SN():
         self.coffin = self.df_geo[self.df_geo["Volume"] == "cf_active_phys"]
         self.coffin["PreKinetic/keV"] = self.coffin["PreKinetic/MeV"] * 1000
 
+        print(self.coffin)
+
 
 
         ffig, ax = plt.subplots(1,2,figsize=(16,4))
