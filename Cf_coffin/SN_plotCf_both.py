@@ -802,6 +802,8 @@ class SN():
 
         self.active["PreKinetic/keV"] = self.active["PreKinetic/MeV"] * 1000
         self.leaving_source["PreKinetic/keV"] = self.leaving_source["PreKinetic/MeV"] * 1000
+        self.leaving_source["PostKinetic/keV"] = self.leaving_source["PostKinetic/MeV"] * 1000
+
 
         self.leaving_source_R = self.leaving_source
         self.leaving_source_R["R/mm"] = np.sqrt((self.leaving_source_R["X/mm"]-center_x) ** 2 + (self.leaving_source_R["Y/mm"]-center_y) ** 2)
@@ -828,7 +830,7 @@ class SN():
 
 
         ax[1].hist(self.active["PreKinetic/keV"], bins=50, alpha=0.7, label="active_region")
-        ax[1].hist(self.leaving_source["PreKinetic/keV"], bins=50, alpha=0.7, label="leaving source tube")
+        ax[1].hist(self.leaving_source["PostKinetic/keV"], bins=50, alpha=0.7, label="leaving source tube")
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
         # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
