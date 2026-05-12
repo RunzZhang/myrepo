@@ -797,7 +797,8 @@ class SN():
         self.active["PreKinetic/keV"] = self.active["PreKinetic/MeV"] * 1000
         self.leaving_source["PreKinetic/keV"] = self.leaving_source["PreKinetic/MeV"] * 1000
 
-
+        self.leaving_source_slice = self.leaving_source[(self.leaving_source["Y/mm"]>= -687 )&(self.leaving_source["Y/mm"]<= -684)]
+        # slice and add legend
 
 
 
@@ -828,6 +829,7 @@ class SN():
 
         ax[1].set_xlabel("Energy [keV]")
         ax[1].set_ylabel("Counts")
+        ax[1].legend()
 
         plt.savefig(self.plot_path + f"Cf_1E7_sstl_phys_effect_{self.config_string}.pdf")
         print(self.plot_path+ f"Cf_1E7_sstl_phys_effect_{self.config_string}.pdf")
