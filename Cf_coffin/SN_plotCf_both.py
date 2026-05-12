@@ -923,7 +923,7 @@ class SN():
             capture_rate_list.append(capture_rate)
             total_rate_list.append(scatter_rate+capture_rate)
 
-        print("NR edge, rate", capture_edge, total_rate_list)
+        print("NR edge, rate", capture_edge[:10], total_rate_list[:10])
 
 
 
