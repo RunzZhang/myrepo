@@ -61,7 +61,7 @@ class SN():
         self.NR_spectrum_moderated_by_sstl()
 
 
-        # self.NR_spectrum()
+        self.NR_spectrum()
         # self.write_sims_results()
         # self.NR_multiplicity()
         # for ploting PN background tagging and SNR
