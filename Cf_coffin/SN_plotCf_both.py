@@ -14,12 +14,12 @@ class SN():
 
         ## change config A to B
         # replace sourcetube_A and config_A
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_A/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_A/" # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
-        self.config_string = 'config_A'
+        self.config_string = 'config_B'
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
         self.TN_spectrum_path = './MC_argon_full_20250701_LSS07_2E5'
         self.false_1 = "PN_false1.csv"
@@ -51,10 +51,10 @@ class SN():
         #     self.main_body(i)
         self.main_body(1)
         #check the intial neutron postions, argon volume and the intial neutron energy spectrum
-        self.check_geometry()
+        # self.check_geometry()
         #check neutron which first entering argon volum's positions and energy
         # self.neutron_spectrum_enteringLAr()
-        # self.neutron_source_geometry()
+        self.neutron_source_geometry()
         # self.NR_spectrum()
         # self.write_sims_results()
         # self.NR_multiplicity()
