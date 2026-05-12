@@ -804,7 +804,7 @@ class SN():
 
         ffig, ax = plt.subplots(1,2,figsize=(16,4))
         # X and Y
-        sc0=ax[0].hist2d(self.leaving_source["X/mm"],self.leaving_source["Z/mm"],bins=50,
+        sc0=ax[0].hist2d(self.leaving_source_slice["X/mm"],self.leaving_source_slice["Z/mm"],bins=50,
         cmap="plasma",norm="log",alpha=0.7)
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
