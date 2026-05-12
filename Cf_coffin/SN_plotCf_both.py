@@ -803,6 +803,9 @@ class SN():
         self.active["PreKinetic/keV"] = self.active["PreKinetic/MeV"] * 1000
         self.leaving_source["PreKinetic/keV"] = self.leaving_source["PreKinetic/MeV"] * 1000
         self.leaving_source["PostKinetic/keV"] = self.leaving_source["PostKinetic/MeV"] * 1000
+        # neutron leaving source moderated by the ssteel to below 200keV
+        self.low_e_n_list = self.leaving_source[self.leaving_source["PostKinetic/keV"] < 200]["Event"].tolist()
+
 
 
         self.leaving_source_R = self.leaving_source
@@ -842,8 +845,11 @@ class SN():
 
         leaving_neutron = np.histogram(self.leaving_source["PostKinetic/keV"], bins=50)
         print(leaving_neutron[0],"\n",leaving_neutron[1])
+        # 200 keV
         plt.savefig(self.plot_path + f"Cf_1E7_sstl_phys_effect_{self.config_string}.pdf")
         print(self.plot_path+ f"Cf_1E7_sstl_phys_effect_{self.config_string}.pdf")
+
+        self.NR_spectrum_moderated_by_sstl()
 
     def neutron_spectrum_enteringLAr(self):
 
@@ -1042,6 +1048,87 @@ class SN():
         self.NR_rate_zoomed(capture_edge, total_rate_list)
 
 
+    def NR_spectrum_moderated_by_sstl(self):
+        rate_factor = 1000*self.rate*self.Activity/(self.original_Activity*self.G4_events) # /ms
+
+        # # filter NR = 0 events
+        print("initial df ", self.df_energy.head(10))
+        # self.df_energy = self.df_energy[self.df_energy["Recoiled/MeV"]>0]
+        self.df_energy = self.df_energy[self.df_energy['Event'].isin(self.low_e_n_list)]
+        self.scatter = self.df_energy[self.df_energy["Process"].isin(['hadElastic', 'neutronInelastic'])]
+        self.capture = self.df_energy[self.df_energy["Process"].isin(['nCapture'])]
+        max_NR_limit = max(self.scatter["Recoiled/MeV"]*1e6)
+        print("maximum scatter recoil energy",max_NR_limit)
+        # bin info and maybe same for both category
+        # 100 ev per bin
+        bin_num= int(max_NR_limit/100)+1
+        max_bin_range= bin_num*100
+
+        bin_range= (0,max_bin_range)
+        (scatter_counts, scatter_edge) = np.histogram(self.scatter["Recoiled/MeV"]*1e6, bins=bin_num, range=bin_range)
+        capture_counts = len(self.capture["Recoiled/MeV"])
+        # read thermal neutron recoiled spectrum by MCMC
+        self.TN_recoil_list = self.read_TN_R_spectrum()# in eV
+        (capture_counts, capture_edge) = np.histogram(self.TN_recoil_list, density=True,bins=bin_num, range=bin_range)
+        width = capture_edge[1]-capture_edge[0]
+        #0th order just a threshold
+
+        scatter_rate_list = []
+        capture_rate_list = []
+        total_rate_list = []
+        for threshold in scatter_edge:
+            Efficiency_array = np.array([self.NucleationEfficiencyTrue(edge, threshold,threshold/8,threshold/8) for edge in scatter_edge] )
+            scatter_rate = sum(rate_factor*(Efficiency_array[1:]+Efficiency_array[:-1])*scatter_counts/2)
+            # capture is different becasue density is true means is normalized also by bin width
+            capture_rate = sum(rate_factor*capture_counts*(Efficiency_array[1:]+Efficiency_array[:-1])*width*capture_counts/2)
+            scatter_rate_list.append(scatter_rate)
+            capture_rate_list.append(capture_rate)
+            total_rate_list.append(scatter_rate+capture_rate)
+
+        print("NR edge, rate", capture_edge[:10], total_rate_list[:10])
+
+
+
+
+        fig, ax = plt.subplots(1,4,figsize=(20, 4))
+
+        ax[0].bar(scatter_edge, scatter_rate_list, width=width, align="edge")
+        ax[0].set_xlabel("Energy threshold [eV]")
+        ax[0].set_ylabel("Rate [mHz]")
+        ax[0].set_yscale("log")
+        # ax[0].set_xlim(0,2000)
+
+
+        ax[1].bar(capture_edge, capture_rate_list, width=width, align="edge")
+        ax[1].set_xlabel("Energy threshold [eV]")
+        ax[1].set_ylabel("Rate [mHz]")
+        ax[1].set_yscale("log")
+        # ax[1].set_xlim(0, 2000)
+
+        ax[2].bar(capture_edge, total_rate_list, width=width, align="edge")
+        ax[2].set_xlabel("Energy threshold [eV]")
+        ax[2].set_ylabel("Rate [mHz]")
+        # ax[2].set_yscale("log")
+        # ax[2].set_xlim(0, 2000)
+
+        # sc = ax[3].hist2d(self.scatter["PreKinetic/MeV"]*1e6, self.scatter["Recoiled/MeV"]*1e6, bins=50,
+        #                   cmap="plasma", norm="log", alpha=0.7)
+        #
+        #
+        #
+        # ax[3].set_xlabel("PreKinetic [eV]")
+        # ax[3].set_ylabel("Recoil [eV]")
+        # # ax[0].set_xlim(0,400)
+        # # ax[0].set_ylim(-100,800)
+        # cbar = plt.colorbar(sc[3], ax=ax[3])
+        # cbar.set_label("Counts(log)")
+
+
+        plt.savefig(self.plot_path+f"Cf_1E7_sstl_moderated_n_{self.config_string}.pdf")
+        print(self.plot_path)
+
+
+        self.NR_rate_zoomed(capture_edge, total_rate_list)
     def NR_multiplicity(self):
         rate_factor = 1000*self.rate*self.Activity/(self.original_Activity*self.G4_events) # /ms
         print("rate_factor",rate_factor)
