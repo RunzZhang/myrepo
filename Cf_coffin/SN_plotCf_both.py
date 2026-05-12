@@ -791,27 +791,34 @@ class SN():
 
         self.active = self.df_phys[(self.df_phys["Volume"] == "cf_active_phys")&(self.df_phys["Step ID"] == 1)]
 
+        # find center x and center Y locations
+        center_x= self.active["X/mm"].mean()
+        center_y = self.active["Y/mm"].mean()
+
         self.leaving_source = self.df_phys[(self.df_phys["name"] == "neutron") & (self.df_phys["Volume"] == "cf_source_phys")]
         self.leaving_source = self.leaving_source.loc[self.leaving_source.groupby('Event')['Step ID'].idxmax()]
+
+
 
         self.active["PreKinetic/keV"] = self.active["PreKinetic/MeV"] * 1000
         self.leaving_source["PreKinetic/keV"] = self.leaving_source["PreKinetic/MeV"] * 1000
 
-        self.leaving_source_slice = self.leaving_source[(self.leaving_source["Y/mm"]>= -686 )&(self.leaving_source["Y/mm"]<= -685)]
+        self.leaving_source_R = self.leaving_source
+        self.leaving_source_R["R/mm"] = np.sqrt((self.leaving_source_R["X/mm"]-center_x) ** 2 + (self.leaving_source_R["Y/mm"]-center_y) ** 2)
         # slice and add legend
 
 
 
         ffig, ax = plt.subplots(1,2,figsize=(16,4))
         # X and Y
-        sc0=ax[0].hist2d(self.leaving_source_slice["X/mm"],self.leaving_source_slice["Z/mm"],bins=50,
+        sc0=ax[0].hist2d(self.leaving_source_R["R/mm"],self.leaving_source_R["Z/mm"],bins=50,
         cmap="plasma",norm="log",alpha=0.7)
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
         # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
         # ax.plot([99.01,99.01, 4.34], [0,366.49, 399.82], color="red")
 
-        ax[0].set_xlabel("X [mm]")
+        ax[0].set_xlabel("R- $R_{center}$ [mm]")
         ax[0].set_ylabel("Z [mm]")
         ax[0].set_xlim(-77,-75)
         # ax[0].set_ylim(-690,-680)
