@@ -51,12 +51,12 @@ class SN():
         #     self.main_body(i)
         self.main_body(1)
         #check the intial neutron postions, argon volume and the intial neutron energy spectrum
-        # self.check_geometry()
+        self.check_geometry()
         #check neutron which first entering argon volum's positions and energy
         # self.neutron_spectrum_enteringLAr()
-        self.neutron_source_geometry()
-        self.NR_spectrum()
-        self.write_sims_results()
+        # self.neutron_source_geometry()
+        # self.NR_spectrum()
+        # self.write_sims_results()
         # self.NR_multiplicity()
         # for ploting PN background tagging and SNR
         # self.untagged_bubble_rate()
@@ -734,7 +734,7 @@ class SN():
         plt.savefig(self.plot_path + "PN_specturm_lin_1E6.pdf", bbox_inches='tight')
     def check_geometry(self):
 
-        self.coffin = self.df_geo[self.df_geo["Volume"]=="cf_source_phys"]
+        self.coffin = self.df_geo[self.df_geo["Volume"]=="cf_active_phys"]
         self.coffin["PreKinetic/keV"] = self.coffin["PreKinetic/MeV"]*1000
         self.argon = self.df_geo[self.df_geo["Volume"]=="LAr_phys"]
         self.df_geo["R/mm"]=  np.sqrt(self.df_geo["X/mm"]**2+self.df_geo["Y/mm"]**2 )
