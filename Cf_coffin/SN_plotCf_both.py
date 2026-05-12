@@ -806,7 +806,7 @@ class SN():
 
         self.active["PreKinetic/keV"] = self.active["PreKinetic/MeV"] * 1000
 
-        print("total runs", len(self.active['Event'].tolist())
+        print("total runs", len(self.active['Event'].tolist()))
 
         self.leaving_source["PreKinetic/keV"] = self.leaving_source["PreKinetic/MeV"] * 1000
         self.leaving_source["PostKinetic/keV"] = self.leaving_source["PostKinetic/MeV"] * 1000
