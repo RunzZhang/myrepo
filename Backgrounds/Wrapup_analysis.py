@@ -397,7 +397,7 @@ class integrated_analysis():
 
             merged_df.to_csv(self.Cf_expB_rate_path[i], index=False)
 
-        fig, ax = plt.subplots(1, 4, figsize=(20, 4))
+        fig, ax = plt.subplots(1, 4, figsize=(22, 4))
         # 1 plot to compare with original data Gray had, 2 to plot the spectrum with clean data comparasion
         for i in range(len(self.Cf_expA_rate_path)):
             exp_df = pd.read_csv(self.Cf_expA_rate_path[i])
