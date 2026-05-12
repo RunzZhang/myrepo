@@ -54,9 +54,9 @@ class SN():
         # self.check_geometry()
         #check neutron which first entering argon volum's positions and energy
         # self.neutron_spectrum_enteringLAr()
-        self.neutron_source_geometry()
-        # self.NR_spectrum()
-        # self.write_sims_results()
+        # self.neutron_source_geometry()
+        self.NR_spectrum()
+        self.write_sims_results()
         # self.NR_multiplicity()
         # for ploting PN background tagging and SNR
         # self.untagged_bubble_rate()
