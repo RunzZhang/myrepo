@@ -841,7 +841,7 @@ class SN():
         ax[1].legend()
 
         leaving_neutron = np.histogram(self.leaving_source["PostKinetic/keV"], bins=50)
-        print(leaving_neutron[0],"\n",leaving_neutron[1],"\n",leaving_neutron[2])
+        print(leaving_neutron[0],"\n",leaving_neutron[1])
         plt.savefig(self.plot_path + f"Cf_1E7_sstl_phys_effect_{self.config_string}.pdf")
         print(self.plot_path+ f"Cf_1E7_sstl_phys_effect_{self.config_string}.pdf")
 
