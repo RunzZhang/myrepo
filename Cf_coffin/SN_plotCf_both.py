@@ -47,9 +47,9 @@ class SN():
 
         #982 statics false 1
         # for i in range(1,101):
-        for i in range(1, 11):
-            self.main_body(i)
-        # self.main_body(1)
+        # for i in range(1, 11):
+        #     self.main_body(i)
+        self.main_body(1)
         #check the intial neutron postions, argon volume and the intial neutron energy spectrum
         # self.check_geometry()
         #check neutron which first entering argon volum's positions and energy
