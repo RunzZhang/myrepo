@@ -41,6 +41,7 @@ class SN():
         self.neutron_ar_ke_alter_list = []
         self.gamma = gamma
         self.full_gamma = full_gamma
+        self.df_phys_list = []
         self.df_geo_list = []
         self.df_energy_list = []
 
@@ -93,6 +94,7 @@ class SN():
         self.ar_ke_path = self.base_path + f"PN_1E7_ke_part{i}.csv"
         self.ar_ke_alter_path = self.base_path + f"PN_1E7_ke_part{i}.csv"
         self.geometry_path = self.base_path+f"PN_1E7_geo_part{i}.csv"
+        self.phys_path = self.base_path + f"PN_1E7_phys_part{i}.csv"
 
 
         self.read_files()
@@ -131,6 +133,16 @@ class SN():
 
         try:
 
+            temp_phys_df = pd.read_csv(self.phys_path)
+
+            self.df_phys_list.append(temp_phys_df)
+
+            self.df_phys = pd.concat(self.df_phys_list, ignore_index=True)
+        except:
+            print("Fail to read geometry")
+
+        try:
+
             temp_geo_df = pd.read_csv(self.geometry_path)
 
             self.df_geo_list.append(temp_geo_df)
@@ -147,6 +159,8 @@ class SN():
             self.df_energy = pd.concat(self.df_energy_list, ignore_index=True)
         except:
             print("failed to read energy")
+
+
         # if self.full_gamma:
         #     self.G4_gamma_time =  self.G4_full_gamma_time
         # with open(self.signal_path, 'r') as file:
@@ -769,6 +783,53 @@ class SN():
         plt.savefig(self.plot_path+f"Cf_1E7_position_density_{self.config_string}.pdf")
         print(self.plot_path)
 
+    def source_tube_phys(self):
+
+        rate_factor = 1000 * self.rate * self.Activity / (self.original_Activity * self.G4_events)
+
+
+        self.active = self.df_phys[(self.df_phys["Volume"] == "cf_active_phys")&(self.df_phys["Step ID"] == 1)]
+
+        self.leaving_source = self.df_phys[(self.df_phys["name"] == "neutron") & (self.df_phys["Volume"] == "cf_source_phys")]
+        self.leaving_source = self.leaving_source.loc[self.leaving_source.groupby('Event')['Step ID'].idxmax()]
+
+        self.active["PreKinetic/keV"] = self.active["PreKinetic/MeV"] * 1000
+        self.leaving_source["PreKinetic/keV"] = self.leaving_source["PreKinetic/MeV"] * 1000
+
+        print(self.coffin)
+
+
+
+        ffig, ax = plt.subplots(1,2,figsize=(16,4))
+        # X and Y
+        sc0=ax[0].hist2d(self.leaving_source["X/mm"],self.leaving_source["Z/mm"],bins=50,
+        cmap="plasma",norm="log",alpha=0.7)
+
+        # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
+        # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
+        # ax.plot([99.01,99.01, 4.34], [0,366.49, 399.82], color="red")
+
+        ax[0].set_xlabel("X [mm]")
+        ax[0].set_ylabel("Z [mm]")
+        # ax[0].set_xlim(0,400)
+        # ax[0].set_ylim(-100,800)
+        cbar0 = plt.colorbar(sc0[3], ax=ax[0])
+        cbar0.set_label("Counts(log)")
+
+
+
+        ax[1].hist(self.active["PreKinetic/keV"], bins=50, alpha=0.7, label="active_region")
+        ax[1].hist(self.leaving_source["PreKinetic/keV"], bins=50, alpha=0.7, label="leaving source tube")
+
+        # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
+        # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
+        # ax.plot([99.01,99.01, 4.34], [0,366.49, 399.82], color="red")
+
+        ax[1].set_xlabel("Energy [keV]")
+        ax[1].set_ylabel("Counts")
+        print(self.coffin["PreKinetic/keV"])
+        plt.savefig(self.plot_path + f"Cf_1E7_sstl_phys_effect_{self.config_string}.pdf")
+        print(self.plot_path)
 
     def neutron_spectrum_enteringLAr(self):
 
@@ -882,11 +943,9 @@ class SN():
         cbar1 = plt.colorbar(sc1[3], ax=ax[1])
         cbar1.set_label("Counts(log)")
 
-
-
-
-
         plt.savefig(self.plot_path+f"Cf_1E7_position_density_source_{self.config_string}.pdf")
+
+
     def NR_spectrum(self):
         rate_factor = 1000*self.rate*self.Activity/(self.original_Activity*self.G4_events) # /ms
 

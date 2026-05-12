@@ -193,6 +193,7 @@ class ReadRoot():
         self.signal_new_path_mid = self.base_path + self.signal_new_mid
         self.signal_new_path = self.base_path + self.signal_new
         self.geometry_path = self.base_path+f"PN_1E7_geo_part{i}.csv"
+        self.phys_path = self.base_path+f"PN_1E7_phys_part{i}.csv"
 
         self.x_range = [0, 0]
         self.y_range = [0, 0]
@@ -217,7 +218,11 @@ class ReadRoot():
 
 
         #find source tube
-        self.source_geometry()
+
+        # self.source_geometry()
+
+        # check ssl tube effect to neutron spectrum
+        self.sstl_phys()
 
 
         self.collect_NR()
@@ -272,6 +277,10 @@ class ReadRoot():
         self.df['Process'] = self.df['Process'].astype(str)
         # this make event number correct
         self.reidx_event()
+    def sstl_phys(self):
+        self.phys = self.df[(self.df["name"]=="neutron")&((self.df["Volume"]=="cf_active_phys")|(self.df["Volume"]=="cf_source_phys"))]
+        self.phys.to_csv(self.phys_path, index = False)
+
     def source_geometry(self):
         # also include initial energy
         self.initial_position = self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="cf_active_phys")&(self.df['Step ID'] == 1)][["Event","X/mm", "Y/mm","Z/mm", "Volume","PreKinetic/MeV"]]
