@@ -797,7 +797,7 @@ class SN():
         self.active["PreKinetic/keV"] = self.active["PreKinetic/MeV"] * 1000
         self.leaving_source["PreKinetic/keV"] = self.leaving_source["PreKinetic/MeV"] * 1000
 
-        self.leaving_source_slice = self.leaving_source[(self.leaving_source["Y/mm"]>= -687 )&(self.leaving_source["Y/mm"]<= -684)]
+        self.leaving_source_slice = self.leaving_source[(self.leaving_source["Y/mm"]>= -686 )&(self.leaving_source["Y/mm"]<= -685)]
         # slice and add legend
 
 
