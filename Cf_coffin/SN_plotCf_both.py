@@ -797,7 +797,7 @@ class SN():
         self.active["PreKinetic/keV"] = self.active["PreKinetic/MeV"] * 1000
         self.leaving_source["PreKinetic/keV"] = self.leaving_source["PreKinetic/MeV"] * 1000
 
-        print(self.coffin)
+        
 
 
 
