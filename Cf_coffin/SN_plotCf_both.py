@@ -840,6 +840,8 @@ class SN():
         ax[1].set_ylabel("Counts")
         ax[1].legend()
 
+        leaving_neutron = np.histogram(self.leaving_source["PostKinetic/keV"], bins=50)
+        print(leaving_neutron[0],"\n",leaving_neutron[1],"\n",leaving_neutron[2])
         plt.savefig(self.plot_path + f"Cf_1E7_sstl_phys_effect_{self.config_string}.pdf")
         print(self.plot_path+ f"Cf_1E7_sstl_phys_effect_{self.config_string}.pdf")
 
@@ -1020,17 +1022,17 @@ class SN():
         # ax[2].set_yscale("log")
         # ax[2].set_xlim(0, 2000)
 
-        sc = ax[3].hist2d(self.scatter["PreKinetic/MeV"]*1e6, self.scatter["Recoiled/MeV"]*1e6, bins=50,
-                          cmap="plasma", norm="log", alpha=0.7)
-
-
-
-        ax[3].set_xlabel("PreKinetic [eV]")
-        ax[3].set_ylabel("Recoil [eV]")
-        # ax[0].set_xlim(0,400)
-        # ax[0].set_ylim(-100,800)
-        cbar = plt.colorbar(sc[3], ax=ax[3])
-        cbar.set_label("Counts(log)")
+        # sc = ax[3].hist2d(self.scatter["PreKinetic/MeV"]*1e6, self.scatter["Recoiled/MeV"]*1e6, bins=50,
+        #                   cmap="plasma", norm="log", alpha=0.7)
+        #
+        #
+        #
+        # ax[3].set_xlabel("PreKinetic [eV]")
+        # ax[3].set_ylabel("Recoil [eV]")
+        # # ax[0].set_xlim(0,400)
+        # # ax[0].set_ylim(-100,800)
+        # cbar = plt.colorbar(sc[3], ax=ax[3])
+        # cbar.set_label("Counts(log)")
 
 
         plt.savefig(self.plot_path+f"Cf_1E7_energy_density_{self.config_string}.pdf")
