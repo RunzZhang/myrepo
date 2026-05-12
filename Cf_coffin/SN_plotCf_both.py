@@ -56,8 +56,12 @@ class SN():
         #check neutron which first entering argon volum's positions and energy
         # self.neutron_spectrum_enteringLAr()
         # self.neutron_source_geometry()
+        # get ssttl moderating effect and check Argon recoiled by that
         self.source_tube_phys()
-        self.NR_spectrum()
+        self.NR_spectrum_moderated_by_sstl()
+
+
+        # self.NR_spectrum()
         # self.write_sims_results()
         # self.NR_multiplicity()
         # for ploting PN background tagging and SNR
@@ -849,7 +853,7 @@ class SN():
         plt.savefig(self.plot_path + f"Cf_1E7_sstl_phys_effect_{self.config_string}.pdf")
         print(self.plot_path+ f"Cf_1E7_sstl_phys_effect_{self.config_string}.pdf")
 
-        self.NR_spectrum_moderated_by_sstl()
+
 
     def neutron_spectrum_enteringLAr(self):
 
@@ -1054,9 +1058,9 @@ class SN():
         # # filter NR = 0 events
         print("initial df ", self.df_energy.head(10))
         # self.df_energy = self.df_energy[self.df_energy["Recoiled/MeV"]>0]
-        self.df_energy = self.df_energy[self.df_energy['Event'].isin(self.low_e_n_list)]
-        self.scatter = self.df_energy[self.df_energy["Process"].isin(['hadElastic', 'neutronInelastic'])]
-        self.capture = self.df_energy[self.df_energy["Process"].isin(['nCapture'])]
+        self.df_sstl_energy = self.df_energy[self.df_energy['Event'].isin(self.low_e_n_list)]
+        self.scatter = self.df_sstl_energy[self.df_sstl_energy["Process"].isin(['hadElastic', 'neutronInelastic'])]
+        self.capture = self.df_sstl_energy[self.df_sstl_energy["Process"].isin(['nCapture'])]
         max_NR_limit = max(self.scatter["Recoiled/MeV"]*1e6)
         print("maximum scatter recoil energy",max_NR_limit)
         # bin info and maybe same for both category
