@@ -437,10 +437,10 @@ class integrated_analysis():
             Efficiency_applied_rate = sum((Efficiency_array[1:] + Efficiency_array[:-1]) * self.Cf_simB_rate / 2)
             self.Cf_simB_NEC_rate.append(Efficiency_applied_rate)
 
-        ax[1].plot(self.Cf_simA_energy[:-1],self.Cf_simA_NEC_rate, label='Cf configA spectrum')
+        ax[1].plot(self.Cf_simA_energy,self.Cf_simA_NEC_rate, label='Cf configA spectrum')
         print("self.Cf_simsA[0]",self.Cf_simsA[0])
         print("self.Cf_simsA[2]", self.Cf_simsA[2])
-        ax[1].plot(self.Cf_simB_energy[:-1],self.Cf_simB_NEC_rate, label='Cf configB spectrum')
+        ax[1].plot(self.Cf_simB_energy,self.Cf_simB_NEC_rate, label='Cf configB spectrum')
 
         ax[2].plot(self.Cf_simsA[1][0][1][:-1]/1000, self.Cf_simsA[0] * self.Cf_simsA[2], label='Cf configA spectrum')
         ax[2].plot(self.Cf_simsB[1][0][1][:-1]/1000, self.Cf_simsB[0] * self.Cf_simsB[2], label='Cf configB spectrum')
