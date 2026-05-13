@@ -428,6 +428,7 @@ class integrated_analysis():
                 [self.NucleationEfficiencyTrue(edge, threshold, threshold / 8, threshold / 8) for edge in self.Cf_simA_energy])
             Efficiency_applied_rate = sum((Efficiency_array[1:]+Efficiency_array[:-1])*self.Cf_simA_diff_rate/2)
             self.Cf_simA_NEC_rate.append(Efficiency_applied_rate)
+        self.Cf_simA_NEC_rate[0] = 0
 
         self.Cf_simB_energy = self.Cf_simsB[1][0][1]
         self.Cf_simB_rate = self.Cf_simsB[0] * self.Cf_simsB[2]
@@ -440,6 +441,7 @@ class integrated_analysis():
                  self.Cf_simB_energy])
             Efficiency_applied_rate = sum((Efficiency_array[1:] + Efficiency_array[:-1]) * self.Cf_simB_diff_rate / 2)
             self.Cf_simB_NEC_rate.append(Efficiency_applied_rate)
+        self.Cf_simB_NEC_rate[0] = 0
         print("simA rate after threshold",self.Cf_simA_NEC_rate[:5] )
         ax[1].plot(self.Cf_simA_energy,self.Cf_simA_NEC_rate, label='Cf configA spectrum')
         print("self.Cf_simsA[0]",self.Cf_simsA[0])
