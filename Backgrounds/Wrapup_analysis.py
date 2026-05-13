@@ -420,7 +420,7 @@ class integrated_analysis():
         # add Nucleation Efficiency Curve to moderate the rate
         self.Cf_simA_energy = self.Cf_simsA[1][0][1]
         self.Cf_simA_rate = self.Cf_simsA[0]*self.Cf_simsA[2]
-        self.Cf_simA_diff_rate = self.Cf_simA_rate[1:]-self.Cf_simA_rate[:-1]
+        self.Cf_simA_diff_rate = -self.Cf_simA_rate[1:]+self.Cf_simA_rate[:-1]
         self.Cf_simA_diff_rate = np.insert(self.Cf_simA_diff_rate, 0, 0)
         self.Cf_simA_NEC_rate = []
         for threshold in self.Cf_simA_energy:
@@ -431,7 +431,7 @@ class integrated_analysis():
 
         self.Cf_simB_energy = self.Cf_simsB[1][0][1]
         self.Cf_simB_rate = self.Cf_simsB[0] * self.Cf_simsB[2]
-        self.Cf_simB_diff_rate = self.Cf_simB_rate[1:] - self.Cf_simB_rate[:-1]
+        self.Cf_simB_diff_rate = -self.Cf_simB_rate[1:] + self.Cf_simB_rate[:-1]
         self.Cf_simB_diff_rate = np.insert(self.Cf_simB_diff_rate, 0, 0)
         self.Cf_simB_NEC_rate = []
         for threshold in self.Cf_simB_energy:
