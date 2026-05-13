@@ -1001,7 +1001,11 @@ class SN():
         capture_rate_list = []
         total_rate_list = []
         for threshold in scatter_edge:
-            Efficiency_array = np.array([self.NucleationEfficiencyTrue(edge, threshold,threshold/8,threshold/8) for edge in scatter_edge] )
+            # normal
+            # Efficiency_array = np.array([self.NucleationEfficiencyTrue(edge, threshold,threshold/8,threshold/8) for edge in scatter_edge] )
+            # step function
+            Efficiency_array = np.array(
+                [self.NucleationEfficiencyTrue(edge, threshold, 0, 0) for edge in scatter_edge])
             scatter_rate = sum(rate_factor*(Efficiency_array[1:]+Efficiency_array[:-1])*scatter_counts/2)
             # capture is different becasue density is true means is normalized also by bin width
             capture_rate = sum(rate_factor*capture_counts*(Efficiency_array[1:]+Efficiency_array[:-1])*width*capture_counts/2)
@@ -1084,7 +1088,12 @@ class SN():
         capture_rate_list = []
         total_rate_list = []
         for threshold in scatter_edge:
-            Efficiency_array = np.array([self.NucleationEfficiencyTrue(edge, threshold,threshold/8,threshold/8) for edge in scatter_edge] )
+            # normal
+            # Efficiency_array = np.array([self.NucleationEfficiencyTrue(edge, threshold,threshold/8,threshold/8) for edge in scatter_edge] )
+            # step function
+            Efficiency_array = np.array(
+                [self.NucleationEfficiencyTrue(edge, threshold, 0, 0) for edge in scatter_edge])
+
             scatter_rate = sum(rate_factor*(Efficiency_array[1:]+Efficiency_array[:-1])*scatter_counts/2)
             # capture is different becasue density is true means is normalized also by bin width
             capture_rate = sum(rate_factor*capture_counts*(Efficiency_array[1:]+Efficiency_array[:-1])*width*capture_counts/2)
