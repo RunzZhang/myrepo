@@ -1005,7 +1005,7 @@ class SN():
             # Efficiency_array = np.array([self.NucleationEfficiencyTrue(edge, threshold,threshold/8,threshold/8) for edge in scatter_edge] )
             # step function
             Efficiency_array = np.array(
-                [self.NucleationEfficiencyTrue(edge, threshold, 0, 0) for edge in scatter_edge])
+                [self.NucleationEfficiencyTrue_Step(edge, threshold) for edge in scatter_edge])
             scatter_rate = sum(rate_factor*(Efficiency_array[1:]+Efficiency_array[:-1])*scatter_counts/2)
             # capture is different becasue density is true means is normalized also by bin width
             capture_rate = sum(rate_factor*capture_counts*(Efficiency_array[1:]+Efficiency_array[:-1])*width*capture_counts/2)
@@ -1092,7 +1092,7 @@ class SN():
             # Efficiency_array = np.array([self.NucleationEfficiencyTrue(edge, threshold,threshold/8,threshold/8) for edge in scatter_edge] )
             # step function
             Efficiency_array = np.array(
-                [self.NucleationEfficiencyTrue(edge, threshold, 0, 0) for edge in scatter_edge])
+                [self.NucleationEfficiencyTrue_Step(edge, threshold) for edge in scatter_edge])
 
             scatter_rate = sum(rate_factor*(Efficiency_array[1:]+Efficiency_array[:-1])*scatter_counts/2)
             # capture is different becasue density is true means is normalized also by bin width
@@ -1355,6 +1355,13 @@ class SN():
             R = 1 / 2 * (1 + math.erf((r - T) / (sigLow * 2 ** (1 / 2))))
         else:
             R = 1 / 2 * (1 + math.erf((r - T) / (sigUp * 2 ** (1 / 2))))
+        return R
+
+    def NucleationEfficiencyTrue_Step(self, r, T):
+        if r < T:
+            R = 0
+        else:
+            R = 1
         return R
     def read_TN_R_spectrum(self):
         with open(self.TN_spectrum_path, "rb") as fp:  # Unpickling
