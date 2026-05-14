@@ -278,7 +278,7 @@ class ReadRoot():
         # this make event number correct
         self.reidx_event()
     def sstl_phys(self):
-        self.phys = self.df[(self.df["name"]=="neutron")&((self.df["Volume"]=="cf_active_phys")|(self.df["Volume"]=="cf_source_phys"))]
+        self.phys = self.df[(self.df["name"]=="neutron")&((self.df["Volume"]=="cf_active_phys")|(self.df["Volume"]=="cf_source_phys")|(self.df["Volume"]=="BPE_coffin_phys"))]
         self.phys.to_csv(self.phys_path, index = False)
 
     def source_geometry(self):

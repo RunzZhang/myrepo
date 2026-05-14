@@ -48,15 +48,16 @@ class SN():
 
         #982 statics false 1
         # for i in range(1,101):
-        # for i in range(1, 11):
-        #     self.main_body(i)
-        self.main_body(1)
+        for i in range(1, 11):
+            self.main_body(i)
+        # self.main_body(1)
         #check the intial neutron postions, argon volume and the intial neutron energy spectrum
         # self.check_geometry()
         #check neutron which first entering argon volum's positions and energy
         # self.neutron_spectrum_enteringLAr()
         # self.neutron_source_geometry()
         # get ssttl moderating effect and check Argon recoiled by that
+        self.coffin_phys()
         self.source_tube_phys()
         self.NR_spectrum_moderated_by_sstl()
 
@@ -857,6 +858,87 @@ class SN():
         print(self.plot_path+ f"Cf_1E7_sstl_phys_effect_{self.config_string}.pdf")
 
 
+    def coffin_phys(self):
+
+        rate_factor = 1000 * self.rate * self.Activity / (self.original_Activity * self.G4_events)
+
+
+        self.active = self.df_phys[(self.df_phys["Volume"] == "cf_active_phys")&(self.df_phys["Step ID"] == 1)]
+
+        # find center x and center Y locations
+        center_x= self.active["X/mm"].mean()
+        center_y = self.active["Y/mm"].mean()
+
+        self.leaving_coffin = self.df_phys[(self.df_phys["name"] == "neutron") & (self.df_phys["Volume"] == "BPE_coffin_phys")]
+        self.leaving_coffin = self.leaving_coffin.loc[self.leaving_coffin.groupby('Event')['Step ID'].idxmax()]
+
+
+
+        self.active["PreKinetic/keV"] = self.active["PreKinetic/MeV"] * 1000
+
+        print("total runs", len(self.active['Event'].tolist()))
+
+        self.leaving_coffin["PreKinetic/keV"] = self.leaving_coffin["PreKinetic/MeV"] * 1000
+        self.leaving_coffin["PostKinetic/keV"] = self.leaving_coffin["PostKinetic/MeV"] * 1000
+        # neutron leaving source moderated by the ssteel to below 200keV
+        self.low_e_n_coffin_list = self.leaving_coffin[self.leaving_coffin["PostKinetic/keV"] < 200]["Event"].tolist()
+
+
+
+        self.leaving_coffin_R = self.leaving_coffin
+        self.leaving_coffin_R["R/mm"] = np.sqrt((self.leaving_coffin_R["X/mm"]-center_x) ** 2 + (self.leaving_coffin_R["Y/mm"]-center_y) ** 2)
+        # slice and add legend
+
+
+
+        ffig, ax = plt.subplots(1,3,figsize=(24,4))
+        # X and Y
+        sc0=ax[0].hist2d(self.leaving_coffin_R["X/mm"],self.leaving_coffin_R["Z/mm"],bins=50,
+        cmap="plasma",norm="log",alpha=0.7)
+
+        # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
+        # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
+        # ax.plot([99.01,99.01, 4.34], [0,366.49, 399.82], color="red")
+
+        ax[0].set_xlabel("X [mm]")
+        ax[0].set_ylabel("Z [mm]")
+        # ax[0].set_xlim(-77,-75)
+        # ax[0].set_ylim(-690,-680)
+        cbar0 = plt.colorbar(sc0[3], ax=ax[0])
+        cbar0.set_label("Counts(log)")
+
+        sc1 = ax[1].hist2d(self.leaving_coffin_R["Y/mm"], self.leaving_coffin_R["Z/mm"], bins=50,
+                           cmap="plasma", norm="log", alpha=0.7)
+
+        # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
+        # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
+        # ax.plot([99.01,99.01, 4.34], [0,366.49, 399.82], color="red")
+
+        ax[1].set_xlabel("X [mm]")
+        ax[1].set_ylabel("Z [mm]")
+        # ax[0].set_xlim(-77,-75)
+        # ax[0].set_ylim(-690,-680)
+        cbar1 = plt.colorbar(sc1[3], ax=ax[1])
+        cbar1.set_label("Counts(log)")
+
+
+
+        ax[2].hist(self.active["PreKinetic/keV"], bins=50, alpha=0.7, label="active_region")
+        ax[2].hist(self.leaving_coffin["PostKinetic/keV"], bins=50, alpha=0.7, label="leaving coffin")
+
+        # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
+        # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
+        # ax.plot([99.01,99.01, 4.34], [0,366.49, 399.82], color="red")
+
+        ax[2].set_xlabel("Energy [keV]")
+        ax[2].set_ylabel("Counts")
+        ax[2].legend()
+
+        leaving_neutron = np.histogram(self.leaving_coffin["PostKinetic/keV"], bins=50)
+        print(leaving_neutron[0],"\n",leaving_neutron[1])
+        # 200 keV
+        plt.savefig(self.plot_path + f"Cf_1E7_coffin_phys_effect_{self.config_string}.pdf")
+        print(self.plot_path+ f"Cf_1E7_coffin_phys_effect_{self.config_string}.pdf")
 
     def neutron_spectrum_enteringLAr(self):
 
