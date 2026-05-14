@@ -59,7 +59,7 @@ class SN():
         # get ssttl moderating effect and check Argon recoiled by that
         self.coffin_phys()
         # self.source_tube_phys()
-        # self.NR_spectrum_moderated_by_sstl()
+        self.NR_spectrum_moderated_by_sstl()
 
 
         self.NR_spectrum()
@@ -1065,7 +1065,7 @@ class SN():
         # self.df_energy = self.df_energy[self.df_energy["Recoiled/MeV"]>0]
         self.scatter = self.df_energy[self.df_energy["Process"].isin(['hadElastic', 'neutronInelastic'])]
         self.capture = self.df_energy[self.df_energy["Process"].isin(['nCapture'])]
-        max_NR_limit = max(self.scatter["Recoiled/MeV"]*1e6)
+        max_NR_limit = max(self.scatter["Recoiled/MeV"]*1e3)
         print("maximum scatter recoil energy",max_NR_limit)
         # bin info and maybe same for both category
         # 100 ev per bin
@@ -1073,7 +1073,7 @@ class SN():
         max_bin_range= bin_num*100
 
         bin_range= (0,max_bin_range)
-        (scatter_counts, scatter_edge) = np.histogram(self.scatter["Recoiled/MeV"]*1e6, bins=bin_num, range=bin_range)
+        (scatter_counts, scatter_edge) = np.histogram(self.scatter["Recoiled/MeV"]*1e3, bins=bin_num, range=bin_range)
         capture_counts = len(self.capture["Recoiled/MeV"])
         # read thermal neutron recoiled spectrum by MCMC
         self.TN_recoil_list = self.read_TN_R_spectrum()# in eV
@@ -1105,20 +1105,20 @@ class SN():
         fig, ax = plt.subplots(1,4,figsize=(20, 4))
 
         ax[0].bar(scatter_edge, scatter_rate_list, width=width, align="edge")
-        ax[0].set_xlabel("Energy threshold [eV]")
+        ax[0].set_xlabel("Energy threshold [keV]")
         ax[0].set_ylabel("Rate [mHz]")
         ax[0].set_yscale("log")
         # ax[0].set_xlim(0,2000)
 
 
         ax[1].bar(capture_edge, capture_rate_list, width=width, align="edge")
-        ax[1].set_xlabel("Energy threshold [eV]")
+        ax[1].set_xlabel("Energy threshold [keV]")
         ax[1].set_ylabel("Rate [mHz]")
         ax[1].set_yscale("log")
         # ax[1].set_xlim(0, 2000)
 
         ax[2].bar(capture_edge, total_rate_list, width=width, align="edge")
-        ax[2].set_xlabel("Energy threshold [eV]")
+        ax[2].set_xlabel("Energy threshold [keV]")
         ax[2].set_ylabel("Rate [mHz]")
         # ax[2].set_yscale("log")
         # ax[2].set_xlim(0, 2000)
@@ -1152,7 +1152,7 @@ class SN():
         self.df_sstl_energy = self.df_energy[self.df_energy['Event'].isin(self.low_e_n_list)]
         self.scatter = self.df_sstl_energy[self.df_sstl_energy["Process"].isin(['hadElastic', 'neutronInelastic'])]
         self.capture = self.df_sstl_energy[self.df_sstl_energy["Process"].isin(['nCapture'])]
-        max_NR_limit = max(self.scatter["Recoiled/MeV"]*1e6)
+        max_NR_limit = max(self.scatter["Recoiled/MeV"]*1e3)
         print("maximum scatter recoil energy",max_NR_limit)
         # bin info and maybe same for both category
         # 100 ev per bin
@@ -1160,7 +1160,7 @@ class SN():
         max_bin_range= bin_num*100
 
         bin_range= (0,max_bin_range)
-        (scatter_counts, scatter_edge) = np.histogram(self.scatter["Recoiled/MeV"]*1e6, bins=bin_num, range=bin_range)
+        (scatter_counts, scatter_edge) = np.histogram(self.scatter["Recoiled/MeV"]*1e3, bins=bin_num, range=bin_range)
         capture_counts = len(self.capture["Recoiled/MeV"])
         # read thermal neutron recoiled spectrum by MCMC
         self.TN_recoil_list = self.read_TN_R_spectrum()# in eV
@@ -1193,20 +1193,20 @@ class SN():
         fig, ax = plt.subplots(1,4,figsize=(20, 4))
 
         ax[0].bar(scatter_edge, scatter_rate_list, width=width, align="edge")
-        ax[0].set_xlabel("Recoiled Energy threshold [eV]")
+        ax[0].set_xlabel("Recoiled Energy threshold [keV]")
         ax[0].set_ylabel("Rate [mHz]")
         ax[0].set_yscale("log")
         # ax[0].set_xlim(0,2000)
 
 
         ax[1].bar(capture_edge, capture_rate_list, width=width, align="edge")
-        ax[1].set_xlabel("Recoiled Energy threshold [eV]")
+        ax[1].set_xlabel("Recoiled Energy threshold [keV]")
         ax[1].set_ylabel("Rate [mHz]")
         ax[1].set_yscale("log")
         # ax[1].set_xlim(0, 2000)
 
         ax[2].bar(capture_edge, total_rate_list, width=width, align="edge")
-        ax[2].set_xlabel("Recoiled Energy threshold [eV]")
+        ax[2].set_xlabel("Recoiled Energy threshold [keV]")
         ax[2].set_ylabel("Rate [mHz]")
         # ax[2].set_yscale("log")
         # ax[2].set_xlim(0, 2000)
