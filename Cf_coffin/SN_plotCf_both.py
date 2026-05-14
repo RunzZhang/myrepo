@@ -57,8 +57,8 @@ class SN():
         # self.neutron_spectrum_enteringLAr()
         # self.neutron_source_geometry()
         # get ssttl moderating effect and check Argon recoiled by that
-        self.coffin_phys()
-        # self.source_tube_phys()
+        # self.coffin_phys()
+        self.source_tube_phys()
         self.NR_spectrum_moderated_by_sstl()
 
 
