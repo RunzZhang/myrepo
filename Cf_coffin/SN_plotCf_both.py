@@ -1077,8 +1077,8 @@ class SN():
         capture_counts = len(self.capture["Recoiled/MeV"])
         # read thermal neutron recoiled spectrum by MCMC
         self.TN_recoil_list = self.read_TN_R_spectrum()# in eV
-        self.TN_recoil_list = [i * 1000 for i in self.TN_recoil_list]  # kev
-        (capture_counts, capture_edge) = np.histogram(self.TN_recoil_list, density=True,bins=bin_num, range=bin_range)
+        self.TN_recoil_keV_list = [i * 0.1000 for i in self.TN_recoil_list]  # kev
+        (capture_counts, capture_edge) = np.histogram(self.TN_recoil_keV_list, density=True,bins=bin_num, range=bin_range)
         width = capture_edge[1]-capture_edge[0]
         #0th order just a threshold
 
@@ -1167,8 +1167,8 @@ class SN():
         capture_counts = len(self.capture["Recoiled/MeV"])
         # read thermal neutron recoiled spectrum by MCMC
         self.TN_recoil_list = self.read_TN_R_spectrum()# in eV
-        self.TN_recoil_list = [i*1000 for i in self.TN_recoil_list] #kev
-        (capture_counts, capture_edge) = np.histogram(self.TN_recoil_list, density=True,bins=bin_num, range=bin_range)
+        self.TN_recoil_keV_list = [i*0.1000 for i in self.TN_recoil_list] #kev
+        (capture_counts, capture_edge) = np.histogram(self.TN_recoil_keV_list, density=True,bins=bin_num, range=bin_range)
         width = capture_edge[1]-capture_edge[0]
         #0th order just a threshold
 
