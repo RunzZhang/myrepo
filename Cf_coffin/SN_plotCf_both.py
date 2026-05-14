@@ -862,14 +862,16 @@ class SN():
 
         rate_factor = 1000 * self.rate * self.Activity / (self.original_Activity * self.G4_events)
 
-
+        coffin_volume_list = ["block1_phys", "block2_phys", "block3_phys",
+                       "block4_phys", "block5_phys", "block6_phys", "block7_phys", "block8_phys", "block9_phys",
+                       "block10_phys", "block11_phys"]
         self.active = self.df_phys[(self.df_phys["Volume"] == "cf_active_phys")&(self.df_phys["Step ID"] == 1)]
 
         # find center x and center Y locations
         center_x= self.active["X/mm"].mean()
         center_y = self.active["Y/mm"].mean()
 
-        self.leaving_coffin = self.df_phys[(self.df_phys["name"] == "neutron") & (self.df_phys["Volume"] == "BPE_coffin_phys")]
+        self.leaving_coffin = self.df_phys[(self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(coffin_volume_list))]
         self.leaving_coffin = self.leaving_coffin.loc[self.leaving_coffin.groupby('Event')['Step ID'].idxmax()]
 
 

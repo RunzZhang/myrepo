@@ -283,7 +283,7 @@ class ReadRoot():
         # self.phys = self.df[(self.df["name"]=="neutron")&((self.df["Volume"]=="cf_active_phys")|(self.df["Volume"]=="cf_source_phys")|(self.df["Volume"]=="BPE_coffin_phys"))]
         self.phys = self.df[(self.df["name"] == "neutron") &
                     (self.df["Volume"].isin(volume_list))]
-        print(self.phys)
+        # print(self.phys)
 
         self.phys.to_csv(self.phys_path, index = False)
 
