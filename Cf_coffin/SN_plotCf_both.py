@@ -145,7 +145,7 @@ class SN():
 
             self.df_phys = pd.concat(self.df_phys_list, ignore_index=True)
         except:
-            print("Fail to read geometry")
+            print("Fail to read source geometry")
 
         try:
 
