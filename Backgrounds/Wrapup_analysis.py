@@ -431,7 +431,7 @@ class integrated_analysis():
                 [self.NucleationEfficiencyTrue(edge, threshold, threshold / 8, threshold / 8) for edge in self.Cf_simA_energy])
             Efficiency_applied_rate = sum((Efficiency_array[1:]+Efficiency_array[:-1])*self.Cf_simA_diff_rate/2)
             self.Cf_simA_NEC_rate.append(Efficiency_applied_rate)
-            if self.Cf_simA_energy.index(threshold) == 0:
+            if threshold == self.Cf_simA_energy[0]:
                 print('Efficiency_array',Efficiency_array[:10])
                 print('Efficiency_applied_rate',Efficiency_applied_rate[:10])
 
