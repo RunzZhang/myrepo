@@ -1065,19 +1065,20 @@ class SN():
         # self.df_energy = self.df_energy[self.df_energy["Recoiled/MeV"]>0]
         self.scatter = self.df_energy[self.df_energy["Process"].isin(['hadElastic', 'neutronInelastic'])]
         self.capture = self.df_energy[self.df_energy["Process"].isin(['nCapture'])]
-        max_NR_limit = max(self.scatter["Recoiled/MeV"]*1e3)
+        max_NR_limit = max(self.scatter["Recoiled/MeV"]*1e6)
         print("maximum scatter recoil energy",max_NR_limit)
         # bin info and maybe same for both category
-        # 100 ev per bin
-        bin_num= int(max_NR_limit/0.100)+1
-        max_bin_range= bin_num*0.100
+        # 100 ev per bin, 100 eV/ 0.100 keV 0.0001 MeV
+        energy_scale = 100
+        bin_num= int(max_NR_limit/100)+1
+        max_bin_range= bin_num*100
 
         bin_range= (0,max_bin_range)
-        (scatter_counts, scatter_edge) = np.histogram(self.scatter["Recoiled/MeV"]*1e3, bins=bin_num, range=bin_range)
+        (scatter_counts, scatter_edge) = np.histogram(self.scatter["Recoiled/MeV"]*1e6, bins=bin_num, range=bin_range)
         capture_counts = len(self.capture["Recoiled/MeV"])
         # read thermal neutron recoiled spectrum by MCMC
         self.TN_recoil_list = self.read_TN_R_spectrum()# in eV
-        self.TN_recoil_keV_list = [i * 0.1000 for i in self.TN_recoil_list]  # kev
+        self.TN_recoil_keV_list = [i for i in self.TN_recoil_list]  # kev
         (capture_counts, capture_edge) = np.histogram(self.TN_recoil_keV_list, density=True,bins=bin_num, range=bin_range)
         width = capture_edge[1]-capture_edge[0]
         #0th order just a threshold
@@ -1122,7 +1123,7 @@ class SN():
         ax[2].set_xlabel("Energy threshold [keV]")
         ax[2].set_ylabel("Rate [mHz]")
         # ax[2].set_yscale("log")
-        # ax[2].set_xlim(0, 2000)
+        ax[2].set_xlim(0, 3500)
 
         # sc = ax[3].hist2d(self.scatter["PreKinetic/MeV"]*1e6, self.scatter["Recoiled/MeV"]*1e6, bins=50,
         #                   cmap="plasma", norm="log", alpha=0.7)
@@ -1154,20 +1155,20 @@ class SN():
         self.scatter = self.df_sstl_energy[self.df_sstl_energy["Process"].isin(['hadElastic', 'neutronInelastic'])]
         self.capture = self.df_sstl_energy[self.df_sstl_energy["Process"].isin(['nCapture'])]
 
-        max_NR_limit = max(self.scatter["Recoiled/MeV"]*1e3)
+        max_NR_limit = max(self.scatter["Recoiled/MeV"]*1e6)
         print("maximum scatter recoil energy",max_NR_limit)
         # bin info and maybe same for both category
         # 100 ev per bin
-        bin_num= int(max_NR_limit/0.100)+1
-        max_bin_range= bin_num*0.1
+        bin_num= int(max_NR_limit/100)+1
+        max_bin_range= bin_num*100
         print("bin_num",bin_num,"max_bin_range",max_bin_range)
 
         bin_range= (0,max_bin_range)
-        (scatter_counts, scatter_edge) = np.histogram(self.scatter["Recoiled/MeV"]*1e3, bins=bin_num, range=bin_range)
+        (scatter_counts, scatter_edge) = np.histogram(self.scatter["Recoiled/MeV"]*1e6, bins=bin_num, range=bin_range)
         capture_counts = len(self.capture["Recoiled/MeV"])
         # read thermal neutron recoiled spectrum by MCMC
         self.TN_recoil_list = self.read_TN_R_spectrum()# in eV
-        self.TN_recoil_keV_list = [i*0.1000 for i in self.TN_recoil_list] #kev
+        self.TN_recoil_keV_list = [i for i in self.TN_recoil_list] #eV
         (capture_counts, capture_edge) = np.histogram(self.TN_recoil_keV_list, density=True,bins=bin_num, range=bin_range)
         width = capture_edge[1]-capture_edge[0]
         #0th order just a threshold
@@ -1213,7 +1214,7 @@ class SN():
         ax[2].set_xlabel("Recoiled Energy threshold [keV]")
         ax[2].set_ylabel("Rate [mHz]")
         # ax[2].set_yscale("log")
-        # ax[2].set_xlim(0, 2000)
+        ax[2].set_xlim(0, 3500)
 
         # sc = ax[3].hist2d(self.scatter["PreKinetic/MeV"]*1e6, self.scatter["Recoiled/MeV"]*1e6, bins=50,
         #                   cmap="plasma", norm="log", alpha=0.7)
