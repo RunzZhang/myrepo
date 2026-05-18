@@ -430,6 +430,8 @@ class integrated_analysis():
             Efficiency_array = np.array(
                 [self.NucleationEfficiencyTrue(edge, threshold, threshold / 8, threshold / 8) for edge in self.Cf_simA_energy])
             Efficiency_applied_rate = sum((Efficiency_array[1:]+Efficiency_array[:-1])*self.Cf_simA_diff_rate/2)
+            if  math.isnan(Efficiency_applied_rate): # nan protection -> happen when edge == 0
+                Efficiency_applied_rate =1
             self.Cf_simA_NEC_rate.append(Efficiency_applied_rate)
             if threshold == self.Cf_simA_energy[0]:
                 print('Efficiency_array',Efficiency_array[:10])
@@ -444,7 +446,10 @@ class integrated_analysis():
             Efficiency_array = np.array(
                 [self.NucleationEfficiencyTrue(edge, threshold, threshold / 8, threshold / 8) for edge in
                  self.Cf_simB_energy])
+
             Efficiency_applied_rate = sum((Efficiency_array[1:] + Efficiency_array[:-1]) * self.Cf_simB_diff_rate / 2)
+            if  math.isnan(Efficiency_applied_rate):
+                Efficiency_applied_rate =1
             self.Cf_simB_NEC_rate.append(Efficiency_applied_rate)
 
 
