@@ -470,8 +470,8 @@ class integrated_analysis():
         #            label='Cf configB spectrum')
         # ax[3].plot(Cf_ene_avgA, Cf_count_sumA, label='Cf configA spectrum')
         # ax[3].plot(Cf_ene_avgB, Cf_count_sumB, label='Cf configB spectrum')
-        ax[3].plot(self.Cf_simsA[1][0][1][:-1]/1000, self.Cf_simA_diff_rate, label='Cf configA spectrum')
-        ax[3].plot(self.Cf_simsB[1][0][1][:-1]/1000, self.Cf_simB_diff_rate, label='Cf configB spectrum')
+        ax[3].plot(self.Cf_simsA[1][0][1][:-1], self.Cf_simA_diff_rate, label='Cf configA spectrum')
+        ax[3].plot(self.Cf_simsB[1][0][1][:-1], self.Cf_simB_diff_rate, label='Cf configB spectrum')
 
 
         for i in range(len(self.Cf_simsA[0]*self.Cf_simsA[2])):
@@ -526,7 +526,7 @@ class integrated_analysis():
         ax[3].set_ylabel("Clean Rate [mHz] per bin")
         ax[3].set_title("Clean Rate Differential Spectrum")
         ax[3].set_yscale("log")
-        ax[3].set_xlim(-1, 200)
+        ax[3].set_xlim(-1, 3500)
         # ax[3].set_ylim(0, 220)
         ax[3].legend()
 
