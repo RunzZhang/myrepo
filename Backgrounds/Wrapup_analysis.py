@@ -430,8 +430,6 @@ class integrated_analysis():
                 Efficiency_applied_rate = sum( self.Cf_simA_diff_rate / 2)
 
                 self.Cf_simA_NEC_rate.append(Efficiency_applied_rate)
-
-                print('Efficiency_array',Efficiency_array[:10])
                 print('Efficiency_applied_rate',Efficiency_applied_rate)
                 continue
 
