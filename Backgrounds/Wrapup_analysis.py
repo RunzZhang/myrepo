@@ -522,7 +522,7 @@ class integrated_analysis():
         ax[4].set_title("Config B/A Raio")
         # ax[4].set_yscale("log")
         ax[4].set_xlim(-1, 3500)
-        # ax[4].set_ylim(0, 220)
+        ax[4].set_ylim(0, 3)
         ax[4].legend()
 
 
