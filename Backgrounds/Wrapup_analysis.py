@@ -518,7 +518,7 @@ class integrated_analysis():
         ax[3].legend()
 
         ax[4].set_xlabel("Seitz [eV]")
-        ax[4].set_ylabel("Clean Rate [mHz]")
+        ax[4].set_ylabel("Ratio []")
         ax[4].set_title("Config B/A Raio")
         # ax[4].set_yscale("log")
         ax[4].set_xlim(-1, 3500)
