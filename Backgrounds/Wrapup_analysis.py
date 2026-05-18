@@ -450,6 +450,7 @@ class integrated_analysis():
 
         ax[2].plot(self.Cf_simsA[1][0][1][:-1]/1000, self.Cf_simsA[0] * self.Cf_simsA[2], label='Cf configA spectrum')
         ax[2].plot(self.Cf_simsB[1][0][1][:-1]/1000, self.Cf_simsB[0] * self.Cf_simsB[2], label='Cf configB spectrum')
+
         # print differential spectrum
         # self.Cf_simsA_diff = self.Cf_simsA[2][:-1]-self.Cf_simsA[2][1:]
         # self.Cf_simsB_diff = self.Cf_simsB[2][:-1] - self.Cf_simsB[2][1:]
@@ -484,7 +485,7 @@ class integrated_analysis():
             self.BA_ratio_sims.append(ratio_sims)
         self.BA_ratio_exp = expB_df["Exp Rate [mHz]"]/expA_df["Exp Rate [mHz]"]
         self.BA_err_exp = np.sqrt((expB_df["Clean Rate Sigma [mHz]"]/expA_df["Exp Rate [mHz]"])**2+(expA_df["Clean Rate Sigma [mHz]"]*expB_df["Exp Rate [mHz]"]/(expA_df["Exp Rate [mHz]"])**2)**2)
-        ax[4].plot(self.Cf_simA_energy,self.BA_ratio_sims, label=f"Sim Ratio B/A")
+        ax[4].plot(self.Cf_simA_energy[:-1],self.BA_ratio_sims, label=f"Sim Ratio B/A")
         ax[4].errorbar(expB_df["Seitz [keV]"]*1000,self.BA_ratio_exp,
                    yerr = self.BA_err_exp, label=f"Exp Ratio B/A",fmt = 'o')
 
