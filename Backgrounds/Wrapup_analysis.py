@@ -426,7 +426,7 @@ class integrated_analysis():
         self.Cf_simA_diff_rate = self.Cf_simsA[0]*self.Cf_simsA[1][0][0]
         self.Cf_simA_NEC_rate = []
         for threshold in self.Cf_simA_energy:
-            if threshold == self.Cf_simA_energy[0]:
+            if threshold == self.Cf_simA_energy[0]: # when energy edge is 0, no good definition of nucleation efficiency curve
                 Efficiency_applied_rate = sum( self.Cf_simA_diff_rate)
 
                 self.Cf_simA_NEC_rate.append(Efficiency_applied_rate)
@@ -434,7 +434,7 @@ class integrated_analysis():
                 continue
 
             Efficiency_array = np.array(
-                [self.NucleationEfficiencyTrue(edge, threshold, threshold / 8, threshold / 8) for edge in self.Cf_simA_energy])
+                [self.NucleationEfficiencyTrue(edge, threshold, threshold / 2, threshold / 2) for edge in self.Cf_simA_energy])
             Efficiency_applied_rate = sum((Efficiency_array[1:]+Efficiency_array[:-1])*self.Cf_simA_diff_rate/2)
 
             self.Cf_simA_NEC_rate.append(Efficiency_applied_rate)
@@ -453,7 +453,7 @@ class integrated_analysis():
 
                 continue
             Efficiency_array = np.array(
-                [self.NucleationEfficiencyTrue(edge, threshold, threshold / 8, threshold / 8) for edge in
+                [self.NucleationEfficiencyTrue(edge, threshold, threshold / 2, threshold / 2) for edge in
                  self.Cf_simB_energy])
 
             Efficiency_applied_rate = sum((Efficiency_array[1:] + Efficiency_array[:-1]) * self.Cf_simB_diff_rate / 2)
