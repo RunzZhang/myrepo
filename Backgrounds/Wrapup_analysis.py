@@ -433,7 +433,7 @@ class integrated_analysis():
             self.Cf_simA_NEC_rate.append(Efficiency_applied_rate)
             if threshold == self.Cf_simA_energy[0]:
                 print('Efficiency_array',Efficiency_array[:10])
-                print('Efficiency_applied_rate',Efficiency_applied_rate[:10])
+                print('Efficiency_applied_rate',Efficiency_applied_rate)
 
 
         self.Cf_simB_energy = self.Cf_simsB[1][0][1]
