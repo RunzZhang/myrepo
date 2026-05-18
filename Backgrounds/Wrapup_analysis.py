@@ -427,7 +427,7 @@ class integrated_analysis():
         self.Cf_simA_NEC_rate = []
         for threshold in self.Cf_simA_energy:
             if threshold == self.Cf_simA_energy[0]:
-                Efficiency_applied_rate = sum( self.Cf_simA_diff_rate / 2)
+                Efficiency_applied_rate = sum( self.Cf_simA_diff_rate)
 
                 self.Cf_simA_NEC_rate.append(Efficiency_applied_rate)
                 print('Efficiency_applied_rate',Efficiency_applied_rate)
@@ -447,7 +447,7 @@ class integrated_analysis():
         self.Cf_simB_NEC_rate = []
         for threshold in self.Cf_simB_energy:
             if threshold == self.Cf_simB_energy[0]:
-                Efficiency_applied_rate = sum( self.Cf_simB_diff_rate / 2)
+                Efficiency_applied_rate = sum( self.Cf_simB_diff_rate)
 
                 self.Cf_simB_NEC_rate.append(Efficiency_applied_rate)
 
