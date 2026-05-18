@@ -445,7 +445,7 @@ class integrated_analysis():
 
 
         ax[5].plot(self.Cf_simB_energy,self.Cf_simB_NEC_rate,label='Cf config B erf')
-        ax[5].plot(self.Cf_simB_energy,self.Cf_simsB[0] * self.Cf_simsB[2],label='Cf config B step')
+        ax[5].plot(self.Cf_simB_energy[:-1],self.Cf_simsB[0] * self.Cf_simsB[2],label='Cf config B step')
 
 
         print("simA rate after threshold",self.Cf_simA_NEC_rate[:5] )
