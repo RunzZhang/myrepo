@@ -481,7 +481,7 @@ class integrated_analysis():
         # definition B/A
         self.BA_ratio_sims = []
         for i in range(len(self.Cf_simsA[2])):
-            ratio_sims = self.Cf_simsB[0] * self.Cf_simsB[2][i]/(self.Cf_simsB[0] * self.Cf_simsB[2][i])
+            ratio_sims = self.Cf_simsB[0] * self.Cf_simsB[2][i]/(self.Cf_simsA[0] * self.Cf_simsA[2][i])
             self.BA_ratio_sims.append(ratio_sims)
         self.BA_ratio_exp = expB_df["Exp Rate [mHz]"]/expA_df["Exp Rate [mHz]"]
         self.BA_err_exp = np.sqrt((expB_df["Clean Rate Sigma [mHz]"]/expA_df["Exp Rate [mHz]"])**2+(expA_df["Clean Rate Sigma [mHz]"]*expB_df["Exp Rate [mHz]"]/(expA_df["Exp Rate [mHz]"])**2)**2)
