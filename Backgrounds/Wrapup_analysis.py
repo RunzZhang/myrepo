@@ -398,24 +398,24 @@ class integrated_analysis():
 
             merged_df.to_csv(self.Cf_expB_rate_path[i], index=False)
 
-        fig, ax = plt.subplots(1, 4, figsize=(22, 4))
+        fig, ax = plt.subplots(1, 5, figsize=(28, 4))
         # 1 plot to compare with original data Gray had, 2 to plot the spectrum with clean data comparasion
         for i in range(len(self.Cf_expA_rate_path)):
-            exp_df = pd.read_csv(self.Cf_expA_rate_path[i])
+            expA_df = pd.read_csv(self.Cf_expA_rate_path[i])
             if i==0:
-                ax[0].errorbar(exp_df['Pressure [bara]'], exp_df["Bkg Rate [mHz]"],
-                               yerr=exp_df['Bkg Rate Sigma [mHz]'], label="combined bkg 116.7 K ", fmt='o', color='blue')
-            ax[0].errorbar(exp_df['Pressure [bara]'],exp_df["Exp Rate [mHz]"],
-                   yerr = exp_df["Exp Rate Sigma [mHz]"], label=f"Cf config A {i}",fmt = 'o')
-            ax[1].errorbar(exp_df["Seitz [keV]"]*1000,exp_df["Clean Rate [mHz]"],
-                   yerr = exp_df["Clean Rate Sigma [mHz]"], label=f"Cf config A {i}",fmt = 'o')
+                ax[0].errorbar(expA_df['Pressure [bara]'], expA_df["Bkg Rate [mHz]"],
+                               yerr=expA_df['Bkg Rate Sigma [mHz]'], label="combined bkg 116.7 K ", fmt='o', color='blue')
+            ax[0].errorbar(expA_df['Pressure [bara]'],expA_df["Exp Rate [mHz]"],
+                   yerr = expA_df["Exp Rate Sigma [mHz]"], label=f"Cf config A {i}",fmt = 'o')
+            ax[1].errorbar(expA_df["Seitz [keV]"]*1000,expA_df["Clean Rate [mHz]"],
+                   yerr = expA_df["Clean Rate Sigma [mHz]"], label=f"Cf config A {i}",fmt = 'o')
 
         for i in range(len(self.Cf_expB_rate_path)):
-            exp_df = pd.read_csv(self.Cf_expB_rate_path[i])
-            ax[0].errorbar(exp_df['Pressure [bara]'],exp_df["Exp Rate [mHz]"],
-                   yerr = exp_df["Exp Rate Sigma [mHz]"], label=f"Cf config B {i}",fmt = 'o')
-            ax[1].errorbar(exp_df["Seitz [keV]"]*1000,exp_df["Clean Rate [mHz]"],
-                   yerr = exp_df["Clean Rate Sigma [mHz]"], label=f"Cf config B {i}",fmt = 'o')
+            expB_df = pd.read_csv(self.Cf_expB_rate_path[i])
+            ax[0].errorbar(expB_df['Pressure [bara]'],expB_df["Exp Rate [mHz]"],
+                   yerr = expB_df["Exp Rate Sigma [mHz]"], label=f"Cf config B {i}",fmt = 'o')
+            ax[1].errorbar(expB_df["Seitz [keV]"]*1000,expB_df["Clean Rate [mHz]"],
+                   yerr = expB_df["Clean Rate Sigma [mHz]"], label=f"Cf config B {i}",fmt = 'o')
 
         # add Nucleation Efficiency Curve to moderate the rate
         self.Cf_simA_energy = self.Cf_simsA[1][0][1]
@@ -475,6 +475,19 @@ class integrated_analysis():
                 print(self.Cf_simsB[1][0][1][:-1][i],"eV")
                 break
 
+
+        # plot the ratio between config A and config B
+        # definition B/A
+        self.BA_ratio_sims = []
+        for i in range(len(self.Cf_simsA[2])):
+            ratio_sims = self.Cf_simsB[0] * self.Cf_simsB[2][i]/(self.Cf_simsB[0] * self.Cf_simsB[2][i])
+            self.BA_ratio_sims.append(ratio_sims)
+        self.BA_ratio_exp = expB_df["Exp Rate [mHz]"]/expA_df["Exp Rate [mHz]"]
+        self.BA_err_exp = np.sqrt((expB_df["Clean Rate Sigma [mHz]"]/expA_df["Exp Rate [mHz]"])**2+(expA_df["Clean Rate Sigma [mHz]"]*expB_df["Exp Rate [mHz]"]/(expA_df["Exp Rate [mHz]"])**2)**2)
+        ax[4].plot(self.Cf_simA_energy,self.BA_ratio_sims, label=f"Sim Ratio B/A")
+        ax[4].errorbar(expB_df["Seitz [keV]"]*1000,self.BA_ratio_exp,
+                   yerr = self.BA_err_exp, label=f"Exp Ratio B/A",fmt = 'o')
+
         ax[0].set_xlabel('Pressure [bara]')
         ax[0].set_ylabel("Exp Rate [mHz]")
         ax[0].set_title("Check with exp rate")
@@ -502,6 +515,16 @@ class integrated_analysis():
         ax[3].set_xlim(-1, 200)
         # ax[3].set_ylim(0, 220)
         ax[3].legend()
+
+        ax[4].set_xlabel("Seitz [eV]")
+        ax[4].set_ylabel("Clean Rate [mHz]")
+        ax[4].set_title("Config B/A Raio")
+        # ax[4].set_yscale("log")
+        ax[4].set_xlim(-1, 3500)
+        # ax[4].set_ylim(0, 220)
+        ax[4].legend()
+
+
 
         plt.savefig(self.plot_path + "Cf_abs_rate_comparison.pdf")
 
