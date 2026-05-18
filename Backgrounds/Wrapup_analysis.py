@@ -398,7 +398,7 @@ class integrated_analysis():
 
             merged_df.to_csv(self.Cf_expB_rate_path[i], index=False)
 
-        fig, ax = plt.subplots(1, 5, figsize=(28, 4))
+        fig, ax = plt.subplots(1, 6, figsize=(34, 4))
         # 1 plot to compare with original data Gray had, 2 to plot the spectrum with clean data comparasion
         for i in range(len(self.Cf_expA_rate_path)):
             expA_df = pd.read_csv(self.Cf_expA_rate_path[i])
@@ -416,24 +416,25 @@ class integrated_analysis():
                    yerr = expB_df["Exp Rate Sigma [mHz]"], label=f"Cf config B {i}",fmt = 'o')
             ax[1].errorbar(expB_df["Seitz [keV]"]*1000,expB_df["Clean Rate [mHz]"],
                    yerr = expB_df["Clean Rate Sigma [mHz]"], label=f"Cf config B {i}",fmt = 'o')
+            ax[5].errorbar(expB_df["Seitz [keV]"] * 1000, expB_df["Clean Rate [mHz]"],
+                           yerr=expB_df["Clean Rate Sigma [mHz]"], label=f"Cf config B {i}", fmt='o')
+
 
         # add Nucleation Efficiency Curve to moderate the rate
         self.Cf_simA_energy = self.Cf_simsA[1][0][1]
         self.Cf_simA_rate = self.Cf_simsA[0]*self.Cf_simsA[2]
-        self.Cf_simA_diff_rate = -self.Cf_simA_rate[1:]+self.Cf_simA_rate[:-1]
-        self.Cf_simA_diff_rate = np.insert(self.Cf_simA_diff_rate, 0, 0)
+        self.Cf_simA_diff_rate = self.Cf_simsA[0]*self.Cf_simsA[1][0][0]
         self.Cf_simA_NEC_rate = []
         for threshold in self.Cf_simA_energy:
             Efficiency_array = np.array(
                 [self.NucleationEfficiencyTrue(edge, threshold, threshold / 8, threshold / 8) for edge in self.Cf_simA_energy])
             Efficiency_applied_rate = sum((Efficiency_array[1:]+Efficiency_array[:-1])*self.Cf_simA_diff_rate/2)
             self.Cf_simA_NEC_rate.append(Efficiency_applied_rate)
-        self.Cf_simA_NEC_rate[0] = 0
+
 
         self.Cf_simB_energy = self.Cf_simsB[1][0][1]
         self.Cf_simB_rate = self.Cf_simsB[0] * self.Cf_simsB[2]
-        self.Cf_simB_diff_rate = -self.Cf_simB_rate[1:] + self.Cf_simB_rate[:-1]
-        self.Cf_simB_diff_rate = np.insert(self.Cf_simB_diff_rate, 0, 0)
+        self.Cf_simB_diff_rate = self.Cf_simsA[0]*self.Cf_simsB[1][0][0]
         self.Cf_simB_NEC_rate = []
         for threshold in self.Cf_simB_energy:
             Efficiency_array = np.array(
@@ -441,7 +442,12 @@ class integrated_analysis():
                  self.Cf_simB_energy])
             Efficiency_applied_rate = sum((Efficiency_array[1:] + Efficiency_array[:-1]) * self.Cf_simB_diff_rate / 2)
             self.Cf_simB_NEC_rate.append(Efficiency_applied_rate)
-        self.Cf_simB_NEC_rate[0] = 0
+
+
+        ax[5].plot(self.Cf_simB_energy,self.Cf_simB_NEC_rate,label='Cf config B erf')
+        ax[5].plot(self.Cf_simB_energy,self.Cf_simsB[0] * self.Cf_simsB[2],label='Cf config B step')
+
+
         print("simA rate after threshold",self.Cf_simA_NEC_rate[:5] )
         ax[1].plot(self.Cf_simA_energy,self.Cf_simA_NEC_rate, label='Cf configA spectrum')
         print("self.Cf_simsA[0]",self.Cf_simsA[0])
@@ -464,6 +470,8 @@ class integrated_analysis():
         #            label='Cf configB spectrum')
         # ax[3].plot(Cf_ene_avgA, Cf_count_sumA, label='Cf configA spectrum')
         # ax[3].plot(Cf_ene_avgB, Cf_count_sumB, label='Cf configB spectrum')
+        ax[3].plot(self.Cf_simsA[1][0][1][:-1]/1000, self.Cf_simA_diff_rate, label='Cf configA spectrum')
+        ax[3].plot(self.Cf_simsB[1][0][1][:-1]/1000, self.Cf_simB_diff_rate, label='Cf configB spectrum')
 
 
         for i in range(len(self.Cf_simsA[0]*self.Cf_simsA[2])):
@@ -488,6 +496,11 @@ class integrated_analysis():
         ax[4].plot(self.Cf_simA_energy[:-1],self.BA_ratio_sims, label=f"Sim Ratio B/A")
         ax[4].errorbar(expB_df["Seitz [keV]"]*1000,self.BA_ratio_exp,
                    yerr = self.BA_err_exp, label=f"Exp Ratio B/A",fmt = 'o')
+
+
+        # ax 5, plot different shape of nucleation efficiency curve
+
+
 
         ax[0].set_xlabel('Pressure [bara]')
         ax[0].set_ylabel("Exp Rate [mHz]")
@@ -524,6 +537,13 @@ class integrated_analysis():
         ax[4].set_xlim(-1, 3500)
         ax[4].set_ylim(0, 3)
         ax[4].legend()
+
+        ax[5].set_xlabel("Seitz [eV]")
+        ax[5].set_ylabel("Clean Rate [mHz]")
+        ax[5].set_title("Different Efficiency Comparision")
+        ax[5].set_xlim(-1, 3500)
+        ax[5].set_ylim(0, 220)
+        ax[5].legend()
 
 
 
