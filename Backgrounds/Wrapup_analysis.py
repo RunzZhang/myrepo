@@ -426,10 +426,14 @@ class integrated_analysis():
         self.Cf_simA_diff_rate = self.Cf_simsA[0]*self.Cf_simsA[1][0][0]
         self.Cf_simA_NEC_rate = []
         for threshold in self.Cf_simA_energy:
+
             Efficiency_array = np.array(
                 [self.NucleationEfficiencyTrue(edge, threshold, threshold / 8, threshold / 8) for edge in self.Cf_simA_energy])
             Efficiency_applied_rate = sum((Efficiency_array[1:]+Efficiency_array[:-1])*self.Cf_simA_diff_rate/2)
             self.Cf_simA_NEC_rate.append(Efficiency_applied_rate)
+            if self.Cf_simA_energy.index(threshold) == 0:
+                print('Efficiency_array',Efficiency_array[:10])
+                print('Efficiency_applied_rate',Efficiency_applied_rate[:10])
 
 
         self.Cf_simB_energy = self.Cf_simsB[1][0][1]
@@ -522,7 +526,7 @@ class integrated_analysis():
         ax[2].set_xlim(-1, 200)
         ax[2].legend()
 
-        ax[3].set_xlabel("Seitz [keV]")
+        ax[3].set_xlabel("Seitz [eV]")
         ax[3].set_ylabel("Clean Rate [mHz] per bin")
         ax[3].set_title("Clean Rate Differential Spectrum")
         ax[3].set_yscale("log")
