@@ -1107,20 +1107,20 @@ class SN():
         fig, ax = plt.subplots(1,4,figsize=(20, 4))
 
         ax[0].bar(scatter_edge, scatter_rate_list, width=width, align="edge")
-        ax[0].set_xlabel("Energy threshold [keV]")
+        ax[0].set_xlabel("Energy threshold [eV]")
         ax[0].set_ylabel("Rate [mHz]")
         ax[0].set_yscale("log")
         # ax[0].set_xlim(0,2000)
 
 
         ax[1].bar(capture_edge, capture_rate_list, width=width, align="edge")
-        ax[1].set_xlabel("Energy threshold [keV]")
+        ax[1].set_xlabel("Energy threshold [eV]")
         ax[1].set_ylabel("Rate [mHz]")
         ax[1].set_yscale("log")
         # ax[1].set_xlim(0, 2000)
 
         ax[2].bar(capture_edge, total_rate_list, width=width, align="edge")
-        ax[2].set_xlabel("Energy threshold [keV]")
+        ax[2].set_xlabel("Energy threshold [eV]")
         ax[2].set_ylabel("Rate [mHz]")
         # ax[2].set_yscale("log")
         ax[2].set_xlim(0, 3500)
@@ -1198,20 +1198,20 @@ class SN():
         fig, ax = plt.subplots(1,4,figsize=(20, 4))
 
         ax[0].bar(scatter_edge, scatter_rate_list, width=width, align="edge")
-        ax[0].set_xlabel("Recoiled Energy threshold [keV]")
+        ax[0].set_xlabel("Recoiled Energy threshold [eV]")
         ax[0].set_ylabel("Rate [mHz]")
         ax[0].set_yscale("log")
         # ax[0].set_xlim(0,2000)
 
 
         ax[1].bar(capture_edge, capture_rate_list, width=width, align="edge")
-        ax[1].set_xlabel("Recoiled Energy threshold [keV]")
+        ax[1].set_xlabel("Recoiled Energy threshold [eV]")
         ax[1].set_ylabel("Rate [mHz]")
         ax[1].set_yscale("log")
         # ax[1].set_xlim(0, 2000)
 
         ax[2].bar(capture_edge, total_rate_list, width=width, align="edge")
-        ax[2].set_xlabel("Recoiled Energy threshold [keV]")
+        ax[2].set_xlabel("Recoiled Energy threshold [eV]")
         ax[2].set_ylabel("Rate [mHz]")
         # ax[2].set_yscale("log")
         ax[2].set_xlim(0, 3500)
