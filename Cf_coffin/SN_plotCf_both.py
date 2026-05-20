@@ -17,8 +17,8 @@ class SN():
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/" # for gamma path
 
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density2_sourcetube_B/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density2_sourcetube_B/"  # for different density
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_boron10_sourcetube_B/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_boron10_sourcetube_B/"  # for different density
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
