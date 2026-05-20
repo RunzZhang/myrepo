@@ -39,7 +39,7 @@ class ReadRoot:
 
     def chunk_and_write_root(self, num_chunks=20, output_dir=None):
         if output_dir is None:
-            output_dir = os.path.join(self.base_path, "chunked_root_files_Cf_1E7_density104_sourcetube_B")
+            output_dir = os.path.join(self.base_path, "chunked_root_files_Cf_1E7_density2_sourcetube_B")
         os.makedirs(output_dir, exist_ok=True)
 
         with uproot.open(self.filepath) as file:
