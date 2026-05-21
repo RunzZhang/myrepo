@@ -16,6 +16,12 @@ class integrated_analysis():
         self.Cf_simA_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_A.pkl'
         self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_B.pkl'
 
+        self.Cf_Density104_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density104_config_B.pkl"
+        self.Cf_Density150_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density15_config_B.pkl"
+
+        self.Cf_Boron00_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_boron0_config_B.pkl"
+        self.Cf_Boron10_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_boron10_config_B.pkl"
+
         self.Cs_exp_116_raw_path = ["Cold-Cs-11_17-18_exposures_mix","Cold-Cs-12_01_exposures_mix",
                                     "Cold-Cs-12_10-11_exposures_mix","Cold-Cs-1_20-21_exposures_mix"]
 
@@ -564,6 +570,66 @@ class integrated_analysis():
 
 
         plt.savefig(self.plot_path + "Cf_abs_rate_comparison.pdf")
+        plt.clf()
+        # follow up analysis
+        self.change_density_boron()
+    def change_density_boron(self):
+        # see how rate of boron amount and PE density change the rate
+        with open(self.Cf_Density104_path, "rb") as f:
+            self.Cf_Density104 = pickle.load(f)
+
+        self.Cf_Density104_energy = self.Cf_Density104[1][0][1]
+        self.Cf_Density104_rate = self.Cf_Density104[0] * self.Cf_Density104[2]
+
+        with open(self.Cf_Density150_path, "rb") as f:
+            self.Cf_Density150 = pickle.load(f)
+        self.Cf_Density150_energy = self.Cf_Density150[1][0][1]
+        self.Cf_Density150_rate = self.Cf_Density150[0] * self.Cf_Density150[2]
+
+        with open(self.Cf_Boron00_path, "rb") as f:
+            self.Cf_Boron00 = pickle.load(f)
+        self.Cf_Boron00_energy = self.Cf_Boron00[1][0][1]
+        self.Cf_Boron00_rate = self.Cf_Boron00[0] * self.Cf_Boron00[2]
+
+        with open(self.Cf_Boron10_path, "rb") as f:
+            self.Cf_Boron10 = pickle.load(f)
+        self.Cf_Boron10_energy = self.Cf_Boron10[1][0][1]
+        self.Cf_Boron10_rate = self.Cf_Boron10[0] * self.Cf_Boron10[2]
+
+        fig, ax = plt.subplots(1, 2, figsize=(34, 4))
+        # 1 plot to compare with original data Gray had, 2 to plot the spectrum with clean data comparasion
+
+        for i in range(len(self.Cf_expB_rate_path)):
+            expB_df = pd.read_csv(self.Cf_expB_rate_path[i])
+            ax[0].errorbar(expB_df["Seitz [keV]"] * 1000, expB_df["Clean Rate [mHz]"],
+                           yerr=expB_df["Clean Rate Sigma [mHz]"], label=f"exp {i}", fmt='o')
+            ax[1].errorbar(expB_df["Seitz [keV]"] * 1000, expB_df["Clean Rate [mHz]"],
+                           yerr=expB_df["Clean Rate Sigma [mHz]"], label=f"exp {i}", fmt='o')
+
+        ax[0].plot(self.Cf_simB_energy,self.Cf_simB_NEC_rate, label=f'Density 0.95 $g/cm^3$')
+        ax[0].plot(self.Cf_Density104_energy, self.Cf_Density104_rate, label=f'Density 1.04 $g/cm^3$')
+        ax[0].plot(self.Cf_Density150_energy, self.Cf_Density150_rate, label=f'Density 1.50 $g/cm^3$')
+
+        ax[1].plot(self.Cf_Boron00, self.Cf_Boron00_rate, label=f'Boron 0%')
+        ax[1].plot(self.Cf_Density104_energy, self.Cf_Density104_rate, label=f'Boron 5%')
+        ax[1].plot(self.Cf_Boron10_energy, self.Cf_Boron10_rate, label=f'Boron 10%')
+
+        ax[0].set_xlabel("Seitz [eV]")
+        ax[0].set_ylabel("Clean Rate [mHz]")
+        ax[0].set_title("Rate with Different PE Density Boron = 5%")
+        ax[0].set_xlim(-1, 3500)
+        ax[0].set_ylim(0, 220)
+        ax[0].legend()
+
+        ax[1].set_xlabel("Seitz [eV]")
+        ax[1].set_ylabel("Clean Rate [mHz]")
+        ax[1].set_title(f"Rate Different Boron Weight Density = 1.04 $g/cm^3$")
+        ax[1].set_xlim(-1, 3500)
+        ax[1].set_ylim(0, 220)
+        ax[1].legend()
+
+
+
 
     def read_Seitz_info(self):
         Seitz_pressure_list = np.arange(1.25, 6.5, 0.25)
