@@ -596,7 +596,7 @@ class integrated_analysis():
         self.Cf_Boron10_energy = self.Cf_Boron10[1][0][1]
         self.Cf_Boron10_rate = self.Cf_Boron10[0] * self.Cf_Boron10[2]
 
-        fig, ax = plt.subplots(1, 2, figsize=(34, 4))
+        fig, ax = plt.subplots(1, 2, figsize=(14, 4))
         # 1 plot to compare with original data Gray had, 2 to plot the spectrum with clean data comparasion
 
         for i in range(len(self.Cf_expB_rate_path)):
