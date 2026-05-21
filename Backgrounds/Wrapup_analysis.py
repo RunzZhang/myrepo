@@ -629,6 +629,7 @@ class integrated_analysis():
         ax[1].legend()
 
         plt.savefig(self.plot_path + "density_n_boron_rate.pdf")
+        print(self.plot_path + "density_n_boron_rate.pdf")
 
 
 
