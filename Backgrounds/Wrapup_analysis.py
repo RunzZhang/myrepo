@@ -628,6 +628,8 @@ class integrated_analysis():
         ax[1].set_ylim(0, 220)
         ax[1].legend()
 
+        plt.savefig(self.plot_path + "density_n_boron_rate.pdf")
+
 
 
 
