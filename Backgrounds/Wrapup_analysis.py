@@ -610,7 +610,7 @@ class integrated_analysis():
         ax[0].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Density 1.04 $g/cm^3$')
         ax[0].plot(self.Cf_density20_energy[:-1], self.Cf_density20_rate, label=f'Density 1.50 $g/cm^3$')
 
-        ax[1].plot(self.Cf_Boron00, self.Cf_Boron00_rate, label=f'Boron 0%')
+        ax[1].plot(self.Cf_Boron00[:-1], self.Cf_Boron00_rate, label=f'Boron 0%')
         ax[1].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Boron 5%')
         ax[1].plot(self.Cf_Boron10_energy[:-1], self.Cf_Boron10_rate, label=f'Boron 10%')
 
