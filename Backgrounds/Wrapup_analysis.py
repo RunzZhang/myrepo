@@ -596,7 +596,7 @@ class integrated_analysis():
         self.Cf_Boron10_energy = self.Cf_Boron10[1][0][1]
         self.Cf_Boron10_rate = self.Cf_Boron10[0] * self.Cf_Boron10[2]
 
-        fig, ax = plt.subplots(1, 2, figsize=(14, 4))
+        fig, ax = plt.subplots(1, 2, figsize=(12, 4))
         # 1 plot to compare with original data Gray had, 2 to plot the spectrum with clean data comparasion
 
         for i in range(len(self.Cf_expB_rate_path)):
@@ -608,7 +608,7 @@ class integrated_analysis():
 
         ax[0].plot(self.Cf_simB_energy,self.Cf_simB_NEC_rate, label=f'Density 0.95 $g/cm^3$')
         ax[0].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Density 1.04 $g/cm^3$')
-        ax[0].plot(self.Cf_density20_energy[:-1], self.Cf_density20_rate, label=f'Density 1.50 $g/cm^3$')
+        ax[0].plot(self.Cf_density20_energy[:-1], self.Cf_density20_rate, label=f'Density 2.0 $g/cm^3$')
 
         ax[1].plot(self.Cf_Boron00_energy[:-1], self.Cf_Boron00_rate, label=f'Boron 0%')
         ax[1].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Boron 5%')
