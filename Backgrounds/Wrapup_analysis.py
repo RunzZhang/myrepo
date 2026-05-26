@@ -700,7 +700,7 @@ class integrated_analysis():
         ax[1].plot(self.Cf_Boron10_energy[:-1], self.Cf_Boron10_rate, label=f'Boron 10%')
 
         ax[2].plot(self.Cf_location_p20_energy[:-1], self.Cf_location_p20_rate, label=f'Location +20 cm')
-        # ax[2].plot(self.Cf_location_p10_energy[:-1], self.Cf_location_p10_rate, label=f'Location +10 cm')
+        ax[2].plot(self.Cf_location_p10_energy[:-1], self.Cf_location_p10_rate, label=f'Location +10 cm')
         ax[2].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Location 0 cm')
         ax[2].plot(self.Cf_location_m10_energy[:-1], self.Cf_location_m10_rate, label=f'Location -10 cm')
         ax[2].plot(self.Cf_location_m20_energy[:-1], self.Cf_location_m20_rate, label=f'Location -20 cm')
@@ -728,14 +728,14 @@ class integrated_analysis():
 
         ax[2].set_xlabel("Seitz [eV]")
         ax[2].set_ylabel("Clean Rate [mHz]")
-        ax[2].set_title("Rate with Different PE Density Boron = 5%")
+        ax[2].set_title("Rate with Different Coffin locations")
         ax[2].set_xlim(-1, 3500)
         ax[2].set_ylim(0, 220)
         ax[2].legend()
 
         ax[3].set_xlabel("Seitz [eV]")
         ax[3].set_ylabel("Clean Rate [mHz]")
-        ax[3].set_title("Rate with Different PE Density Boron = 5%")
+        ax[3].set_title("Rate with different CF4 temp")
         ax[3].set_xlim(-1, 3500)
         ax[3].set_ylim(0, 220)
         ax[3].legend()
