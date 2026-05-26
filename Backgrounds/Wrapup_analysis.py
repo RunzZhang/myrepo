@@ -29,10 +29,10 @@ class integrated_analysis():
         self.Cf_location_m20_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zm20_config_B.pkl"
 
 
-        self.Cf_CF4temp_100K_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_CFtemp_100K_config_B.pkl"
-        self.Cf_CF4temp_110K_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_CFtemp_110K_config_B.pkl"
-        self.Cf_CF4temp_120K_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_CFtemp_120K_config_B.pkl"
-        self.Cf_CF4temp_140K_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_CFtemp_140K_config_B.pkl"
+        self.Cf_CF4temp_100K_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_100K_config_B.pkl"
+        self.Cf_CF4temp_110K_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_110K_config_B.pkl"
+        self.Cf_CF4temp_120K_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_120K_config_B.pkl"
+        self.Cf_CF4temp_140K_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_140K_config_B.pkl"
 
         self.Cf_Boron00_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_boron0_config_B.pkl"
         self.Cf_Boron10_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_boron10_config_B.pkl"
