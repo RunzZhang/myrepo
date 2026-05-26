@@ -624,11 +624,11 @@ class integrated_analysis():
         self.Cf_location_p20_energy = self.Cf_location_p20[1][0][1]
         self.Cf_location_p20_rate = self.Cf_location_p20[0] * self.Cf_location_p20[2]
 
-        # with open(self.Cf_location_p10_path, "rb") as f:
-        #     self.Cf_location_p10 = pickle.load(f)
-        #
-        # self.Cf_location_p10_energy = self.Cf_location_p10[1][0][1]
-        # self.Cf_location_p10_rate = self.Cf_location_p10[0] * self.Cf_location_p10[2]
+        with open(self.Cf_location_p10_path, "rb") as f:
+            self.Cf_location_p10 = pickle.load(f)
+
+        self.Cf_location_p10_energy = self.Cf_location_p10[1][0][1]
+        self.Cf_location_p10_rate = self.Cf_location_p10[0] * self.Cf_location_p10[2]
 
         with open(self.Cf_location_m10_path, "rb") as f:
             self.Cf_location_m10 = pickle.load(f)
