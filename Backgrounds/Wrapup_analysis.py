@@ -17,6 +17,10 @@ class integrated_analysis():
         self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_B.pkl'
 
         self.Cf_Density104_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density104_config_B.pkl"
+        self.Cf_Density125_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density125_config_B.pkl"
+        self.Cf_Density150_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density150_config_B.pkl"
+        self.Cf_Density175_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density175_config_B.pkl"
+
         self.Cf_density20_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density2_config_B.pkl"
 
         self.Cf_Boron00_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_boron0_config_B.pkl"
@@ -581,6 +585,23 @@ class integrated_analysis():
         self.Cf_Density104_energy = self.Cf_Density104[1][0][1]
         self.Cf_Density104_rate = self.Cf_Density104[0] * self.Cf_Density104[2]
 
+        with open(self.Cf_Density125_path, "rb") as f:
+            self.Cf_Density125 = pickle.load(f)
+
+        self.Cf_Density125_energy = self.Cf_Density125[1][0][1]
+        self.Cf_Density125_rate = self.Cf_Density125[0] * self.Cf_Density125[2]
+
+        with open(self.Cf_Density150_path, "rb") as f:
+            self.Cf_Density150 = pickle.load(f)
+
+        self.Cf_Density150_energy = self.Cf_Density150[1][0][1]
+        self.Cf_Density150_rate = self.Cf_Density150[0] * self.Cf_Density150[2]
+
+        with open(self.Cf_Density175_path, "rb") as f:
+            self.Cf_Density175 = pickle.load(f)
+
+        self.Cf_Density175_energy = self.Cf_Density175[1][0][1]
+        self.Cf_Density175_rate = self.Cf_Density175[0] * self.Cf_Density175[2]
         with open(self.Cf_density20_path, "rb") as f:
             self.Cf_density20 = pickle.load(f)
         self.Cf_density20_energy = self.Cf_density20[1][0][1]
@@ -608,6 +629,9 @@ class integrated_analysis():
 
         ax[0].plot(self.Cf_simB_energy,self.Cf_simB_NEC_rate, label=f'Density 0.95 $g/cm^3$')
         ax[0].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Density 1.04 $g/cm^3$')
+        ax[0].plot(self.Cf_Density125_energy[:-1], self.Cf_Density125_rate, label=f'Density 1.04 $g/cm^3$')
+        ax[0].plot(self.Cf_Density150_energy[:-1], self.Cf_Density150_rate, label=f'Density 1.04 $g/cm^3$')
+        ax[0].plot(self.Cf_Density175_energy[:-1], self.Cf_Density175_rate, label=f'Density 1.04 $g/cm^3$')
         ax[0].plot(self.Cf_density20_energy[:-1], self.Cf_density20_rate, label=f'Density 2.0 $g/cm^3$')
 
         ax[1].plot(self.Cf_Boron00_energy[:-1], self.Cf_Boron00_rate, label=f'Boron 0%')
