@@ -705,11 +705,11 @@ class integrated_analysis():
         ax[2].plot(self.Cf_location_m10_energy[:-1], self.Cf_location_m10_rate, label=f'Location -10 cm')
         ax[2].plot(self.Cf_location_m20_energy[:-1], self.Cf_location_m20_rate, label=f'Location -20 cm')
 
-        ax[3].plot(self.Cf_CF4temp_100K_energy[:-1], self.Cf_CF4temp_100K_rate, label=f'CF4 $\rho$ 1.825$g/cm^3$ 100.1K')
-        ax[3].plot(self.Cf_CF4temp_110K_energy[:-1], self.Cf_CF4temp_110K_rate, label=f'CF4 $\rho$ 1.789$g/cm^3$ 107.57K')
-        ax[3].plot(self.Cf_CF4temp_120K_energy[:-1], self.Cf_CF4temp_120K_rate, label=f'CF4 $\rho$ 1.735$g/cm^3$ 119.06K')
-        ax[3].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'CF4 $\rho$ 1.682$g/cm^3$ $\sim$ 129.36K')
-        ax[3].plot(self.Cf_CF4temp_140K_energy[:-1], self.Cf_CF4temp_140K_rate, label=f'CF4 $\rho$ 1.631$g/cm^3$ 139.82K')
+        ax[3].plot(self.Cf_CF4temp_100K_energy[:-1], self.Cf_CF4temp_100K_rate, label=r'CF4 $\rho$ 1.825$g/cm^3$ 100.1K')
+        ax[3].plot(self.Cf_CF4temp_110K_energy[:-1], self.Cf_CF4temp_110K_rate, label=r'CF4 $\rho$ 1.789$g/cm^3$ 107.57K')
+        ax[3].plot(self.Cf_CF4temp_120K_energy[:-1], self.Cf_CF4temp_120K_rate, label=r'CF4 $\rho$ 1.735$g/cm^3$ 119.06K')
+        ax[3].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=r'CF4 $\rho$ 1.682$g/cm^3$ $\sim$ 129.36K')
+        ax[3].plot(self.Cf_CF4temp_140K_energy[:-1], self.Cf_CF4temp_140K_rate, label=r'CF4 $\rho$ 1.631$g/cm^3$ 139.82K')
 
 
         ax[0].set_xlabel("Seitz [eV]")
