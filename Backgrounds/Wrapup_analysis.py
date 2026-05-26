@@ -23,10 +23,10 @@ class integrated_analysis():
 
         self.Cf_density20_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density2_config_B.pkl"
 
-        self.Cf_location_p20_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_location_p20_config_B.pkl"
-        self.Cf_location_p10_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_location_p10_config_B.pkl"
-        self.Cf_location_m10_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_location_m10_config_B.pkl"
-        self.Cf_location_m20_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_location_m20_config_B.pkl"
+        self.Cf_location_p20_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zp20_config_B.pkl"
+        self.Cf_location_p10_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zp10_config_B.pkl"
+        self.Cf_location_m10_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zm10_config_B.pkl"
+        self.Cf_location_m20_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zm20_config_B.pkl"
 
 
         self.Cf_CF4temp_100K_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_CFtemp_100K_config_B.pkl"
