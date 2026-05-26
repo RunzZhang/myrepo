@@ -23,6 +23,17 @@ class integrated_analysis():
 
         self.Cf_density20_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density2_config_B.pkl"
 
+        self.Cf_location_p20_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_location_p20_config_B.pkl"
+        self.Cf_location_p10_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_location_p10_config_B.pkl"
+        self.Cf_location_m10_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_location_m10_config_B.pkl"
+        self.Cf_location_m20_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_location_m20_config_B.pkl"
+
+
+        self.Cf_CF4temp_100K_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_CFtemp_100K_config_B.pkl"
+        self.Cf_CF4temp_110K_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_CFtemp_110K_config_B.pkl"
+        self.Cf_CF4temp_120K_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_CFtemp_120K_config_B.pkl"
+        self.Cf_CF4temp_140K_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_CFtemp_140K_config_B.pkl"
+
         self.Cf_Boron00_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_boron0_config_B.pkl"
         self.Cf_Boron10_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_boron10_config_B.pkl"
 
@@ -606,7 +617,57 @@ class integrated_analysis():
             self.Cf_density20 = pickle.load(f)
         self.Cf_density20_energy = self.Cf_density20[1][0][1]
         self.Cf_density20_rate = self.Cf_density20[0] * self.Cf_density20[2]
+        # source location
+        with open(self.Cf_location_p20_path, "rb") as f:
+            self.Cf_location_p20 = pickle.load(f)
 
+        self.Cf_location_p20_energy = self.Cf_location_p20[1][0][1]
+        self.Cf_location_p20_rate = self.Cf_location_p20[0] * self.Cf_location_p20[2]
+
+        with open(self.Cf_location_p10_path, "rb") as f:
+            self.Cf_location_p10 = pickle.load(f)
+
+        self.Cf_location_p10_energy = self.Cf_location_p10[1][0][1]
+        self.Cf_location_p10_rate = self.Cf_location_p10[0] * self.Cf_location_p10[2]
+
+        with open(self.Cf_location_m10_path, "rb") as f:
+            self.Cf_location_m10 = pickle.load(f)
+
+        self.Cf_location_m10_energy = self.Cf_location_m10[1][0][1]
+        self.Cf_location_m10_rate = self.Cf_location_m10[0] * self.Cf_location_m10[2]
+
+        with open(self.Cf_location_m20_path, "rb") as f:
+            self.Cf_location_m20 = pickle.load(f)
+
+        self.Cf_location_m20_energy = self.Cf_location_m20[1][0][1]
+        self.Cf_location_m20_rate = self.Cf_location_m20[0] * self.Cf_location_m20[2]
+
+        # CF4 density dependence on temperature
+        with open(self.Cf_CF4temp_100K_path, "rb") as f:
+            self.Cf_CF4temp_100K = pickle.load(f)
+
+        self.Cf_CF4temp_100K_energy = self.Cf_CF4temp_100K[1][0][1]
+        self.Cf_CF4temp_100K_rate = self.Cf_CF4temp_100K[0] * self.Cf_CF4temp_100K[2]
+
+        with open(self.Cf_CF4temp_110K_path, "rb") as f:
+            self.Cf_CF4temp_110K = pickle.load(f)
+
+        self.Cf_CF4temp_110K_energy = self.Cf_CF4temp_110K[1][0][1]
+        self.Cf_CF4temp_110K_rate = self.Cf_CF4temp_110K[0] * self.Cf_CF4temp_110K[2]
+
+        with open(self.Cf_CF4temp_120K_path, "rb") as f:
+            self.Cf_CF4temp_120K = pickle.load(f)
+
+        self.Cf_CF4temp_120K_energy = self.Cf_CF4temp_120K[1][0][1]
+        self.Cf_CF4temp_120K_rate = self.Cf_CF4temp_120K[0] * self.Cf_CF4temp_120K[2]
+
+        with open(self.Cf_CF4temp_140K_path, "rb") as f:
+            self.Cf_CF4temp_140K = pickle.load(f)
+
+        self.Cf_CF4temp_140K_energy = self.Cf_CF4temp_140K[1][0][1]
+        self.Cf_CF4temp_140K_rate = self.Cf_CF4temp_140K[0] * self.Cf_CF4temp_140K[2]
+
+        # boron percentage
         with open(self.Cf_Boron00_path, "rb") as f:
             self.Cf_Boron00 = pickle.load(f)
         self.Cf_Boron00_energy = self.Cf_Boron00[1][0][1]
@@ -617,7 +678,7 @@ class integrated_analysis():
         self.Cf_Boron10_energy = self.Cf_Boron10[1][0][1]
         self.Cf_Boron10_rate = self.Cf_Boron10[0] * self.Cf_Boron10[2]
 
-        fig, ax = plt.subplots(1, 2, figsize=(12, 4))
+        fig, ax = plt.subplots(1, 4, figsize=(24, 4))
         # 1 plot to compare with original data Gray had, 2 to plot the spectrum with clean data comparasion
 
         for i in range(len(self.Cf_expB_rate_path)):
@@ -629,14 +690,27 @@ class integrated_analysis():
 
         ax[0].plot(self.Cf_simB_energy,self.Cf_simB_NEC_rate, label=f'Density 0.95 $g/cm^3$')
         ax[0].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Density 1.04 $g/cm^3$')
-        ax[0].plot(self.Cf_Density125_energy[:-1], self.Cf_Density125_rate, label=f'Density 1.04 $g/cm^3$')
-        ax[0].plot(self.Cf_Density150_energy[:-1], self.Cf_Density150_rate, label=f'Density 1.04 $g/cm^3$')
-        ax[0].plot(self.Cf_Density175_energy[:-1], self.Cf_Density175_rate, label=f'Density 1.04 $g/cm^3$')
+        ax[0].plot(self.Cf_Density125_energy[:-1], self.Cf_Density125_rate, label=f'Density 1.25 $g/cm^3$')
+        ax[0].plot(self.Cf_Density150_energy[:-1], self.Cf_Density150_rate, label=f'Density 1.50 $g/cm^3$')
+        ax[0].plot(self.Cf_Density175_energy[:-1], self.Cf_Density175_rate, label=f'Density 1.75 $g/cm^3$')
         ax[0].plot(self.Cf_density20_energy[:-1], self.Cf_density20_rate, label=f'Density 2.0 $g/cm^3$')
 
         ax[1].plot(self.Cf_Boron00_energy[:-1], self.Cf_Boron00_rate, label=f'Boron 0%')
         ax[1].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Boron 5%')
         ax[1].plot(self.Cf_Boron10_energy[:-1], self.Cf_Boron10_rate, label=f'Boron 10%')
+
+        ax[2].plot(self.Cf_location_p20_energy[:-1], self.Cf_location_p20_rate, label=f'Location +20 cm')
+        ax[2].plot(self.Cf_location_p10_energy[:-1], self.Cf_location_p10_rate, label=f'Location +10 cm')
+        ax[2].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Location 0 cm')
+        ax[2].plot(self.Cf_location_m10_energy[:-1], self.Cf_location_m10_rate, label=f'Location -10 cm')
+        ax[2].plot(self.Cf_location_m20_energy[:-1], self.Cf_location_m20_rate, label=f'Location -20 cm')
+
+        ax[3].plot(self.Cf_CF4temp_100K_energy[:-1], self.Cf_CF4temp_100K_rate, label=f'CF4 $\rho$ 1.825$g/cm^3$ 100.1K')
+        ax[3].plot(self.Cf_CF4temp_110K_energy[:-1], self.Cf_CF4temp_110K_rate, label=f'CF4 $\rho$ 1.789$g/cm^3$ 107.57K')
+        ax[3].plot(self.Cf_CF4temp_120K_energy[:-1], self.Cf_CF4temp_120K_rate, label=f'CF4 $\rho$ 1.735$g/cm^3$ 119.06K')
+        ax[3].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'CF4 $\rho$ 1.682$g/cm^3$ $\sim$ 129.36K')
+        ax[3].plot(self.Cf_CF4temp_140K_energy[:-1], self.Cf_CF4temp_140K_rate, label=f'CF4 $\rho$ 1.631$g/cm^3$ 139.82K')
+
 
         ax[0].set_xlabel("Seitz [eV]")
         ax[0].set_ylabel("Clean Rate [mHz]")
@@ -651,6 +725,20 @@ class integrated_analysis():
         ax[1].set_xlim(-1, 3500)
         ax[1].set_ylim(0, 220)
         ax[1].legend()
+
+        ax[2].set_xlabel("Seitz [eV]")
+        ax[2].set_ylabel("Clean Rate [mHz]")
+        ax[2].set_title("Rate with Different PE Density Boron = 5%")
+        ax[2].set_xlim(-1, 3500)
+        ax[2].set_ylim(0, 220)
+        ax[2].legend()
+
+        ax[3].set_xlabel("Seitz [eV]")
+        ax[3].set_ylabel("Clean Rate [mHz]")
+        ax[3].set_title("Rate with Different PE Density Boron = 5%")
+        ax[3].set_xlim(-1, 3500)
+        ax[3].set_ylim(0, 220)
+        ax[3].legend()
 
         plt.savefig(self.plot_path + "density_n_boron_rate.pdf")
         print(self.plot_path + "density_n_boron_rate.pdf")
