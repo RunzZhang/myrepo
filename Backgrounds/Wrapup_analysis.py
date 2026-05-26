@@ -23,7 +23,7 @@ class integrated_analysis():
 
         self.Cf_density20_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density2_config_B.pkl"
 
-        self.Cf_location_p20_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zp20_config_B.pkl"
+        # self.Cf_location_p20_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zp20_config_B.pkl"
         self.Cf_location_p10_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zp10_config_B.pkl"
         self.Cf_location_m10_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zm10_config_B.pkl"
         self.Cf_location_m20_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zm20_config_B.pkl"
@@ -618,11 +618,11 @@ class integrated_analysis():
         self.Cf_density20_energy = self.Cf_density20[1][0][1]
         self.Cf_density20_rate = self.Cf_density20[0] * self.Cf_density20[2]
         # source location
-        with open(self.Cf_location_p20_path, "rb") as f:
-            self.Cf_location_p20 = pickle.load(f)
-
-        self.Cf_location_p20_energy = self.Cf_location_p20[1][0][1]
-        self.Cf_location_p20_rate = self.Cf_location_p20[0] * self.Cf_location_p20[2]
+        # with open(self.Cf_location_p20_path, "rb") as f:
+        #     self.Cf_location_p20 = pickle.load(f)
+        #
+        # self.Cf_location_p20_energy = self.Cf_location_p20[1][0][1]
+        # self.Cf_location_p20_rate = self.Cf_location_p20[0] * self.Cf_location_p20[2]
 
         with open(self.Cf_location_p10_path, "rb") as f:
             self.Cf_location_p10 = pickle.load(f)
@@ -699,7 +699,7 @@ class integrated_analysis():
         ax[1].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Boron 5%')
         ax[1].plot(self.Cf_Boron10_energy[:-1], self.Cf_Boron10_rate, label=f'Boron 10%')
 
-        ax[2].plot(self.Cf_location_p20_energy[:-1], self.Cf_location_p20_rate, label=f'Location +20 cm')
+        # ax[2].plot(self.Cf_location_p20_energy[:-1], self.Cf_location_p20_rate, label=f'Location +20 cm')
         ax[2].plot(self.Cf_location_p10_energy[:-1], self.Cf_location_p10_rate, label=f'Location +10 cm')
         ax[2].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Location 0 cm')
         ax[2].plot(self.Cf_location_m10_energy[:-1], self.Cf_location_m10_rate, label=f'Location -10 cm')
