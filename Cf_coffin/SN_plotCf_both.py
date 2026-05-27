@@ -61,12 +61,12 @@ class SN():
         # self.neutron_source_geometry()
         # get ssttl moderating effect and check Argon recoiled by that
         # self.coffin_phys()
-        self.source_tube_phys()
+        # self.source_tube_phys()
         # self.NR_spectrum_moderated_by_sstl()
 
 
         # self.NR_spectrum()
-        # self.write_sims_results()
+        self.write_sims_results()
         # self.NR_multiplicity()
         # for ploting PN background tagging and SNR
         # self.untagged_bubble_rate()

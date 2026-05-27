@@ -464,7 +464,7 @@ class integrated_analysis():
 
         self.Cf_simB_energy = self.Cf_simsB[1][0][1]
         self.Cf_simB_rate = self.Cf_simsB[0] * self.Cf_simsB[2]
-        self.Cf_simB_diff_rate = self.Cf_simsA[0]*self.Cf_simsB[1][0][0]
+        self.Cf_simB_diff_rate = self.Cf_simsB[0]*self.Cf_simsB[1][0][0]
         self.Cf_simB_NEC_rate = []
         for threshold in self.Cf_simB_energy:
             if threshold == self.Cf_simB_energy[0]:
@@ -595,6 +595,7 @@ class integrated_analysis():
 
         self.Cf_Density104_energy = self.Cf_Density104[1][0][1]
         self.Cf_Density104_rate = self.Cf_Density104[0] * self.Cf_Density104[2]
+        self.Cf_Density104_diff_rate = self.Cf_Density104[0] * self.Cf_Density104[1][0][0]
         self.Cf_Density104_error = self.Cf_Density104[0] * self.Cf_Density104[2]/np.sqrt(self.Cf_Density104[2])
 
 
@@ -603,6 +604,7 @@ class integrated_analysis():
 
         self.Cf_Density125_energy = self.Cf_Density125[1][0][1]
         self.Cf_Density125_rate = self.Cf_Density125[0] * self.Cf_Density125[2]
+        self.Cf_Density125_diff_rate = self.Cf_Density125[0] * self.Cf_Density125[1][0][0]
         self.Cf_Density125_error = self.Cf_Density125[0] * self.Cf_Density125[2] / np.sqrt(self.Cf_Density125[2])
 
         with open(self.Cf_Density150_path, "rb") as f:
@@ -610,6 +612,7 @@ class integrated_analysis():
 
         self.Cf_Density150_energy = self.Cf_Density150[1][0][1]
         self.Cf_Density150_rate = self.Cf_Density150[0] * self.Cf_Density150[2]
+        self.Cf_Density150_diff_rate = self.Cf_Density150[0] * self.Cf_Density150[1][0][0]
         self.Cf_Density150_error = self.Cf_Density150[0] * self.Cf_Density150[2] / np.sqrt(self.Cf_Density150[2])
 
         with open(self.Cf_Density175_path, "rb") as f:
@@ -617,12 +620,14 @@ class integrated_analysis():
 
         self.Cf_Density175_energy = self.Cf_Density175[1][0][1]
         self.Cf_Density175_rate = self.Cf_Density175[0] * self.Cf_Density175[2]
+        self.Cf_Density175_diff_rate = self.Cf_Density175[0] * self.Cf_Density175[1][0][0]
         self.Cf_Density175_error = self.Cf_Density175[0] * self.Cf_Density175[2] / np.sqrt(self.Cf_Density175[2])
 
         with open(self.Cf_density20_path, "rb") as f:
             self.Cf_density20 = pickle.load(f)
         self.Cf_density20_energy = self.Cf_density20[1][0][1]
         self.Cf_density20_rate = self.Cf_density20[0] * self.Cf_density20[2]
+        self.Cf_density20_diff_rate = self.Cf_density20[0] * self.Cf_density20[1][0][0]
         self.Cf_density20_error = self.Cf_density20[0] * self.Cf_density20[2] / np.sqrt(self.Cf_density20[2])
         # source location
         with open(self.Cf_location_p20_path, "rb") as f:
@@ -662,6 +667,7 @@ class integrated_analysis():
 
         self.Cf_CF4temp_100K_energy = self.Cf_CF4temp_100K[1][0][1]
         self.Cf_CF4temp_100K_rate = self.Cf_CF4temp_100K[0] * self.Cf_CF4temp_100K[2]
+        self.Cf_CF4temp_100K_diff_rate = self.Cf_CF4temp_100K[0] * self.Cf_CF4temp_100K[1][0][0]
         self.Cf_CF4temp_100K_error = self.Cf_CF4temp_100K[0] * self.Cf_CF4temp_100K[2] / np.sqrt(
             self.Cf_CF4temp_100K[2])
 
@@ -670,6 +676,7 @@ class integrated_analysis():
 
         self.Cf_CF4temp_110K_energy = self.Cf_CF4temp_110K[1][0][1]
         self.Cf_CF4temp_110K_rate = self.Cf_CF4temp_110K[0] * self.Cf_CF4temp_110K[2]
+        self.Cf_CF4temp_110K_diff_rate = self.Cf_CF4temp_110K[0] * self.Cf_CF4temp_110K[1][0][0]
         self.Cf_CF4temp_110K_error = self.Cf_CF4temp_110K[0] * self.Cf_CF4temp_110K[2] / np.sqrt(
             self.Cf_CF4temp_110K[2])
 
@@ -678,6 +685,7 @@ class integrated_analysis():
 
         self.Cf_CF4temp_120K_energy = self.Cf_CF4temp_120K[1][0][1]
         self.Cf_CF4temp_120K_rate = self.Cf_CF4temp_120K[0] * self.Cf_CF4temp_120K[2]
+        self.Cf_CF4temp_120K_diff_rate = self.Cf_CF4temp_120K[0] * self.Cf_CF4temp_120K[1][0][0]
         self.Cf_CF4temp_120K_error = self.Cf_CF4temp_120K[0] * self.Cf_CF4temp_120K[2] / np.sqrt(
             self.Cf_CF4temp_120K[2])
 
@@ -686,6 +694,7 @@ class integrated_analysis():
 
         self.Cf_CF4temp_140K_energy = self.Cf_CF4temp_140K[1][0][1]
         self.Cf_CF4temp_140K_rate = self.Cf_CF4temp_140K[0] * self.Cf_CF4temp_140K[2]
+        self.Cf_CF4temp_140K_diff_rate = self.Cf_CF4temp_140K[0] * self.Cf_CF4temp_140K[1][0][0]
         self.Cf_CF4temp_140K_error = self.Cf_CF4temp_140K[0] * self.Cf_CF4temp_140K[2] / np.sqrt(
             self.Cf_CF4temp_140K[2])
 
@@ -700,94 +709,130 @@ class integrated_analysis():
         self.Cf_Boron10_energy = self.Cf_Boron10[1][0][1]
         self.Cf_Boron10_rate = self.Cf_Boron10[0] * self.Cf_Boron10[2]
 
-        fig, ax = plt.subplots(1, 4, figsize=(24, 4))
+        fig, ax = plt.subplots(2, 4, figsize=(24, 10))
         # 1 plot to compare with original data Gray had, 2 to plot the spectrum with clean data comparasion
 
         for i in range(len(self.Cf_expB_rate_path)):
             expB_df = pd.read_csv(self.Cf_expB_rate_path[i])
-            ax[0].errorbar(expB_df["Seitz [keV]"] * 1000, expB_df["Clean Rate [mHz]"],
+            ax[0,0].errorbar(expB_df["Seitz [keV]"] * 1000, expB_df["Clean Rate [mHz]"],
                            yerr=expB_df["Clean Rate Sigma [mHz]"], label=f"exp {i}", fmt='o')
-            ax[1].errorbar(expB_df["Seitz [keV]"] * 1000, expB_df["Clean Rate [mHz]"],
-                           yerr=expB_df["Clean Rate Sigma [mHz]"], label=f"exp {i}", fmt='o')
-
-            ax[2].errorbar(expB_df["Seitz [keV]"] * 1000, expB_df["Clean Rate [mHz]"],
+            ax[0,1].errorbar(expB_df["Seitz [keV]"] * 1000, expB_df["Clean Rate [mHz]"],
                            yerr=expB_df["Clean Rate Sigma [mHz]"], label=f"exp {i}", fmt='o')
 
-            ax[3].errorbar(expB_df["Seitz [keV]"] * 1000, expB_df["Clean Rate [mHz]"],
+            ax[0,2].errorbar(expB_df["Seitz [keV]"] * 1000, expB_df["Clean Rate [mHz]"],
+                           yerr=expB_df["Clean Rate Sigma [mHz]"], label=f"exp {i}", fmt='o')
+
+            ax[0,3].errorbar(expB_df["Seitz [keV]"] * 1000, expB_df["Clean Rate [mHz]"],
                            yerr=expB_df["Clean Rate Sigma [mHz]"], label=f"exp {i}", fmt='o')
 
 
-        ax[0].plot(self.Cf_simB_energy,self.Cf_simB_NEC_rate, label=f'Density 0.95 $g/cm^3$')
-        ax[0].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Density 1.04 $g/cm^3$',color = "b")
-        ax[0].plot(self.Cf_Density125_energy[:-1], self.Cf_Density125_rate, label=f'Density 1.25 $g/cm^3$',color = "orange")
-        ax[0].plot(self.Cf_Density150_energy[:-1], self.Cf_Density150_rate, label=f'Density 1.50 $g/cm^3$',color = "green")
-        ax[0].plot(self.Cf_Density175_energy[:-1], self.Cf_Density175_rate, label=f'Density 1.75 $g/cm^3$',color = "r")
-        ax[0].plot(self.Cf_density20_energy[:-1], self.Cf_density20_rate, label=f'Density 2.0 $g/cm^3$',color = "purple")
+        ax[0,0].plot(self.Cf_simB_energy,self.Cf_simB_NEC_rate, label=f'Density 0.95 $g/cm^3$',color="black")
+        ax[0,0].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Density 1.04 $g/cm^3$',color = "b")
+        ax[0,0].plot(self.Cf_Density125_energy[:-1], self.Cf_Density125_rate, label=f'Density 1.25 $g/cm^3$',color = "orange")
+        ax[0,0].plot(self.Cf_Density150_energy[:-1], self.Cf_Density150_rate, label=f'Density 1.50 $g/cm^3$',color = "green")
+        ax[0,0].plot(self.Cf_Density175_energy[:-1], self.Cf_Density175_rate, label=f'Density 1.75 $g/cm^3$',color = "r")
+        ax[0,0].plot(self.Cf_density20_energy[:-1], self.Cf_density20_rate, label=f'Density 2.0 $g/cm^3$',color = "purple")
         # uncertainty
-        ax[0].fill_between(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate + self.Cf_Density104_error,
-                           self.Cf_Density104_rate - self.Cf_Density104_error, color='blue', alpha=0.2)
-        ax[0].fill_between(self.Cf_Density125_energy[:-1], self.Cf_Density125_rate + self.Cf_Density125_error,
-                           self.Cf_Density125_rate - self.Cf_Density125_error, color="orange", alpha=0.2)
-        ax[0].fill_between(self.Cf_Density150_energy[:-1], self.Cf_Density150_rate + self.Cf_Density150_error,
-                           self.Cf_Density150_rate - self.Cf_Density150_error, color='green', alpha=0.2)
-        ax[0].fill_between(self.Cf_Density175_energy[:-1], self.Cf_Density175_rate + self.Cf_Density175_error,
-                           self.Cf_Density175_rate - self.Cf_Density175_error, color='r', alpha=0.2)
-        ax[0].fill_between(self.Cf_density20_energy[:-1], self.Cf_density20_rate + self.Cf_density20_error,
-                           self.Cf_density20_rate - self.Cf_density20_error, color='purple', alpha=0.2)
+        # ax[0,0].fill_between(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate + self.Cf_Density104_error,
+        #                    self.Cf_Density104_rate - self.Cf_Density104_error, color='blue', alpha=0.2)
+        # ax[0,0].fill_between(self.Cf_Density125_energy[:-1], self.Cf_Density125_rate + self.Cf_Density125_error,
+        #                    self.Cf_Density125_rate - self.Cf_Density125_error, color="orange", alpha=0.2)
+        # ax[0,0].fill_between(self.Cf_Density150_energy[:-1], self.Cf_Density150_rate + self.Cf_Density150_error,
+        #                    self.Cf_Density150_rate - self.Cf_Density150_error, color='green', alpha=0.2)
+        # ax[0,0].fill_between(self.Cf_Density175_energy[:-1], self.Cf_Density175_rate + self.Cf_Density175_error,
+        #                    self.Cf_Density175_rate - self.Cf_Density175_error, color='r', alpha=0.2)
+        # ax[0,0].fill_between(self.Cf_density20_energy[:-1], self.Cf_density20_rate + self.Cf_density20_error,
+        #                    self.Cf_density20_rate - self.Cf_density20_error, color='purple', alpha=0.2)
 
-        ax[1].plot(self.Cf_Boron00_energy[:-1], self.Cf_Boron00_rate, label=f'Boron 0%')
-        ax[1].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Boron 5%')
-        ax[1].plot(self.Cf_Boron10_energy[:-1], self.Cf_Boron10_rate, label=f'Boron 10%')
+        ax[0,1].plot(self.Cf_Boron00_energy[:-1], self.Cf_Boron00_rate, label=f'Boron 0%')
+        ax[0,1].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Boron 5%')
+        ax[0,1].plot(self.Cf_Boron10_energy[:-1], self.Cf_Boron10_rate, label=f'Boron 10%')
 
-        ax[2].plot(self.Cf_location_p20_energy[:-1], self.Cf_location_p20_rate, label=f'Location +20 cm',color = "b")
-        ax[2].plot(self.Cf_location_p10_energy[:-1], self.Cf_location_p10_rate, label=f'Location +10 cm',color = "orange")
-        ax[2].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Location 0 cm',color = "green")
-        ax[2].plot(self.Cf_location_m10_energy[:-1], self.Cf_location_m10_rate, label=f'Location -10 cm',color = "r")
-        ax[2].plot(self.Cf_location_m20_energy[:-1], self.Cf_location_m20_rate, label=f'Location -20 cm',color = "purple")
+        ax[0,2].plot(self.Cf_location_p20_energy[:-1], self.Cf_location_p20_rate, label=f'Location +20 cm',color = "b")
+        ax[0,2].plot(self.Cf_location_p10_energy[:-1], self.Cf_location_p10_rate, label=f'Location +10 cm',color = "orange")
+        ax[0,2].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Location 0 cm',color = "green")
+        ax[0,2].plot(self.Cf_location_m10_energy[:-1], self.Cf_location_m10_rate, label=f'Location -10 cm',color = "r")
+        ax[0,2].plot(self.Cf_location_m20_energy[:-1], self.Cf_location_m20_rate, label=f'Location -20 cm',color = "purple")
 
-        ax[3].plot(self.Cf_CF4temp_100K_energy[:-1], self.Cf_CF4temp_100K_rate, label=r'CF4 $\rho$ 1.825$g/cm^3$ 100.1K',color = "b")
-        ax[3].plot(self.Cf_CF4temp_110K_energy[:-1], self.Cf_CF4temp_110K_rate, label=r'CF4 $\rho$ 1.789$g/cm^3$ 107.57K',color = "orange")
-        ax[3].plot(self.Cf_CF4temp_120K_energy[:-1], self.Cf_CF4temp_120K_rate, label=r'CF4 $\rho$ 1.735$g/cm^3$ 119.06K',color = "green")
-        ax[3].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=r'CF4 $\rho$ 1.682$g/cm^3$ $\sim$ 129.36K',color = "r")
-        ax[3].plot(self.Cf_CF4temp_140K_energy[:-1], self.Cf_CF4temp_140K_rate, label=r'CF4 $\rho$ 1.631$g/cm^3$ 139.82K',color = "purple")
-        ax[3].fill_between(self.Cf_CF4temp_100K_energy[:-1], self.Cf_CF4temp_100K_rate + self.Cf_CF4temp_100K_error,
-                           self.Cf_CF4temp_100K_rate - self.Cf_CF4temp_100K_error, color='blue', alpha=0.2)
-        ax[3].fill_between(self.Cf_CF4temp_110K_energy[:-1], self.Cf_CF4temp_110K_rate + self.Cf_CF4temp_110K_error,
-                           self.Cf_CF4temp_110K_rate - self.Cf_CF4temp_110K_error, color='orange', alpha=0.2)
-        ax[3].fill_between(self.Cf_CF4temp_120K_energy[:-1], self.Cf_CF4temp_120K_rate + self.Cf_CF4temp_120K_error,
-                           self.Cf_CF4temp_120K_rate - self.Cf_CF4temp_120K_error, color='green', alpha=0.2)
-        ax[0].fill_between(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate + self.Cf_Density104_error,
-                           self.Cf_Density104_rate - self.Cf_Density104_error, color='red', alpha=0.2)
-        ax[3].fill_between(self.Cf_CF4temp_140K_energy[:-1],self.Cf_CF4temp_140K_rate+self.Cf_CF4temp_140K_error,self.Cf_CF4temp_140K_rate-self.Cf_CF4temp_140K_error,color='purple', alpha=0.2)
+        ax[0,3].plot(self.Cf_CF4temp_100K_energy[:-1], self.Cf_CF4temp_100K_rate, label=r'CF4 $\rho$ 1.825$g/cm^3$ 100.1K',color = "b")
+        ax[0,3].plot(self.Cf_CF4temp_110K_energy[:-1], self.Cf_CF4temp_110K_rate, label=r'CF4 $\rho$ 1.789$g/cm^3$ 107.57K',color = "orange")
+        ax[0,3].plot(self.Cf_CF4temp_120K_energy[:-1], self.Cf_CF4temp_120K_rate, label=r'CF4 $\rho$ 1.735$g/cm^3$ 119.06K',color = "green")
+        ax[0,3].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=r'CF4 $\rho$ 1.682$g/cm^3$ $\sim$ 129.36K',color = "r")
+        ax[0,3].plot(self.Cf_CF4temp_140K_energy[:-1], self.Cf_CF4temp_140K_rate, label=r'CF4 $\rho$ 1.631$g/cm^3$ 139.82K',color = "purple")
+        # ax[0,3].fill_between(self.Cf_CF4temp_100K_energy[:-1], self.Cf_CF4temp_100K_rate + self.Cf_CF4temp_100K_error,
+        #                    self.Cf_CF4temp_100K_rate - self.Cf_CF4temp_100K_error, color='blue', alpha=0.2)
+        # ax[0,3].fill_between(self.Cf_CF4temp_110K_energy[:-1], self.Cf_CF4temp_110K_rate + self.Cf_CF4temp_110K_error,
+        #                    self.Cf_CF4temp_110K_rate - self.Cf_CF4temp_110K_error, color='orange', alpha=0.2)
+        # ax[0,3].fill_between(self.Cf_CF4temp_120K_energy[:-1], self.Cf_CF4temp_120K_rate + self.Cf_CF4temp_120K_error,
+        #                    self.Cf_CF4temp_120K_rate - self.Cf_CF4temp_120K_error, color='green', alpha=0.2)
+        # ax[0,0].fill_between(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate + self.Cf_Density104_error,
+        #                    self.Cf_Density104_rate - self.Cf_Density104_error, color='red', alpha=0.2)
+        # ax[0,3].fill_between(self.Cf_CF4temp_140K_energy[:-1],self.Cf_CF4temp_140K_rate+self.Cf_CF4temp_140K_error,self.Cf_CF4temp_140K_rate-self.Cf_CF4temp_140K_error,color='purple', alpha=0.2)
 
+        ax[1,0].plot(self.Cf_simB_energy,self.Cf_simB_diff_rate, label=f'Density 0.95 $g/cm^3$',color="black")
+        ax[1, 0].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_diff_rate, label=f'Density 1.04 $g/cm^3$',
+                      color="b")
+        ax[1, 0].plot(self.Cf_Density125_energy[:-1], self.Cf_Density125_diff_rate, label=f'Density 1.25 $g/cm^3$',
+                      color="orange")
+        ax[1, 0].plot(self.Cf_Density150_energy[:-1], self.Cf_Density150_diff_rate, label=f'Density 1.50 $g/cm^3$',
+                      color="green")
+        ax[1, 0].plot(self.Cf_Density175_energy[:-1], self.Cf_Density175_diff_rate, label=f'Density 1.75 $g/cm^3$',
+                      color="r")
+        ax[1, 0].plot(self.Cf_density20_energy[:-1], self.Cf_density20_diff_rate, label=f'Density 2.0 $g/cm^3$',
+                      color="purple")
 
-        ax[0].set_xlabel("Seitz [eV]")
-        ax[0].set_ylabel("Clean Rate [mHz]")
-        ax[0].set_title("Rate with Different PE Density Boron = 5%")
-        ax[0].set_xlim(-1, 3500)
-        ax[0].set_ylim(0, 220)
-        ax[0].legend()
+        ax[1, 3].plot(self.Cf_CF4temp_100K_energy[:-1], self.Cf_CF4temp_100K_diff_rate,
+                      label=r'CF4 $\rho$ 1.825$g/cm^3$ 100.1K', color="b")
+        ax[1, 3].plot(self.Cf_CF4temp_110K_energy[:-1], self.Cf_CF4temp_110K_diff_rate,
+                      label=r'CF4 $\rho$ 1.789$g/cm^3$ 107.57K', color="orange")
+        ax[1, 3].plot(self.Cf_CF4temp_120K_energy[:-1], self.Cf_CF4temp_120K_diff_rate,
+                      label=r'CF4 $\rho$ 1.735$g/cm^3$ 119.06K', color="green")
+        ax[1, 3].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_diff_rate,
+                      label=r'CF4 $\rho$ 1.682$g/cm^3$ $\sim$ 129.36K', color="r")
+        ax[1, 3].plot(self.Cf_CF4temp_140K_energy[:-1], self.Cf_CF4temp_140K_diff_rate,
+                      label=r'CF4 $\rho$ 1.631$g/cm^3$ 139.82K', color="purple")
 
-        ax[1].set_xlabel("Seitz [eV]")
-        ax[1].set_ylabel("Clean Rate [mHz]")
-        ax[1].set_title(f"Rate Different Boron Weight Density = 1.04 $g/cm^3$")
-        ax[1].set_xlim(-1, 3500)
-        ax[1].set_ylim(0, 220)
-        ax[1].legend()
+        ax[0,0].set_xlabel("Seitz [eV]")
+        ax[0,0].set_ylabel("Clean Rate [mHz]")
+        ax[0,0].set_title("Rate with Different PE Density Boron = 5%")
+        ax[0,0].set_xlim(-1, 3500)
+        ax[0,0].set_ylim(0, 220)
+        ax[0,0].legend()
 
-        ax[2].set_xlabel("Seitz [eV]")
-        ax[2].set_ylabel("Clean Rate [mHz]")
-        ax[2].set_title("Rate with Different Coffin Locations")
-        ax[2].set_xlim(-1, 3500)
-        ax[2].set_ylim(0, 500)
-        ax[2].legend()
+        ax[0,1].set_xlabel("Seitz [eV]")
+        ax[0,1].set_ylabel("Clean Rate [mHz]")
+        ax[0,1].set_title(f"Rate Different Boron Weight Density = 1.04 $g/cm^3$")
+        ax[0,1].set_xlim(-1, 3500)
+        ax[0,1].set_ylim(0, 220)
+        ax[0,1].legend()
 
-        ax[3].set_xlabel("Seitz [eV]")
-        ax[3].set_ylabel("Clean Rate [mHz]")
-        ax[3].set_title("Rate with different CF4 temp")
-        ax[3].set_xlim(-1, 3500)
-        ax[3].set_ylim(0, 220)
-        ax[3].legend()
+        ax[0,2].set_xlabel("Seitz [eV]")
+        ax[0,2].set_ylabel("Clean Rate [mHz]")
+        ax[0,2].set_title("Rate with Different Coffin Locations")
+        ax[0,2].set_xlim(-1, 3500)
+        ax[0,2].set_ylim(0, 500)
+        ax[0,2].legend()
+
+        ax[0,3].set_xlabel("Seitz [eV]")
+        ax[0,3].set_ylabel("Clean Rate [mHz]")
+        ax[0,3].set_title("Rate with different CF4 temp")
+        ax[0,3].set_xlim(-1, 3500)
+        ax[0,3].set_ylim(0, 220)
+        ax[0,3].legend()
+
+        ax[1, 0].set_xlabel("Seitz [eV]")
+        ax[1, 0].set_ylabel("Clean Rate [mHz/bin]")
+        ax[1, 0].set_title("Diff Rate with Different PE Density")
+        ax[1, 0].set_xlim(-1, 3500)
+        # ax[1, 0].set_ylim(0, 220)
+        ax[1, 0].legend()
+
+        ax[1, 3].set_xlabel("Seitz [eV]")
+        ax[1, 3].set_ylabel("Clean Rate [mHz]")
+        ax[1, 3].set_title("Diff Rate with different CF4 temp")
+        ax[1, 3].set_xlim(-1, 3500)
+        # ax[1, 3].set_ylim(0, 220)
+        ax[1, 3].legend()
 
         plt.savefig(self.plot_path + "density_n_boron_rate.pdf")
         print(self.plot_path + "density_n_boron_rate.pdf")
