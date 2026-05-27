@@ -710,6 +710,13 @@ class integrated_analysis():
             ax[1].errorbar(expB_df["Seitz [keV]"] * 1000, expB_df["Clean Rate [mHz]"],
                            yerr=expB_df["Clean Rate Sigma [mHz]"], label=f"exp {i}", fmt='o')
 
+            ax[2].errorbar(expB_df["Seitz [keV]"] * 1000, expB_df["Clean Rate [mHz]"],
+                           yerr=expB_df["Clean Rate Sigma [mHz]"], label=f"exp {i}", fmt='o')
+
+            ax[3].errorbar(expB_df["Seitz [keV]"] * 1000, expB_df["Clean Rate [mHz]"],
+                           yerr=expB_df["Clean Rate Sigma [mHz]"], label=f"exp {i}", fmt='o')
+
+
         ax[0].plot(self.Cf_simB_energy,self.Cf_simB_NEC_rate, label=f'Density 0.95 $g/cm^3$')
         ax[0].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Density 1.04 $g/cm^3$',color = "b")
         ax[0].plot(self.Cf_Density125_energy[:-1], self.Cf_Density125_rate, label=f'Density 1.25 $g/cm^3$',color = "orange")
@@ -770,9 +777,9 @@ class integrated_analysis():
 
         ax[2].set_xlabel("Seitz [eV]")
         ax[2].set_ylabel("Clean Rate [mHz]")
-        ax[2].set_title("Rate with Different Coffin locations")
+        ax[2].set_title("Rate with Different Coffin Locations")
         ax[2].set_xlim(-1, 3500)
-        ax[2].set_ylim(0, 220)
+        ax[2].set_ylim(0, 500)
         ax[2].legend()
 
         ax[3].set_xlabel("Seitz [eV]")
