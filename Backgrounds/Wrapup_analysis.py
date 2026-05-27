@@ -825,6 +825,7 @@ class integrated_analysis():
         ax[1, 0].set_title("Diff Rate with Different PE Density")
         ax[1, 0].set_xlim(-1, 3500)
         # ax[1, 0].set_ylim(0, 220)
+        ax[1, 0].set_yscale("log")
         ax[1, 0].legend()
 
         ax[1, 3].set_xlabel("Seitz [eV]")
@@ -832,6 +833,7 @@ class integrated_analysis():
         ax[1, 3].set_title("Diff Rate with different CF4 temp")
         ax[1, 3].set_xlim(-1, 3500)
         # ax[1, 3].set_ylim(0, 220)
+        ax[1, 3].set_yscale("log")
         ax[1, 3].legend()
 
         plt.savefig(self.plot_path + "density_n_boron_rate.pdf")
