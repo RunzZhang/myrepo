@@ -587,60 +587,74 @@ class integrated_analysis():
         plt.savefig(self.plot_path + "Cf_abs_rate_comparison.pdf")
         plt.clf()
         # follow up analysis
-        self.change_density_boron()
-    def change_density_boron(self):
+        self.uncertainty_analysis()
+    def uncertainty_analysis(self):
         # see how rate of boron amount and PE density change the rate
         with open(self.Cf_Density104_path, "rb") as f:
             self.Cf_Density104 = pickle.load(f)
 
         self.Cf_Density104_energy = self.Cf_Density104[1][0][1]
         self.Cf_Density104_rate = self.Cf_Density104[0] * self.Cf_Density104[2]
+        self.Cf_Density104_error = self.Cf_Density104[0] * self.Cf_Density104[2]/np.sqrt(self.Cf_Density104[2])
+
 
         with open(self.Cf_Density125_path, "rb") as f:
             self.Cf_Density125 = pickle.load(f)
 
         self.Cf_Density125_energy = self.Cf_Density125[1][0][1]
         self.Cf_Density125_rate = self.Cf_Density125[0] * self.Cf_Density125[2]
+        self.Cf_Density125_error = self.Cf_Density125[0] * self.Cf_Density125[2] / np.sqrt(self.Cf_Density125[2])
 
         with open(self.Cf_Density150_path, "rb") as f:
             self.Cf_Density150 = pickle.load(f)
 
         self.Cf_Density150_energy = self.Cf_Density150[1][0][1]
         self.Cf_Density150_rate = self.Cf_Density150[0] * self.Cf_Density150[2]
+        self.Cf_Density150_error = self.Cf_Density150[0] * self.Cf_Density150[2] / np.sqrt(self.Cf_Density150[2])
 
         with open(self.Cf_Density175_path, "rb") as f:
             self.Cf_Density175 = pickle.load(f)
 
         self.Cf_Density175_energy = self.Cf_Density175[1][0][1]
         self.Cf_Density175_rate = self.Cf_Density175[0] * self.Cf_Density175[2]
+        self.Cf_Density175_error = self.Cf_Density175[0] * self.Cf_Density175[2] / np.sqrt(self.Cf_Density175[2])
+
         with open(self.Cf_density20_path, "rb") as f:
             self.Cf_density20 = pickle.load(f)
         self.Cf_density20_energy = self.Cf_density20[1][0][1]
         self.Cf_density20_rate = self.Cf_density20[0] * self.Cf_density20[2]
+        self.Cf_density20_error = self.Cf_density20[0] * self.Cf_density20[2] / np.sqrt(self.Cf_density20[2])
         # source location
         with open(self.Cf_location_p20_path, "rb") as f:
             self.Cf_location_p20 = pickle.load(f)
 
         self.Cf_location_p20_energy = self.Cf_location_p20[1][0][1]
         self.Cf_location_p20_rate = self.Cf_location_p20[0] * self.Cf_location_p20[2]
+        self.Cf_location_p20_error = self.Cf_location_p20[0] * self.Cf_location_p20[2] / np.sqrt(self.Cf_location_p20[2])
 
         with open(self.Cf_location_p10_path, "rb") as f:
             self.Cf_location_p10 = pickle.load(f)
 
         self.Cf_location_p10_energy = self.Cf_location_p10[1][0][1]
         self.Cf_location_p10_rate = self.Cf_location_p10[0] * self.Cf_location_p10[2]
+        self.Cf_location_p10_error = self.Cf_location_p10[0] * self.Cf_location_p10[2] / np.sqrt(
+            self.Cf_location_p10[2])
 
         with open(self.Cf_location_m10_path, "rb") as f:
             self.Cf_location_m10 = pickle.load(f)
 
         self.Cf_location_m10_energy = self.Cf_location_m10[1][0][1]
         self.Cf_location_m10_rate = self.Cf_location_m10[0] * self.Cf_location_m10[2]
+        self.Cf_location_m10_error = self.Cf_location_m10[0] * self.Cf_location_m10[2] / np.sqrt(
+            self.Cf_location_m10[2])
 
         with open(self.Cf_location_m20_path, "rb") as f:
             self.Cf_location_m20 = pickle.load(f)
 
         self.Cf_location_m20_energy = self.Cf_location_m20[1][0][1]
         self.Cf_location_m20_rate = self.Cf_location_m20[0] * self.Cf_location_m20[2]
+        self.Cf_location_m20_error = self.Cf_location_m20[0] * self.Cf_location_m20[2] / np.sqrt(
+            self.Cf_location_m20[2])
 
         # CF4 density dependence on temperature
         with open(self.Cf_CF4temp_100K_path, "rb") as f:
@@ -648,24 +662,32 @@ class integrated_analysis():
 
         self.Cf_CF4temp_100K_energy = self.Cf_CF4temp_100K[1][0][1]
         self.Cf_CF4temp_100K_rate = self.Cf_CF4temp_100K[0] * self.Cf_CF4temp_100K[2]
+        self.Cf_CF4temp_100K_error = self.Cf_CF4temp_100K[0] * self.Cf_CF4temp_100K[2] / np.sqrt(
+            self.Cf_CF4temp_100K[2])
 
         with open(self.Cf_CF4temp_110K_path, "rb") as f:
             self.Cf_CF4temp_110K = pickle.load(f)
 
         self.Cf_CF4temp_110K_energy = self.Cf_CF4temp_110K[1][0][1]
         self.Cf_CF4temp_110K_rate = self.Cf_CF4temp_110K[0] * self.Cf_CF4temp_110K[2]
+        self.Cf_CF4temp_110K_error = self.Cf_CF4temp_110K[0] * self.Cf_CF4temp_110K[2] / np.sqrt(
+            self.Cf_CF4temp_110K[2])
 
         with open(self.Cf_CF4temp_120K_path, "rb") as f:
             self.Cf_CF4temp_120K = pickle.load(f)
 
         self.Cf_CF4temp_120K_energy = self.Cf_CF4temp_120K[1][0][1]
         self.Cf_CF4temp_120K_rate = self.Cf_CF4temp_120K[0] * self.Cf_CF4temp_120K[2]
+        self.Cf_CF4temp_120K_error = self.Cf_CF4temp_120K[0] * self.Cf_CF4temp_120K[2] / np.sqrt(
+            self.Cf_CF4temp_120K[2])
 
         with open(self.Cf_CF4temp_140K_path, "rb") as f:
             self.Cf_CF4temp_140K = pickle.load(f)
 
         self.Cf_CF4temp_140K_energy = self.Cf_CF4temp_140K[1][0][1]
         self.Cf_CF4temp_140K_rate = self.Cf_CF4temp_140K[0] * self.Cf_CF4temp_140K[2]
+        self.Cf_CF4temp_140K_error = self.Cf_CF4temp_140K[0] * self.Cf_CF4temp_140K[2] / np.sqrt(
+            self.Cf_CF4temp_140K[2])
 
         # boron percentage
         with open(self.Cf_Boron00_path, "rb") as f:
@@ -710,6 +732,7 @@ class integrated_analysis():
         ax[3].plot(self.Cf_CF4temp_120K_energy[:-1], self.Cf_CF4temp_120K_rate, label=r'CF4 $\rho$ 1.735$g/cm^3$ 119.06K')
         ax[3].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=r'CF4 $\rho$ 1.682$g/cm^3$ $\sim$ 129.36K')
         ax[3].plot(self.Cf_CF4temp_140K_energy[:-1], self.Cf_CF4temp_140K_rate, label=r'CF4 $\rho$ 1.631$g/cm^3$ 139.82K')
+        ax[3].fill_between(self.Cf_CF4temp_140K_energy[:-1],self.Cf_CF4temp_140K_rate+self.Cf_CF4temp_140K_error,self.Cf_CF4temp_140K_rate-self.Cf_CF4temp_140K_error)
 
 
         ax[0].set_xlabel("Seitz [eV]")
