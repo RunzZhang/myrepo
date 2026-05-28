@@ -27,6 +27,7 @@ class integrated_analysis():
         self.Cf_location_p10_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zp10_config_B.pkl"
         self.Cf_location_m10_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zm10_config_B.pkl"
         self.Cf_location_m20_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zm20_config_B.pkl"
+        self.Cf_location_top_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_top_config_B.pkl"
 
 
         self.Cf_CF4temp_100K_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_100K_config_B.pkl"
@@ -661,6 +662,15 @@ class integrated_analysis():
         self.Cf_location_m20_error = self.Cf_location_m20[0] * self.Cf_location_m20[2] / np.sqrt(
             self.Cf_location_m20[2])
 
+
+        with open(self.Cf_location_top_path, "rb") as f:
+            self.Cf_location_top = pickle.load(f)
+
+        self.Cf_location_top_energy = self.Cf_location_top[1][0][1]
+        self.Cf_location_top_rate = self.Cf_location_top[0] * self.Cf_location_top[2]
+        self.Cf_location_top_error = self.Cf_location_top[0] * self.Cf_location_top[2] / np.sqrt(
+            self.Cf_location_top[2])
+
         # CF4 density dependence on temperature
         with open(self.Cf_CF4temp_100K_path, "rb") as f:
             self.Cf_CF4temp_100K = pickle.load(f)
@@ -753,6 +763,8 @@ class integrated_analysis():
         ax[0,2].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Location 0 cm',color = "green")
         ax[0,2].plot(self.Cf_location_m10_energy[:-1], self.Cf_location_m10_rate, label=f'Location -10 cm',color = "r")
         ax[0,2].plot(self.Cf_location_m20_energy[:-1], self.Cf_location_m20_rate, label=f'Location -20 cm',color = "purple")
+        ax[0, 2].plot(self.Cf_location_top_energy[:-1], self.Cf_location_top_rate, label=f'Location top',
+                      color="brown")
 
         ax[0,3].plot(self.Cf_CF4temp_100K_energy[:-1], self.Cf_CF4temp_100K_rate, label=r'CF4 $\rho$ 1.825$g/cm^3$ 100.1K',color = "b")
         ax[0,3].plot(self.Cf_CF4temp_110K_energy[:-1], self.Cf_CF4temp_110K_rate, label=r'CF4 $\rho$ 1.789$g/cm^3$ 107.57K',color = "orange")
