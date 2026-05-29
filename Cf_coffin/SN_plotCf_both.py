@@ -910,7 +910,7 @@ class SN():
         # X and Y
         # sc0=ax[0].hist2d(self.leaving_coffin_Y_slice["X/mm"],self.leaving_coffin_Y_slice["Z/mm"],bins=50,
         # cmap="plasma",norm="log",alpha=0.7)
-        sc0 = ax[0].hist2d(self.leaving_coffin_R["X/mm"], self.leaving_coffin_R["Z/mm"], bins=50,
+        sc0 = ax[0].hist2d(self.leaving_coffin_Y_slice["X/mm"], self.leaving_coffin_Y_slice["Z/mm"], bins=50,
                            cmap="plasma",norm="log", alpha=0.7)
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
