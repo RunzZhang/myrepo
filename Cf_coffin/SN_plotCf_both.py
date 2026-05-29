@@ -875,7 +875,7 @@ class SN():
         center_y = self.active["Y/mm"].mean()
 
         # find neutron entering argon volume event list
-        lar_event_list = self.df_phys[(self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(["LAr_phys"]))].groupby('Event')["Event"].tolist()
+        lar_event_list = self.df_phys[(self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(["LAr_phys"]))]["Event"].tolist()
 
 
 
