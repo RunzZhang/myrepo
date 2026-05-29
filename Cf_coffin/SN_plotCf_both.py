@@ -911,7 +911,7 @@ class SN():
         # sc0=ax[0].hist2d(self.leaving_coffin_Y_slice["X/mm"],self.leaving_coffin_Y_slice["Z/mm"],bins=50,
         # cmap="plasma",norm="log",alpha=0.7)
         sc0 = ax[0].hist2d(self.leaving_coffin_R["X/mm"], self.leaving_coffin_R["Z/mm"], bins=50,
-                           cmap="plasma", alpha=0.7)
+                           cmap="plasma",norm="log", alpha=0.7)
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
         # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
@@ -927,7 +927,7 @@ class SN():
         # sc1 = ax[1].hist2d(self.leaving_coffin_X_slice["Y/mm"], self.leaving_coffin_X_slice["Z/mm"], bins=50,
         #                    cmap="plasma", norm="log", alpha=0.7)
         sc1 = ax[1].hist2d(self.leaving_coffin_R["Y/mm"], self.leaving_coffin_R["Z/mm"], bins=50,
-                           cmap="plasma", alpha=0.7)
+                           cmap="plasma",norm="log", alpha=0.7)
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
         # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
