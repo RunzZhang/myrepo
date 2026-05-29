@@ -17,8 +17,8 @@ class SN():
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/" # for gamma path
 
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_top_sourcetube_B/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_top_sourcetube_B/"  # for different density
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density104_sourcetube_B/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density104_sourcetube_B/"  # for different density
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -60,13 +60,13 @@ class SN():
         # self.neutron_spectrum_enteringLAr()
         # self.neutron_source_geometry()
         # get ssttl moderating effect and check Argon recoiled by that
-        # self.coffin_phys()
+        self.coffin_phys()
         # self.source_tube_phys()
         # self.NR_spectrum_moderated_by_sstl()
 
 
         # self.NR_spectrum()
-        self.write_sims_results()
+        # self.write_sims_results()
         # self.NR_multiplicity()
         # for ploting PN background tagging and SNR
         # self.untagged_bubble_rate()
@@ -874,7 +874,16 @@ class SN():
         center_x= self.active["X/mm"].mean()
         center_y = self.active["Y/mm"].mean()
 
-        self.leaving_coffin = self.df_phys[(self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(coffin_volume_list))]
+        # find neutron entering argon volume event list
+        lar_event_list = self.df_phys[(self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(["LAr_phys"]))].groupby('Event')["Event"].tolist()
+
+
+
+        self.leaving_coffin = self.df_phys[(self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(coffin_volume_list))&(self.df_phys["Event"].isin(lar_event_list))]
+        # also requires neutron entering argon
+        self.leaving_coffin = self.df_phys[
+            (self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(coffin_volume_list))]
+
         self.leaving_coffin = self.leaving_coffin.loc[self.leaving_coffin.groupby('Event')['Step ID'].idxmax()]
 
 
@@ -893,12 +902,13 @@ class SN():
         self.leaving_coffin_R = self.leaving_coffin
         self.leaving_coffin_R["R/mm"] = np.sqrt((self.leaving_coffin_R["X/mm"]-center_x) ** 2 + (self.leaving_coffin_R["Y/mm"]-center_y) ** 2)
         # slice and add legend
-
+        self.leaving_coffin_Y_slice = self.leaving_coffin_R[self.leaving_coffin_R["Y/mm"].between(-86,-66)]
+        self.leaving_coffin_X_slice = self.leaving_coffin_R[self.leaving_coffin_R["X/mm"].between(-695, -675)]
 
 
         ffig, ax = plt.subplots(1,3,figsize=(24,4))
         # X and Y
-        sc0=ax[0].hist2d(self.leaving_coffin_R["X/mm"],self.leaving_coffin_R["Z/mm"],bins=50,
+        sc0=ax[0].hist2d(self.leaving_coffin_Y_slice["X/mm"],self.leaving_coffin_Y_slice["Z/mm"],bins=50,
         cmap="plasma",norm="log",alpha=0.7)
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
@@ -912,7 +922,7 @@ class SN():
         cbar0 = plt.colorbar(sc0[3], ax=ax[0])
         cbar0.set_label("Counts(log)")
 
-        sc1 = ax[1].hist2d(self.leaving_coffin_R["Y/mm"], self.leaving_coffin_R["Z/mm"], bins=50,
+        sc1 = ax[1].hist2d(self.leaving_coffin_X_slice["Y/mm"], self.leaving_coffin_X_slice["Z/mm"], bins=50,
                            cmap="plasma", norm="log", alpha=0.7)
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
