@@ -4,6 +4,7 @@ import csv
 import numpy as np
 import math, pickle
 import matplotlib.ticker as ticker
+import matplotlib.colors as colors
 class SN():
     def __init__(self,gamma=False,full_gamma = False):
         # after generate new files, you need to select the capture ratio/source for different configs in read_files function.
@@ -911,7 +912,7 @@ class SN():
         # sc0=ax[0].hist2d(self.leaving_coffin_Y_slice["X/mm"],self.leaving_coffin_Y_slice["Z/mm"],bins=50,
         # cmap="plasma",norm="log",alpha=0.7)
         sc0 = ax[0].hist2d(self.leaving_coffin_Y_slice["X/mm"], self.leaving_coffin_Y_slice["Z/mm"], bins=50,
-                           cmap="plasma", alpha=0.7)
+                           cmap="plasma", alpha=0.7,cmin=1,norm=colors.LogNorm())
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
         # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
@@ -927,7 +928,7 @@ class SN():
         # sc1 = ax[1].hist2d(self.leaving_coffin_X_slice["Y/mm"], self.leaving_coffin_X_slice["Z/mm"], bins=50,
         #                    cmap="plasma", norm="log", alpha=0.7)
         sc1 = ax[1].hist2d(self.leaving_coffin_X_slice["Y/mm"], self.leaving_coffin_X_slice["Z/mm"], bins=50,
-                           cmap="plasma", alpha=0.7)
+                           cmap="plasma", alpha=0.7,cmin=1,norm=colors.LogNorm()))
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
         # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
