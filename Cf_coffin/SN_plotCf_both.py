@@ -18,8 +18,8 @@ class SN():
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/" # for gamma path
 
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_bare_top_sourcetube_B/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_bare_top_sourcetube_B/"  # for different density
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/"  # for different density
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -1456,10 +1456,27 @@ class SN():
             [sum(energy_deposit_list[i:]) for i in range(len(energy_deposit_list))])
         print("total count* energy Cf", cumulative_threshold_per_scatter_array[0][0],cumulative_threshold_per_scatter_array[0][0]/cumulative_threshold_array[0][0])
 
-        output_list = [rate_factor ,hist_array, cumulative_threshold_per_scatter_array[0], cumulative_threshold_array[0]]
+        #get first argon energy diff spectrum
+        first_argon_ene_array = [None]
+        #try to read
+        try:
+            self.argon = self.df_geo[self.df_geo["Volume"] == "LAr_phys"]
+            argon_energy = self.argon["PreKinetic/MeV"]
+            argon_energy["PreKinetic/keV"] = self.argon["PreKinetic/MeV"]*1000
+            # 100 per bin
+            max_first_argon = max(self.argon["PreKinetic/MeV"])*1e6
+            first_argon_ene_array[0] = np.histogram(argon_energy["PreKinetic/keV"],bins=int(max_first_argon/100), range=(0, max_first_argon))
+
+        finally:
+            print("different neutron energy firstly entering argon volume")
+
+
+
+
+        output_list = [rate_factor ,hist_array, cumulative_threshold_per_scatter_array[0], cumulative_threshold_array[0],first_argon_ene_array]
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* energy above the bin edge
         # with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_{self.config_string}.pkl", "wb") as f:
-        with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_bare_top_{self.config_string}.pkl", "wb") as f:
+        with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_{self.config_string}.pkl", "wb") as f:
             pickle.dump(output_list, f)
 
     def NucleationEfficiencyTrue(self, r, T, sigLow, sigUp):
