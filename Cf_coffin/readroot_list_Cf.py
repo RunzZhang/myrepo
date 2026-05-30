@@ -145,31 +145,31 @@ class ReadRoot():
             self.main_body(i)
     def main_body(self,i):
         print(i)
-        self.ini_path = self.base_path+ f"PN_1E7_density104_ini_part{i}.csv"
-        self.ar_ke_path = self.base_path+ f"PN_1E7_density104_ke_part{i}.csv"
-        self.ini_x_path = self.base_path+ f"PN_1E7_density104_inix_part{i}.csv"
-        self.false_1 = f"PN_1E7_density104_false1_part{i}.csv"
-        self.false_2 = f"PN_1E7_density104_false2_part{i}.csv"
-        self.false_3 = f"PN_1E7_density104_false3_part{i}.csv"
-        self.false_1_old = f"PN_1E7_density104_false1_old_part{i}.csv"
-        self.false_2_old = f"PN_1E7_density104_false2_old_part{i}.csv"
-        self.false_3_old = f"PN_1E7_density104_false3_old_part{i}.csv"
-        self.false_1_new = f"PN_1E7_density104_false1_new_part{i}.csv"
-        self.false_2_new = f"PN_1E7_density104_false2_new_part{i}.csv"
-        self.signal = f"PN_1E7_density104_sig_part{i}.csv"
-        self.signal_old = f"PN_1E7_density104_sig_old_part{i}.csv"
-        self.signal_new = f"PN_1E7_density104_sig_new_part{i}.csv"
-        self.false_1_mid = f"PN_1E7_density104_false1_mid_part{i}.csv"
-        self.false_2_mid = f"PN_1E7_density104_false2_mid_part{i}.csv"
-        self.false_3_mid = f"PN_1E7_density104_false3_mid_part{i}.csv"
-        self.signal_mid = f"PN_1E7_density104_sig_mid_part{i}.csv"
-        self.false_1_old_mid = f"PN_1E7_density104_false1_old_mid_part{i}.csv"
-        self.false_2_old_mid = f"PN_1E7_density104_false2_old_mid_part{i}.csv"
-        self.false_3_old_mid = f"PN_1E7_density104_false3_old_mid_part{i}.csv"
-        self.signal_old_mid = f"PN_1E7_density104_sig_old_mid_part{i}.csv"
-        self.false_1_new_mid = f"PN_1E7_density104_false1_new_mid_part{i}.csv"
-        self.false_2_new_mid = f"PN_1E7_density104_false2_new_mid_part{i}.csv"
-        self.signal_new_mid = f"PN_1E7_density104_sig_new_mid_part{i}.csv"
+        self.ini_path = self.base_path+ f"PN_1E7_ini_part{i}.csv"
+        self.ar_ke_path = self.base_path+ f"PN_1E7_ke_part{i}.csv"
+        self.ini_x_path = self.base_path+ f"PN_1E7_inix_part{i}.csv"
+        self.false_1 = f"PN_1E7_false1_part{i}.csv"
+        self.false_2 = f"PN_1E7_false2_part{i}.csv"
+        self.false_3 = f"PN_1E7_false3_part{i}.csv"
+        self.false_1_old = f"PN_1E7_false1_old_part{i}.csv"
+        self.false_2_old = f"PN_1E7_false2_old_part{i}.csv"
+        self.false_3_old = f"PN_1E7_false3_old_part{i}.csv"
+        self.false_1_new = f"PN_1E7_false1_new_part{i}.csv"
+        self.false_2_new = f"PN_1E7_false2_new_part{i}.csv"
+        self.signal = f"PN_1E7_sig_part{i}.csv"
+        self.signal_old = f"PN_1E7_sig_old_part{i}.csv"
+        self.signal_new = f"PN_1E7_sig_new_part{i}.csv"
+        self.false_1_mid = f"PN_1E7_false1_mid_part{i}.csv"
+        self.false_2_mid = f"PN_1E7_false2_mid_part{i}.csv"
+        self.false_3_mid = f"PN_1E7_false3_mid_part{i}.csv"
+        self.signal_mid = f"PN_1E7_sig_mid_part{i}.csv"
+        self.false_1_old_mid = f"PN_1E7_false1_old_mid_part{i}.csv"
+        self.false_2_old_mid = f"PN_1E7_false2_old_mid_part{i}.csv"
+        self.false_3_old_mid = f"PN_1E7_false3_old_mid_part{i}.csv"
+        self.signal_old_mid = f"PN_1E7_sig_old_mid_part{i}.csv"
+        self.false_1_new_mid = f"PN_1E7_false1_new_mid_part{i}.csv"
+        self.false_2_new_mid = f"PN_1E7_false2_new_mid_part{i}.csv"
+        self.signal_new_mid = f"PN_1E7_sig_new_mid_part{i}.csv"
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
         self.false_3_path = self.base_path + self.false_3
@@ -192,8 +192,8 @@ class ReadRoot():
         self.signal_old_path = self.base_path + self.signal_old
         self.signal_new_path_mid = self.base_path + self.signal_new_mid
         self.signal_new_path = self.base_path + self.signal_new
-        self.geometry_path = self.base_path+f"PN_1E7_density104_geo_part{i}.csv"
-        self.phys_path = self.base_path+f"PN_1E7_density104_phys_part{i}.csv"
+        self.geometry_path = self.base_path+f"PN_1E7_geo_part{i}.csv"
+        self.phys_path = self.base_path+f"PN_1E7_phys_part{i}.csv"
 
         self.x_range = [0, 0]
         self.y_range = [0, 0]

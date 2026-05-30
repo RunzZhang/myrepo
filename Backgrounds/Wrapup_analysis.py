@@ -802,18 +802,18 @@ class integrated_analysis():
         # ax[0,0].fill_between(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate + self.Cf_Density104_error,
         #                    self.Cf_Density104_rate - self.Cf_Density104_error, color='red', alpha=0.2)
         # ax[0,3].fill_between(self.Cf_CF4temp_140K_energy[:-1],self.Cf_CF4temp_140K_rate+self.Cf_CF4temp_140K_error,self.Cf_CF4temp_140K_rate-self.Cf_CF4temp_140K_error,color='purple', alpha=0.2)
-        print('self.Cf_simsB[4]',self.Cf_simsB[4][0],"\n",self.Cf_simsB[4][1])
+
         ax[1,0].plot(self.Cf_simsB[4][1][:-1],self.Cf_simsB[4][0]*self.Cf_simsB[0], label=f'Density 0.95 $g/cm^3$',color="black")
-        # ax[1, 0].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_diff_rate, label=f'Density 1.04 $g/cm^3$',
-        #               color="b")
-        # # ax[1, 0].plot(self.Cf_Density125_energy[:-1], self.Cf_Density125_diff_rate, label=f'Density 1.25 $g/cm^3$',
-        # #               color="orange")
-        # ax[1, 0].plot(self.Cf_Density150_energy[:-1], self.Cf_Density150_diff_rate, label=f'Density 1.50 $g/cm^3$',
-        #               color="green")
-        # # ax[1, 0].plot(self.Cf_Density175_energy[:-1], self.Cf_Density175_diff_rate, label=f'Density 1.75 $g/cm^3$',
-        # #               color="r")
-        # ax[1, 0].plot(self.Cf_density20_energy[:-1], self.Cf_density20_diff_rate, label=f'Density 2.0 $g/cm^3$',
-        #               color="purple")
+        ax[1, 0].plot(self.Cf_Density104[4][1][:-1], self.Cf_Density104[4][0]*self.Cf_Density104[0], label=f'Density 1.04 $g/cm^3$',
+                      color="b")
+        # ax[1, 0].plot(self.Cf_Density125_energy[:-1], self.Cf_Density125_diff_rate, label=f'Density 1.25 $g/cm^3$',
+        #               color="orange")
+        ax[1, 0].plot(self.Cf_Density150[4][1][:-1], self.Cf_Density150[4][0]*self.Cf_Density150[0], label=f'Density 1.50 $g/cm^3$',
+                      color="green")
+        # ax[1, 0].plot(self.Cf_Density175_energy[:-1], self.Cf_Density175_diff_rate, label=f'Density 1.75 $g/cm^3$',
+        #               color="r")
+        ax[1, 0].plot(self.Cf_density20[4][1][:-1], self.Cf_density20[4][0]*self.Cf_density20[0], label=f'Density 2.0 $g/cm^3$',
+                      color="purple")
 
         ax[1, 3].plot(self.Cf_CF4temp_100K_energy[:-1], self.Cf_CF4temp_100K_diff_rate,
                       label=r'CF4 $\rho$ 1.825$g/cm^3$ 100.1K', color="b")
