@@ -28,6 +28,8 @@ class integrated_analysis():
         self.Cf_location_m10_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zm10_config_B.pkl"
         self.Cf_location_m20_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zm20_config_B.pkl"
         self.Cf_location_top_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_top_config_B.pkl"
+        self.Cf_location_bare_top_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_bare_top_config_B.pkl"
+
 
 
         self.Cf_CF4temp_100K_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_100K_config_B.pkl"

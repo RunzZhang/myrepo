@@ -4,13 +4,13 @@
             ['neutron', 'gamma', 'Ar40', 'Ar36', 'Ar41', 'Ar37']
             ['world_phys', 'Vacuum_vessel_phys', 'Inside_vacuum_vessel_phys', 'pressure_vessel_phys', 
             'hydraulic_fluid_phys', 'HDPE_pressure_vessel_phys', 'reflector_Cu_phys', 'reflector_PTFE_phys', 
-            'outer_jar_phys', 'SiPM_Holder21_phys', 'reflector_top_PTFE_phys', 'reflector_top_Cu_phys', 'LAr_phys', 
+            'outer_jar_phys', 'SiPM_Holder21_phys', 'reflector_bare_top_PTFE_phys', 'reflector_bare_top_Cu_phys', 'LAr_phys', 
             'Camera_port_phys', 'inner_jar_phys', 'RTD_Cable_Kapton_phys', 'RTD_Cable_Cu_phys', 'Camera_System2_phys', 
-            ' Iris_Holder_phys', ' Iris_phys', 'Top_Plastic_phys', 'Lens_Holder3_phys', 'Camera_System1_phys', 
-            ' Iris_Holder1_phys', 'Lens_Holder4_phys', 'Side_support3_phys', 'Top_sf_phys', 'SiPM_Holder31_phys',
+            ' Iris_Holder_phys', ' Iris_phys', 'bare_top_Plastic_phys', 'Lens_Holder3_phys', 'Camera_System1_phys', 
+            ' Iris_Holder1_phys', 'Lens_Holder4_phys', 'Side_support3_phys', 'bare_top_sf_phys', 'SiPM_Holder31_phys',
              'SiPM_PCB_Out42_phys', 'SiPM_Holder42_phys', 'SiPM_PCB_Inn4_phys', 'SiPM4_Inside_phys', 'SiPM_Holder51_phys', 
              'calibration_port_phys', 'calibration_Be_phys', 'calibration_air_phys', 'RTD_Cable_Cu_1_phys', 'SiPM_PCB_Out31_phys', 
-             'SiPM_PCB_Inn3_phys', 'SIPM3_Si_phys', 'top_flange_phys', 'SiPM_Holder18_phys', 'SiPM1_Inside_phys', 'SIPM1_Si_phys', 
+             'SiPM_PCB_Inn3_phys', 'SIPM3_Si_phys', 'bare_top_flange_phys', 'SiPM_Holder18_phys', 'SiPM1_Inside_phys', 'SIPM1_Si_phys', 
              'OJ_Spacer2_phys', 'SiPM_Holder17_phys', 'Adjustment1_phys', 'SiPM_PCB_Out38_phys', 'SiPM_Holder38_phys', 
              'SiPM3_Inside_phys', 'Hyspan_bellow_phys', 'Bottom_Flange_phys', 'Bellows_weldment_phys', ' Sensor_Holder_phys', 
              'SiPM_Holder12_phys', 'SiPM2_Inside_phys', 'Side_support1_phys', 'OJ_Spacer17_phys', 'SiPM_PCB_Out22_phys', 
@@ -21,7 +21,7 @@
               'RTD_connector_feedthru_phys', 'SiPM_Holder11_phys', 'SiPM_PCB_Inn1_phys', 'SiPM_PCB_Out11_phys', 
               'Camera_port2_phys', 'Holder1_VV_phys', 'SiPM_Holder52_phys', 'OJ_Spacer8_phys', 'Guide_rod_flange_phys', 
               'Guide_Rod2_phys', 'SiPM_PCB_Out58_phys', 'OJ_Spacer7_phys', 'SiPM_Holder41_phys', 'Sapphire1_Ssteal_phys',
-               'Piezo_Cu_8_phys', 'Guide_Rod1_phys', 'SiPM_PCB_Out21_phys', 'Top_Plastic1_phys', 'Plastic_Flange_phys', 
+               'Piezo_Cu_8_phys', 'Guide_Rod1_phys', 'SiPM_PCB_Out21_phys', 'bare_top_Plastic1_phys', 'Plastic_Flange_phys', 
                'Iris_brass_phys', 'Aspheric_lens_phys', 'Adjustment_phys', 'SS_Rod1_phys', 'Lens_Holder2_phys', 'Lens1_phys',
                 'Sapphire1_phys', 'SiPM_Holder35_phys', 'OJ_Spacer4_phys', 'Bottom_Spacer5_phys', 'OJ_Spacer5_phys', 
                 'Camera_PCB1_phys', 'Camera1_phys', 'RTD_connector_1_4_phys', 'Bottom_Spacer9_phys', 'Sapphire_Ssteal_phys',
@@ -66,10 +66,10 @@ def test_write():
         columns= ["Event","name","Parent ID","Track ID","Step ID","X/mm","PreKinetic/MeV","Recoiled/MeV","Volume","Process"]
         # columns = ["Event", "PreKinetic/MeV","Recoiled/MeV","Process"]
         # Optional: Try to read a few entries to confirm data is there
-        # df_test = tree.arrays(columns, library="pd", entry_start=30633056,entry_stop=30633066)
+        # df_test = tree.arrays(columns, library="pd", entry_start=30633056,entry_sbare_top=30633066)
         df_test = tree.arrays(columns, library="pd")
         # df_test = tree.arrays(["Event", "PreKinetic/MeV"], library="pd",
-                              # entry_stop=10)
+                              # entry_sbare_top=10)
 
         print("First 10 entries:", df_test)
     except Exception as e:
@@ -134,8 +134,8 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_top_sourcetube_B/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_top_sourcetube_B/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_bare_top_sourcetube_B/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_bare_top_sourcetube_B/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
@@ -212,7 +212,7 @@ class ReadRoot():
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
         # # process data so that it is easier to read
         # first 1000 rows
-        # self.df = self.file.arrays(self.selected_columns, library="pd", entry_start=0,entry_stop=10000)
+        # self.df = self.file.arrays(self.selected_columns, library="pd", entry_start=0,entry_sbare_top=10000)
         self.df = self.file.arrays(self.selected_columns, library="pd")
         self.modify_df()
 

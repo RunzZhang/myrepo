@@ -906,7 +906,9 @@ class SN():
         self.leaving_coffin_Y_slice = self.leaving_coffin_R[self.leaving_coffin_R["Y/mm"].between(-96,-66)]
         self.leaving_coffin_X_slice = self.leaving_coffin_R[self.leaving_coffin_R["X/mm"].between(--750, -650)]
 
-
+        if self.leaving_coffin_Y_slice.empty:
+            print("Y slice empty")
+            return 0
         ffig, ax = plt.subplots(1,3,figsize=(24,4))
         # X and Y
         # sc0=ax[0].hist2d(self.leaving_coffin_Y_slice["X/mm"],self.leaving_coffin_Y_slice["Z/mm"],bins=50,
