@@ -18,8 +18,8 @@ class SN():
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/" # for gamma path
 
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_zp20_sourcetube_B/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_zp20_sourcetube_B/"  # for different density
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_bare_top_sourcetube_B/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_bare_top_sourcetube_B/"  # for different density
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -61,13 +61,13 @@ class SN():
         # self.neutron_spectrum_enteringLAr()
         # self.neutron_source_geometry()
         # get ssttl moderating effect and check Argon recoiled by that
-        self.coffin_phys()
+        # self.coffin_phys()
         # self.source_tube_phys()
         # self.NR_spectrum_moderated_by_sstl()
 
 
         # self.NR_spectrum()
-        # self.write_sims_results()
+        self.write_sims_results()
         # self.NR_multiplicity()
         # for ploting PN background tagging and SNR
         # self.untagged_bubble_rate()
@@ -1459,7 +1459,7 @@ class SN():
         output_list = [rate_factor ,hist_array, cumulative_threshold_per_scatter_array[0], cumulative_threshold_array[0]]
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* energy above the bin edge
         # with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_{self.config_string}.pkl", "wb") as f:
-        with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zp20_{self.config_string}.pkl", "wb") as f:
+        with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_bare_top_{self.config_string}.pkl", "wb") as f:
             pickle.dump(output_list, f)
 
     def NucleationEfficiencyTrue(self, r, T, sigLow, sigUp):
