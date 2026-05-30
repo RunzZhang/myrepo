@@ -16,6 +16,11 @@ class integrated_analysis():
         self.Cf_simA_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_A.pkl'
         self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_B.pkl'
 
+
+        # self.density_name_list = ['density104','density125','density150','density175','density2']
+        # self.density_path_list = []
+        # for i in self.density_name_list:
+        #     self.density_name_list.append(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_{i}_config_B.pkl")
         self.Cf_Density104_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density104_config_B.pkl"
         self.Cf_Density125_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density125_config_B.pkl"
         self.Cf_Density150_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density150_config_B.pkl"
@@ -23,6 +28,10 @@ class integrated_analysis():
 
         self.Cf_density20_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density2_config_B.pkl"
 
+        # self.location_name_list = ['zp20', 'zp10', 'zm10', 'zm20']
+        # self.location_path_list = []
+        # for i in self.location_name_list:
+        #     self.density_name_list.append(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_{i}_config_B.pkl")
         self.Cf_location_p20_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zp20_config_B.pkl"
         self.Cf_location_p10_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zp10_config_B.pkl"
         self.Cf_location_m10_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zm10_config_B.pkl"
