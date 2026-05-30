@@ -673,6 +673,15 @@ class integrated_analysis():
         self.Cf_location_top_error = self.Cf_location_top[0] * self.Cf_location_top[2] / np.sqrt(
             self.Cf_location_top[2])
 
+
+        with open(self.Cf_location_bare_top_path, "rb") as f:
+            self.Cf_location_bare_top = pickle.load(f)
+
+        self.Cf_location_bare_top_energy = self.Cf_location_bare_top[1][0][1]
+        self.Cf_location_bare_top_rate = self.Cf_location_bare_top[0] * self.Cf_location_bare_top[2]
+        self.Cf_location_bare_top_error = self.Cf_location_bare_top[0] * self.Cf_location_bare_top[2] / np.sqrt(
+            self.Cf_location_bare_top[2])
+
         # CF4 density dependence on temperature
         with open(self.Cf_CF4temp_100K_path, "rb") as f:
             self.Cf_CF4temp_100K = pickle.load(f)
@@ -766,6 +775,8 @@ class integrated_analysis():
         ax[0,2].plot(self.Cf_location_m10_energy[:-1], self.Cf_location_m10_rate, label=f'Location -10 cm',color = "r")
         ax[0,2].plot(self.Cf_location_m20_energy[:-1], self.Cf_location_m20_rate, label=f'Location -20 cm',color = "purple")
         ax[0, 2].plot(self.Cf_location_top_energy[:-1], self.Cf_location_top_rate, label=f'Location top',
+                      color="brown")
+        ax[0, 2].plot(self.Cf_location_bare_top_energy[:-1], self.Cf_location_bare_top_rate, label=f'bare_top',
                       color="brown")
 
         ax[0,3].plot(self.Cf_CF4temp_100K_energy[:-1], self.Cf_CF4temp_100K_rate, label=r'CF4 $\rho$ 1.825$g/cm^3$ 100.1K',color = "b")
