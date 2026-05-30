@@ -913,7 +913,7 @@ class SN():
             return 0
         ffig, ax = plt.subplots(1,3,figsize=(24,4))
         # X and Y
-        sc0=ax[0].hist2d(self.leaving_coffin_Y_slice["X/mm"],self.leaving_coffin_Y_slice["Z/mm"],bins=50,
+        sc0=ax[0].hist2d(self.leaving_coffin_R["X/mm"],self.leaving_coffin_R["Z/mm"],bins=50,
         cmap="plasma",norm="log",alpha=0.7)
         # sc0 = ax[0].hist2d(self.leaving_coffin_Y_slice["X/mm"], self.leaving_coffin_Y_slice["Z/mm"], bins=50,
         #                    cmap="plasma", alpha=0.7,norm=colors.LogNorm(vmin=1))
@@ -929,7 +929,7 @@ class SN():
         cbar0 = plt.colorbar(sc0[3], ax=ax[0])
         cbar0.set_label("Counts(log)")
 
-        sc1 = ax[1].hist2d(self.leaving_coffin_X_slice["Y/mm"], self.leaving_coffin_X_slice["Z/mm"], bins=50,
+        sc1 = ax[1].hist2d(self.leaving_coffin_R["Y/mm"], self.leaving_coffin_R["Z/mm"], bins=50,
                            cmap="plasma", norm="log", alpha=0.7)
         # sc1 = ax[1].hist2d(self.leaving_coffin_X_slice["Y/mm"], self.leaving_coffin_X_slice["Z/mm"], bins=50,
         #                    cmap="plasma", alpha=0.7,norm=colors.LogNorm(vmin=1))
