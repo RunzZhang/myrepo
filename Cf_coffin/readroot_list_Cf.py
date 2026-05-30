@@ -199,7 +199,7 @@ class ReadRoot():
         self.y_range = [0, 0]
         self.z_range = [0, 0]
 
-        self.filepath = self.base_path + f"dmx_PN_1E7_density104_{i}.root"
+        self.filepath = self.base_path + f"dmx_PN_1E7_{i}.root"
         self.file = uproot.open(self.filepath)["tree"]
         # print("columns: ", self.file.keys())
         # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
