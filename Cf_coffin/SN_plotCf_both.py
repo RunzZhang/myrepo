@@ -1466,7 +1466,8 @@ class SN():
             # 100 per bin
             max_first_argon = max(self.argon["PreKinetic/MeV"])*1e6
             first_argon_ene_array[0] = np.histogram(argon_energy["PreKinetic/keV"],bins=int(max_first_argon/100), range=(0, max_first_argon))
-
+        except:
+            print("error in neutron entering argon")
         finally:
             print("different neutron energy firstly entering argon volume")
 
