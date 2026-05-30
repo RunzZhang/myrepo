@@ -60,7 +60,7 @@ import csv
 # filename = "/data/runzezhang/Geant4Simulaions/g411_TN/dmx.root"
 def test_write():
     try:
-        f = uproot.open("/data/runzezhang/result/TN_sims_D/chunked_root_files_test/dmx_Cf_1E7_density104__2.root")
+        f = uproot.open("/data/runzezhang/result/TN_sims_D/chunked_root_files_test/dmx_Cf_1E7_density104_2.root")
         tree = f["tree"]  # Or whatever your tree name is
         print("Successfully opened the file!")
         columns= ["Event","name","Parent ID","Track ID","Step ID","X/mm","PreKinetic/MeV","Recoiled/MeV","Volume","Process"]
@@ -79,7 +79,7 @@ def find_entries():
     """
         Opens a ROOT file and returns the number of entries in a specified TTree.
         """
-    filepath= "/data/runzezhang/result/TN_sims_D/chunked_root_files_corrupted/dmx_Cf_1E7_density104__1.root"
+    filepath= "/data/runzezhang/result/TN_sims_D/chunked_root_files_corrupted/dmx_Cf_1E7_density104_1.root"
     tree_name="tree"
     try:
         with uproot.open(filepath) as file:
@@ -145,31 +145,31 @@ class ReadRoot():
             self.main_body(i)
     def main_body(self,i):
         print(i)
-        self.ini_path = self.base_path+ f"PN_1E7_density104__ini_part{i}.csv"
-        self.ar_ke_path = self.base_path+ f"PN_1E7_density104__ke_part{i}.csv"
-        self.ini_x_path = self.base_path+ f"PN_1E7_density104__inix_part{i}.csv"
-        self.false_1 = f"PN_1E7_density104__false1_part{i}.csv"
-        self.false_2 = f"PN_1E7_density104__false2_part{i}.csv"
-        self.false_3 = f"PN_1E7_density104__false3_part{i}.csv"
-        self.false_1_old = f"PN_1E7_density104__false1_old_part{i}.csv"
-        self.false_2_old = f"PN_1E7_density104__false2_old_part{i}.csv"
-        self.false_3_old = f"PN_1E7_density104__false3_old_part{i}.csv"
-        self.false_1_new = f"PN_1E7_density104__false1_new_part{i}.csv"
-        self.false_2_new = f"PN_1E7_density104__false2_new_part{i}.csv"
-        self.signal = f"PN_1E7_density104__sig_part{i}.csv"
-        self.signal_old = f"PN_1E7_density104__sig_old_part{i}.csv"
-        self.signal_new = f"PN_1E7_density104__sig_new_part{i}.csv"
-        self.false_1_mid = f"PN_1E7_density104__false1_mid_part{i}.csv"
-        self.false_2_mid = f"PN_1E7_density104__false2_mid_part{i}.csv"
-        self.false_3_mid = f"PN_1E7_density104__false3_mid_part{i}.csv"
-        self.signal_mid = f"PN_1E7_density104__sig_mid_part{i}.csv"
-        self.false_1_old_mid = f"PN_1E7_density104__false1_old_mid_part{i}.csv"
-        self.false_2_old_mid = f"PN_1E7_density104__false2_old_mid_part{i}.csv"
-        self.false_3_old_mid = f"PN_1E7_density104__false3_old_mid_part{i}.csv"
-        self.signal_old_mid = f"PN_1E7_density104__sig_old_mid_part{i}.csv"
-        self.false_1_new_mid = f"PN_1E7_density104__false1_new_mid_part{i}.csv"
-        self.false_2_new_mid = f"PN_1E7_density104__false2_new_mid_part{i}.csv"
-        self.signal_new_mid = f"PN_1E7_density104__sig_new_mid_part{i}.csv"
+        self.ini_path = self.base_path+ f"PN_1E7_density104_ini_part{i}.csv"
+        self.ar_ke_path = self.base_path+ f"PN_1E7_density104_ke_part{i}.csv"
+        self.ini_x_path = self.base_path+ f"PN_1E7_density104_inix_part{i}.csv"
+        self.false_1 = f"PN_1E7_density104_false1_part{i}.csv"
+        self.false_2 = f"PN_1E7_density104_false2_part{i}.csv"
+        self.false_3 = f"PN_1E7_density104_false3_part{i}.csv"
+        self.false_1_old = f"PN_1E7_density104_false1_old_part{i}.csv"
+        self.false_2_old = f"PN_1E7_density104_false2_old_part{i}.csv"
+        self.false_3_old = f"PN_1E7_density104_false3_old_part{i}.csv"
+        self.false_1_new = f"PN_1E7_density104_false1_new_part{i}.csv"
+        self.false_2_new = f"PN_1E7_density104_false2_new_part{i}.csv"
+        self.signal = f"PN_1E7_density104_sig_part{i}.csv"
+        self.signal_old = f"PN_1E7_density104_sig_old_part{i}.csv"
+        self.signal_new = f"PN_1E7_density104_sig_new_part{i}.csv"
+        self.false_1_mid = f"PN_1E7_density104_false1_mid_part{i}.csv"
+        self.false_2_mid = f"PN_1E7_density104_false2_mid_part{i}.csv"
+        self.false_3_mid = f"PN_1E7_density104_false3_mid_part{i}.csv"
+        self.signal_mid = f"PN_1E7_density104_sig_mid_part{i}.csv"
+        self.false_1_old_mid = f"PN_1E7_density104_false1_old_mid_part{i}.csv"
+        self.false_2_old_mid = f"PN_1E7_density104_false2_old_mid_part{i}.csv"
+        self.false_3_old_mid = f"PN_1E7_density104_false3_old_mid_part{i}.csv"
+        self.signal_old_mid = f"PN_1E7_density104_sig_old_mid_part{i}.csv"
+        self.false_1_new_mid = f"PN_1E7_density104_false1_new_mid_part{i}.csv"
+        self.false_2_new_mid = f"PN_1E7_density104_false2_new_mid_part{i}.csv"
+        self.signal_new_mid = f"PN_1E7_density104_sig_new_mid_part{i}.csv"
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
         self.false_3_path = self.base_path + self.false_3
@@ -192,14 +192,14 @@ class ReadRoot():
         self.signal_old_path = self.base_path + self.signal_old
         self.signal_new_path_mid = self.base_path + self.signal_new_mid
         self.signal_new_path = self.base_path + self.signal_new
-        self.geometry_path = self.base_path+f"PN_1E7_density104__geo_part{i}.csv"
-        self.phys_path = self.base_path+f"PN_1E7_density104__phys_part{i}.csv"
+        self.geometry_path = self.base_path+f"PN_1E7_density104_geo_part{i}.csv"
+        self.phys_path = self.base_path+f"PN_1E7_density104_phys_part{i}.csv"
 
         self.x_range = [0, 0]
         self.y_range = [0, 0]
         self.z_range = [0, 0]
 
-        self.filepath = self.base_path + f"dmx_PN_1E7_density104__{i}.root"
+        self.filepath = self.base_path + f"dmx_PN_1E7_density104_{i}.root"
         self.file = uproot.open(self.filepath)["tree"]
         # print("columns: ", self.file.keys())
         # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
