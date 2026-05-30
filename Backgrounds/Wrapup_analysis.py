@@ -763,16 +763,16 @@ class integrated_analysis():
         ax[0,0].plot(self.Cf_Density175_energy[:-1], self.Cf_Density175_rate, label=f'Density 1.75 $g/cm^3$',color = "r")
         ax[0,0].plot(self.Cf_density20_energy[:-1], self.Cf_density20_rate, label=f'Density 2.0 $g/cm^3$',color = "purple")
         # uncertainty
-        ax[0,0].fill_between(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate + self.Cf_Density104_error,
-                           self.Cf_Density104_rate - self.Cf_Density104_error, color='blue', alpha=0.2)
-        ax[0,0].fill_between(self.Cf_Density125_energy[:-1], self.Cf_Density125_rate + self.Cf_Density125_error,
-                           self.Cf_Density125_rate - self.Cf_Density125_error, color="orange", alpha=0.2)
-        ax[0,0].fill_between(self.Cf_Density150_energy[:-1], self.Cf_Density150_rate + self.Cf_Density150_error,
-                           self.Cf_Density150_rate - self.Cf_Density150_error, color='green', alpha=0.2)
-        ax[0,0].fill_between(self.Cf_Density175_energy[:-1], self.Cf_Density175_rate + self.Cf_Density175_error,
-                           self.Cf_Density175_rate - self.Cf_Density175_error, color='r', alpha=0.2)
-        ax[0,0].fill_between(self.Cf_density20_energy[:-1], self.Cf_density20_rate + self.Cf_density20_error,
-                           self.Cf_density20_rate - self.Cf_density20_error, color='purple', alpha=0.2)
+        # ax[0,0].fill_between(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate + self.Cf_Density104_error,
+        #                    self.Cf_Density104_rate - self.Cf_Density104_error, color='blue', alpha=0.2)
+        # ax[0,0].fill_between(self.Cf_Density125_energy[:-1], self.Cf_Density125_rate + self.Cf_Density125_error,
+        #                    self.Cf_Density125_rate - self.Cf_Density125_error, color="orange", alpha=0.2)
+        # ax[0,0].fill_between(self.Cf_Density150_energy[:-1], self.Cf_Density150_rate + self.Cf_Density150_error,
+        #                    self.Cf_Density150_rate - self.Cf_Density150_error, color='green', alpha=0.2)
+        # ax[0,0].fill_between(self.Cf_Density175_energy[:-1], self.Cf_Density175_rate + self.Cf_Density175_error,
+        #                    self.Cf_Density175_rate - self.Cf_Density175_error, color='r', alpha=0.2)
+        # ax[0,0].fill_between(self.Cf_density20_energy[:-1], self.Cf_density20_rate + self.Cf_density20_error,
+        #                    self.Cf_density20_rate - self.Cf_density20_error, color='purple', alpha=0.2)
 
         ax[0,1].plot(self.Cf_Boron00_energy[:-1], self.Cf_Boron00_rate, label=f'Boron 0%')
         ax[0,1].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Boron 5%')
