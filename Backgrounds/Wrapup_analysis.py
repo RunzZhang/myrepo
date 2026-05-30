@@ -857,7 +857,7 @@ class integrated_analysis():
         ax[1, 0].set_xlabel("Seitz [eV]")
         ax[1, 0].set_ylabel("Clean Rate [mHz/bin]")
         ax[1, 0].set_title("Diff Rate with Different PE Density")
-        # ax[1, 0].set_xlim(-1, 3500)
+        ax[1, 0].set_xlim(-1, 3500)
         # ax[1, 0].set_ylim(0, 220)
         ax[1, 0].set_yscale("log")
         ax[1, 0].legend()
