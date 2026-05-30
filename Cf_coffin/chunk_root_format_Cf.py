@@ -65,7 +65,7 @@ class ReadRoot:
             start_entry = 0
             # Iterate through the ROOT file in chunks
             for arrays in tree.iterate(expressions=self.selected_columns, library="pd", entry_start=0,
-                                       entry_sbare_top=total_entries, step_size=entries_per_chunk):
+                                       entry_stop=total_entries, step_size=entries_per_chunk):
                 arrays['name'] = arrays['name'].astype(str)
                 arrays['Volume'] = arrays['Volume'].astype(str)
                 arrays['Process'] = arrays['Process'].astype(str)
