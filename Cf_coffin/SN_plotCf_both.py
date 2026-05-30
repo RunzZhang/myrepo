@@ -903,6 +903,8 @@ class SN():
         self.leaving_coffin_R = self.leaving_coffin
         self.leaving_coffin_R["R/mm"] = np.sqrt((self.leaving_coffin_R["X/mm"]-center_x) ** 2 + (self.leaving_coffin_R["Y/mm"]-center_y) ** 2)
         # slice and add legend
+
+        print(self.leaving_coffin_R["Y/mm"].min(), self.leaving_coffin_R["Y/mm"].max())
         self.leaving_coffin_Y_slice = self.leaving_coffin_R[self.leaving_coffin_R["Y/mm"].between(-96,-66)]
         self.leaving_coffin_X_slice = self.leaving_coffin_R[self.leaving_coffin_R["X/mm"].between(--750, -650)]
 
