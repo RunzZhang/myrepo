@@ -815,9 +815,26 @@ class integrated_analysis():
         # ax[1, 0].plot(self.Cf_density20[4][1][:-1], self.Cf_density20[4][0]*self.Cf_density20[0], label=f'Density 2.0 $g/cm^3$',
         #               color="purple")
 
-        ax[1, 1].plot(self.Cf_Density104[4][1][:-1] / 1000, self.Cf_Density104[4][0] * self.Cf_Density104[0]-self.Cf_simsB[4][0]*self.Cf_simsB[0],
+        # cumulative of neutron entering argon
+        self.Cf_simB_nLAr = []
+        for i in range(len(self.Cf_simsB[4][0])):
+            cumulative_count = sum(self.Cf_simsB[4][0][i:])
+            self.Cf_simB_nLAr.append(cumulative_count)
+        self.Cf_simB_nLAr=np.array(self.Cf_simB_nLAr)
+
+        self.Cf_Density104_nLAr = []
+        for i in range(len(self.Cf_Density104[4][0])):
+            cumulative_count = sum(self.Cf_Density104[4][0][i:])
+            self.Cf_Density104_nLAr.append(cumulative_count)
+        self.Cf_Density104_nLAr = np.array(self.Cf_Density104_nLAr)
+        ax[1, 1].plot(self.Cf_simsB[4][1][:-1] / 1000,
+                      self.Cf_simB_nLAr * self.Cf_simsB[0],
                       label=f'Density 1.04 $g/cm^3$',
                       color="b")
+        ax[1, 1].plot(self.Cf_Density104[4][1][:-1] / 1000, self.Cf_Density104_nLAr[4][0] * self.Cf_Density104[0],
+                      label=f'Density 1.04 $g/cm^3$',
+                      color="b")
+
 
         ax[1, 3].plot(self.Cf_CF4temp_100K_energy[:-1], self.Cf_CF4temp_100K_diff_rate,
                       label=r'CF4 $\rho$ 1.825$g/cm^3$ 100.1K', color="b")
