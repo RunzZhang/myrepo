@@ -18,8 +18,8 @@ class SN():
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/" # for gamma path
         # pay attention to different statistics
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density175_sourcetube_B/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density175_sourcetube_B/"  # for different density
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density104_sourcetube_B/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density104_sourcetube_B/"  # for different density
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -131,8 +131,8 @@ class SN():
         self.gamma_rate = 1.27e4 # 1.77MeV PN gamma rate/s for 5 microCurie
         self.gamma_BR = 0.0687
         # self.G4_events= 1E5
-        self.G4_events = 5E5
-        self.G4_events_gamma =  5E5
+        self.G4_events = 10E5
+        self.G4_events_gamma =  10E5
         self.ambient_bubble = 5 # /h
 
         self.T = 1e-3
@@ -1459,8 +1459,10 @@ class SN():
         #get first argon energy diff spectrum
         first_argon_ene_array = [None]
         #try to read
-        try:
-            self.argon = self.df_geo[self.df_geo["Volume"] == "LAr_phys"]
+        try:#
+            # also for thoes neutrons cause Ar recoil
+            lar_event_list = self.df_energy["Event"].tolist()
+            self.argon = self.df_geo[(self.df_geo["Volume"] == "LAr_phys")&(self.df_geo["Event"].isin(lar_event_list))]
             argon_energy = self.argon["PreKinetic/MeV"]
             argon_energy["PreKinetic/keV"] = self.argon["PreKinetic/MeV"]*1000
             # 100 per bin
@@ -1477,7 +1479,7 @@ class SN():
         output_list = [rate_factor ,hist_array, cumulative_threshold_per_scatter_array[0], cumulative_threshold_array[0],first_argon_ene_array[0]]
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* energy above the bin edge
         # with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_{self.config_string}.pkl", "wb") as f:
-        with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density175_{self.config_string}.pkl", "wb") as f:
+        with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density104_{self.config_string}.pkl", "wb") as f:
             pickle.dump(output_list, f)
 
     def NucleationEfficiencyTrue(self, r, T, sigLow, sigUp):
