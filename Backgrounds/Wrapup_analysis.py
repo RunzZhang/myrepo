@@ -816,6 +816,7 @@ class integrated_analysis():
         #               color="purple")
 
         # cumulative of neutron entering argon
+        print('self.Cf_simB_nLAr',len(self.Cf_simsB[4][0]), self.Cf_simsB[4][0][:20])
         self.Cf_simB_nLAr = np.array([sum(self.Cf_simsB[4][0][i:]) for i in range(len(self.Cf_simsB[4][0]))])
 
         self.Cf_Density104_nLAr = np.array([sum(self.Cf_Density104[4][0][i:]) for i in range(len(self.Cf_Density104[4][0]))])
