@@ -803,14 +803,14 @@ class integrated_analysis():
         #                    self.Cf_Density104_rate - self.Cf_Density104_error, color='red', alpha=0.2)
         # ax[0,3].fill_between(self.Cf_CF4temp_140K_energy[:-1],self.Cf_CF4temp_140K_rate+self.Cf_CF4temp_140K_error,self.Cf_CF4temp_140K_rate-self.Cf_CF4temp_140K_error,color='purple', alpha=0.2)
 
-        ax[1,0].plot(self.Cf_simsB[4][1][:-1],self.Cf_simsB[4][0]*self.Cf_simsB[0], label=f'Density 0.95 $g/cm^3$',color="black")
-        ax[1, 0].plot(self.Cf_Density104[4][1][:-1], self.Cf_Density104[4][0]*self.Cf_Density104[0], label=f'Density 1.04 $g/cm^3$',
+        ax[1,0].plot(self.Cf_simsB[4][1][:-1]/1000,self.Cf_simsB[4][0]*self.Cf_simsB[0], label=f'Density 0.95 $g/cm^3$',color="black")
+        ax[1, 0].plot(self.Cf_Density104[4][1][:-1]/1000, self.Cf_Density104[4][0]*self.Cf_Density104[0], label=f'Density 1.04 $g/cm^3$',
                       color="b")
         # ax[1, 0].plot(self.Cf_Density125_energy[:-1], self.Cf_Density125_diff_rate, label=f'Density 1.25 $g/cm^3$',
         #               color="orange")
-        ax[1, 0].plot(self.Cf_Density150[4][1][:-1], self.Cf_Density150[4][0]*self.Cf_Density150[0], label=f'Density 1.50 $g/cm^3$',
+        ax[1, 0].plot(self.Cf_Density150[4][1][:-1]/1000, self.Cf_Density150[4][0]*self.Cf_Density150[0], label=f'Density 1.50 $g/cm^3$',
                       color="green")
-        ax[1, 0].plot(self.Cf_Density175_energy[:-1], self.Cf_Density175_diff_rate, label=f'Density 1.75 $g/cm^3$',
+        ax[1, 0].plot(self.Cf_Density175_energy[:-1]/1000, self.Cf_Density175_diff_rate, label=f'Density 1.75 $g/cm^3$',
                       color="r")
         # ax[1, 0].plot(self.Cf_density20[4][1][:-1], self.Cf_density20[4][0]*self.Cf_density20[0], label=f'Density 2.0 $g/cm^3$',
         #               color="purple")
@@ -854,10 +854,10 @@ class integrated_analysis():
         ax[0,3].set_ylim(0, 220)
         ax[0,3].legend()
 
-        ax[1, 0].set_xlabel("Seitz [eV]")
+        ax[1, 0].set_xlabel("Kinetic Energy [keV]")
         ax[1, 0].set_ylabel("Clean Rate [mHz/bin]")
         ax[1, 0].set_title("Diff Kinetic Spectrum For neutron first entering Ar")
-        ax[1, 0].set_xlim(-1, 3500)
+        ax[1, 0].set_xlim(-1, 10)
         # ax[1, 0].set_ylim(0, 220)
         ax[1, 0].set_yscale("log")
         ax[1, 0].legend()
