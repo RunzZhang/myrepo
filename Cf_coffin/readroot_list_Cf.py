@@ -219,7 +219,7 @@ class ReadRoot():
 
         #find source tube
 
-        # self.source_geometry()
+        self.source_geometry()
 
         # check ssl tube effect to neutron spectrum
         self.sstl_phys()
