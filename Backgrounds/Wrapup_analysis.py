@@ -816,17 +816,11 @@ class integrated_analysis():
         #               color="purple")
 
         # cumulative of neutron entering argon
-        self.Cf_simB_nLAr = []
-        for i in range(len(self.Cf_simsB[4][0])):
-            cumulative_count = sum(self.Cf_simsB[4][0][i:])
-            self.Cf_simB_nLAr.append(cumulative_count)
-        self.Cf_simB_nLAr=np.array(self.Cf_simB_nLAr)
+        self.Cf_simB_nLAr = np.array([sum(self.Cf_simsB[4][0][i:]) for i in range(len(self.Cf_simsB[4][0]))])
 
-        self.Cf_Density104_nLAr = []
-        for i in range(len(self.Cf_Density104[4][0])):
-            cumulative_count = sum(self.Cf_Density104[4][0][i:])
-            self.Cf_Density104_nLAr.append(cumulative_count)
-        self.Cf_Density104_nLAr = np.array(self.Cf_Density104_nLAr)
+        self.Cf_Density104_nLAr = np.array([sum(self.Cf_Density104[4][0][i:]) for i in range(len(self.Cf_Density104[4][0]))])
+
+
         ax[1, 1].plot(self.Cf_simsB[4][1][:-1] / 1000,
                       self.Cf_simB_nLAr * self.Cf_simsB[0],
                       label=f'Density 0.95 $g/cm^3$',
