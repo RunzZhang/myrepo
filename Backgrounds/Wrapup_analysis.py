@@ -808,10 +808,10 @@ class integrated_analysis():
                       color="b")
         # ax[1, 0].plot(self.Cf_Density125_energy[:-1], self.Cf_Density125_diff_rate, label=f'Density 1.25 $g/cm^3$',
         #               color="orange")
-        ax[1, 0].plot(self.Cf_Density150[4][1][:-1]/1000, self.Cf_Density150[4][0]*self.Cf_Density150[0], label=f'Density 1.50 $g/cm^3$',
-                      color="green")
-        ax[1, 0].plot(self.Cf_Density175_energy[:-1]/1000, self.Cf_Density175_diff_rate, label=f'Density 1.75 $g/cm^3$',
-                      color="r")
+        # ax[1, 0].plot(self.Cf_Density150[4][1][:-1]/1000, self.Cf_Density150[4][0]*self.Cf_Density150[0], label=f'Density 1.50 $g/cm^3$',
+        #               color="green")
+        # ax[1, 0].plot(self.Cf_Density175_energy[:-1]/1000, self.Cf_Density175_diff_rate, label=f'Density 1.75 $g/cm^3$',
+        #               color="r")
         # ax[1, 0].plot(self.Cf_density20[4][1][:-1], self.Cf_density20[4][0]*self.Cf_density20[0], label=f'Density 2.0 $g/cm^3$',
         #               color="purple")
 
