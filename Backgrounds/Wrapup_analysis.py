@@ -816,18 +816,17 @@ class integrated_analysis():
         #               color="purple")
 
         # cumulative of neutron entering argon
-        print('self.Cf_simB_nLAr',len(self.Cf_simsB[4][0]), self.Cf_simsB[4][0][5000:])
-        print("self.Cf_simB_energy",len(self.Cf_simB_energy))
-        self.Cf_simB_nLAr = np.array([sum(self.Cf_simsB[4][0][i:]) for i in range(len(self.Cf_simsB[4][0]))])
+        self.neutron_enter_Ar_cut = 5000 # cut too high energy neutron which bin number is all 0 for saving time
+        self.Cf_simB_nLAr = np.array([sum(self.Cf_simsB[4][0][i:]) for i in range(len(self.Cf_simsB[4][0][:self.neutron_enter_Ar_cut]))])
 
-        self.Cf_Density104_nLAr = np.array([sum(self.Cf_Density104[4][0][i:]) for i in range(len(self.Cf_Density104[4][0]))])
+        self.Cf_Density104_nLAr = np.array([sum(self.Cf_Density104[4][0][i:]) for i in range(len(self.Cf_Density104[4][0][:self.neutron_enter_Ar_cut]))])
 
 
-        ax[1, 1].plot(self.Cf_simsB[4][1][:-1] / 1000,
+        ax[1, 1].plot(self.Cf_simsB[4][1][:self.neutron_enter_Ar_cut-1] / 1000,
                       self.Cf_simB_nLAr * self.Cf_simsB[0],
                       label=f'Density 0.95 $g/cm^3$',
                       color="b")
-        ax[1, 1].plot(self.Cf_Density104[4][1][:-1] / 1000, self.Cf_Density104_nLAr * self.Cf_Density104[0],
+        ax[1, 1].plot(self.Cf_Density104[4][1][:self.neutron_enter_Ar_cut-1] / 1000, self.Cf_Density104_nLAr * self.Cf_Density104[0],
                       label=f'Density 1.04 $g/cm^3$',
                       color="b")
 
