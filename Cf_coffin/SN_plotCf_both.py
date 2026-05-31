@@ -132,7 +132,7 @@ class SN():
         self.gamma_BR = 0.0687
         # self.G4_events= 1E5
         self.G4_events = 5E5
-        self.G4_events_gamma =  5E5
+        self.G4_events_gamma =  10E5
         self.ambient_bubble = 5 # /h
 
         self.T = 1e-3
