@@ -844,7 +844,7 @@ class integrated_analysis():
         ax[0,2].set_ylabel("Clean Rate [mHz]")
         ax[0,2].set_title("Rate with Different Coffin Locations")
         ax[0,2].set_xlim(-1, 3500)
-        ax[0,2].set_ylim(0, 500)
+        # ax[0,2].set_ylim(0, 500)
         ax[0,2].legend()
 
         ax[0,3].set_xlabel("Seitz [eV]")
