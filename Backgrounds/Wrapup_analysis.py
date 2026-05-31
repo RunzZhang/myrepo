@@ -825,7 +825,7 @@ class integrated_analysis():
         ax[1, 1].plot(self.Cf_simsB[4][1][:self.neutron_enter_Ar_cut] / 1000,
                       self.Cf_simB_nLAr * self.Cf_simsB[0],
                       label=f'Density 0.95 $g/cm^3$',
-                      color="b")
+                      color="black")
         ax[1, 1].plot(self.Cf_Density104[4][1][:self.neutron_enter_Ar_cut] / 1000, self.Cf_Density104_nLAr * self.Cf_Density104[0],
                       label=f'Density 1.04 $g/cm^3$',
                       color="b")
