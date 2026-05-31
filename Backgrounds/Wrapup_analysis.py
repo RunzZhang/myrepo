@@ -815,6 +815,10 @@ class integrated_analysis():
         # ax[1, 0].plot(self.Cf_density20[4][1][:-1], self.Cf_density20[4][0]*self.Cf_density20[0], label=f'Density 2.0 $g/cm^3$',
         #               color="purple")
 
+        ax[1, 1].plot(self.Cf_Density104[4][1][:-1] / 1000, self.Cf_Density104[4][0] * self.Cf_Density104[0]-self.Cf_simsB[4][0]*self.Cf_simsB[0],
+                      label=f'Density 1.04 $g/cm^3$',
+                      color="b")
+
         ax[1, 3].plot(self.Cf_CF4temp_100K_energy[:-1], self.Cf_CF4temp_100K_diff_rate,
                       label=r'CF4 $\rho$ 1.825$g/cm^3$ 100.1K', color="b")
         ax[1, 3].plot(self.Cf_CF4temp_110K_energy[:-1], self.Cf_CF4temp_110K_diff_rate,
@@ -861,6 +865,14 @@ class integrated_analysis():
         # ax[1, 0].set_ylim(0, 220)
         ax[1, 0].set_yscale("log")
         ax[1, 0].legend()
+
+        ax[1, 1].set_xlabel("Kinetic Energy [keV]")
+        ax[1, 1].set_ylabel("Diff Clean Rate [mHz/bin]")
+        ax[1, 1].set_title("Diff Kinetic Spectrum For neutron first entering Ar")
+        ax[1, 1].set_xlim(-1, 10)
+        # ax[1, 1].set_ylim(0, 220)
+        ax[1, 1].set_yscale("log")
+        ax[1, 1].legend()
 
         ax[1, 3].set_xlabel("Seitz [eV]")
         ax[1, 3].set_ylabel("Clean Rate [mHz]")
