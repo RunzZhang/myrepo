@@ -768,12 +768,12 @@ class integrated_analysis():
                               yerr=expB_df["Clean Rate Sigma [mHz]"], label=f"exp {i}", fmt='o')
 
 
-        ax[0,0].plot(self.Cf_simB_energy[:-1],self.Cf_simB_rate, label=f'Density 0.95 $g/cm^3$',color="black")
-        ax[0,0].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Density 1.04 $g/cm^3$',color = "b")
-        ax[0,0].plot(self.Cf_Density125_energy[:-1], self.Cf_Density125_rate, label=f'Density 1.25 $g/cm^3$',color = "orange")
-        ax[0,0].plot(self.Cf_Density150_energy[:-1], self.Cf_Density150_rate, label=f'Density 1.50 $g/cm^3$',color = "green")
-        ax[0,0].plot(self.Cf_Density175_energy[:-1], self.Cf_Density175_rate, label=f'Density 1.75 $g/cm^3$',color = "r")
-        ax[0,0].plot(self.Cf_density20_energy[:-1], self.Cf_density20_rate, label=f'Density 2.0 $g/cm^3$',color = "purple")
+        ax[0,0].plot(self.Cf_simB_energy[:-1]/1000,self.Cf_simB_rate, label=f'Density 0.95 $g/cm^3$',color="black")
+        ax[0,0].plot(self.Cf_Density104_energy[:-1]/1000, self.Cf_Density104_rate, label=f'Density 1.04 $g/cm^3$',color = "b")
+        ax[0,0].plot(self.Cf_Density125_energy[:-1]/1000, self.Cf_Density125_rate, label=f'Density 1.25 $g/cm^3$',color = "orange")
+        ax[0,0].plot(self.Cf_Density150_energy[:-1]/1000, self.Cf_Density150_rate, label=f'Density 1.50 $g/cm^3$',color = "green")
+        ax[0,0].plot(self.Cf_Density175_energy[:-1]/1000, self.Cf_Density175_rate, label=f'Density 1.75 $g/cm^3$',color = "r")
+        ax[0,0].plot(self.Cf_density20_energy[:-1]/1000, self.Cf_density20_rate, label=f'Density 2.0 $g/cm^3$',color = "purple")
         # uncertainty
         # ax[0,0].fill_between(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate + self.Cf_Density104_error,
         #                    self.Cf_Density104_rate - self.Cf_Density104_error, color='blue', alpha=0.2)
@@ -818,15 +818,13 @@ class integrated_analysis():
         ax[1,0].plot(self.Cf_simsB[4][1][:-1],self.Cf_simsB[4][0]*self.Cf_simsB[0], label=f'Density 0.95 $g/cm^3$',color="black")
         ax[1, 0].plot(self.Cf_Density104[4][1][:-1], self.Cf_Density104[4][0]*self.Cf_Density104[0], label=f'Density 1.04 $g/cm^3$',
                       color="b")
-        # ax[1, 0].plot(self.Cf_Density125_energy[:-1], self.Cf_Density125_diff_rate, label=f'Density 1.25 $g/cm^3$',
-        #               color="orange")
+
 
         ax[1, 0].plot(self.Cf_Density150[4][1][:-1], self.Cf_Density150[4][0]*self.Cf_Density150[0], label=f'Density 1.50 $g/cm^3$',
                       color="green")
-        # ax[1, 0].plot(self.Cf_Density175_energy[:-1], self.Cf_Density175_diff_rate, label=f'Density 1.75 $g/cm^3$',
-        #               color="r")
-        # ax[1, 0].plot(self.Cf_density20[4][1][:-1], self.Cf_density20[4][0]*self.Cf_density20[0], label=f'Density 2.0 $g/cm^3$',
-        #               color="purple")
+        ax[1, 0].plot(self.Cf_Density175_energy[:-1], self.Cf_Density175_diff_rate, label=f'Density 1.75 $g/cm^3$',
+                      color="r")
+
 
         # cumulative of neutron entering argon
          # cut too high energy neutron which bin number is all 0 for saving time / 500 keV
@@ -860,7 +858,7 @@ class integrated_analysis():
         ax[1, 3].plot(self.Cf_CF4temp_140K_energy[:-1], self.Cf_CF4temp_140K_diff_rate,
                       label=r'CF4 $\rho$ 1.631$g/cm^3$ 139.82K', color="purple")
 
-        ax[0,0].set_xlabel("Seitz [eV]")
+        ax[0,0].set_xlabel("Seitz [keV]")
         ax[0,0].set_ylabel("Clean Rate [mHz]")
         ax[0,0].set_title("Rate with Different PE Density Boron = 5%")
         # ax[0,0].set_xlim(-1, 3500)
