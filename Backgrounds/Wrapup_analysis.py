@@ -849,7 +849,7 @@ class integrated_analysis():
 
         ax[1, 1].plot(self.Cf_Density150[4][1][:-1], self.Cf_Density150_nLAr*self.Cf_Density150[0], label=f'Density 1.50 $g/cm^3$',
                       color="green")
-        ax[1, 1].plot(self.Cf_Density175_energy[:-1], self.Cf_Density175_nLAr*self.Cf_Density175[0], label=f'Density 1.75 $g/cm^3$',
+        ax[1, 1].plot(self.Cf_Density175[4][1][:-1], self.Cf_Density175_nLAr*self.Cf_Density175[0], label=f'Density 1.75 $g/cm^3$',
                       color="r")
 
 
