@@ -66,8 +66,8 @@ class SN():
         # self.NR_spectrum_moderated_by_sstl()
 
 
-        self.NR_spectrum()
-        # self.write_sims_results()
+        # self.NR_spectrum()
+        self.write_sims_results()
         # self.NR_multiplicity()
         # for ploting PN background tagging and SNR
         # self.untagged_bubble_rate()
@@ -1149,7 +1149,7 @@ class SN():
         ax[2].set_xlabel("Energy threshold [eV]")
         ax[2].set_ylabel("Rate [mHz]")
         # ax[2].set_yscale("log")
-        # ax[2].set_xlim(0, 3500)
+        ax[2].set_xlim(0, 3500)
 
         # sc = ax[3].hist2d(self.scatter["PreKinetic/MeV"]*1e6, self.scatter["Recoiled/MeV"]*1e6, bins=50,
         #                   cmap="plasma", norm="log", alpha=0.7)

@@ -756,7 +756,7 @@ class integrated_analysis():
                            yerr=expB_df["Clean Rate Sigma [mHz]"], label=f"exp {i}", fmt='o')
 
 
-        ax[0,0].plot(self.Cf_simB_energy,self.Cf_simB_NEC_rate, label=f'Density 0.95 $g/cm^3$',color="black")
+        ax[0,0].plot(self.Cf_simB_energy,self.Cf_simB_rate, label=f'Density 0.95 $g/cm^3$',color="black")
         ax[0,0].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Density 1.04 $g/cm^3$',color = "b")
         ax[0,0].plot(self.Cf_Density125_energy[:-1], self.Cf_Density125_rate, label=f'Density 1.25 $g/cm^3$',color = "orange")
         ax[0,0].plot(self.Cf_Density150_energy[:-1], self.Cf_Density150_rate, label=f'Density 1.50 $g/cm^3$',color = "green")
