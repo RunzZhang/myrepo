@@ -1496,12 +1496,12 @@ class SN():
         self.argon = self.df_geo[(self.df_geo["Volume"] == "LAr_phys")&(self.df_geo["Event"].isin(lar_event_list))]
         argon_energy = self.argon
         argon_energy["PreKinetic/keV"] = argon_energy["PreKinetic/MeV"]*1000
-        # tagged1_event_list =argon_energy[(argon_energy["PreKinetic/keV"].values>486)&(argon_energy["PreKinetic/keV"].values<487.5)]["Event"].tolist()
+        tagged1_event_list =argon_energy[(argon_energy["PreKinetic/keV"].values>486)&(argon_energy["PreKinetic/keV"].values<487.5)]["Event"].tolist()
         #
         # Explicitly use .loc for label/boolean alignment
-        argon_energy = argon_energy.reset_index(drop=True)
-        mask = (argon_energy["PreKinetic/keV"] > 486) & (argon_energy["PreKinetic/keV"] < 487.5)
-        tagged1_event_list = argon_energy.loc[mask, "Event"].tolist()
+        # argon_energy = argon_energy.reset_index(drop=True)
+        # mask = (argon_energy["PreKinetic/keV"] > 486) & (argon_energy["PreKinetic/keV"] < 487.5)
+        # tagged1_event_list = argon_energy.loc[mask, "Event"].tolist()
         print(self.df_energy[self.df_energy["Event"].isin(tagged1_event_list)])
 
 
