@@ -49,8 +49,11 @@ class integrated_analysis():
         self.Cf_Boron00_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_boron0_config_B.pkl"
         self.Cf_Boron10_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_boron10_config_B.pkl"
 
+        self.Cf_test_panel_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_test_panel_config_B.pkl"
+
         self.Cs_exp_116_raw_path = ["Cold-Cs-11_17-18_exposures_mix","Cold-Cs-12_01_exposures_mix",
                                     "Cold-Cs-12_10-11_exposures_mix","Cold-Cs-1_20-21_exposures_mix"]
+
 
         self.Cs_exp_116_raw_len = len(self.Cs_exp_116_raw_path)
         self.Cs_exp_119_raw_path = ["Cold-Cs-2_2-3_exposures_zoom"]
@@ -739,6 +742,12 @@ class integrated_analysis():
         self.Cf_Boron10_energy = self.Cf_Boron10[1][0][1]
         self.Cf_Boron10_rate = self.Cf_Boron10[0] * self.Cf_Boron10[2]
 
+
+        with open(self.Cf_test_panel_path, "rb") as f:
+            self.Cf_test_panel = pickle.load(f)
+        self.Cf_test_panel_energy = self.Cf_test_panel[1][0][1]
+        self.Cf_test_panel_rate = self.Cf_test_panel[0] * self.Cf_test_panel[2]
+
         fig, ax = plt.subplots(2, 4, figsize=(24, 10))
         # 1 plot to compare with original data Gray had, 2 to plot the spectrum with clean data comparasion
 
@@ -831,6 +840,11 @@ class integrated_analysis():
                       label=f'Density 1.04 $g/cm^3$',
                       color="b")
 
+        ax[1, 2].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'1.04 g/cm3', color="green")
+        ax[1, 2].plot(self.Cf_test_panel_energy[:-1], self.Cf_test_panel_rate,
+                      label=f'1 cm sstl film$',
+                      color="b")
+
 
         ax[1, 3].plot(self.Cf_CF4temp_100K_energy[:-1], self.Cf_CF4temp_100K_diff_rate,
                       label=r'CF4 $\rho$ 1.825$g/cm^3$ 100.1K', color="b")
@@ -890,6 +904,14 @@ class integrated_analysis():
         ax[1, 1].set_ylim(10, 220)
         # ax[1, 1].set_yscale("log")
         ax[1, 1].legend()
+
+        ax[1, 2].set_xlabel("Seitz [eV]")
+        ax[1, 2].set_ylabel("Clean Rate [mHz]")
+        ax[1, 2].set_title("Rate with Different PE Density Boron = 5%")
+        ax[1,2].set_xlim(-1, 3500)
+        # ax[0, 0].set_xlim(0, 200000)
+        ax[1,2].set_ylim(0, 220)
+
 
         ax[1, 3].set_xlabel("Seitz [eV]")
         ax[1, 3].set_ylabel("Clean Rate [mHz]")
