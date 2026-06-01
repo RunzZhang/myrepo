@@ -1499,6 +1499,8 @@ class SN():
         # tagged1_event_list =argon_energy[(argon_energy["PreKinetic/keV"].values>486)&(argon_energy["PreKinetic/keV"].values<487.5)]["Event"].tolist()
         #
         # Explicitly use .loc for label/boolean alignment
+        has_nan = argon_energy["PreKinetic/keV"].isna().any()
+        print(has_nan)
         mask = (argon_energy["PreKinetic/keV"] > 486) & (argon_energy["PreKinetic/keV"] < 487.5)
         tagged1_event_list = argon_energy.loc[mask, "Event"].tolist()
         print(self.df_energy[self.df_energy["Event"].isin(tagged1_event_list)])
