@@ -816,19 +816,19 @@ class integrated_analysis():
         #               color="purple")
 
         # cumulative of neutron entering argon
-        # self.neutron_enter_Ar_cut = 5000 # cut too high energy neutron which bin number is all 0 for saving time / 500 keV
-        # self.Cf_simB_nLAr = np.array([sum(self.Cf_simsB[4][0][i:]) for i in range(len(self.Cf_simsB[4][0][:self.neutron_enter_Ar_cut]))])
-        #
-        # self.Cf_Density104_nLAr = np.array([sum(self.Cf_Density104[4][0][i:]) for i in range(len(self.Cf_Density104[4][0][:self.neutron_enter_Ar_cut]))])
-        #
-        # # first entering argon and causing ar recoil 's neutron intial energy
-        # ax[1, 1].plot(self.Cf_simsB[4][1][:self.neutron_enter_Ar_cut] ,
-        #               self.Cf_simB_nLAr * self.Cf_simsB[0],
-        #               label=f'Density 0.95 $g/cm^3$',
-        #               color="black")
-        # ax[1, 1].plot(self.Cf_Density104[4][1][:self.neutron_enter_Ar_cut] , self.Cf_Density104_nLAr * self.Cf_Density104[0],
-        #               label=f'Density 1.04 $g/cm^3$',
-        #               color="b")
+        self.neutron_enter_Ar_cut = -1 # cut too high energy neutron which bin number is all 0 for saving time / 500 keV
+        self.Cf_simB_nLAr = np.array([sum(self.Cf_simsB[4][0][i:]) for i in range(len(self.Cf_simsB[4][0][:self.neutron_enter_Ar_cut]))])
+
+        self.Cf_Density104_nLAr = np.array([sum(self.Cf_Density104[4][0][i:]) for i in range(len(self.Cf_Density104[4][0][:self.neutron_enter_Ar_cut]))])
+
+        # first entering argon and causing ar recoil 's neutron intial energy
+        ax[1, 1].plot(self.Cf_simsB[4][1][:self.neutron_enter_Ar_cut] ,
+                      self.Cf_simB_nLAr * self.Cf_simsB[0],
+                      label=f'Density 0.95 $g/cm^3$',
+                      color="black")
+        ax[1, 1].plot(self.Cf_Density104[4][1][:self.neutron_enter_Ar_cut] , self.Cf_Density104_nLAr * self.Cf_Density104[0],
+                      label=f'Density 1.04 $g/cm^3$',
+                      color="b")
 
 
         ax[1, 3].plot(self.Cf_CF4temp_100K_energy[:-1], self.Cf_CF4temp_100K_diff_rate,
