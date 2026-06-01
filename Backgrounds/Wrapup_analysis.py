@@ -907,10 +907,11 @@ class integrated_analysis():
 
         ax[1, 2].set_xlabel("Seitz [eV]")
         ax[1, 2].set_ylabel("Clean Rate [mHz]")
-        ax[1, 2].set_title("Rate with Different PE Density Boron = 5%")
+        ax[1, 2].set_title("Rate with 1cm sstl film")
         ax[1,2].set_xlim(-1, 3500)
         # ax[0, 0].set_xlim(0, 200000)
         ax[1,2].set_ylim(0, 220)
+        ax[1, 2].legend()
 
 
         ax[1, 3].set_xlabel("Seitz [eV]")
