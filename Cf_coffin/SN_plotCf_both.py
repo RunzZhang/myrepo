@@ -1451,6 +1451,7 @@ class SN():
         cumulative_threshold_per_scatter_array[0] = np.array(
             [sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))])
         print("last cumulative", cumulative_threshold_per_scatter_array[0][-10:-1])
+        print("last hist", hist_array[0][0][-10:-1])
         print("cumulative spectrum  in counts", cumulative_threshold_per_scatter_array[0])
 
         # histogram per scattering per keV
