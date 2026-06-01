@@ -821,7 +821,7 @@ class integrated_analysis():
 
         self.Cf_Density104_nLAr = np.array([sum(self.Cf_Density104[4][0][i:]) for i in range(len(self.Cf_Density104[4][0][:self.neutron_enter_Ar_cut]))])
 
-
+        # first entering argon and causing ar recoil 's neutron intial energy
         ax[1, 1].plot(self.Cf_simsB[4][1][:self.neutron_enter_Ar_cut] / 1000,
                       self.Cf_simB_nLAr * self.Cf_simsB[0],
                       label=f'Density 0.95 $g/cm^3$',
