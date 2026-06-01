@@ -1493,6 +1493,8 @@ class SN():
 
         # also for those neutrons cause Ar recoil
         lar_event_list = self.df_energy["Event"].tolist()
+        lar_event_list = list(dict.fromkeys(lar_event_list))
+
         self.argon = self.df_geo[(self.df_geo["Volume"] == "LAr_phys")&(self.df_geo["Event"].isin(lar_event_list))]
         argon_energy = self.argon
         argon_energy["PreKinetic/keV"] = argon_energy["PreKinetic/MeV"]*1000
