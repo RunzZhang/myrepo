@@ -803,8 +803,8 @@ class integrated_analysis():
         #                    self.Cf_Density104_rate - self.Cf_Density104_error, color='red', alpha=0.2)
         # ax[0,3].fill_between(self.Cf_CF4temp_140K_energy[:-1],self.Cf_CF4temp_140K_rate+self.Cf_CF4temp_140K_error,self.Cf_CF4temp_140K_rate-self.Cf_CF4temp_140K_error,color='purple', alpha=0.2)
 
-        ax[1,0].plot(self.Cf_simsB[4][1][:-1]/1000,self.Cf_simsB[4][0]*self.Cf_simsB[0], label=f'Density 0.95 $g/cm^3$',color="black")
-        ax[1, 0].plot(self.Cf_Density104[4][1][:-1]/1000, self.Cf_Density104[4][0]*self.Cf_Density104[0], label=f'Density 1.04 $g/cm^3$',
+        ax[1,0].plot(self.Cf_simsB[4][1][:-1],self.Cf_simsB[4][0]*self.Cf_simsB[0], label=f'Density 0.95 $g/cm^3$',color="black")
+        ax[1, 0].plot(self.Cf_Density104[4][1][:-1], self.Cf_Density104[4][0]*self.Cf_Density104[0], label=f'Density 1.04 $g/cm^3$',
                       color="b")
         # ax[1, 0].plot(self.Cf_Density125_energy[:-1], self.Cf_Density125_diff_rate, label=f'Density 1.25 $g/cm^3$',
         #               color="orange")
@@ -822,11 +822,11 @@ class integrated_analysis():
         self.Cf_Density104_nLAr = np.array([sum(self.Cf_Density104[4][0][i:]) for i in range(len(self.Cf_Density104[4][0][:self.neutron_enter_Ar_cut]))])
 
         # first entering argon and causing ar recoil 's neutron intial energy
-        ax[1, 1].plot(self.Cf_simsB[4][1][:self.neutron_enter_Ar_cut] / 1000,
+        ax[1, 1].plot(self.Cf_simsB[4][1][:self.neutron_enter_Ar_cut] ,
                       self.Cf_simB_nLAr * self.Cf_simsB[0],
                       label=f'Density 0.95 $g/cm^3$',
                       color="black")
-        ax[1, 1].plot(self.Cf_Density104[4][1][:self.neutron_enter_Ar_cut] / 1000, self.Cf_Density104_nLAr * self.Cf_Density104[0],
+        ax[1, 1].plot(self.Cf_Density104[4][1][:self.neutron_enter_Ar_cut] , self.Cf_Density104_nLAr * self.Cf_Density104[0],
                       label=f'Density 1.04 $g/cm^3$',
                       color="b")
 
