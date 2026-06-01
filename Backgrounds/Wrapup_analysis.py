@@ -881,7 +881,7 @@ class integrated_analysis():
         ax[1, 1].set_xlabel("Kinetic Energy [keV]")
         ax[1, 1].set_ylabel("Diff Clean Rate [mHz/bin]")
         ax[1, 1].set_title("Diff Kinetic Spectrum For neutron first entering Ar")
-        ax[1, 1].set_xlim(-1, 10)
+        # ax[1, 1].set_xlim(-1, 10)
         # ax[1, 1].set_ylim(0, 220)
         ax[1, 1].set_yscale("log")
         ax[1, 1].legend()
