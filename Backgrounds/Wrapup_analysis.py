@@ -832,6 +832,12 @@ class integrated_analysis():
 
         self.Cf_Density104_nLAr = np.array([sum(self.Cf_Density104[4][0][i:]) for i in range(len(self.Cf_Density104[4][0]))])
 
+        self.Cf_Density150_nLAr = np.array(
+            [sum(self.Cf_Density150[4][0][i:]) for i in range(len(self.Cf_Density150[4][0]))])
+        self.Cf_Density175_nLAr = np.array(
+            [sum(self.Cf_Density175[4][0][i:]) for i in range(len(self.Cf_Density175[4][0]))])
+
+
         # first entering argon and causing ar recoil 's neutron intial energy
         ax[1, 1].plot(self.Cf_simsB[4][1][:-1] ,
                       self.Cf_simB_nLAr * self.Cf_simsB[0],
@@ -840,6 +846,12 @@ class integrated_analysis():
         ax[1, 1].plot(self.Cf_Density104[4][1][:-1] , self.Cf_Density104_nLAr * self.Cf_Density104[0],
                       label=f'Density 1.04 $g/cm^3$',
                       color="b")
+
+        ax[1, 1].plot(self.Cf_Density150[4][1][:-1], self.Cf_Density150_nLAr*self.Cf_Density150[0], label=f'Density 1.50 $g/cm^3$',
+                      color="green")
+        ax[1, 1].plot(self.Cf_Density175_energy[:-1], self.Cf_Density175_nLAr*self.Cf_Density175[0], label=f'Density 1.75 $g/cm^3$',
+                      color="r")
+
 
         ax[1, 2].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'1.04 g/cm3', color="green")
         ax[1, 2].plot(self.Cf_test_panel_energy[:-1], self.Cf_test_panel_rate,
