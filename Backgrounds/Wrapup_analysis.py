@@ -887,7 +887,7 @@ class integrated_analysis():
         ax[1, 1].set_title("Diff Kinetic Spectrum For neutron first entering Ar")
         ax[1, 1].set_xlim(0, 2500)
         ax[1, 1].set_ylim(10, 220)
-        ax[1, 1].set_yscale("log")
+        # ax[1, 1].set_yscale("log")
         ax[1, 1].legend()
 
         ax[1, 3].set_xlabel("Seitz [eV]")
