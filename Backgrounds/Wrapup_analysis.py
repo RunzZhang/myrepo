@@ -854,7 +854,7 @@ class integrated_analysis():
         ax[0,1].set_xlabel("Seitz [eV]")
         ax[0,1].set_ylabel("Clean Rate [mHz]")
         ax[0,1].set_title(f"Rate Different Boron Weight Density = 1.04 $g/cm^3$")
-        ax[0,1].set_xlim(-1, 3500)
+        # ax[0,1].set_xlim(-1, 3500)
         # ax[0, 1].set_xlim(-1, 6000)
         ax[0,1].set_ylim(0, 220)
         ax[0,1].legend()
