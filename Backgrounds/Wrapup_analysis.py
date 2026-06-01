@@ -862,7 +862,7 @@ class integrated_analysis():
         ax[0,0].set_ylabel("Clean Rate [mHz]")
         ax[0,0].set_title("Rate with Different PE Density Boron = 5%")
         # ax[0,0].set_xlim(-1, 3500)
-        ax[0, 0].set_xlim(0, 200000)
+        ax[0, 0].set_xlim(0, 300)
         # ax[0,0].set_ylim(0, 220)
 
         ax[0,0].legend()
