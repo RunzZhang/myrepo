@@ -67,7 +67,7 @@ class SN():
 
 
         # self.NR_spectrum()
-        # self.write_sims_results()
+        self.write_sims_results()
         # self.NR_multiplicity()
         # for ploting PN background tagging and SNR
         # self.untagged_bubble_rate()
@@ -87,7 +87,7 @@ class SN():
 
 
         #check PE density over Ar NR spectrum
-        self.check_neutron_spectrum_Ar()
+        # self.check_neutron_spectrum_Ar()
 
 
     def main_body(self,i):
@@ -1471,7 +1471,7 @@ class SN():
             argon_energy["PreKinetic/keV"] = self.argon["PreKinetic/MeV"]*1000
             # 100 per bin
             max_first_argon = max(self.argon["PreKinetic/MeV"])*1e6
-            first_argon_ene_array[0] = np.histogram(argon_energy["PreKinetic/keV"],bins=int(max_first_argon/100), range=(0, max_first_argon/1000))
+            first_argon_ene_array[0] = np.histogram(argon_energy["PreKinetic/keV"],bins=int(max_first_argon/1000), range=(0, max_first_argon/1000))
         except:
             print("error in neutron entering argon")
         finally:
