@@ -1500,11 +1500,8 @@ class SN():
         argon_energy["PreKinetic/keV"] = argon_energy["PreKinetic/MeV"]*1000
         tagged1_event_list =argon_energy[(argon_energy["PreKinetic/keV"].values>486)&(argon_energy["PreKinetic/keV"].values<487.5)]["Event"].tolist()
         #
-        # Explicitly use .loc for label/boolean alignment
-        # argon_energy = argon_energy.reset_index(drop=True)
-        # mask = (argon_energy["PreKinetic/keV"] > 486) & (argon_energy["PreKinetic/keV"] < 487.5)
-        # tagged1_event_list = argon_energy.loc[mask, "Event"].tolist()
-        print(self.df_energy[self.df_energy["Event"].isin(tagged1_event_list)])
+        print("neutorn",argon_energy[(argon_energy["PreKinetic/keV"].values>486)&(argon_energy["PreKinetic/keV"].values<487.5)])
+        print("argon",self.df_energy[self.df_energy["Event"].isin(tagged1_event_list)])
 
 
 
