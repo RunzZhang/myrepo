@@ -764,6 +764,9 @@ class integrated_analysis():
             ax[0,3].errorbar(expB_df["Seitz [keV]"] * 1000, expB_df["Clean Rate [mHz]"],
                            yerr=expB_df["Clean Rate Sigma [mHz]"], label=f"exp {i}", fmt='o')
 
+            ax[1, 2].errorbar(expB_df["Seitz [keV]"] * 1000, expB_df["Clean Rate [mHz]"],
+                              yerr=expB_df["Clean Rate Sigma [mHz]"], label=f"exp {i}", fmt='o')
+
 
         ax[0,0].plot(self.Cf_simB_energy[:-1],self.Cf_simB_rate, label=f'Density 0.95 $g/cm^3$',color="black")
         ax[0,0].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Density 1.04 $g/cm^3$',color = "b")
@@ -842,7 +845,7 @@ class integrated_analysis():
 
         ax[1, 2].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'1.04 g/cm3', color="green")
         ax[1, 2].plot(self.Cf_test_panel_energy[:-1], self.Cf_test_panel_rate,
-                      label=f'1 cm sstl film$',
+                      label=f'1 cm sstl film',
                       color="b")
 
 
