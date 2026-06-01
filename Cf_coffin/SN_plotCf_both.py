@@ -67,7 +67,7 @@ class SN():
 
 
         # self.NR_spectrum()
-        self.write_sims_results()
+        # self.write_sims_results()
         # self.NR_multiplicity()
         # for ploting PN background tagging and SNR
         # self.untagged_bubble_rate()
@@ -84,6 +84,10 @@ class SN():
         # self.plot_neutron_spectrum()
 
         # self.plot_neutron_spectrum_lin()
+
+
+        #check PE density over Ar NR spectrum
+        self.check_neutron_spectrum_Ar()
 
 
     def main_body(self,i):
