@@ -783,8 +783,8 @@ class integrated_analysis():
         ax[0,2].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'Location 0 cm',color = "green")
         ax[0,2].plot(self.Cf_location_m10_energy[:-1], self.Cf_location_m10_rate, label=f'Location -10 cm',color = "r")
         ax[0,2].plot(self.Cf_location_m20_energy[:-1], self.Cf_location_m20_rate, label=f'Location -20 cm',color = "purple")
-        ax[0, 2].plot(self.Cf_location_top_energy[:-1], self.Cf_location_top_rate, label=f'Location top',
-                      color="brown")
+        # ax[0, 2].plot(self.Cf_location_top_energy[:-1], self.Cf_location_top_rate, label=f'Location top',
+        #               color="brown")
         ax[0, 2].plot(self.Cf_location_bare_top_energy[:-1], self.Cf_location_bare_top_rate, label=f'bare_top',
                       color="brown")
 
@@ -847,8 +847,9 @@ class integrated_analysis():
         ax[0,0].set_ylabel("Clean Rate [mHz]")
         ax[0,0].set_title("Rate with Different PE Density Boron = 5%")
         # ax[0,0].set_xlim(-1, 3500)
-        ax[0, 0].set_xlim(175000, 200000)
-        ax[0,0].set_ylim(0, 220)
+        ax[0, 0].set_xlim(0, 200000)
+        # ax[0,0].set_ylim(0, 220)
+
         ax[0,0].legend()
 
         ax[0,1].set_xlabel("Seitz [eV]")
