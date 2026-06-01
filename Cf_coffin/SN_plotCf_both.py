@@ -66,8 +66,8 @@ class SN():
         # self.NR_spectrum_moderated_by_sstl()
 
 
-        # self.NR_spectrum()
-        self.write_sims_results()
+        self.NR_spectrum()
+        # self.write_sims_results()
         # self.NR_multiplicity()
         # for ploting PN background tagging and SNR
         # self.untagged_bubble_rate()
@@ -1446,8 +1446,6 @@ class SN():
         # transfer edge to mid point per bin
 
 
-        # test make last entry = 0
-        hist_array[0][0][-1] = 0
         # get probablity per scattering and the statistics
         cumulative_threshold_per_scatter_array = [None]
 
