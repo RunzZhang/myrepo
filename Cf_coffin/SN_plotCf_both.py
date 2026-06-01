@@ -1496,7 +1496,7 @@ class SN():
         self.argon = self.df_geo[(self.df_geo["Volume"] == "LAr_phys")&(self.df_geo["Event"].isin(lar_event_list))]
         argon_energy = self.argon["PreKinetic/MeV"]
         argon_energy["PreKinetic/keV"] = self.argon["PreKinetic/MeV"]*1000
-        tagged1_event_list =argon_energy[(argon_energy["PreKinetic/keV"]>486)&(argon_energy["PreKinetic/keV"]<487.5)]["Event"].tolist()
+        tagged1_event_list =argon_energy[(argon_energy["PreKinetic/keV"].values>486)&(argon_energy["PreKinetic/keV"].values<487.5)]["Event"].tolist()
         print(self.df_energy[self.df_energy["Event"].isin(tagged1_event_list)])
 
 
