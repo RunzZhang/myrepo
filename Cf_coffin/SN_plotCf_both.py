@@ -1490,19 +1490,16 @@ class SN():
         # get first argon energy diff spectrum
         first_argon_ene_array = [None]
         # try to read
-        try:#
-            # also for those neutrons cause Ar recoil
-            lar_event_list = self.df_energy["Event"].tolist()
-            self.argon = self.df_geo[(self.df_geo["Volume"] == "LAr_phys")&(self.df_geo["Event"].isin(lar_event_list))]
-            argon_energy = self.argon["PreKinetic/MeV"]
-            argon_energy["PreKinetic/keV"] = self.argon["PreKinetic/MeV"]*1000
-            tagged1_event_list =argon_energy[argon_energy["PreKinetic/keV"].between(486,487.5)]["Event"].tolist()
-            print(self.df_energy[self.df_energy["Event"].isin(tagged1_event_list)])
 
-        except:
-            print("error in neutron entering argon")
-        finally:
-            print("different neutron energy firstly entering argon volume")
+        # also for those neutrons cause Ar recoil
+        lar_event_list = self.df_energy["Event"].tolist()
+        self.argon = self.df_geo[(self.df_geo["Volume"] == "LAr_phys")&(self.df_geo["Event"].isin(lar_event_list))]
+        argon_energy = self.argon["PreKinetic/MeV"]
+        argon_energy["PreKinetic/keV"] = self.argon["PreKinetic/MeV"]*1000
+        tagged1_event_list =argon_energy[argon_energy["PreKinetic/keV"].between(486,487.5)]["Event"].tolist()
+        print(self.df_energy[self.df_energy["Event"].isin(tagged1_event_list)])
+
+
 
     def NucleationEfficiencyTrue(self, r, T, sigLow, sigUp):
         if r < T:
