@@ -1474,7 +1474,7 @@ class SN():
             argon_energy["PreKinetic/keV"] = self.argon["PreKinetic/MeV"]*1000
             # 20keV per bin
             max_first_argon = max(self.argon["PreKinetic/MeV"])*1e3
-            first_argon_ene_array[0] = np.histogram(argon_energy["PreKinetic/keV"],bins=int(max_first_argon/20), range=(0, max_first_argon))
+            first_argon_ene_array[0] = np.histogram(argon_energy["PreKinetic/keV"],bins=int(max_first_argon/10), range=(0, max_first_argon))
         except:
             print("error in neutron entering argon")
         finally:
