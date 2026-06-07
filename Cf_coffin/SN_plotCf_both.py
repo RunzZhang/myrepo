@@ -1472,9 +1472,9 @@ class SN():
             self.argon = self.df_geo[(self.df_geo["Volume"] == "LAr_phys")&(self.df_geo["Event"].isin(lar_event_list))]
             argon_energy = self.argon["PreKinetic/MeV"]
             argon_energy["PreKinetic/keV"] = self.argon["PreKinetic/MeV"]*1000
-            # 10keV per bin
+            # 20keV per bin
             max_first_argon = max(self.argon["PreKinetic/MeV"])*1e3
-            first_argon_ene_array[0] = np.histogram(argon_energy["PreKinetic/keV"],bins=int(max_first_argon/10), range=(0, max_first_argon))
+            first_argon_ene_array[0] = np.histogram(argon_energy["PreKinetic/keV"],bins=int(max_first_argon/20), range=(0, max_first_argon))
         except:
             print("error in neutron entering argon")
         finally:
