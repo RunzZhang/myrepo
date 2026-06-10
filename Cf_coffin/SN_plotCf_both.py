@@ -898,7 +898,7 @@ class SN():
         #     (self.df_phys["name"] == "neutron") & (self.df_phys["Event"].isin(lar_event_list))]
         coffin_horizontal_list = ["block1_phys", "block2_phys", "block3_phys",
                        "block4_phys"]
-        geo_mask = (self.leaving_coffin["Y/mm"]>-720)&(self.leaving_coffin["Y/mm"]<-670)&(self.leaving_coffin["X/mm"]>-30)&(self.leaving_coffin["X/mm"]<-20)&(self.leaving_coffin["Z/mm"]>1200)&(self.leaving_coffin["Z/mm"]<1230)
+        geo_mask = (self.leaving_coffin["Y/mm"]>-720)&(self.leaving_coffin["Y/mm"]<-670)&(self.leaving_coffin["X/mm"]>-60)&(self.leaving_coffin["X/mm"]<-50)&(self.leaving_coffin["Z/mm"]>1200)&(self.leaving_coffin["Z/mm"]<1230)
         self.test_volume = self.leaving_coffin[
             (self.leaving_coffin["name"] == "neutron") & (self.leaving_coffin["Volume"].isin(coffin_horizontal_list))&geo_mask]
 
