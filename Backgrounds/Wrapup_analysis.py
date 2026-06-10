@@ -821,6 +821,8 @@ class integrated_analysis():
         ax[1,0].plot(self.Cf_simsB[4][1][:-1],self.Cf_simsB[4][0], label=f'Density 0.95 $g/cm^3$',color="black")
         ax[1, 0].plot(self.Cf_Density104[4][1][:-1], self.Cf_Density104[4][0], label=f'Density 1.04 $g/cm^3$',
                       color="b")
+        ax[1, 0].plot(self.Cf_Density175[4][1][:-1], self.Cf_Density175[4][0], label=f'Density 1.75 $g/cm^3$',
+                      color="r")
 
 
 
