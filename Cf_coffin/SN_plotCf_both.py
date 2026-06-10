@@ -891,6 +891,7 @@ class SN():
             (self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(coffin_volume_list))&(self.df_phys["Event"].isin(lar_event_list))]
 
         self.leaving_coffin = self.leaving_coffin.loc[self.leaving_coffin.groupby('Event')['Step ID'].idxmax()]
+        print("leaving coffin",self.leaving_coffin[:20])
 
 
 
