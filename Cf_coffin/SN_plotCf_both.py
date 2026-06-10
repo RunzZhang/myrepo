@@ -893,7 +893,7 @@ class SN():
         self.leaving_coffin = self.leaving_coffin_init.loc[self.leaving_coffin_init.groupby('Event')['Step ID'].idxmax()]
         print("leaving coffin",self.leaving_coffin[:20])
 
-        print("test", self.leaving_coffin_init[self.leaving_coffin_init["Event"]==669])
+        print("test", self.leaving_coffin_init[self.leaving_coffin_init["Event"]==20388])
 
 
 
