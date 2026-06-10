@@ -286,7 +286,7 @@ class ReadRoot():
                     (self.df["Volume"].isin(volume_list))]
         # print(self.phys)
 
-        print("test check df", self.df[self.df["Event"]==733])
+        print("test check df", self.df[self.df["Event"]==1270])
         # print("test check phys", self.phys[self.phys["Event"] == 20388])
         sys.exit(0)
         self.phys.to_csv(self.phys_path, index = False)
