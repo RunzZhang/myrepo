@@ -50,7 +50,7 @@ class integrated_analysis():
         self.Cf_Boron00_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_boron0_config_B.pkl"
         self.Cf_Boron10_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_boron10_config_B.pkl"
 
-        self.Cf_test_panel_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_test_panel_config_B.pkl"
+        self.Cf_test_panel_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_5E5_test_panel_config_B.pkl"
 
         self.Cs_exp_116_raw_path = ["Cold-Cs-11_17-18_exposures_mix","Cold-Cs-12_01_exposures_mix",
                                     "Cold-Cs-12_10-11_exposures_mix","Cold-Cs-1_20-21_exposures_mix"]
