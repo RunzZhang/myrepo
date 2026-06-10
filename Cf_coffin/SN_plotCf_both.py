@@ -905,7 +905,7 @@ class SN():
                                self.leaving_coffin["Z/mm"] > 1230) & (self.leaving_coffin["Z/mm"] < 1250)
 
         self.test_volume = self.leaving_coffin[
-            (self.leaving_coffin["name"] == "neutron") & (self.leaving_coffin["Volume"].isin(coffin_horizontal_list))&geo_mask]
+            (self.leaving_coffin["name"] == "neutron") & (self.leaving_coffin["Volume"].isin(coffin_volume_list))&geo_mask]
 
 
 
