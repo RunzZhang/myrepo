@@ -930,8 +930,8 @@ class SN():
         # slice and add legend
 
         print(self.leaving_coffin_R["Y/mm"].min(), self.leaving_coffin_R["Y/mm"].max())
-        self.leaving_coffin_Y_slice = self.leaving_coffin_R[(self.leaving_coffin_R["Y/mm"]>-720)&(self.leaving_coffin_R["Y/mm"]<-670)]
-        self.leaving_coffin_X_slice = self.leaving_coffin_R[self.leaving_coffin_R["X/mm"].between(-96, -66)]
+        self.leaving_coffin_Y_slice = self.leaving_coffin_R[(self.leaving_coffin_R["Y/mm"]>-710)&(self.leaving_coffin_R["Y/mm"]<-690)]
+        self.leaving_coffin_X_slice = self.leaving_coffin_R[self.leaving_coffin_R["X/mm"].between(-90, -70)]
 
 
         #
