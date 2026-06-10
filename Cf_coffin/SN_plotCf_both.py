@@ -905,7 +905,10 @@ class SN():
 
         # pd.set_option('display.max_columns', None)
         print("test", self.test_volume)
-        print("wired list", self.test_volume["Event"].tolist())
+        print("wired list", self.test_volume["Event"].tolist()[:20], len(self.test_volume["Event"].tolist()))
+        process_mask = self.test_volume["Process"]=="neutronInelastic"
+        inelatic_test = self.test_volume[process_mask]
+        print('inelastic', len(inelatic_test["Event"].tolist()))
         print("test", self.df_phys[self.df_phys["Event"] == 145])
 
 
