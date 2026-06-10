@@ -68,7 +68,7 @@ class SN():
 
 
         # self.NR_spectrum()
-        self.write_sims_results()
+        # self.write_sims_results()
         # self.NR_multiplicity()
         # for ploting PN background tagging and SNR
         # self.untagged_bubble_rate()
