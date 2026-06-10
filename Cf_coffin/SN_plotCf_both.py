@@ -915,7 +915,7 @@ class SN():
         process_mask = self.test_volume["Process"]=="neutronInelastic"
         inelatic_test = self.test_volume[process_mask]
         print('inelastic', len(inelatic_test["Event"].tolist()))
-        print("test", self.df_phys[self.df_phys["Event"] == 145])
+        print("test", self.df_phys[self.df_phys["Event"] == 27])
 
 
 
