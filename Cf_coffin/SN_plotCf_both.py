@@ -897,8 +897,8 @@ class SN():
         #     (self.df_phys["name"] == "neutron") & (self.df_phys["Event"].isin(lar_event_list))]
         coffin_horizontal_list = ["block1_phys", "block2_phys", "block3_phys",
                        "block4_phys"]
-        self.test_volume = self.df_phys[
-            (self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(coffin_horizontal_list))]
+        self.test_volume = self.leaving_coffin[
+            (self.leaving_coffin["name"] == "neutron") & (self.leaving_coffin["Volume"].isin(coffin_horizontal_list))]
 
 
         # pd.set_option('display.max_columns', None)
