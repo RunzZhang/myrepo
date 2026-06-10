@@ -897,8 +897,9 @@ class SN():
         #     (self.df_phys["name"] == "neutron") & (self.df_phys["Event"].isin(lar_event_list))]
         coffin_horizontal_list = ["block1_phys", "block2_phys", "block3_phys",
                        "block4_phys"]
+        geo_mask = (self.leaving_coffin["Y/mm"]>-720)&(self.leaving_coffin["Y/mm"]<-670)&(self.leaving_coffin["X/mm"]>-40)&(self.leaving_coffin["X/mm"]<-30)&(self.leaving_coffin["Z/mm"]>1200)&(self.leaving_coffin["Z/mm"]<1230)
         self.test_volume = self.leaving_coffin[
-            (self.leaving_coffin["name"] == "neutron") & (self.leaving_coffin["Volume"].isin(coffin_horizontal_list))]
+            (self.leaving_coffin["name"] == "neutron") & (self.leaving_coffin["Volume"].isin(coffin_horizontal_list))&geo_mask]
 
 
         # pd.set_option('display.max_columns', None)
@@ -925,6 +926,9 @@ class SN():
         print(self.leaving_coffin_R["Y/mm"].min(), self.leaving_coffin_R["Y/mm"].max())
         self.leaving_coffin_Y_slice = self.leaving_coffin_R[(self.leaving_coffin_R["Y/mm"]>-720)&(self.leaving_coffin_R["Y/mm"]<-670)]
         self.leaving_coffin_X_slice = self.leaving_coffin_R[self.leaving_coffin_R["X/mm"].between(-96, -66)]
+
+
+        #
 
         if self.leaving_coffin_Y_slice.empty:
             print("Y slice empty")
