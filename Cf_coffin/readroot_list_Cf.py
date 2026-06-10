@@ -57,6 +57,7 @@ import uproot
 import matplotlib.pyplot as plt
 import numpy as np
 import csv
+import sys
 # filename = "/data/runzezhang/Geant4Simulaions/g411_TN/dmx.root"
 def test_write():
     try:
@@ -134,14 +135,14 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_5E5_test_panel_sourcetube_B/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_5E5_test_panel_sourcetube_B/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density104_sourcetube_B/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density104_sourcetube_B/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.main_body(1)
-        for i in range(1,101):
-        # for i in range(1, 11):
+        # for i in range(1,101):
+        for i in range(1, 11):
             self.main_body(i)
     def main_body(self,i):
         print(i)
@@ -222,7 +223,7 @@ class ReadRoot():
         self.source_geometry()
 
         # check ssl tube effect to neutron spectrum
-        self.sstl_phys()
+        self.source_phys()
 
 
         self.collect_NR()
@@ -277,7 +278,7 @@ class ReadRoot():
         self.df['Process'] = self.df['Process'].astype(str)
         # this make event number correct
         self.reidx_event()
-    def sstl_phys(self):
+    def source_phys(self):
         volume_list = ["cf_active_phys", "cf_source_phys", "block1_phys", "block2_phys", "block3_phys",
    "block4_phys","block5_phys","block6_phys","block7_phys","block8_phys","block9_phys","block10_phys","block11_phys"]
         # self.phys = self.df[(self.df["name"]=="neutron")&((self.df["Volume"]=="cf_active_phys")|(self.df["Volume"]=="cf_source_phys")|(self.df["Volume"]=="BPE_coffin_phys"))]
@@ -285,6 +286,8 @@ class ReadRoot():
                     (self.df["Volume"].isin(volume_list))]
         # print(self.phys)
 
+        print("test check", self.df[self.df["Event"]==20388])
+        sys.exit(0)
         self.phys.to_csv(self.phys_path, index = False)
 
     def source_geometry(self):
