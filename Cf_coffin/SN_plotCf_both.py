@@ -902,8 +902,10 @@ class SN():
             (self.leaving_coffin["name"] == "neutron") & (self.leaving_coffin["Volume"].isin(coffin_horizontal_list))&geo_mask]
 
 
+
         # pd.set_option('display.max_columns', None)
         print("test", self.test_volume)
+        print("wired list", self.test_volume["Event"].tolist())
         print("test", self.df_phys[self.df_phys["Event"] == 145])
 
 
