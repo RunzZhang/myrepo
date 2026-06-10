@@ -955,7 +955,7 @@ class SN():
 
         # sc1 = ax[1].hist2d(self.leaving_coffin_R["Y/mm"], self.leaving_coffin_R["Z/mm"], bins=50,
         #                    cmap="plasma", norm="log", alpha=0.7)
-        sc1 = ax[1].hist2d(self.leaving_coffin_X_slice["Y/mm"], self.leaving_coffin_X_slice["Z/mm"], bins=50,bins=bin_yz,range=range_yz,
+        sc1 = ax[1].hist2d(self.leaving_coffin_X_slice["Y/mm"], self.leaving_coffin_X_slice["Z/mm"], bins=bin_yz,range=range_yz,
                            cmap="plasma", alpha=0.7,norm=colors.LogNorm(vmin=1))
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
