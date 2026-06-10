@@ -860,7 +860,7 @@ class integrated_analysis():
                       color="r")
 
 
-        ax[1, 2].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'1.04 g/cm3', color="green")
+        ax[1, 2].plot(self.Cf_Density104_energy[:-1], self.Cf_Density104_rate, label=f'no sstl film', color="green")
         ax[1, 2].plot(self.Cf_test_panel_energy[:-1], self.Cf_test_panel_rate,
                       label=f'1 cm sstl film',
                       color="b")
