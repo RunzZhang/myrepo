@@ -18,10 +18,10 @@ class SN():
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/" # for gamma path
         # pay attention to different statistics
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density095_sourcetube_B/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density095_sourcetube_B/"  # for different density
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density104_sourcetube_B/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density104_sourcetube_B/"  # for different density
         # statistics
-        # if Cf_1E7, only Cf_1E7_sourcetube_B/A and Cf_1E7_density095 is 1E6 others are 5E5, sorry for the confusion
+        # if Cf_1E7, only Cf_1E7_sourcetube_B/A and Cf_1E7_density 104 is 1E6 others are 5E5, sorry for the confusion
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
         self.config_string = 'config_B'
@@ -1487,7 +1487,7 @@ class SN():
         output_list = [rate_factor ,hist_array, cumulative_threshold_per_scatter_array[0], cumulative_threshold_array[0],first_argon_ene_array[0]]
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* energy above the bin edge
         # with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_{self.config_string}.pkl", "wb") as f:
-        with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density095_{self.config_string}.pkl", "wb") as f:
+        with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density104_{self.config_string}.pkl", "wb") as f:
         # with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_{self.config_string}.pkl",
         #               "wb") as f:
             pickle.dump(output_list, f)
