@@ -14,7 +14,8 @@ class integrated_analysis():
         self.Co_sim_path  ='/data/runzezhang/result/TN_sims_D/Co_output_5E7.pkl'
         self.Cs_sim_path = '/data/runzezhang/result/TN_sims_D/Cs_output.pkl'
         self.Cf_simA_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_A.pkl'
-        self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_B.pkl'
+        # self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_B.pkl'
+        self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density095_config_B.pkl'
 
 
         # self.density_name_list = ['density104','density125','density150','density175','density2']
