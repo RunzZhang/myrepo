@@ -904,7 +904,7 @@ class SN():
 
         # pd.set_option('display.max_columns', None)
         print("test", self.test_volume)
-        print("test", self.df_phys[self.df_phys["Event"] == 1000392])
+        print("test", self.df_phys[self.df_phys["Event"] == 145])
 
 
 
