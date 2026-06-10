@@ -930,10 +930,16 @@ class SN():
             print("Y slice empty")
             return 0
         ffig, ax = plt.subplots(1,3,figsize=(24,4))
+        range_xz = [[-550, 0], [1100, 1400]]
+        bin_xz = [55,30]
+
+        range_yz = [[-775, -575], [1100, 1400]]
+        bin_yz = [20, 30]
+
         # X and Y
         # sc0=ax[0].hist2d(self.leaving_coffin_R["X/mm"],self.leaving_coffin_R["Z/mm"],bins=50,
         # cmap="plasma",norm="log",alpha=0.7)
-        sc0 = ax[0].hist2d(self.leaving_coffin_Y_slice["X/mm"], self.leaving_coffin_Y_slice["Z/mm"], bins=50,
+        sc0 = ax[0].hist2d(self.leaving_coffin_Y_slice["X/mm"], self.leaving_coffin_Y_slice["Z/mm"], bins=bin_xz,range=range_xz,
                            cmap="plasma", alpha=0.7,norm=colors.LogNorm(vmin=1))
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
@@ -949,7 +955,7 @@ class SN():
 
         # sc1 = ax[1].hist2d(self.leaving_coffin_R["Y/mm"], self.leaving_coffin_R["Z/mm"], bins=50,
         #                    cmap="plasma", norm="log", alpha=0.7)
-        sc1 = ax[1].hist2d(self.leaving_coffin_X_slice["Y/mm"], self.leaving_coffin_X_slice["Z/mm"], bins=50,
+        sc1 = ax[1].hist2d(self.leaving_coffin_X_slice["Y/mm"], self.leaving_coffin_X_slice["Z/mm"], bins=50,bins=bin_yz,range=range_yz,
                            cmap="plasma", alpha=0.7,norm=colors.LogNorm(vmin=1))
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
