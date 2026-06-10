@@ -893,7 +893,10 @@ class SN():
         self.leaving_coffin = self.leaving_coffin_init.loc[self.leaving_coffin_init.groupby('Event')['Step ID'].idxmax()]
         print("leaving coffin",self.leaving_coffin[:20])
 
-        print("test", self.leaving_coffin_init[self.leaving_coffin_init["Event"]==20388])
+        self.test_volume = self.df_phys[
+            (self.df_phys["name"] == "neutron") & (self.df_phys["Event"].isin(lar_event_list))]
+        pd.set_option('display.max_columns', None)
+        print("test", self.test_volume[self.test_volume["Event"]==20388])
 
 
 
