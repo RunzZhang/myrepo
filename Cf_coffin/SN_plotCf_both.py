@@ -18,8 +18,8 @@ class SN():
         # pay attention to different statistics
         """A. This is the path for reading readroot_list_Cf.py. path2 are reserved becasue it was for gamma analysis, which
         is absense in Cf simulation"""
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density150_sourcetube_B/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density150_sourcetube_B/"  # for different density
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_5E6_singleblock_sourcetube_B/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_5E6_singleblock_sourcetube_B/"  # for different density
         # statistics
         # if Cf_1E7, only Cf_1E7_sourcetube_B/A and Cf_1E7_density 104 is 1E6 others are 1E7, sorry for the confusion
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
@@ -1552,7 +1552,7 @@ class SN():
         output_list = [rate_factor ,hist_array, cumulative_threshold_per_scatter_array[0], cumulative_threshold_array[0],first_argon_ene_array[0]]
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* energy above the bin edge
         # with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_{self.config_string}.pkl", "wb") as f:
-        with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density150_{self.config_string}.pkl", "wb") as f:
+        with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_5E6_singleblock_{self.config_string}.pkl", "wb") as f:
         # with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_{self.config_string}.pkl",
         #               "wb") as f:
             pickle.dump(output_list, f)
