@@ -884,7 +884,8 @@ class SN():
         lar_event_list = self.df_energy["Event"].tolist()
 
 
-        process_mask = (self.df_phys["Process"] != "Transportation")
+        # process_mask = (self.df_phys["Process"] != "Transportation")
+        process_mask = (self.df_phys["Process"] != "neutronInelastic")
 
         self.leaving_coffin_init = self.df_phys[(self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(coffin_volume_list))&process_mask]
         # also requires neutron entering argon
