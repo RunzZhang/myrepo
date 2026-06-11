@@ -987,9 +987,18 @@ class SN():
 
         # find x value at fixed y
 
-        # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
-        # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
-        # ax.plot([99.01,99.01, 4.34], [0,366.49, 399.82], color="red")
+        # target_z = 1235  # Replace with your actual Y value
+        #
+        #
+        # z_bin_index = np.searchsorted(sc1[2], target_z) - 1
+        #
+        # if 0 <= z_bin_index < len(sc1[0][0]):
+        #     fixed_z_row = sc1[0][:, z_bin_index]
+        #
+        #     print(f"Target Y = {target_z} falls into Y-bin index: {z_bin_index}")
+        #     print(f"The bin edges for this row are from {zedges[z_bin_index]} to {zedges[z_bin_index + 1]}")
+        #     print("Counts along this row:", fixed_z_row)
+
 
         ax[1].set_xlabel("Y [mm]")
         ax[1].set_ylabel("Z [mm]")
