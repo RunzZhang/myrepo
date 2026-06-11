@@ -96,8 +96,8 @@ class integrated_analysis():
         self.read_Seitz_info()
 
         # read experimental txt file, drop the non-sense values, and write to clean dataframe
-        self.read_raw_Co_exp()
-        self.read_raw_Cs_exp()
+        # self.read_raw_Co_exp()
+        # self.read_raw_Cs_exp()
         self.read_raw_Cf_exp()
 
         self.read_raw_backgrounds_exp()
@@ -109,10 +109,13 @@ class integrated_analysis():
         # add the Seitz energy to the exp txt files, and Seitz should have already included all temperature info, so in post-analysis
         # no demands to devide by temperature configurations
         # also caculate the clean signal and signal uncerntainty
-        self.clean_signal_analysis()
+        # self.clean_signal_analysis()
 
         # Cf
+        """B. clean_NR_signal_analysis pulled out background substracted exp NR rate 
+        uncertainty_analysis plot different variable effect such as PE density, CF4 density, sstl film"""
         self.clean_NR_signal_analysis()
+        self.uncertainty_analysis()
 
         # based on sims and clean signal rate, calculate gamma rejection
         # self.gamma_rejection_calculation()
@@ -606,7 +609,7 @@ class integrated_analysis():
         plt.savefig(self.plot_path + "Cf_abs_rate_comparison.pdf")
         plt.clf()
         # follow up analysis
-        self.uncertainty_analysis()
+
     def uncertainty_analysis(self):
         # see how rate of boron amount and PE density change the rate
         with open(self.Cf_Density104_path, "rb") as f:
