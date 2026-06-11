@@ -107,20 +107,18 @@ class integrated_analysis():
         # add the Seitz energy to the exp txt files, and Seitz should have already included all temperature info, so in post-analysis
         # no demands to devide by temperature configurations
         # also caculate the clean signal and signal uncerntainty
-        self.clean_signal_analysis()
+        # self.clean_signal_analysis()
 
         # Cf
-        self.clean_NR_signal_analysis()
+        # self.clean_NR_signal_analysis()
 
         # based on sims and clean signal rate, calculate gamma rejection
-        # self.gamma_rejection_calculation()
+        self.gamma_rejection_calculation()
 
-
-
-        # plot
+        # plot gamma
         # self.bkg_plot()
-        # self.gamma_rejection_plot()
-        # self.spectrums_plot()
+        self.gamma_rejection_plot()
+        self.spectrums_plot()
 
 
     def generate_path(self):
