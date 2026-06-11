@@ -56,7 +56,8 @@ class SN():
         for i in range(1, 11):
             self.main_body(i)
         # self.main_body(1)
-
+        #################################################################################################################
+        ################################################################################################################
         #check the intial neutron postions, argon volume and the intial neutron energy spectrum
         # self.check_geometry()
         #check neutron which first entering argon volum's positions and energy
@@ -71,6 +72,11 @@ class SN():
         # self.NR_spectrum()
         # self.write_sims_results()
         # self.NR_multiplicity()
+        # check PE density over Ar NR spectrum
+        # self.check_neutron_spectrum_Ar()
+
+        ################################################################################################################
+        ###############################################################################################################
         # for ploting PN background tagging and SNR
         # self.untagged_bubble_rate()
         # if self.gamma:
@@ -88,8 +94,7 @@ class SN():
         # self.plot_neutron_spectrum_lin()
 
 
-        #check PE density over Ar NR spectrum
-        # self.check_neutron_spectrum_Ar()
+
 
 
     def main_body(self,i):
@@ -115,29 +120,17 @@ class SN():
 
         self.read_files()
 
-        # self.write_sims_results()
-
-        # self.read_files_s_to_N1()
 
 # main funtion we use
     def read_files(self):
         self.original_Activity = 1 #
         self.Activity = 1  # unit one, the number is calculated by SBC paper
-        # self.Activity = 0.0416  # source activity in mivro curie
-        # self.capture_ratio = 1.164E-3 # 1125eV 1.4g/cm Ar
-        # self.capture_ratio = 0.121 # 400 eV 1.4g/cm3 Ar
-        # self.capture_ratio = 0.267  # 350 eV
         self.capture_ratio = 0.116  # 400 eV
-        # self.capture_ratio = 6.52E-3  # 700 eV
-        # self.capture_ratio = 1.158E-3  # 1125 eV
-        # self.rate = 435.6 #/s # CF neutron rate 9 mucurie
-        # self.rate = 0.1968 #PN neutron rate /s
-        # self.rate = 2.52e4  # PN neutron rate /s PNNL
+
         self.rate = 149.952  # Cf neutron rate for SBC in 2026 Dec
         self.gamma_rate = 1.27e4 # 1.77MeV PN gamma rate/s for 5 microCurie
         self.gamma_BR = 0.0687
         self.G4_events= 1E7
-        # self.G4_events = 1E7
         self.G4_events_gamma =  1E7
         self.ambient_bubble = 5 # /h
 
@@ -176,87 +169,6 @@ class SN():
         except:
             print("failed to read energy")
 
-
-        # if self.full_gamma:
-        #     self.G4_gamma_time =  self.G4_full_gamma_time
-        # with open(self.signal_path, 'r') as file:
-        #     reader = csv.reader(file)
-        #     # Read the first row (assuming single row for simplicity)
-        #     number_list = next(reader)
-        #     # Convert the strings to floats
-        #     self.sig_raw_list = [float(value) for value in number_list]
-        # self.signal_final_list = self.signal_final_list + self.sig_raw_list
-        #
-        # print("capture event number", len(self.sig_raw_list))
-        #
-        # # with open("/data/runzezhang/result/TN_e_sims/scatter_spectrum_CF.csv", 'r') as file:
-        # # Noise 1,
-        # with open(self.false_1_path, 'r') as file:
-        #     reader = csv.reader(file)
-        #     # Read the first row (assuming single row for simplicity)
-        #     number_list = next(reader)
-        #     # Convert the strings to floats
-        #     self.noise1_raw_list = [float(value) for value in number_list[1:]]
-        #     bubble_num =  number_list[0]
-        #
-        #
-        #     # the [0] is NR number and [1:] is the photon numbers
-        # self.noise1_final_list = self.noise1_final_list + self.noise1_raw_list
-        # self.untagged_bubble_list.append(float(bubble_num))
-        # self.tagged_bubble_list.append(len(self.noise1_raw_list))
-        # # tagged number for noise1
-        # # Noise 2
-        # with open(self.false_2_path, 'r') as file:
-        #     reader = csv.reader(file)
-        #     # Read the first row (assuming single row for simplicity)
-        #     number_list = next(reader)
-        #     # Convert the strings to floats
-        #     self.noise2_raw_list = [float(value) for value in number_list]
-        #     # self.noise_raw_list = [float(value)  for value in number_list]
-        # self.noise2_raw_list = list(filter(lambda x: x != 0, self.noise2_raw_list))
-        # self.noise2_final_list = self.noise2_final_list + self.noise2_raw_list
-        # # print(self.noise2_raw_list)
-        # self.tagged_bubble_list.append(len(self.noise2_raw_list))
-        # # tagged number for noise2
-        #
-        # with open(self.false_gamma_1_path, 'r') as file:
-        #     reader = csv.reader(file)
-        #     # Read the first row (assuming single row for simplicity)
-        #     number_list = next(reader)
-        #     # Convert the strings to floats
-        #     self.noisegamma1_raw_list = [float(value) for value in number_list]
-        #     # self.noise_raw_list = [float(value)  for value in number_list]
-        # self.noisegamma1_final_list = self.noisegamma1_final_list + self.noisegamma1_raw_list
-        #
-        # # Initial amli spectrm
-        # with open(self.ini_path, 'r') as file:
-        #     reader = csv.reader(file)
-        #     # Read the first row (assuming single row for simplicity)
-        #     number_list = next(reader)
-        #     # Convert the strings to floats
-        #     self.neutron_ini_raw_list = [float(value)*1e6 for value in number_list]
-        #
-        #
-        #     # the [0] is NR number and [1:] is the photon numbers
-        # self.neutron_ini_list +=  self.neutron_ini_raw_list
-        #
-        # with open(self.ar_ke_path, 'r') as file:
-        #     reader = csv.reader(file)
-        #     # Read the first row (assuming single row for simplicity)
-        #     number_list = next(reader)
-        #     # Convert the strings to floats
-        #     self.ar_ke_raw_list = [float(value)*1e6 for value in number_list] # in eV
-        #     # self.noise_raw_list = [float(value)  for value in number_list]
-        # self.neutron_ar_ke_list += self.ar_ke_raw_list
-        #
-        # with open(self.ar_ke_alter_path, 'r') as file:
-        #     reader = csv.reader(file)
-        #     # Read the first row (assuming single row for simplicity)
-        #     number_list = next(reader)
-        #     # Convert the strings to floats
-        #     self.ar_ke_alter_raw_list = [float(value)*1e6 for value in number_list] # in eV
-        #     # self.noise_raw_list = [float(value)  for value in number_list]
-        # self.neutron_ar_ke_alter_list += self.ar_ke_raw_list
 
 
     def combine_data(self,gamma=False):
