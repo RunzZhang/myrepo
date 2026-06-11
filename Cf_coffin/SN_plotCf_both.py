@@ -58,20 +58,31 @@ class SN():
         # self.main_body(1)
         #################################################################################################################
         ################################################################################################################
+        """B. This is function modules for Cf analysis. There are alot of previously used modules. 
+        But if you just want to do NR spectrum comparation between different configuration and experiment result, the only
+        required code is write_sims_results"""
         #check the intial neutron postions, argon volume and the intial neutron energy spectrum
         # self.check_geometry()
+
         #check neutron which first entering argon volum's positions and energy
         # self.neutron_spectrum_enteringLAr()
         # self.neutron_source_geometry()
+
         # get ssttl moderating effect and check Argon recoiled by that
-        self.coffin_phys()
+        # self.coffin_phys()
         # self.source_tube_phys()
         # self.NR_spectrum_moderated_by_sstl()
 
-
+        # plot single configuration NR spectrum
         # self.NR_spectrum()
-        # self.write_sims_results()
+
+        # write NR spectrum to do cross configuration analysis
+        self.write_sims_results()
+
+
+        # check multiplicity dependence on NR
         # self.NR_multiplicity()
+
         # check PE density over Ar NR spectrum
         # self.check_neutron_spectrum_Ar()
 
@@ -123,6 +134,9 @@ class SN():
 
 # main funtion we use
     def read_files(self):
+
+        """C. This contains the source configuration information like Cf rate self.rate and Geant statitis self.G4_events
+        The left loop are reading from output files of the readroot python code"""
         self.original_Activity = 1 #
         self.Activity = 1  # unit one, the number is calculated by SBC paper
         self.capture_ratio = 0.116  # 400 eV
@@ -1418,10 +1432,6 @@ class SN():
         max_Ar = max(NR_Ar)
         hist_array = [None]
         hist_array[0] = np.histogram(NR_Ar, bins=int(max_Ar/100), range=(0, max_Ar))
-        # hist_array[0] = np.histogram(NR_Ar, bins=350, range=(0, 3500))
-        # every 100 eV per bin
-
-        # transfer edge to mid point per bin
 
 
         # get probablity per scattering and the statistics
@@ -1460,13 +1470,17 @@ class SN():
 
 
 
-
+        """D.the output file format
+         0:factor from count to mHz,
+         1: differential spectrum of NR recoils[eV]
+         2. cumulative spectrum of NR recoils[eV]
+         3. cumulative spectrum of NR recoils in Eion configurations. [eV]
+         4. differential spectrum of neutron first entering argon[keV]"""
         output_list = [rate_factor ,hist_array, cumulative_threshold_per_scatter_array[0], cumulative_threshold_array[0],first_argon_ene_array[0]]
-        # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* energy above the bin edge
-        # with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_{self.config_string}.pkl", "wb") as f:
+
+
         with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density150_{self.config_string}.pkl", "wb") as f:
-        # with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_{self.config_string}.pkl",
-        #               "wb") as f:
+
             pickle.dump(output_list, f)
 
     def check_neutron_spectrum_Ar(self):

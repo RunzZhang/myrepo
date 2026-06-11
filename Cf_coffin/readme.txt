@@ -13,5 +13,7 @@
     Some codes are not well structured :( but I am trying to clean it up to make it more sense
     a. chunk_root_format_Cf.py. I made marks A.B.C to indicate where I need to modify
     b. readroot.py. Only class ReadRoot is useful. I also marked A.B.C for easier understanding.
-    c. SN_plotCf_both.py Analysis module for single configuration simulation
+    c. SN_plotCf_both.py Analysis module for single configuration simulation. A.B.C.D comments describe main functions
+        to proceed to plot multiple configurations of NR spectrum
+    d. Wrapup_Analaysis. This is a code that wrapup both gamma analysis and Cf analysis.
 

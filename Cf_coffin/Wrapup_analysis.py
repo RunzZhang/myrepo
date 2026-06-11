@@ -8,7 +8,9 @@ from scipy.optimize import curve_fit
 import math
 class integrated_analysis():
     def __init__(self):
-
+        """A. Read different configuration output pkl files. I should have done this by loop but somehow I didn't...
+        If missing file caused error of the execuation, you can replace the path to some file existed if you don't
+        want to delete every related rows. """
         self.output_path = '/data/runzezhang/result/gamma_rejection/'
         self.plot_path = '/data/runzezhang/result/gamma_rejection/plot/'
         self.Co_sim_path  ='/data/runzezhang/result/TN_sims_D/Co_output_5E7.pkl'
