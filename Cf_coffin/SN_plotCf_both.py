@@ -888,7 +888,7 @@ class SN():
         process_mask = (self.df_phys["Process"] != "Transportation")
         # process_mask = True
         # find high energy or low energy
-        high_energy_neutron_list= self.df_phys[(self.df_phys["name"] == "neutron")&(self.df_phys["Step ID"] == 1)&(self.df_phys["PreKinetic/MeV"] < 1)]["Event"].tolist()
+        high_energy_neutron_list= self.df_phys[(self.df_phys["name"] == "neutron")&(self.df_phys["Step ID"] == 1)&(self.df_phys["PreKinetic/MeV"] < 2)]["Event"].tolist()
 
         self.leaving_coffin_init = self.df_phys[(self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(coffin_volume_list))&process_mask&(self.df_phys["Event"].isin(high_energy_neutron_list))]
         # also requires neutron entering argon
@@ -899,7 +899,8 @@ class SN():
 
         # energy and process mask
         # process_mask2 = (self.df_phys["Process"] == "neutronInelastic")
-        mask2 = (self.leaving_coffin["Process"] == "hadElastic") &(self.leaving_coffin["PreKinetic/MeV"]>=1)
+        # mask2 = (self.leaving_coffin["Process"] == "hadElastic") &(self.leaving_coffin["PreKinetic/MeV"]>=1)
+        mask2 =  True
         self.leaving_coffin =self.leaving_coffin[mask2]
 
         print("leaving coffin",self.leaving_coffin[:20])
