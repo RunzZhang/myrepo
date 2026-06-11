@@ -900,7 +900,7 @@ class SN():
                        "block4_phys"]
         # geo_mask = (self.leaving_coffin["Y/mm"]>-720)&(self.leaving_coffin["Y/mm"]<-670)&(self.leaving_coffin["X/mm"]>-60)&(self.leaving_coffin["X/mm"]<-50)&(self.leaving_coffin["Z/mm"]>1200)&(self.leaving_coffin["Z/mm"]<1230)
 
-        geo_mask = (self.leaving_coffin["Y/mm"] > -645) & (self.leaving_coffin["Y/mm"] < -635) & (
+        geo_mask = (self.leaving_coffin["Y/mm"] > -640) & (self.leaving_coffin["Y/mm"] < -635) & (
                     self.leaving_coffin["X/mm"] > -80) & (self.leaving_coffin["X/mm"] < -70) & (
                                self.leaving_coffin["Z/mm"] > 1230) & (self.leaving_coffin["Z/mm"] < 1250)
 
