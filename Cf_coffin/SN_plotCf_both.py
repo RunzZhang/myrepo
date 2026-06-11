@@ -18,8 +18,8 @@ class SN():
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/" # for gamma path
         # pay attention to different statistics
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_5E5_singleblock_sourcetube_B/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_5E5_singleblock_sourcetube_B/"  # for different density
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density104_sourcetube_B/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density104_sourcetube_B/"  # for different density
         # statistics
         # if Cf_1E7, only Cf_1E7_sourcetube_B/A and Cf_1E7_density 104 is 1E6 others are 1E7, sorry for the confusion
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
@@ -921,6 +921,9 @@ class SN():
 
 
 
+
+
+
         # pd.set_option('display.max_columns', None)
         print("test", self.test_volume)
         print("wired list", self.test_volume["Event"].tolist()[:20], len(self.test_volume["Event"].tolist()))
@@ -987,17 +990,17 @@ class SN():
 
         # find x value at fixed y
 
-        # target_z = 1235  # Replace with your actual Y value
-        #
-        #
-        # z_bin_index = np.searchsorted(sc1[2], target_z) - 1
-        #
-        # if 0 <= z_bin_index < len(sc1[0][0]):
-        #     fixed_z_row = sc1[0][:, z_bin_index]
-        #
-        #     print(f"Target Y = {target_z} falls into Y-bin index: {z_bin_index}")
-        #     print(f"The bin edges for this row are from {zedges[z_bin_index]} to {zedges[z_bin_index + 1]}")
-        #     print("Counts along this row:", fixed_z_row)
+        target_z = 1235  # Replace with your actual Y value
+
+
+        z_bin_index = np.searchsorted(sc1[2], target_z) - 1
+
+        if 0 <= z_bin_index < len(sc1[0][0]):
+            fixed_z_row = sc1[0][:, z_bin_index]
+
+            print(f"Target Y = {target_z} falls into Y-bin index: {z_bin_index}")
+            print(f"The bin edges for this row are from {zedges[z_bin_index]} to {zedges[z_bin_index + 1]}")
+            print("Counts along this row:", fixed_z_row)
 
 
         ax[1].set_xlabel("Y [mm]")
