@@ -999,7 +999,7 @@ class SN():
             fixed_z_row = sc1[0][:, z_bin_index]
 
             print(f"Target Y = {target_z} falls into Y-bin index: {z_bin_index}")
-            print(f"The bin edges for this row are from {zedges[z_bin_index]} to {zedges[z_bin_index + 1]}")
+            # print(f"The bin edges for this row are from {zedges[z_bin_index]} to {zedges[z_bin_index + 1]}")
             print("Counts along this row:", fixed_z_row)
 
 
