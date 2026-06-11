@@ -62,13 +62,13 @@ class SN():
         # self.neutron_spectrum_enteringLAr()
         # self.neutron_source_geometry()
         # get ssttl moderating effect and check Argon recoiled by that
-        # self.coffin_phys()
+        self.coffin_phys()
         # self.source_tube_phys()
         # self.NR_spectrum_moderated_by_sstl()
 
 
         # self.NR_spectrum()
-        self.write_sims_results()
+        # self.write_sims_results()
         # self.NR_multiplicity()
         # for ploting PN background tagging and SNR
         # self.untagged_bubble_rate()
@@ -885,8 +885,8 @@ class SN():
         lar_event_list = self.df_energy["Event"].tolist()
 
 
-        process_mask = (self.df_phys["Process"] != "Transportation")
-        # process_mask = True
+        # process_mask = (self.df_phys["Process"] != "Transportation")
+        process_mask = True
         # find high energy or low energy
         # high_energy_neutron_list= self.df_phys[(self.df_phys["name"] == "neutron")&(self.df_phys["Step ID"] == 1)&(self.df_phys["PreKinetic/MeV"] < 1)]["Event"].tolist()
 
@@ -899,10 +899,10 @@ class SN():
 
         # energy and process mask
         # process_mask2 = (self.df_phys["Process"] == "neutronInelastic")
-        mask2 = (self.leaving_coffin["Process"] == "hadElastic") &(self.leaving_coffin["PreKinetic/MeV"]
-            < 0.5)
-        # mask2 =  True
-        self.leaving_coffin =self.leaving_coffin[mask2]
+        # mask2 = (self.leaving_coffin["Process"] == "hadElastic") &(self.leaving_coffin["PreKinetic/MeV"]
+        #     < 0.5)
+        # # mask2 =  True
+        # self.leaving_coffin =self.leaving_coffin[mask2]
 
         print("leaving coffin",self.leaving_coffin[:20])
 
