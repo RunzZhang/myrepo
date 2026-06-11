@@ -900,7 +900,7 @@ class SN():
         # energy and process mask
         # process_mask2 = (self.df_phys["Process"] == "neutronInelastic")
         mask2 = (self.leaving_coffin["Process"] == "hadElastic") &(self.leaving_coffin["PreKinetic/MeV"]
-            <=1)
+            >= 1)
         # mask2 =  True
         self.leaving_coffin =self.leaving_coffin[mask2]
 
