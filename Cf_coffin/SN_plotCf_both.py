@@ -955,7 +955,7 @@ class SN():
         bin_xz = [55,30]
 
         range_yz = [[-775, -575], [1100, 1400]]
-        bin_yz = [40, 30]
+        bin_yz = [20, 30]
 
         # X and Y
         # sc0=ax[0].hist2d(self.leaving_coffin_R["X/mm"],self.leaving_coffin_R["Z/mm"],bins=50,
