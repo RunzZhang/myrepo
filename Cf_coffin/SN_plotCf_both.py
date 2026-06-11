@@ -15,9 +15,9 @@ class SN():
 
         ## change config A to B
         # replace sourcetube_A and config_A
-        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/"
-        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_B/" # for gamma path
         # pay attention to different statistics
+        """A. This is the path for reading readroot_list_Cf.py. path2 are reserved becasue it was for gamma analysis, which
+        is absense in Cf simulation"""
         self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density150_sourcetube_B/"
         self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density150_sourcetube_B/"  # for different density
         # statistics
@@ -51,11 +51,12 @@ class SN():
         self.df_energy_list = []
 
 
-        #982 statics false 1
+        """B. same as previous, number of chunked files. """
         # for i in range(1,101):
         for i in range(1, 11):
             self.main_body(i)
         # self.main_body(1)
+
         #check the intial neutron postions, argon volume and the intial neutron energy spectrum
         # self.check_geometry()
         #check neutron which first entering argon volum's positions and energy

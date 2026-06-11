@@ -1,57 +1,5 @@
 """This file is for analyze the root files"""
-"""['Transportation', 'hadElastic', 'nCapture', 'conv', 'phot', 'compt', 'Rayl', 'neutronInelastic', 'ionIoni', 
-        'NoProcess', 'RadioactiveDecay', 'photonNuclear', 'Decay']
-            ['neutron', 'gamma', 'Ar40', 'Ar36', 'Ar41', 'Ar37']
-            ['world_phys', 'Vacuum_vessel_phys', 'Inside_vacuum_vessel_phys', 'pressure_vessel_phys', 
-            'hydraulic_fluid_phys', 'HDPE_pressure_vessel_phys', 'reflector_Cu_phys', 'reflector_PTFE_phys', 
-            'outer_jar_phys', 'SiPM_Holder21_phys', 'reflector_bare_top_PTFE_phys', 'reflector_bare_top_Cu_phys', 'LAr_phys', 
-            'Camera_port_phys', 'inner_jar_phys', 'RTD_Cable_Kapton_phys', 'RTD_Cable_Cu_phys', 'Camera_System2_phys', 
-            ' Iris_Holder_phys', ' Iris_phys', 'bare_top_Plastic_phys', 'Lens_Holder3_phys', 'Camera_System1_phys', 
-            ' Iris_Holder1_phys', 'Lens_Holder4_phys', 'Side_support3_phys', 'bare_top_sf_phys', 'SiPM_Holder31_phys',
-             'SiPM_PCB_Out42_phys', 'SiPM_Holder42_phys', 'SiPM_PCB_Inn4_phys', 'SiPM4_Inside_phys', 'SiPM_Holder51_phys', 
-             'calibration_port_phys', 'calibration_Be_phys', 'calibration_air_phys', 'RTD_Cable_Cu_1_phys', 'SiPM_PCB_Out31_phys', 
-             'SiPM_PCB_Inn3_phys', 'SIPM3_Si_phys', 'bare_top_flange_phys', 'SiPM_Holder18_phys', 'SiPM1_Inside_phys', 'SIPM1_Si_phys', 
-             'OJ_Spacer2_phys', 'SiPM_Holder17_phys', 'Adjustment1_phys', 'SiPM_PCB_Out38_phys', 'SiPM_Holder38_phys', 
-             'SiPM3_Inside_phys', 'Hyspan_bellow_phys', 'Bottom_Flange_phys', 'Bellows_weldment_phys', ' Sensor_Holder_phys', 
-             'SiPM_Holder12_phys', 'SiPM2_Inside_phys', 'Side_support1_phys', 'OJ_Spacer17_phys', 'SiPM_PCB_Out22_phys', 
-             'SiPM_Holder22_phys', 'SiPM_PCB_Inn2_phys', 'SIPM2_Si_phys', 'OJ_Spacer16_phys', 'Aspheric_lens1_phys', 
-             'Camera_port3_phys', 'Piezo_Cu_2_phys', 'Vacio_phys', 'Piezo_phys', 'RTD_block_phys', 'RTD_base_phys', 
-             'RTD_mother2_phys', 'SiPM_Holder32_phys', 'SiPM_PCB_Out32_phys', 'PV_spool_phys', 'Base_SF_phys',
-              'Piezo_Cu_1_phys', 'SiPM_Holder58_phys', 'Copper_Rod1_phys', 'PBC_phys', 'OJ_Spacer3_phys', 
-              'RTD_connector_feedthru_phys', 'SiPM_Holder11_phys', 'SiPM_PCB_Inn1_phys', 'SiPM_PCB_Out11_phys', 
-              'Camera_port2_phys', 'Holder1_VV_phys', 'SiPM_Holder52_phys', 'OJ_Spacer8_phys', 'Guide_rod_flange_phys', 
-              'Guide_Rod2_phys', 'SiPM_PCB_Out58_phys', 'OJ_Spacer7_phys', 'SiPM_Holder41_phys', 'Sapphire1_Ssteal_phys',
-               'Piezo_Cu_8_phys', 'Guide_Rod1_phys', 'SiPM_PCB_Out21_phys', 'bare_top_Plastic1_phys', 'Plastic_Flange_phys', 
-               'Iris_brass_phys', 'Aspheric_lens_phys', 'Adjustment_phys', 'SS_Rod1_phys', 'Lens_Holder2_phys', 'Lens1_phys',
-                'Sapphire1_phys', 'SiPM_Holder35_phys', 'OJ_Spacer4_phys', 'Bottom_Spacer5_phys', 'OJ_Spacer5_phys', 
-                'Camera_PCB1_phys', 'Camera1_phys', 'RTD_connector_1_4_phys', 'Bottom_Spacer9_phys', 'Sapphire_Ssteal_phys',
-                 'Lens_Holder_phys', 'Camera_System_phys', 'SiPM_Holder48_phys', 'Bottom_Spacer11_phys', 'Piezo_Cu_5_phys', 
-                 'S_Epoxy_phys', 'RTD_mother1_phys', 'RTD_wire_clamp_phys', 'SiPM_Holder23_phys', 'SiPM_Holder33_phys', 
-                 'RTD_mother3_phys', 'SiPM_PCB_Out41_phys', 'OJ_Spacer6_phys', 'OJ_Spacer1_phys', 'SiPM_Holder27_phys', 
-                 'SiPM5_Inside_phys', 'SiPM_PCB_Out36_phys', 'SiPM_Holder36_phys', 'OJ_Spacer9_phys', 'SiPM_PCB_Out28_phys',
-                  'SiPM_Holder28_phys', 'OJ_Spacer10_phys', 'SIPM4_Si_phys', 'SiPM_Holder37_phys', 'OJ_Spacer18_phys', 
-                  'SiPM_Holder14_phys', 'SiPM_PCB_Out13_phys', 'SiPM_Holder13_phys', 'Piezo_Cu_7_phys', 'SiPM_PCB_Out18_phys',
-                   'SiPM_PCB_Out51_phys', 'SiPM_PCB_Inn5_phys', 'SIPM5_Si_phys', 'SiPM_Holder16_phys', 'SiPM_PCB_Out16_phys', 
-                   'SiPM_PCB_Out44_phys', 'SiPM_Holder44_phys', 'SS_Rod2_phys', 'SiPM_Holder15_phys', 'Piezo_Cu_6_phys',
-                    'OJ_Spacer12_phys', 'Bottom_Spacer3_phys', 'Holder2_VV_phys', 'Sapphire_phys', 'Alignment_Ring_phys',
-                     'SiPM_Holder43_phys', 'Bottom_Spacer6_phys', 'Bottom_Spacer7_phys', 'Piezo_Cu_4_phys', 'Iris_blades_phys',
-                      'SiPM_PCB_Out33_phys', 'Copper_Rod2_phys', 'SiPM_PCB_Out43_phys', 'Piezo_Cu_3_phys', 'SiPM_Holder54_phys',
-                       'SiPM_Holder55_phys', 'Side_support2_phys', 'Bottom_Spacer2_phys', 'SiPM_Holder53_phys', 'SiPM_Holder57_phys', 
-                       'SiPM_PCB_Out57_phys', 'SiPM_PCB_Out35_phys', 'SiPM_Holder45_phys', 'SiPM_Holder56_phys', 'OJ_Spacer15_phys',
-                        'OJ_Spacer14_phys', 'SiPM_PCB_Out52_phys', 'SiPM_Holder46_phys', 'SiPM_PCB_Out56_phys', 
-                        'Front_Nanoguide_Holder_phys', 'SiPM_Holder47_phys', 'SiPM_Holder34_phys', 'Bottom_Spacer10_phys',
-                         'Bottom_Spacer14_phys', 'Bottom_Spacer13_phys', 'Bottom_Spacer12_phys', 'SiPM_PCB_Out14_phys', 
-                         'SiPM_PCB_Out12_phys', 'SiPM_PCB_Out47_phys', 'Camera_spring2_phys', 'Bottom_Spacer8_phys', 
-                         'SiPM_PCB_Out53_phys', 'SiPM_PCB_Out23_phys', 'Lens_phys', 'OJ_Spacer11_phys', 'SiPM_Holder24_phys', 
-                         'Bottom_Spacer17_phys', 'Bottom_Spacer18_phys', 'Holder3_VV_phys', 'SiPM_PCB_Out17_phys', 
-                         'SiPM_PCB_Out24_phys', 'Bottom_Spacer1_phys', 'SiPM_PCB_Out48_phys', 'Guide_Rod3_phys',
-                          'Bottom_Spacer15_phys', 'Bottom_Spacer4_phys', 'SiPM_PCB_Out37_phys', 'SiPM_PCB_Out15_phys', 
-                          'SiPM_Holder26_phys', 'SiPM_PCB_Out26_phys', 'SiPM_Holder25_phys', 'SiPM_PCB_Out25_phys', 
-                          'SiPM_PCB_Out45_phys', 'SiPM_PCB_Out27_phys', 'SiPM_PCB_Out34_phys', 'OJ_Spacer13_phys', 
-                          'Peak_Rod2_phys', 'Rear_Nanoguide_Holder_phys', 'Screw4_phys', 'SiPM_PCB_Out46_phys', 
-                          'Sensor_Covere_phys', 'Bottom_Spacer16_phys', 'SiPM_PCB_Out55_phys', 'Screw1_phys', 'Nanoguide_phys',
-                           'SiPM_PCB_Out54_phys', 'Camera_spring1_phys', 'Sensor_Plate_phys', 'Peak_Rod1_phys', 'Screw3_phys', 
-                           'Screw2_phys']"""
+
 import pandas as pd
 import uproot
 import matplotlib.pyplot as plt
@@ -101,7 +49,6 @@ class RestructureRoot():
         self.reconstruct_filepath = "/data/runzezhang/result/TN_sims_D/chunked_root_files/dmx_rcCf_1E7.csv"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
-        #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
         self.selected_columns = ["Event","name","Parent ID","Track ID","Step ID","X/mm","PreKinetic/MeV","Recoiled/MeV","Volume","Process"]
         self.rows = 1000
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
@@ -135,16 +82,19 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
+        """A. Here are chunk file repository I build from chunk python code. ANd the loop below number should match the
+        number of chunked files.  By default, the  path and loop number are only ones you need to change"""
         self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_5E6_singleblock_sourcetube_B/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_5E6_singleblock_sourcetube_B/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
-        # self.filepath = self.base_path +"dmx_lr.root"
+
         # self.main_body(1)
         for i in range(1,101):
         # for i in range(1, 11):
             self.main_body(i)
     def main_body(self,i):
+        """B. Output files names for next python to read. PN originally means photo-neutron but I forgot to change it when
+        switch to Cf simulations.... You don't need to change these as long as it is consistent with SN_plotCf_both.py"""
         print(i)
         self.ini_path = self.base_path+ f"PN_1E7_ini_part{i}.csv"
         self.ar_ke_path = self.base_path+ f"PN_1E7_ke_part{i}.csv"
@@ -202,25 +152,25 @@ class ReadRoot():
 
         self.filepath = self.base_path + f"dmx_PN_1E7_{i}.root"
         self.file = uproot.open(self.filepath)["tree"]
-        # print("columns: ", self.file.keys())
-        # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
         self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm","Y/mm","Z/mm","PreKinetic/MeV","PostKinetic/MeV",
                                  "Recoiled/MeV", "Volume", "Process"]
 
         self.bubble_threshold = 0.0001 # MeV bubble generate threshold
         self.rows = 1000
 
-        # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
-        # # process data so that it is easier to read
-        # first 1000 rows
-        # self.df = self.file.arrays(self.selected_columns, library="pd", entry_start=0,entry_sbare_top=10000)
+
         self.df = self.file.arrays(self.selected_columns, library="pd")
         self.modify_df()
 
 
+        """C. there are 3 functions: 
+        source_phys is get all neutron steps that passing through Coffin volumes
+        first_argon is to get neutron in the active volume and also neutrons that first entering argon volume
+        collet_NR is to get all neutron interaction in the argon volumes but only save argon status. """
+
         #find source tube
 
-        self.source_geometry()
+        self.first_argon()
 
         # check ssl tube effect to neutron spectrum
         self.source_phys()
@@ -284,14 +234,9 @@ class ReadRoot():
         # self.phys = self.df[(self.df["name"]=="neutron")&((self.df["Volume"]=="cf_active_phys")|(self.df["Volume"]=="cf_source_phys")|(self.df["Volume"]=="BPE_coffin_phys"))]
         self.phys = self.df[(self.df["name"] == "neutron") &
                     (self.df["Volume"].isin(volume_list))]
-        # print(self.phys)
-
-        # print("test check df", self.df[self.df["Event"]==145])
-        # print("test check phys", self.phys[self.phys["Event"] == 20388])
-        # sys.exit(0)
         self.phys.to_csv(self.phys_path, index = False)
 
-    def source_geometry(self):
+    def first_argon(self):
         # also include initial energy
         self.initial_position = self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="cf_active_phys")&(self.df['Step ID'] == 1)][["Event","X/mm", "Y/mm","Z/mm", "Volume","PreKinetic/MeV"]]
 
@@ -358,6 +303,3 @@ if __name__ =="__main__":
     RR = ReadRoot()
     # test_write()
 
-    # find corrupted file entries
-    # num= find_entries()
-    # print(num)

@@ -8,37 +8,19 @@ class ReadRoot:
     def __init__(self):
         self.base_path = "/data/runzezhang/result/TN_sims_D/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
-
-        # self.base_path = "/data/runzezhang/result/TN_box/"
-        # self.plot_path = '/data/runzezhang/result/TN_box/plot/'
-
-        # self.false_1 = "AmLi_1E7_false1.csv"
-        # self.false_2 = "AmLi_1E7_false2.csv"
-        # self.signal = "AmLi_1E7_sig.csv"
-        # self.false_1_mid = "AmLi_1E7_false1_mid.csv"
-        # self.false_2_mid = "AmLi_1E7_false2_mid.csv"
-        # self.signal_mid = "AmLi_1E7_sig_mid.csv"
-        #
-        # self.false_1_path = self.base_path + self.false_1
-        # self.false_2_path = self.base_path + self.false_2
-        # self.false_1_path_mid = self.base_path + self.false_1_mid
-        # self.false_2_path_mid = self.base_path + self.false_2_mid
-        # self.signal_path_mid = self.base_path + self.signal_mid
-        # self.signal_path = self.base_path + self.signal
-
+        """A.Here change name of root file"""
         self.filepath = self.base_path + "dmx_Cf_5E6_singleblock_sourcetube_B.root"
         # self.filepath = self.base_path + "dmx_AmLi.root" # test
         self.tree_name = "tree"  # Assuming your TTree is named "tree"
 
         # Define the columns you want to read and write
-        # self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV","PostKinetic/MeV"
-        #                          "Recoiled/MeV", "Volume", "Process"]
         self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm","Y/mm", "Z/mm", "PreKinetic/MeV",
                                  "PostKinetic/MeV",
                                  "Recoiled/MeV", "Volume", "Process"]
 
     def chunk_and_write_root(self, num_chunks=20, output_dir=None):
         if output_dir is None:
+            """B. here to change output file directory name"""
             output_dir = os.path.join(self.base_path, "chunked_root_files_Cf_5E6_singleblock_sourcetube_B")
         os.makedirs(output_dir, exist_ok=True)
 
@@ -92,7 +74,8 @@ class ReadRoot:
         print(f"\nFinished chunking the ROOT file into {chunk_num} files in {output_dir}.")
 
 
-# Example usage:
+
 if __name__ == "__main__":
     reader = ReadRoot()
+    """C. change here to decide number of chunks you want to devide the original root file"""
     reader.chunk_and_write_root(num_chunks=50)
