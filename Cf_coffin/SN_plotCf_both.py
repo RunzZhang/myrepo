@@ -869,6 +869,7 @@ class SN():
 
     def coffin_phys(self):
 
+
         rate_factor = 1000 * self.rate * self.Activity / (self.original_Activity * self.G4_events)
 
         coffin_volume_list = ["block1_phys", "block2_phys", "block3_phys",
@@ -884,11 +885,13 @@ class SN():
         lar_event_list = self.df_energy["Event"].tolist()
 
 
-        # process_mask = (self.df_phys["Process"] != "Transportation")
-        process_mask = True
+        process_mask = (self.df_phys["Process"] != "Transportation")
+        # process_mask = True
+        # find high energy or low energy
+        high_energy_neutron_list= self.df_phys[(self.df_phys["name"] == "neutron")&(self.df_phys["Step ID"] == 0)&(self.df_phys["PreKinetic/MeV"] >= 1)]["Event"].tolist
 
 
-        self.leaving_coffin_init = self.df_phys[(self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(coffin_volume_list))&process_mask]
+        self.leaving_coffin_init = self.df_phys[(self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(coffin_volume_list))&process_mask&(self.df_phys["Event"].isin(high_energy_neutron_list))]
         # also requires neutron entering argon
         # self.leaving_coffin_init = self.df_phys[
         #     (self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(coffin_volume_list))&(self.df_phys["Event"].isin(lar_event_list))]
@@ -964,7 +967,7 @@ class SN():
         bin_xz = [55,30]
 
         range_yz = [[-775, -575], [1100, 1400]]
-        bin_yz = [20, 30]
+        bin_yz = [40, 30]
 
         # X and Y
         # sc0=ax[0].hist2d(self.leaving_coffin_R["X/mm"],self.leaving_coffin_R["Z/mm"],bins=50,
@@ -988,19 +991,19 @@ class SN():
         sc1 = ax[1].hist2d(self.leaving_coffin_X_slice["Y/mm"], self.leaving_coffin_X_slice["Z/mm"], bins=bin_yz,range=range_yz,
                            cmap="plasma", alpha=0.7,norm=colors.LogNorm(vmin=1))
 
-        # find x value at fixed y
-
-        target_z = 1235  # Replace with your actual Y value
-
-        zedges = sc1[2]
-        z_bin_index = np.searchsorted(zedges, target_z) - 1
-
-        if 0 <= z_bin_index < len(sc1[0][0]):
-            fixed_z_row = sc1[0][:, z_bin_index]
-
-            print(f"Target Y = {target_z} falls into Y-bin index: {z_bin_index}")
-            print(f"The bin edges for this row are from {zedges[z_bin_index]} to {zedges[z_bin_index + 1]}")
-            print("Counts along this row:", fixed_z_row)
+        # # find x value at fixed y
+        #
+        # target_z = 1235  # Replace with your actual Y value
+        #
+        # zedges = sc1[2]
+        # z_bin_index = np.searchsorted(zedges, target_z) - 1
+        #
+        # if 0 <= z_bin_index < len(sc1[0][0]):
+        #     fixed_z_row = sc1[0][:, z_bin_index]
+        #
+        #     print(f"Target Y = {target_z} falls into Y-bin index: {z_bin_index}")
+        #     print(f"The bin edges for this row are from {zedges[z_bin_index]} to {zedges[z_bin_index + 1]}")
+        #     print("Counts along this row:", fixed_z_row)
 
 
         ax[1].set_xlabel("Y [mm]")
