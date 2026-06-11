@@ -885,8 +885,7 @@ class SN():
 
 
         process_mask = (self.df_phys["Process"] != "Transportation")
-        # process_mask = (self.df_phys["Process"] == "neutronInelastic")
-        # process_mask = (self.df_phys["Process"] == "hadElastic")
+
 
         self.leaving_coffin_init = self.df_phys[(self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(coffin_volume_list))&process_mask]
         # also requires neutron entering argon
@@ -894,6 +893,12 @@ class SN():
         #     (self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(coffin_volume_list))&(self.df_phys["Event"].isin(lar_event_list))]
 
         self.leaving_coffin = self.leaving_coffin_init.loc[self.leaving_coffin_init.groupby('Event')['Step ID'].idxmax()]
+
+        # energy and process mask
+        # process_mask2 = (self.df_phys["Process"] == "neutronInelastic")
+        mask2 = (self.leaving_coffin["Process"] == "hadElastic") &(self.leaving_coffin["PreKinetic/MeV"]>=1)
+        self.leaving_coffin =self.leaving_coffin[mask2]
+
         print("leaving coffin",self.leaving_coffin[:20])
 
         # self.test_volume = self.df_phys[
@@ -978,6 +983,8 @@ class SN():
         #                    cmap="plasma", norm="log", alpha=0.7)
         sc1 = ax[1].hist2d(self.leaving_coffin_X_slice["Y/mm"], self.leaving_coffin_X_slice["Z/mm"], bins=bin_yz,range=range_yz,
                            cmap="plasma", alpha=0.7,norm=colors.LogNorm(vmin=1))
+
+        # find x value at fixed y
 
         # ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
         # ax.plot([114.98,114.98, 0.75575], [0,587.01, 617.78], color="blue")
