@@ -15,5 +15,6 @@
     b. readroot.py. Only class ReadRoot is useful. I also marked A.B.C for easier understanding.
     c. SN_plotCf_both.py Analysis module for single configuration simulation. A.B.C.D comments describe main functions
         to proceed to plot multiple configurations of NR spectrum
-    d. Wrapup_Analaysis. This is a code that wrapup both gamma analysis and Cf analysis.
+    d. Wrapup_Analaysis. This is a code that wrapup both gamma analysis and Cf analysis. A.B state where the Cf simulatin
+    plots are.
 

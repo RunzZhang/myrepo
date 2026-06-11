@@ -1,0 +1,83 @@
+# this is the macro for point isotropic AmLi source placed out of SBC
+# and log interpolation with NO3 AmLi contaimination
+/control/verbose 0
+/run/verbose 1
+/tracking/verbose 0 
+/hits/verbose 1
+
+
+# uppper cone volume limited in the desgin
+
+/gps/pos/type Volume
+/gps/pos/shape Para   # for a cube or rectangular box
+#/gps/pos/centre -27.94 -68.58 128.68 cm
+#/gps/pos/centre -37.55 0 45 cm   # center of the box with lead brick
+#/gps/pos/halfx 27.94 cm
+#/gps/pos/halfy 10.16 cm
+#/gps/pos/halfz 15.24 cm
+
+/gps/pos/centre -7.6 -68.58 123.5  cm
+
+/gps/pos/halfx 1 cm
+/gps/pos/halfy 1 cm
+/gps/pos/halfz 3 cm
+
+
+/gps/pos/rot1 1 0 0
+/gps/pos/rot2 0 1 0
+
+
+/gps/pos/confine cf_active_phys
+#/gps/pos/confine LAr_phys
+
+#/gps/particle gamma
+#/gps/ang/type iso
+#/gps/ene/type Arb
+#/gps/histname arb
+#
+/gps/ene/type Arb
+/gps/particle neutron
+/gps/ang/type iso
+
+#
+# estimated neutron spectrum from Jaime's paper:
+# - first bin is in MeV:
+/gps/hist/type arb
+/gps/hist/point 0.0 0
+/gps/hist/point 0.5 394
+/gps/hist/point 0.797 1076
+/gps/hist/point 1.002 1788
+/gps/hist/point 1.164 3015
+/gps/hist/point 1.326 4500
+/gps/hist/point 1.503 5788
+/gps/hist/point 1.623 6152
+/gps/hist/point 1.750 6333
+/gps/hist/point 1.869 6439
+/gps/hist/point 2.004 6485
+/gps/hist/point 2.131 6470
+/gps/hist/point 2.257 6394
+/gps/hist/point 2.370 6273
+/gps/hist/point 2.497 6091
+/gps/hist/point 2.638 5833
+/gps/hist/point 2.780 5500
+/gps/hist/point 2.998 4970
+/gps/hist/point 3.513 3909
+/gps/hist/point 3.810 3318
+/gps/hist/point 4.000 3000
+/gps/hist/point 4.261 2651
+/gps/hist/point 4.571 2348
+/gps/hist/point 5.002 1985
+/gps/hist/point 5.362 1758
+/gps/hist/point 5.996 1394
+/gps/hist/point 6.490 1152
+/gps/hist/point 6.998 894
+/gps/hist/point 7.690 652
+/gps/hist/point 10.0 0
+/gps/hist/inter Lin
+
+
+# --- Number of events ---
+#/run/beamOn 20
+/run/beamOn 5000000
+#/run/beamOn 10000000
+
