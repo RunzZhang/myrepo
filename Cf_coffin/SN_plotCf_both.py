@@ -18,8 +18,8 @@ class SN():
         # pay attention to different statistics
         """A. This is the path for reading readroot_list_Cf.py. path2 are reserved becasue it was for gamma analysis, which
         is absense in Cf simulation"""
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density104_sourcetube_B/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_density104_sourcetube_B/"  # for different density
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_zp20_sourcetube_B/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_zp20_sourcetube_B/"  # for different density
         # statistics
         # if Cf_1E7, only Cf_1E7_sourcetube_B/A and Cf_1E7_density 104 is 1E6 others are 1E7, sorry for the confusion
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
@@ -893,10 +893,10 @@ class SN():
         # find high energy or low energy
         # high_energy_neutron_list= self.df_phys[(self.df_phys["name"] == "neutron")&(self.df_phys["Step ID"] == 1)&(self.df_phys["PreKinetic/MeV"] < 1)]["Event"].tolist()
         # no requirement
-        self.leaving_coffin_init = self.df_phys[(self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(coffin_volume_list))&process_mask]
+        # self.leaving_coffin_init = self.df_phys[(self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(coffin_volume_list))&process_mask]
         # also requires neutron entering argon
-        # self.leaving_coffin_init = self.df_phys[
-        #     (self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(coffin_volume_list))&(self.df_phys["Event"].isin(lar_event_list))&process_mask]
+        self.leaving_coffin_init = self.df_phys[
+            (self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(coffin_volume_list))&(self.df_phys["Event"].isin(lar_event_list))&process_mask]
 
         self.leaving_coffin = self.leaving_coffin_init.loc[self.leaving_coffin_init.groupby('Event')['Step ID'].idxmax()]
 
@@ -1554,7 +1554,7 @@ class SN():
         output_list = [rate_factor ,hist_array, cumulative_threshold_per_scatter_array[0], cumulative_threshold_array[0],first_argon_ene_array[0]]
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* energy above the bin edge
         # with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_{self.config_string}.pkl", "wb") as f:
-        with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density104_{self.config_string}.pkl", "wb") as f:
+        with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zp20_{self.config_string}.pkl", "wb") as f:
         # with open(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_{self.config_string}.pkl",
         #               "wb") as f:
             pickle.dump(output_list, f)
