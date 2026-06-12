@@ -1192,13 +1192,13 @@ class integrated_analysis():
         # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
         self.fitting_list = []
 
-        self.Cs_label = ["Cs 11/17/2025","Cs 12/01/2025","Cs 12/10/2025","",""]
-        self.Co_label = []
+        self.Cs_label = ["Cs 11/17/2025","Cs 12/01/2025","Cs 12/10/2025","Cs 01/20/2026","Cs 02/02/2026"]
+        self.Co_label = ["Co 12/15/2026"]
         for i in range(len(self.Cs_exp_rejection_path)):
             df = pd.read_csv(self.Cs_exp_rejection_path[i])
             # print(df.columns)
-            doc_label = self.Cs_exp_raw_path[i].replace('_exposures', '')
-
+            # doc_label = self.Cs_exp_raw_path[i].replace('_exposures', '')
+            doc_label = self.Cs_label[i]
             print('doc_label',doc_label)
             # signal
             # drop 2.75,3.25, 3.75 bara pressure
@@ -1222,7 +1222,8 @@ class integrated_analysis():
         for i in range(len(self.Co_exp_rejection_path)):
             df = pd.read_csv(self.Co_exp_rejection_path[i])
             # print(df.columns)
-            doc_label = self.Co_exp_raw_path[i].rstrip("_exposures")
+            # doc_label = self.Co_exp_raw_path[i].rstrip("_exposures")
+            doc_label = self.Co_label[i]
             # signal
             # drop 2.75,3.25, 3.75 bara pressure
             # pressure_drop_list = [2.75,3.25,3.75]
