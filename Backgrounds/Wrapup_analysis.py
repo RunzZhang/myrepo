@@ -1188,7 +1188,7 @@ class integrated_analysis():
         plt.savefig(self.plot_path + "average_bkg_rate.pdf")
 
     def gamma_rejection_plot(self):
-        fig, ax = plt.subplots(1, 2, figsize=(10, 5))
+        fig, ax = plt.subplots(1, 2, figsize=(14, 5))
         # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
         self.fitting_list = []
 
@@ -1247,7 +1247,9 @@ class integrated_analysis():
         [(a_fit_scatter, b_fit_scatter,x_fitted_scatter,y_fitted_scatter),(a_fit_keV, b_fit_keV,x_fitted_keV,y_fitted_keV)] = self.fitting_gamma_rejection()
 
         # plot the fitting function
-        ax[0].plot(x_fitted_scatter,y_fitted_scatter,label = f"a,b = {a_fit_scatter:.2e} , {b_fit_scatter:.2e}", color="black")
+        # ax[0].plot(x_fitted_scatter,y_fitted_scatter,label = f"a,b = {a_fit_scatter:.2e} , {b_fit_scatter:.2e}", color="black")
+        ax[0].plot(x_fitted_scatter, y_fitted_scatter,
+                   color="black")
 
         #gamma rejection up limit
         # self.bkg_floor_plot(ax[0],"Seitz")
@@ -1263,7 +1265,8 @@ class integrated_analysis():
 
         ax[0].legend(loc='upper right', fontsize=7)
 
-        ax[1].plot(x_fitted_keV, y_fitted_keV, label=f"a,b = {a_fit_keV:.2e} , {b_fit_keV:.2e}", color="black")
+        # ax[1].plot(x_fitted_keV, y_fitted_keV, label=f"a,b = {a_fit_keV:.2e} , {b_fit_keV:.2e}", color="black")
+        ax[1].plot(x_fitted_keV, y_fitted_keV, color="black")
 
         # self.bkg_floor_plot(ax[1], "Eion")
         ax[1].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
