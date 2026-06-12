@@ -888,8 +888,8 @@ class SN():
         lar_event_list = self.df_energy["Event"].tolist()
 
 
-        # process_mask = (self.df_phys["Process"] != "Transportation")
-        process_mask = True
+        process_mask = (self.df_phys["Process"] != "Transportation")
+        # process_mask = True
         # find high energy or low energy
         # high_energy_neutron_list= self.df_phys[(self.df_phys["name"] == "neutron")&(self.df_phys["Step ID"] == 1)&(self.df_phys["PreKinetic/MeV"] < 1)]["Event"].tolist()
         # no requirement
