@@ -1192,11 +1192,12 @@ class integrated_analysis():
         fig, ax = plt.subplots(2, 1, figsize=(6, 10))
         self.fitting_list = []
 
-
+        self.Cs_label = ["Cs 11/17/2025","Cs 12/01/2025","Cs 12/10/2025"]
         for i in range(len(self.Cs_exp_rejection_path)):
             df = pd.read_csv(self.Cs_exp_rejection_path[i])
             # print(df.columns)
             doc_label = self.Cs_exp_raw_path[i].replace('_exposures', '')
+
             print('doc_label',doc_label)
             # signal
             # drop 2.75,3.25, 3.75 bara pressure
@@ -1244,14 +1245,14 @@ class integrated_analysis():
         [(a_fit_scatter, b_fit_scatter,x_fitted_scatter,y_fitted_scatter),(a_fit_keV, b_fit_keV,x_fitted_keV,y_fitted_keV)] = self.fitting_gamma_rejection()
 
         # plot the fitting function
-        ax[0].plot(x_fitted_scatter,y_fitted_scatter,label = f"a,b = {a_fit_scatter:.2e} , {b_fit_scatter:.2e}", color="black")
+        # ax[0].plot(x_fitted_scatter,y_fitted_scatter,label = f"a,b = {a_fit_scatter:.2e} , {b_fit_scatter:.2e}", color="black")
 
         #gamma rejection up limit
         # self.bkg_floor_plot(ax[0],"Seitz")
 
-        ax[0].set_xlabel("Seitz [keV]")
-        ax[0].set_ylabel("Gamma rejection  [per Scattering]")
-        ax[0].set_title("Gamma Rejection Per Scattering ")
+        ax[0].set_xlabel(r"Seitz threshold [keV]")
+        ax[0].set_ylabel("Nucleation probability (per interaction)")
+        # ax[0].set_title("Gamma Rejection Per Scattering ")
         # ax[0].set_ylim(1.0e-12,1.0e-2)
         # ax[0].set_xlim(0,6)
         # ax[0].set_xlim(0.8,1.5)
@@ -1260,12 +1261,12 @@ class integrated_analysis():
 
         ax[0].legend(loc='upper right', fontsize=7)
 
-        ax[1].plot(x_fitted_keV, y_fitted_keV, label=f"a,b = {a_fit_keV:.2e} , {b_fit_keV:.2e}", color="black")
+        # ax[1].plot(x_fitted_keV, y_fitted_keV, label=f"a,b = {a_fit_keV:.2e} , {b_fit_keV:.2e}", color="black")
 
         # self.bkg_floor_plot(ax[1], "Eion")
-        ax[1].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1} [GeV cm^2 g^{-1}]$")
-        ax[1].set_ylabel("Gamma rejection per energy deposited [per keV]")
-        ax[1].set_title("Gamma Rejection Per keV ")
+        ax[1].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1} [\text{GeV} \text{cm}^2 \text{g}^{-1}]$")
+        ax[1].set_ylabel("Probability per energy deposited (events/keV)")
+        # ax[1].set_title("Gamma Rejection Per keV ")
         # ax[1].set_ylim(1.0e-14,1.0e-4)
         # ax[1].set_xlim(0.08,0.15)
         # ax[1].set_xlim(0.8,1.1)
@@ -1299,6 +1300,7 @@ class integrated_analysis():
             #         color="gray")
             # ax.plot(self.df_bkg_119_full_info['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_bkg_119_full_info['Co Rejection Uplimit KeV [/keV]'],
             #         color="gray")
+
 
 
     def spectrums_plot(self):
