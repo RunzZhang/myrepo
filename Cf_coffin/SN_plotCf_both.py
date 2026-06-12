@@ -893,10 +893,10 @@ class SN():
         # find high energy or low energy
         # high_energy_neutron_list= self.df_phys[(self.df_phys["name"] == "neutron")&(self.df_phys["Step ID"] == 1)&(self.df_phys["PreKinetic/MeV"] < 1)]["Event"].tolist()
         # no requirement
-        # self.leaving_coffin_init = self.df_phys[(self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(coffin_volume_list))&process_mask]
+        self.leaving_coffin_init = self.df_phys[(self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(coffin_volume_list))&process_mask]
         # also requires neutron entering argon
-        self.leaving_coffin_init = self.df_phys[
-            (self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(coffin_volume_list))&(self.df_phys["Event"].isin(lar_event_list))&process_mask]
+        # self.leaving_coffin_init = self.df_phys[
+        #     (self.df_phys["name"] == "neutron") & (self.df_phys["Volume"].isin(coffin_volume_list))&(self.df_phys["Event"].isin(lar_event_list))&process_mask]
 
         self.leaving_coffin = self.leaving_coffin_init.loc[self.leaving_coffin_init.groupby('Event')['Step ID'].idxmax()]
 

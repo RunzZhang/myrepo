@@ -1188,11 +1188,12 @@ class integrated_analysis():
         plt.savefig(self.plot_path + "average_bkg_rate.pdf")
 
     def gamma_rejection_plot(self):
-        fig, ax = plt.subplots(1, 2, figsize=(10, 4))
-        fig, ax = plt.subplots(2, 1, figsize=(6, 10))
+        fig, ax = plt.subplots(1, 2, figsize=(10, 5))
+        # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
         self.fitting_list = []
 
-        self.Cs_label = ["Cs 11/17/2025","Cs 12/01/2025","Cs 12/10/2025"]
+        self.Cs_label = ["Cs 11/17/2025","Cs 12/01/2025","Cs 12/10/2025","",""]
+        self.Co_label = []
         for i in range(len(self.Cs_exp_rejection_path)):
             df = pd.read_csv(self.Cs_exp_rejection_path[i])
             # print(df.columns)
