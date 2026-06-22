@@ -52,8 +52,8 @@ class SN():
 
 
         """B. same as previous, number of chunked files. """
-        # for i in range(1,101):
-        for i in range(1, 11):
+        for i in range(1,101):
+        # for i in range(1, 11):
             self.main_body(i)
         # self.main_body(1)
 
