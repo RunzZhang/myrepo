@@ -136,9 +136,9 @@ class SN():
         self.rate = 149.952  # Cf neutron rate for SBC in 2026 Dec
         self.gamma_rate = 1.27e4 # 1.77MeV PN gamma rate/s for 5 microCurie
         self.gamma_BR = 0.0687
-        self.G4_events= 1E6
+        self.G4_events= 1E7
         # self.G4_events = 1E7
-        self.G4_events_gamma =  1E6
+        self.G4_events_gamma =  1E7
         self.ambient_bubble = 5 # /h
 
         self.T = 1e-3
