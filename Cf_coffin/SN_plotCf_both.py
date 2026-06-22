@@ -60,7 +60,7 @@ class SN():
         #check the intial neutron postions, argon volume and the intial neutron energy spectrum
         # self.check_geometry()
         #check neutron which first entering argon volum's positions and energy
-        self.neutron_spectrum_enteringLAr()
+        # self.neutron_spectrum_enteringLAr()
         # self.neutron_source_geometry()
         # get ssttl moderating effect and check Argon recoiled by that
         # self.coffin_phys()
