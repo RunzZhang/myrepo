@@ -52,15 +52,15 @@ class SN():
 
 
         """B. same as previous, number of chunked files. """
-        for i in range(1,101):
-        # for i in range(1, 11):
+        # for i in range(1,101):
+        for i in range(1, 11):
             self.main_body(i)
         # self.main_body(1)
 
         #check the intial neutron postions, argon volume and the intial neutron energy spectrum
         # self.check_geometry()
         #check neutron which first entering argon volum's positions and energy
-        # self.neutron_spectrum_enteringLAr()
+        self.neutron_spectrum_enteringLAr()
         # self.neutron_source_geometry()
         # get ssttl moderating effect and check Argon recoiled by that
         # self.coffin_phys()
