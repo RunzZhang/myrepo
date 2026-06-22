@@ -18,13 +18,13 @@ class SN():
         # pay attention to different statistics
         """A. This is the path for reading readroot_list_Cf.py. path2 are reserved becasue it was for gamma analysis, which
         is absense in Cf simulation"""
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_zm20_sourcetube_B/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_zm20_sourcetube_B/"  # for different density
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_A/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E7_sourcetube_A/"  # for different density
         # statistics
         # if Cf_1E7, only Cf_1E7_sourcetube_B/A and Cf_1E7_density 104 is 1E6 others are 1E7, sorry for the confusion
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
-        self.config_string = 'config_B'
+        self.config_string = 'config_A'
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
         self.TN_spectrum_path = './MC_argon_full_20250701_LSS07_2E5'
         self.false_1 = "PN_false1.csv"
@@ -63,14 +63,14 @@ class SN():
         # self.neutron_spectrum_enteringLAr()
         # self.neutron_source_geometry()
         # get ssttl moderating effect and check Argon recoiled by that
-        self.coffin_phys()
+        # self.coffin_phys()
         # self.source_tube_phys()
         # self.NR_spectrum_moderated_by_sstl()
 
 
         # self.NR_spectrum()
         # self.write_sims_results()
-        # self.NR_multiplicity()
+        self.NR_multiplicity()
         # for ploting PN background tagging and SNR
         # self.untagged_bubble_rate()
         # if self.gamma:
@@ -136,9 +136,9 @@ class SN():
         self.rate = 149.952  # Cf neutron rate for SBC in 2026 Dec
         self.gamma_rate = 1.27e4 # 1.77MeV PN gamma rate/s for 5 microCurie
         self.gamma_BR = 0.0687
-        self.G4_events= 1E7
+        self.G4_events= 1E6
         # self.G4_events = 1E7
-        self.G4_events_gamma =  1E7
+        self.G4_events_gamma =  1E6
         self.ambient_bubble = 5 # /h
 
         self.T = 1e-3
