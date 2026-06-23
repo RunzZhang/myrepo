@@ -317,7 +317,7 @@ class ReadRoot():
 
 
         ## test Xenon doping
-        print(self.df['name'].unique())
+        print("particle name",self.df['name'].unique())
         self.gamma_Scint = self.df[
             ((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys')) &( (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))& (self.df['Parent ID'] == 0)]
         # record the positions and multiplicity
