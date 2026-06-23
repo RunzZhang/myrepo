@@ -95,4 +95,4 @@ class ReadRoot:
 # Example usage:
 if __name__ == "__main__":
     reader = ReadRoot()
-    reader.chunk_and_write_root(num_chunks=25)
+    reader.chunk_and_write_root(num_chunks=1)
