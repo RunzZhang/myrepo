@@ -84,7 +84,7 @@ class ReadRoot():
     def __init__(self):
         """A. Here are chunk file repository I build from chunk python code. ANd the loop below number should match the
         number of chunked files.  By default, the  path and loop number are only ones you need to change"""
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_5E6_singleblock_sourcetube_B/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cf_1E5_100ppm_sourcetube_B/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
 
@@ -173,10 +173,10 @@ class ReadRoot():
         self.first_argon()
 
         # check ssl tube effect to neutron spectrum
-        self.source_phys()
+        # self.source_phys()
 
 
-        self.collect_NR()
+        # self.collect_NR()
         # self.check_NR()
 
     def reidx_event(self):
@@ -237,6 +237,8 @@ class ReadRoot():
         self.phys.to_csv(self.phys_path, index = False)
 
     def first_argon(self):
+        # check particles
+        print("particle name",self.df["name"].unique())
         # also include initial energy
         self.initial_position = self.df[(self.df["name"]=="neutron")&(self.df["Volume"]=="cf_active_phys")&(self.df['Step ID'] == 1)][["Event","X/mm", "Y/mm","Z/mm", "Volume","PreKinetic/MeV"]]
 

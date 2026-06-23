@@ -9,7 +9,7 @@ class ReadRoot:
         self.base_path = "/data/runzezhang/result/TN_sims_D/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
         """A.Here change name of root file"""
-        self.filepath = self.base_path + "dmx_Cf_5E6_singleblock_sourcetube_B.root"
+        self.filepath = self.base_path + "dmx_Cf_1E5_100ppm_sourcetube_B.root"
         # self.filepath = self.base_path + "dmx_AmLi.root" # test
         self.tree_name = "tree"  # Assuming your TTree is named "tree"
 
@@ -21,7 +21,7 @@ class ReadRoot:
     def chunk_and_write_root(self, num_chunks=20, output_dir=None):
         if output_dir is None:
             """B. here to change output file directory name"""
-            output_dir = os.path.join(self.base_path, "chunked_root_files_Cf_5E6_singleblock_sourcetube_B")
+            output_dir = os.path.join(self.base_path, "chunked_root_files_Cf_1E5_100ppm_sourcetube_B")
         os.makedirs(output_dir, exist_ok=True)
 
         with uproot.open(self.filepath) as file:
@@ -78,4 +78,4 @@ class ReadRoot:
 if __name__ == "__main__":
     reader = ReadRoot()
     """C. change here to decide number of chunks you want to devide the original root file"""
-    reader.chunk_and_write_root(num_chunks=50)
+    reader.chunk_and_write_root(num_chunks=1)
