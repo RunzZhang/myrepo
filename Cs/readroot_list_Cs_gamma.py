@@ -214,13 +214,18 @@ class ReadRoot():
         self.df = self.file.arrays(self.selected_columns, library="pd")
         self.modify_df()
 
-        # find all ER and save ER into csv
+        # find all ER and save ER into csv, pure argon
+
         self.allER()
         self.ER_distribution()
         # self.gamma_ER()
 
         # find all NR
         # self.allNR()
+
+
+        # for xenon doped configuration, find photo absorption by xenon
+        self.xenon_doped_phot()
 
 
 
@@ -316,8 +321,7 @@ class ReadRoot():
         # in each eventi_data, it is matrix [(x1,y1,z1),ER1], [(x2,y2,z2),ER2,,,] including the bubble multiplicity and ER and position
 
 
-        ## test Xenon doping
-        print("particle name",self.df['name'].unique())
+
         self.gamma_Scint = self.df[
             ((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys')) &( (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))& (self.df['Parent ID'] == 0)]
         # record the positions and multiplicity
@@ -452,6 +456,10 @@ class ReadRoot():
             wr.writerow(self.electron_recoiled_list)
 
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep.csv")
+    def xenon_doped_phot(self):
+        ## test Xenon doping
+        print("particle name", self.df['name'].unique())
+        print("df the whole list", self.df)
 
     def exclude_common(self,df1, df2): # exclude same ["Event"]
         common_events = set(df1["Event"]) & set(df2["Event"])
