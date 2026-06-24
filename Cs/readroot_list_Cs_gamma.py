@@ -216,8 +216,8 @@ class ReadRoot():
 
         # find all ER and save ER into csv, pure argon
 
-        self.allER()
-        self.ER_distribution()
+        # self.allER()
+        # self.ER_distribution()
         # self.gamma_ER()
 
         # find all NR
