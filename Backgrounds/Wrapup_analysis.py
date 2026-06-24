@@ -14,6 +14,10 @@ class integrated_analysis():
         self.Co_sim_path  ='/data/runzezhang/result/TN_sims_D/Co_output_5E7.pkl'
         self.Cs_sim_path = '/data/runzezhang/result/TN_sims_D/Cs_output.pkl'
         self.Cf_simA_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_A.pkl'
+
+
+        # doped
+        self.Cs_sim_path = '/data/runzezhang/result/TN_sims_D/Cs_doped_output.pkl'
         # self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_B.pkl'
         self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density095_config_B.pkl'
 
@@ -106,8 +110,8 @@ class integrated_analysis():
 
         # add the Seitz energy to the exp txt files, and Seitz should have already included all temperature info, so in post-analysis
         # no demands to devide by temperature configurations
-        # also caculate the clean signal and signal uncerntainty
-        # self.clean_signal_analysis()
+        # also calculate the clean signal and signal uncerntainty
+        self.clean_signal_analysis()
 
         # Cf
         # self.clean_NR_signal_analysis()
@@ -1219,28 +1223,28 @@ class integrated_analysis():
             ax[1].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate KeV[/keV]"],
                            yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
 
-        for i in range(len(self.Co_exp_rejection_path)):
-            df = pd.read_csv(self.Co_exp_rejection_path[i])
-            # print(df.columns)
-            # doc_label = self.Co_exp_raw_path[i].rstrip("_exposures")
-            doc_label = self.Co_label[i]
-            # signal
-            # drop 2.75,3.25, 3.75 bara pressure
-            # pressure_drop_list = [2.75,3.25,3.75]
-            pressure_drop_list = []
-            df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
-            df = df[df['Clean Rate [mHz]'] > 0]
-
-            df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
-                         "Rejection Rate KeV[/keV]"]]
-            self.fitting_list.append(df_fit)
-
-            ax[0].errorbar(df['Seitz [keV]'], df["Rejection Rate Scattering[]"],
-                           yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
-
-
-            ax[1].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate KeV[/keV]"],
-                           yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
+        # for i in range(len(self.Co_exp_rejection_path)):
+        #     df = pd.read_csv(self.Co_exp_rejection_path[i])
+        #     # print(df.columns)
+        #     # doc_label = self.Co_exp_raw_path[i].rstrip("_exposures")
+        #     doc_label = self.Co_label[i]
+        #     # signal
+        #     # drop 2.75,3.25, 3.75 bara pressure
+        #     # pressure_drop_list = [2.75,3.25,3.75]
+        #     pressure_drop_list = []
+        #     df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
+        #     df = df[df['Clean Rate [mHz]'] > 0]
+        #
+        #     df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+        #                  "Rejection Rate KeV[/keV]"]]
+        #     self.fitting_list.append(df_fit)
+        #
+        #     ax[0].errorbar(df['Seitz [keV]'], df["Rejection Rate Scattering[]"],
+        #                    yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
+        #
+        #
+        #     ax[1].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate KeV[/keV]"],
+        #                    yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
 
 
         self.fitting_df =  pd.concat(self.fitting_list, ignore_index=True)
