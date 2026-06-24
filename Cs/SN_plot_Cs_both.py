@@ -35,10 +35,10 @@ class SN():
 
 
         #982 statics false 1
-        for i in range(1,51):
+        # for i in range(1,51):
         # for i in range(1, 11):
-            self.main_body(i)
-        # self.main_body(1)
+        #     self.main_body(i)
+        self.main_body(1)
         self.combine_df()
         self.data_analysis()
 
