@@ -57,6 +57,7 @@ import uproot
 import matplotlib.pyplot as plt
 import numpy as np
 import csv
+import pickle
 # filename = "/data/runzezhang/Geant4Simulaions/g411_TN/dmx.root"
 def test_write():
     try:
@@ -460,6 +461,8 @@ class ReadRoot():
         ## test Xenon doping
         print("particle name", self.df['name'].unique())
         print("df the whole list", self.df[self.df["Volume"]=="LAr_phys"])
+        self.df.to_csv(self.info_path, index=False)
+
 
     def exclude_common(self,df1, df2): # exclude same ["Event"]
         common_events = set(df1["Event"]) & set(df2["Event"])
