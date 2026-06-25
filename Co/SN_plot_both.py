@@ -122,7 +122,7 @@ class SN():
 
         #doped analyasis
         self.read_ER_Ar_doped()
-        self.write_doped_sims_results()
+        # self.write_doped_sims_results()
 
 
     def read_positions(self):
