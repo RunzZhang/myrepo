@@ -134,8 +134,8 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_50E6/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_50E6/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_1E8/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_1E8/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
@@ -219,13 +219,15 @@ class ReadRoot():
         self.modify_df()
 
         # find all ER and save ER into csv
-        self.allER()
-        self.ER_distribution()
+        # self.allER()
+        # self.ER_distribution()
         # self.gamma_ER()
 
         # find all NR
         # self.allNR()
 
+        #xenon doping
+        self.xenon_doped_phot()
 
 
 
@@ -454,6 +456,12 @@ class ReadRoot():
             wr.writerow(self.electron_recoiled_list)
 
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep.csv")
+
+    def xenon_doped_phot(self):
+        ## test Xenon doping
+        print("particle name", self.df['name'].unique())
+        print("df the whole list", self.df[self.df["Volume"]=="LAr_phys"])
+        self.df.to_csv(self.info_path, index=False)
 
     def exclude_common(self,df1, df2): # exclude same ["Event"]
         common_events = set(df1["Event"]) & set(df2["Event"])

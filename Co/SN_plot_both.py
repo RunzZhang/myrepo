@@ -11,8 +11,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_50E6/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_50E6/" # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_1E8/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_1E8/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -82,7 +82,7 @@ class SN():
         self.gamma_rate = 2*7.31e4 # /s
 
 
-        self.G4_events_gamma =  50E6 # only 50 chunks
+        self.G4_events_gamma =  1E8 # only 50 chunks
         self.ambient_bubble = 5 # /h
 
 
@@ -117,8 +117,12 @@ class SN():
         # self.gamma_rejection_rate_per_keV_vs_Setiz()
         # self.gamma_rejection_rate_vs_Setiz()
 
-        self.write_sims_results()
+        # self.write_sims_results()
 
+
+        #doped analyasis
+        self.read_ER_Ar_doped()
+        self.write_doped_sims_results()
 
 
     def read_positions(self):
@@ -205,6 +209,18 @@ class SN():
         ax.set_xlabel("Multiplicity")
         ax.set_ylabel("Probability")
         plt.savefig(self.plot_path+"Co_1E7_multi.pdf")
+    def read_ER_Ar_doped(self):
+        # per energy deposition
+        # the sum is per event
+        ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["PreKinetic/MeV"]*1000
+
+        fig, ax = plt.subplots(1,3, figsize=(14, 4))
+        ax[0].hist(ER_Ar, bins=40,align="left")
+        ax[0].set_xlabel("ER/keV per scattering LAr")
+        ax[0].set_ylabel("Counts")
+
+
+        plt.savefig(self.plot_path + "Co_1E8_ER_all_doped.pdf")
 
     def read_Ar_multiplicity(self):
         multiplicity = self.merged_df[self.merged_df["Volume"]=="LAr_phys"].groupby("Event")["Multiplicity"].max()
@@ -792,6 +808,39 @@ class SN():
         with open("/data/runzezhang/result/TN_sims_D/Co_output_5E7.pkl", "wb") as f:
             pickle.dump(output_list, f)
 
+
+    def write_doped_sims_results(self):
+        # rate factor in mHz
+
+        Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
+        ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["PreKinetic/MeV"] * 1000  # in keV
+
+        hist_array = [None]
+        # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
+        hist_array[0] = np.histogram(ER_Ar, bins=12000, range=(0, 1200))
+        # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
+        # we need 0.1 keV, and this gives us 4800 bins
+
+        # transfer edge to mid point per bin
+
+        # get probablity per scattering and the statistics
+        cumulative_threshold_per_scatter_array = [None]
+
+        cumulative_threshold_per_scatter_array[0] = np.array(
+            [sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))])
+
+        # histogram per scattering per keV
+        cumulative_threshold_array = [None]
+        energy_deposit_list = [hist_array[0][0][i] * hist_array[0][1][i] for i in range(len(hist_array[0][0]))]
+
+        cumulative_threshold_array[0] = np.array(
+            [sum(energy_deposit_list[i:]) for i in range(len(energy_deposit_list))])
+        print("total count* energy Co", cumulative_threshold_per_scatter_array[0][0],cumulative_threshold_per_scatter_array[0][0]/cumulative_threshold_array[0][0])
+
+        output_list = [Rate_factor ,hist_array, cumulative_threshold_per_scatter_array[0], cumulative_threshold_array[0]]
+        # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
+        with open("/data/runzezhang/result/TN_sims_D/Co_doped_output.pkl", "wb") as f:
+            pickle.dump(output_list, f)
     def read_ER_CF_per_deposit_rate_cumulative(self):
         # rate factor in mHz
         Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
