@@ -254,7 +254,7 @@ class SN():
         #bins=12000, range=(0, 1200))
         ax[0].set_xlabel("photo absorption of Xe[keV] ")
         ax[0].set_ylabel("Counts")
-        ax[0].set_title("Cs source")
+        ax[0].set_title("Cs source - 662 keV gamma")
 
 
         plt.savefig(self.plot_path + "Cs_1E8_ER_all_doped.pdf")
