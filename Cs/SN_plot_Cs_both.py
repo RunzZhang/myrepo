@@ -247,7 +247,8 @@ class SN():
         ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["PreKinetic/MeV"]*1000
 
         fig, ax = plt.subplots(1,3, figsize=(14, 4))
-        ax[0].hist(ER_Ar, bins=60,range= (0,600),align="left")
+        # ax[0].hist(ER_Ar, bins=60,range= (0,600),align="left")
+        ax[0].hist(ER_Ar, bins=6000, range=(0, 600), align="left")
         #bins=12000, range=(0, 1200))
         ax[0].set_xlabel("photo absorption of Xe[keV] ")
         ax[0].set_ylabel("Counts")
