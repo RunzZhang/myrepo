@@ -212,12 +212,18 @@ class SN():
     def read_ER_Ar_doped(self):
         # per energy deposition
         # the sum is per event
-        ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["PreKinetic/MeV"]*1000
 
-        fig, ax = plt.subplots(1,3, figsize=(14, 4))
-        ax[0].hist(ER_Ar, bins=40,align="left")
-        ax[0].set_xlabel("ER/keV per scattering LAr")
+        ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["PreKinetic/MeV"] * 1000
+
+        fig, ax = plt.subplots(1, 3, figsize=(14, 4))
+        # ax[0].hist(ER_Ar, bins=60,range= (0,600),align="left")
+        array = ax[0].hist(ER_Ar, bins=1400, range=(0, 700), align="left")
+        print("counts", array[0][:20])
+        print("bins", array[1][:20])
+        # bins=12000, range=(0, 1200))
+        ax[0].set_xlabel("photo absorption of Xe[keV] ")
         ax[0].set_ylabel("Counts")
+        ax[0].set_title("Co source - 1332 keV gamma")
 
 
         plt.savefig(self.plot_path + "Co_1E8_ER_all_doped.pdf")
