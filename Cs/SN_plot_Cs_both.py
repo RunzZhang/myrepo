@@ -248,7 +248,8 @@ class SN():
 
         fig, ax = plt.subplots(1,3, figsize=(14, 4))
         # ax[0].hist(ER_Ar, bins=60,range= (0,600),align="left")
-        ax[0].hist(ER_Ar, bins=1200, range=(0, 600), align="left")
+        array = ax[0].hist(ER_Ar, bins=1200, range=(0, 600), align="left")
+        print(array[0][:20])
         #bins=12000, range=(0, 1200))
         ax[0].set_xlabel("photo absorption of Xe[keV] ")
         ax[0].set_ylabel("Counts")
