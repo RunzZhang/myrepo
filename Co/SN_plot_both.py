@@ -35,15 +35,15 @@ class SN():
 
 
         #982 statics false 1
-        for i in range(1,54):
-        # for i in range(1, 26):
-        # for i in range(26, 54):
-            try:
-        # for i in range(1, 11):
-                self.main_body(i)
-            except:
-                continue
-        # self.main_body(1)
+        # for i in range(1,54):
+        # # for i in range(1, 26):
+        # # for i in range(26, 54):
+        #     try:
+        # # for i in range(1, 11):
+        #         self.main_body(i)
+        #     except:
+        #         continue
+        self.main_body(1)
         self.combine_df()
         self.data_analysis()
 
@@ -224,7 +224,8 @@ class SN():
         # bins=12000, range=(0, 1200))
         ax[0].set_xlabel("photo absorption of Xe[keV] ")
         ax[0].set_ylabel("Counts")
-        ax[0].set_title("Co source - 1332 keV gamma")
+        # ax[0].set_title("Co source - 1332 keV gamma")
+        ax[0].set_title("Co source - 1173 keV gamma")
 
 
         plt.savefig(self.plot_path + "Co_1E8_ER_all_doped.pdf")
