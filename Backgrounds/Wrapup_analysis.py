@@ -1290,7 +1290,7 @@ class integrated_analysis():
         # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
         self.fitting_list = []
 
-        self.Cs_label = ["Cs 11/17/2025 116K", "Cs 12/01/2025 116K", "Cs 12/10/2025", "Cs 01/20/2026 116K",
+        self.Cs_label = ["Cs 11/17/2025 116K", "Cs 12/01/2025 116K", "Cs 12/10/2025 116K", "Cs 01/20/2026 116K",
                          "Cs 02/02/2026 119K"]
         self.Co_label = ["Co 12/15/2026 116K"]
         for i in range(len(self.Cs_exp_rejection_path)):
