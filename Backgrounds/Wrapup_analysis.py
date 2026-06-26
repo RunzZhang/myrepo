@@ -1343,7 +1343,7 @@ class integrated_analysis():
 
 
         self.fitting_df =  pd.concat(self.fitting_list, ignore_index=True)
-        [(a_fit_scatter, b_fit_scatter,x_fitted_scatter,y_fitted_scatter),(a_fit_keV, b_fit_keV,x_fitted_keV,y_fitted_keV)] = self.fitting_gamma_rejection()
+        [(a_fit_scatter, b_fit_scatter,x_fitted_scatter,y_fitted_scatter),(a_fit_keV, b_fit_keV,x_fitted_keV,y_fitted_keV)] = self.fitting_doped_gamma_rejection()
 
         # plot the fitting function
         # ax[0].plot(x_fitted_scatter,y_fitted_scatter,label = f"a,b = {a_fit_scatter:.2e} , {b_fit_scatter:.2e}", color="black")
@@ -1497,6 +1497,50 @@ class integrated_analysis():
 
         return [(a_fit_scatter, b_fit_scatter,x_fitted_scatter,y_fitted_scatter),(a_fit_keV, b_fit_keV,x_fitted_keV,y_fitted_keV)]
 
+    def fitting_doped_gamma_rejection(self):
+        #
+        x_per_scatter = self.fitting_df["Seitz [keV]"].values
+        y_per_scatter = self.fitting_df["Rejection Rate Scattering[]"].values
+        # dealing with guess
+        x_min_per_scattering= min(x_per_scatter)
+        x_max_per_scattering = max(x_per_scatter)
+        y_min_per_scattering = min(y_per_scatter)
+        y_max_per_scattering = max(y_per_scatter)
+         # b is negative
+        b_guess_per_scattering=-(np.log(y_max_per_scattering)-np.log(y_min_per_scattering))/(x_max_per_scattering-x_min_per_scattering)
+        a_guess_scattering = y_max_per_scattering
+        initial_guess_scatter = [a_guess_scattering, b_guess_per_scattering]
+        popt_scatter, pcov_scatter = curve_fit(self.exp_func, x_per_scatter, y_per_scatter, p0=initial_guess_scatter)
+        a_fit_scatter, b_fit_scatter= popt_scatter
+        print('a_fit_scatter, b_fit_scatter',a_fit_scatter, b_fit_scatter)
+        x_fitted_scatter = np.linspace(min(x_per_scatter), max(x_per_scatter), 100)
+        y_fitted_scatter = self.exp_func(x_fitted_scatter, *popt_scatter)
+
+
+
+
+
+        x_per_keV = self.fitting_df["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"].values
+        # for doped, y should be still per interaction, I keep the value is per interaction but the variable name
+        # is per keV.
+        y_per_keV = self.fitting_df["Rejection Rate Scattering[]"].values
+        # dealing with guess
+        x_min_per_keV = min(x_per_keV)
+        x_max_per_keV = max(x_per_keV)
+        y_min_per_keV = min(y_per_keV)
+        y_max_per_keV = max(y_per_keV)
+        # b is negative
+        b_guess_per_keV = -(np.log(y_max_per_keV) - np.log(y_min_per_keV)) / (
+                    x_max_per_keV - x_min_per_keV)
+        a_guess_scattering = y_max_per_keV
+        initial_guess_keV = [a_guess_scattering, b_guess_per_keV]
+        popt_keV, pcov_keV = curve_fit(self.exp_func, x_per_keV, y_per_keV, p0=initial_guess_keV)
+        a_fit_keV, b_fit_keV = popt_keV
+        print('a_fit_keV, b_fit_keV', a_fit_keV, b_fit_keV)
+        x_fitted_keV = np.linspace(min(x_per_keV), max(x_per_keV), 100)
+        y_fitted_keV = self.exp_func(x_fitted_keV, *popt_keV)
+
+        return [(a_fit_scatter, b_fit_scatter,x_fitted_scatter,y_fitted_scatter),(a_fit_keV, b_fit_keV,x_fitted_keV,y_fitted_keV)]
 
 
     def calculate_rss(self, series):
