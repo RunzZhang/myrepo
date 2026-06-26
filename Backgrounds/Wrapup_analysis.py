@@ -1316,7 +1316,7 @@ class integrated_analysis():
                            yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
 
             ax[1].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate Scattering[]"],
-                           yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
+                           yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
 
         for i in range(len(self.Co_exp_rejection_path)):
             df = pd.read_csv(self.Co_exp_rejection_path[i])
@@ -1338,8 +1338,8 @@ class integrated_analysis():
                            yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
 
 
-            ax[1].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate KeV[/keV]"],
-                           yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
+            ax[1].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate Scattering[]"],
+                           yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
 
 
         self.fitting_df =  pd.concat(self.fitting_list, ignore_index=True)
