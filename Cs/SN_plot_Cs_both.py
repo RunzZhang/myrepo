@@ -246,7 +246,7 @@ class SN():
         # the sum is per event
         ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["PreKinetic/MeV"]*1000
         print(self.merged_df[(self.merged_df["Volume"] == "LAr_phys") & (
-            self.merged_df["PreKinetic/MeV"].between(0.003, 0.0045))])
+            self.merged_df["PreKinetic/MeV"].between(0.029, 0.030))])
 
         fig, ax = plt.subplots(1,3, figsize=(14, 4))
         # ax[0].hist(ER_Ar, bins=60,range= (0,600),align="left")
