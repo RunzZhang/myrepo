@@ -255,8 +255,8 @@ class SN():
             if array[0][i]>40:
                 print("energy bin keV",array[1][i],array[1][i+1])
         #bins=12000, range=(0, 1200))
-        # ax[0].set_xlabel("photo absorption of Xe[keV] ")
-        ax[0].set_xlabel("photo absorption of Ar [keV] ")
+        ax[0].set_xlabel("photo absorption of Xe[keV] ")
+        # ax[0].set_xlabel("photo absorption of Ar [keV] ")
         ax[0].set_ylabel("Counts")
         ax[0].set_title("Cs source - 662 keV gamma")
 
