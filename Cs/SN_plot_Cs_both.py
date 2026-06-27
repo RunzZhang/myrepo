@@ -249,8 +249,8 @@ class SN():
             self.merged_df["PreKinetic/MeV"].between(0.029, 0.030))])
 
         fig, ax = plt.subplots(1,3, figsize=(14, 4))
-        # ax[0].hist(ER_Ar, bins=60,range= (0,600),align="left")
-        array = ax[0].hist(ER_Ar, bins=200, range=(0, 100), align="left")
+        ax[0].hist(ER_Ar, bins=60,range= (0,600),align="left")
+        # array = ax[0].hist(ER_Ar, bins=200, range=(0, 100), align="left")
         for i in range(len(array[0])):
             if array[0][i]>100:
                 print("energy bin keV",array[1][i],array[1][i+1])
