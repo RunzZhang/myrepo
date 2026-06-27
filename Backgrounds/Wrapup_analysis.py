@@ -1195,7 +1195,7 @@ class integrated_analysis():
         plt.savefig(self.plot_path + "average_bkg_rate.pdf")
 
     def gamma_rejection_plot(self):
-        fig, ax = plt.subplots(1, 2, figsize=(14, 5))
+        fig, ax = plt.subplots(2, 1, figsize=(6, 14))
         # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
         self.fitting_list = []
 
@@ -1289,7 +1289,7 @@ class integrated_analysis():
 
     def gamma_rejection_plot_alter(self):
         # print Q vs per keV and Eion per interaction
-        fig, ax = plt.subplots(1, 2, figsize=(14, 5))
+        fig, ax = plt.subplots(2, 1, figsize=(6, 14))
         # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
         self.fitting_list = []
 
@@ -1345,7 +1345,7 @@ class integrated_analysis():
 
 
         self.fitting_df =  pd.concat(self.fitting_list, ignore_index=True)
-        [(a_fit_scatter, b_fit_scatter,x_fitted_scatter,y_fitted_scatter),(a_fit_keV, b_fit_keV,x_fitted_keV,y_fitted_keV)] = self.fitting_gamma_rejection()
+        [(a_fit_scatter, b_fit_scatter,x_fitted_scatter,y_fitted_scatter),(a_fit_keV, b_fit_keV,x_fitted_keV,y_fitted_keV)] = self.fitting_gamma_rejection_alter()
 
         # plot the fitting function
         # ax[0].plot(x_fitted_scatter,y_fitted_scatter,label = f"a,b = {a_fit_scatter:.2e} , {b_fit_scatter:.2e}", color="black")
@@ -1382,7 +1382,7 @@ class integrated_analysis():
         plt.savefig(self.plot_path + "gamma_rejection_alter.pdf")
 
     def doped_gamma_rejection_plot(self):
-        fig, ax = plt.subplots(1, 2, figsize=(14, 5))
+        fig, ax = plt.subplots(2, 1, figsize=(6, 14))
         # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
         self.fitting_list = []
 
