@@ -18,8 +18,8 @@ class integrated_analysis():
         self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density095_config_B.pkl'
 
         # doped
-        self.Co_sim_path = '/data/runzezhang/result/TN_sims_D/Co_doped_output.pkl'
-        self.Cs_sim_path = '/data/runzezhang/result/TN_sims_D/Cs_doped_output.pkl'
+        # self.Co_sim_path = '/data/runzezhang/result/TN_sims_D/Co_doped_output.pkl'
+        # self.Cs_sim_path = '/data/runzezhang/result/TN_sims_D/Cs_doped_output.pkl'
 
 
 
@@ -122,8 +122,9 @@ class integrated_analysis():
 
         # plot gamma
         # self.bkg_plot()
-        # self.gamma_rejection_plot()
-        self.doped_gamma_rejection_plot()
+        self.gamma_rejection_plot()
+        self.gamma_rejection_plot_alter()
+        # self.doped_gamma_rejection_plot()
         self.spectrums_plot()
 
 
@@ -1198,7 +1199,7 @@ class integrated_analysis():
         # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
         self.fitting_list = []
 
-        self.Cs_label = ["Cs 11/17/2025 116K","Cs 12/01/2025 116K","Cs 12/10/2025","Cs 01/20/2026 116K","Cs 02/02/2026 119K"]
+        self.Cs_label = ["Cs 11/17/2025 116K","Cs 12/01/2025 116K","Cs 12/10/2025 116K","Cs 01/20/2026 116K","Cs 02/02/2026 119K"]
         self.Co_label = ["Co 12/15/2026 116K"]
         for i in range(len(self.Cs_exp_rejection_path)):
             df = pd.read_csv(self.Cs_exp_rejection_path[i])
@@ -1285,6 +1286,101 @@ class integrated_analysis():
         ax[1].legend(loc='upper right', fontsize=7)
 
         plt.savefig(self.plot_path + "gamma_rejection.pdf")
+
+    def gamma_rejection_plot_alter(self):
+        # print Q vs per keV and Eion per interaction
+        fig, ax = plt.subplots(1, 2, figsize=(14, 5))
+        # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
+        self.fitting_list = []
+
+        self.Cs_label = ["Cs 11/17/2025 116K","Cs 12/01/2025 116K","Cs 12/10/2025 116K","Cs 01/20/2026 116K","Cs 02/02/2026 119K"]
+        self.Co_label = ["Co 12/15/2026 116K"]
+        for i in range(len(self.Cs_exp_rejection_path)):
+            df = pd.read_csv(self.Cs_exp_rejection_path[i])
+            # print(df.columns)
+            # doc_label = self.Cs_exp_raw_path[i].replace('_exposures', '')
+            doc_label = self.Cs_label[i]
+            print('doc_label',doc_label)
+            # signal
+            # drop 2.75,3.25, 3.75 bara pressure
+            # pressure_drop_list = [2.75,3.25,3.75]
+            pressure_drop_list = []
+            df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
+            # only positive rate
+            df =  df[df['Clean Rate [mHz]']>0]
+
+            df_fit = df[['Seitz [keV]',"Rejection Rate Scattering[]",'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',"Rejection Rate KeV[/keV]"]]
+            self.fitting_list.append(df_fit)
+
+
+
+            ax[0].errorbar(df['Seitz [keV]'], df["Rejection Rate KeV[/keV]"],
+                           yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
+
+            ax[1].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate Scattering[]"],
+                           yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
+
+        for i in range(len(self.Co_exp_rejection_path)):
+            df = pd.read_csv(self.Co_exp_rejection_path[i])
+            # print(df.columns)
+            # doc_label = self.Co_exp_raw_path[i].rstrip("_exposures")
+            doc_label = self.Co_label[i]
+            # signal
+            # drop 2.75,3.25, 3.75 bara pressure
+            # pressure_drop_list = [2.75,3.25,3.75]
+            pressure_drop_list = []
+            df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
+            df = df[df['Clean Rate [mHz]'] > 0]
+
+            df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+                         "Rejection Rate KeV[/keV]"]]
+            self.fitting_list.append(df_fit)
+
+            ax[0].errorbar(df['Seitz [keV]'], df["Rejection Rate Scattering[]"],
+                           yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
+
+
+            ax[1].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate KeV[/keV]"],
+                           yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
+
+
+        self.fitting_df =  pd.concat(self.fitting_list, ignore_index=True)
+        [(a_fit_scatter, b_fit_scatter,x_fitted_scatter,y_fitted_scatter),(a_fit_keV, b_fit_keV,x_fitted_keV,y_fitted_keV)] = self.fitting_gamma_rejection()
+
+        # plot the fitting function
+        # ax[0].plot(x_fitted_scatter,y_fitted_scatter,label = f"a,b = {a_fit_scatter:.2e} , {b_fit_scatter:.2e}", color="black")
+        ax[0].plot(x_fitted_scatter, y_fitted_scatter,
+                   color="black")
+
+        #gamma rejection up limit
+        # self.bkg_floor_plot(ax[0],"Seitz")
+
+        ax[0].set_xlabel(r"Seitz threshold [keV]")
+        ax[0].set_ylabel("Nucleation probability (per interaction)")
+        # ax[0].set_title("Gamma Rejection Per Scattering ")
+        # ax[0].set_ylim(1.0e-12,1.0e-2)
+        # ax[0].set_xlim(0,6)
+        # ax[0].set_xlim(0.8,1.5)
+        # ax[0].set_ylim(1.0e-12,1.0e-2)
+        ax[0].set_yscale("log")
+
+        ax[0].legend(loc='upper right', fontsize=7)
+
+        # ax[1].plot(x_fitted_keV, y_fitted_keV, label=f"a,b = {a_fit_keV:.2e} , {b_fit_keV:.2e}", color="black")
+        ax[1].plot(x_fitted_keV, y_fitted_keV, color="black")
+
+        # self.bkg_floor_plot(ax[1], "Eion")
+        ax[1].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
+        ax[1].set_ylabel("Probability per energy deposited (events/keV)")
+        # ax[1].set_title("Gamma Rejection Per keV ")
+        # ax[1].set_ylim(1.0e-14,1.0e-4)
+        # ax[1].set_xlim(0.08,0.15)
+        # ax[1].set_xlim(0.8,1.1)
+        ax[1].set_yscale("log")
+        ax[1].legend(loc='upper right', fontsize=7)
+
+        plt.savefig(self.plot_path + "gamma_rejection_alter.pdf")
+
     def doped_gamma_rejection_plot(self):
         fig, ax = plt.subplots(1, 2, figsize=(14, 5))
         # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
@@ -1479,6 +1575,48 @@ class integrated_analysis():
 
         x_per_keV = self.fitting_df["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"].values
         y_per_keV = self.fitting_df["Rejection Rate KeV[/keV]"].values
+        # dealing with guess
+        x_min_per_keV = min(x_per_keV)
+        x_max_per_keV = max(x_per_keV)
+        y_min_per_keV = min(y_per_keV)
+        y_max_per_keV = max(y_per_keV)
+        # b is negative
+        b_guess_per_keV = -(np.log(y_max_per_keV) - np.log(y_min_per_keV)) / (
+                    x_max_per_keV - x_min_per_keV)
+        a_guess_scattering = y_max_per_keV
+        initial_guess_keV = [a_guess_scattering, b_guess_per_keV]
+        popt_keV, pcov_keV = curve_fit(self.exp_func, x_per_keV, y_per_keV, p0=initial_guess_keV)
+        a_fit_keV, b_fit_keV = popt_keV
+        print('a_fit_keV, b_fit_keV', a_fit_keV, b_fit_keV)
+        x_fitted_keV = np.linspace(min(x_per_keV), max(x_per_keV), 100)
+        y_fitted_keV = self.exp_func(x_fitted_keV, *popt_keV)
+
+        return [(a_fit_scatter, b_fit_scatter,x_fitted_scatter,y_fitted_scatter),(a_fit_keV, b_fit_keV,x_fitted_keV,y_fitted_keV)]
+    def fitting_gamma_rejection_alter(self):
+        # switch Y axis. Now Q vs per kev and Eion vs per interaction
+        x_per_scatter = self.fitting_df["Seitz [keV]"].values
+        y_per_scatter = self.fitting_df["Rejection Rate KeV[/keV]"].values
+        # dealing with guess
+        x_min_per_scattering= min(x_per_scatter)
+        x_max_per_scattering = max(x_per_scatter)
+        y_min_per_scattering = min(y_per_scatter)
+        y_max_per_scattering = max(y_per_scatter)
+         # b is negative
+        b_guess_per_scattering=-(np.log(y_max_per_scattering)-np.log(y_min_per_scattering))/(x_max_per_scattering-x_min_per_scattering)
+        a_guess_scattering = y_max_per_scattering
+        initial_guess_scatter = [a_guess_scattering, b_guess_per_scattering]
+        popt_scatter, pcov_scatter = curve_fit(self.exp_func, x_per_scatter, y_per_scatter, p0=initial_guess_scatter)
+        a_fit_scatter, b_fit_scatter= popt_scatter
+        print('a_fit_scatter, b_fit_scatter',a_fit_scatter, b_fit_scatter)
+        x_fitted_scatter = np.linspace(min(x_per_scatter), max(x_per_scatter), 100)
+        y_fitted_scatter = self.exp_func(x_fitted_scatter, *popt_scatter)
+
+
+
+
+
+        x_per_keV = self.fitting_df["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"].values
+        y_per_keV = self.fitting_df["Rejection Rate Scattering[]"].values
         # dealing with guess
         x_min_per_keV = min(x_per_keV)
         x_max_per_keV = max(x_per_keV)
