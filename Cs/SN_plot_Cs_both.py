@@ -11,8 +11,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_ar_1E5/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_ar_1E5/" # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_xe_1E5/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_xe_1E5/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -249,7 +249,7 @@ class SN():
             self.merged_df["PreKinetic/MeV"].between(0.029, 0.030))])
 
         fig, ax = plt.subplots(1,3, figsize=(14, 4))
-        array = ax[0].hist(ER_Ar, bins=1200,range= (0,600),align="left")
+        array = ax[0].hist(ER_Ar, bins=1200,range= (0,1200),align="left")
         # array = ax[0].hist(ER_Ar, bins=200, range=(0, 100), align="left")
         for i in range(len(array[0])):
             if array[0][i]>40:
