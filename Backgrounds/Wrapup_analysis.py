@@ -123,9 +123,9 @@ class integrated_analysis():
         # plot gamma
         # self.bkg_plot()
         # self.gamma_rejection_plot()
-        self.gamma_rejection_plot_alter()
-        # self.doped_gamma_rejection_plot()
-        self.spectrums_plot()
+        # self.gamma_rejection_plot_alter()
+        self.doped_gamma_rejection_plot()
+        # self.spectrums_plot()
 
 
     def generate_path(self):
