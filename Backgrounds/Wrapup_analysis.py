@@ -1336,12 +1336,12 @@ class integrated_analysis():
                          "Rejection Rate KeV[/keV]"]]
             self.fitting_list.append(df_fit)
 
-            ax[0].errorbar(df['Seitz [keV]'], df["Rejection Rate Scattering[]"],
-                           yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
-
-
-            ax[1].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate KeV[/keV]"],
+            ax[0].errorbar(df['Seitz [keV]'], df["Rejection Rate KeV[/keV]"],
                            yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
+
+
+            ax[1].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate Scattering[]"],
+                           yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
 
 
         self.fitting_df =  pd.concat(self.fitting_list, ignore_index=True)
