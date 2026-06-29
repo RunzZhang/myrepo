@@ -276,7 +276,7 @@ class SN():
             array = ax[0].hist(ER_Ar, bins=800, range=(0, 400), align="left")
             # array = ax[0].hist(ER_Ar, bins=200, range=(0, 100), align="left")
             for i in range(len(array[0])):
-                if array[0][i] > 10:
+                if array[0][i] > 100:
                     print("energy bin keV", array[1][i], array[1][i + 1],array[0][i])
             # bins=12000, range=(0, 1200))
             ax[0].set_xlabel("photo absorption of Xe [keV] ")
