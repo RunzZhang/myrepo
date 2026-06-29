@@ -18,8 +18,8 @@ class integrated_analysis():
         self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density095_config_B.pkl'
 
         # doped
-        self.Co_sim_path = '/data/runzezhang/result/TN_sims_D/Co_doped_output.pkl'
-        self.Cs_sim_path = '/data/runzezhang/result/TN_sims_D/Cs_doped_output.pkl'
+        # self.Co_sim_path = '/data/runzezhang/result/TN_sims_D/Co_doped_output.pkl'
+        # self.Cs_sim_path = '/data/runzezhang/result/TN_sims_D/Cs_doped_output.pkl'
 
 
 
