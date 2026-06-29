@@ -1407,7 +1407,7 @@ class integrated_analysis():
         # self.bkg_floor_plot(ax[0],"Seitz")
 
         ax[0].set_xlabel(r"Seitz threshold [keV]")
-        ax[0].set_ylabel("Probability per energy deposited (events/keV)")
+        ax[0].set_ylabel("Probability per energy deposited (events/keV) ")
         # ax[0].set_title("Gamma Rejection Per Scattering ")
         # ax[0].set_ylim(1.0e-12,1.0e-2)
         # ax[0].set_xlim(0,6)
