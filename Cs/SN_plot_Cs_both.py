@@ -264,6 +264,73 @@ class SN():
 
         plt.savefig(self.plot_path + "Cs_1E8_ER_all_doped.pdf")
 
+
+    def read_ER_Ar_doped(self):
+        material = "argon"
+        # material = "xenon"
+        # material = "mixing"
+        # per energy deposition
+        # the sum is per event
+        ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["PreKinetic/MeV"]*1000
+        if material == "argon":
+            print(self.merged_df[(self.merged_df["Volume"] == "LAr_phys") & (
+                self.merged_df["PreKinetic/MeV"].between(0.0030, 0.0035))])
+
+            fig, ax = plt.subplots(1, 3, figsize=(14, 4))
+            array = ax[0].hist(ER_Ar, bins=800, range=(0, 300), align="left")
+            # array = ax[0].hist(ER_Ar, bins=200, range=(0, 100), align="left")
+            for i in range(len(array[0])):
+                if array[0][i] > 10:
+                    print("energy bin keV", array[1][i], array[1][i + 1], array[0][i])
+            # bins=12000, range=(0, 1200))
+            ax[0].set_xlabel("photo absorption of Ar[keV] ")
+            # ax[0].set_xlabel("photo absorption of Ar [keV] ")
+            ax[0].set_ylabel("Counts")
+            ax[0].set_yscale("log")
+            ax[0].set_title("Cs source - 662 keV gamma")
+
+            plt.savefig(self.plot_path + "Cs_1E5_argon_pho.pdf")
+        elif material == "xenon":
+            print(self.merged_df[(self.merged_df["Volume"] == "LAr_phys") & (
+                self.merged_df["PreKinetic/MeV"].between(0.0030, 0.0035))])
+
+            fig, ax = plt.subplots(1, 3, figsize=(14, 4))
+            array = ax[0].hist(ER_Ar, bins=800, range=(0, 400), align="left")
+            # array = ax[0].hist(ER_Ar, bins=200, range=(0, 100), align="left")
+            for i in range(len(array[0])):
+                if array[0][i] > 10:
+                    print("energy bin keV", array[1][i], array[1][i + 1],array[0][i])
+            # bins=12000, range=(0, 1200))
+            ax[0].set_xlabel("photo absorption of Xe [keV] ")
+            # ax[0].set_xlabel("photo absorption of Ar [keV] ")
+            ax[0].set_ylabel("Counts")
+            ax[0].set_yscale("log")
+            ax[0].set_title("Cs source - 662 keV gamma")
+
+            plt.savefig(self.plot_path + "Cs_1E5_xenon_pho.pdf")
+        elif material == "mixing":
+            print(self.merged_df[(self.merged_df["Volume"] == "LAr_phys") & (
+                self.merged_df["PreKinetic/MeV"].between(0.0030, 0.0035))])
+
+            fig, ax = plt.subplots(1, 3, figsize=(14, 4))
+            array = ax[0].hist(ER_Ar, bins=800, range=(0, 400), align="left")
+            # array = ax[0].hist(ER_Ar, bins=200, range=(0, 100), align="left")
+            for i in range(len(array[0])):
+                if array[0][i] > 10:
+                    print("energy bin keV", array[1][i], array[1][i + 1],array[0][i])
+            # bins=12000, range=(0, 1200))
+            ax[0].set_xlabel("photo absorption of Xe [keV] ")
+            # ax[0].set_xlabel("photo absorption of Ar [keV] ")
+            ax[0].set_ylabel("Counts")
+            ax[0].set_yscale("log")
+            ax[0].set_title("Cs source - 662 keV gamma")
+
+            plt.savefig(self.plot_path + "Cs_1E8_doped_pho.pdf")
+        else:
+            return 0
+
+
+
     def read_ER_Ar_CF_per_deposit_rate(self):
         # per energy deposition and total
         # MHz
