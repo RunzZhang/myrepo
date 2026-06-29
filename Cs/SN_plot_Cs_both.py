@@ -277,7 +277,7 @@ class SN():
                 self.merged_df["PreKinetic/MeV"].between(0.0030, 0.0035))])
 
             fig, ax = plt.subplots(1, 3, figsize=(14, 4))
-            array = ax[0].hist(ER_Ar, bins=800, range=(0, 300), align="left")
+            array = ax[0].hist(ER_Ar, bins=600, range=(0, 300), align="left")
             # array = ax[0].hist(ER_Ar, bins=200, range=(0, 100), align="left")
             for i in range(len(array[0])):
                 if array[0][i] > 10:
