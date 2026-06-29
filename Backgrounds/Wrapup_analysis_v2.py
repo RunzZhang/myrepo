@@ -1407,7 +1407,7 @@ class integrated_analysis():
         # self.bkg_floor_plot(ax[0],"Seitz")
 
         ax[0].set_xlabel(r"Seitz threshold [keV]")
-        ax[0].set_ylabel("Nucleation probability (per interaction)")
+        ax[0].set_ylabel("Probability per energy deposited (events/keV)")
         # ax[0].set_title("Gamma Rejection Per Scattering ")
         # ax[0].set_ylim(1.0e-12,1.0e-2)
         # ax[0].set_xlim(0,6)
@@ -1422,7 +1422,7 @@ class integrated_analysis():
 
         # self.bkg_floor_plot(ax[1], "Eion")
         ax[1].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
-        ax[1].set_ylabel("Probability per energy deposited (events/keV)")
+        ax[1].set_ylabel("Nucleation probability (per interaction)")
         # ax[1].set_title("Gamma Rejection Per keV ")
         # ax[1].set_ylim(1.0e-14,1.0e-4)
         # ax[1].set_xlim(0.08,0.15)
