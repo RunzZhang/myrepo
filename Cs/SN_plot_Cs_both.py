@@ -11,8 +11,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_xe_1E5/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_xe_1E5/" # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_ar_1E5/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_ar_1E5/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -255,7 +255,7 @@ class SN():
             if array[0][i]>10:
                 print("energy bin keV",array[1][i],array[1][i+1])
         #bins=12000, range=(0, 1200))
-        ax[0].set_xlabel("photo absorption of Xe[keV] ")
+        ax[0].set_xlabel("photo absorption of Ar[keV] ")
         # ax[0].set_xlabel("photo absorption of Ar [keV] ")
         ax[0].set_ylabel("Counts")
         ax[0].set_yscale("log")
