@@ -11,8 +11,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_ar_1E5/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_ar_1E5/" # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_xe_1E5/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_xe_1E5/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -241,33 +241,11 @@ class SN():
 
         plt.savefig(self.plot_path + "Cs_1E5_ER_all.pdf")
 
-    def read_ER_Ar_doped(self):
-        # per energy deposition
-        # the sum is per event
-        ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["PreKinetic/MeV"]*1000
-        print(self.merged_df[(self.merged_df["Volume"] == "LAr_phys") & (
-            self.merged_df["PreKinetic/MeV"].between(0.0030, 0.0035))])
-
-        fig, ax = plt.subplots(1,3, figsize=(14, 4))
-        array = ax[0].hist(ER_Ar, bins=800,range= (0,400),align="left")
-        # array = ax[0].hist(ER_Ar, bins=200, range=(0, 100), align="left")
-        for i in range(len(array[0])):
-            if array[0][i]>10:
-                print("energy bin keV",array[1][i],array[1][i+1])
-        #bins=12000, range=(0, 1200))
-        ax[0].set_xlabel("photo absorption of Ar[keV] ")
-        # ax[0].set_xlabel("photo absorption of Ar [keV] ")
-        ax[0].set_ylabel("Counts")
-        ax[0].set_yscale("log")
-        ax[0].set_title("Cs source - 662 keV gamma")
-
-
-        plt.savefig(self.plot_path + "Cs_1E8_ER_all_doped.pdf")
 
 
     def read_ER_Ar_doped(self):
-        material = "argon"
-        # material = "xenon"
+        # material = "argon"
+        material = "xenon"
         # material = "mixing"
         # per energy deposition
         # the sum is per event
