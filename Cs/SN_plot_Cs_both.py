@@ -270,7 +270,7 @@ class SN():
             plt.savefig(self.plot_path + "Cs_1E5_argon_pho.pdf")
         elif material == "xenon":
             print(self.merged_df[(self.merged_df["Volume"] == "LAr_phys") & (
-                self.merged_df["PreKinetic/MeV"].between(0.004, 0.0045))])
+                self.merged_df["PreKinetic/MeV"].between(0.0029, 0.00295))])
 
             fig, ax = plt.subplots(1, 3, figsize=(14, 4))
             array = ax[0].hist(ER_Ar, bins=800, range=(0, 400), align="left")
