@@ -1457,7 +1457,7 @@ class integrated_analysis():
                       color="black")
         ax[1, 1].plot(result_Eion_keV[2], result_Eion_keV[3],
                       color="black")
-        ax[2, 2].plot(result_Eion_xe[2], result_Eion_xe[3],
+        ax[1, 2].plot(result_Eion_xe[2], result_Eion_xe[3],
                       color="black")
         
 
