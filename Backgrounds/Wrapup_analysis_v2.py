@@ -1739,7 +1739,7 @@ class integrated_analysis():
     def fitting_gamma_rejection_v2(self):
         # switch Y axis. Now Q vs per kev and Eion vs per interaction
         x_Q = self.fitting_df["Seitz [keV]"].values
-        y_per_scatter = self.fitting_df["Rejection Rate KeV[/keV]"].values
+        y_per_scatter = self.fitting_df["Rejection Rate Scattering[]"].values
         # dealing with guess
         x_min_Q= min(x_Q)
         x_max_Q = max(x_Q)
@@ -1747,7 +1747,7 @@ class integrated_analysis():
         y_max_per_scattering = max(y_per_scatter)
 
         x_Eion = self.fitting_df["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"].values
-        y_per_keV = self.fitting_df["Rejection Rate Scattering[]"].values
+        y_per_keV = self.fitting_df["Rejection Rate KeV[/keV]"].values
         # dealing with guess
         x_min_Eion = min(x_Eion)
         x_max_Eion = max(x_Eion)
@@ -1763,6 +1763,7 @@ class integrated_analysis():
         y_max_per_xe = max(y_per_xe)
         
         result_Q_scatter  = self.fit_combination(x_Q,y_per_scatter,y_max_per_scattering,y_min_per_scattering,x_max_Q,x_min_Q)
+
         result_Q_keV = self.fit_combination(x_Q, y_per_keV, y_max_per_keV, y_min_per_keV, x_max_Q,
                                                 x_min_Q)
         result_Q_xe = self.fit_combination(x_Q, y_per_xe, y_max_per_xe, y_min_per_xe, x_max_Q,
