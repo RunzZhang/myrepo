@@ -1447,17 +1447,17 @@ class integrated_analysis():
 
         # plot the fitting function
         # ax[0].plot(x_fitted_scatter,y_fitted_scatter,label = f"a,b = {a_fit_scatter:.2e} , {b_fit_scatter:.2e}", color="black")
-        ax[0,0].plot(result_Q_scatter[1], result_Q_scatter[2],
+        ax[0,0].plot(result_Q_scatter[2], result_Q_scatter[2],
                    color="black")
-        ax[0, 1].plot(result_Q_keV[1], result_Q_keV[2],
+        ax[0, 1].plot(result_Q_keV[2], result_Q_keV[2],
                       color="black")
-        ax[0, 2].plot(result_Q_xe[1], result_Q_xe[2],
+        ax[0, 2].plot(result_Q_xe[2], result_Q_xe[2],
                       color="black")
-        ax[0, 0].plot(result_Eion_scatter[1], result_Eion_scatter[2],
+        ax[0, 0].plot(result_Eion_scatter[2], result_Eion_scatter[2],
                       color="black")
-        ax[1, 1].plot(result_Eion_keV[1], result_Eion_keV[2],
+        ax[1, 1].plot(result_Eion_keV[2], result_Eion_keV[2],
                       color="black")
-        ax[2, 2].plot(result_Eion_xe[1], result_Eion_xe[2],
+        ax[2, 2].plot(result_Eion_xe[2], result_Eion_xe[2],
                       color="black")
         
 
