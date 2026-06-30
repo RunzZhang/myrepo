@@ -66,7 +66,7 @@ class integrated_analysis():
         # self.Cs_exp_119_raw_path = ["Cold-Cs-2_2-3_exposures_zoom"]
         self.Cs_exp_119_raw_path = ["Cold-Cs-2_2-3_exposures_mix"] # updated slight change
         # self.Co_exp_116_raw_path = ["60Co-12_15-16_exposures"]
-        self.Co_exp_116_raw_path = ["60Co-12_15-16_exposures_mix"]
+        self.Co_exp_116_raw_path = ["60Co-Source-12_15-16_exposures_mix"]
         self.Co_exp_116_raw_len = len(self.Co_exp_116_raw_path)
         self.Co_exp_119_raw_path = ["60Co-Source-02_06_exposures_mix"]
         self.Co_exp_119_raw_len = len(self.Co_exp_119_raw_path)
