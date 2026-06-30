@@ -1479,20 +1479,20 @@ class integrated_analysis():
         ax[0, 2].set_yscale("log")
         ax[0, 2].legend(loc='upper right', fontsize=7)
 
-        ax[0, 0].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
-        ax[0, 0].set_ylabel("Nucleation probability (per interaction) ")
-        ax[0, 0].set_yscale("log")
-        ax[0, 0].legend(loc='upper right', fontsize=7)
+        ax[1, 0].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
+        ax[1, 0].set_ylabel("Nucleation probability (per interaction) ")
+        ax[1, 0].set_yscale("log")
+        ax[1, 0].legend(loc='upper right', fontsize=7)
 
         ax[1, 1].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
         ax[1, 1].set_ylabel("Probability per energy deposited (events/keV) ")
         ax[1, 1].set_yscale("log")
         ax[1, 1].legend(loc='upper right', fontsize=7)
 
-        ax[2, 2].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
-        ax[2, 2].set_ylabel("Nucleation probability (per xenon photoabsorption) ")
-        ax[2, 2].set_yscale("log")
-        ax[2, 2].legend(loc='upper right', fontsize=7)
+        ax[1, 2].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
+        ax[1, 2].set_ylabel("Nucleation probability (per xenon photoabsorption) ")
+        ax[1, 2].set_yscale("log")
+        ax[1, 2].legend(loc='upper right', fontsize=7)
 
         plt.savefig(self.plot_path + "gamma_rejection_v2.pdf")
         
