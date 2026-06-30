@@ -18,8 +18,8 @@ class integrated_analysis():
         self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density095_config_B.pkl'
 
         # doped
-        self.Co_sim_path = '/data/runzezhang/result/TN_sims_D/Co_doped_output.pkl'
-        self.Cs_sim_path = '/data/runzezhang/result/TN_sims_D/Cs_doped_output.pkl'
+        self.Co_sim_doped_path = '/data/runzezhang/result/TN_sims_D/Co_doped_output.pkl'
+        self.Cs_sim_doped_path = '/data/runzezhang/result/TN_sims_D/Cs_doped_output.pkl'
 
 
 
@@ -82,6 +82,9 @@ class integrated_analysis():
 
         self.Co_exp_raw_path = self.Co_exp_116_raw_path+self.Co_exp_119_raw_path
         self.Cs_exp_raw_path = self.Cs_exp_116_raw_path+self.Cs_exp_119_raw_path
+
+
+
         self.backgrounds_exp_raw_path = self.background_116_sorted_path+self.background_119_sorted_path
 
         self.main()
@@ -123,8 +126,8 @@ class integrated_analysis():
         # plot gamma
         # self.bkg_plot()
         # self.gamma_rejection_plot()
-        # self.gamma_rejection_plot_alter()
-        self.doped_gamma_rejection_plot()
+        self.gamma_rejection_plot_v2()
+        # self.doped_gamma_rejection_plot()
         # self.spectrums_plot()
 
 
@@ -183,6 +186,16 @@ class integrated_analysis():
         with open(self.Cs_sim_path, "rb") as f:
             self.Cs_sims = pickle.load(f)
         print("self.Cs_sims",self.Cs_sims)
+
+        with open(self.Co_sim_doped_path, "rb") as f:
+            self.Co_sims_doped = pickle.load(f)
+        print("self.Co_sims",self.Co_sims_doped)
+        with open(self.Cs_sim_doped_path, "rb") as f:
+            self.Cs_sims_doped = pickle.load(f)
+        print("self.Cs_sims",self.Cs_sims_doped)
+
+
+
 
         with open(self.Cf_simA_path, "rb") as f:
             self.Cf_simsA = pickle.load(f)
@@ -1075,6 +1088,10 @@ class integrated_analysis():
             self.sim_list = self.Co_sims
         elif source == "Cs":
             self.sim_list = self.Cs_sims
+        elif source == "Cs_doped":
+            self.sim_list = self.Cs_sims_doped
+        elif source == "Co_doped":
+            self.sim_list = self.Co_sims_doped
         else:
             print("NA sources")
 
@@ -1125,8 +1142,10 @@ class integrated_analysis():
     def calculate_rejection_by_row(self, row, source):
         if source == "Co":
             self.sim_list = self.Co_sims
+            self.sim_doped_list = self.Co_sims_doped
         elif source == "Cs":
             self.sim_list = self.Cs_sims
+            self.sim_doped_list = self.Cs_sims_doped
         else:
             print("NA sources")
 
@@ -1181,21 +1200,28 @@ class integrated_analysis():
                 break
         # for xenon k shell absorption
         # only counts interactions that > 34.56 keV
+        self.Rate_factor_doped = self.sim_doped_list[0]
+        # print("self.Rate_factor",self.Rate_factor)
+        self.energy_edges_doped = self.sim_doped_list[1][0][1]
+        # print("self.energy_edges", self.energy_edges)
+        self.counts_cum_bin_doped = self.sim_doped_list[2]
+        # print("self.counts_cum_bin", self.counts_cum_bin)
+        self.counts_energy_cum_bin_doped = self.sim_doped_list[3]
         rejection_PX = 0
         rejection_PX_sigma = 0
         energy_K = 34.56
             
-        for i in range(len(self.energy_edges)):
+        for i in range(len(self.energy_edges_doped)):
             # if row['Seitz [keV]']>= self.energy_edges[i]:
             #     # rejection per xenon photo absorption in k shell, PX meaning per xenon
             #     counts = self.counts_cum_bin[i] + (row['Seitz [keV]'] - self.energy_edges[i]) * (
             #             self.counts_cum_bin[i + 1] -
             #             self.counts_cum_bin[i]) / (
             #                      self.energy_edges[i + 1] - self.energy_edges[i])
-            if self.energy_edges[i] >= 34.56:
-                counts = self.counts_cum_bin[i]
+            if self.energy_edges_doped[i] >= 0:
+                counts = self.counts_cum_bin_doped[i]
 
-                rate_PX = self.Rate_factor * (counts)
+                rate_PX = self.Rate_factor_doped * (counts)
 
                 rate_PX_sigma = rate_PX / np.sqrt(counts)
 
@@ -1330,9 +1356,9 @@ class integrated_analysis():
 
         plt.savefig(self.plot_path + "gamma_rejection.pdf")
 
-    def gamma_rejection_plot_alter(self):
+    def gamma_rejection_plot_v2(self):
         # print Q vs per keV and Eion per interaction
-        fig, ax = plt.subplots(3, 1, figsize=(8,21))
+        fig, ax = plt.subplots(2, 4, figsize=(28,16))
         # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
         self.fitting_list = []
 
@@ -1357,14 +1383,28 @@ class integrated_analysis():
 
 
 
-            ax[0].errorbar(df['Seitz [keV]'], df["Rejection Rate KeV[/keV]"],
-                           yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
-
-            ax[1].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate Scattering[]"],
+            ax[0 , 0].errorbar(df['Seitz [keV]'], df["Rejection Rate Scattering[]"],
                            yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
 
-            ax[2].errorbar(df['Q_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate Xenon Abs[]"],
-                           yerr=df["Rejection Sigma Xenon Abs[]"], label=doc_label, fmt='o')
+            ax[0, 1].errorbar(df['Seitz [keV]'], df["Rejection Rate KeV[/keV]"],
+                              yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
+
+            ax[0, 2].errorbar(df['Seitz [keV]'], df["Rejection Rate Xenon Abs[]"],
+                              yerr=df["Rejection Sigma Xenon Abs[]"], label=doc_label, fmt='o')
+
+            ax[1, 0].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate Scattering[]"],
+                              yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
+
+            ax[1, 1].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate KeV[/keV]"],
+                              yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
+
+            ax[1, 2].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate Xenon Abs[]"],
+                              yerr=df["Rejection Sigma Xenon Abs[]"], label=doc_label, fmt='o')
+            
+            
+
+            # ax[2].errorbar(df['Q_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate Xenon Abs[]"],
+            #                yerr=df["Rejection Sigma Xenon Abs[]"], label=doc_label, fmt='o')
             
 
         for i in range(len(self.Co_exp_rejection_path)):
@@ -1383,71 +1423,94 @@ class integrated_analysis():
                          "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]',"Rejection Rate Xenon Abs[]"]]
             self.fitting_list.append(df_fit)
 
-            ax[0].errorbar(df['Seitz [keV]'], df["Rejection Rate KeV[/keV]"],
-                           yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
+            ax[0, 0].errorbar(df['Seitz [keV]'], df["Rejection Rate Scattering[]"],
+                              yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
 
+            ax[0, 1].errorbar(df['Seitz [keV]'], df["Rejection Rate KeV[/keV]"],
+                              yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
 
-            ax[1].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate Scattering[]"],
-                           yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
+            ax[0, 2].errorbar(df['Seitz [keV]'], df["Rejection Rate Xenon Abs[]"],
+                              yerr=df["Rejection Sigma Xenon Abs[]"], label=doc_label, fmt='o')
 
-            ax[2].errorbar(df['Q_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate Xenon Abs[]"],
-                           yerr=df["Rejection Sigma Xenon Abs[]"], label=doc_label, fmt='o')
+            ax[1, 0].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate Scattering[]"],
+                              yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
+
+            ax[1, 1].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate KeV[/keV]"],
+                              yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
+
+            ax[1, 2].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate Xenon Abs[]"],
+                              yerr=df["Rejection Sigma Xenon Abs[]"], label=doc_label, fmt='o')
 
 
         self.fitting_df =  pd.concat(self.fitting_list, ignore_index=True)
-        [(a_fit_scatter, b_fit_scatter,x_fitted_scatter,y_fitted_scatter),(a_fit_keV, b_fit_keV,x_fitted_keV,y_fitted_keV),(a_fit_xe, b_fit_xe,x_fitted_xe,y_fitted_xe)]\
-            = self.fitting_gamma_rejection_alter()
+        [result_Q_scatter,result_Q_keV,result_Q_xe,result_Eion_scatter,result_Eion_keV,result_Eion_xe,result_Q2_xe] = self.fitting_gamma_rejection_v2()
 
         # plot the fitting function
         # ax[0].plot(x_fitted_scatter,y_fitted_scatter,label = f"a,b = {a_fit_scatter:.2e} , {b_fit_scatter:.2e}", color="black")
-        ax[0].plot(x_fitted_scatter, y_fitted_scatter,
+        ax[0,0].plot(result_Q_scatter[1], result_Q_scatter[2],
                    color="black")
+        ax[0, 1].plot(result_Q_keV[1], result_Q_keV[2],
+                      color="black")
+        ax[0, 2].plot(result_Q_xe[1], result_Q_xe[2],
+                      color="black")
+        ax[0, 0].plot(result_Eion_scatter[1], result_Eion_scatter[2],
+                      color="black")
+        ax[1, 1].plot(result_Eion_keV[1], result_Eion_keV[2],
+                      color="black")
+        ax[2, 2].plot(result_Eion_xe[1], result_Eion_xe[2],
+                      color="black")
+        
 
         #gamma rejection up limit
         # self.bkg_floor_plot(ax[0],"Seitz")
 
-        ax[0].set_xlabel(r"Seitz threshold [keV]")
-        ax[0].set_ylabel("Probability per energy deposited (events/keV) ")
-        # ax[0].set_title("Gamma Rejection Per Scattering ")
-        # ax[0].set_ylim(1.0e-12,1.0e-2)
-        # ax[0].set_xlim(0,6)
-        # ax[0].set_xlim(0.8,1.5)
-        # ax[0].set_ylim(1.0e-12,1.0e-2)
-        ax[0].set_yscale("log")
+        ax[0,0].set_xlabel(r"Seitz threshold [keV]")
+        ax[0,0].set_ylabel("Nucleation probability (per interaction) ")
+        ax[0,0].set_yscale("log")
+        ax[0,0].legend(loc='upper right', fontsize=7)
 
-        ax[0].legend(loc='upper right', fontsize=7)
+        ax[0, 1].set_xlabel(r"Seitz threshold [keV]")
+        ax[0, 1].set_ylabel("Probability per energy deposited (events/keV) ")
+        ax[0, 1].set_yscale("log")
+        ax[0, 1].legend(loc='upper right', fontsize=7)
 
-        # ax[1].plot(x_fitted_keV, y_fitted_keV, label=f"a,b = {a_fit_keV:.2e} , {b_fit_keV:.2e}", color="black")
-        ax[1].plot(x_fitted_keV, y_fitted_keV, color="black")
+        ax[0, 2].set_xlabel(r"Seitz threshold [keV]")
+        ax[0, 2].set_ylabel("Nucleation probability (per xenon photoabsorption) ")
+        ax[0, 2].set_yscale("log")
+        ax[0, 2].legend(loc='upper right', fontsize=7)
 
-        # self.bkg_floor_plot(ax[1], "Eion")
-        ax[1].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
-        ax[1].set_ylabel("Nucleation probability (per interaction)")
-        # ax[1].set_title("Gamma Rejection Per keV ")
-        # ax[1].set_ylim(1.0e-14,1.0e-4)
-        # ax[1].set_xlim(0.08,0.15)
-        # ax[1].set_xlim(0.8,1.1)
-        ax[1].set_yscale("log")
-        ax[1].legend(loc='upper right', fontsize=7)
+        ax[0, 0].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
+        ax[0, 0].set_ylabel("Nucleation probability (per interaction) ")
+        ax[0, 0].set_yscale("log")
+        ax[0, 0].legend(loc='upper right', fontsize=7)
 
-        ax[2].plot(x_fitted_xe, y_fitted_xe,
-                   color="black")
+        ax[1, 1].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
+        ax[1, 1].set_ylabel("Probability per energy deposited (events/keV) ")
+        ax[1, 1].set_yscale("log")
+        ax[1, 1].legend(loc='upper right', fontsize=7)
 
-        # gamma rejection up limit
-        # self.bkg_floor_plot(ax[0],"Seitz")
+        ax[2, 2].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
+        ax[2, 2].set_ylabel("Nucleation probability (per xenon photoabsorption) ")
+        ax[2, 2].set_yscale("log")
+        ax[2, 2].legend(loc='upper right', fontsize=7)
 
-        ax[2].set_xlabel(r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
-        ax[2].set_ylabel("Nucleation probability (per xenon photoabsorption in K shell)")
-        # ax[0].set_title("Gamma Rejection Per Scattering ")
-        # ax[0].set_ylim(1.0e-12,1.0e-2)
-        # ax[0].set_xlim(0,6)
-        # ax[0].set_xlim(0.8,1.5)
-        # ax[0].set_ylim(1.0e-12,1.0e-2)
-        ax[2].set_yscale("log")
+        plt.savefig(self.plot_path + "gamma_rejection_v2.pdf")
+        
+        plt.clf()
+        
 
-        ax[2].legend(loc='upper right', fontsize=7)
+        
 
-        plt.savefig(self.plot_path + "gamma_rejection_alter.pdf")
+        
+
+
+        # ax[2].set_xlabel(r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
+        # ax[2].set_ylabel("Nucleation probability (per xenon photoabsorption in K shell)")
+        # ax[2].set_yscale("log")
+        # 
+        # ax[2].legend(loc='upper right', fontsize=7)
+
+        
         
         
         
@@ -1663,67 +1726,90 @@ class integrated_analysis():
         y_fitted_keV = self.exp_func(x_fitted_keV, *popt_keV)
 
         return [(a_fit_scatter, b_fit_scatter,x_fitted_scatter,y_fitted_scatter),(a_fit_keV, b_fit_keV,x_fitted_keV,y_fitted_keV)]
-    def fitting_gamma_rejection_alter(self):
+    def fitting_gamma_rejection_v2(self):
         # switch Y axis. Now Q vs per kev and Eion vs per interaction
-        x_per_scatter = self.fitting_df["Seitz [keV]"].values
+        x_Q = self.fitting_df["Seitz [keV]"].values
         y_per_scatter = self.fitting_df["Rejection Rate KeV[/keV]"].values
         # dealing with guess
-        x_min_per_scattering= min(x_per_scatter)
-        x_max_per_scattering = max(x_per_scatter)
+        x_min_Q= min(x_Q)
+        x_max_Q = max(x_Q)
         y_min_per_scattering = min(y_per_scatter)
         y_max_per_scattering = max(y_per_scatter)
-         # b is negative
-        b_guess_per_scattering=-(np.log(y_max_per_scattering)-np.log(y_min_per_scattering))/(x_max_per_scattering-x_min_per_scattering)
-        a_guess_scattering = y_max_per_scattering
-        initial_guess_scatter = [a_guess_scattering, b_guess_per_scattering]
-        popt_scatter, pcov_scatter = curve_fit(self.exp_func, x_per_scatter, y_per_scatter, p0=initial_guess_scatter)
-        a_fit_scatter, b_fit_scatter= popt_scatter
-        print('a_fit_scatter, b_fit_scatter',a_fit_scatter, b_fit_scatter)
-        x_fitted_scatter = np.linspace(min(x_per_scatter), max(x_per_scatter), 100)
-        y_fitted_scatter = self.exp_func(x_fitted_scatter, *popt_scatter)
 
-
-
-
-
-        x_per_keV = self.fitting_df["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"].values
+        x_Eion = self.fitting_df["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"].values
         y_per_keV = self.fitting_df["Rejection Rate Scattering[]"].values
         # dealing with guess
-        x_min_per_keV = min(x_per_keV)
-        x_max_per_keV = max(x_per_keV)
+        x_min_Eion = min(x_Eion)
+        x_max_Eion = max(x_Eion)
         y_min_per_keV = min(y_per_keV)
         y_max_per_keV = max(y_per_keV)
-        # b is negative
-        b_guess_per_keV = -(np.log(y_max_per_keV) - np.log(y_min_per_keV)) / (
-                    x_max_per_keV - x_min_per_keV)
-        a_guess_scattering = y_max_per_keV
-        initial_guess_keV = [a_guess_scattering, b_guess_per_keV]
-        popt_keV, pcov_keV = curve_fit(self.exp_func, x_per_keV, y_per_keV, p0=initial_guess_keV)
-        a_fit_keV, b_fit_keV = popt_keV
-        print('a_fit_keV, b_fit_keV', a_fit_keV, b_fit_keV)
-        x_fitted_keV = np.linspace(min(x_per_keV), max(x_per_keV), 100)
-        y_fitted_keV = self.exp_func(x_fitted_keV, *popt_keV)
 
-        x_per_xe = self.fitting_df["Q_rl-1_rhol-1 [GeVcm**2 g-1]"].values
+        x_Q2 = self.fitting_df["Q_rl-1_rhol-1 [GeVcm**2 g-1]"].values
         y_per_xe = self.fitting_df["Rejection Rate Xenon Abs[]"].values
         # dealing with guess
-        x_min_per_xe = min(x_per_xe)
-        x_max_per_xe = max(x_per_xe)
+        x_min_Q2 = min(x_Q2)
+        x_max_Q2 = max(x_Q2)
         y_min_per_xe = min(y_per_xe)
         y_max_per_xe = max(y_per_xe)
-        # b is negative
-        b_guess_per_xe = -(np.log(y_max_per_xe) - np.log(y_min_per_xe)) / (
-                    x_max_per_xe - x_min_per_xe)
-        a_guess_xe = y_max_per_xe
-        initial_guess_xe = [a_guess_xe, b_guess_per_xe]
-        popt_xe, pcov_xe = curve_fit(self.exp_func, x_per_xe, y_per_xe, p0=initial_guess_xe)
-        a_fit_xe, b_fit_xe = popt_xe
-        print('a_fit_xe, b_fit_xe', a_fit_xe, b_fit_xe)
-        x_fitted_xe = np.linspace(min(x_per_xe), max(x_per_xe), 100)
-        y_fitted_xe = self.exp_func(x_fitted_xe, *popt_xe)
         
-        return [(a_fit_scatter, b_fit_scatter,x_fitted_scatter,y_fitted_scatter),(a_fit_keV, b_fit_keV,x_fitted_keV,y_fitted_keV),(a_fit_xe, b_fit_xe,x_fitted_xe,y_fitted_xe)]
+        result_Q_scatter  = self.fit_combination(x_Q,y_per_scatter,y_max_per_scattering,y_min_per_scattering,x_max_Q,x_min_Q)
+        result_Q_keV = self.fit_combination(x_Q, y_per_keV, y_max_per_keV, y_min_per_keV, x_max_Q,
+                                                x_min_Q)
+        result_Q_xe = self.fit_combination(x_Q, y_per_xe, y_max_per_xe, y_min_per_xe, x_max_Q,
+                                            x_min_Q)
 
+        result_Eion_scatter = self.fit_combination(x_Eion, y_per_scatter, y_max_per_scattering, y_min_per_scattering, x_max_Eion,
+                                                x_min_Eion)
+        result_Eion_keV = self.fit_combination(x_Eion, y_per_keV, y_max_per_keV, y_min_per_keV, x_max_Eion,
+                                            x_min_Eion)
+        result_Eion_xe = self.fit_combination(x_Eion, y_per_xe, y_max_per_xe, y_min_per_xe, x_max_Eion,
+                                           x_min_Eion)
+        
+        result_Q2_xe = self.fit_combination(x_Q2, y_per_xe, y_max_per_xe, y_min_per_xe, x_max_Q2,
+                                           x_min_Q2)
+        
+        
+        return [result_Q_scatter,result_Q_keV,result_Q_xe,result_Eion_scatter,result_Eion_keV,result_Eion_xe,result_Q2_xe]
+
+        # # fit 
+        # b_guess_per_scattering=-(np.log(y_max_per_scattering)-np.log(y_min_per_scattering))/(x_max_Q-x_min_Q)
+        # a_guess_scattering = y_max_per_scattering
+        # initial_guess_scatter = [a_guess_scattering, b_guess_per_scattering]
+        # popt_scatter, pcov_scatter = curve_fit(self.exp_func, x_Q, y_per_scatter, p0=initial_guess_scatter)
+        # a_fit_scatter, b_fit_scatter= popt_scatter
+        # print('a_fit_scatter, b_fit_scatter',a_fit_scatter, b_fit_scatter)
+        # x_fitted_scatter = np.linspace(min(x_Q), max(x_Q), 100)
+        # y_fitted_scatter = self.exp_func(x_fitted_scatter, *popt_scatter)
+        # 
+        # 
+        # 
+        # 
+        # 
+        # 
+        # # b is negative
+        # b_guess_per_keV = -(np.log(y_max_per_keV) - np.log(y_min_per_keV)) / (
+        #             x_max_Eion - x_min_Eion)
+        # a_guess_scattering = y_max_per_keV
+        # initial_guess_keV = [a_guess_scattering, b_guess_per_keV]
+        # popt_keV, pcov_keV = curve_fit(self.exp_func, x_Eion, y_per_keV, p0=initial_guess_keV)
+        # a_fit_keV, b_fit_keV = popt_keV
+        # print('a_fit_keV, b_fit_keV', a_fit_keV, b_fit_keV)
+        # x_fitted_keV = np.linspace(min(x_Eion), max(x_Eion), 100)
+        # y_fitted_keV = self.exp_func(x_fitted_keV, *popt_keV)
+        # 
+        # 
+        # # b is negative
+        # b_guess_per_xe = -(np.log(y_max_per_xe) - np.log(y_min_per_xe)) / (
+        #             x_max_Q2 - x_min_Q2)
+        # a_guess_xe = y_max_per_xe
+        # initial_guess_xe = [a_guess_xe, b_guess_per_xe]
+        # popt_xe, pcov_xe = curve_fit(self.exp_func, x_Q2, y_per_xe, p0=initial_guess_xe)
+        # a_fit_xe, b_fit_xe = popt_xe
+        # print('a_fit_xe, b_fit_xe', a_fit_xe, b_fit_xe)
+        # x_fitted_xe = np.linspace(min(x_Q2), max(x_Q2), 100)
+        # y_fitted_xe = self.exp_func(x_fitted_xe, *popt_xe)
+        
+        
     def fitting_doped_gamma_rejection(self):
         #
         x_per_scatter = self.fitting_df["Seitz [keV]"].values
@@ -1769,7 +1855,17 @@ class integrated_analysis():
 
         return [(a_fit_scatter, b_fit_scatter,x_fitted_scatter,y_fitted_scatter),(a_fit_keV, b_fit_keV,x_fitted_keV,y_fitted_keV)]
 
-
+    def fit_combination(self,x,y,y_max,y_min,x_max,x_min):
+        b_guess_per_scattering = -(np.log(y_max) - np.log(y_min)) / (x_max - x_min)
+        a_guess_scattering = y_max
+        initial_guess_scatter = [a_guess_scattering, b_guess_per_scattering]
+        popt_scatter, pcov_scatter = curve_fit(self.exp_func, x, y, p0=initial_guess_scatter)
+        a_fit_scatter, b_fit_scatter = popt_scatter
+        print('a_fit_scatter, b_fit_scatter', a_fit_scatter, b_fit_scatter)
+        x_fitted_scatter = np.linspace(min(x), max(x), 100)
+        y_fitted_scatter = self.exp_func(x_fitted_scatter, *popt_scatter)
+        return (a_fit_scatter, b_fit_scatter, x_fitted_scatter, y_fitted_scatter)
+        
     def calculate_rss(self, series):
         """Calculates sqrt(a^2 + b^2 + ...)"""
         return np.sqrt(np.sum(series ** 2))
