@@ -63,8 +63,8 @@ class integrated_analysis():
 
 
         self.Cs_exp_116_raw_len = len(self.Cs_exp_116_raw_path)
-        # self.Cs_exp_119_raw_path = ["Cold-Cs-2_2-3_exposures_zoom"]
-        self.Cs_exp_119_raw_path = ["Cold-Cs-2_2-3_exposures_mix"] # updated slight change
+        self.Cs_exp_119_raw_path = ["Cold-Cs-2_2-3_exposures_zoom"]
+        # self.Cs_exp_119_raw_path = ["Cold-Cs-2_2-3_exposures_mix"] # updated slight change
         # self.Co_exp_116_raw_path = ["60Co-12_15-16_exposures"]
         self.Co_exp_116_raw_path = ["60Co-Source-12_15-16_exposures_mix"]
         self.Co_exp_116_raw_len = len(self.Co_exp_116_raw_path)
@@ -1369,7 +1369,7 @@ class integrated_analysis():
 
     def gamma_rejection_plot_v2(self):
         # print Q vs per keV and Eion per interaction
-        fig, ax = plt.subplots(2, 4, figsize=(33,16))
+        fig, ax = plt.subplots(2, 4, figsize=(40,16))
         # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
         self.fitting_list = []
 
