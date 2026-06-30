@@ -63,11 +63,17 @@ class integrated_analysis():
 
 
         self.Cs_exp_116_raw_len = len(self.Cs_exp_116_raw_path)
-        self.Cs_exp_119_raw_path = ["Cold-Cs-2_2-3_exposures_zoom"]
-        self.Co_exp_116_raw_path = ["60Co-12_15-16_exposures"]
+        # self.Cs_exp_119_raw_path = ["Cold-Cs-2_2-3_exposures_zoom"]
+        self.Cs_exp_119_raw_path = ["Cold-Cs-2_2-3_exposures_mix"] # updated slight change
+        # self.Co_exp_116_raw_path = ["60Co-12_15-16_exposures"]
+        self.Co_exp_116_raw_path = ["60Co-12_15-16_exposures_mix"]
         self.Co_exp_116_raw_len = len(self.Co_exp_116_raw_path)
-        self.Co_exp_119_raw_path = []
+        self.Co_exp_119_raw_path = ["60Co-Source-02_06_exposures_mix"]
         self.Co_exp_119_raw_len = len(self.Co_exp_119_raw_path)
+
+        self.Ba_exp_116_raw_path = ["Ba-11_19-24_exposures_mix"]
+        self.Ba_exp_116_raw_len = len(self.Co_exp_116_raw_path)
+
         self.Cf_exp_116A_raw_path = ['252Cf-Coffin-A-1_7-8_exposures']
         self.Cf_exp_116A_raw_len = len(self.Cf_exp_116A_raw_path)
         self.Cf_exp_116B_raw_path = ['252Cf-Coffin-B-1_8-9_exposures']
@@ -82,6 +88,7 @@ class integrated_analysis():
 
         self.Co_exp_raw_path = self.Co_exp_116_raw_path+self.Co_exp_119_raw_path
         self.Cs_exp_raw_path = self.Cs_exp_116_raw_path+self.Cs_exp_119_raw_path
+        self.Ba_exp_raw_path = self.Ba_exp_116_raw_path
 
 
 
@@ -189,10 +196,10 @@ class integrated_analysis():
 
         with open(self.Co_sim_doped_path, "rb") as f:
             self.Co_sims_doped = pickle.load(f)
-        print("self.Co_sims",self.Co_sims_doped)
+        print("self.Co_sims doped",self.Co_sims_doped)
         with open(self.Cs_sim_doped_path, "rb") as f:
             self.Cs_sims_doped = pickle.load(f)
-        print("self.Cs_sims",self.Cs_sims_doped)
+        print("self.Cs_sims doped",self.Cs_sims_doped)
 
 
 
@@ -1358,7 +1365,7 @@ class integrated_analysis():
 
     def gamma_rejection_plot_v2(self):
         # print Q vs per keV and Eion per interaction
-        fig, ax = plt.subplots(2, 4, figsize=(28,16))
+        fig, ax = plt.subplots(2, 4, figsize=(33,16))
         # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
         self.fitting_list = []
 
@@ -1453,7 +1460,7 @@ class integrated_analysis():
                       color="black")
         ax[0, 2].plot(result_Q_xe[2], result_Q_xe[3],
                       color="black")
-        ax[0, 0].plot(result_Eion_scatter[2], result_Eion_scatter[3],
+        ax[1, 0].plot(result_Eion_scatter[2], result_Eion_scatter[3],
                       color="black")
         ax[1, 1].plot(result_Eion_keV[2], result_Eion_keV[3],
                       color="black")
@@ -1501,7 +1508,6 @@ class integrated_analysis():
 
         
 
-        
 
 
         # ax[2].set_xlabel(r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
