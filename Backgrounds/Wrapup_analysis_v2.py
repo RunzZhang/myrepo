@@ -216,6 +216,7 @@ class integrated_analysis():
         # read file, delete unreasonable rows and rewrite
         for i in range(len(self.Cs_exp_raw_path)):
             exposure_df = self.read_exposure(self.Cs_exp_raw_path[i] + ".txt")
+            exposure_df = exposure_df.iloc[:, :7]
             exposure_df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]','Exponential Fit 2xNLL','N.d.o.f.','Time Cut High [s]','Time Cut Low [s]']
             exposure_df = exposure_df[(exposure_df['Lifetime [s]'] <=6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
             exposure_df = exposure_df[
@@ -230,6 +231,7 @@ class integrated_analysis():
         # read file, delete unreasonable rows and rewrite
         for i in range(len(self.Co_exp_raw_path)):
             exposure_df = self.read_exposure(self.Co_exp_raw_path[i] + ".txt")
+            exposure_df = exposure_df.iloc[:, :7]
             exposure_df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]','Exponential Fit 2xNLL','N.d.o.f.','Time Cut High [s]','Time Cut Low [s]']
             exposure_df = exposure_df[(exposure_df['Lifetime [s]'] <=6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
             exposure_df = exposure_df[
@@ -246,6 +248,7 @@ class integrated_analysis():
         # read file, delete unreasonable rows and rewrite
         for i in range(len(self.Cf_exp_116A_raw_path)):
             exposure_df = self.read_exposure(self.Cf_exp_116A_raw_path[i] + ".txt")
+            exposure_df = exposure_df.iloc[:, :7]
             exposure_df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]','Exponential Fit 2xNLL','N.d.o.f.','Time Cut High [s]','Time Cut Low [s]']
             exposure_df = exposure_df[(exposure_df['Lifetime [s]'] <=6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
             exposure_df = exposure_df[
@@ -262,6 +265,7 @@ class integrated_analysis():
         for i in range(len(self.Cf_exp_116B_raw_path)):
             exposure_df = self.read_exposure(self.Cf_exp_116B_raw_path[i] + ".txt")
             exposure_df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]','Exponential Fit 2xNLL','N.d.o.f.','Time Cut High [s]','Time Cut Low [s]']
+            exposure_df = exposure_df.iloc[:, :7]
             exposure_df = exposure_df[(exposure_df['Lifetime [s]'] <=6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
             exposure_df = exposure_df[
                 (exposure_df['Lifetime Error [s]']/exposure_df['Lifetime [s]'] <= 0.3)]
