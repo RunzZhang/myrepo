@@ -1374,7 +1374,7 @@ class integrated_analysis():
         self.fitting_list = []
 
         self.Cs_label = ["Cs 11/17/2025 116K","Cs 12/01/2025 116K","Cs 12/10/2025 116K","Cs 01/20/2026 116K","Cs 02/02/2026 119K"]
-        self.Co_label = ["Co 12/15/2026 116K"]
+        self.Co_label = ["Co 12/15/2026 116K" , "Co 119K"]
         for i in range(len(self.Cs_exp_rejection_path)):
             df = pd.read_csv(self.Cs_exp_rejection_path[i])
             # print(df.columns)
