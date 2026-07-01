@@ -1375,7 +1375,8 @@ class integrated_analysis():
         fig, ax = plt.subplots(2, 4, figsize=(40,16))
         # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
         self.fitting_list = []
-
+        self.Cs_fitting_list =[]
+        self.Co_fitting_list = []
         self.df_Cs_116_plot_list = []
         self.df_Cs_119_plot_list = []
         self.df_Co_116_plot_list = []
@@ -1405,6 +1406,7 @@ class integrated_analysis():
 
             df_fit = df[['Seitz [keV]',"Rejection Rate Scattering[]",'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',"Rejection Rate KeV[/keV]",'Q_rl-1_rhol-1 [GeVcm**2 g-1]',"Rejection Rate Xenon Abs[]",'Clean Rate [mHz]']]
             self.fitting_list.append(df_fit)
+            self.Cs_fitting_list.append(df_fit)
         self.df_Cs_116_plot = pd.concat(self.df_Cs_116_plot_list, ignore_index=True)
         self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
 
@@ -1484,6 +1486,7 @@ class integrated_analysis():
             else:
                 self.df_Co_119_plot_list.append(df)
             self.fitting_list.append(df_fit)
+            self.Cs_fitting_list.append(df_fit)
 
         self.df_Co_116_plot = pd.concat(self.df_Co_116_plot_list, ignore_index=True)
         self.df_Co_119_plot = pd.concat(self.df_Co_119_plot_list, ignore_index=True)
@@ -1542,8 +1545,10 @@ class integrated_analysis():
         [result_Q_scatter,result_Q_keV,result_Q_xe,result_Eion_scatter,result_Eion_keV,result_Eion_xe,result_Q2_xe, result_Q_rate] = self.fitting_gamma_rejection_v2(self.fitting_df)
 
         # for Rate Cs and Co, fit individually, only get last component
-        result_Cs_fitting  = self.fitting_gamma_rejection_v2(self.fitting_list[0])[-1]
-        result_Co_fitting = self.fitting_gamma_rejection_v2(self.fitting_list[1])[-1]
+        self.fitting_df_Cs = pd.concat(self.Cs_fitting_list, ignore_index=True)
+        self.fitting_df_Co = pd.concat(self.Co_fitting_list, ignore_index=True)
+        result_Cs_fitting  = self.fitting_gamma_rejection_v2(self.fitting_df_Cs)[-1]
+        result_Co_fitting = self.fitting_gamma_rejection_v2(self.fitting_df_Co)[-1]
         # plot the fitting function
         # ax[0].plot(x_fitted_scatter,y_fitted_scatter,label = f"a,b = {a_fit_scatter:.2e} , {b_fit_scatter:.2e}", color="black")
         ax[0,0].plot(result_Q_scatter[2], result_Q_scatter[3],
@@ -1552,8 +1557,8 @@ class integrated_analysis():
                       color="black")
         ax[0, 2].plot(result_Q_xe[2], result_Q_xe[3],
                       color="black")
-        ax[0, 3].plot(result_Cs_fitting[2], result_Cs_fitting[3], label=f"Cs fitting with a,b: {result_Cs_fitting[0]}, {result_Cs_fitting[1]} ")
-        ax[0, 3].plot(result_Co_fitting[2], result_Co_fitting[3], label=f"Co fitting with a,b: {result_Co_fitting[0]}, {result_Co_fitting[1]} ")
+        ax[0, 3].plot(result_Cs_fitting[2], result_Cs_fitting[3], label=f"Cs a,b: {result_Cs_fitting[0]}, {result_Cs_fitting[1]} ", color = "red")
+        ax[0, 3].plot(result_Co_fitting[2], result_Co_fitting[3], label=f"Co a,b: {result_Co_fitting[0]}, {result_Co_fitting[1]} ", color = "blue")
         ax[1, 0].plot(result_Eion_scatter[2], result_Eion_scatter[3],
                       color="black")
 
@@ -1584,7 +1589,7 @@ class integrated_analysis():
         ax[0, 3].set_xlabel(r"Seitz threshold [keV]")
         ax[0, 3].set_ylabel("Background Substacted Rate [mHz]")
         ax[0, 3].set_yscale("log")
-        ax[0, 3].legend(loc='upper right', fontsize=14)
+        ax[0, 3].legend(loc='upper right', fontsize=8)
 
         ax[1, 0].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
         ax[1, 0].set_ylabel("Nucleation probability (per interaction) ")
