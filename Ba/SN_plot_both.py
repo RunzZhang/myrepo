@@ -11,8 +11,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/" # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -113,11 +113,11 @@ class SN():
         # self.read_ER_Ar_CF_1d_sum_rate_cummulative()
         # self.read_ER_Ar_CF_1d_sum_counts()
 
-        # self.read_emit_spectrum()
+        self.read_emit_spectrum()
         # self.gamma_rejection_rate_per_keV_vs_Setiz()
         # self.gamma_rejection_rate_vs_Setiz()
 
-        self.write_sims_results()
+        # self.write_sims_results()
 
 
         #doped analyasis
