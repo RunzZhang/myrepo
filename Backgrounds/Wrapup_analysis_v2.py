@@ -1380,6 +1380,10 @@ class integrated_analysis():
             # print(df.columns)
             # doc_label = self.Cs_exp_raw_path[i].replace('_exposures', '')
             doc_label = self.Cs_label[i]
+            if i <=3:
+                doc_label = "Cs 116K"
+            else:
+                doc_label = "Cs 119 K"
             print('doc_label',doc_label)
             # signal
             # drop 2.75,3.25, 3.75 bara pressure
@@ -1423,6 +1427,10 @@ class integrated_analysis():
             # print(df.columns)
             # doc_label = self.Co_exp_raw_path[i].rstrip("_exposures")
             doc_label = self.Co_label[i]
+            if i <=0:
+                doc_label = "Co 116K"
+            else:
+                doc_label = "Co 119 K"
             # signal
             # drop 2.75,3.25, 3.75 bara pressure
             # pressure_drop_list = [2.75,3.25,3.75]
@@ -1712,9 +1720,6 @@ class integrated_analysis():
         print('a_fit_scatter, b_fit_scatter',a_fit_scatter, b_fit_scatter)
         x_fitted_scatter = np.linspace(min(x_per_scatter), max(x_per_scatter), 100)
         y_fitted_scatter = self.exp_func(x_fitted_scatter, *popt_scatter)
-
-
-
 
 
         x_per_keV = self.fitting_df["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"].values
