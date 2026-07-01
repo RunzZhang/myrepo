@@ -21,7 +21,7 @@ class integrated_analysis():
         self.Co_sim_doped_path = '/data/runzezhang/result/TN_sims_D/Co_doped_output.pkl'
         self.Cs_sim_doped_path = '/data/runzezhang/result/TN_sims_D/Cs_doped_output.pkl'
 
-
+        self.xe_shell_threshold = 34.56
 
         # self.density_name_list = ['density104','density125','density150','density175','density2']
         # self.density_path_list = []
@@ -1229,7 +1229,7 @@ class integrated_analysis():
             #             self.counts_cum_bin[i + 1] -
             #             self.counts_cum_bin[i]) / (
             #                      self.energy_edges[i + 1] - self.energy_edges[i])
-            if self.energy_edges_doped[i] >= 0:
+            if self.energy_edges_doped[i] >= self.xe_shell_threshold:
                 counts = self.counts_cum_bin_doped[i]
 
                 rate_PX = self.Rate_factor_doped * (counts)
