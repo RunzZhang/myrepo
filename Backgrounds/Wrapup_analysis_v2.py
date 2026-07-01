@@ -1539,8 +1539,11 @@ class integrated_analysis():
 
 
         self.fitting_df =  pd.concat(self.fitting_list, ignore_index=True)
-        [result_Q_scatter,result_Q_keV,result_Q_xe,result_Eion_scatter,result_Eion_keV,result_Eion_xe,result_Q2_xe] = self.fitting_gamma_rejection_v2()
+        [result_Q_scatter,result_Q_keV,result_Q_xe,result_Eion_scatter,result_Eion_keV,result_Eion_xe,result_Q2_xe, result_Q_rate] = self.fitting_gamma_rejection_v2(self.fitting_df)
 
+        # for Rate Cs and Co, fit individually, only get last component
+        result_Cs_fitting  = self.fitting_gamma_rejection_v2(self.fitting_list[0])[-1]
+        result_Co_fitting = self.fitting_gamma_rejection_v2(self.fitting_list[1])[-1]
         # plot the fitting function
         # ax[0].plot(x_fitted_scatter,y_fitted_scatter,label = f"a,b = {a_fit_scatter:.2e} , {b_fit_scatter:.2e}", color="black")
         ax[0,0].plot(result_Q_scatter[2], result_Q_scatter[3],
@@ -1549,8 +1552,11 @@ class integrated_analysis():
                       color="black")
         ax[0, 2].plot(result_Q_xe[2], result_Q_xe[3],
                       color="black")
+        ax[0, 3].plot(result_Cs_fitting[2], result_Cs_fitting[3], label=f"Cs fitting with a,b: {result_Cs_fitting[0]}, {result_Cs_fitting[1]} ")
+        ax[0, 3].plot(result_Co_fitting[2], result_Co_fitting[3], label=f"Co fitting with a,b: {result_Co_fitting[0]}, {result_Co_fitting[1]} ")
         ax[1, 0].plot(result_Eion_scatter[2], result_Eion_scatter[3],
                       color="black")
+
         ax[1, 1].plot(result_Eion_keV[2], result_Eion_keV[3],
                       color="black")
         ax[1, 2].plot(result_Eion_xe[2], result_Eion_xe[3],
@@ -1851,32 +1857,39 @@ class integrated_analysis():
         y_fitted_keV = self.exp_func(x_fitted_keV, *popt_keV)
 
         return [(a_fit_scatter, b_fit_scatter,x_fitted_scatter,y_fitted_scatter),(a_fit_keV, b_fit_keV,x_fitted_keV,y_fitted_keV)]
-    def fitting_gamma_rejection_v2(self):
+    def fitting_gamma_rejection_v2(self, dataframe):
         # switch Y axis. Now Q vs per kev and Eion vs per interaction
-        x_Q = self.fitting_df["Seitz [keV]"].values
-        y_per_scatter = self.fitting_df["Rejection Rate Scattering[]"].values
+        x_Q = dataframe["Seitz [keV]"].values
+        y_per_scatter = dataframe["Rejection Rate Scattering[]"].values
         # dealing with guess
         x_min_Q= min(x_Q)
         x_max_Q = max(x_Q)
         y_min_per_scattering = min(y_per_scatter)
         y_max_per_scattering = max(y_per_scatter)
 
-        x_Eion = self.fitting_df["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"].values
-        y_per_keV = self.fitting_df["Rejection Rate KeV[/keV]"].values
+        x_Eion = dataframe["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"].values
+        y_per_keV = dataframe["Rejection Rate KeV[/keV]"].values
         # dealing with guess
         x_min_Eion = min(x_Eion)
         x_max_Eion = max(x_Eion)
         y_min_per_keV = min(y_per_keV)
         y_max_per_keV = max(y_per_keV)
 
-        x_Q2 = self.fitting_df["Q_rl-1_rhol-1 [GeVcm**2 g-1]"].values
-        y_per_xe = self.fitting_df["Rejection Rate Xenon Abs[]"].values
+        x_Q2 = dataframe["Q_rl-1_rhol-1 [GeVcm**2 g-1]"].values
+        y_per_xe = dataframe["Rejection Rate Xenon Abs[]"].values
         # dealing with guess
         x_min_Q2 = min(x_Q2)
         x_max_Q2 = max(x_Q2)
         y_min_per_xe = min(y_per_xe)
         y_max_per_xe = max(y_per_xe)
-        
+
+        y_rate = dataframe["Clean Rate [mHz]"].values
+        y_min_rate = min(y_rate)
+        y_max_rate = max(y_rate)
+
+
+
+
         result_Q_scatter  = self.fit_combination(x_Q,y_per_scatter,y_max_per_scattering,y_min_per_scattering,x_max_Q,x_min_Q)
 
         result_Q_keV = self.fit_combination(x_Q, y_per_keV, y_max_per_keV, y_min_per_keV, x_max_Q,
@@ -1893,9 +1906,11 @@ class integrated_analysis():
         
         result_Q2_xe = self.fit_combination(x_Q2, y_per_xe, y_max_per_xe, y_min_per_xe, x_max_Q2,
                                            x_min_Q2)
+        result_Q_rate  = self.fit_combination(x_Q, y_rate, y_max_rate, y_min_rate, x_max_Q,
+                                           x_min_Q)
         
         
-        return [result_Q_scatter,result_Q_keV,result_Q_xe,result_Eion_scatter,result_Eion_keV,result_Eion_xe,result_Q2_xe]
+        return [result_Q_scatter,result_Q_keV,result_Q_xe,result_Eion_scatter,result_Eion_keV,result_Eion_xe,result_Q2_xe,result_Q_rate ]
 
         # # fit 
         # b_guess_per_scattering=-(np.log(y_max_per_scattering)-np.log(y_min_per_scattering))/(x_max_Q-x_min_Q)
