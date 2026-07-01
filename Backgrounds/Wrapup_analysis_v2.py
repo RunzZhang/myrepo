@@ -1402,8 +1402,8 @@ class integrated_analysis():
 
             df_fit = df[['Seitz [keV]',"Rejection Rate Scattering[]",'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',"Rejection Rate KeV[/keV]",'Q_rl-1_rhol-1 [GeVcm**2 g-1]',"Rejection Rate Xenon Abs[]"]]
             self.fitting_list.append(df_fit)
-        self.df_Cs_116_plot = pd.concat(self.df_Co_116_plot_list, ignore_index=True)
-        self.df_Cs_119_plot = pd.concat(self.df_Co_119_plot_list, ignore_index=True)
+        self.df_Cs_116_plot = pd.concat(self.df_Cs_116_plot_list, ignore_index=True)
+        self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
 
 
 
@@ -1475,6 +1475,9 @@ class integrated_analysis():
             else:
                 self.df_Co_119_plot_list.append(df)
             self.fitting_list.append(df_fit)
+
+        self.df_Co_116_plot = pd.concat(self.df_Co_116_plot_list, ignore_index=True)
+        self.df_Co_119_plot = pd.concat(self.df_Co_119_plot_list, ignore_index=True)
 
         ax[0, 0].errorbar(self.df_Co_116_plot['Seitz [keV]'], self.df_Co_116_plot["Rejection Rate Scattering[]"],
                           yerr=self.df_Co_116_plot["Rejection Sigma Scattering[]"], label="Co 116K", fmt='o')
