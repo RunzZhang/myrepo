@@ -1394,23 +1394,23 @@ class integrated_analysis():
 
 
 
-            ax[0 , 0].errorbar(df['Seitz [keV]'], df["Rejection Rate Scattering[]"],
-                           yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
-
-            ax[0, 1].errorbar(df['Seitz [keV]'], df["Rejection Rate KeV[/keV]"],
-                              yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
-
-            ax[0, 2].errorbar(df['Seitz [keV]'], df["Rejection Rate Xenon Abs[]"],
-                              yerr=df["Rejection Sigma Xenon Abs[]"], label=doc_label, fmt='o')
-
-            ax[1, 0].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate Scattering[]"],
-                              yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
-
-            ax[1, 1].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate KeV[/keV]"],
-                              yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
-
-            ax[1, 2].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate Xenon Abs[]"],
-                              yerr=df["Rejection Sigma Xenon Abs[]"], label=doc_label, fmt='o')
+            # ax[0 , 0].errorbar(df['Seitz [keV]'], df["Rejection Rate Scattering[]"],
+            #                yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
+            #
+            # ax[0, 1].errorbar(df['Seitz [keV]'], df["Rejection Rate KeV[/keV]"],
+            #                   yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
+            #
+            # ax[0, 2].errorbar(df['Seitz [keV]'], df["Rejection Rate Xenon Abs[]"],
+            #                   yerr=df["Rejection Sigma Xenon Abs[]"], label=doc_label, fmt='o')
+            #
+            # ax[1, 0].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate Scattering[]"],
+            #                   yerr=df["Rejection Sigma Scattering[]"], label=doc_label, fmt='o')
+            #
+            # ax[1, 1].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate KeV[/keV]"],
+            #                   yerr=df["Rejection Sigma KeV[/keV]"], label=doc_label, fmt='o')
+            #
+            # ax[1, 2].errorbar(df['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate Xenon Abs[]"],
+            #                   yerr=df["Rejection Sigma Xenon Abs[]"], label=doc_label, fmt='o')
             
             
 
