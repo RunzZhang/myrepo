@@ -21,7 +21,7 @@ class integrated_analysis():
         self.Co_sim_doped_path = '/data/runzezhang/result/TN_sims_D/Co_doped_output.pkl'
         self.Cs_sim_doped_path = '/data/runzezhang/result/TN_sims_D/Cs_doped_output.pkl'
 
-        self.xe_shell_threshold = 34.56
+        self.xe_shell_threshold = 0
 
         # self.density_name_list = ['density104','density125','density150','density175','density2']
         # self.density_path_list = []
