@@ -314,7 +314,8 @@ class ReadRoot():
         # self.LAr_NR_sample.to_csv(self.base_path+"LAr_NR_sample.csv")
     def spectrum_lines(self):
         self.spectrum = self.df[(self.df["Volume"]=='calibration_Be_phys')&(self.df["name"]=='gamma')&(self.df["Step ID"]==1)]
-        self.output_df.to_csv(self.info_path, index=False)
+        print(self.spectrum)
+        self.spectrum.to_csv(self.info_path, index=False)
     def allER(self):
         # we need to do several things:
         # gamma only in LAr or CF4
