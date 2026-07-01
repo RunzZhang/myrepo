@@ -1385,7 +1385,7 @@ class integrated_analysis():
             df = pd.read_csv(self.Cs_exp_rejection_path[i])
             # print(df.columns)
             # doc_label = self.Cs_exp_raw_path[i].replace('_exposures', '')
-            doc_label = self.Cs_label[i]
+
 
             print('doc_label',doc_label)
             # signal
@@ -1458,7 +1458,7 @@ class integrated_analysis():
             df = pd.read_csv(self.Co_exp_rejection_path[i])
             # print(df.columns)
             # doc_label = self.Co_exp_raw_path[i].rstrip("_exposures")
-            doc_label = self.Co_label[i]
+            
 
             # signal
             # drop 2.75,3.25, 3.75 bara pressure
