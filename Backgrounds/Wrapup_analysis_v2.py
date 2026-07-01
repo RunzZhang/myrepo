@@ -1628,7 +1628,7 @@ class integrated_analysis():
             # self.Ba_fitting_list.append(df_fit)
 
         self.df_Ba_116_plot = pd.concat(self.df_Ba_116_plot_list, ignore_index=True)
-        self.df_Ba_119_plot = pd.concat(self.df_Ba_119_plot_list, ignore_index=True)
+        # self.df_Ba_119_plot = pd.concat(self.df_Ba_119_plot_list, ignore_index=True)
 
         # ax[0, 0].errorbar(self.df_Ba_116_plot['Seitz [keV]'], self.df_Ba_116_plot["Rejection Rate Scattering[]"],
         #                   yerr=self.df_Ba_116_plot["Rejection Sigma Scattering[]"], label="Ba 116K", fmt='o')
