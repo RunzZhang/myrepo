@@ -82,7 +82,7 @@ class SN():
         self.gamma_rate = 2*7.31e4 # /s
 
 
-        self.G4_events_gamma =  1E8 # only 50 chunks
+        self.G4_events_gamma =  5E6 # only 50 chunks
         self.ambient_bubble = 5 # /h
 
 
@@ -113,11 +113,11 @@ class SN():
         # self.read_ER_Ar_CF_1d_sum_rate_cummulative()
         # self.read_ER_Ar_CF_1d_sum_counts()
 
-        self.read_emit_spectrum()
+        # self.read_emit_spectrum()
         # self.gamma_rejection_rate_per_keV_vs_Setiz()
         # self.gamma_rejection_rate_vs_Setiz()
 
-        # self.write_sims_results()
+        self.write_sims_results()
 
 
         #doped analyasis

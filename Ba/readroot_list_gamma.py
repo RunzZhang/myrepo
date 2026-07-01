@@ -219,9 +219,9 @@ class ReadRoot():
         self.modify_df()
 
         # find all ER and save ER into csv
-        self.spectrum_lines()
-        # self.allER()
-        # self.ER_distribution()
+        # self.spectrum_lines()
+        self.allER()
+        self.ER_distribution()
         # self.gamma_ER()
 
         # find all NR
