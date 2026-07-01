@@ -1486,7 +1486,7 @@ class integrated_analysis():
             else:
                 self.df_Co_119_plot_list.append(df)
             self.fitting_list.append(df_fit)
-            self.Cs_fitting_list.append(df_fit)
+            self.Co_fitting_list.append(df_fit)
 
         self.df_Co_116_plot = pd.concat(self.df_Co_116_plot_list, ignore_index=True)
         self.df_Co_119_plot = pd.concat(self.df_Co_119_plot_list, ignore_index=True)
