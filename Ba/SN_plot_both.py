@@ -128,7 +128,7 @@ class SN():
     def read_emit_spectrum(self):
         df_init_emit = self.merged_df[(self.merged_df["Volume"]=='calibration_Be_phys')&(self.merged_df["name"]=='gamma')&(self.merged_df["Step ID"]==1)]
         fig, ax = plt.subplots()
-        ax.hist(df_init_emit["PreKinetic/MeV"]*1000)
+        ax.hist(df_init_emit["PreKinetic/MeV"]*1000, bins=300, range=(0,300))
         ax.set_xlabel("Gamma Energy/keV")
         ax.set_ylabel("Counts")
         plt.savefig(self.plot_path + "Ba_init_spectrum.pdf")
