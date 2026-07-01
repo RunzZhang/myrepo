@@ -821,7 +821,7 @@ class SN():
 
         output_list = [Rate_factor ,hist_array, cumulative_threshold_per_scatter_array[0], cumulative_threshold_array[0]]
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
-        with open("/data/runzezhang/result/TN_sims_D/Co_output_5E7.pkl", "wb") as f:
+        with open("/data/runzezhang/result/TN_sims_D/Ba_output_5E6.pkl", "wb") as f:
             pickle.dump(output_list, f)
 
 
