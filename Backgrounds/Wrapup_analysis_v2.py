@@ -1578,7 +1578,7 @@ class integrated_analysis():
         
         plt.clf()
 
-        fig, ax = plt.subplots(2, 1, figsize=(16,6))
+        fig, ax = plt.subplots(1, 2, figsize=(16,6))
 
         ax[0].errorbar(self.df_Cs_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_Cs_116_plot["Rejection Rate Xenon Abs[]"],
                           yerr=self.df_Cs_116_plot["Rejection Sigma Xenon Abs[]"], label="Cs 116K", fmt='o')
