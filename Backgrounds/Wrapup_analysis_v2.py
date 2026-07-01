@@ -1252,7 +1252,7 @@ class integrated_analysis():
                 "Rejection Rate Xenon Abs[]": rejection_PX,
                 "Rejection Sigma Xenon Abs[]": rejection_PX_sigma,
                             })
-        print("source", "Rate[mHz]:" , self.Rate_factor*self.counts_cum_bin[0],"Energy deposit [keV]",self.Rate_factor*self.counts_energy_cum_bin[0],
+        print("source", source, "Rate[mHz]:" , self.Rate_factor*self.counts_cum_bin[0],"Energy deposit [keV]",self.Rate_factor*self.counts_energy_cum_bin[0],
               "Xe abs Rate[mHz]: ", self.Rate_factor_doped*self.counts_cum_bin_doped[0])
         return output
 
