@@ -1485,7 +1485,7 @@ class integrated_analysis():
                           yerr=self.df_Cs_116_plot["Rejection Sigma Xenon Abs[]"], label="Cs 116K", fmt='o')
 
         ax[0, 3].errorbar(self.df_Cs_116_plot['Seitz [keV]'], self.df_Cs_116_plot["Clean Rate [mHz]"],
-                          yerr=self.df_Cs_116_plot['Clean Rate Sigma [mHz]'], label="Cs 116K", fmt='o', color ="r")
+                          yerr=self.df_Cs_116_plot['Clean Rate Sigma [mHz]'], label="Cs 116K", fmt='o', color ="orange")
 
         ax[1, 0].errorbar(self.df_Cs_116_plot['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_Cs_116_plot["Rejection Rate Scattering[]"],
                           yerr=self.df_Cs_116_plot["Rejection Sigma Scattering[]"], label="Cs 116K", fmt='o')
@@ -1506,7 +1506,7 @@ class integrated_analysis():
                           yerr=self.df_Cs_119_plot["Rejection Sigma Xenon Abs[]"], label="Cs 119K", fmt='o')
 
         ax[0, 3].errorbar(self.df_Cs_119_plot['Seitz [keV]'], self.df_Cs_119_plot["Clean Rate [mHz]"],
-                          yerr=self.df_Cs_119_plot['Clean Rate Sigma [mHz]'], label="Cs 116K", fmt='o', color ="r")
+                          yerr=self.df_Cs_119_plot['Clean Rate Sigma [mHz]'], label="Cs 119K", fmt='o', color ="r")
 
         ax[1, 0].errorbar(self.df_Cs_119_plot['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'],
                           self.df_Cs_119_plot["Rejection Rate Scattering[]"],
@@ -1564,7 +1564,7 @@ class integrated_analysis():
                           yerr=self.df_Co_116_plot["Rejection Sigma Xenon Abs[]"], label="Co 116K", fmt='o')
 
         ax[0, 3].errorbar(self.df_Co_116_plot['Seitz [keV]'], self.df_Co_116_plot["Clean Rate [mHz]"],
-                          yerr=self.df_Co_116_plot['Clean Rate Sigma [mHz]'], label="Co 116K", fmt='o', color ="b")
+                          yerr=self.df_Co_116_plot['Clean Rate Sigma [mHz]'], label="Co 116K", fmt='o', color ="green")
 
         ax[1, 0].errorbar(self.df_Co_116_plot['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'],
                           self.df_Co_116_plot["Rejection Rate Scattering[]"],
