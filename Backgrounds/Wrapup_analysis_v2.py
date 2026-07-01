@@ -1161,6 +1161,7 @@ class integrated_analysis():
             print("NA sources")
 
         self.Rate_factor = self.sim_list[0]
+
         # print("self.Rate_factor",self.Rate_factor)
         self.energy_edges = self.sim_list[1][0][1]
         # print("self.energy_edges", self.energy_edges)
@@ -1251,6 +1252,8 @@ class integrated_analysis():
                 "Rejection Rate Xenon Abs[]": rejection_PX,
                 "Rejection Sigma Xenon Abs[]": rejection_PX_sigma,
                             })
+        print("source", "Rate[mHz]:" , self.Rate_factor*self.counts_cum_bin[0],"Energy deposit [keV]",self.Rate_factor*self.counts_energy_cum_bin[0],
+              "Xe abs Rate[mHz]: ", self.Rate_factor_doped*self.counts_cum_bin_doped[0])
         return output
 
     def bkg_plot(self):
