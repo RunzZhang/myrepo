@@ -314,6 +314,8 @@ class ReadRoot():
         # self.LAr_NR_sample.to_csv(self.base_path+"LAr_NR_sample.csv")
     def spectrum_lines(self):
         self.spectrum = self.df[(self.df["Volume"]=='calibration_Be_phys')&(self.df["name"]=='gamma')]
+        self.hi_ene = self.spectrum[self.spectrum["PreKinetic/MeV"]>=0.275]
+        print("hi ene",self.hi_ene)
         print(self.spectrum)
         self.spectrum.to_csv(self.info_path, index=False)
     def allER(self):
