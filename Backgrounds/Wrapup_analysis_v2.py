@@ -1419,6 +1419,9 @@ class integrated_analysis():
         ax[0, 2].errorbar(self.df_Cs_116_plot['Seitz [keV]'], self.df_Cs_116_plot["Rejection Rate Xenon Abs[]"],
                           yerr=self.df_Cs_116_plot["Rejection Sigma Xenon Abs[]"], label="Cs 116K", fmt='o')
 
+        ax[0, 3].errorbar(self.df_Cs_116_plot['Seitz [keV]'], self.df_Cs_116_plot["Clean Rate [mHz]"],
+                          yerr=self.df_Cs_116_plot['Clean Rate Sigma [mHz]'], label="Cs 116K", fmt='o')
+
         ax[1, 0].errorbar(self.df_Cs_116_plot['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_Cs_116_plot["Rejection Rate Scattering[]"],
                           yerr=self.df_Cs_116_plot["Rejection Sigma Scattering[]"], label="Cs 116K", fmt='o')
 
@@ -1436,6 +1439,9 @@ class integrated_analysis():
 
         ax[0, 2].errorbar(self.df_Cs_119_plot['Seitz [keV]'], self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"],
                           yerr=self.df_Cs_119_plot["Rejection Sigma Xenon Abs[]"], label="Cs 119K", fmt='o')
+
+        ax[0, 3].errorbar(self.df_Cs_119_plot['Seitz [keV]'], self.df_Cs_119_plot["Clean Rate [mHz]"],
+                          yerr=self.df_Cs_119_plot['Clean Rate Sigma [mHz]'], label="Cs 116K", fmt='o')
 
         ax[1, 0].errorbar(self.df_Cs_119_plot['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'],
                           self.df_Cs_119_plot["Rejection Rate Scattering[]"],
@@ -1491,6 +1497,9 @@ class integrated_analysis():
         ax[0, 2].errorbar(self.df_Co_116_plot['Seitz [keV]'], self.df_Co_116_plot["Rejection Rate Xenon Abs[]"],
                           yerr=self.df_Co_116_plot["Rejection Sigma Xenon Abs[]"], label="Co 116K", fmt='o')
 
+        ax[0, 3].errorbar(self.df_Co_116_plot['Seitz [keV]'], self.df_Co_116_plot["Clean Rate [mHz]"],
+                          yerr=self.df_Co_116_plot['Clean Rate Sigma [mHz]'], label="Co 116K", fmt='o')
+
         ax[1, 0].errorbar(self.df_Co_116_plot['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'],
                           self.df_Co_116_plot["Rejection Rate Scattering[]"],
                           yerr=self.df_Co_116_plot["Rejection Sigma Scattering[]"], label="Co 116K", fmt='o')
@@ -1503,6 +1512,7 @@ class integrated_analysis():
                           self.df_Co_116_plot["Rejection Rate Xenon Abs[]"],
                           yerr=self.df_Co_116_plot["Rejection Sigma Xenon Abs[]"], label="Co 116K", fmt='o')
 
+
         ax[0, 0].errorbar(self.df_Co_119_plot['Seitz [keV]'], self.df_Co_119_plot["Rejection Rate Scattering[]"],
                           yerr=self.df_Co_119_plot["Rejection Sigma Scattering[]"], label="Co 119K", fmt='o')
 
@@ -1511,6 +1521,9 @@ class integrated_analysis():
 
         ax[0, 2].errorbar(self.df_Co_119_plot['Seitz [keV]'], self.df_Co_119_plot["Rejection Rate Xenon Abs[]"],
                           yerr=self.df_Co_119_plot["Rejection Sigma Xenon Abs[]"], label="Co 119K", fmt='o')
+
+        ax[0, 3].errorbar(self.df_Co_119_plot['Seitz [keV]'], self.df_Co_119_plot["Clean Rate [mHz]"],
+                          yerr=self.df_Co_119_plot['Clean Rate Sigma [mHz]'], label="Co 119K", fmt='o')
 
         ax[1, 0].errorbar(self.df_Co_119_plot['Eion_rl-1_rhol-1 [GeVcm**2 g-1]'],
                           self.df_Co_119_plot["Rejection Rate Scattering[]"],
@@ -1559,6 +1572,11 @@ class integrated_analysis():
 
         ax[0, 2].set_xlabel(r"Seitz threshold [keV]")
         ax[0, 2].set_ylabel("Nucleation probability (per xenon photoabsorption) ")
+        ax[0, 2].set_yscale("log")
+        ax[0, 2].legend(loc='upper right', fontsize=14)
+
+        ax[0, 2].set_xlabel(r"Seitz threshold [keV]")
+        ax[0, 2].set_ylabel("Background Substacted Rate [mHz]")
         ax[0, 2].set_yscale("log")
         ax[0, 2].legend(loc='upper right', fontsize=14)
 
