@@ -464,7 +464,7 @@ class ReadRoot():
         p_observed = [0]
         print("recoil list", len(self.electron_recoiled_list))
         for i in range(len(self.electron_recoiled_list)):
-            # 40 /MeV 0.03 and 0.2 PCE and PDE
+            # 40 /keV 0.03 and 0.2 PCE and PDE
             p_observed.append(self.electron_recoiled_list[i] * 1E6 * 40 * 0.03 * 0.2 / (1000))
         print("p observed list len", len(p_observed))
 
@@ -594,7 +594,7 @@ class ReadRoot():
         p_observed = [0]
         scatter_ene = [] # in eV
         for i in range(len(self.Ar_recoiled_list)):
-            # 40 /MeV 0.03 and 0.2 PCE and PDE
+            # 10 /keV 0.03 and 0.2 PCE and PDE
             if self.Ar_recoiled_list[i] > 1E-6:
                 pho_num = self.Ar_recoiled_list[i] * 1E6 * 10 * 0.03 * 0.2 / (1000)
                 scatter_ene.append(self.Ar_recoiled_list[i] * 1E6)

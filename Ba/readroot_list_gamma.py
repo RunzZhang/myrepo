@@ -219,9 +219,10 @@ class ReadRoot():
         self.modify_df()
 
         # find all ER and save ER into csv
-        self.allER()
-        self.ER_distribution()
-        self.gamma_ER()
+        self.spectrum_lines()
+        # self.allER()
+        # self.ER_distribution()
+        # self.gamma_ER()
 
         # find all NR
         # self.allNR()
@@ -311,7 +312,9 @@ class ReadRoot():
         # sample the first 10 event to see what caused the NR
         # self.LAr_NR_sample = self.df[(self.df["Event"].isin(self.LAr_recoiled_event_list))]
         # self.LAr_NR_sample.to_csv(self.base_path+"LAr_NR_sample.csv")
-
+    def spectrum_lines(self):
+        self.spectrum = self.df[(self.df["Volume"]=='calibration_Be_phys')&(self.df["name"]=='gamma')&(self.df["Step ID"]==1)]
+        self.output_df.to_csv(self.info_path, index=False)
     def allER(self):
         # we need to do several things:
         # gamma only in LAr or CF4
@@ -440,7 +443,7 @@ class ReadRoot():
 
         p_observed = []  # the first digit is always the NR number
         for i in range(len(self.electron_recoiled_list)):
-            # 40 /MeV 0.03 and 0.2 PCE and PDE
+            # 40 /keV 0.03 and 0.2 PCE and PDE
             if self.electron_recoiled_list[i] > 1E-6:
                 p_observed.append(self.electron_recoiled_list[i] * 1E6 * 40 * 0.03 * 0.2 / (1000))
             if self.electron_recoiled_list[i] > 350 * 1000 / (1E6 * 40 * 0.03 * 0.2):
