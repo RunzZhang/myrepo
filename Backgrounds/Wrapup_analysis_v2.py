@@ -220,7 +220,7 @@ class integrated_analysis():
             exposure_df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]','Exponential Fit 2xNLL','N.d.o.f.','Time Cut High [s]','Time Cut Low [s]']
             exposure_df = exposure_df[(exposure_df['Lifetime [s]'] <=6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
             exposure_df = exposure_df[
-                (exposure_df['Lifetime Error [s]']/exposure_df['Lifetime [s]'] <= 0.5)]
+                (exposure_df['Lifetime Error [s]']/exposure_df['Lifetime [s]'] <= 0.3)]
             # add rate column
             exposure_df['Exp Rate [mHz]']= 1000/exposure_df['Lifetime [s]']
             exposure_df['Exp Rate Sigma [mHz]'] = exposure_df['Lifetime Error [s]'] * 1000 / (exposure_df['Lifetime [s]']) ** 2
