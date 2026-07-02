@@ -1827,7 +1827,7 @@ class integrated_analysis():
             self.Cs_fitting_list.append(df_fit)
         self.df_Cs_116_plot = pd.concat(self.df_Cs_116_plot_list, ignore_index=True)
         self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
-        print("self.df_Cs_116_plot",self.df_Cs_116_plot.columns)
+        # print("self.df_Cs_116_plot",self.df_Cs_116_plot.columns)
 
         # make Cs 116 show just as one series
         self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
@@ -1909,7 +1909,7 @@ class integrated_analysis():
                     {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                      "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
                     {"x": "Eion [keV]", "xlabel": r"$E_{ion}"}]
-
+        print("Eion",self.df_Cs_116_plot["Eion [keV]"])
         for i in range(4):
             for j in range(3):
                 # Extract the configuration for this specific slot
