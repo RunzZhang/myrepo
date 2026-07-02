@@ -1775,7 +1775,7 @@ class integrated_analysis():
         
     def concat_PT_condition(self, df):
 
-        df_combined = df.groupby(['Pressure [bara]', 'Seitz [keV]', 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], as_index=False).agg({
+        df_combined = df.groupby(['Pressure [bara]', 'Seitz [keV]', 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]', 'Q_rl-1_rhol-1 [GeVcm**2 g-1]'], as_index=False).agg({
             "Clean Rate [mHz]": 'mean',
             'Clean Rate Sigma [mHz]': lambda x: np.sqrt(np.sum(x ** 2)),
             "Rejection Rate Scattering[]": 'mean',
