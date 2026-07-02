@@ -137,7 +137,8 @@ class integrated_analysis():
         # plot gamma
         # self.bkg_plot()
         # self.gamma_rejection_plot()
-        self.gamma_rejection_plot_v2()
+        # self.gamma_rejection_plot_v2()
+        self.gamma_rejection_plot_v3()
         # self.doped_gamma_rejection_plot()
         # self.spectrums_plot()
 
@@ -1431,7 +1432,7 @@ class integrated_analysis():
 
     def gamma_rejection_plot_v2(self):
         # print Q vs per keV and Eion per interaction
-        fig, ax = plt.subplots(2, 4, figsize=(40,16))
+        fig, ax = plt.subplots(3, 4, figsize=(40,16))
         # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
         self.fitting_list = []
         self.Cs_fitting_list =[]
@@ -1478,6 +1479,16 @@ class integrated_analysis():
         # make Cs 116 show just as one series
         self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
 
+        plot_configs = [
+            [{"title": "Config (0,0)", "color": "r"}, {"title": "Config (0,1)", "color": "g"},
+             {"title": "Config (0,2)", "color": "b"}],
+            [{"title": "Config (1,0)", "color": "m"}, {"title": "Config (1,1)", "color": "c"},
+             {"title": "Config (1,2)", "color": "y"}],
+            [{"title": "Config (2,0)", "color": "k"}, {"title": "Config (2,1)", "color": "orange"},
+             {"title": "Config (2,2)", "color": "purple"}],
+            [{"title": "Config (3,0)", "color": "brown"}, {"title": "Config (3,1)", "color": "pink"},
+             {"title": "Config (3,2)", "color": "teal"}]
+        ]
         ax[0 , 0].errorbar(self.df_Cs_116_plot['Seitz [keV]'], self.df_Cs_116_plot["Rejection Rate Scattering[]"],
                        yerr=self.df_Cs_116_plot["Rejection Sigma Scattering[]"], label="Cs 116K", fmt='o')
 
@@ -1771,6 +1782,215 @@ class integrated_analysis():
         # 
         # ax[2].legend(loc='upper right', fontsize=7)
 
+    def gamma_rejection_plot_v3(self):
+        # print Q vs per keV and Eion per interaction
+        fig, ax = plt.subplots(3, 4, figsize=(40, 24))
+        # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
+        self.fitting_list = []
+        self.Cs_fitting_list = []
+        self.Co_fitting_list = []
+        self.Ba_fitting_list = []
+        self.df_Cs_116_plot_list = []
+        self.df_Cs_119_plot_list = []
+        self.df_Co_116_plot_list = []
+        self.df_Co_119_plot_list = []
+        self.df_Ba_116_plot_list = []
+        self.df_Ba_119_plot_list = []
+        self.Cs_116_label = ["Cs 11/17/2025 116K", "Cs 12/01/2025 116K", "Cs 12/10/2025 116K", "Cs 01/20/2026 116K"]
+        self.Cs_119_label = ["Cs 02/02/2026 119K"]
+        self.Co_116_label = ["Co 12/15/2026 116K"]
+        self.Co_119_label = ["Co 02/06/2026 119K"]
+        self.Ba_116_label = ["Ba 11/19/2025 116K"]
+
+        for i in range(len(self.Cs_exp_rejection_path)):
+            df = pd.read_csv(self.Cs_exp_rejection_path[i])
+            # print(df.columns)
+            # doc_label = self.Cs_exp_raw_path[i].replace('_exposures', '')
+            # doc_label = self.Cs_label[i]
+            doc_label = "Cs"
+            print('doc_label', doc_label)
+            # signal
+            # drop 2.75,3.25, 3.75 bara pressure
+            # pressure_drop_list = [2.75,3.25,3.75]
+            pressure_drop_list = []
+            df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
+            # only positive rate
+            df = df[df['Clean Rate [mHz]'] > 0]
+            if i <= 3:
+                self.df_Cs_116_plot_list.append(df)
+            else:
+                self.df_Cs_119_plot_list.append(df)
+
+            df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+                         "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
+                         'Clean Rate [mHz]', "Eion [keV]"]]
+            self.fitting_list.append(df_fit)
+            self.Cs_fitting_list.append(df_fit)
+        self.df_Cs_116_plot = pd.concat(self.df_Cs_116_plot_list, ignore_index=True)
+        self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
+
+        # make Cs 116 show just as one series
+        self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
+
+
+
+        # ax[2].errorbar(df['Q_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate Xenon Abs[]"],
+        #                yerr=df["Rejection Sigma Xenon Abs[]"], label=doc_label, fmt='o')
+
+        for i in range(len(self.Co_exp_rejection_path)):
+            df = pd.read_csv(self.Co_exp_rejection_path[i])
+            # print(df.columns)
+            # doc_label = self.Co_exp_raw_path[i].rstrip("_exposures")
+            # doc_label = self.Co_label[i]
+            doc_label = "Co"
+            # signal
+            # drop 2.75,3.25, 3.75 bara pressure
+            # pressure_drop_list = [2.75,3.25,3.75]
+            pressure_drop_list = []
+            df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
+            df = df[df['Clean Rate [mHz]'] > 0]
+
+            df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+                         "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
+                         'Clean Rate [mHz]', "Eion [keV]"]]
+
+            if i <= 0:
+                self.df_Co_116_plot_list.append(df)
+            else:
+                self.df_Co_119_plot_list.append(df)
+            self.fitting_list.append(df_fit)
+            self.Co_fitting_list.append(df_fit)
+
+        self.df_Co_116_plot = pd.concat(self.df_Co_116_plot_list, ignore_index=True)
+        self.df_Co_119_plot = pd.concat(self.df_Co_119_plot_list, ignore_index=True)
+
+
+
+        for i in range(len(self.Ba_exp_rejection_path)):
+            df = pd.read_csv(self.Ba_exp_rejection_path[i])
+            # print(df.columns)
+            # doc_label = self.Co_exp_raw_path[i].rstrip("_exposures")
+            # doc_label = self.Co_label[i]
+            doc_label = "Co"
+            # signal
+            # drop 2.75,3.25, 3.75 bara pressure
+            # pressure_drop_list = [2.75,3.25,3.75]
+            pressure_drop_list = []
+            df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
+            df = df[df['Clean Rate [mHz]'] > 0]
+
+            df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+                         "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
+                         'Clean Rate [mHz]']]
+
+            if i <= 0:
+                self.df_Ba_116_plot_list.append(df)
+            else:
+                self.df_Ba_119_plot_list.append(df)
+            self.fitting_list.append(df_fit)
+            # self.Ba_fitting_list.append(df_fit)
+
+        self.df_Ba_116_plot = pd.concat(self.df_Ba_116_plot_list, ignore_index=True)
+        # self.df_Ba_119_plot = pd.concat(self.df_Ba_119_plot_list, ignore_index=True)
+
+        y_config = [{"y": "Rejection Rate Scattering[]", "y_err": "Rejection Sigma Scattering[]",
+                     "ylabel": "Nucleation probability (per interaction) "},
+                    {"y": "Rejection Rate KeV[/keV]", "y_err": "Rejection Sigma KeV[/keV]",
+                     "ylabel": "Probability per energy deposited (events/keV) "},
+                    {"y": "Rejection Rate Xenon Abs[]", "y_err": "Rejection Sigma Scattering[]",
+                     "ylabel": "Nucleation probability (per xenon photoabsorption in K shell) "},
+                    {"y": "Clean Rate [mHz]", "y_err": 'Clean Rate Sigma [mHz]',
+                     "ylabel": "Background Substacted Rate [mHz]"}]
+        x_config = [{"x": "'Seitz [keV]'", "xlabel": r"Seitz threshold [keV]"},
+                    {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+                     "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
+                    {"x": "Eion [keV]", "xlabel": r"$E_{ion}"}]
+
+        for i in range(4):
+            for j in range(3):
+                # Extract the configuration for this specific slot
+                y_cfg = y_config[i]
+                x_cfg = x_config[j]
+                ax_ij = ax[i, j]
+
+                ax_ij.plot(self.df_Cs_116_plot[x_cfg["x"]], self.df_Cs_116_plot[y_cfg["y"]],
+                           yerr=self.df_Cs_116_plot[y_cfg["y_err"]], label="Cs 116K", fmt='o')
+                ax_ij.plot(self.df_Cs_119_plot[x_cfg["x"]], self.df_Cs_119_plot[y_cfg["y"]],
+                           yerr=self.df_Cs_119_plot[y_cfg["y_err"]], label="Cs 119K", fmt='o')
+                ax_ij.plot(self.df_Co_116_plot[x_cfg["x"]], self.df_Co_116_plot[y_cfg["y"]],
+                           yerr=self.df_Co_116_plot[y_cfg["y_err"]], label="Co 116K", fmt='o')
+                ax_ij.plot(self.df_Co_119_plot[x_cfg["x"]], self.df_Co_119_plot[y_cfg["y"]],
+                           yerr=self.df_Co_119_plot[y_cfg["y_err"]], label="Co 119K", fmt='o')
+                ax_ij.plot(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
+                           yerr=self.df_Ba_116_plot[y_cfg["y_err"]], label="Ba 116K", fmt='o')
+
+                ax_ij.set_xlabel(x_cfg["xlabel"])
+                ax_ij.set_ylabel(x_cfg["ylabel"])
+                ax_ij.set_yscale("log")
+                ax_ij.legend(loc='upper right', fontsize=14)
+
+
+
+        self.fitting_df = pd.concat(self.fitting_list, ignore_index=True)
+        fitting_matrix = self.fitting_gamma_rejection_v3(self.fitting_df,x_config,y_config)
+
+
+        # plot the fitting function
+        for i in range(4):
+            for j in range(3):
+                # Extract the configuration for this specific slot
+                y_cfg = y_config[i]
+                x_cfg = x_config[j]
+                ax_ij = ax[i, j]
+                ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
+                      color="black")
+
+
+        plt.savefig(self.plot_path + "gamma_rejection_v2.pdf")
+
+        plt.clf()
+
+        fig, ax = plt.subplots(1, 2, figsize=(16, 6))
+        [result_Q_scatter, result_Q_keV, result_Q_xe, result_Eion_scatter, result_Eion_keV, result_Eion_xe,
+         result_Q2_xe, result_Q_rate] = self.fitting_gamma_rejection_v2(self.fitting_df)
+
+        # # for Rate Cs and Co, fit individually, only get last component
+        self.fitting_df_Cs = pd.concat(self.Cs_fitting_list, ignore_index=True)
+        self.fitting_df_Co = pd.concat(self.Co_fitting_list, ignore_index=True)
+        result_Cs_fitting = self.fitting_gamma_rejection_v2(self.fitting_df_Cs)[-1]
+        result_Co_fitting = self.fitting_gamma_rejection_v2(self.fitting_df_Co)[-1]
+
+        ax[0].errorbar(self.df_Cs_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'],
+                       self.df_Cs_116_plot["Rejection Rate Xenon Abs[]"],
+                       yerr=self.df_Cs_116_plot["Rejection Sigma Xenon Abs[]"], label="Cs 116K", fmt='o')
+
+        # ax[1].errorbar(self.df_Co_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_Co_116_plot["Rejection Rate KeV[/keV]"],
+        #                   yerr=self.df_Co_116_plot["Rejection Sigma KeV[/keV]"], label="Co 116K", fmt='o')
+
+        ax[0].errorbar(self.df_Cs_119_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'],
+                       self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"],
+                       yerr=self.df_Cs_119_plot["Rejection Sigma Xenon Abs[]"], label="Cs 119K", fmt='o')
+
+        # ax[1].errorbar(self.df_Co_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_Co_116_plot["Rejection Rate KeV[/keV]"],
+        #                yerr=self.df_Co_116_plot["Rejection Sigma KeV[/keV]"], label="Co 116K", fmt='o')
+
+        ax[0].errorbar(self.df_Co_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'],
+                       self.df_Co_116_plot["Rejection Rate Xenon Abs[]"],
+                       yerr=self.df_Co_116_plot["Rejection Sigma Xenon Abs[]"], label="Co 116K", fmt='o')
+
+        ax[0].errorbar(self.df_Co_119_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'],
+                       self.df_Co_119_plot["Rejection Rate Xenon Abs[]"],
+                       yerr=self.df_Co_119_plot["Rejection Sigma Xenon Abs[]"], label="Co 119K", fmt='o')
+
+        ax[0].plot(result_Q2_xe[2], result_Q2_xe[3],
+                   color="black")
+
+        ax[0].set_xlabel(r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
+        ax[0].set_ylabel("Nucleation probability (per xenon K shell photoabsorption) ")
+        ax[0].set_yscale("log")
+        ax[0].legend(loc='upper right', fontsize=14)
+
+        plt.savefig(self.plot_path + "Qseitz_compound_xe.pdf")
         
         
     def concat_PT_condition(self, df):
@@ -2087,8 +2307,23 @@ class integrated_analysis():
         # print('a_fit_xe, b_fit_xe', a_fit_xe, b_fit_xe)
         # x_fitted_xe = np.linspace(min(x_Q2), max(x_Q2), 100)
         # y_fitted_xe = self.exp_func(x_fitted_xe, *popt_xe)
-        
-        
+
+    def fitting_gamma_rejection_v3(self, dataframe , x_cfg,y_cfg):
+        # switch Y axis. Now Q vs per kev and Eion vs per interaction
+        result=np.zeros(4,3)
+        for i in range(4):
+            for j in range(3):
+                x = dataframe[[x_cfg["x"]]].values
+                y = dataframe[[y_cfg["y"]]].values
+                # dealing with guess
+                x_min = min(x)
+                x_max = max(x)
+                y_min = min(y)
+                y_max = max(y)
+                result[i][j] = self.fit_combination(x, y, y_max,y_min, x_max,x_min)
+
+        return result
+
     def fitting_doped_gamma_rejection(self):
         #
         x_per_scatter = self.fitting_df["Seitz [keV]"].values
