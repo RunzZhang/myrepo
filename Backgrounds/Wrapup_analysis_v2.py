@@ -1823,6 +1823,7 @@ class integrated_analysis():
             df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                          "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
                          'Clean Rate [mHz]', "Eion [keV]"]]
+            print("df_fit", df_fit.columns)
             self.fitting_list.append(df_fit)
             self.Cs_fitting_list.append(df_fit)
         self.df_Cs_116_plot = pd.concat(self.df_Cs_116_plot_list, ignore_index=True)
@@ -1909,7 +1910,7 @@ class integrated_analysis():
                     {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                      "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
                     {"x": "Eion [keV]", "xlabel": r"$E_{ion}"}]
-        print("Eion",self.df_Cs_116_plot.columns)
+
         for i in range(4):
             for j in range(3):
                 # Extract the configuration for this specific slot
