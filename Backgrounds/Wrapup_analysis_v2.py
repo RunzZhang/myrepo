@@ -302,6 +302,7 @@ class integrated_analysis():
         for i in range(len(self.Ba_exp_raw_path)):
             exposure_df = self.read_exposure(self.Ba_exp_raw_path[i] + ".txt")
             exposure_df = exposure_df.iloc[:, :7]
+            print("Ba", exposure_df)
             exposure_df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]','Exponential Fit 2xNLL','N.d.o.f.','Time Cut High [s]','Time Cut Low [s]']
             exposure_df = exposure_df[(exposure_df['Lifetime [s]'] <=6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
             exposure_df = exposure_df[
@@ -1890,7 +1891,7 @@ class integrated_analysis():
                 self.df_Ba_119_plot_list.append(df)
             self.fitting_list.append(df_fit)
             # self.Ba_fitting_list.append(df_fit)
-        print("Ba", self.df_Ba_116_plot_list)
+        # print("Ba", self.df_Ba_116_plot_list)
         self.df_Ba_116_plot = pd.concat(self.df_Ba_116_plot_list, ignore_index=True)
         # self.df_Ba_119_plot = pd.concat(self.df_Ba_119_plot_list, ignore_index=True)
 
