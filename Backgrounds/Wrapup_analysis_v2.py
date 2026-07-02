@@ -1915,15 +1915,15 @@ class integrated_analysis():
                 x_cfg = x_config[j]
                 ax_ij = ax[i, j]
 
-                ax_ij.plot(self.df_Cs_116_plot[x_cfg["x"]], self.df_Cs_116_plot[y_cfg["y"]],
+                ax_ij.errorbar(self.df_Cs_116_plot[x_cfg["x"]], self.df_Cs_116_plot[y_cfg["y"]],
                            yerr=self.df_Cs_116_plot[y_cfg["y_err"]], label="Cs 116K", fmt='o')
-                ax_ij.plot(self.df_Cs_119_plot[x_cfg["x"]], self.df_Cs_119_plot[y_cfg["y"]],
+                ax_ij.errorbar(self.df_Cs_119_plot[x_cfg["x"]], self.df_Cs_119_plot[y_cfg["y"]],
                            yerr=self.df_Cs_119_plot[y_cfg["y_err"]], label="Cs 119K", fmt='o')
-                ax_ij.plot(self.df_Co_116_plot[x_cfg["x"]], self.df_Co_116_plot[y_cfg["y"]],
+                ax_ij.errorbar(self.df_Co_116_plot[x_cfg["x"]], self.df_Co_116_plot[y_cfg["y"]],
                            yerr=self.df_Co_116_plot[y_cfg["y_err"]], label="Co 116K", fmt='o')
-                ax_ij.plot(self.df_Co_119_plot[x_cfg["x"]], self.df_Co_119_plot[y_cfg["y"]],
+                ax_ij.errorbar(self.df_Co_119_plot[x_cfg["x"]], self.df_Co_119_plot[y_cfg["y"]],
                            yerr=self.df_Co_119_plot[y_cfg["y_err"]], label="Co 119K", fmt='o')
-                ax_ij.plot(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
+                ax_ij.errorbar(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
                            yerr=self.df_Ba_116_plot[y_cfg["y_err"]], label="Ba 116K", fmt='o')
 
                 ax_ij.set_xlabel(x_cfg["xlabel"])
