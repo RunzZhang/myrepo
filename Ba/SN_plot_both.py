@@ -11,8 +11,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_1E8_100ppm/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_1E8_100ppm/" # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -105,7 +105,7 @@ class SN():
         # ER distribution per row
         # self.read_ER_Ar_CF()
         # self.read_ER_Ar_CF_per_deposit_rate()
-        # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
+        self.read_ER_Ar_CF_per_deposit_rate_cumulative()
         # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
         # self.read_ER_Ar_CF_2d_sum()
@@ -122,7 +122,7 @@ class SN():
 
         #doped analyasis
         # self.read_ER_Ar_doped()
-        self.write_doped_sims_results()
+        # self.write_doped_sims_results()
 
 
     def read_emit_spectrum(self):
@@ -415,7 +415,7 @@ class SN():
         # ax[2].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         # ax[2].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
-        plt.savefig(self.plot_path + "Co_1E7_ER_perdepostion_cumulative.pdf")
+        plt.savefig(self.plot_path + "Ba_1E7_ER_perdepostion_cumulative.pdf")
 
     def gamma_rejection_rate_vs_Setiz(self):
         # rate factor in mHz
