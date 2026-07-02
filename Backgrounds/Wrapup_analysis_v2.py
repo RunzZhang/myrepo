@@ -1915,7 +1915,7 @@ class integrated_analysis():
                 # Extract the configuration for this specific slot
                 y_cfg = y_config[i]
                 x_cfg = x_config[j]
-                ax_ij = ax[i, j]
+                ax_ij = ax[j, i]
 
                 ax_ij.errorbar(self.df_Cs_116_plot[x_cfg["x"]], self.df_Cs_116_plot[y_cfg["y"]],
                            yerr=self.df_Cs_116_plot[y_cfg["y_err"]], label="Cs 116K", fmt='o')
