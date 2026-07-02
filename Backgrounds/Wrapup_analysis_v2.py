@@ -1890,7 +1890,7 @@ class integrated_analysis():
                 self.df_Ba_119_plot_list.append(df)
             self.fitting_list.append(df_fit)
             # self.Ba_fitting_list.append(df_fit)
-
+        print("Ba", self.df_Ba_116_plot_list)
         self.df_Ba_116_plot = pd.concat(self.df_Ba_116_plot_list, ignore_index=True)
         # self.df_Ba_119_plot = pd.concat(self.df_Ba_119_plot_list, ignore_index=True)
 
@@ -1908,7 +1908,7 @@ class integrated_analysis():
         x_config = [{"x": "Seitz [keV]", "xlabel": r"Seitz threshold [keV]"},
                     {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                      "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
-                    {"x": "Eion [keV]", "xlabel": r"$E_{ion}"}]
+                    {"x": "Eion [keV]", "xlabel": r"$E_{ion}$"}]
 
         for i in range(4):
             for j in range(3):
