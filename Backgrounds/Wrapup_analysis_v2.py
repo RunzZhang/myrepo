@@ -2319,6 +2319,7 @@ class integrated_analysis():
             for j in range(3):
                 x = dataframe[[x_cfg[j]["x"]]].values
                 y = dataframe[[y_cfg[i]["y"]]].values
+                print("shape",type(x),x.shape)
                 # dealing with guess
                 x_min = min(x)
                 x_max = max(x)
