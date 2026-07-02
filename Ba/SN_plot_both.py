@@ -104,8 +104,8 @@ class SN():
         # self.read_Ar_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
-        # self.read_ER_Ar_CF_per_deposit_rate()
-        self.read_ER_Ar_CF_per_deposit_rate_cumulative()
+        self.read_ER_Ar_CF_per_deposit_rate()
+        # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
         # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
         # self.read_ER_Ar_CF_2d_sum()
@@ -283,6 +283,7 @@ class SN():
         Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
         ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
         ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
+        ER_CF4 = ER_Ar # only test argon
         print("ER CF4 counts", len(ER_CF4))
         print("max ER Lar", max(ER_Ar))
         ER_sum = self.merged_df["ER_near/eV"]/1000
@@ -338,7 +339,7 @@ class SN():
         # ax[2].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         # ax[2].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
-        plt.savefig(self.plot_path + "Co_1E7_ER_perdepostion_coldrate.pdf")
+        plt.savefig(self.plot_path + "Ba_1E7_ER_perdepostion.pdf")
 
 
     def read_ER_Ar_CF_per_deposit_rate_cumulative(self):
@@ -348,7 +349,7 @@ class SN():
         Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
         ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000
         ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
-        ER_CF4 = ER_Ar # just plot the argon
+        # ER_CF4 = ER_Ar # just plot the argon
         ER_sum = self.merged_df["ER_near/eV"] / 1000
         print('max(ER_Ar)', max(ER_Ar))
         print('max(ER_CF4)', max(ER_CF4))
