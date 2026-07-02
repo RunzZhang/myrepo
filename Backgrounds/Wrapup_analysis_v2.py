@@ -302,18 +302,18 @@ class integrated_analysis():
         for i in range(len(self.Ba_exp_raw_path)):
             exposure_df = self.read_exposure(self.Ba_exp_raw_path[i] + ".txt")
             exposure_df = exposure_df.iloc[:, :7]
-            print("Ba0", exposure_df)
             exposure_df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]','Exponential Fit 2xNLL','N.d.o.f.','Time Cut High [s]','Time Cut Low [s]']
             exposure_df = exposure_df[(exposure_df['Lifetime [s]'] <=6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
-            print("Ba1", exposure_df)
+
             exposure_df = exposure_df[
                 (exposure_df['Lifetime Error [s]']/exposure_df['Lifetime [s]'] <= 0.3)]
-            print("Ba1", exposure_df)
+
             # add rate column
             exposure_df['Exp Rate [mHz]']= 1000/exposure_df['Lifetime [s]']
             exposure_df['Exp Rate Sigma [mHz]'] = exposure_df['Lifetime Error [s]'] * 1000 / (exposure_df['Lifetime [s]']) ** 2
             exposure_df = exposure_df.drop(columns=['Exponential Fit 2xNLL',
                                                     'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]'])
+            print("Ba0", exposure_df)
             exposure_df.to_csv(self.Ba_exp_sorted_path[i],index=False)
     def read_raw_backgrounds_exp(self):
         # read file, delete unreasonable rows and rewrite
