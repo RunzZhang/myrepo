@@ -1909,7 +1909,7 @@ class integrated_analysis():
                     {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                      "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
                     {"x": "Eion [keV]", "xlabel": r"$E_{ion}"}]
-        print("Eion",self.df_Cs_116_plot["Eion [keV]"])
+        print("Eion",self.df_Cs_116_plot.columns,self.df_Cs_116_plot["Eion [keV]"])
         for i in range(4):
             for j in range(3):
                 # Extract the configuration for this specific slot
