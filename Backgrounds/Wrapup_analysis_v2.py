@@ -313,7 +313,7 @@ class integrated_analysis():
             exposure_df['Exp Rate Sigma [mHz]'] = exposure_df['Lifetime Error [s]'] * 1000 / (exposure_df['Lifetime [s]']) ** 2
             exposure_df = exposure_df.drop(columns=['Exponential Fit 2xNLL',
                                                     'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]'])
-            print("Ba0", exposure_df)
+
             exposure_df.to_csv(self.Ba_exp_sorted_path[i],index=False)
     def read_raw_backgrounds_exp(self):
         # read file, delete unreasonable rows and rewrite
@@ -462,11 +462,13 @@ class integrated_analysis():
         for i in range(0,self.Ba_exp_116_raw_len):
             print("Cs 116K", self.Ba_exp_rate_path[i])
             exposure_df = pd.read_csv(self.Ba_exp_sorted_path[i])
+            print("Ba0", exposure_df)
             # merge both has the pressure value, on pressure
             merged_df = pd.merge(self.df_bkg_116,exposure_df,on='Pressure [bara]', how="inner")
             # clean rate!
             merged_df['Clean Rate [mHz]'] = merged_df['Exp Rate [mHz]'] - merged_df['Bkg Rate [mHz]']
             merged_df['Clean Rate Sigma [mHz]'] = np.sqrt(merged_df['Exp Rate Sigma [mHz]']**2 + merged_df['Bkg Rate Sigma [mHz]']**2)
+            print("Ba1", exposure_df)
             # add Seitz and Eion unit
             merged_df = pd.merge(merged_df, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
             # add sims analysis to get rejection
