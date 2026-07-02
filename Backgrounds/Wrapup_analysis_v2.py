@@ -1880,7 +1880,7 @@ class integrated_analysis():
 
             df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                          "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
-                         'Clean Rate [mHz]']]
+                         'Clean Rate [mHz]',"Eion [keV]"]]
 
             if i <= 0:
                 self.df_Ba_116_plot_list.append(df)
