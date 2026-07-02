@@ -14,8 +14,8 @@ class SN():
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_xe_1E5/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_xe_1E5/" # for gamma path
 
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E8_100ppm/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_1E8_100ppm/"  # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_ar_1E5/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_ar_1E5/"  # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -247,12 +247,12 @@ class SN():
 
 
     def read_ER_Ar_doped(self):
-        # material = "argon"
-        material = "xenon"
+        material = "argon"
+        # material = "xenon"
         # material = "mixing"
         # per energy deposition
         # the sum is per event
-        ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["PreKinetic/MeV"]*1000
+        ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["PreKinetic/MeV"]*1000-self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["PostKinetic/MeV"]*1000
         if material == "argon":
             print(self.merged_df[(self.merged_df["Volume"] == "LAr_phys") & (
                 self.merged_df["PreKinetic/MeV"].between(0.0025, 0.003))])
