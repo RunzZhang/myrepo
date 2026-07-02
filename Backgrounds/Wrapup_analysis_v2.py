@@ -2324,7 +2324,7 @@ class integrated_analysis():
                 x_max = max(x)
                 y_min = min(y)
                 y_max = max(y)
-                result[i][j] = self.fit_combination(x, y, y_max,y_min, x_max,x_min)
+                result[i,j] = self.fit_combination(x, y, y_max,y_min, x_max,x_min)
 
         return result
 
