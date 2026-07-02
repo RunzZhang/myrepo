@@ -2314,8 +2314,9 @@ class integrated_analysis():
 
     def fitting_gamma_rejection_v3(self, dataframe , x_cfg,y_cfg):
         # switch Y axis. Now Q vs per kev and Eion vs per interaction
-        result=np.zeros((4,3))
+        result = []
         for i in range(4):
+            row_result = []
             for j in range(3):
                 x = dataframe[[x_cfg[j]["x"]]].values.flatten()
                 y = dataframe[[y_cfg[i]["y"]]].values.flatten()
@@ -2325,7 +2326,9 @@ class integrated_analysis():
                 x_max = max(x)
                 y_min = min(y)
                 y_max = max(y)
-                result[i,j] = self.fit_combination(x, y, y_max,y_min, x_max,x_min)
+                fit_output = self.fit_combination(x, y, y_max, y_min, x_max, x_min)
+                row_result.append(fit_output)
+            result.append(row_result)
 
         return result
 
