@@ -1784,8 +1784,7 @@ class integrated_analysis():
 
     def gamma_rejection_plot_v3(self):
         # print Q vs per keV and Eion per interaction
-        fig, ax = plt.subplots(3, 4, figsize=(40, 24))
-        # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
+
         self.fitting_list = []
         self.Cs_fitting_list = []
         self.Co_fitting_list = []
@@ -1892,6 +1891,9 @@ class integrated_analysis():
 
         self.df_Ba_116_plot = pd.concat(self.df_Ba_116_plot_list, ignore_index=True)
         # self.df_Ba_119_plot = pd.concat(self.df_Ba_119_plot_list, ignore_index=True)
+
+        fig, ax = plt.subplots(3, 4, figsize=(40, 24))
+        # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
 
         y_config = [{"y": "Rejection Rate Scattering[]", "y_err": "Rejection Sigma Scattering[]",
                      "ylabel": "Nucleation probability (per interaction) "},
