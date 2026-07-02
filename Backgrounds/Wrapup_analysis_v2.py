@@ -1927,7 +1927,7 @@ class integrated_analysis():
                            yerr=self.df_Ba_116_plot[y_cfg["y_err"]], label="Ba 116K", fmt='o')
 
                 ax_ij.set_xlabel(x_cfg["xlabel"])
-                ax_ij.set_ylabel(x_cfg["ylabel"])
+                ax_ij.set_ylabel(y_cfg["ylabel"])
                 ax_ij.set_yscale("log")
                 ax_ij.legend(loc='upper right', fontsize=14)
 
