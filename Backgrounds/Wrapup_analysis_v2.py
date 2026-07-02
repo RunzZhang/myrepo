@@ -1939,7 +1939,7 @@ class integrated_analysis():
                 # ax_ij.errorbar(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
                 #            yerr=self.df_Ba_116_plot[y_cfg["y_err"]], label="Ba 116K", fmt='o')
                 ax_ij.plot(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
-                               label="Ba 116K 95% CL Upper Limit", marker='v',linestyle='None')
+                               label="Ba 116K 95% CL \nUpper Limit", marker='v',linestyle='None')
 
                 ax_ij.set_xlabel(x_cfg["xlabel"])
                 ax_ij.set_ylabel(y_cfg["ylabel"])
