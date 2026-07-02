@@ -134,17 +134,17 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        # self.main_body(1)
-        for i in range(1,56):
+        self.main_body(1)
+        # for i in range(1,56):
         # for i in range(26, 54):
             try:
         # for i in range(1, 11):
-                self.main_body(i)
+        #         self.main_body(i)
             except:
                 continue
     def main_body(self,i):
@@ -220,15 +220,15 @@ class ReadRoot():
 
         # find all ER and save ER into csv
         # self.spectrum_lines()
-        # self.allER()
-        # self.ER_distribution()
+        self.allER()
+        self.ER_distribution()
         # self.gamma_ER()
 
         # find all NR
         # self.allNR()
 
         #xenon doping
-        self.xenon_doped_phot()
+        # self.xenon_doped_phot()
 
 
 
@@ -422,6 +422,9 @@ class ReadRoot():
         self.output_df = self.mom_gamma[["Event","name", "X/mm","Y/mm","R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
 
         self.output_df.to_csv(self.info_path, index=False)
+
+        non_compton_ER_list = self.output_df[self.output_df["ER_near/eV"]>=231*1000]["Event"].unique().tolist()
+        print('non_compton_ER_list',non_compton_ER_list)
 
         self.df[self.df["Event"] == 6391].to_csv(self.base_path+"LAr_ER_abnormalER.csv")
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
