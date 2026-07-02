@@ -134,8 +134,8 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
@@ -220,15 +220,15 @@ class ReadRoot():
 
         # find all ER and save ER into csv
         # self.spectrum_lines()
-        self.allER()
-        self.ER_distribution()
+        # self.allER()
+        # self.ER_distribution()
         # self.gamma_ER()
 
         # find all NR
         # self.allNR()
 
         #xenon doping
-        # self.xenon_doped_phot()
+        self.xenon_doped_phot()
 
 
 
