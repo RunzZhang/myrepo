@@ -1890,7 +1890,6 @@ class integrated_analysis():
             pressure_drop_list = []
             df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
             # df = df[df['Clean Rate [mHz]'] > 0]
-            print("Ba clean rate",df["Clean Rate [mHz]"])
 
             df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                          "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
@@ -1940,7 +1939,7 @@ class integrated_analysis():
                 # ax_ij.errorbar(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
                 #            yerr=self.df_Ba_116_plot[y_cfg["y_err"]], label="Ba 116K", fmt='o')
                 ax_ij.plot(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
-                               label="Ba 116K", marker='v')
+                               label="Ba 116K 95% CL Upper Limit", marker='v',linestyle='None')
 
                 ax_ij.set_xlabel(x_cfg["xlabel"])
                 ax_ij.set_ylabel(y_cfg["ylabel"])
