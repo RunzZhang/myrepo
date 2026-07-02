@@ -2314,7 +2314,7 @@ class integrated_analysis():
 
     def fitting_gamma_rejection_v3(self, dataframe , x_cfg,y_cfg):
         # switch Y axis. Now Q vs per kev and Eion vs per interaction
-        result=np.zeros(4,3)
+        result=np.zeros((4,3))
         for i in range(4):
             for j in range(3):
                 x = dataframe[[x_cfg["x"]]].values
