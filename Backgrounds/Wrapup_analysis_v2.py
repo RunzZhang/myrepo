@@ -1901,7 +1901,7 @@ class integrated_analysis():
                      "ylabel": "Nucleation probability (per xenon photoabsorption in K shell) "},
                     {"y": "Clean Rate [mHz]", "y_err": 'Clean Rate Sigma [mHz]',
                      "ylabel": "Background Substacted Rate [mHz]"}]
-        x_config = [{"x": "'Seitz [keV]'", "xlabel": r"Seitz threshold [keV]"},
+        x_config = [{"x": "Seitz [keV]", "xlabel": r"Seitz threshold [keV]"},
                     {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                      "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
                     {"x": "Eion [keV]", "xlabel": r"$E_{ion}"}]
