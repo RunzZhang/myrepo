@@ -23,7 +23,7 @@ class integrated_analysis():
         self.Co_sim_doped_path = '/data/runzezhang/result/TN_sims_D/Co_doped_output.pkl'
         self.Cs_sim_doped_path = '/data/runzezhang/result/TN_sims_D/Cs_doped_output.pkl'
         # self.Ba_sim_doped_path = '/data/runzezhang/result/TN_sims_D/Ba_doped_output.pkl'
-        self.Ba_sim_doped_path = '/data/runzezhang/result/TN_sims_D/Ba_output_5E6.pkl'
+        self.Ba_sim_doped_path = '/data/runzezhang/result/TN_sims_D/Ba_doped_output.pkl'
 
         self.xe_shell_threshold = 34.56
 
