@@ -1945,7 +1945,7 @@ class integrated_analysis():
                 # Extract the configuration for this specific slot
                 y_cfg = y_config[i]
                 x_cfg = x_config[j]
-                ax_ij = ax[i, j]
+                ax_ij = ax[j, i]
                 ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
                       color="black")
 
