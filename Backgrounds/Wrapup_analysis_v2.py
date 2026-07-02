@@ -2317,8 +2317,8 @@ class integrated_analysis():
         result=np.zeros((4,3))
         for i in range(4):
             for j in range(3):
-                x = dataframe[[x_cfg["x"]]].values
-                y = dataframe[[y_cfg["y"]]].values
+                x = dataframe[[x_cfg[j]["x"]]].values
+                y = dataframe[[y_cfg[i]["y"]]].values
                 # dealing with guess
                 x_min = min(x)
                 x_max = max(x)
