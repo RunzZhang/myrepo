@@ -1829,7 +1829,7 @@ class integrated_analysis():
             self.Cs_fitting_list.append(df_fit)
         self.df_Cs_116_plot = pd.concat(self.df_Cs_116_plot_list, ignore_index=True)
         self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
-        # print("self.df_Cs_116_plot",self.df_Cs_116_plot.columns)
+        print("self.df_Cs_116_plot",self.df_Cs_116_plot.columns)
 
         # make Cs 116 show just as one series
         self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
