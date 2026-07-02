@@ -11,8 +11,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/" # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_1E8_100ppm/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_1E8_100ppm/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -117,12 +117,12 @@ class SN():
         # self.gamma_rejection_rate_per_keV_vs_Setiz()
         # self.gamma_rejection_rate_vs_Setiz()
 
-        self.write_sims_results()
+        # self.write_sims_results()
 
 
         #doped analyasis
         # self.read_ER_Ar_doped()
-        # self.write_doped_sims_results()
+        self.write_doped_sims_results()
 
 
     def read_emit_spectrum(self):
@@ -855,7 +855,7 @@ class SN():
 
         output_list = [Rate_factor ,hist_array, cumulative_threshold_per_scatter_array[0], cumulative_threshold_array[0]]
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
-        with open("/data/runzezhang/result/TN_sims_D/Co_doped_output.pkl", "wb") as f:
+        with open("/data/runzezhang/result/TN_sims_D/Ba_doped_output.pkl", "wb") as f:
             pickle.dump(output_list, f)
     def read_ER_CF_per_deposit_rate_cumulative(self):
         # rate factor in mHz
