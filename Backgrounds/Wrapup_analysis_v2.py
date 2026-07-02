@@ -1817,13 +1817,14 @@ class integrated_analysis():
             df = df[df['Clean Rate [mHz]'] > 0]
             if i <= 3:
                 self.df_Cs_116_plot_list.append(df)
+                print("df",df.columns)
             else:
                 self.df_Cs_119_plot_list.append(df)
 
             df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                          "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
                          'Clean Rate [mHz]', "Eion [keV]"]]
-            print("df_fit", df_fit.columns)
+
             self.fitting_list.append(df_fit)
             self.Cs_fitting_list.append(df_fit)
         self.df_Cs_116_plot = pd.concat(self.df_Cs_116_plot_list, ignore_index=True)
