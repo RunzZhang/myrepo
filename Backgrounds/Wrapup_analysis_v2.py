@@ -1448,6 +1448,8 @@ class integrated_analysis():
         self.Co_116_label = ["Co 12/15/2026 116K"]
         self.Co_119_label = ["Co 02/06/2026 119K"]
         self.Ba_116_label = ["Ba 11/19/2025 116K"]
+
+
         for i in range(len(self.Cs_exp_rejection_path)):
             df = pd.read_csv(self.Cs_exp_rejection_path[i])
             # print(df.columns)
@@ -1467,13 +1469,14 @@ class integrated_analysis():
             else:
                 self.df_Cs_119_plot_list.append(df)
 
-            df_fit = df[['Seitz [keV]',"Rejection Rate Scattering[]",'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',"Rejection Rate KeV[/keV]",'Q_rl-1_rhol-1 [GeVcm**2 g-1]',"Rejection Rate Xenon Abs[]",'Clean Rate [mHz]']]
+            df_fit = df[['Seitz [keV]',"Rejection Rate Scattering[]",'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',"Rejection Rate KeV[/keV]",'Q_rl-1_rhol-1 [GeVcm**2 g-1]',"Rejection Rate Xenon Abs[]",'Clean Rate [mHz]', "Eion [keV]"]]
             self.fitting_list.append(df_fit)
             self.Cs_fitting_list.append(df_fit)
         self.df_Cs_116_plot = pd.concat(self.df_Cs_116_plot_list, ignore_index=True)
         self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
 
-
+        # make Cs 116 show just as one series
+        self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
 
         ax[0 , 0].errorbar(self.df_Cs_116_plot['Seitz [keV]'], self.df_Cs_116_plot["Rejection Rate Scattering[]"],
                        yerr=self.df_Cs_116_plot["Rejection Sigma Scattering[]"], label="Cs 116K", fmt='o')
@@ -1542,7 +1545,7 @@ class integrated_analysis():
             df = df[df['Clean Rate [mHz]'] > 0]
 
             df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
-                         "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]',"Rejection Rate Xenon Abs[]",'Clean Rate [mHz]']]
+                         "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]',"Rejection Rate Xenon Abs[]",'Clean Rate [mHz]',"Eion [keV]"]]
 
             if i <=0:
                 self.df_Co_116_plot_list.append(df)
@@ -1553,6 +1556,9 @@ class integrated_analysis():
 
         self.df_Co_116_plot = pd.concat(self.df_Co_116_plot_list, ignore_index=True)
         self.df_Co_119_plot = pd.concat(self.df_Co_119_plot_list, ignore_index=True)
+
+
+
 
         ax[0, 0].errorbar(self.df_Co_116_plot['Seitz [keV]'], self.df_Co_116_plot["Rejection Rate Scattering[]"],
                           yerr=self.df_Co_116_plot["Rejection Sigma Scattering[]"], label="Co 116K", fmt='o')
@@ -1767,8 +1773,19 @@ class integrated_analysis():
 
         
         
-        
-        
+    def concat_PT_condition(self, df):
+
+        df_combined = df.groupby(['Pressure [bara]', 'Seitz [keV]', 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]'], as_index=False).agg({
+            "Clean Rate [mHz]": 'mean',
+            'Clean Rate Sigma [mHz]': lambda x: np.sqrt(np.sum(x ** 2)),
+            "Rejection Rate Scattering[]": 'mean',
+            "Rejection Sigma Scattering[]": lambda x: np.sqrt(np.sum(x**2)),
+            "Rejection Rate KeV[/keV]": 'mean',
+            "Rejection Sigma KeV[/keV]": lambda x: np.sqrt(np.sum(x ** 2)),
+            "Rejection Rate Xenon Abs[]": 'mean',
+            "Rejection Sigma Xenon Abs[]": lambda x: np.sqrt(np.sum(x ** 2)),
+        })
+        return df_combined
 
     def doped_gamma_rejection_plot(self):
         fig, ax = plt.subplots(2, 1, figsize=(8,14))
