@@ -2078,10 +2078,10 @@ class integrated_analysis():
 
         ax[0].errorbar(merged_df_Co_Cs["Seitz [keV]"],
                        merged_df_Co_Cs['Clean Rate [mHz] ratio'],
-                       yerr=merged_df_Co_Cs['Clean Rate Sigma [mHz] ratio'], label="Co/Cs", fmt='o', color = 'r')
+                       yerr=merged_df_Co_Cs['Clean Rate Sigma ratio'], label="Co/Cs", fmt='o', color = 'r')
         ax[0].errorbar(merged_df_Ba_Cs["Seitz [keV]"],
                        merged_df_Ba_Cs['Clean Rate [mHz] ratio'],
-                       yerr=merged_df_Ba_Cs['Clean Rate Sigma [mHz] ratio'], label="Ba/Cs", fmt='o', color='r')
+                       yerr=merged_df_Ba_Cs['Clean Rate Sigma ratio'], label="Ba/Cs", fmt='o', color='r')
 
         ax[0].axhline(y=(self.Cs_Rate_factor*self.Cs_counts_cum_bin[0]/(self.Co_Rate_factor*self.Co_counts_cum_bin[0])),label = 'sim per scatter',color = 'b')
         ax[0].axhline(
