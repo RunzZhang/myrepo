@@ -2061,6 +2061,7 @@ class integrated_analysis():
 
 
         merged_df_Co_Cs = pd.merge(self.Cs_list, self.Co_list, on="Seitz [keV]", suffixes=('1', '2'))
+        print(merged_df_Co_Cs)
         merged_df_Co_Cs['Background Substacted Rate [mHz] ratio'] = merged_df_Co_Cs['Background Substacted Rate [mHz]2'] / merged_df_Co_Cs['Background Substacted Rate [mHz]1']
 
         merged_df_Ba_Cs = pd.merge(self.Cs_list, self.Ba_list, on="Seitz [keV]", suffixes=('1', '2'))
