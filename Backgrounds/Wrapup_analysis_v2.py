@@ -2079,12 +2079,12 @@ class integrated_analysis():
 
         ax[0].errorbar(merged_df_Co_Cs["Seitz [keV]"],
                        merged_df_Co_Cs['Clean Rate ratio'],
-                       yerr=merged_df_Co_Cs['Clean Rate Sigma ratio'], label="Co/Cs", fmt='o', color = 'r')
+                       yerr=merged_df_Co_Cs['Clean Rate Sigma ratio'], label="Cs/Co", fmt='o', color = 'r')
         ax[1].errorbar(merged_df_Ba_Cs["Seitz [keV]"],
                        merged_df_Ba_Cs['Clean Rate ratio'],
-                       yerr=merged_df_Ba_Cs['Clean Rate Sigma ratio'], label="Ba/Cs", fmt='o', color='r')
+                       yerr=merged_df_Ba_Cs['Clean Rate Sigma ratio'], label="Cs/Ba", fmt='o', color='r')
 
-        print("Ba/Cs clean rate ratio",merged_df_Ba_Cs['Clean Rate ratio'])
+        print("Cs/Ba clean rate ratio",merged_df_Ba_Cs['Clean Rate ratio'])
 
         ax[0].axhline(y=(self.Cs_Rate_factor*self.Cs_counts_cum_bin[0]/(self.Co_Rate_factor*self.Co_counts_cum_bin[0])),label = 'sim per scatter',color = 'b')
         ax[0].axhline(
@@ -2112,7 +2112,7 @@ class integrated_analysis():
         ax[0].legend(loc='upper right', fontsize=14)
 
         ax[1].set_xlabel(r"$Q_{Seitz} [keV]$")
-        ax[1].set_ylabel("Ba/Cs Ratio [] ")
+        ax[1].set_ylabel("Cs/Ba Ratio [] ")
         ax[1].set_yscale("log")
         ax[1].legend(loc='upper right', fontsize=14)
 
