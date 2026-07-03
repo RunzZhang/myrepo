@@ -221,7 +221,7 @@ class ReadRoot():
 
         # find all ER and save ER into csv
         # self.spectrum_lines()
-        # self.allER()
+        self.allER()
         # self.ER_distribution()
         self.ER_distribution_discrete()
         # self.gamma_ER()
