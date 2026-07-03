@@ -2083,27 +2083,27 @@ class integrated_analysis():
                         self.Cs_doped_Rate_factor * self.Cs_doped_counts_cum_bin[0]),
             label='sim per xe photo')
 
-        ax[0].axhline(
+        ax[1].axhline(
             y=self.Ba_Rate_factor * self.Ba_counts_cum_bin[0] / (self.Cs_Rate_factor * self.Cs_counts_cum_bin[0]),
             label='sim per scatter')
-        ax[0].axhline(
+        ax[1].axhline(
             y=self.Ba_Rate_factor * self.Ba_counts_energy_cum_bin[0] / (
                         self.Cs_Rate_factor * self.Cs_counts_energy_cum_bin[0]),
             label='sim per keV')
-        ax[0].axhline(
+        ax[1].axhline(
             y=self.Ba_doped_Rate_factor * self.Ba_doped_counts_cum_bin[0] / (
                     self.Cs_doped_Rate_factor * self.Cs_doped_counts_cum_bin[0]),
             label='sim per xe photo')
 
         ax[0].set_xlabel(r"$Q_{Seitz} [keV]")
-        ax[0].set_ylabel("Ratio [] ")
+        ax[0].set_ylabel("Co/Cs Ratio [] ")
         # ax[0].set_yscale("log")
         ax[0].legend(loc='upper right', fontsize=14)
 
-        ax[0].set_xlabel(r"$Q_{Seitz} [keV]")
-        ax[0].set_ylabel("Ratio [] ")
+        ax[1].set_xlabel(r"$Q_{Seitz} [keV]")
+        ax[1].set_ylabel("Ba/Cs Ratio [] ")
         # ax[0].set_yscale("log")
-        ax[0].legend(loc='upper right', fontsize=14)
+        ax[1].legend(loc='upper right', fontsize=14)
 
 
         plt.savefig(self.plot_path + "Ratio_compare.pdf")
