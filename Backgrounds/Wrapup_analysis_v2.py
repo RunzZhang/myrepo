@@ -2111,7 +2111,7 @@ class integrated_analysis():
 
         ax[1].set_xlabel(r"$Q_{Seitz} [keV]$")
         ax[1].set_ylabel("Ba/Cs Ratio [] ")
-        ax[0].set_yscale("log")
+        ax[1].set_yscale("log")
         ax[1].legend(loc='upper right', fontsize=14)
 
 
