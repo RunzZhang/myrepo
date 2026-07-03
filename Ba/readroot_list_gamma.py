@@ -549,7 +549,7 @@ class ReadRoot():
 
         # Rename the column to keep compatibility with the rest of your script
         merged_rows = merged_rows.rename(columns={'Recoiled/MeV': 'ER_near'})
-
+        print("colum names.", merged_rows.columns)
         # --- 3. Compute your calculated variables on the expanded dataframe ---
         # Calculate R/mm and convert energy to eV
         merged_rows["R/mm"] = np.sqrt(merged_rows["X/mm"] ** 2 + merged_rows["Y/mm"] ** 2)
