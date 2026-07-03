@@ -2079,7 +2079,7 @@ class integrated_analysis():
         ax[0].errorbar(merged_df_Co_Cs["Seitz [keV]"],
                        merged_df_Co_Cs['Clean Rate ratio'],
                        yerr=merged_df_Co_Cs['Clean Rate Sigma ratio'], label="Co/Cs", fmt='o', color = 'r')
-        ax[0].errorbar(merged_df_Ba_Cs["Seitz [keV]"],
+        ax[1].errorbar(merged_df_Ba_Cs["Seitz [keV]"],
                        merged_df_Ba_Cs['Clean Rate ratio'],
                        yerr=merged_df_Ba_Cs['Clean Rate Sigma ratio'], label="Ba/Cs", fmt='o', color='r')
 
