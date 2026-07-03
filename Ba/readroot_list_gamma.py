@@ -222,7 +222,7 @@ class ReadRoot():
         # self.spectrum_lines()
         self.allER()
         self.ER_distribution()
-        self.ER_distribution_discrete()
+        # self.ER_distribution_discrete()
         # self.gamma_ER()
 
         # find all NR
