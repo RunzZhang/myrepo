@@ -14,6 +14,9 @@ class SN():
         self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/"
         self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/" # for gamma path
 
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"  # for gamma path
+
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
 
@@ -82,7 +85,8 @@ class SN():
         self.gamma_rate = 2.58*1.67e4 # /s
 
 
-        self.G4_events_gamma =  1E8 # only 50 chunks
+        self.G4_events_gamma =  5E6 # only 50 chunks
+        # self.G4_events_gamma = 1E8  # only 50 chunks
         self.ambient_bubble = 5 # /h
 
 
@@ -117,12 +121,12 @@ class SN():
         # self.gamma_rejection_rate_per_keV_vs_Setiz()
         # self.gamma_rejection_rate_vs_Setiz()
 
-        # self.write_sims_results()
+        self.write_sims_results()
 
 
         #doped analyasis
-        self.read_ER_Ar_doped()
-        self.write_doped_sims_results()
+        # self.read_ER_Ar_doped()
+        # self.write_doped_sims_results()
 
 
     def read_emit_spectrum(self):
