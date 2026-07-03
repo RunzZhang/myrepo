@@ -581,6 +581,7 @@ class ReadRoot():
 
         print('self.mom_gamma2_expanded',self.mom_gamma2_expanded)
         self.output_df = pd.concat([[], self.mom_gamma2_expanded], ignore_index=True)
+        print('self.output_df', self.output_df)
         # self.output_df = pd.concat([self.mom_gamma1, self.mom_gamma2_expanded],ignore_index=True)
         self.output_df.to_csv(self.info_phot_path, index=False)
 
