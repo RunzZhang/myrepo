@@ -1889,7 +1889,7 @@ class integrated_analysis():
             # pressure_drop_list = [2.75,3.25,3.75]
             pressure_drop_list = []
             df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
-            # df = df[df['Clean Rate [mHz]'] > 0]
+            df = df[df['Clean Rate [mHz]'] > 0]
 
             df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                          "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
