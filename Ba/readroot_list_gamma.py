@@ -134,19 +134,19 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        self.main_body(2)
-        # for i in range(1,56):
-        # # for i in range(26, 54):
-        #     try:
-        # # for i in range(1, 11):
-        #         self.main_body(i)
-        #     except:
-        #         continue
+        # self.main_body(2)
+        for i in range(1,56):
+        # for i in range(26, 54):
+            try:
+        # for i in range(1, 11):
+                self.main_body(i)
+            except:
+                continue
     def main_body(self,i):
         print(i)
         self.ini_path = self.base_path+ f"Co_gamma_1E7_ini_part{i}.csv"
@@ -220,16 +220,15 @@ class ReadRoot():
 
         # find all ER and save ER into csv
         # self.spectrum_lines()
-        self.allER()
-        self.ER_distribution()
-        # self.ER_distribution_discrete()
+        # self.allER()
+        # self.ER_distribution()
         # self.gamma_ER()
 
         # find all NR
         # self.allNR()
 
         #xenon doping
-        # self.xenon_doped_phot()
+        self.xenon_doped_phot()
 
 
 
