@@ -2062,17 +2062,17 @@ class integrated_analysis():
 
         merged_df_Co_Cs = pd.merge(self.Cs_list, self.Co_list, on="Seitz [keV]", suffixes=('1', '2'))
         print(merged_df_Co_Cs)
-        merged_df_Co_Cs['Background Substacted Rate [mHz] ratio'] = merged_df_Co_Cs['Background Substacted Rate [mHz]2'] / merged_df_Co_Cs['Background Substacted Rate [mHz]1']
+        merged_df_Co_Cs['Clean Rate Sigma [mHz] ratio'] = merged_df_Co_Cs['Clean Rate Sigma [mHz]2'] / merged_df_Co_Cs['Clean Rate Sigma [mHz]1']
 
         merged_df_Ba_Cs = pd.merge(self.Cs_list, self.Ba_list, on="Seitz [keV]", suffixes=('1', '2'))
-        merged_df_Ba_Cs['Background Substacted Rate [mHz] ratio'] = merged_df_Ba_Cs[
-                                                                        'Background Substacted Rate [mHz]2'] / \
-                                                                    merged_df_Ba_Cs['Background Substacted Rate [mHz]1']
+        merged_df_Ba_Cs['Clean Rate Sigma [mHz] ratio'] = merged_df_Ba_Cs[
+                                                                        'Clean Rate Sigma [mHz]2'] / \
+                                                                    merged_df_Ba_Cs['Clean Rate Sigma [mHz]1']
 
 
 
-        ax[0].plot(merged_df_Co_Cs["Seitz [keV]"],merged_df_Co_Cs['Background Substacted Rate [mHz] ratio'], label="Co/Cs")
-        ax[1].plot(merged_df_Ba_Cs["Seitz [keV]"], merged_df_Ba_Cs['Background Substacted Rate [mHz] ratio'],
+        ax[0].plot(merged_df_Co_Cs["Seitz [keV]"],merged_df_Co_Cs['Clean Rate Sigma [mHz] ratio'], label="Co/Cs")
+        ax[1].plot(merged_df_Ba_Cs["Seitz [keV]"], merged_df_Ba_Cs['Clean Rate Sigma [mHz] ratio'],
                    label="Ba/Cs")
         ax[0].axhline(y=self.Co_Rate_factor*self.Co_counts_cum_bin[0]/(self.Cs_Rate_factor*self.Cs_counts_cum_bin[0]),label = 'sim per scatter')
         ax[0].axhline(
