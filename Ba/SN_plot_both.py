@@ -11,8 +11,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/" # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm//"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm//" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -82,7 +82,7 @@ class SN():
         self.gamma_rate = 2.58*1.67e4 # /s
 
 
-        self.G4_events_gamma =  5E6 # only 50 chunks
+        self.G4_events_gamma =  1E8 # only 50 chunks
         self.ambient_bubble = 5 # /h
 
 
@@ -104,7 +104,7 @@ class SN():
         # self.read_Ar_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
-        self.read_ER_Ar_CF_per_deposit_rate()
+        # self.read_ER_Ar_CF_per_deposit_rate()
         # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
         # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
@@ -121,7 +121,7 @@ class SN():
 
 
         #doped analyasis
-        # self.read_ER_Ar_doped()
+        self.read_ER_Ar_doped()
         # self.write_doped_sims_results()
 
 
@@ -236,7 +236,7 @@ class SN():
         ax[0].set_title("Co source - 1173 keV gamma")
 
 
-        plt.savefig(self.plot_path + "Co_1E8_ER_all_doped.pdf")
+        plt.savefig(self.plot_path + "Ba_1E8_ER_all_doped.pdf")
 
     def read_Ar_multiplicity(self):
         multiplicity = self.merged_df[self.merged_df["Volume"]=="LAr_phys"].groupby("Event")["Multiplicity"].max()
