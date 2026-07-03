@@ -1966,7 +1966,9 @@ class integrated_analysis():
         plt.savefig(self.plot_path + "gamma_rejection_v2.pdf")
 
         plt.clf()
-
+        self.Qseitz_compound_xe_plot()
+        self.Ratio_plot()
+    def Qseitz_compound_xe_plot(self):
         fig, ax = plt.subplots(1, 2, figsize=(16, 6))
         [result_Q_scatter, result_Q_keV, result_Q_xe, result_Eion_scatter, result_Eion_keV, result_Eion_xe,
          result_Q2_xe, result_Q_rate] = self.fitting_gamma_rejection_v2(self.fitting_df)
@@ -1999,6 +2001,10 @@ class integrated_analysis():
                        self.df_Co_119_plot["Rejection Rate Xenon Abs[]"],
                        yerr=self.df_Co_119_plot["Rejection Sigma Xenon Abs[]"], label="Co 119K", fmt='o')
 
+        ax[0].errorbar(self.df_Ba_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'],
+                       self.df_Ba_116_plot["Rejection Rate Xenon Abs[]"],
+                       yerr=self.df_Ba_116_plot["Rejection Sigma Xenon Abs[]"], label="Ba 116K", fmt='o')
+
         ax[0].plot(result_Q2_xe[2], result_Q2_xe[3],
                    color="black")
 
@@ -2011,6 +2017,95 @@ class integrated_analysis():
 
 
         plt.savefig(self.plot_path + "Qseitz_compound_xe.pdf")
+
+        plt.clf()
+    def Ratio_plot(self):
+
+        fig, ax = plt.subplots(1, 2, figsize=(16, 6))
+
+        self.Cs_list = pd.concat([self.df_Cs_116_plot, self.df_Cs_119_plot], ignore_index=True)
+        self.Co_list = pd.concat([self.df_Co_116_plot, self.df_Co_119_plot], ignore_index=True)
+        # self.Ba_list = pd.concat([self.df_Ba_116_plot, self.df_Ba_119_plot], ignore_index=True)
+        self.Ba_list = self.df_Ba_116_plot
+
+        self.Cs_Rate_factor = self.Cs_sims[0]
+        self.Cs_energy_edges = self.Cs_sims[1][0][1]
+        self.Cs_counts_cum_bin = self.Cs_sims[2]
+        self.Cs_counts_energy_cum_bin = self.Cs_sims[3]
+
+        self.Cs_doped_Rate_factor = self.Cs_sims_doped[0]
+        self.Cs_doped_energy_edges = self.Cs_sims_doped[1][0][1]
+        self.Cs_doped_counts_cum_bin = self.Cs_sims_doped[2]
+        self.Cs_doped_counts_energy_cum_bin = self.Cs_sims_doped[3]
+
+        self.Co_Rate_factor = self.Co_sims[0]
+        self.Co_energy_edges = self.Co_sims[1][0][1]
+        self.Co_counts_cum_bin = self.Co_sims[2]
+        self.Co_counts_energy_cum_bin = self.Co_sims[3]
+
+        self.Co_doped_Rate_factor = self.Co_sims_doped[0]
+        self.Co_doped_energy_edges = self.Co_sims_doped[1][0][1]
+        self.Co_doped_counts_cum_bin = self.Co_sims_doped[2]
+        self.Co_doped_counts_energy_cum_bin = self.Co_sims_doped[3]
+
+        self.Ba_Rate_factor = self.Ba_sims[0]
+        self.Ba_energy_edges = self.Ba_sims[1][0][1]
+        self.Ba_counts_cum_bin = self.Ba_sims[2]
+        self.Ba_counts_energy_cum_bin = self.Ba_sims[3]
+
+        self.Ba_doped_Rate_factor = self.Ba_sims_doped[0]
+        self.Ba_doped_energy_edges = self.Ba_sims_doped[1][0][1]
+        self.Ba_doped_counts_cum_bin = self.Ba_sims_doped[2]
+        self.Ba_doped_counts_energy_cum_bin = self.Ba_sims_doped[3]
+
+
+
+        merged_df_Co_Cs = pd.merge(self.Cs_list, self.Co_list, on="Seitz [keV]", suffixes=('1', '2'))
+        merged_df_Co_Cs['Background Substacted Rate [mHz] ratio'] = merged_df_Co_Cs['Background Substacted Rate [mHz]2'] / merged_df_Co_Cs['Background Substacted Rate [mHz]1']
+
+        merged_df_Ba_Cs = pd.merge(self.Cs_list, self.Ba_list, on="Seitz [keV]", suffixes=('1', '2'))
+        merged_df_Ba_Cs['Background Substacted Rate [mHz] ratio'] = merged_df_Ba_Cs[
+                                                                        'Background Substacted Rate [mHz]2'] / \
+                                                                    merged_df_Ba_Cs['Background Substacted Rate [mHz]1']
+
+
+
+        ax[0].plot(merged_df_Co_Cs["Seitz [keV]"],merged_df_Co_Cs['Background Substacted Rate [mHz] ratio'], label="Co/Cs")
+        ax[1].plot(merged_df_Ba_Cs["Seitz [keV]"], merged_df_Ba_Cs['Background Substacted Rate [mHz] ratio'],
+                   label="Ba/Cs")
+        ax[0].axhline(y=self.Co_Rate_factor*self.Co_counts_cum_bin[0]/(self.Cs_Rate_factor*self.Cs_counts_cum_bin[0]),label = 'sim per scatter')
+        ax[0].axhline(
+            y=self.Co_Rate_factor * self.Co_counts_energy_cum_bin[0] / (self.Cs_Rate_factor * self.Cs_counts_energy_cum_bin[0]),
+            label='sim per keV')
+        ax[0].axhline(
+            y=self.Co_doped_Rate_factor * self.Co_doped_counts_cum_bin[0] / (
+                        self.Cs_doped_Rate_factor * self.Cs_doped_counts_cum_bin[0]),
+            label='sim per xe photo')
+
+        ax[0].axhline(
+            y=self.Ba_Rate_factor * self.Ba_counts_cum_bin[0] / (self.Cs_Rate_factor * self.Cs_counts_cum_bin[0]),
+            label='sim per scatter')
+        ax[0].axhline(
+            y=self.Ba_Rate_factor * self.Ba_counts_energy_cum_bin[0] / (
+                        self.Cs_Rate_factor * self.Cs_counts_energy_cum_bin[0]),
+            label='sim per keV')
+        ax[0].axhline(
+            y=self.Ba_doped_Rate_factor * self.Ba_doped_counts_cum_bin[0] / (
+                    self.Cs_doped_Rate_factor * self.Cs_doped_counts_cum_bin[0]),
+            label='sim per xe photo')
+
+        ax[0].set_xlabel(r"$Q_{Seitz} [keV]")
+        ax[0].set_ylabel("Ratio [] ")
+        # ax[0].set_yscale("log")
+        ax[0].legend(loc='upper right', fontsize=14)
+
+        ax[0].set_xlabel(r"$Q_{Seitz} [keV]")
+        ax[0].set_ylabel("Ratio [] ")
+        # ax[0].set_yscale("log")
+        ax[0].legend(loc='upper right', fontsize=14)
+
+
+        plt.savefig(self.plot_path + "Ratio_compare.pdf")
         
         
     def concat_PT_condition(self, df):
