@@ -2062,18 +2062,27 @@ class integrated_analysis():
 
         merged_df_Co_Cs = pd.merge(self.Cs_list, self.Co_list, on="Seitz [keV]", suffixes=('1', '2'))
         print(merged_df_Co_Cs)
-        merged_df_Co_Cs['Clean Rate Sigma [mHz] ratio'] = merged_df_Co_Cs['Clean Rate Sigma [mHz]1'] / merged_df_Co_Cs['Clean Rate Sigma [mHz]2']
+        merged_df_Co_Cs['Clean Rate [mHz] ratio'] = merged_df_Co_Cs['Clean Rate [mHz]1'] / merged_df_Co_Cs['Clean Rate [mHz]2']
+        merged_df_Co_Cs['Clean Rate Sigma ratio'] = merged_df_Co_Cs['Clean Rate [mHz] ratio'] * np.sqrt(
+            (merged_df_Co_Cs['Clean Rate Sigma [mHz]1'] / merged_df_Co_Cs['Clean Rate [mHz]1']) ** 2 + (
+                        merged_df_Co_Cs['Clean Rate Sigma [mHz]2'] / merged_df_Co_Cs['Clean Rate [mHz]2']) ** 2
+        )
+
 
         merged_df_Ba_Cs = pd.merge(self.Cs_list, self.Ba_list, on="Seitz [keV]", suffixes=('1', '2'))
-        merged_df_Ba_Cs['Clean Rate Sigma [mHz] ratio'] = merged_df_Ba_Cs[
-                                                                        'Clean Rate Sigma [mHz]1'] / \
-                                                                    merged_df_Ba_Cs['Clean Rate Sigma [mHz]2']
+        merged_df_Ba_Cs['Clean Rate [mHz] ratio'] = merged_df_Ba_Cs['Clean Rate [mHz]1'] / merged_df_Ba_Cs['Clean Rate [mHz]2']
+        merged_df_Ba_Cs['Clean Rate Sigma ratio'] = merged_df_Ba_Cs['Clean Rate [mHz] ratio'] * np.sqrt(
+            (merged_df_Ba_Cs['Clean Rate Sigma [mHz]1'] / merged_df_Ba_Cs['Clean Rate [mHz]1']) ** 2 + (
+                        merged_df_Ba_Cs['Clean Rate Sigma [mHz]2'] / merged_df_Ba_Cs['Clean Rate [mHz]2']) ** 2
+        )
 
+        ax[0].errorbar(merged_df_Co_Cs["Seitz [keV]"],
+                       merged_df_Co_Cs['Clean Rate [mHz] ratio'],
+                       yerr=merged_df_Co_Cs['Clean Rate Sigma [mHz] ratio'], label="Co/Cs", fmt='o', color = 'r')
+        ax[0].errorbar(merged_df_Ba_Cs["Seitz [keV]"],
+                       merged_df_Ba_Cs['Clean Rate [mHz] ratio'],
+                       yerr=merged_df_Ba_Cs['Clean Rate Sigma [mHz] ratio'], label="Ba/Cs", fmt='o', color='r')
 
-
-        ax[0].plot(merged_df_Co_Cs["Seitz [keV]"],merged_df_Co_Cs['Clean Rate Sigma [mHz] ratio'], label="Co/Cs",marker='o',linestyle='None', color = 'r')
-        ax[1].plot(merged_df_Ba_Cs["Seitz [keV]"], merged_df_Ba_Cs['Clean Rate Sigma [mHz] ratio'],
-                   label="Ba/Cs",marker='o', linestyle='None',color = 'r')
         ax[0].axhline(y=(self.Cs_Rate_factor*self.Cs_counts_cum_bin[0]/(self.Co_Rate_factor*self.Co_counts_cum_bin[0])),label = 'sim per scatter',color = 'b')
         ax[0].axhline(
             y= (self.Cs_Rate_factor * self.Cs_counts_energy_cum_bin[0])/(self.Co_Rate_factor * self.Co_counts_energy_cum_bin[0]),
@@ -2086,10 +2095,10 @@ class integrated_analysis():
         ax[1].axhline(
             y=(self.Cs_Rate_factor * self.Cs_counts_cum_bin[0])/(self.Ba_Rate_factor * self.Ba_counts_cum_bin[0]),
             label='sim per scatter',color = 'b')
-        # ax[1].axhline(
-        #     y= (
-        #                 self.Cs_Rate_factor * self.Cs_counts_energy_cum_bin[0]/self.Ba_Rate_factor * self.Ba_counts_energy_cum_bin[0]),
-        #     label='sim per keV',color = 'g')
+        ax[1].axhline(
+            y= (
+                        self.Cs_Rate_factor * self.Cs_counts_energy_cum_bin[0]/self.Ba_Rate_factor * self.Ba_counts_energy_cum_bin[0]),
+            label='sim per keV',color = 'g')
         ax[1].axhline(
             y=  (
                     self.Cs_doped_Rate_factor * self.Cs_doped_counts_cum_bin[0])/(self.Ba_doped_Rate_factor * self.Ba_doped_counts_cum_bin[0]),
@@ -2102,7 +2111,7 @@ class integrated_analysis():
 
         ax[1].set_xlabel(r"$Q_{Seitz} [keV]$")
         ax[1].set_ylabel("Ba/Cs Ratio [] ")
-        # ax[0].set_yscale("log")
+        ax[0].set_yscale("log")
         ax[1].legend(loc='upper right', fontsize=14)
 
 
