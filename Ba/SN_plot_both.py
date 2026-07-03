@@ -34,6 +34,7 @@ class SN():
         cols = ["Event","name", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]
 
         self.df_list =[]
+        self.df_phot_list =[]
 
 
 
@@ -92,12 +93,16 @@ class SN():
 
 
         temp_df = pd.read_csv(self.info_path)
+        temp_df_phot = pd.read_csv(self.info_phot_path)
+
 
         self.df_list.append(temp_df)
+        self.df_phot_list.append(temp_df_phot)
 
 
     def combine_df(self):
         self.merged_df = pd.concat(self.df_list, ignore_index=True)
+        self.merged_phot_df = pd.concat(self.df_phot_list, ignore_index=True)
 
     def data_analysis(self):
         #position distributions histogram, dependisng on step number
@@ -109,7 +114,7 @@ class SN():
         # self.read_Ar_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
-        # self.read_ER_Ar_CF_per_deposit_rate()
+        self.read_ER_Ar_CF_per_deposit_rate()
         # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
         # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
@@ -122,14 +127,15 @@ class SN():
         # self.gamma_rejection_rate_per_keV_vs_Setiz()
         # self.gamma_rejection_rate_vs_Setiz()
 
-        self.write_sims_results()
+        # self.write_sims_results()
 
 
         #doped analyasis
         # self.read_ER_Ar_doped()
         # self.write_doped_sims_results()
 
-
+        # photo process analysis
+        self.read_ER_Ar_pho_per_deposit_rate()
     def read_emit_spectrum(self):
         df_init_emit = self.merged_df[(self.merged_df["Volume"]=='calibration_Be_phys')&(self.merged_df["name"]=='gamma')&(self.merged_df["Step ID"]==1)]
         fig, ax = plt.subplots()
@@ -281,7 +287,38 @@ class SN():
         ax[2].set_ylabel("Counts")
 
         plt.savefig(self.plot_path + "Co_1E5_ER_all.pdf")
+    def read_ER_Ar_pho_per_deposit_rate(self):
+        # per energy deposition and total
+        # MHz
+        Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
+        ER_Ar = self.merged_phot_df[self.merged_phot_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000
 
+
+        hist_array = [None] * 3
+
+        hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
+
+        # find if compton edge exist in CF4 cumulative spectrum
+        for j in range(len(hist_array[1][0])):
+            if hist_array[1][1][j] > 500:
+                print(hist_array[1][1][j], "keV edge", hist_array[1][0][j])
+
+        fig, ax = plt.subplots(1, 3, figsize=(16, 4))
+        ax[0].bar(hist_array[0][1][:-1], Rate_factor * hist_array[0][0], width=np.diff(hist_array[0][1]),
+                  align="edge",
+                  edgecolor="black")
+        bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
+        ax[0].set_xlabel("ER/keV per deposition in LAr")
+        ax[0].set_ylabel(" Rate mHz/(bin[" + str(bin0_len) + " keV])")
+        # ax[0].ticklabel_format(axis="y",style="sci", scilimits=(0, 0) )
+        ax[0].set_yscale("log")
+        ax[0].minorticks_on()
+        # ax[0].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
+        # ax[0].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
+
+
+
+        plt.savefig(self.plot_path + "Ba_5E6_ER_perdepostion_photo.pdf")
     def read_ER_Ar_CF_per_deposit_rate(self):
         # per energy deposition and total
         # MHz
