@@ -437,8 +437,8 @@ class ReadRoot():
 
         non_compton_ER_list = self.output_df[self.output_df["ER_near/eV"]>=231*1000]["Event"].unique().tolist()
         print('non_compton_ER_list',non_compton_ER_list)
-        self.df[self.df["Event"] == 20].to_csv(self.base_path + "LAr_ER_abnormalER.csv")
-        self.output_df[self.output_df["Event"] == 20].to_csv(self.base_path + "LAr_ER_abnormalER2.csv")
+        self.df[self.df["Event"] == 5789].to_csv(self.base_path + "LAr_ER_abnormalER_5789.csv")
+        # self.output_df[self.output_df["Event"] == 20].to_csv(self.base_path + "LAr_ER_abnormalER5789.csv")
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
 
 
