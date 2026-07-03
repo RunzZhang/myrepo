@@ -222,6 +222,7 @@ class ReadRoot():
         # self.spectrum_lines()
         # self.allER()
         # self.ER_distribution()
+        self.ER_distribution_discrete()
         # self.gamma_ER()
 
         # find all NR
@@ -463,23 +464,23 @@ class ReadRoot():
         # self.mom_gamma = self.df[
         #     ((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys')) &( (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))& (self.df['Parent ID'] == 0)& (self.df["Event"].isin(self.electron_recoiled_event_list))]
         # compton -> collect all ER
-        self.mom_gamma = self.df[
+        self.mom_gamma1 = self.df[
             ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
                         (self.df['Process'] == "compt")) & (
                         self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
 
-        self.mom_gamma_group = self.mom_gamma.groupby("Event")
+        self.mom_gamma1_group = self.mom_gamma1.groupby("Event")
 
 
         self.kid_e = self.df[(self.df['name'] == 'e-') &(self.df['Step ID'] == 1)& (self.df['Parent ID'] == 1)& (self.df["Event"].isin(self.electron_recoiled_event_list))&((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys'))]
         self.kid_e_group = self.kid_e.groupby("Event")
 
-        self.mom_gamma = self.mom_gamma.copy()
-        self.mom_gamma["ER_near"] = 0.0
+        self.mom_gamma1 = self.mom_gamma1.copy()
+        self.mom_gamma1["ER_near"] = 0.0
         half = 0.00 # mm from original cube 2*2*2 mm
 
 
-        for event_id, g_evt in self.mom_gamma_group:
+        for event_id, g_evt in self.mom_gamma1_group:
             # electrons for same event
             try:
                 e_evt = self.kid_e_group.get_group(event_id)
@@ -506,23 +507,82 @@ class ReadRoot():
             ER_near = inside @ e_E  # (N_gamma,)
 
             # write back aligned to the same rows in mom_gamma
-            self.mom_gamma.loc[g_evt.index, "ER_near"] = ER_near
+            self.mom_gamma1.loc[g_evt.index, "ER_near"] = ER_near
 
-        first3_events = self.mom_gamma["Event"].unique()[:3]
+        first3_events = self.mom_gamma1["Event"].unique()[:3]
         print(first3_events)
-        print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
+        print(self.mom_gamma1[self.mom_gamma1["Event"].isin(first3_events)])
 
-        self.mom_gamma["Multiplicity"] = (self.mom_gamma.groupby("Event")["Step ID"].rank(method="dense", ascending=True).astype(int))
-        self.mom_gamma["R/mm"] = np.sqrt(self.mom_gamma["X/mm"]**2+self.mom_gamma["Y/mm"]**2 )
+        self.mom_gamma1["Multiplicity"] = (self.mom_gamma1.groupby("Event")["Step ID"].rank(method="dense", ascending=True).astype(int))
+        self.mom_gamma1["R/mm"] = np.sqrt(self.mom_gamma1["X/mm"]**2+self.mom_gamma1["Y/mm"]**2 )
 
-        self.mom_gamma["ER_near/eV"]= self.mom_gamma["ER_near"]*1e6
+        self.mom_gamma1["ER_near/eV"]= self.mom_gamma1["ER_near"]*1e6
 
-        first3_events = self.mom_gamma["Event"].unique()[:3]
-        print(first3_events)
-        print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
+        self.mom_gamma1 = self.mom_gamma1[
+            ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
 
-        self.output_df = self.mom_gamma[["Event","name", "X/mm","Y/mm","R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
+        # photo process
+        #
+        self.mom_gamma2 = self.df[
+            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) &
+            (self.df['Process'] == "phot") &
+            (self.df['Parent ID'] == 0) &
+            (self.df["Event"].isin(self.electron_recoiled_event_list))
+            ].copy()
 
+        self.kid_e = self.df[
+            (self.df['name'] == 'e-') &
+            (self.df['Step ID'] == 1) &
+            (self.df['Parent ID'] == 1) &
+            (self.df["Event"].isin(self.electron_recoiled_event_list)) &
+            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys'))
+            ].copy()
+
+        # --- 2. Perform a vectorised pandas merge instead of the loop ---
+        # This merges rows where Event, X, Y, Z match exactly.
+        # Suffixes help differentiate tracking columns (e.g. Step ID of gamma vs electron)
+        merged_rows = pd.merge(
+            self.mom_gamma2,
+            self.kid_e[['Event', 'X/mm', 'Y/mm', 'Z/mm', 'Recoiled/MeV', 'Track ID', 'Step ID']],
+            on=['Event', 'X/mm', 'Y/mm', 'Z/mm'],
+            suffixes=('_gamma', '_electron')
+        )
+
+        # Rename the column to keep compatibility with the rest of your script
+        merged_rows = merged_rows.rename(columns={'Recoiled/MeV': 'ER_near'})
+
+        # --- 3. Compute your calculated variables on the expanded dataframe ---
+        # Calculate R/mm and convert energy to eV
+        merged_rows["R/mm"] = np.sqrt(merged_rows["X/mm"] ** 2 + merged_rows["Y/mm"] ** 2)
+        merged_rows["ER_near/eV"] = merged_rows["ER_near"] * 1e6
+
+        # Groupby Event to get Multiplicity per event now that everything is unrolled
+        merged_rows["Multiplicity"] = 1
+
+        # --- Drop the first electron (smallest Track ID) per photoabsorption vertex ---
+
+        # 1. Group by the unique interaction vertex keys and find the row index of the lowest Track ID
+        rows_to_drop = (
+            merged_rows.groupby(['Event', 'X/mm', 'Y/mm', 'Z/mm'])['Track ID_electron']
+            .idxmin()
+        )
+
+        # 2. Drop those indexes from the dataframe
+        merged_rows = merged_rows.drop(rows_to_drop)
+
+        # --- 4. Assign back to self ---
+        self.mom_gamma2_expanded = merged_rows
+
+        # --- 5. Inspect the first 3 events ---
+        first3_events = self.mom_gamma2_expanded["Event"].unique()[:3]
+        print("First 3 unique event IDs:", first3_events)
+        print(self.mom_gamma2_expanded[self.mom_gamma2_expanded["Event"].isin(first3_events)])
+
+        self.mom_gamma2_expanded =  self.mom_gamma2_expanded[["Event","name", "X/mm","Y/mm","R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
+
+
+
+        self.output_df = pd.concat([self.mom_gamma1, self.mom_gamma2_expanded],ignore_index=True)
         self.output_df.to_csv(self.info_path, index=False)
 
     def gamma_ER(self):
