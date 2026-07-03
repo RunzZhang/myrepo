@@ -2057,8 +2057,8 @@ class integrated_analysis():
         self.Ba_doped_energy_edges = self.Ba_sims_doped[1][0][1]
         self.Ba_doped_counts_cum_bin = self.Ba_sims_doped[2]
         self.Ba_doped_counts_energy_cum_bin = self.Ba_sims_doped[3]
-        print("Ba, ", self.Ba_counts_cum_bin[0], "counts," , self.Co_doped_counts_energy_cum_bin[0], "keV" )
-
+        print("Ba, ", self.Ba_counts_cum_bin[0], "counts," , self.Ba_doped_counts_energy_cum_bin[0], "keV" )
+        print("Co, ", self.Co_counts_cum_bin[0], "counts,", self.Co_doped_counts_energy_cum_bin[0], "keV")
 
 
         merged_df_Co_Cs = pd.merge(self.Cs_list, self.Co_list, on="Seitz [keV]", suffixes=('1', '2'))
