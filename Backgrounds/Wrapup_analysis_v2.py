@@ -467,14 +467,14 @@ class integrated_analysis():
             # merge both has the pressure value, on pressure
             merged_df = pd.merge(self.df_bkg_116,exposure_df,on='Pressure [bara]', how="inner")
             # clean rate! Upper limit for Barium
-            merged_df['Raw Clean Rate [mHz]'] = merged_df['Exp Rate [mHz]'] - merged_df['Bkg Rate [mHz]']
+            merged_df['Clean Rate [mHz]'] = merged_df['Exp Rate [mHz]'] - merged_df['Bkg Rate [mHz]']
             merged_df['Clean Rate Sigma [mHz]'] = np.sqrt(merged_df['Exp Rate Sigma [mHz]']**2 + merged_df['Bkg Rate Sigma [mHz]']**2)
 
-            S = merged_df['Raw Clean Rate [mHz]']
-            E = merged_df['Clean Rate Sigma [mHz]']
-            inside_ppf = 1.0 - 0.05 * norm.cdf(S / E)
-            merged_df['Clean Rate [mHz]'] = S + E * norm.ppf(inside_ppf)
-            merged_df.drop(columns=['Raw Clean Rate [mHz]'])
+            # S = merged_df['Raw Clean Rate [mHz]']
+            # E = merged_df['Clean Rate Sigma [mHz]']
+            # inside_ppf = 1.0 - 0.05 * norm.cdf(S / E)
+            # merged_df['Clean Rate [mHz]'] = S + E * norm.ppf(inside_ppf)
+            # merged_df.drop(columns=['Raw Clean Rate [mHz]'])
             # add Seitz and Eion unit
             merged_df = pd.merge(merged_df, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
             # add sims analysis to get rejection
@@ -1936,10 +1936,10 @@ class integrated_analysis():
                            yerr=self.df_Co_116_plot[y_cfg["y_err"]], label="Co 116K", fmt='o')
                 ax_ij.errorbar(self.df_Co_119_plot[x_cfg["x"]], self.df_Co_119_plot[y_cfg["y"]],
                            yerr=self.df_Co_119_plot[y_cfg["y_err"]], label="Co 119K", fmt='o')
-                # ax_ij.errorbar(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
-                #            yerr=self.df_Ba_116_plot[y_cfg["y_err"]], label="Ba 116K", fmt='o')
-                ax_ij.plot(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
-                               label="Ba 116K 95% CL \nUpper Limit", marker='v',linestyle='None')
+                ax_ij.errorbar(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
+                           yerr=self.df_Ba_116_plot[y_cfg["y_err"]], label="Ba 116K", fmt='o')
+                # ax_ij.plot(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
+                #                label="Ba 116K 95% CL \nUpper Limit", marker='v',linestyle='None')
 
                 ax_ij.set_xlabel(x_cfg["xlabel"])
                 ax_ij.set_ylabel(y_cfg["ylabel"])
@@ -2006,6 +2006,9 @@ class integrated_analysis():
         ax[0].set_ylabel("Nucleation probability (per xenon K shell photoabsorption) ")
         ax[0].set_yscale("log")
         ax[0].legend(loc='upper right', fontsize=14)
+
+
+
 
         plt.savefig(self.plot_path + "Qseitz_compound_xe.pdf")
         
