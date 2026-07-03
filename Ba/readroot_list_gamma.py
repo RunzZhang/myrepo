@@ -134,19 +134,19 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        # self.main_body(2)
-        for i in range(1,56):
-        # for i in range(26, 54):
-            try:
-        # for i in range(1, 11):
-                self.main_body(i)
-            except:
-                continue
+        self.main_body(1)
+        # for i in range(1,56):
+        # # for i in range(26, 54):
+        #     try:
+        # # for i in range(1, 11):
+        #         self.main_body(i)
+        #     except:
+        #         continue
     def main_body(self,i):
         print(i)
         self.ini_path = self.base_path+ f"Co_gamma_1E7_ini_part{i}.csv"
@@ -580,7 +580,7 @@ class ReadRoot():
 
         self.mom_gamma2_expanded =  self.mom_gamma2_expanded[["Event","name", "X/mm","Y/mm","R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
 
-
+        print('self.mom_gamma2_expanded',self.mom_gamma2_expanded)
 
         self.output_df = pd.concat([self.mom_gamma1, self.mom_gamma2_expanded],ignore_index=True)
         self.output_df.to_csv(self.info_path, index=False)
