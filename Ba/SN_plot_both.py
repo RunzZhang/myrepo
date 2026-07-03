@@ -11,8 +11,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/" # for gamma path
+        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/"
+        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/" # for gamma path
 
         self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
         self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"  # for gamma path
@@ -103,6 +103,7 @@ class SN():
     def combine_df(self):
         self.merged_df = pd.concat(self.df_list, ignore_index=True)
         self.merged_phot_df = pd.concat(self.df_phot_list, ignore_index=True)
+        print('self.merged_phot_df',self.merged_phot_df.head(10))
 
     def data_analysis(self):
         #position distributions histogram, dependisng on step number
