@@ -233,7 +233,7 @@ class SN():
         ax[0].set_xlabel("photo absorption of Xe[keV] ")
         ax[0].set_ylabel("Counts")
         # ax[0].set_title("Co source - 1332 keV gamma")
-        ax[0].set_title("Co source - 1173 keV gamma")
+        ax[0].set_title("Ba source")
 
 
         plt.savefig(self.plot_path + "Ba_1E8_ER_all_doped.pdf")
