@@ -103,7 +103,6 @@ class SN():
     def combine_df(self):
         self.merged_df = pd.concat(self.df_list, ignore_index=True)
         self.merged_phot_df = pd.concat(self.df_phot_list, ignore_index=True)
-        print('self.merged_phot_df',self.merged_phot_df.head(10))
 
     def data_analysis(self):
         #position distributions histogram, dependisng on step number
@@ -115,7 +114,7 @@ class SN():
         # self.read_Ar_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
-        self.read_ER_Ar_CF_per_deposit_rate()
+        # self.read_ER_Ar_CF_per_deposit_rate()
         # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
         # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
