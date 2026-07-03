@@ -2071,36 +2071,36 @@ class integrated_analysis():
 
 
 
-        ax[0].plot(merged_df_Co_Cs["Seitz [keV]"],merged_df_Co_Cs['Clean Rate Sigma [mHz] ratio'], label="Co/Cs")
+        ax[0].plot(merged_df_Co_Cs["Seitz [keV]"],merged_df_Co_Cs['Clean Rate Sigma [mHz] ratio'], label="Co/Cs",linestyle='None', color = 'r')
         ax[1].plot(merged_df_Ba_Cs["Seitz [keV]"], merged_df_Ba_Cs['Clean Rate Sigma [mHz] ratio'],
-                   label="Ba/Cs")
-        ax[0].axhline(y=self.Co_Rate_factor*self.Co_counts_cum_bin[0]/(self.Cs_Rate_factor*self.Cs_counts_cum_bin[0]),label = 'sim per scatter')
+                   label="Ba/Cs",linestyle='None',color = 'r')
+        ax[0].axhline(y=self.Co_Rate_factor*self.Co_counts_cum_bin[0]/(self.Cs_Rate_factor*self.Cs_counts_cum_bin[0]),label = 'sim per scatter',color = 'b')
         ax[0].axhline(
             y=self.Co_Rate_factor * self.Co_counts_energy_cum_bin[0] / (self.Cs_Rate_factor * self.Cs_counts_energy_cum_bin[0]),
-            label='sim per keV')
+            label='sim per keV',color = 'g')
         ax[0].axhline(
             y=self.Co_doped_Rate_factor * self.Co_doped_counts_cum_bin[0] / (
                         self.Cs_doped_Rate_factor * self.Cs_doped_counts_cum_bin[0]),
-            label='sim per xe photo')
+            label='sim per xe photo',color = 'brown')
 
         ax[1].axhline(
             y=self.Ba_Rate_factor * self.Ba_counts_cum_bin[0] / (self.Cs_Rate_factor * self.Cs_counts_cum_bin[0]),
-            label='sim per scatter')
+            label='sim per scatter',color = 'b')
         ax[1].axhline(
             y=self.Ba_Rate_factor * self.Ba_counts_energy_cum_bin[0] / (
                         self.Cs_Rate_factor * self.Cs_counts_energy_cum_bin[0]),
-            label='sim per keV')
+            label='sim per keV',color = 'g')
         ax[1].axhline(
             y=self.Ba_doped_Rate_factor * self.Ba_doped_counts_cum_bin[0] / (
                     self.Cs_doped_Rate_factor * self.Cs_doped_counts_cum_bin[0]),
-            label='sim per xe photo')
+            label='sim per xe photo', color= 'brown')
 
-        ax[0].set_xlabel(r"$Q_{Seitz} [keV]")
+        ax[0].set_xlabel(r"$Q_{Seitz} [keV]$")
         ax[0].set_ylabel("Co/Cs Ratio [] ")
         # ax[0].set_yscale("log")
         ax[0].legend(loc='upper right', fontsize=14)
 
-        ax[1].set_xlabel(r"$Q_{Seitz} [keV]")
+        ax[1].set_xlabel(r"$Q_{Seitz} [keV]$")
         ax[1].set_ylabel("Ba/Cs Ratio [] ")
         # ax[0].set_yscale("log")
         ax[1].legend(loc='upper right', fontsize=14)
