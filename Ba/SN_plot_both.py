@@ -299,10 +299,6 @@ class SN():
 
         hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
 
-        # find if compton edge exist in CF4 cumulative spectrum
-        for j in range(len(hist_array[1][0])):
-            if hist_array[1][1][j] > 500:
-                print(hist_array[1][1][j], "keV edge", hist_array[1][0][j])
 
         fig, ax = plt.subplots(1, 3, figsize=(16, 4))
         ax[0].bar(hist_array[0][1][:-1], Rate_factor * hist_array[0][0], width=np.diff(hist_array[0][1]),
