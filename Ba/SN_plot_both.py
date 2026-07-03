@@ -290,6 +290,7 @@ class SN():
     def read_ER_Ar_pho_per_deposit_rate(self):
         # per energy deposition and total
         # MHz
+        print(self.merged_phot_df.head(10))
         Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
         ER_Ar = self.merged_phot_df[self.merged_phot_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000
 
