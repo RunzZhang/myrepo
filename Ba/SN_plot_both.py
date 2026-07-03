@@ -60,6 +60,7 @@ class SN():
         self.signal = f"PN_1E7_sig_part{i}.csv"
 
         self.info_path = self.base_path + f"Co_gamma_1E6_info_scube_part{i}.csv"
+        self.info_phot_path = self.base_path + f"Co_gamma_1E6_pho_info_scube_part{i}.csv"
 
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2

@@ -174,6 +174,7 @@ class ReadRoot():
         self.false_gamma_2_new_mid = f"Co_gamma_1E7_false2_new_mid_part{i}.csv"
         self.signal_new_mid = f"Co_gamma_1E7_sig_new_mid_part{i}.csv"
         self.info_path = self.base_path+ f"Co_gamma_1E6_info_scube_part{i}.csv"
+        self.info_phot_path = self.base_path + f"Co_gamma_1E6_pho_info_scube_part{i}.csv"
         self.false_gamma_1_path = self.base_path + self.false_gamma_1
         self.false_gamma_2_path = self.base_path + self.false_gamma_2
         self.false_gamma_3_path = self.base_path + self.false_gamma_3
@@ -444,8 +445,6 @@ class ReadRoot():
 
     def ER_distribution_discrete(self):
 
-
-
         self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-") & (self.df_electron["Event"] != 1)]
         # double check gamma
 
@@ -583,7 +582,7 @@ class ReadRoot():
         print('self.mom_gamma2_expanded',self.mom_gamma2_expanded)
 
         self.output_df = pd.concat([self.mom_gamma1, self.mom_gamma2_expanded],ignore_index=True)
-        self.output_df.to_csv(self.info_path, index=False)
+        self.output_df.to_csv(self.info_phot_path, index=False)
 
     def gamma_ER(self):
 
