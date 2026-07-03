@@ -314,6 +314,7 @@ class integrated_analysis():
             exposure_df['Exp Rate Sigma [mHz]'] = exposure_df['Lifetime Error [s]'] * 1000 / (exposure_df['Lifetime [s]']) ** 2
             exposure_df = exposure_df.drop(columns=['Exponential Fit 2xNLL',
                                                     'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]'])
+            print("Ba Rate", exposure_df)
 
             exposure_df.to_csv(self.Ba_exp_sorted_path[i],index=False)
     def read_raw_backgrounds_exp(self):
