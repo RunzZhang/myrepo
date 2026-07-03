@@ -11,8 +11,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/" # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/" # for gamma path
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
@@ -35,15 +35,15 @@ class SN():
 
 
         #982 statics false 1
-        # for i in range(1,54):
-        # # for i in range(1, 26):
-        # # for i in range(26, 54):
-        #     try:
-        # # for i in range(1, 11):
-        #         self.main_body(i)
-        #     except:
-        #         continue
-        self.main_body(1)
+        for i in range(1,54):
+        # for i in range(1, 26):
+        # for i in range(26, 54):
+            try:
+        # for i in range(1, 11):
+                self.main_body(i)
+            except:
+                continue
+        # self.main_body(1)
         self.combine_df()
         self.data_analysis()
 
@@ -104,7 +104,7 @@ class SN():
         # self.read_Ar_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
-        # self.read_ER_Ar_CF_per_deposit_rate()
+        self.read_ER_Ar_CF_per_deposit_rate()
         # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
         # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
@@ -122,7 +122,7 @@ class SN():
 
         #doped analyasis
         # self.read_ER_Ar_doped()
-        self.write_doped_sims_results()
+        # self.write_doped_sims_results()
 
 
     def read_emit_spectrum(self):
@@ -339,7 +339,7 @@ class SN():
         # ax[2].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         # ax[2].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
-        plt.savefig(self.plot_path + "Ba_1E7_ER_perdepostion.pdf")
+        plt.savefig(self.plot_path + "Ba_1E7_ER_perdepostion_insideargon.pdf")
 
 
     # def read_ER_Ar_CF_per_deposit_rate_cumulative(self):
