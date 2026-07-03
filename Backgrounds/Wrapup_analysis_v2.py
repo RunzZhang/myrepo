@@ -2084,6 +2084,8 @@ class integrated_analysis():
                        merged_df_Ba_Cs['Clean Rate ratio'],
                        yerr=merged_df_Ba_Cs['Clean Rate Sigma ratio'], label="Ba/Cs", fmt='o', color='r')
 
+        print("Ba/Cs clean rate ratio",merged_df_Ba_Cs['Clean Rate ratio'])
+
         ax[0].axhline(y=(self.Cs_Rate_factor*self.Cs_counts_cum_bin[0]/(self.Co_Rate_factor*self.Co_counts_cum_bin[0])),label = 'sim per scatter',color = 'b')
         ax[0].axhline(
             y= (self.Cs_Rate_factor * self.Cs_counts_energy_cum_bin[0])/(self.Co_Rate_factor * self.Co_counts_energy_cum_bin[0]),
