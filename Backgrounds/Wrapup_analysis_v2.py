@@ -2063,7 +2063,7 @@ class integrated_analysis():
         merged_df_Co_Cs = pd.merge(self.Cs_list, self.Co_list, on="Seitz [keV]", suffixes=('1', '2'))
         print(merged_df_Co_Cs)
         merged_df_Co_Cs['Clean Rate ratio'] = merged_df_Co_Cs['Clean Rate [mHz]1'] / merged_df_Co_Cs['Clean Rate [mHz]2']
-        merged_df_Co_Cs['Clean Rate Sigma ratio'] = merged_df_Co_Cs['Clean Rate [mHz] ratio'] * np.sqrt(
+        merged_df_Co_Cs['Clean Rate Sigma ratio'] = merged_df_Co_Cs['Clean Rate ratio'] * np.sqrt(
             (merged_df_Co_Cs['Clean Rate Sigma [mHz]1'] / merged_df_Co_Cs['Clean Rate [mHz]1']) ** 2 + (
                         merged_df_Co_Cs['Clean Rate Sigma [mHz]2'] / merged_df_Co_Cs['Clean Rate [mHz]2']) ** 2
         )
@@ -2071,7 +2071,7 @@ class integrated_analysis():
 
         merged_df_Ba_Cs = pd.merge(self.Cs_list, self.Ba_list, on="Seitz [keV]", suffixes=('1', '2'))
         merged_df_Ba_Cs['Clean Rate ratio'] = merged_df_Ba_Cs['Clean Rate [mHz]1'] / merged_df_Ba_Cs['Clean Rate [mHz]2']
-        merged_df_Ba_Cs['Clean Rate Sigma ratio'] = merged_df_Ba_Cs['Clean Rate [mHz] ratio'] * np.sqrt(
+        merged_df_Ba_Cs['Clean Rate Sigma ratio'] = merged_df_Ba_Cs['Clean Rate ratio'] * np.sqrt(
             (merged_df_Ba_Cs['Clean Rate Sigma [mHz]1'] / merged_df_Ba_Cs['Clean Rate [mHz]1']) ** 2 + (
                         merged_df_Ba_Cs['Clean Rate Sigma [mHz]2'] / merged_df_Ba_Cs['Clean Rate [mHz]2']) ** 2
         )
