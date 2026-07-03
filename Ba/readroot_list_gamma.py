@@ -365,12 +365,12 @@ class ReadRoot():
         print(self.electron_recoiled_event_list[:3])
         high_NRER = []
 
-        # self.mom_gamma = self.df[
-        #     ((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys')) &( (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))& (self.df['Parent ID'] == 0)& (self.df["Event"].isin(self.electron_recoiled_event_list))]
         self.mom_gamma = self.df[
-            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-                         (self.df['Process'] == "phot")) & (
-                        self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
+            ((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys')) &( (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))& (self.df['Parent ID'] == 0)& (self.df["Event"].isin(self.electron_recoiled_event_list))]
+        # self.mom_gamma = self.df[
+        #     ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
+        #                  (self.df['Process'] == "phot")) & (
+        #                 self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
 
         # self.mom_gamma = self.df[
         #     ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
