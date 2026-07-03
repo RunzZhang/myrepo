@@ -1912,7 +1912,7 @@ class integrated_analysis():
                      "ylabel": "Nucleation probability (per interaction) "},
                     {"y": "Rejection Rate KeV[/keV]", "y_err": "Rejection Sigma KeV[/keV]",
                      "ylabel": "Probability per energy deposited (events/keV) "},
-                    {"y": "Rejection Rate Xenon Abs[]", "y_err": "Rejection Sigma Scattering[]",
+                    {"y": "Rejection Rate Xenon Abs[]", "y_err": "Rejection Sigma Xenon Abs[]",
                      "ylabel": "Nucleation probability (per xenon photoabsorption in K shell) "},
                     {"y": "Clean Rate [mHz]", "y_err": 'Clean Rate Sigma [mHz]',
                      "ylabel": "Background Substacted Rate [mHz]"}]
