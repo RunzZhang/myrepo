@@ -2111,6 +2111,8 @@ class integrated_analysis():
 
         print("self.Cs_Rate_factor * self.Cs_counts_energy_cum_bin[0]",self.Cs_Rate_factor * self.Cs_counts_energy_cum_bin[0])
         print("self.Ba_Rate_factor * self.Ba_counts_energy_cum_bin[0]",self.Ba_Rate_factor * self.Ba_counts_energy_cum_bin[0])
+
+        print(self.Cs_Rate_factor * self.Cs_counts_energy_cum_bin[0]/self.Ba_Rate_factor * self.Ba_counts_energy_cum_bin[0])
         ax[1].axhline(
             y=  (
                     self.Cs_doped_Rate_factor * self.Cs_doped_counts_cum_bin[0])/(self.Ba_doped_Rate_factor * self.Ba_doped_counts_cum_bin[0]),
