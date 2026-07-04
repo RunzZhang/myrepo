@@ -134,8 +134,8 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_CF4/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_CF4/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_CF4_inside/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_CF4_inside/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
@@ -322,7 +322,7 @@ class ReadRoot():
         self.spectrum.to_csv(self.info_path, index=False)
     def allER(self):
         # we need to do several things:
-        # gamma only in LAr or CF4
+        # gamma only in LAr or CF4_inside
         # in 1 event number, only the first series of gammas, avoiding over-countting
         # including phot - Xray excited the electrons
         # fetch the location/multiplicity/ER
