@@ -2134,6 +2134,7 @@ class integrated_analysis():
         plt.savefig(self.plot_path + "Ratio_compare.pdf")
         
     def time_plot(self):
+        import matplotlib.dates as mdates
         print(self.df_Cs_116_time_plot)
 
         run_dates = [
@@ -2176,20 +2177,24 @@ class integrated_analysis():
                 x_values = group_sorted.index
 
                 # Plot line with markers and error bars
-                ax.errorbar(x_values, group_sorted[y_column], yerr=group_sorted[y_error],
+                ax.errorbar(group_sorted['Run_Date'], group_sorted[y_column], yerr=group_sorted[y_error],
                             marker='o', linestyle='-', linewidth=2, elinewidth=1.5, capsize=4,
                             label=f'{pressure:.2f} bara')
 
-        # --- Graph Formatting ---
-        ax.set_xlabel("Time", fontsize=12)
-        ax.set_ylabel('Background Subtracted Rate [mHz]', fontsize=12)
+            # --- 3. Format the X-axis time presentation ---
+            # Formats the dates on screen as MM/DD/YYYY
+        ax.xaxis.set_major_formatter(mdates.DateFormatter('%m/%d/%Y'))
 
-        # Ensure X-axis only displays integer steps
-        ax.set_xticks(self.df_Cs_116_time_plot.index)
-        #
-        # ax.grid(True, linestyle=':', alpha=0.6)
-        # ax.legend(title="Pressure State", loc="upper right", fontsize=10)
+        # Ensures matplotlib spaces out the dates nicely
+        ax.xaxis.set_major_locator(mdates.AutoDateLocator())
 
+        # Clean up layout and rotate date strings so they don't overlap
+        fig.autofmt_xdate()
+
+        # --- 4. Labels and aesthetics ---
+        ax.set_xlabel("Run Date", fontsize=12, fontweight='bold')
+        ax.set_ylabel(y_column, fontsize=12, fontweight='bold')
+        ax.legend(loc='upper right', fontsize=14)
         plt.tight_layout()
         plt.savefig(self.plot_path + "Time_stability.pdf")
     def concat_PT_condition(self, df):
