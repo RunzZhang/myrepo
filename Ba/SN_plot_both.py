@@ -100,12 +100,10 @@ class SN():
 
 
         self.df_list.append(temp_df)
-        print("df list append", self.df_list)
         self.df_phot_list.append(temp_df_phot)
 
 
     def combine_df(self):
-        print("df list",self.df_list)
         self.merged_df = pd.concat(self.df_list, ignore_index=True)
         self.merged_phot_df = pd.concat(self.df_phot_list, ignore_index=True)
 
