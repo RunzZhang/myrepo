@@ -1968,8 +1968,9 @@ class integrated_analysis():
         plt.savefig(self.plot_path + "gamma_rejection_v2.pdf")
 
         plt.clf()
-        self.Qseitz_compound_xe_plot()
-        self.Ratio_plot()
+        # self.Qseitz_compound_xe_plot()
+        # self.Ratio_plot()
+        self.time_plot()
     def Qseitz_compound_xe_plot(self):
         fig, ax = plt.subplots(1, 2, figsize=(16, 6))
         [result_Q_scatter, result_Q_keV, result_Q_xe, result_Eion_scatter, result_Eion_keV, result_Eion_xe,
@@ -2131,7 +2132,8 @@ class integrated_analysis():
 
         plt.savefig(self.plot_path + "Ratio_compare.pdf")
         
-        
+    def time_plot(self):
+        print(self.df_Cs_116_plot)
     def concat_PT_condition(self, df):
 
         df_combined = df.groupby(['Pressure [bara]', 'Seitz [keV]', 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]', 'Q_rl-1_rhol-1 [GeVcm**2 g-1]' , 'Eion [keV]'], as_index=False).agg({
