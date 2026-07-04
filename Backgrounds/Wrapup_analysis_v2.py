@@ -2135,6 +2135,63 @@ class integrated_analysis():
         
     def time_plot(self):
         print(self.df_Cs_116_time_plot)
+
+        run_dates = [
+            "11/17/2025",  # Row 0: 3.00 bara
+            "11/17/2025",  # Row 1: 3.50 bara
+            "11/17/2025",  # Row 2: 4.00 bara
+            "12/01/2025",  # Row 3: 2.25 bara
+            "12/01/2025",  # Row 4: 2.50 bara (Same run batch)
+            "12/01/2025",  # Row 5: 3.00 bara
+            "12/01/2025",  # Row 6: 3.50 bara
+            "12/01/2025",  # Row 7: 4.50 bara
+            "12/10/2025",  # Row 8: 2.25 bara
+            "12/10/2025",  # Row 9: 2.50 bara
+            "12/10/2025",  # Row 10: 3.00 bara
+            "12/10/2025",  # Row 11: 3.50 bara
+            "01/20/2026"  # Row 12: 3.00 bara
+        ]
+
+        # Add the column to your existing dataframe and cast it to datetime objects
+        self.df_Cs_116_time_plot['Run_Date'] = pd.to_datetime(run_dates)
+
+
+        grouped = self.df_Cs_116_time_plot.groupby("Seitz [keV]")
+
+
+        fig, ax = plt.subplots(figsize=(10, 6))
+
+        # Define your target columns for the Y-axis and its error bars
+        y_column = 'Clean Rate [mHz]'
+        y_error = 'Clean Rate Sigma [mHz]'
+
+        for pressure, group in grouped:
+            # Condition: Only plot lines that have 2 or more points
+            if len(group) >= 2:
+                # Sort by index to guarantee lines connect strictly in chronological order
+                group_sorted = group.sort_index()
+
+                # X-axis: Use the index (0, 1, 2...) since it matches the time sequence
+                # (Note: If you created a 'Run_Date' column earlier, change this to group_sorted['Run_Date'])
+                x_values = group_sorted.index
+
+                # Plot line with markers and error bars
+                ax.errorbar(x_values, group_sorted[y_column], yerr=group_sorted[y_error],
+                            marker='o', linestyle='-', linewidth=2, elinewidth=1.5, capsize=4,
+                            label=f'{pressure:.2f} bara')
+
+        # --- Graph Formatting ---
+        ax.set_xlabel("Time", fontsize=12)
+        ax.set_ylabel('Background Subtracted Rate [mHz]', fontsize=12)
+
+        # Ensure X-axis only displays integer steps
+        ax.set_xticks(self.df_Cs_116_time_plot.index)
+        #
+        # ax.grid(True, linestyle=':', alpha=0.6)
+        # ax.legend(title="Pressure State", loc="upper right", fontsize=10)
+
+        plt.tight_layout()
+        plt.savefig(self.plot_path + "Time_stability.pdf")
     def concat_PT_condition(self, df):
 
         df_combined = df.groupby(['Pressure [bara]', 'Seitz [keV]', 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]', 'Q_rl-1_rhol-1 [GeVcm**2 g-1]' , 'Eion [keV]'], as_index=False).agg({
