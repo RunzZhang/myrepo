@@ -2085,9 +2085,11 @@ class integrated_analysis():
         ax[0].errorbar(merged_df_Co_Cs["Seitz [keV]"],
                        merged_df_Co_Cs['Clean Rate ratio'],
                        yerr=merged_df_Co_Cs['Clean Rate Sigma ratio'], label="Cs/Co", fmt='o', color = 'r')
-        ax[1].errorbar(merged_df_Ba_Cs["Seitz [keV]"],
-                       merged_df_Ba_Cs['Clean Rate ratio'],
-                       yerr=merged_df_Ba_Cs['Clean Rate Sigma ratio'], label="Cs/Ba", fmt='o', color='r')
+        # ax[1].errorbar(merged_df_Ba_Cs["Seitz [keV]"],
+        #                merged_df_Ba_Cs['Clean Rate ratio'],
+        #                yerr=merged_df_Ba_Cs['Clean Rate Sigma ratio'], label="Cs/Ba", fmt='o', color='r')
+        ax[1].plot(merged_df_Ba_Cs["Seitz [keV]"],
+                       merged_df_Ba_Cs['Clean Rate ratio'], marker='v',linestyle='None', label="Cs/Ba", fmt='o', color='r')
 
         print("Cs/Ba clean rate ratio",merged_df_Ba_Cs['Clean Rate ratio'])
 
@@ -2106,6 +2108,9 @@ class integrated_analysis():
         ax[1].axhline(
             y= (self.Cs_Rate_factor * self.Cs_counts_energy_cum_bin[0]/(self.Ba_Rate_factor * self.Ba_counts_energy_cum_bin[0])),
             label='sim per keV',color = 'g')
+
+        print("self.Cs_Rate_factor * self.Cs_counts_energy_cum_bin[0]",self.Cs_Rate_factor * self.Cs_counts_energy_cum_bin[0])
+        print("self.Ba_Rate_factor * self.Ba_counts_energy_cum_bin[0]",self.Ba_Rate_factor * self.Ba_counts_energy_cum_bin[0])
         ax[1].axhline(
             y=  (
                     self.Cs_doped_Rate_factor * self.Cs_doped_counts_cum_bin[0])/(self.Ba_doped_Rate_factor * self.Ba_doped_counts_cum_bin[0]),
