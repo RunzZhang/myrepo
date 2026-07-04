@@ -1841,6 +1841,7 @@ class integrated_analysis():
         self.df_Cs_116_plot = pd.concat(self.df_Cs_116_plot_list, ignore_index=True)
         self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
 
+        self.df_Cs_116_time_plot=self.df_Cs_116_plot
         # make Cs 116 show just as one series
         self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
 
@@ -2133,7 +2134,7 @@ class integrated_analysis():
         plt.savefig(self.plot_path + "Ratio_compare.pdf")
         
     def time_plot(self):
-        print(self.df_Cs_116_plot)
+        print(self.df_Cs_116_time_plot)
     def concat_PT_condition(self, df):
 
         df_combined = df.groupby(['Pressure [bara]', 'Seitz [keV]', 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]', 'Q_rl-1_rhol-1 [GeVcm**2 g-1]' , 'Eion [keV]'], as_index=False).agg({
