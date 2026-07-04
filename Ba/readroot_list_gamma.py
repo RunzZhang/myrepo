@@ -436,7 +436,7 @@ class ReadRoot():
         self.output_df.to_csv(self.info_path, index=False)
 
 
-        non_compton_ER_list = self.output_df[self.output_df["ER_near/eV"]>=360*1000]["Event"].unique().tolist()
+        non_compton_ER_list = self.output_df[self.output_df["ER_near/eV"]>=350*1000]["Event"].unique().tolist()
         print('non_compton_ER_list',non_compton_ER_list)
         self.df[self.df["Event"] == 5789].to_csv(self.base_path + "LAr_ER_abnormalER_5789.csv")
         # self.output_df[self.output_df["Event"] == 20].to_csv(self.base_path + "LAr_ER_abnormalER5789.csv")
