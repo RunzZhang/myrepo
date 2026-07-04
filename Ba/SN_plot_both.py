@@ -342,12 +342,16 @@ class SN():
 
 
         fig, ax = plt.subplots(1, 3, figsize=(16, 4))
-        ax[0].bar(hist_array[0][1][:-1], Rate_factor * hist_array[0][0],width=np.diff(hist_array[0][1]),
-        align="edge",
-        edgecolor="black")
+        # ax[0].bar(hist_array[0][1][:-1], Rate_factor * hist_array[0][0],width=np.diff(hist_array[0][1]),
+        # align="edge",
+        # edgecolor="black")
+        ax[0].bar(hist_array[0][1][:-1],  hist_array[0][0], width=np.diff(hist_array[0][1]),
+                  align="edge",
+                  edgecolor="black")
         bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
         ax[0].set_xlabel("ER/keV per deposition in LAr")
-        ax[0].set_ylabel(" Rate mHz/(bin[" + str(bin0_len) + " keV])")
+        # ax[0].set_ylabel(" Rate mHz/(bin[" + str(bin0_len) + " keV])")
+        ax[0].set_ylabel(" Counts/(bin[" + str(bin0_len) + " keV])")
         # ax[0].ticklabel_format(axis="y",style="sci", scilimits=(0, 0) )
         ax[0].set_yscale("log")
         ax[0].minorticks_on()
