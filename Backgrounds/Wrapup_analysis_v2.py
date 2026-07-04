@@ -1425,7 +1425,7 @@ class integrated_analysis():
         # ax[0].set_ylim(1.0e-12,1.0e-2)
         ax[0].set_yscale("log")
 
-        ax[0].legend(loc='upper right', fontsize=7)
+        ax[0].legend(loc='bottom left', fontsize=7)
 
         # ax[1].plot(x_fitted_keV, y_fitted_keV, label=f"a,b = {a_fit_keV:.2e} , {b_fit_keV:.2e}", color="black")
         ax[1].plot(x_fitted_keV, y_fitted_keV, color="black")
@@ -1438,7 +1438,7 @@ class integrated_analysis():
         # ax[1].set_xlim(0.08,0.15)
         # ax[1].set_xlim(0.8,1.1)
         ax[1].set_yscale("log")
-        ax[1].legend(loc='upper right', fontsize=7)
+        ax[1].legend(loc='bottom left', fontsize=7)
 
         plt.savefig(self.plot_path + "gamma_rejection.pdf")
 
@@ -1719,37 +1719,37 @@ class integrated_analysis():
         ax[0,0].set_xlabel(r"Seitz threshold [keV]")
         ax[0,0].set_ylabel("Nucleation probability (per interaction) ")
         ax[0,0].set_yscale("log")
-        ax[0,0].legend(loc='upper right', fontsize=14)
+        ax[0,0].legend(loc='bottom left', fontsize=14)
 
         ax[0, 1].set_xlabel(r"Seitz threshold [keV]")
         ax[0, 1].set_ylabel("Probability per energy deposited (events/keV) ")
         ax[0, 1].set_yscale("log")
-        ax[0, 1].legend(loc='upper right', fontsize=14)
+        ax[0, 1].legend(loc='bottom left', fontsize=14)
 
         ax[0, 2].set_xlabel(r"Seitz threshold [keV]")
         ax[0, 2].set_ylabel("Nucleation probability (per xenon photoabsorption) ")
         ax[0, 2].set_yscale("log")
-        ax[0, 2].legend(loc='upper right', fontsize=14)
+        ax[0, 2].legend(loc='bottom left', fontsize=14)
 
         ax[0, 3].set_xlabel(r"Seitz threshold [keV]")
         ax[0, 3].set_ylabel("Background Substacted Rate [mHz]")
         ax[0, 3].set_yscale("log")
-        ax[0, 3].legend(loc='upper right', fontsize=8)
+        ax[0, 3].legend(loc='bottom left', fontsize=8)
 
         ax[1, 0].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
         ax[1, 0].set_ylabel("Nucleation probability (per interaction) ")
         ax[1, 0].set_yscale("log")
-        ax[1, 0].legend(loc='upper right', fontsize=14)
+        ax[1, 0].legend(loc='bottom left', fontsize=14)
 
         ax[1, 1].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
         ax[1, 1].set_ylabel("Probability per energy deposited (events/keV) ")
         ax[1, 1].set_yscale("log")
-        ax[1, 1].legend(loc='upper right', fontsize=14)
+        ax[1, 1].legend(loc='bottom left', fontsize=14)
 
         ax[1, 2].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
         ax[1, 2].set_ylabel("Nucleation probability (per xenon photoabsorption) ")
         ax[1, 2].set_yscale("log")
-        ax[1, 2].legend(loc='upper right', fontsize=14)
+        ax[1, 2].legend(loc='bottom left', fontsize=14)
 
         plt.savefig(self.plot_path + "gamma_rejection_v2.pdf")
         
@@ -1784,7 +1784,7 @@ class integrated_analysis():
         ax[0].set_xlabel(r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
         ax[0].set_ylabel("Nucleation probability (per xenon K shell photoabsorption) ")
         ax[0].set_yscale("log")
-        ax[0].legend(loc='upper right', fontsize=14)
+        ax[0].legend(loc='bottom left', fontsize=14)
 
         plt.savefig(self.plot_path + "Qseitz_compound_xe.pdf")
 
@@ -1792,7 +1792,7 @@ class integrated_analysis():
         # ax[2].set_ylabel("Nucleation probability (per xenon photoabsorption in K shell)")
         # ax[2].set_yscale("log")
         # 
-        # ax[2].legend(loc='upper right', fontsize=7)
+        # ax[2].legend(loc='bottom left', fontsize=7)
 
     def gamma_rejection_plot_v3(self):
         # print Q vs per keV and Eion per interaction
@@ -1946,7 +1946,7 @@ class integrated_analysis():
                 ax_ij.set_xlabel(x_cfg["xlabel"])
                 ax_ij.set_ylabel(y_cfg["ylabel"])
                 ax_ij.set_yscale("log")
-                ax_ij.legend(loc='upper right', fontsize=14)
+                ax_ij.legend(loc='bottom left', fontsize=14)
 
 
 
@@ -2016,7 +2016,7 @@ class integrated_analysis():
         ax[0].set_xlabel(r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
         ax[0].set_ylabel("Nucleation probability (per xenon K shell photoabsorption) ")
         ax[0].set_yscale("log")
-        ax[0].legend(loc='upper right', fontsize=12)
+        ax[0].legend(loc='bottom left', fontsize=12)
 
 
 
@@ -2114,12 +2114,12 @@ class integrated_analysis():
         ax[0].set_xlabel(r"$Q_{Seitz} [keV]$")
         ax[0].set_ylabel("Cs/Co Ratio [] ")
         # ax[0].set_yscale("log")
-        ax[0].legend(loc='upper right', fontsize=14)
+        ax[0].legend(loc='bottom left', fontsize=14)
 
         ax[1].set_xlabel(r"$Q_{Seitz} [keV]$")
         ax[1].set_ylabel("Cs/Ba Ratio [] ")
         ax[1].set_yscale("log")
-        ax[1].legend(loc='upper right', fontsize=14)
+        ax[1].legend(loc='bottom left', fontsize=14)
 
 
         plt.savefig(self.plot_path + "Ratio_compare.pdf")
@@ -2216,7 +2216,7 @@ class integrated_analysis():
         # ax[0].set_ylim(1.0e-12,1.0e-2)
         ax[0].set_yscale("log")
 
-        ax[0].legend(loc='upper right', fontsize=7)
+        ax[0].legend(loc='bottom left', fontsize=7)
 
         # ax[1].plot(x_fitted_keV, y_fitted_keV, label=f"a,b = {a_fit_keV:.2e} , {b_fit_keV:.2e}", color="black")
         ax[1].plot(x_fitted_keV, y_fitted_keV, color="black")
@@ -2229,7 +2229,7 @@ class integrated_analysis():
         # ax[1].set_xlim(0.08,0.15)
         # ax[1].set_xlim(0.8,1.1)
         ax[1].set_yscale("log")
-        ax[1].legend(loc='upper right', fontsize=7)
+        ax[1].legend(loc='bottom left', fontsize=7)
 
         plt.savefig(self.plot_path + "gamma_rejection_doped.pdf")
     def bkg_floor_plot(self,ax,mode):
