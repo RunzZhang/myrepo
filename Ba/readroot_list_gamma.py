@@ -139,14 +139,14 @@ class ReadRoot():
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        # self.main_body(1)
-        for i in range(1,56):
-        # for i in range(26, 54):
-            try:
-        # for i in range(1, 11):
-                self.main_body(i)
-            except:
-                continue
+        self.main_body(1)
+        # for i in range(1,56):
+        # # for i in range(26, 54):
+        #     try:
+        # # for i in range(1, 11):
+        #         self.main_body(i)
+        #     except:
+        #         continue
     def main_body(self,i):
         print(i)
         self.ini_path = self.base_path+ f"Co_gamma_1E7_ini_part{i}.csv"
@@ -436,7 +436,7 @@ class ReadRoot():
         self.output_df.to_csv(self.info_path, index=False)
 
 
-        non_compton_ER_list = self.output_df[self.output_df["ER_near/eV"]>=231*1000]["Event"].unique().tolist()
+        non_compton_ER_list = self.output_df[self.output_df["ER_near/eV"]>=360*1000]["Event"].unique().tolist()
         print('non_compton_ER_list',non_compton_ER_list)
         self.df[self.df["Event"] == 5789].to_csv(self.base_path + "LAr_ER_abnormalER_5789.csv")
         # self.output_df[self.output_df["Event"] == 20].to_csv(self.base_path + "LAr_ER_abnormalER5789.csv")
