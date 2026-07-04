@@ -2089,7 +2089,7 @@ class integrated_analysis():
         #                merged_df_Ba_Cs['Clean Rate ratio'],
         #                yerr=merged_df_Ba_Cs['Clean Rate Sigma ratio'], label="Cs/Ba", fmt='o', color='r')
         ax[1].plot(merged_df_Ba_Cs["Seitz [keV]"],
-                       merged_df_Ba_Cs['Clean Rate ratio'], marker='v',linestyle='None', label="Cs/Ba", fmt='o', color='r')
+                       merged_df_Ba_Cs['Clean Rate ratio'], marker='v',linestyle='None', label="Cs/Ba",  color='r')
 
         print("Cs/Ba clean rate ratio",merged_df_Ba_Cs['Clean Rate ratio'])
 
