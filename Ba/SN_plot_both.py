@@ -93,6 +93,7 @@ class SN():
 
 
         temp_df = pd.read_csv(self.info_path)
+        print(temp_df)
         temp_df_phot = pd.read_csv(self.info_phot_path)
 
 
