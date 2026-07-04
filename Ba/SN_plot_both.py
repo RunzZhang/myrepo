@@ -45,7 +45,7 @@ class SN():
             try:
         # for i in range(1, 11):
                 self.main_body(i)
-            except e as Exception:
+            except Exception as e:
                 print(e)
                 continue
         # self.main_body(1)
@@ -95,7 +95,8 @@ class SN():
 
         temp_df = pd.read_csv(self.info_path)
 
-        temp_df_phot = pd.read_csv(self.info_phot_path)
+        # temp_df_phot = pd.read_csv(self.info_phot_path)
+        temp_df_phot = pd.read_csv(self.info_path)
 
 
         self.df_list.append(temp_df)
