@@ -139,7 +139,7 @@ class ReadRoot():
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        self.main_body(1)
+        self.main_body(2)
         # for i in range(1,56):
         # # for i in range(26, 54):
         #     try:
