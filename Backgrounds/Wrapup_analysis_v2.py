@@ -2016,7 +2016,7 @@ class integrated_analysis():
         ax[0].set_xlabel(r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
         ax[0].set_ylabel("Nucleation probability (per xenon K shell photoabsorption) ")
         ax[0].set_yscale("log")
-        ax[0].legend(loc='upper right', fontsize=14)
+        ax[0].legend(loc='upper right', fontsize=12)
 
 
 
