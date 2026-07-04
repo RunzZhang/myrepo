@@ -2193,7 +2193,7 @@ class integrated_analysis():
 
         # --- 4. Labels and aesthetics ---
         ax.set_xlabel("Run Date", fontsize=12, fontweight='bold')
-        ax.set_ylabel(y_column, fontsize=12, fontweight='bold')
+        ax.set_ylabel("Background Substracted Rate [mHz]", fontsize=12, fontweight='bold')
         ax.legend(loc='upper right', fontsize=14)
         plt.tight_layout()
         plt.savefig(self.plot_path + "Time_stability.pdf")
