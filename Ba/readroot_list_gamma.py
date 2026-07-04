@@ -134,8 +134,8 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_xe_inside/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_xe_inside/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
@@ -366,12 +366,12 @@ class ReadRoot():
         print(self.electron_recoiled_event_list[:3])
         high_NRER = []
 
-        self.mom_gamma = self.df[
-            ((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys')) &( (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))& (self.df['Parent ID'] == 0)& (self.df["Event"].isin(self.electron_recoiled_event_list))]
         # self.mom_gamma = self.df[
-        #     ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-        #                  (self.df['Process'] == "phot")) & (
-        #                 self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
+        #     ((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys')) &( (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))& (self.df['Parent ID'] == 0)& (self.df["Event"].isin(self.electron_recoiled_event_list))]
+        self.mom_gamma = self.df[
+            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
+                         (self.df['Process'] == "phot")) & (
+                        self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
 
         # self.mom_gamma = self.df[
         #     ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
