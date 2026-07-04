@@ -321,7 +321,8 @@ class SN():
         # MHz
         Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
         ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
-        print("Ba level",self.merged_df[(self.merged_df["Volume"]=="LAr_phys")&(self.merged_df["ER_near/eV"]>350*1000)])
+        ba_high_energy = self.merged_df[(self.merged_df["Volume"]=="LAr_phys")&(self.merged_df["ER_near/eV"]>350*1000)]
+        print("Ba level",len(ba_high_energy),ba_high_energy)
         ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
         ER_CF4 = ER_Ar # only test argon
         print("ER CF4 counts", len(ER_CF4))
