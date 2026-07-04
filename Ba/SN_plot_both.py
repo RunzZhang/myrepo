@@ -93,11 +93,12 @@ class SN():
 
 
         temp_df = pd.read_csv(self.info_path)
-        print(temp_df)
+
         temp_df_phot = pd.read_csv(self.info_phot_path)
 
 
         self.df_list.append(temp_df)
+        print(self.df_list)
         self.df_phot_list.append(temp_df_phot)
 
 
