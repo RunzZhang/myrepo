@@ -45,7 +45,8 @@ class SN():
             try:
         # for i in range(1, 11):
                 self.main_body(i)
-            except:
+            except e as Exception:
+                print(e)
                 continue
         # self.main_body(1)
         self.combine_df()
