@@ -101,6 +101,7 @@ class SN():
 
 
     def combine_df(self):
+        print(self.df_list)
         self.merged_df = pd.concat(self.df_list, ignore_index=True)
         self.merged_phot_df = pd.concat(self.df_phot_list, ignore_index=True)
 
