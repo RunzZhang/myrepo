@@ -2160,7 +2160,7 @@ class integrated_analysis():
         grouped = self.df_Cs_116_time_plot.groupby("Seitz [keV]")
 
 
-        fig, ax = plt.subplots(figsize=(10, 6))
+        fig, ax = plt.subplots(figsize=(8, 6))
 
         # Define your target columns for the Y-axis and its error bars
         y_column = 'Clean Rate [mHz]'
