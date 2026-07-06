@@ -251,7 +251,7 @@ ax1.set_xlabel("Photon Energy [MeV]", fontsize=12)
 ax1.set_ylabel("Mass Cross Section [$\mathrm{cm}^2/\mathrm{g}$]", fontsize=12)
 ax1.set_xscale("log")
 ax1.set_yscale("log")
-ax1.grid(True, which="both", linestyle="--", alpha=0.5)
+# ax1.grid(True, which="both", linestyle="--", alpha=0.5)
 ax1.legend(fontsize=10, loc="lower left")
 
 # --- GRAPH 2: XENON ---
@@ -298,7 +298,7 @@ ax2.plot(
 ax2.set_title("Photon Cross Sections in Xenon ($Z=54$)", fontsize=14, weight="bold")
 ax2.set_xlabel("Photon Energy [MeV]", fontsize=12)
 ax2.set_xscale("log")
-ax2.grid(True, which="both", linestyle="--", alpha=0.5)
+# ax2.grid(True, which="both", linestyle="--", alpha=0.5)
 ax2.legend(fontsize=10, loc="lower left")
 
 # Final polishing layout adjustments
