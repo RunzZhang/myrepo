@@ -218,7 +218,7 @@ ax1.plot(
 ax1.plot(
     df_nist_ar["Energy_MeV"],
     df_nist_ar["Compton_cm2_g"],
-    label="NIST Compton",
+    label="NIST no coherent",
     color="navy",
     linestyle="-",
     linewidth=linewidth,
@@ -267,7 +267,7 @@ ax2.plot(
 ax2.plot(
     df_nist_xe["Energy_MeV"],
     df_nist_xe["Compton_cm2_g"],
-    label="NIST Compton",
+    label="NIST no coherent",
     color="navy",
     linestyle="-",
     linewidth=linewidth,

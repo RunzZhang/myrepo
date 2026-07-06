@@ -14,12 +14,12 @@ class SN():
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/" # for gamma path
         #
-        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/"
-        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/"  # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/"  # for gamma path
 
 
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_CF4_inside/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_CF4_inside/"
+        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_CF4_inside/"
+        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_CF4_inside/"
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"  # for gamma path
@@ -121,7 +121,7 @@ class SN():
         # self.read_Ar_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
-        self.read_ER_Ar_CF_per_deposit_rate()
+        # self.read_ER_Ar_CF_per_deposit_rate()
         # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
         # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
@@ -138,7 +138,7 @@ class SN():
 
 
         #doped analyasis
-        # self.read_ER_Ar_doped()
+        self.read_ER_Ar_doped()
         # self.write_doped_sims_results()
 
         # photo process analysis
