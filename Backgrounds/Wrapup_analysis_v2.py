@@ -2178,7 +2178,7 @@ class integrated_analysis():
 
                 # Plot line with markers and error bars
                 ax.errorbar(group_sorted['Run_Date'], group_sorted[y_column], yerr=group_sorted[y_error],
-                            fmt='o',label=r"$Q_{Seitz}$ "+f'{energy:.2f} keV')
+                            fmt='o',linestyle='-', linewidth=2, elinewidth=1.5,label=r"$Q_{Seitz}$ "+f'{energy:.2f} keV')
 
             # --- 3. Format the X-axis time presentation ---
             # Formats the dates on screen as MM/DD/YYYY
