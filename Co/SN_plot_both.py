@@ -298,6 +298,8 @@ class SN():
 
         ER_sum = self.merged_df_primary["ER_near/eV"] / 1000
 
+        #estimate gamma rejction level
+        print(len(ER_sum), len(self.merged_df_all["ER_near/eV"]))
         hist_array = [None] * 3
 
         hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 660))
