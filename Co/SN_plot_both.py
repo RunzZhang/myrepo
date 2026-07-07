@@ -856,7 +856,7 @@ class SN():
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
 
 
-def write_doped_sims_results(self):
+    def write_doped_sims_results(self):
         # rate factor in mHz
 
         Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
@@ -888,6 +888,7 @@ def write_doped_sims_results(self):
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
         with open("/data/runzezhang/result/TN_sims_D/Co_doped_output.pkl", "wb") as f:
             pickle.dump(output_list, f)
+
     def read_ER_CF_per_deposit_rate_cumulative(self):
         # rate factor in mHz
         Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
