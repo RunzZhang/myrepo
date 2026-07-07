@@ -106,7 +106,8 @@ class SN():
     def combine_df(self):
         self.merged_df_primary = pd.concat(self.df_primary_list, ignore_index=True)
         self.merged_df_all = pd.concat(self.df_all_list, ignore_index=True)
-        self.merged_df_phot = pd.concat(self.df_phot_list, ignore_index=True)
+        # self.merged_df_phot = pd.concat(self.df_phot_list, ignore_index=True)
+        self.merged_df_phot = self.df_phot_list[0] # usually photo_list only has 1 chunked file
 
     def data_analysis(self):
         #position distributions histogram, dependisng on step number
