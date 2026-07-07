@@ -134,11 +134,11 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E6_phot/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E6_phot/"
+        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E6_phot/"
+        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E6_phot/"
 
-        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
-        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
 
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
@@ -225,15 +225,15 @@ class ReadRoot():
         self.modify_df()
 
         # find all ER and save ER into csv
-        # self.allER()
-        # self.ER_distribution_primary()
-        # self.ER_distribution_counts()
+        self.allER()
+        self.ER_distribution_primary()
+        self.ER_distribution_counts()
 
         # find all NR
         # self.allNR()
 
         #xenon doping
-        self.xenon_doped_phot()
+        # self.xenon_doped_phot()
 
 
 
@@ -328,8 +328,12 @@ class ReadRoot():
         # in each eventi_data, it is matrix [(x1,y1,z1),ER1], [(x2,y2,z2),ER2,,,] including the bubble multiplicity and ER and position
 
         print(self.df['name'].unique())
+        # self.gamma_Scint = self.df[
+        #     ((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys')) &( (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))& (self.df['Parent ID'] == 0)]
         self.gamma_Scint = self.df[
-            ((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys')) &( (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))& (self.df['Parent ID'] == 0)]
+            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
+                        (self.df['Process'] == "compt") | (self.df['Process'] == "phot"))]
+
         # record the positions and multiplicity
 
         gamma_list = self.gamma_Scint["Event"].unique()
