@@ -452,6 +452,11 @@ class ReadRoot():
         print(self.electron_recoiled_event_list[:3])
         high_NRER = []
 
+        self.test_mom = self.df[
+            (self.df['Volume'] == 'LAr_phys') & (self.df['Process'] == "phot") ]
+        print("test mom",self.test_mom[self.test_mom["PreKinetic/MeV"]<0.006])
+
+
         self.mom_gamma = self.df[
             ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
                         (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
@@ -510,8 +515,8 @@ class ReadRoot():
         print(first3_events)
         print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
         # for test only
-        self.mom_gamma["ER_near/eV"] = self.mom_gamma["PreKinetic/MeV"]*1e6
-        print("low energy",self.mom_gamma[self.mom_gamma["PreKinetic/MeV"]<0.006] )
+        # self.mom_gamma["ER_near/eV"] = self.mom_gamma["PreKinetic/MeV"]*1e6
+
 
         self.output_df = self.mom_gamma[
             ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
