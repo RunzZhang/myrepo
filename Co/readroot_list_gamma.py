@@ -553,7 +553,7 @@ class ReadRoot():
         ## test Xenon doping
         print("particle name", self.df['name'].unique())
         print("df the whole list", self.df[self.df["Volume"]=="LAr_phys"])
-        self.df.to_csv(self.info_path, index=False)
+        self.df.to_csv(self.info_phot_path, index=False)
 
     def exclude_common(self,df1, df2): # exclude same ["Event"]
         common_events = set(df1["Event"]) & set(df2["Event"])
