@@ -14,8 +14,8 @@ class SN():
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/" # for gamma path
         #
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/"  # for gamma path
+        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/"
+        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/"  # for gamma path
 
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_CF4_inside/"
@@ -25,8 +25,8 @@ class SN():
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E6_phot/"
 
 
-        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
-        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"  # for gamma path
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"  # for gamma path
 
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
         self.false_1 = "PN_false1.csv"
@@ -396,7 +396,7 @@ class SN():
         # ax[2].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         # ax[2].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
-        plt.savefig(self.plot_path + "Ba_1E5_all_photo_insideargon.pdf")
+        plt.savefig(self.plot_path + "Ba_5E6_all_photo.pdf")
 
 
     def read_ER_Ar_CF_per_deposit_rate_cumulative(self):
