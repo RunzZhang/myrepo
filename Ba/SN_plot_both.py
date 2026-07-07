@@ -398,7 +398,7 @@ class SN():
         plt.savefig(self.plot_path + "Ba_1E7_ER_perdepostion_insideargon.pdf")
 
 
-    # def read_ER_Ar_CF_per_deposit_rate_cumulative(self):
+    def read_ER_Ar_CF_per_deposit_rate_cumulative(self):
         # rate factor in mHz
 
 
