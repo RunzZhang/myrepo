@@ -13,7 +13,7 @@ class SN():
         # v4 kill duplicated NRERs
         self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_5E6/"
         self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_5E6/" # for gamma path
-
+        self.doped_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_100ppm_1E8/"
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_outside_1E7/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_gamma/"  # without lead
 
@@ -60,7 +60,7 @@ class SN():
 
         self.info_primary_path = self.base_path + f"Cs_gamma_1E6_info_primary_scube_part{i}.csv"
         self.info_all_path = self.base_path + f"Cs_gamma_1E6_info_scube_all_part{i}.csv"
-        self.info_phot_path = self.base_path + f"Cs_gamma_1E6_info_scube_phot_part{i}.csv"
+        self.info_phot_path = self.doped_path + f"Cs_gamma_1E6_info_scube_phot_part{i}.csv"
 
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
