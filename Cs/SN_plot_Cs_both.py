@@ -33,8 +33,9 @@ class SN():
 
         cols = ["Event","name", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]
 
-        self.df_list =[]
-
+        self.df_primary_list =[]
+        self.df_all_list = []
+        self.df_phot_list =[]
 
 
         #982 statics false 1
@@ -54,7 +55,9 @@ class SN():
         self.false_gamma_1 = f"PN_gamma_1E7_false1_part{i}.csv"
         self.signal = f"PN_1E7_sig_part{i}.csv"
 
-        self.info_path = self.base_path + f"Cs_gamma_1E6_info_scube_part{i}.csv"
+        self.info_primary_path = self.base_path + f"Cs_gamma_1E6_info_primary_scube_part{i}.csv"
+        self.info_all_path = self.base_path + f"Cs_gamma_1E6_info_scube_all_part{i}.csv"
+        self.info_phot_path = self.base_path + f"Cs_gamma_1E6_info_scube_phot_part{i}.csv"
 
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
@@ -81,16 +84,27 @@ class SN():
 
 
         self.G4_events_gamma =  1E8 # only 50 chunks
+
+        self.G4_phot_gamma = 1E8
         self.ambient_bubble = 5 # /h
 
 
-        temp_df = pd.read_csv(self.info_path)
+        temp_df_primary = pd.read_csv(self.info_primary_path)
 
-        self.df_list.append(temp_df)
+        self.df_primary_list.append(temp_df_primary)
 
+        temp_df_all = pd.read_csv(self.info_all_path)
+
+        self.df_all_list.append(temp_df_all)
+
+        temp_df_phot = pd.read_csv(self.info_phot_path)
+
+        self.df_phot_list.append(temp_df_phot)
 
     def combine_df(self):
-        self.merged_df = pd.concat(self.df_list, ignore_index=True)
+        self.merged_df_primary = pd.concat(self.df_primary_list, ignore_index=True)
+        self.merged_df_all = pd.concat(self.df_all_list, ignore_index=True)
+        self.merged_df_phot = pd.concat(self.df_phot_list, ignore_index=True)
 
     def data_analysis(self):
         #position distributions histogram, dependisng on step number
@@ -102,7 +116,7 @@ class SN():
         # self.read_Ar_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
-        # self.read_ER_Ar_CF_per_deposit_rate()
+        self.read_ER_Ar_CF_per_deposit_rate()
         # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
         # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
@@ -115,25 +129,25 @@ class SN():
 
 
         #doped event function group
-        self.read_ER_Ar_doped()
+        # self.read_ER_Ar_doped()
         # self.write_doped_sims_results()
 
 
 
     def read_positions(self):
-        max_multi_num = self.merged_df["Multiplicity"].max()
+        max_multi_num = self.merged_df_primary["Multiplicity"].max()
         print(max_multi_num)
         self.mutiplicity_list =[]
         for i in range(1,max_multi_num+1,1):
-            temp_df = self.merged_df[self.merged_df["Multiplicity"]==i][["R/mm","Z/mm"]]
+            temp_df = self.merged_df_primary[self.merged_df_primary["Multiplicity"]==i][["R/mm","Z/mm"]]
             temp_list = temp_df.to_numpy()
             self.mutiplicity_list.append(temp_list)
 
         # self.cmap =  plt.cm.plasma
         fig, ax = plt.subplots()
 
-        sc=ax.scatter(self.merged_df["R/mm"],self.merged_df["Z/mm"],
-        c=self.merged_df["Multiplicity"],   # color comes from data
+        sc=ax.scatter(self.merged_df_primary["R/mm"],self.merged_df_primary["Z/mm"],
+        c=self.merged_df_primary["Multiplicity"],   # color comes from data
         cmap="plasma",
         s=5,
         alpha=0.7)
@@ -149,7 +163,7 @@ class SN():
         plt.savefig(self.plot_path+"Cs_1E5_position.pdf")
 
     def read_positions_zslice(self):
-        z_slice = self.merged_df[(self.merged_df["Z/mm"]>=450)&(self.merged_df["Z/mm"]<=550)]
+        z_slice = self.merged_df_primary[(self.merged_df_primary["Z/mm"]>=450)&(self.merged_df_primary["Z/mm"]<=550)]
 
         fig, ax = plt.subplots()
         # self.cmap =  plt.cm.plasma
@@ -166,18 +180,18 @@ class SN():
         plt.savefig(self.plot_path + "Cs_1E5_zslice_position_density.pdf")
 
     def read_positions_2d_hist(self):
-        max_multi_num = self.merged_df["Multiplicity"].max()
+        max_multi_num = self.merged_df_primary["Multiplicity"].max()
         print(max_multi_num)
         self.mutiplicity_list =[]
         for i in range(1,max_multi_num+1,1):
-            temp_df = self.merged_df[self.merged_df["Multiplicity"]==i][["R/mm","Z/mm"]]
+            temp_df = self.merged_df_primary[self.merged_df_primary["Multiplicity"]==i][["R/mm","Z/mm"]]
             temp_list = temp_df.to_numpy()
             self.mutiplicity_list.append(temp_list)
 
         # self.cmap =  plt.cm.plasma
         fig, ax = plt.subplots()
 
-        sc=ax.hist2d(self.merged_df["R/mm"],self.merged_df["Z/mm"],bins=50,
+        sc=ax.hist2d(self.merged_df_primary["R/mm"],self.merged_df_primary["Z/mm"],bins=50,
         cmap="plasma",norm="log",alpha=0.7)
 
         ax.plot([189.95,189.95, 0.8485], [0,663.22, 714.03], color="red")
@@ -194,8 +208,8 @@ class SN():
 
 
     def read_multiplicity(self):
-        multiplicity= self.merged_df.groupby("Event")["Multiplicity"].max()
-        max_m = self.merged_df["Multiplicity"].max()
+        multiplicity= self.merged_df_primary.groupby("Event")["Multiplicity"].max()
+        max_m = self.merged_df_primary["Multiplicity"].max()
         print(max_m)
         bins = np.arange(1, max_m + 2)
         fig,ax = plt.subplots()
@@ -206,8 +220,8 @@ class SN():
         plt.savefig(self.plot_path+"Cs_1E7_multi.pdf")
 
     def read_Ar_multiplicity(self):
-        multiplicity = self.merged_df[self.merged_df["Volume"]=="LAr_phys"].groupby("Event")["Multiplicity"].max()
-        max_m = self.merged_df["Multiplicity"].max()
+        multiplicity = self.merged_df_primary[self.merged_df_primary["Volume"]=="LAr_phys"].groupby("Event")["Multiplicity"].max()
+        max_m = self.merged_df_primary["Multiplicity"].max()
         print(max_m)
         bins = np.arange(1, max_m + 2)
         fig, ax = plt.subplots()
@@ -219,13 +233,13 @@ class SN():
     def read_ER_Ar_CF(self):
         # per energy deposition
         # the sum is per event
-        ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
-        ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
-        ER_sum = self.merged_df.groupby("Event")["ER_near/eV"].sum()/1000
+        ER_Ar = self.merged_df_primary[self.merged_df_primary["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
+        ER_CF4 = self.merged_df_primary[self.merged_df_primary["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
+        ER_sum = self.merged_df_primary.groupby("Event")["ER_near/eV"].sum()/1000
 
-        ER_huge = self.merged_df.groupby("Event")["ER_near/eV"].sum()
+        ER_huge = self.merged_df_primary.groupby("Event")["ER_near/eV"].sum()
         events_keep = ER_huge[ER_huge>9e5].index
-        filtered_df = self.merged_df[self.merged_df["Event"].isin(events_keep)]
+        filtered_df = self.merged_df_primary[self.merged_df_primary["Event"].isin(events_keep)]
 
         print(filtered_df.head(20))
 
@@ -252,10 +266,10 @@ class SN():
         # material = "mixing"
         # per energy deposition
         # the sum is per event
-        ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["PreKinetic/MeV"]*1000-self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["PostKinetic/MeV"]*1000
+        ER_Ar = self.merged_df_primary[self.merged_df_primary["Volume"]=="LAr_phys"]["PreKinetic/MeV"]*1000-self.merged_df_primary[self.merged_df_primary["Volume"]=="LAr_phys"]["PostKinetic/MeV"]*1000
         if material == "argon":
-            print(self.merged_df[(self.merged_df["Volume"] == "LAr_phys") & (
-                self.merged_df["PreKinetic/MeV"].between(0.0025, 0.003))])
+            print(self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys") & (
+                self.merged_df_primary["PreKinetic/MeV"].between(0.0025, 0.003))])
 
             fig, ax = plt.subplots(1, 3, figsize=(14, 4))
             array = ax[0].hist(ER_Ar, bins=600, range=(0, 300), align="left")
@@ -272,8 +286,8 @@ class SN():
 
             plt.savefig(self.plot_path + "Cs_1E5_argon_pho.pdf")
         elif material == "xenon":
-            print(self.merged_df[(self.merged_df["Volume"] == "LAr_phys") & (
-                self.merged_df["PreKinetic/MeV"].between(0.0335, 0.0340))])
+            print(self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys") & (
+                self.merged_df_primary["PreKinetic/MeV"].between(0.0335, 0.0340))])
 
             fig, ax = plt.subplots(1, 3, figsize=(14, 4))
             # array = ax[0].hist(ER_Ar, bins=800, range=(0, 400), align="left")
@@ -290,8 +304,8 @@ class SN():
 
             plt.savefig(self.plot_path + "Cs_1E5_xenon_pho.pdf")
         elif material == "mixing":
-            print(self.merged_df[(self.merged_df["Volume"] == "LAr_phys") & (
-                self.merged_df["PreKinetic/MeV"].between(0.0030, 0.0035))])
+            print(self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys") & (
+                self.merged_df_primary["PreKinetic/MeV"].between(0.0030, 0.0035))])
 
             fig, ax = plt.subplots(1, 3, figsize=(14, 4))
             array = ax[0].hist(ER_Ar, bins=800, range=(0, 400), align="left")
@@ -316,10 +330,10 @@ class SN():
         # per energy deposition and total
         # MHz
         Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
-        ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
-        ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
+        ER_Ar = self.merge_df_primary[self.merged_df_primary["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
+        ER_CF4 = self.merged_df_primary[self.merged_df_primary["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
         print("ER CF4 counts", len(ER_CF4))
-        ER_sum = self.merged_df["ER_near/eV"]/1000
+        ER_sum = self.merged_df_primary["ER_near/eV"]/1000
 
         hist_array = [None] * 3
 
@@ -378,9 +392,9 @@ class SN():
     def read_ER_Ar_CF_per_deposit_rate_cumulative(self):
         # rate factor in mHz
         Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
-        ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000
-        ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
-        ER_sum = self.merged_df["ER_near/eV"] / 1000
+        ER_Ar = self.merged_df_primary[self.merged_df_primary["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000
+        ER_CF4 = self.merged_df_primary[self.merged_df_primary["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
+        ER_sum = self.merged_df_primary["ER_near/eV"] / 1000
 
         hist_array = [None] * 3
 
@@ -448,9 +462,9 @@ class SN():
     def read_ER_CF_per_deposit_rate_cumulative(self):
         # rate factor in mHz
         Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
-        ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000
-        ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
-        ER_sum = self.merged_df["ER_near/eV"] / 1000
+        ER_Ar = self.merged_df_primary[self.merged_df_primary["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000
+        ER_CF4 = self.merged_df_primary[self.merged_df_primary["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
+        ER_sum = self.merged_df_primary["ER_near/eV"] / 1000
 
         hist_array = [None]
 
@@ -492,10 +506,10 @@ class SN():
         # and sum rate is over both volume in Ar and CF4
 
         Rate_factor = self.gamma_rate / (3600*self.G4_events_gamma) # /h per geant run file
-        ER_Ar_sum = self.merged_df[self.merged_df["Volume"]=="LAr_phys"].groupby("Event")["ER_near/eV"].sum()/1000
-        ER_CF4_sum = self.merged_df[self.merged_df["Volume"]=="hydraulic_fluid_phys"].groupby("Event")["ER_near/eV"].sum()/1000
+        ER_Ar_sum = self.merged_df_primary[self.merged_df_primary["Volume"]=="LAr_phys"].groupby("Event")["ER_near/eV"].sum()/1000
+        ER_CF4_sum = self.merged_df_primary[self.merged_df_primary["Volume"]=="hydraulic_fluid_phys"].groupby("Event")["ER_near/eV"].sum()/1000
 
-        ER_sum = self.merged_df.groupby("Event")["ER_near/eV"].sum() / 1000
+        ER_sum = self.merged_df_primary.groupby("Event")["ER_near/eV"].sum() / 1000
 
         hist_array = [None] * 3
 
@@ -540,10 +554,10 @@ class SN():
         # calcualte sum of ER classified in Ar and CF4 per event
         # cumulative, event rate above NR threshold
         Rate_factor = self.gamma_rate / (3600*self.G4_events_gamma) # /h per geant run file
-        ER_Ar_sum = self.merged_df[self.merged_df["Volume"]=="LAr_phys"].groupby("Event")["ER_near/eV"].sum()/1000
-        ER_CF4_sum = self.merged_df[self.merged_df["Volume"]=="hydraulic_fluid_phys"].groupby("Event")["ER_near/eV"].sum()/1000
+        ER_Ar_sum = self.merged_df_primary[self.merged_df_primary["Volume"]=="LAr_phys"].groupby("Event")["ER_near/eV"].sum()/1000
+        ER_CF4_sum = self.merged_df_primary[self.merged_df_primary["Volume"]=="hydraulic_fluid_phys"].groupby("Event")["ER_near/eV"].sum()/1000
 
-        ER_sum = self.merged_df.groupby("Event")["ER_near/eV"].sum() / 1000
+        ER_sum = self.merged_df_primary.groupby("Event")["ER_near/eV"].sum() / 1000
 
         hist_array = [None] * 3
 
@@ -597,8 +611,8 @@ class SN():
         # 2d histogram
 
 
-        ER_Ar_sum = self.merged_df[self.merged_df["Volume"]=="LAr_phys"].groupby("Event")["ER_near/eV"].sum()/1000
-        ER_CF4_sum = self.merged_df[self.merged_df["Volume"]=="hydraulic_fluid_phys"].groupby("Event")["ER_near/eV"].sum()/1000
+        ER_Ar_sum = self.merged_df_primary[self.merged_df_primary["Volume"]=="LAr_phys"].groupby("Event")["ER_near/eV"].sum()/1000
+        ER_CF4_sum = self.merged_df_primary[self.merged_df_primary["Volume"]=="hydraulic_fluid_phys"].groupby("Event")["ER_near/eV"].sum()/1000
 
         evt = pd.concat([ER_Ar_sum, ER_CF4_sum], axis=1)
         evt.columns = ["ER_Ar_keV", "ER_CF4_keV"]  # <-- you create these names
@@ -634,7 +648,7 @@ class SN():
         bkgfile_name = "Background-1_30-2_2_exposures"
 
         Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
-        ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000  # in keV
+        ER_Ar = self.merged_df_primary[self.merged_df_primary["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000  # in keV
 
 
         hist_array = [None]
@@ -849,7 +863,7 @@ class SN():
         bkgfile_name = "Background-1_30-2_2_exposures"
 
         Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
-        ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000  # in keV
+        ER_Ar = self.merged_df_primary[self.merged_df_primary["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000  # in keV
 
         hist_array = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
@@ -1096,7 +1110,7 @@ class SN():
         # bkgfile_name = "Background-1_30-2_2_exposures"
         #
         # Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
-        # ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000  # in keV
+        # ER_Ar = self.merged_df_primary[self.merged_df_primary["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000  # in keV
         #
         # hist_array = [None]
         # # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
@@ -1322,42 +1336,75 @@ class SN():
         # print(hist_array[0][1][1] - hist_array[0][1][0], "keV width")
         # plt.savefig(self.plot_path + "Cs_cumulative_counts_function.pdf")
     def write_sims_results(self):
+
         # rate factor in mHz
 
         Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
-        ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000  # in keV
+        ER_Ar_primary = self.merged_df_primary[self.merged_df_primary["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000  # in keV
 
-        hist_array = [None]
+        hist_array_primary = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
-        hist_array[0] = np.histogram(ER_Ar, bins=12000, range=(0, 1200))
+        hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=12000, range=(0, 1200))
         # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
         # we need 0.1 keV, and this gives us 4800 bins
 
         # transfer edge to mid point per bin
 
         # get probablity per scattering and the statistics
-        cumulative_threshold_per_scatter_array = [None]
+        cumulative_threshold_per_scatter_array_primary = [None]
 
-        cumulative_threshold_per_scatter_array[0] = np.array(
-            [sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))])
+        cumulative_threshold_per_scatter_array_primary[0] = np.array(
+            [sum(hist_array_primary[0][0][i:]) for i in range(len(hist_array_primary[0][0]))])
 
         # histogram per scattering per keV
-        cumulative_threshold_array = [None]
-        energy_deposit_list = [hist_array[0][0][i] * hist_array[0][1][i] for i in range(len(hist_array[0][0]))]
+        cumulative_threshold_array_primary = [None]
+        energy_deposit_list_primary = [hist_array_primary[0][0][i] * hist_array_primary[0][1][i] for i in range(len(hist_array_primary[0][0]))]
 
-        cumulative_threshold_array[0] = np.array(
-            [sum(energy_deposit_list[i:]) for i in range(len(energy_deposit_list))])
-        print("total count* energy Co", cumulative_threshold_per_scatter_array[0][0],cumulative_threshold_per_scatter_array[0][0]/cumulative_threshold_array[0][0])
+        cumulative_threshold_array_primary[0] = np.array(
+            [sum(energy_deposit_list_primary[i:]) for i in range(len(energy_deposit_list_primary))])
+        print("total count* energy Co", cumulative_threshold_per_scatter_array_primary[0][0],cumulative_threshold_per_scatter_array_primary[0][0]/cumulative_threshold_array_primary[0][0])
 
-        output_list = [Rate_factor ,hist_array, cumulative_threshold_per_scatter_array[0], cumulative_threshold_array[0]]
+        ER_Ar_all = self.merged_df_all[self.merged_df_all["Volume"] == "LAr_phys"][
+                            "ER_near/eV"] / 1000  # in keV
+
+        hist_array_all = [None]
+        # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
+        hist_array_all[0] = np.histogram(ER_Ar_all, bins=12000, range=(0, 1200))
+        # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
+        # we need 0.1 keV, and this gives us 4800 bins
+
+        # transfer edge to mid point per bin
+
+        # get probablity per scattering and the statistics
+        cumulative_threshold_per_scatter_array_all = [None]
+
+        cumulative_threshold_per_scatter_array_all[0] = np.array(
+            [sum(hist_array_all[0][0][i:]) for i in range(len(hist_array_all[0][0]))])
+
+        # histogram per scattering per keV
+        cumulative_threshold_array_all = [None]
+        energy_deposit_list_all = [hist_array_all[0][0][i] * hist_array_all[0][1][i] for i in
+                                       range(len(hist_array_all[0][0]))]
+
+        cumulative_threshold_array_all[0] = np.array(
+            [sum(energy_deposit_list_all[i:]) for i in range(len(energy_deposit_list_all))])
+        print("total count* energy Co", cumulative_threshold_per_scatter_array_all[0][0],
+              cumulative_threshold_per_scatter_array_all[0][0] / cumulative_threshold_array_all[0][0])
+
+
+        output_list = [Rate_factor ,hist_array_all, cumulative_threshold_per_scatter_array_all[0], cumulative_threshold_array_all[0],
+                       hist_array_primary, cumulative_threshold_per_scatter_array_primary[0], cumulative_threshold_array_primary[0]]
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
-        with open("/data/runzezhang/result/TN_sims_D/Cs_output.pkl", "wb") as f:
+
+
+
+        with open("/data/runzezhang/result/TN_sims_D/Cs_dual_output.pkl", "wb") as f:
             pickle.dump(output_list, f)
     def write_doped_sims_results(self):
         # rate factor in mHz
 
-        Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
-        ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["PreKinetic/MeV"] * 1000  # in keV
+        Rate_factor = self.gamma_rate * 1000 / (self.G4_phot_gamma)
+        ER_Ar = self.merged_df_phot[self.merged_df_phot["Volume"] == "LAr_phys"]["PreKinetic/MeV"] * 1000  # in keV
 
         hist_array = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
