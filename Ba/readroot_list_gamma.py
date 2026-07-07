@@ -134,8 +134,8 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E6_phot/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E6_phot/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/"
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
@@ -221,8 +221,8 @@ class ReadRoot():
 
         # find all ER and save ER into csv
         # self.spectrum_lines()
-        # self.allER()
-        # self.ER_distribution()
+        self.allER()
+        self.ER_distribution()
         # self.ER_distribution_discrete()
         # self.gamma_ER()
 
@@ -230,7 +230,7 @@ class ReadRoot():
         # self.allNR()
 
         #xenon doping
-        self.xenon_doped_phot()
+        # self.xenon_doped_phot()
 
 
 
@@ -368,11 +368,19 @@ class ReadRoot():
 
         # self.mom_gamma = self.df[
         #     ((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys')) &( (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))& (self.df['Parent ID'] == 0)& (self.df["Event"].isin(self.electron_recoiled_event_list))]
+        # photo and not limited to primary gamma
         self.mom_gamma = self.df[
             ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-                         (self.df['Process'] == "phot")) & (
-                        self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
+                (self.df['Process'] == "phot"))  & (self.df["Event"].isin(self.electron_recoiled_event_list))]
 
+        # photo only
+        # self.mom_gamma = self.df[
+        #     ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
+        #                  (self.df['Process'] == "phot")) & (
+        #                 self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
+        #
+        #
+        # compton only
         # self.mom_gamma = self.df[
         #     ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
         #                 (self.df['Process'] == "compt")) & (
@@ -529,6 +537,8 @@ class ReadRoot():
             (self.df['Parent ID'] == 0) &
             (self.df["Event"].isin(self.electron_recoiled_event_list))
             ].copy()
+
+
 
         self.kid_e = self.df[
             (self.df['name'] == 'e-') &
