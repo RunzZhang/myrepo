@@ -21,8 +21,8 @@ class SN():
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_CF4_inside/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_CF4_inside/"
 
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E5_phot/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E5_phot/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E6_phot/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E6_phot/"
 
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
@@ -258,7 +258,7 @@ class SN():
         ax[0].set_title("Ba source")
 
 
-        plt.savefig(self.plot_path + "Ba_1E8_ER_all_doped.pdf")
+        plt.savefig(self.plot_path + "Ba_1E6_ar_photo.pdf")
 
     def read_Ar_multiplicity(self):
         multiplicity = self.merged_df[self.merged_df["Volume"]=="LAr_phys"].groupby("Event")["Multiplicity"].max()
