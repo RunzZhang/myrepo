@@ -229,7 +229,7 @@ class ReadRoot():
         # self.allNR()
 
         #xenon doping
-        self.xenon_doped_phot()
+        # self.xenon_doped_phot()
 
 
 
