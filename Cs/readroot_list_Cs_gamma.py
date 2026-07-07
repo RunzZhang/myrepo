@@ -57,7 +57,6 @@ import uproot
 import matplotlib.pyplot as plt
 import numpy as np
 import csv
-import pickle
 # filename = "/data/runzezhang/Geant4Simulaions/g411_TN/dmx.root"
 def test_write():
     try:
@@ -135,42 +134,50 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_5E6/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_5E6/"
+        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_5E6/"
+        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_5E6/"
+
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cso_100ppm_1E8/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Cs_100ppm_1E8/"
+
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.main_body(1)
-        for i in range(1,51):
+        for i in range(1,56):
+        # for i in range(26, 54):
+            try:
         # for i in range(1, 11):
-            self.main_body(i)
+                self.main_body(i)
+            except:
+                continue
     def main_body(self,i):
         print(i)
-        self.ini_path = self.base_path+ f"Cs_gamma_1E7_ini_part{i}.csv"
-        self.ar_ke_path = self.base_path+ f"Cs_gamma_1E7_ke_part{i}.csv"
-        self.false_gamma_1 = f"Cs_gamma_1E7_false1_part{i}.csv"
-        self.false_gamma_2 = f"Cs_gamma_1E7_false2_part{i}.csv"
-        self.false_gamma_3 = f"Cs_gamma_1E7_false3_part{i}.csv"
-        self.false_gamma_1_old = f"Cs_gamma_1E7_false1_old_part{i}.csv"
-        self.false_gamma_2_old = f"Cs_gamma_1E7_false2_old_part{i}.csv"
-        self.false_gamma_3_old = f"Cs_gamma_1E7_false3_old_part{i}.csv"
-        self.false_gamma_1_new = f"Cs_gamma_1E7_false1_new_part{i}.csv"
-        self.false_gamma_2_new = f"Cs_gamma_1E7_false2_new_part{i}.csv"
-        self.signal = f"Cs_gamma_1E7_sig_part{i}.csv"
-        self.signal_old = f"Cs_gamma_1E7_sig_old_part{i}.csv"
-        self.signal_new = f"Cs_gamma_1E7_sig_new_part{i}.csv"
-        self.false_gamma_1_mid = f"Cs_gamma_1E7_false1_mid_part{i}.csv"
-        self.false_gamma_2_mid = f"Cs_gamma_1E7_false2_mid_part{i}.csv"
-        self.false_gamma_3_mid = f"Cs_gamma_1E7_false3_mid_part{i}.csv"
-        self.signal_mid = f"Cs_gamma_1E7_sig_mid_part{i}.csv"
-        self.false_gamma_1_old_mid = f"Cs_gamma_1E7_false1_old_mid_part{i}.csv"
-        self.false_gamma_2_old_mid = f"Cs_gamma_1E7_false2_old_mid_part{i}.csv"
-        self.false_gamma_3_old_mid = f"Cs_gamma_1E7_false3_old_mid_part{i}.csv"
-        self.signal_old_mid = f"Cs_gamma_1E7_sig_old_mid_part{i}.csv"
-        self.false_gamma_1_new_mid = f"Cs_gamma_1E7_false1_new_mid_part{i}.csv"
-        self.false_gamma_2_new_mid = f"Cs_gamma_1E7_false2_new_mid_part{i}.csv"
-        self.signal_new_mid = f"Cs_gamma_1E7_sig_new_mid_part{i}.csv"
-        self.info_primary_path = self.base_path+ f"Cs_gamma_1E6_info_primary_scube_part{i}.csv"
+        self.ini_path = self.base_path+ f"Co_gamma_1E7_ini_part{i}.csv"
+        self.ar_ke_path = self.base_path+ f"Co_gamma_1E7_ke_part{i}.csv"
+        self.false_gamma_1 = f"Co_gamma_1E7_false1_part{i}.csv"
+        self.false_gamma_2 = f"Co_gamma_1E7_false2_part{i}.csv"
+        self.false_gamma_3 = f"Co_gamma_1E7_false3_part{i}.csv"
+        self.false_gamma_1_old = f"Co_gamma_1E7_false1_old_part{i}.csv"
+        self.false_gamma_2_old = f"Co_gamma_1E7_false2_old_part{i}.csv"
+        self.false_gamma_3_old = f"Co_gamma_1E7_false3_old_part{i}.csv"
+        self.false_gamma_1_new = f"Co_gamma_1E7_false1_new_part{i}.csv"
+        self.false_gamma_2_new = f"Co_gamma_1E7_false2_new_part{i}.csv"
+        self.signal = f"Co_gamma_1E7_sig_part{i}.csv"
+        self.signal_old = f"Co_gamma_1E7_sig_old_part{i}.csv"
+        self.signal_new = f"Co_gamma_1E7_sig_new_part{i}.csv"
+        self.false_gamma_1_mid = f"Co_gamma_1E7_false1_mid_part{i}.csv"
+        self.false_gamma_2_mid = f"Co_gamma_1E7_false2_mid_part{i}.csv"
+        self.false_gamma_3_mid = f"Co_gamma_1E7_false3_mid_part{i}.csv"
+        self.signal_mid = f"Co_gamma_1E7_sig_mid_part{i}.csv"
+        self.false_gamma_1_old_mid = f"Co_gamma_1E7_false1_old_mid_part{i}.csv"
+        self.false_gamma_2_old_mid = f"Co_gamma_1E7_false2_old_mid_part{i}.csv"
+        self.false_gamma_3_old_mid = f"Co_gamma_1E7_false3_old_mid_part{i}.csv"
+        self.signal_old_mid = f"Co_gamma_1E7_sig_old_mid_part{i}.csv"
+        self.false_gamma_1_new_mid = f"Co_gamma_1E7_false1_new_mid_part{i}.csv"
+        self.false_gamma_2_new_mid = f"Co_gamma_1E7_false2_new_mid_part{i}.csv"
+        self.signal_new_mid = f"Co_gamma_1E7_sig_new_mid_part{i}.csv"
+        self.info_primary_path = self.base_path + f"Cs_gamma_1E6_info_primary_scube_part{i}.csv"
         self.info_all_path = self.base_path + f"Cs_gamma_1E6_info_scube_all_part{i}.csv"
         self.info_phot_path = self.base_path + f"Cs_gamma_1E6_info_scube_phot_part{i}.csv"
         self.false_gamma_1_path = self.base_path + self.false_gamma_1
@@ -200,7 +207,7 @@ class ReadRoot():
         self.y_range = [0, 0]
         self.z_range = [0, 0]
 
-        self.filepath = self.base_path + f"dmx_Cs_1E7_{i}.root"
+        self.filepath = self.base_path + f"dmx_Co_1E7_{i}.root"
         self.file = uproot.open(self.filepath)["tree"]
         # print("columns: ", self.file.keys())
         # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
@@ -217,20 +224,16 @@ class ReadRoot():
         self.df = self.file.arrays(self.selected_columns, library="pd")
         self.modify_df()
 
-        # find all ER and save ER into csv, pure argon
-
-        self.allER()
-        self.ER_distribution_primary()
-        self.ER_distribution_counts()
-        # self.gamma_ER()
+        # find all ER and save ER into csv
+        # self.allER()
+        # self.ER_distribution_primary()
+        # self.ER_distribution_counts()
 
         # find all NR
         # self.allNR()
 
-
-        # for xenon doped configuration, find photo absorption by xenon
+        #xenon doping
         self.xenon_doped_phot()
-
 
 
 
@@ -324,8 +327,7 @@ class ReadRoot():
         # output matrix to [event1_data, event2_data]
         # in each eventi_data, it is matrix [(x1,y1,z1),ER1], [(x2,y2,z2),ER2,,,] including the bubble multiplicity and ER and position
 
-
-
+        print(self.df['name'].unique())
         self.gamma_Scint = self.df[
             ((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys')) &( (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))& (self.df['Parent ID'] == 0)]
         # record the positions and multiplicity
@@ -347,7 +349,6 @@ class ReadRoot():
 
         # this is primary gamma ER, used for energy deposition to avoid overcounting in secondary particles
 
-
         self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-") & (self.df_electron["Event"] != 1)]
         # double check gamma
 
@@ -364,17 +365,19 @@ class ReadRoot():
         high_NRER = []
 
         self.mom_gamma = self.df[
-            ((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys')) &( (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))& (self.df['Parent ID'] == 0)& (self.df["Event"].isin(self.electron_recoiled_event_list))]
+            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
+                        (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
+                        self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
         self.mom_gamma_group = self.mom_gamma.groupby("Event")
 
-
-        self.kid_e = self.df[(self.df['name'] == 'e-') &(self.df['Step ID'] == 1)& (self.df['Parent ID'] == 1)& (self.df["Event"].isin(self.electron_recoiled_event_list))&((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys'))]
+        self.kid_e = self.df[(self.df['name'] == 'e-') & (self.df['Step ID'] == 1) & (self.df['Parent ID'] == 1) & (
+            self.df["Event"].isin(self.electron_recoiled_event_list)) & ((self.df['Volume'] == 'LAr_phys') | (
+                    self.df['Volume'] == 'hydraulic_fluid_phys'))]
         self.kid_e_group = self.kid_e.groupby("Event")
 
         self.mom_gamma = self.mom_gamma.copy()
         self.mom_gamma["ER_near"] = 0.0
-        half = 0.00 # mm from original cube 2*2*2 mm
-
+        half = 0.00  # mm from original cube 2*2*2 mm
 
         for event_id, g_evt in self.mom_gamma_group:
             # electrons for same event
@@ -409,26 +412,27 @@ class ReadRoot():
         print(first3_events)
         print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
 
-        self.mom_gamma["Multiplicity"] = (self.mom_gamma.groupby("Event")["Step ID"].rank(method="dense", ascending=True).astype(int))
-        self.mom_gamma["R/mm"] = np.sqrt(self.mom_gamma["X/mm"]**2+self.mom_gamma["Y/mm"]**2 )
+        self.mom_gamma["Multiplicity"] = (
+            self.mom_gamma.groupby("Event")["Step ID"].rank(method="dense", ascending=True).astype(int))
+        self.mom_gamma["R/mm"] = np.sqrt(self.mom_gamma["X/mm"] ** 2 + self.mom_gamma["Y/mm"] ** 2)
 
-        self.mom_gamma["ER_near/eV"]= self.mom_gamma["ER_near"]*1e6
+        self.mom_gamma["ER_near/eV"] = self.mom_gamma["ER_near"] * 1e6
 
         first3_events = self.mom_gamma["Event"].unique()[:3]
         print(first3_events)
         print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
 
-        self.output_df = self.mom_gamma[["Event","name", "X/mm","Y/mm","R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
+        self.output_df = self.mom_gamma[
+            ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
 
         self.output_df.to_csv(self.info_primary_path, index=False)
 
-        self.df[self.df["Event"] == 6391].to_csv(self.base_path+"LAr_ER_abnormalER.csv")
+        self.df[self.df["Event"] == 6391].to_csv(self.base_path + "LAr_ER_abnormalER.csv")
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
 
     def ER_distribution_counts(self):
         # this is is counts of all ER, uses for counting Compton and photo interaction times including secondary particles
 
-
         self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-") & (self.df_electron["Event"] != 1)]
         # double check gamma
 
@@ -445,17 +449,19 @@ class ReadRoot():
         high_NRER = []
 
         self.mom_gamma = self.df[
-            ((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys')) &( (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))& (self.df["Event"].isin(self.electron_recoiled_event_list))]
+            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
+                        (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
+                self.df["Event"].isin(self.electron_recoiled_event_list))]
         self.mom_gamma_group = self.mom_gamma.groupby("Event")
 
-
-        self.kid_e = self.df[(self.df['name'] == 'e-') &(self.df['Step ID'] == 1)& (self.df['Parent ID'] == 1)& (self.df["Event"].isin(self.electron_recoiled_event_list))&((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys'))]
+        self.kid_e = self.df[(self.df['name'] == 'e-') & (self.df['Step ID'] == 1) & (self.df['Parent ID'] == 1) & (
+            self.df["Event"].isin(self.electron_recoiled_event_list)) & ((self.df['Volume'] == 'LAr_phys') | (
+                    self.df['Volume'] == 'hydraulic_fluid_phys'))]
         self.kid_e_group = self.kid_e.groupby("Event")
 
         self.mom_gamma = self.mom_gamma.copy()
         self.mom_gamma["ER_near"] = 0.0
-        half = 0.00 # mm from original cube 2*2*2 mm
-
+        half = 0.00  # mm from original cube 2*2*2 mm
 
         for event_id, g_evt in self.mom_gamma_group:
             # electrons for same event
@@ -490,22 +496,23 @@ class ReadRoot():
         print(first3_events)
         print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
 
-        self.mom_gamma["Multiplicity"] = (self.mom_gamma.groupby("Event")["Step ID"].rank(method="dense", ascending=True).astype(int))
-        self.mom_gamma["R/mm"] = np.sqrt(self.mom_gamma["X/mm"]**2+self.mom_gamma["Y/mm"]**2 )
+        self.mom_gamma["Multiplicity"] = (
+            self.mom_gamma.groupby("Event")["Step ID"].rank(method="dense", ascending=True).astype(int))
+        self.mom_gamma["R/mm"] = np.sqrt(self.mom_gamma["X/mm"] ** 2 + self.mom_gamma["Y/mm"] ** 2)
 
-        self.mom_gamma["ER_near/eV"]= self.mom_gamma["ER_near"]*1e6
+        self.mom_gamma["ER_near/eV"] = self.mom_gamma["ER_near"] * 1e6
 
         first3_events = self.mom_gamma["Event"].unique()[:3]
         print(first3_events)
         print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
 
-        self.output_df = self.mom_gamma[["Event","name", "X/mm","Y/mm","R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
+        self.output_df = self.mom_gamma[
+            ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
 
         self.output_df.to_csv(self.info_all_path, index=False)
 
-        self.df[self.df["Event"] == 6391].to_csv(self.base_path+"LAr_ER_abnormalER.csv")
+        self.df[self.df["Event"] == 6391].to_csv(self.base_path + "LAr_ER_abnormalER.csv")
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
-
 
     def gamma_ER(self):
 
@@ -535,18 +542,18 @@ class ReadRoot():
         print("exclusive ER", high_NRER)
         # p_observe only contains ER, if one event only has NR, it still produce bubbles that we need to compress
         print("path",self.false_gamma_1_path)
-        # Cs, just save the total ER in MeV
+        # Co, just save the total ER in MeV
         with open(self.false_gamma_1_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
             wr.writerow(self.electron_recoiled_list)
 
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep.csv")
+
     def xenon_doped_phot(self):
         ## test Xenon doping
         print("particle name", self.df['name'].unique())
         print("df the whole list", self.df[self.df["Volume"]=="LAr_phys"])
         self.df.to_csv(self.info_phot_path, index=False)
-
 
     def exclude_common(self,df1, df2): # exclude same ["Event"]
         common_events = set(df1["Event"]) & set(df2["Event"])

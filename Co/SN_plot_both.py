@@ -860,12 +860,13 @@ class SN():
                        cumulative_threshold_array_primary[0]]
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
 
-
+        with open("/data/runzezhang/result/TN_sims_D/Co_output_5E6.pkl", "wb") as f:
+            pickle.dump(output_list, f)
     def write_doped_sims_results(self):
         # rate factor in mHz
 
         Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
-        ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["PreKinetic/MeV"] * 1000  # in keV
+        ER_Ar = self.merged_df_phot[self.merged_df_phot["Volume"] == "LAr_phys"]["PreKinetic/MeV"] * 1000  # in keV
 
         hist_array = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))

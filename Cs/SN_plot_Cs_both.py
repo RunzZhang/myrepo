@@ -1336,63 +1336,33 @@ class SN():
         # rate factor in mHz
 
         Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
-        ER_Ar_primary = self.merged_df_primary[self.merged_df_primary["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000  # in keV
+        ER_Ar = self.merged_df_phot[self.merged_df_phot["Volume"] == "LAr_phys"]["PreKinetic/MeV"] * 1000  # in keV
 
-        hist_array_primary = [None]
+        hist_array = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
-        hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=12000, range=(0, 1200))
+        hist_array[0] = np.histogram(ER_Ar, bins=12000, range=(0, 1200))
         # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
         # we need 0.1 keV, and this gives us 4800 bins
 
         # transfer edge to mid point per bin
 
         # get probablity per scattering and the statistics
-        cumulative_threshold_per_scatter_array_primary = [None]
+        cumulative_threshold_per_scatter_array = [None]
 
-        cumulative_threshold_per_scatter_array_primary[0] = np.array(
-            [sum(hist_array_primary[0][0][i:]) for i in range(len(hist_array_primary[0][0]))])
-
-        # histogram per scattering per keV
-        cumulative_threshold_array_primary = [None]
-        energy_deposit_list_primary = [hist_array_primary[0][0][i] * hist_array_primary[0][1][i] for i in range(len(hist_array_primary[0][0]))]
-
-        cumulative_threshold_array_primary[0] = np.array(
-            [sum(energy_deposit_list_primary[i:]) for i in range(len(energy_deposit_list_primary))])
-        print("total count* energy Co", cumulative_threshold_per_scatter_array_primary[0][0],cumulative_threshold_per_scatter_array_primary[0][0]/cumulative_threshold_array_primary[0][0])
-
-        ER_Ar_all = self.merged_df_all[self.merged_df_all["Volume"] == "LAr_phys"][
-                            "ER_near/eV"] / 1000  # in keV
-
-        hist_array_all = [None]
-        # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
-        hist_array_all[0] = np.histogram(ER_Ar_all, bins=12000, range=(0, 1200))
-        # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
-        # we need 0.1 keV, and this gives us 4800 bins
-
-        # transfer edge to mid point per bin
-
-        # get probablity per scattering and the statistics
-        cumulative_threshold_per_scatter_array_all = [None]
-
-        cumulative_threshold_per_scatter_array_all[0] = np.array(
-            [sum(hist_array_all[0][0][i:]) for i in range(len(hist_array_all[0][0]))])
+        cumulative_threshold_per_scatter_array[0] = np.array(
+            [sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))])
 
         # histogram per scattering per keV
-        cumulative_threshold_array_all = [None]
-        energy_deposit_list_all = [hist_array_all[0][0][i] * hist_array_all[0][1][i] for i in
-                                       range(len(hist_array_all[0][0]))]
+        cumulative_threshold_array = [None]
+        energy_deposit_list = [hist_array[0][0][i] * hist_array[0][1][i] for i in range(len(hist_array[0][0]))]
 
-        cumulative_threshold_array_all[0] = np.array(
-            [sum(energy_deposit_list_all[i:]) for i in range(len(energy_deposit_list_all))])
-        print("total count* energy Co", cumulative_threshold_per_scatter_array_all[0][0],
-              cumulative_threshold_per_scatter_array_all[0][0] / cumulative_threshold_array_all[0][0])
+        cumulative_threshold_array[0] = np.array(
+            [sum(energy_deposit_list[i:]) for i in range(len(energy_deposit_list))])
+        print("total count* energy Co", cumulative_threshold_per_scatter_array[0][0],
+              cumulative_threshold_per_scatter_array[0][0] / cumulative_threshold_array[0][0])
 
-
-        output_list = [Rate_factor ,hist_array_all, cumulative_threshold_per_scatter_array_all[0], cumulative_threshold_array_all[0],
-                       hist_array_primary, cumulative_threshold_per_scatter_array_primary[0], cumulative_threshold_array_primary[0]]
-        # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
-
-
+        output_list = [Rate_factor, hist_array, cumulative_threshold_per_scatter_array[0],
+                       cumulative_threshold_array[0]]
 
         with open("/data/runzezhang/result/TN_sims_D/Cs_dual_output.pkl", "wb") as f:
             pickle.dump(output_list, f)

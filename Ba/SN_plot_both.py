@@ -11,9 +11,8 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/"
-        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/" # for gamma path
-        #
+        self.doped_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/"
+
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/"  # for gamma path
 
@@ -41,8 +40,9 @@ class SN():
 
         cols = ["Event","name", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]
 
-        self.df_list =[]
-        self.df_phot_list =[]
+        self.df_primary_list = []
+        self.df_all_list = []
+        self.df_phot_list = []
 
 
 
@@ -69,8 +69,9 @@ class SN():
         self.false_gamma_1 = f"PN_gamma_1E7_false1_part{i}.csv"
         self.signal = f"PN_1E7_sig_part{i}.csv"
 
-        self.info_path = self.base_path + f"Co_gamma_1E6_info_scube_part{i}.csv"
-        self.info_phot_path = self.base_path + f"Co_gamma_1E6_pho_info_scube_part{i}.csv"
+        self.info_primary_path = self.base_path + f"Cs_gamma_1E6_info_primary_scube_part{i}.csv"
+        self.info_all_path = self.base_path + f"Cs_gamma_1E6_info_scube_all_part{i}.csv"
+        self.info_phot_path = self.doped_path + f"Cs_gamma_1E6_info_scube_phot_part{i}.csv"
 
         self.false_1_path = self.base_path + self.false_1
         self.false_2_path = self.base_path + self.false_2
@@ -98,22 +99,26 @@ class SN():
 
         self.G4_events_gamma =  5E6 # only 50 chunks
         # self.G4_events_gamma = 1E8  # only 50 chunks
+        self.G4_phot_gamma = 1E8
         self.ambient_bubble = 5 # /h
 
+        temp_df_primary = pd.read_csv(self.info_primary_path)
 
-        temp_df = pd.read_csv(self.info_path)
+        self.df_primary_list.append(temp_df_primary)
 
-        # temp_df_phot = pd.read_csv(self.info_phot_path)
-        temp_df_phot = pd.read_csv(self.info_path)
+        temp_df_all = pd.read_csv(self.info_all_path)
 
+        self.df_all_list.append(temp_df_all)
 
-        self.df_list.append(temp_df)
+        temp_df_phot = pd.read_csv(self.info_phot_path)
+        # print("phot temp", temp_df_phot)
         self.df_phot_list.append(temp_df_phot)
 
-
     def combine_df(self):
-        self.merged_df = pd.concat(self.df_list, ignore_index=True)
-        self.merged_phot_df = pd.concat(self.df_phot_list, ignore_index=True)
+        self.merged_df_primary = pd.concat(self.df_primary_list, ignore_index=True)
+        self.merged_df_all = pd.concat(self.df_all_list, ignore_index=True)
+        # self.merged_df_phot = pd.concat(self.df_phot_list, ignore_index=True)
+        self.merged_df_phot = self.df_phot_list[0]  # usually photo_list only has 1 chunked file
 
     def data_analysis(self):
         #position distributions histogram, dependisng on step number
@@ -331,49 +336,41 @@ class SN():
     def read_ER_Ar_CF_per_deposit_rate(self):
         # per energy deposition and total
         # MHz
-        Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
-        ER_Ar = self.merged_df[self.merged_df["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
-        ba_high_energy = self.merged_df[(self.merged_df["Volume"]=="LAr_phys")&(self.merged_df["ER_near/eV"]>350*1000)]
-        print("Ba level",len(ba_high_energy),ba_high_energy)
-        ER_CF4 = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
-        ER_CF4 = ER_Ar # only test argon
-        print("ER CF4 counts", len(ER_CF4))
-        print("max ER Lar", max(ER_Ar))
-        ER_sum = self.merged_df["ER_near/eV"]/1000
+        Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
+        # ER_Ar = self.merge_df_primary[self.merged_df_primary["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
+        ER_Ar = self.merged_df_phot[self.merged_df_phot["Volume"] == "LAr_phys"]["PreKinetic/MeV"] * 1000
+        ER_Ar_photo_total = \
+            self.merged_df_all[
+                (self.merged_df_all["Volume"] == "LAr_phys") & (self.merged_df_all["Process"] == "phot")][
+                "ER_near/eV"] / 1000
 
+        ER_sum = self.merged_df_primary["ER_near/eV"] / 1000
+
+        # estimate gamma rejction level
+        print(len(ER_sum), len(self.merged_df_all["ER_near/eV"]))
         hist_array = [None] * 3
 
-        hist_array[0] = np.histogram(ER_Ar, bins=12000,range=(0, 1200))
-        hist_array[1] = np.histogram(ER_CF4, bins=100,range=(0, 1200))
-        hist_array[2] = np.histogram(ER_sum, bins=100,range=(0, 1200))
-
-        # find if compton edge exist in CF4 cumulative spectrum
-        for j in range(len(hist_array[1][0])):
-            if hist_array[1][1][j] > 500:
-                print(hist_array[1][1][j],"keV edge", hist_array[1][0][j])
-
+        hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 660))
+        hist_array[1] = np.histogram(ER_Ar_photo_total, bins=100, range=(0, 660))
+        hist_array[2] = np.histogram(ER_sum, bins=100, range=(0, 660))
 
         fig, ax = plt.subplots(1, 3, figsize=(16, 4))
-        # ax[0].bar(hist_array[0][1][:-1], Rate_factor * hist_array[0][0],width=np.diff(hist_array[0][1]),
-        # align="edge",
-        # edgecolor="black")
-        ax[0].bar(hist_array[0][1][:-1],  hist_array[0][0], width=np.diff(hist_array[0][1]),
+        ax[0].bar(hist_array[0][1][:-1], Rate_factor * hist_array[0][0], width=np.diff(hist_array[0][1]),
                   align="edge",
                   edgecolor="black")
         bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
-        ax[0].set_xlabel("ER/keV per deposition in LAr")
-        # ax[0].set_ylabel(" Rate mHz/(bin[" + str(bin0_len) + " keV])")
-        ax[0].set_ylabel(" Counts/(bin[" + str(bin0_len) + " keV])")
+        ax[0].set_xlabel("ER/keV per photo in LAr")
+        ax[0].set_ylabel(" Rate mHz/(bin[" + str(bin0_len) + " keV])")
         # ax[0].ticklabel_format(axis="y",style="sci", scilimits=(0, 0) )
         ax[0].set_yscale("log")
         ax[0].minorticks_on()
         # ax[0].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         # ax[0].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
-        ax[1].bar(hist_array[1][1][:-1], Rate_factor * hist_array[1][0],width=np.diff(hist_array[1][1]),
-        align="edge",
-        edgecolor="black")
-        ax[1].set_xlabel("ER/keV per deposition in CF4")
+        ax[1].bar(hist_array[1][1][:-1], Rate_factor * hist_array[1][0], width=np.diff(hist_array[1][1]),
+                  align="edge",
+                  edgecolor="black")
+        ax[1].set_xlabel("ER/keV per photo in LAr")
         bin1_len = int(hist_array[1][1][1] - hist_array[1][1][0])
         ax[1].set_ylabel("Rate mHz/([" + str(bin1_len) + " keV])")
         ax[1].set_yscale("log")
@@ -383,9 +380,9 @@ class SN():
         # ax[1].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         # ax[1].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
-        ax[2].bar(hist_array[2][1][:-1], Rate_factor * hist_array[2][0],width=np.diff(hist_array[2][1]),
-        align="edge",
-        edgecolor="black")
+        ax[2].bar(hist_array[2][1][:-1], Rate_factor * hist_array[2][0], width=np.diff(hist_array[2][1]),
+                  align="edge",
+                  edgecolor="black")
         ax[2].set_xlabel("ER/keV per deposition ")
         bin2_len = int(hist_array[2][1][1] - hist_array[2][1][0])
         ax[2].set_ylabel("Rate mHz/([" + str(bin2_len) + " keV])")
@@ -853,32 +850,64 @@ class SN():
         # rate factor in mHz
 
         Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
-        ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000  # in keV
+        ER_Ar_primary = self.merged_df_primary[self.merged_df_primary["Volume"] == "LAr_phys"][
+                            "ER_near/eV"] / 1000  # in keV
 
-        print("max(ER_Ar)", max(ER_Ar))
-        hist_array = [None]
+        hist_array_primary = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
-        hist_array[0] = np.histogram(ER_Ar, bins=12000, range=(0, 1200))
+        hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=12000, range=(0, 1200))
         # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
         # we need 0.1 keV, and this gives us 4800 bins
 
         # transfer edge to mid point per bin
 
         # get probablity per scattering and the statistics
-        cumulative_threshold_per_scatter_array = [None]
+        cumulative_threshold_per_scatter_array_primary = [None]
 
-        cumulative_threshold_per_scatter_array[0] = np.array(
-            [sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))])
+        cumulative_threshold_per_scatter_array_primary[0] = np.array(
+            [sum(hist_array_primary[0][0][i:]) for i in range(len(hist_array_primary[0][0]))])
 
         # histogram per scattering per keV
-        cumulative_threshold_array = [None]
-        energy_deposit_list = [hist_array[0][0][i] * hist_array[0][1][i] for i in range(len(hist_array[0][0]))]
+        cumulative_threshold_array_primary = [None]
+        energy_deposit_list_primary = [hist_array_primary[0][0][i] * hist_array_primary[0][1][i] for i in
+                                       range(len(hist_array_primary[0][0]))]
 
-        cumulative_threshold_array[0] = np.array(
-            [sum(energy_deposit_list[i:]) for i in range(len(energy_deposit_list))])
-        print("total count* energy Co", cumulative_threshold_per_scatter_array[0][0],cumulative_threshold_per_scatter_array[0][0]/cumulative_threshold_array[0][0])
+        cumulative_threshold_array_primary[0] = np.array(
+            [sum(energy_deposit_list_primary[i:]) for i in range(len(energy_deposit_list_primary))])
+        print("total count* energy Co", cumulative_threshold_per_scatter_array_primary[0][0],
+              cumulative_threshold_per_scatter_array_primary[0][0] / cumulative_threshold_array_primary[0][0])
 
-        output_list = [Rate_factor ,hist_array, cumulative_threshold_per_scatter_array[0], cumulative_threshold_array[0]]
+        ER_Ar_all = self.merged_df_all[self.merged_df_all["Volume"] == "LAr_phys"][
+                        "ER_near/eV"] / 1000  # in keV
+
+        hist_array_all = [None]
+        # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
+        hist_array_all[0] = np.histogram(ER_Ar_all, bins=12000, range=(0, 1200))
+        # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
+        # we need 0.1 keV, and this gives us 4800 bins
+
+        # transfer edge to mid point per bin
+
+        # get probablity per scattering and the statistics
+        cumulative_threshold_per_scatter_array_all = [None]
+
+        cumulative_threshold_per_scatter_array_all[0] = np.array(
+            [sum(hist_array_all[0][0][i:]) for i in range(len(hist_array_all[0][0]))])
+
+        # histogram per scattering per keV
+        cumulative_threshold_array_all = [None]
+        energy_deposit_list_all = [hist_array_all[0][0][i] * hist_array_all[0][1][i] for i in
+                                   range(len(hist_array_all[0][0]))]
+
+        cumulative_threshold_array_all[0] = np.array(
+            [sum(energy_deposit_list_all[i:]) for i in range(len(energy_deposit_list_all))])
+        print("total count* energy Co", cumulative_threshold_per_scatter_array_all[0][0],
+              cumulative_threshold_per_scatter_array_all[0][0] / cumulative_threshold_array_all[0][0])
+
+        output_list = [Rate_factor, hist_array_all, cumulative_threshold_per_scatter_array_all[0],
+                       cumulative_threshold_array_all[0],
+                       hist_array_primary, cumulative_threshold_per_scatter_array_primary[0],
+                       cumulative_threshold_array_primary[0]]
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
         with open("/data/runzezhang/result/TN_sims_D/Ba_output_5E6.pkl", "wb") as f:
             pickle.dump(output_list, f)
@@ -888,7 +917,7 @@ class SN():
         # rate factor in mHz
 
         Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
-        ER_Ar = self.merged_df[self.merged_df["Volume"] == "LAr_phys"]["PreKinetic/MeV"] * 1000  # in keV
+        ER_Ar = self.merged_df_phot[self.merged_df_phot["Volume"] == "LAr_phys"]["PreKinetic/MeV"] * 1000  # in keV
 
         hist_array = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))

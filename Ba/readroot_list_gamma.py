@@ -134,8 +134,12 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
+        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_5E6/"
+        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_5E6/"
+
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E6_phot/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E6_phot/"
+
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
@@ -173,8 +177,9 @@ class ReadRoot():
         self.false_gamma_1_new_mid = f"Co_gamma_1E7_false1_new_mid_part{i}.csv"
         self.false_gamma_2_new_mid = f"Co_gamma_1E7_false2_new_mid_part{i}.csv"
         self.signal_new_mid = f"Co_gamma_1E7_sig_new_mid_part{i}.csv"
-        self.info_path = self.base_path+ f"Co_gamma_1E6_info_scube_part{i}.csv"
-        self.info_phot_path = self.base_path + f"Co_gamma_1E6_pho_info_scube_part{i}.csv"
+        self.info_primary_path = self.base_path + f"Cs_gamma_1E6_info_primary_scube_part{i}.csv"
+        self.info_all_path = self.base_path + f"Cs_gamma_1E6_info_scube_all_part{i}.csv"
+        self.info_phot_path = self.base_path + f"Cs_gamma_1E6_info_scube_phot_part{i}.csv"
         self.false_gamma_1_path = self.base_path + self.false_gamma_1
         self.false_gamma_2_path = self.base_path + self.false_gamma_2
         self.false_gamma_3_path = self.base_path + self.false_gamma_3
@@ -220,17 +225,15 @@ class ReadRoot():
         self.modify_df()
 
         # find all ER and save ER into csv
-        # self.spectrum_lines()
-        self.allER()
-        self.ER_distribution()
-        # self.ER_distribution_discrete()
-        # self.gamma_ER()
+        # self.allER()
+        # self.ER_distribution_primary()
+        # self.ER_distribution_counts()
 
         # find all NR
         # self.allNR()
 
         #xenon doping
-        # self.xenon_doped_phot()
+        self.xenon_doped_phot()
 
 
 
@@ -314,15 +317,10 @@ class ReadRoot():
         # sample the first 10 event to see what caused the NR
         # self.LAr_NR_sample = self.df[(self.df["Event"].isin(self.LAr_recoiled_event_list))]
         # self.LAr_NR_sample.to_csv(self.base_path+"LAr_NR_sample.csv")
-    def spectrum_lines(self):
-        self.spectrum = self.df[(self.df["Volume"]=='calibration_Be_phys')&(self.df["name"]=='gamma')]
-        self.hi_ene = self.spectrum[self.spectrum["PreKinetic/MeV"]>=0.275]
-        print("hi ene",self.hi_ene)
-        print(self.spectrum)
-        self.spectrum.to_csv(self.info_path, index=False)
+
     def allER(self):
         # we need to do several things:
-        # gamma only in LAr or CF4_inside
+        # gamma only in LAr or CF4
         # in 1 event number, only the first series of gammas, avoiding over-countting
         # including phot - Xray excited the electrons
         # fetch the location/multiplicity/ER
@@ -347,9 +345,9 @@ class ReadRoot():
                                           how='inner')
         print("electron gamma",self.df_electron_gamma.head(20)) #ok
 
-    def ER_distribution(self):
+    def ER_distribution_primary(self):
 
-
+        # this is primary gamma ER, used for energy deposition to avoid overcounting in secondary particles
 
         self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-") & (self.df_electron["Event"] != 1)]
         # double check gamma
@@ -366,36 +364,20 @@ class ReadRoot():
         print(self.electron_recoiled_event_list[:3])
         high_NRER = []
 
-        # self.mom_gamma = self.df[
-        #     ((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys')) &( (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))& (self.df['Parent ID'] == 0)& (self.df["Event"].isin(self.electron_recoiled_event_list))]
-        # photo and not limited to primary gamma
         self.mom_gamma = self.df[
             ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-                (self.df['Process'] == "phot"))  & (self.df["Event"].isin(self.electron_recoiled_event_list))]
-
-        # photo only
-        # self.mom_gamma = self.df[
-        #     ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-        #                  (self.df['Process'] == "phot")) & (
-        #                 self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
-        #
-        #
-        # compton only
-        # self.mom_gamma = self.df[
-        #     ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-        #                 (self.df['Process'] == "compt")) & (
-        #                 self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
-
+                        (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
+                        self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
         self.mom_gamma_group = self.mom_gamma.groupby("Event")
 
-
-        self.kid_e = self.df[(self.df['name'] == 'e-') &(self.df['Step ID'] == 1)& (self.df['Parent ID'] == 1)& (self.df["Event"].isin(self.electron_recoiled_event_list))&((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys'))]
+        self.kid_e = self.df[(self.df['name'] == 'e-') & (self.df['Step ID'] == 1) & (self.df['Parent ID'] == 1) & (
+            self.df["Event"].isin(self.electron_recoiled_event_list)) & ((self.df['Volume'] == 'LAr_phys') | (
+                    self.df['Volume'] == 'hydraulic_fluid_phys'))]
         self.kid_e_group = self.kid_e.groupby("Event")
 
         self.mom_gamma = self.mom_gamma.copy()
         self.mom_gamma["ER_near"] = 0.0
-        half = 0.00 # mm from original cube 2*2*2 mm
-
+        half = 0.00  # mm from original cube 2*2*2 mm
 
         for event_id, g_evt in self.mom_gamma_group:
             # electrons for same event
@@ -430,29 +412,26 @@ class ReadRoot():
         print(first3_events)
         print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
 
-        self.mom_gamma["Multiplicity"] = (self.mom_gamma.groupby("Event")["Step ID"].rank(method="dense", ascending=True).astype(int))
-        self.mom_gamma["R/mm"] = np.sqrt(self.mom_gamma["X/mm"]**2+self.mom_gamma["Y/mm"]**2 )
+        self.mom_gamma["Multiplicity"] = (
+            self.mom_gamma.groupby("Event")["Step ID"].rank(method="dense", ascending=True).astype(int))
+        self.mom_gamma["R/mm"] = np.sqrt(self.mom_gamma["X/mm"] ** 2 + self.mom_gamma["Y/mm"] ** 2)
 
-        self.mom_gamma["ER_near/eV"]= self.mom_gamma["ER_near"]*1e6
+        self.mom_gamma["ER_near/eV"] = self.mom_gamma["ER_near"] * 1e6
 
         first3_events = self.mom_gamma["Event"].unique()[:3]
         print(first3_events)
         print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
 
-        self.output_df = self.mom_gamma[["Event","name", "X/mm","Y/mm","R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
+        self.output_df = self.mom_gamma[
+            ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
 
-        self.output_df.to_csv(self.info_path, index=False)
+        self.output_df.to_csv(self.info_primary_path, index=False)
 
-
-        non_compton_ER_list = self.output_df[self.output_df["ER_near/eV"]>=350*1000]["Event"].unique().tolist()
-        print('non_compton_ER_list',non_compton_ER_list)
-        if not self.df[self.df["Event"] == 520701].empty:
-            self.df[self.df["Event"] == 520701].to_csv(self.base_path + "LAr_ER_abnormalER_520701.csv")
-        # self.output_df[self.output_df["Event"] == 20].to_csv(self.base_path + "LAr_ER_abnormalER5789.csv")
+        self.df[self.df["Event"] == 6391].to_csv(self.base_path + "LAr_ER_abnormalER.csv")
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
 
-
-    def ER_distribution_discrete(self):
+    def ER_distribution_counts(self):
+        # this is is counts of all ER, uses for counting Compton and photo interaction times including secondary particles
 
         self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-") & (self.df_electron["Event"] != 1)]
         # double check gamma
@@ -469,26 +448,22 @@ class ReadRoot():
         print(self.electron_recoiled_event_list[:3])
         high_NRER = []
 
-        # self.mom_gamma = self.df[
-        #     ((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys')) &( (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))& (self.df['Parent ID'] == 0)& (self.df["Event"].isin(self.electron_recoiled_event_list))]
-        # compton -> collect all ER
-        self.mom_gamma1 = self.df[
+        self.mom_gamma = self.df[
             ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-                        (self.df['Process'] == "compt")) & (
-                        self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
+                        (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
+                self.df["Event"].isin(self.electron_recoiled_event_list))]
+        self.mom_gamma_group = self.mom_gamma.groupby("Event")
 
-        self.mom_gamma1_group = self.mom_gamma1.groupby("Event")
-
-
-        self.kid_e = self.df[(self.df['name'] == 'e-') &(self.df['Step ID'] == 1)& (self.df['Parent ID'] == 1)& (self.df["Event"].isin(self.electron_recoiled_event_list))&((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys'))]
+        self.kid_e = self.df[(self.df['name'] == 'e-') & (self.df['Step ID'] == 1) & (self.df['Parent ID'] == 1) & (
+            self.df["Event"].isin(self.electron_recoiled_event_list)) & ((self.df['Volume'] == 'LAr_phys') | (
+                    self.df['Volume'] == 'hydraulic_fluid_phys'))]
         self.kid_e_group = self.kid_e.groupby("Event")
 
-        self.mom_gamma1 = self.mom_gamma1.copy()
-        self.mom_gamma1["ER_near"] = 0.0
-        half = 0.00 # mm from original cube 2*2*2 mm
+        self.mom_gamma = self.mom_gamma.copy()
+        self.mom_gamma["ER_near"] = 0.0
+        half = 0.00  # mm from original cube 2*2*2 mm
 
-
-        for event_id, g_evt in self.mom_gamma1_group:
+        for event_id, g_evt in self.mom_gamma_group:
             # electrons for same event
             try:
                 e_evt = self.kid_e_group.get_group(event_id)
@@ -515,86 +490,29 @@ class ReadRoot():
             ER_near = inside @ e_E  # (N_gamma,)
 
             # write back aligned to the same rows in mom_gamma
-            self.mom_gamma1.loc[g_evt.index, "ER_near"] = ER_near
+            self.mom_gamma.loc[g_evt.index, "ER_near"] = ER_near
 
-        first3_events = self.mom_gamma1["Event"].unique()[:3]
+        first3_events = self.mom_gamma["Event"].unique()[:3]
         print(first3_events)
-        print(self.mom_gamma1[self.mom_gamma1["Event"].isin(first3_events)])
+        print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
 
-        self.mom_gamma1["Multiplicity"] = (self.mom_gamma1.groupby("Event")["Step ID"].rank(method="dense", ascending=True).astype(int))
-        self.mom_gamma1["R/mm"] = np.sqrt(self.mom_gamma1["X/mm"]**2+self.mom_gamma1["Y/mm"]**2 )
+        self.mom_gamma["Multiplicity"] = (
+            self.mom_gamma.groupby("Event")["Step ID"].rank(method="dense", ascending=True).astype(int))
+        self.mom_gamma["R/mm"] = np.sqrt(self.mom_gamma["X/mm"] ** 2 + self.mom_gamma["Y/mm"] ** 2)
 
-        self.mom_gamma1["ER_near/eV"]= self.mom_gamma1["ER_near"]*1e6
+        self.mom_gamma["ER_near/eV"] = self.mom_gamma["ER_near"] * 1e6
 
-        self.mom_gamma1 = self.mom_gamma1[
+        first3_events = self.mom_gamma["Event"].unique()[:3]
+        print(first3_events)
+        print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
+
+        self.output_df = self.mom_gamma[
             ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
 
-        # photo process
-        #
-        self.mom_gamma2 = self.df[
-            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) &
-            (self.df['Process'] == "phot") &
-            (self.df['Parent ID'] == 0) &
-            (self.df["Event"].isin(self.electron_recoiled_event_list))
-            ].copy()
+        self.output_df.to_csv(self.info_all_path, index=False)
 
-
-
-        self.kid_e = self.df[
-            (self.df['name'] == 'e-') &
-            (self.df['Step ID'] == 1) &
-            (self.df['Parent ID'] == 1) &
-            (self.df["Event"].isin(self.electron_recoiled_event_list)) &
-            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys'))
-            ].copy()
-
-        # --- 2. Perform a vectorised pandas merge instead of the loop ---
-        # This merges rows where Event, X, Y, Z match exactly.
-        # Suffixes help differentiate tracking columns (e.g. Step ID of gamma vs electron)
-        merged_rows = pd.merge(
-            self.mom_gamma2,
-            self.kid_e[['Event', 'X/mm', 'Y/mm', 'Z/mm', 'Recoiled/MeV', 'Track ID', 'Step ID']],
-            on=['Event', 'X/mm', 'Y/mm', 'Z/mm'],
-            suffixes=('_gamma', '_electron')
-        )
-
-        # Rename the column to keep compatibility with the rest of your script
-        merged_rows = merged_rows.rename(columns={'Recoiled/MeV_electron': 'ER_near'})
-        print("colum names.", merged_rows.columns)
-        # --- 3. Compute your calculated variables on the expanded dataframe ---
-        # Calculate R/mm and convert energy to eV
-        merged_rows["R/mm"] = np.sqrt(merged_rows["X/mm"] ** 2 + merged_rows["Y/mm"] ** 2)
-        merged_rows["ER_near/eV"] = merged_rows["ER_near"] * 1e6
-
-        # Groupby Event to get Multiplicity per event now that everything is unrolled
-        merged_rows["Multiplicity"] = 1
-
-        # --- Drop the first electron (smallest Track ID) per photoabsorption vertex ---
-
-        # 1. Group by the unique interaction vertex keys and find the row index of the lowest Track ID
-        rows_to_drop = (
-            merged_rows.groupby(['Event', 'X/mm', 'Y/mm', 'Z/mm'])['Track ID_electron']
-            .idxmin()
-        )
-
-        # 2. Drop those indexes from the dataframe
-        merged_rows = merged_rows.drop(rows_to_drop)
-
-        # --- 4. Assign back to self ---
-        self.mom_gamma2_expanded = merged_rows
-
-        # --- 5. Inspect the first 3 events ---
-        first3_events = self.mom_gamma2_expanded["Event"].unique()[:3]
-        print("First 3 unique event IDs:", first3_events)
-        print(self.mom_gamma2_expanded[self.mom_gamma2_expanded["Event"].isin(first3_events)])
-
-        self.mom_gamma2_expanded =  self.mom_gamma2_expanded[["Event","name", "X/mm","Y/mm","R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
-
-        print('self.mom_gamma2_expanded',self.mom_gamma2_expanded)
-        self.output_df = self.mom_gamma2_expanded
-        print('self.output_df', self.output_df)
-        # self.output_df = pd.concat([self.mom_gamma1, self.mom_gamma2_expanded],ignore_index=True)
-        self.output_df.to_csv(self.info_phot_path, index=False)
+        self.df[self.df["Event"] == 6391].to_csv(self.base_path + "LAr_ER_abnormalER.csv")
+        # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
 
     def gamma_ER(self):
 
@@ -614,7 +532,7 @@ class ReadRoot():
 
         p_observed = []  # the first digit is always the NR number
         for i in range(len(self.electron_recoiled_list)):
-            # 40 /keV 0.03 and 0.2 PCE and PDE
+            # 40 /MeV 0.03 and 0.2 PCE and PDE
             if self.electron_recoiled_list[i] > 1E-6:
                 p_observed.append(self.electron_recoiled_list[i] * 1E6 * 40 * 0.03 * 0.2 / (1000))
             if self.electron_recoiled_list[i] > 350 * 1000 / (1E6 * 40 * 0.03 * 0.2):
@@ -635,7 +553,7 @@ class ReadRoot():
         ## test Xenon doping
         print("particle name", self.df['name'].unique())
         print("df the whole list", self.df[self.df["Volume"]=="LAr_phys"])
-        self.df.to_csv(self.info_path, index=False)
+        self.df.to_csv(self.info_phot_path, index=False)
 
     def exclude_common(self,df1, df2): # exclude same ["Event"]
         common_events = set(df1["Event"]) & set(df2["Event"])
