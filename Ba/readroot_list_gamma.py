@@ -134,11 +134,11 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_5E6/"
-        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Co_5E6/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E6_phot/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E6_phot/"
 
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
+        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
+        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
 
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
@@ -225,15 +225,15 @@ class ReadRoot():
         self.modify_df()
 
         # find all ER and save ER into csv
-        self.allER()
-        self.ER_distribution_primary()
-        self.ER_distribution_counts()
+        # self.allER()
+        # self.ER_distribution_primary()
+        # self.ER_distribution_counts()
 
         # find all NR
         # self.allNR()
 
         #xenon doping
-        # self.xenon_doped_phot()
+        self.xenon_doped_phot()
 
 
 
@@ -553,6 +553,20 @@ class ReadRoot():
         ## test Xenon doping
         print("particle name", self.df['name'].unique())
         print("df the whole list", self.df[self.df["Volume"]=="LAr_phys"])
+        print("columns", self.df.columns)
+        self.phot  = self.df[(self.df["Volume"]=="LAr_phys")&(self.df["Step ID"]=="1")]
+        self.phot = self.phot.groupby(["Event","Parent ID"])
+        # combine multiple electrons into same photo absorption event
+        agg_rules = {
+            'Energy_Col': 'sum',  # Sums the energy column
+            'X/mm': 'mean',  # Averages positions (good for getting the centroid)
+            'Y/mm': 'mean',
+            'Z/mm': 'mean',
+            'Track ID': 'first',  # For identifiers, keeping the 'first' is usually best
+            'Process': 'first'  # Keeps the process name string intact
+        }
+
+
         self.df.to_csv(self.info_phot_path, index=False)
 
     def exclude_common(self,df1, df2): # exclude same ["Event"]
