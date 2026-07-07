@@ -330,9 +330,8 @@ class SN():
         # ax[0].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         # ax[0].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
-
-
         plt.savefig(self.plot_path + "Ba_5E6_ER_perdepostion_photo.pdf")
+
     def read_ER_Ar_CF_per_deposit_rate(self):
         # per energy deposition and total
         # MHz

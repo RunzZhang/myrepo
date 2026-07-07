@@ -505,6 +505,8 @@ class ReadRoot():
         first3_events = self.mom_gamma["Event"].unique()[:3]
         print(first3_events)
         print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
+        # for test only
+        self.mom_gamma["ER_near/eV"] = self.mom_gamma["PreKinetic/MeV"]*1e6
 
         self.output_df = self.mom_gamma[
             ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
@@ -554,17 +556,20 @@ class ReadRoot():
         print("particle name", self.df['name'].unique())
         print("df the whole list", self.df[self.df["Volume"]=="LAr_phys"])
         print("columns", self.df.columns)
-        self.phot  = self.df[(self.df["Volume"]=="LAr_phys")&(self.df["Step ID"]=="1")]
-        self.phot = self.phot.groupby(["Event","Parent ID"])
-        # combine multiple electrons into same photo absorption event
-        agg_rules = {
-            'Energy_Col': 'sum',  # Sums the energy column
-            'X/mm': 'mean',  # Averages positions (good for getting the centroid)
-            'Y/mm': 'mean',
-            'Z/mm': 'mean',
-            'Track ID': 'first',  # For identifiers, keeping the 'first' is usually best
-            'Process': 'first'  # Keeps the process name string intact
-        }
+       #  self.phot  = self.df[(self.df["Volume"]=="LAr_phys")&(self.df["Step ID"]=="1")&(self.df["name"]=="e-")]
+       #  self.phot = self.phot.groupby(["Event","Parent ID"])
+       #  # combine multiple electrons into same photo absorption event
+       #  #'Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm',
+       # 'Z/mm', 'PreKinetic/MeV', 'PostKinetic/MeV', 'Recoiled/MeV', 'Volume',
+       # 'Process'
+       #  agg_rules = {
+       #      'Energy_Col': 'sum',  # Sums the energy column
+       #      'X/mm': 'mean',  # Averages positions (good for getting the centroid)
+       #      'Y/mm': 'mean',
+       #      'Z/mm': 'mean',
+       #      'Track ID': 'first',  # For identifiers, keeping the 'first' is usually best
+       #      'Process': 'first'  # Keeps the process name string intact
+       #  }
 
 
         self.df.to_csv(self.info_phot_path, index=False)
