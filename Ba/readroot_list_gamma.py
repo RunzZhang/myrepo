@@ -134,11 +134,11 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E6_phot/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E6_phot/"
+        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E6_phot/"
+        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E6_phot/"
 
-        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
-        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_5E6/"
 
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
@@ -225,15 +225,15 @@ class ReadRoot():
         self.modify_df()
 
         # find all ER and save ER into csv
-        # self.allER()
-        # self.ER_distribution_primary()
-        # self.ER_distribution_counts()
+        self.allER()
+        self.ER_distribution_primary()
+        self.ER_distribution_counts()
 
         # find all NR
         # self.allNR()
 
         #xenon doping
-        self.xenon_doped_phot()
+        # self.xenon_doped_phot()
 
 
 
@@ -511,6 +511,7 @@ class ReadRoot():
         print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
         # for test only
         self.mom_gamma["ER_near/eV"] = self.mom_gamma["PreKinetic/MeV"]*1e6
+        print("low energy",self.mom_gamma[self.mom_gamma["PreKinetic/MeV"]<0.006] )
 
         self.output_df = self.mom_gamma[
             ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
