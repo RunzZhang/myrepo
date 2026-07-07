@@ -330,21 +330,17 @@ class SN():
         # per energy deposition and total
         # MHz
         Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
-        ER_Ar = self.merge_df_primary[self.merged_df_primary["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
-        ER_CF4 = self.merged_df_primary[self.merged_df_primary["Volume"] == "hydraulic_fluid_phys"]["ER_near/eV"] / 1000
-        print("ER CF4 counts", len(ER_CF4))
+        # ER_Ar = self.merge_df_primary[self.merged_df_primary["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
+        ER_Ar = self.merged_df_phot[self.merged_df_phot["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000
+        ER_Ar_photo_total = self.merged_df_all[(self.merged_df_all["Volume"] == "LAr_phys")&(self.merged_df_all["Process"] == "phot")]["ER_near/eV"] / 1000
+
         ER_sum = self.merged_df_primary["ER_near/eV"]/1000
 
         hist_array = [None] * 3
 
         hist_array[0] = np.histogram(ER_Ar, bins=100,range=(0, 660))
-        hist_array[1] = np.histogram(ER_CF4, bins=100,range=(0, 660))
+        hist_array[1] = np.histogram(ER_Ar_photo_total, bins=100,range=(0, 660))
         hist_array[2] = np.histogram(ER_sum, bins=100,range=(0, 660))
-
-        # find if compton edge exist in CF4 cumulative spectrum
-        for j in range(len(hist_array[1][0])):
-            if hist_array[1][1][j] > 500:
-                print(hist_array[1][1][j],"keV edge", hist_array[1][0][j])
 
 
         fig, ax = plt.subplots(1, 3, figsize=(16, 4))
@@ -352,7 +348,7 @@ class SN():
         align="edge",
         edgecolor="black")
         bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
-        ax[0].set_xlabel("ER/keV per deposition in LAr")
+        ax[0].set_xlabel("ER/keV per photo in LAr")
         ax[0].set_ylabel(" Rate mHz/(bin[" + str(bin0_len) + " keV])")
         # ax[0].ticklabel_format(axis="y",style="sci", scilimits=(0, 0) )
         ax[0].set_yscale("log")
@@ -363,7 +359,7 @@ class SN():
         ax[1].bar(hist_array[1][1][:-1], Rate_factor * hist_array[1][0],width=np.diff(hist_array[1][1]),
         align="edge",
         edgecolor="black")
-        ax[1].set_xlabel("ER/keV per deposition in CF4")
+        ax[1].set_xlabel("ER/keV per photo in LAr")
         bin1_len = int(hist_array[1][1][1] - hist_array[1][1][0])
         ax[1].set_ylabel("Rate mHz/([" + str(bin1_len) + " keV])")
         ax[1].set_yscale("log")
@@ -386,7 +382,7 @@ class SN():
         # ax[2].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         # ax[2].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
-        plt.savefig(self.plot_path + "Cs_1E7_ER_perdepostion_coldrate.pdf")
+        plt.savefig(self.plot_path + "Cs_1E7_phot_check.pdf")
 
 
     def read_ER_Ar_CF_per_deposit_rate_cumulative(self):
