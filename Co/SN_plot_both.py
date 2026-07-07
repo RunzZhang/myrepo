@@ -101,7 +101,7 @@ class SN():
         self.df_all_list.append(temp_df_all)
 
         temp_df_phot = pd.read_csv(self.info_phot_path)
-        print("phot temp", temp_df_phot)
+        # print("phot temp", temp_df_phot)
         self.df_phot_list.append(temp_df_phot)
 
 
@@ -291,7 +291,7 @@ class SN():
         # MHz
         Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
         # ER_Ar = self.merge_df_primary[self.merged_df_primary["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
-        ER_Ar = self.merged_df_phot[self.merged_df_phot["Volume"] == "LAr_phys"]["ER_near/eV"] / 1000
+        ER_Ar = self.merged_df_phot[self.merged_df_phot["Volume"] == "LAr_phys"]["PreKinetic/MeV"] *1000
         ER_Ar_photo_total = \
         self.merged_df_all[(self.merged_df_all["Volume"] == "LAr_phys") & (self.merged_df_all["Process"] == "phot")][
             "ER_near/eV"] / 1000
