@@ -11,7 +11,7 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.doped_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E8_100ppm/"
+        self.doped_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E6_phot/"
 
         # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/"
         # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/"  # for gamma path
