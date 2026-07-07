@@ -100,8 +100,9 @@ class SN():
         self.df_all_list.append(temp_df_all)
 
         temp_df_phot = pd.read_csv(self.info_phot_path)
-
+        print("phot temp", temp_df_phot)
         self.df_phot_list.append(temp_df_phot)
+
 
     def combine_df(self):
         self.merged_df_primary = pd.concat(self.df_primary_list, ignore_index=True)
