@@ -659,7 +659,7 @@ class ReadRoot():
         print("df the whole list", self.df[self.df["Volume"]=="LAr_phys"])
         print("columns", self.df.columns)
 
-        print("low energy",self.df[(self.df["Volume"]=="LAr_phys")|(self.df["PreKinetic/MeV"]<0.006)])
+        print("low energy",self.df[(self.df["Volume"]=="LAr_phys")&(self.df["PreKinetic/MeV"]<0.006)])
        #  self.phot  = self.df[(self.df["Volume"]=="LAr_phys")&(self.df["Step ID"]=="1")&(self.df["name"]=="e-")]
        #  self.phot = self.phot.groupby(["Event","Parent ID"])
        #  # combine multiple electrons into same photo absorption event
