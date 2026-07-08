@@ -359,9 +359,7 @@ class SN():
         hist_array[2] = np.histogram(ER_sum, bins=300, range=(0, 1200))
 
         fig, ax = plt.subplots(1, 3, figsize=(16, 4))
-        ax[0].plot(hist_array[0][1][:-1], Rate_factor * hist_array[0][0], width=np.diff(hist_array[0][1]),
-                  align="edge",
-                  edgecolor="black")
+        ax[0].plot(hist_array[0][1][:-1], Rate_factor * hist_array[0][0])
         bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
         ax[0].set_xlabel("ER/keV per photo in LAr")
         ax[0].set_ylabel(" Rate mHz/(bin[" + str(bin0_len) + " keV])")
@@ -371,9 +369,7 @@ class SN():
         # ax[0].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         # ax[0].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
-        ax[1].plot(hist_array[1][1][:-1], Rate_factor * hist_array[1][0], width=np.diff(hist_array[1][1]),
-                  align="edge",
-                  edgecolor="black")
+        ax[1].plot(hist_array[1][1][:-1], Rate_factor * hist_array[1][0])
         ax[1].set_xlabel("ER/keV per photo in LAr")
         bin1_len = int(hist_array[1][1][1] - hist_array[1][1][0])
         ax[1].set_ylabel("Rate mHz/([" + str(bin1_len) + " keV])")
@@ -384,9 +380,7 @@ class SN():
         # ax[1].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         # ax[1].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
-        ax[2].plot(hist_array[2][1][:-1], Rate_factor * hist_array[2][0], width=np.diff(hist_array[2][1]),
-                  align="edge",
-                  edgecolor="black")
+        ax[2].plot(hist_array[2][1][:-1], Rate_factor * hist_array[2][0])
         ax[2].set_xlabel("ER/keV per deposition ")
         bin2_len = int(hist_array[2][1][1] - hist_array[2][1][0])
         ax[2].set_ylabel("Rate mHz/([" + str(bin2_len) + " keV])")
