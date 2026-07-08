@@ -452,10 +452,17 @@ class ReadRoot():
         print(self.electron_recoiled_event_list[:3])
         high_NRER = []
 
-        self.test_mom = self.df[
-            (self.df['Volume'] == 'LAr_phys') & (self.df['Process'] == "phot") ]
-        print("test mom",self.test_mom[self.test_mom["PreKinetic/MeV"]<0.006])
+        track_groups = self.df.groupby(['Event', 'Track ID'])
 
+        self.df['X_next'] = track_groups['X/mm'].shift(-1)
+        self.df['Y_next'] = track_groups['Y/mm'].shift(-1)
+        self.df['Z_next'] = track_groups['Z/mm'].shift(-1)
+
+        # If a process terminates the track (like 'phot'), there is no "next" step.
+        # Fall back to the current coordinates for those terminal steps.
+        self.df['X_next'] = self.df['X_next'].fillna(self.df['X/mm'])
+        self.df['Y_next'] = self.df['Y_next'].fillna(self.df['Y/mm'])
+        self.df['Z_next'] = self.df['Z_next'].fillna(self.df['Z/mm'])
 
         self.mom_gamma = self.df[
             ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
@@ -463,9 +470,13 @@ class ReadRoot():
                 self.df["Event"].isin(self.electron_recoiled_event_list))]
         self.mom_gamma_group = self.mom_gamma.groupby("Event")
 
-        self.kid_e = self.df[(self.df['name'] == 'e-') & (self.df['Step ID'] == 1) & (self.df['Parent ID'] == 1) & (
+        # self.kid_e = self.df[(self.df['name'] == 'e-') & (self.df['Step ID'] == 1) & (self.df['Parent ID'] == 1) & (
+        #     self.df["Event"].isin(self.electron_recoiled_event_list)) & ((self.df['Volume'] == 'LAr_phys') | (
+        #             self.df['Volume'] == 'hydraulic_fluid_phys'))]
+
+        self.kid_e = self.df[(self.df['name'] == 'e-') & (self.df['Step ID'] == 1) & (
             self.df["Event"].isin(self.electron_recoiled_event_list)) & ((self.df['Volume'] == 'LAr_phys') | (
-                    self.df['Volume'] == 'hydraulic_fluid_phys'))]
+                self.df['Volume'] == 'hydraulic_fluid_phys'))]
         self.kid_e_group = self.kid_e.groupby("Event")
 
         self.mom_gamma = self.mom_gamma.copy()
@@ -483,7 +494,7 @@ class ReadRoot():
                 continue
 
             # positions
-            g_pos = g_evt[["X/mm", "Y/mm", "Z/mm"]].to_numpy()
+            g_pos = g_evt[["X_next/mm", "Y_next/mm", "Z_next/mm"]].to_numpy()
             e_pos = e_evt[["X/mm", "Y/mm", "Z/mm"]].to_numpy()
 
             # recoil energy column name: change if yours is different
@@ -515,7 +526,7 @@ class ReadRoot():
         print(first3_events)
         print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
         # for test only
-        self.mom_gamma["ER_near/eV"] = self.mom_gamma["PreKinetic/MeV"]*1e6
+        # self.mom_gamma["ER_near/eV"] = self.mom_gamma["PreKinetic/MeV"]*1e6
 
 
         self.output_df = self.mom_gamma[
