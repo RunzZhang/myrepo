@@ -134,11 +134,11 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_dmx_Ba_1E6_phot_track/"
-        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_dmx_Ba_1E6_phot_track/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_dmx_Ba_1E6_phot_track/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_dmx_Ba_1E6_phot_track/"
 
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_normal/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_normal/"
+        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_normal/"
+        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_normal/"
 
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
@@ -225,15 +225,15 @@ class ReadRoot():
         self.modify_df()
 
         # find all ER and save ER into csv
-        self.allER()
-        self.ER_distribution_primary()
-        self.ER_distribution_counts()
+        # self.allER()
+        # self.ER_distribution_primary()
+        # self.ER_distribution_counts()
 
         # find all NR
         # self.allNR()
 
         #xenon doping
-        # self.xenon_doped_phot()
+        self.xenon_doped_phot()
 
 
 
