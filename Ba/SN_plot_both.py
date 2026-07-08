@@ -362,7 +362,7 @@ class SN():
         # ax[0].bar(hist_array[0][1][:-1], Rate_factor * hist_array[0][0], width=np.diff(hist_array[0][1]),
         #           align="edge",
         #           edgecolor="black")
-        print(type(hist_array[0][0]))
+        print(type(hist_array[0][0]), hist_array[0][0])
         hist_array[0][0]= np.insert(hist_array[0][0],0, 0)
         ax[0].plot(hist_array[0][1], Rate_factor * hist_array[0][0])
         bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
