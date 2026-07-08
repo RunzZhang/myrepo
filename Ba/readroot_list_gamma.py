@@ -227,8 +227,10 @@ class ReadRoot():
 
         # find all ER and save ER into csv
         self.allER()
-        self.ER_distribution_primary()
-        self.ER_distribution_counts()
+        self.ER_distribution_primary_v2()
+        self.ER_distribution_counts_v2()
+        # self.ER_distribution_primary()
+        # self.ER_distribution_counts()
 
         # find all NR
         # self.allNR()
@@ -352,96 +354,7 @@ class ReadRoot():
 
     def ER_distribution_primary(self):
 
-        # # this is primary gamma ER, used for energy deposition to avoid overcounting in secondary particles
-        #
-        # self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-") & (self.df_electron["Event"] != 1)]
-        # # double check gamma
-        #
-        # summed_values = self.tagged_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
-        #
-        # print(summed_values.head(20))
-        #
-        # # add gamma up
-        # self.electron_recoiled_list = summed_values["Recoiled/MeV"].to_list()
-        # # save info
-        #
-        # self.electron_recoiled_event_list = summed_values["Event"].to_list()
-        # print(self.electron_recoiled_event_list[:3])
-        # high_NRER = []
-        #
-        # track_groups = self.df.groupby(['Event', 'Track ID'])
-        #
-        # self.df['X_next'] = track_groups['X/mm'].shift(-1)
-        # self.df['Y_next'] = track_groups['Y/mm'].shift(-1)
-        # self.df['Z_next'] = track_groups['Z/mm'].shift(-1)
-        #
-        # # If a process terminates the track (like 'phot'), there is no "next" step.
-        # # Fall back to the current coordinates for those terminal steps.
-        # self.df['X_next'] = self.df['X_next'].fillna(self.df['X/mm'])
-        # self.df['Y_next'] = self.df['Y_next'].fillna(self.df['Y/mm'])
-        # self.df['Z_next'] = self.df['Z_next'].fillna(self.df['Z/mm'])
-        #
-        # self.mom_gamma = self.df[
-        #     ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-        #                 (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
-        #                 self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
-        # self.mom_gamma_group = self.mom_gamma.groupby("Event")
-        #
-        # self.kid_e = self.df[(self.df['name'] == 'e-') & (self.df['Step ID'] == 1) & (self.df['Parent ID'] == 1) & (
-        #     self.df["Event"].isin(self.electron_recoiled_event_list)) & ((self.df['Volume'] == 'LAr_phys') | (
-        #             self.df['Volume'] == 'hydraulic_fluid_phys'))]
-        # self.kid_e_group = self.kid_e.groupby("Event")
-        #
-        # self.mom_gamma = self.mom_gamma.copy()
-        # self.mom_gamma["ER_near"] = 0.0
-        # half = 0.00  # mm from original cube 2*2*2 mm
-        #
-        # for event_id, g_evt in self.mom_gamma_group:
-        #     # electrons for same event
-        #     try:
-        #         e_evt = self.kid_e_group.get_group(event_id)
-        #     except KeyError:
-        #         continue  # no e- in this event
-        #
-        #     if e_evt.empty:
-        #         continue
-        #
-        #     # positions
-        #     g_pos = g_evt[["X_next/mm", "Y_next/mm", "Z_next/mm"]].to_numpy()
-        #     e_pos = e_evt[["X/mm", "Y/mm", "Z/mm"]].to_numpy()
-        #
-        #     # recoil energy column name: change if yours is different
-        #     e_E = e_evt["Recoiled/MeV"].to_numpy()
-        #
-        #     # cube cut (vectorized): inside shape = (N_gamma, N_e)
-        #     dx = np.abs(g_pos[:, None, 0] - e_pos[None, :, 0]) <= half
-        #     dy = np.abs(g_pos[:, None, 1] - e_pos[None, :, 1]) <= half
-        #     dz = np.abs(g_pos[:, None, 2] - e_pos[None, :, 2]) <= half
-        #     inside = dx & dy & dz
-        #
-        #     # sum E per gamma point
-        #     ER_near = inside @ e_E  # (N_gamma,)
-        #
-        #     # write back aligned to the same rows in mom_gamma
-        #     self.mom_gamma.loc[g_evt.index, "ER_near"] = ER_near
-        #
-        # first3_events = self.mom_gamma["Event"].unique()[:3]
-        # print(first3_events)
-        # print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
-        #
-        # self.mom_gamma["Multiplicity"] = (
-        #     self.mom_gamma.groupby("Event")["Step ID"].rank(method="dense", ascending=True).astype(int))
-        # self.mom_gamma["R/mm"] = np.sqrt(self.mom_gamma["X/mm"] ** 2 + self.mom_gamma["Y/mm"] ** 2)
-        #
-        # self.mom_gamma["ER_near/eV"] = self.mom_gamma["ER_near"] * 1e6
-        #
-        # first3_events = self.mom_gamma["Event"].unique()[:3]
-        # print(first3_events)
-        # print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
-        # # # test purpose
-        # # self.mom_gamma["ER_near/eV"] = self.mom_gamma["PreKinetic/MeV"]*1e6
-        # self.output_df = self.mom_gamma[
-        #     ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
+       #     ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
         self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-") & (self.df_electron["Event"] != 1)]
         # double check gamma
 
@@ -639,7 +552,7 @@ class ReadRoot():
         print(first3_events)
         print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
         # for test only
-        self.mom_gamma["ER_near/eV"] = self.mom_gamma["PreKinetic/MeV"]*1e6
+        # self.mom_gamma["ER_near/eV"] = self.mom_gamma["PreKinetic/MeV"]*1e6
 
 
         self.output_df = self.mom_gamma[
@@ -649,6 +562,108 @@ class ReadRoot():
 
         self.df[self.df["Event"] == 2930].to_csv(self.base_path + "LAr_ER_2930.csv")
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
+
+    def ER_distribution_primary_v2(self):
+
+        #     ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
+        self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-") & (self.df_electron["Event"] != 1)]
+        # double check gamma
+
+        summed_values = self.tagged_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
+
+        print(summed_values.head(20))
+
+        # add gamma up
+        self.electron_recoiled_list = summed_values["Recoiled/MeV"].to_list()
+        # save info
+
+        self.electron_recoiled_event_list = summed_values["Event"].to_list()
+        print(self.electron_recoiled_event_list[:3])
+        high_NRER = []
+
+
+        self.mom_gamma_compt = self.df[
+            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
+                    (self.df['Process'] == "compt") ) & (
+                    self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
+        self.mom_gamma_compt_group = self.mom_gamma_compt.groupby("Event")
+
+
+        self.mom_gamma_compt["ER_near/eV"] = (self.mom_gamma_compt["PreKinetic/MeV"] -self.mom_gamma_compt["PostKinetic/MeV"])* 1e6
+
+
+
+        self.mom_gamma_phot = self.df[
+            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
+                     (self.df['Process'] == "phot")) & (
+                    self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
+        self.mom_gamma_phot_group = self.mom_gamma_phot.groupby("Event")
+
+        self.mom_gamma_phot["ER_near/eV"] = (self.mom_gamma_phot["PreKinetic/MeV"] - self.mom_gamma_phot[
+            "PostKinetic/MeV"]) * 1e6
+
+
+        self.mom_gamma = pd.concat([self.mom_gamma_compt,self.mom_gamma_phot], ignore_index=True)
+        self.mom_gamma["R/mm"] =0
+        self.mom_gamma["Multiplicity"] = 0
+
+        self.output_df = self.mom_gamma[
+            ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
+
+        self.output_df.to_csv(self.info_primary_path, index=False)
+
+        self.df[self.df["Event"] == 6391].to_csv(self.base_path + "LAr_ER_abnormalER.csv")
+        # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
+
+    def ER_distribution_counts_v2(self):
+        self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-") & (self.df_electron["Event"] != 1)]
+        # double check gamma
+
+        summed_values = self.tagged_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
+
+        print(summed_values.head(20))
+
+        # add gamma up
+        self.electron_recoiled_list = summed_values["Recoiled/MeV"].to_list()
+        # save info
+
+        self.electron_recoiled_event_list = summed_values["Event"].to_list()
+        print(self.electron_recoiled_event_list[:3])
+        high_NRER = []
+
+        self.mom_gamma_compt = self.df[
+            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
+                (self.df['Process'] == "compt"))  & (self.df["Event"].isin(self.electron_recoiled_event_list))]
+        self.mom_gamma_compt_group = self.mom_gamma_compt.groupby("Event")
+
+        self.mom_gamma_compt["ER_near/eV"] = (self.mom_gamma_compt["PreKinetic/MeV"] - self.mom_gamma_compt[
+            "PostKinetic/MeV"]) * 1e6
+
+        self.mom_gamma_phot = self.df[
+            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
+                (self.df['Process'] == "phot")) &  (self.df["Event"].isin(self.electron_recoiled_event_list))]
+        self.mom_gamma_phot_group = self.mom_gamma_phot.groupby("Event")
+
+        self.mom_gamma_phot["ER_near/eV"] = (self.mom_gamma_phot["PreKinetic/MeV"] - self.mom_gamma_phot[
+            "PostKinetic/MeV"]) * 1e6
+
+        self.mom_gamma = pd.concat([self.mom_gamma_compt, self.mom_gamma_phot], ignore_index=True)
+        self.mom_gamma["R/mm"] = 0
+        self.mom_gamma["Multiplicity"] = 0
+
+        self.output_df = self.mom_gamma[
+            ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
+
+        self.output_df.to_csv(self.info_primary_path, index=False)
+
+        self.df[self.df["Event"] == 6391].to_csv(self.base_path + "LAr_ER_abnormalER.csv")
+        # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
+
+        self.output_df.to_csv(self.info_all_path, index=False)
+
+        self.df[self.df["Event"] == 2930].to_csv(self.base_path + "LAr_ER_2930.csv")
+        # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
+
     def delta_e_distribution(self):
         # this is is counts of all ER, uses for counting Compton and photo interaction times including secondary particles
 
