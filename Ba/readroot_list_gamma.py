@@ -437,7 +437,8 @@ class ReadRoot():
         first3_events = self.mom_gamma["Event"].unique()[:3]
         print(first3_events)
         print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
-
+        # test purpose
+        self.mom_gamma["ER_near/eV"] = self.mom_gamma["PreKinetic/MeV"]*1e6
         self.output_df = self.mom_gamma[
             ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
 
