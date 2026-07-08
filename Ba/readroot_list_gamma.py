@@ -567,9 +567,9 @@ class ReadRoot():
 
         track_groups = self.df.groupby(['Event', 'Track ID'])
 
-        self.df['X_next/mm'] = track_groups['X/mm'].shift(1)
-        self.df['Y_next/mm'] = track_groups['Y/mm'].shift(1)
-        self.df['Z_next/mm'] = track_groups['Z/mm'].shift(1)
+        self.df['X_next/mm'] = track_groups['X/mm'].shift(-1)
+        self.df['Y_next/mm'] = track_groups['Y/mm'].shift(-1)
+        self.df['Z_next/mm'] = track_groups['Z/mm'].shift(-1)
 
         # If a process terminates the track (like 'phot'), there is no "next" step.
         # Fall back to the current coordinates for those terminal steps.
@@ -639,7 +639,7 @@ class ReadRoot():
         print(first3_events)
         print(self.mom_gamma[self.mom_gamma["Event"].isin(first3_events)])
         # for test only
-        # self.mom_gamma["ER_near/eV"] = self.mom_gamma["PreKinetic/MeV"]*1e6
+        self.mom_gamma["ER_near/eV"] = self.mom_gamma["PreKinetic/MeV"]*1e6
 
 
         self.output_df = self.mom_gamma[
