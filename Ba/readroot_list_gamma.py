@@ -459,36 +459,36 @@ class ReadRoot():
 
         track_groups = self.df.groupby(['Event', 'Track ID'])
 
-        self.df['X_next'] = track_groups['X/mm'].shift(-1)
-        self.df['Y_next'] = track_groups['Y/mm'].shift(-1)
-        self.df['Z_next'] = track_groups['Z/mm'].shift(-1)
+        self.df['X_next/mm'] = track_groups['X/mm'].shift(-1)
+        self.df['Y_next/mm'] = track_groups['Y/mm'].shift(-1)
+        self.df['Z_next/mm'] = track_groups['Z/mm'].shift(-1)
 
         # If a process terminates the track (like 'phot'), there is no "next" step.
         # Fall back to the current coordinates for those terminal steps.
-        self.df['X_next'] = self.df['X_next'].fillna(self.df['X/mm'])
-        self.df['Y_next'] = self.df['Y_next'].fillna(self.df['Y/mm'])
-        self.df['Z_next'] = self.df['Z_next'].fillna(self.df['Z/mm'])
-
-        # self.mom_gamma = self.df[
-        #         ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-        #                     (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
-        #                     self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
-        # self.mom_gamma_group = self.mom_gamma.groupby("Event")
-        #
-        # self.kid_e = self.df[(self.df['name'] == 'e-') & (self.df['Step ID'] == 1) & (self.df['Parent ID'] == 1) & (
-        #         self.df["Event"].isin(self.electron_recoiled_event_list)) & ((self.df['Volume'] == 'LAr_phys') | (
-        #                 self.df['Volume'] == 'hydraulic_fluid_phys'))]
-        # self.kid_e_group = self.kid_e.groupby("Event")
+        self.df['X_next/mm'] = self.df['X_next/mm'].fillna(self.df['X/mm'])
+        self.df['Y_next/mm'] = self.df['Y_next/mm'].fillna(self.df['Y/mm'])
+        self.df['Z_next/mm'] = self.df['Z_next/mm'].fillna(self.df['Z/mm'])
 
         self.mom_gamma = self.df[
-            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-                    (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
+                ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
+                            (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
+                            self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
         self.mom_gamma_group = self.mom_gamma.groupby("Event")
 
-        self.kid_e = self.df[(self.df['name'] == 'e-') & (self.df['Step ID'] == 1)  & (
-            self.df["Event"].isin(self.electron_recoiled_event_list)) & ((self.df['Volume'] == 'LAr_phys') | (
-                self.df['Volume'] == 'hydraulic_fluid_phys'))]
+        self.kid_e = self.df[(self.df['name'] == 'e-') & (self.df['Step ID'] == 1) & (self.df['Parent ID'] == 1) & (
+                self.df["Event"].isin(self.electron_recoiled_event_list)) & ((self.df['Volume'] == 'LAr_phys') | (
+                        self.df['Volume'] == 'hydraulic_fluid_phys'))]
         self.kid_e_group = self.kid_e.groupby("Event")
+
+        # self.mom_gamma = self.df[
+        #     ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
+        #             (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
+        # self.mom_gamma_group = self.mom_gamma.groupby("Event")
+        #
+        # self.kid_e = self.df[(self.df['name'] == 'e-') & (self.df['Step ID'] == 1)  & (
+        #     self.df["Event"].isin(self.electron_recoiled_event_list)) & ((self.df['Volume'] == 'LAr_phys') | (
+        #         self.df['Volume'] == 'hydraulic_fluid_phys'))]
+        # self.kid_e_group = self.kid_e.groupby("Event")
 
         self.mom_gamma = self.mom_gamma.copy()
         self.mom_gamma["ER_near"] = 0.0
@@ -567,15 +567,15 @@ class ReadRoot():
 
         track_groups = self.df.groupby(['Event', 'Track ID'])
 
-        self.df['X_next'] = track_groups['X/mm'].shift(-1)
-        self.df['Y_next'] = track_groups['Y/mm'].shift(-1)
-        self.df['Z_next'] = track_groups['Z/mm'].shift(-1)
+        self.df['X_next/mm'] = track_groups['X/mm'].shift(-1)
+        self.df['Y_next/mm'] = track_groups['Y/mm'].shift(-1)
+        self.df['Z_next/mm'] = track_groups['Z/mm'].shift(-1)
 
         # If a process terminates the track (like 'phot'), there is no "next" step.
         # Fall back to the current coordinates for those terminal steps.
-        self.df['X_next'] = self.df['X_next'].fillna(self.df['X/mm'])
-        self.df['Y_next'] = self.df['Y_next'].fillna(self.df['Y/mm'])
-        self.df['Z_next'] = self.df['Z_next'].fillna(self.df['Z/mm'])
+        self.df['X_next/mm'] = self.df['X_next/mm'].fillna(self.df['X/mm'])
+        self.df['Y_next/mm'] = self.df['Y_next/mm'].fillna(self.df['Y/mm'])
+        self.df['Z_next/mm'] = self.df['Z_next/mm'].fillna(self.df['Z/mm'])
 
         self.mom_gamma = self.df[
             ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
