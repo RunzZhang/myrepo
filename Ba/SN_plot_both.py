@@ -364,7 +364,7 @@ class SN():
         #           edgecolor="black")
         histarray0_1d = np.insert(hist_array[0][0], 0, 0)
 
-        ax[0].bar(hist_array[0][1], Rate_factor * histarray0_1d)
+        ax[0].plot(hist_array[0][1], Rate_factor * histarray0_1d)
         bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
         ax[0].set_xlabel("ER/keV per photo in LAr")
         ax[0].set_ylabel(" Rate mHz/(bin[" + str(bin0_len) + " keV])")
@@ -378,7 +378,7 @@ class SN():
         #           align="edge",
         #           edgecolor="black")
         histarray1_1d = np.insert(hist_array[1][0], 0, 0)
-        ax[1].bar(hist_array[1][1], Rate_factor * histarray1_1d)
+        ax[1].plot(hist_array[1][1], Rate_factor * histarray1_1d)
         ax[1].set_xlabel("ER/keV per photo in LAr")
         bin1_len = int(hist_array[1][1][1] - hist_array[1][1][0])
         ax[1].set_ylabel("Rate mHz/([" + str(bin1_len) + " keV])")
