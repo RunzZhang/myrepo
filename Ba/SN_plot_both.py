@@ -24,6 +24,7 @@ class SN():
         # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_ar_1E6_phot/"
 
         self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
+        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
 
         # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
         # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"  # for gamma path
