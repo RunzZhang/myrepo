@@ -362,7 +362,9 @@ class SN():
         # ax[0].bar(hist_array[0][1][:-1], Rate_factor * hist_array[0][0], width=np.diff(hist_array[0][1]),
         #           align="edge",
         #           edgecolor="black")
-        ax[0].bar(hist_array[0][1][:-1], Rate_factor * hist_array[0][0])
+        histarray1_1d = np.insert(hist_array[0][0], 0, 0)
+
+        ax[0].bar(hist_array[0][1][:-1], Rate_factor * histarray1_1d)
         bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
         ax[0].set_xlabel("ER/keV per photo in LAr")
         ax[0].set_ylabel(" Rate mHz/(bin[" + str(bin0_len) + " keV])")
@@ -389,7 +391,7 @@ class SN():
         # ax[2].bar(hist_array[2][1][:-1], Rate_factor * hist_array[2][0], width=np.diff(hist_array[2][1]),
         #           align="edge",
         #           edgecolor="black")
-        ax[2].bar(hist_array[2][1][:-1], Rate_factor * hist_array[2][0])
+        ax[2].plot(hist_array[2][1], Rate_factor * hist_array[2][0])
         ax[2].set_xlabel("ER/keV per deposition ")
         bin2_len = int(hist_array[2][1][1] - hist_array[2][1][0])
         ax[2].set_ylabel("Rate mHz/([" + str(bin2_len) + " keV])")
