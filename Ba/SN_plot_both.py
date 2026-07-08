@@ -348,6 +348,11 @@ class SN():
                 (self.merged_df_all["Volume"] == "LAr_phys") & (self.merged_df_all["Process"] == "compt")][
                 "ER_near/eV"] / 1000
 
+        ER_sum = \
+            self.merged_df_all[
+                (self.merged_df_all["Volume"] == "LAr_phys") ][
+                "ER_near/eV"] / 1000
+
 
 
         # estimate gamma rejction level
