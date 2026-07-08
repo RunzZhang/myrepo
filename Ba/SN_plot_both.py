@@ -354,9 +354,9 @@ class SN():
         print(len(ER_sum), len(self.merged_df_all["ER_near/eV"]))
         hist_array = [None] * 3
 
-        hist_array[0] = np.histogram(ER_Ar, bins=600, range=(0, 1200))
-        hist_array[1] = np.histogram(ER_Ar_photo_total, bins=600, range=(0, 1200))
-        hist_array[2] = np.histogram(ER_sum, bins=600, range=(0, 1200))
+        hist_array[0] = np.histogram(ER_Ar, bins=300, range=(0, 1200))
+        hist_array[1] = np.histogram(ER_Ar_photo_total, bins=300, range=(0, 1200))
+        hist_array[2] = np.histogram(ER_sum, bins=300, range=(0, 1200))
 
         fig, ax = plt.subplots(1, 3, figsize=(16, 4))
         ax[0].bar(hist_array[0][1][:-1], Rate_factor * hist_array[0][0], width=np.diff(hist_array[0][1]),
