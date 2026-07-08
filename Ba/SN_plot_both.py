@@ -354,17 +354,15 @@ class SN():
         print(len(ER_sum), len(self.merged_df_all["ER_near/eV"]))
         hist_array = [None] * 3
 
-        hist_array[0] = np.histogram(ER_Ar, bins=300, range=(0, 1200))
-        hist_array[1] = np.histogram(ER_Ar_photo_total, bins=300, range=(0, 1200))
-        hist_array[2] = np.histogram(ER_sum, bins=300, range=(0, 1200))
+        hist_array[0] = np.histogram(ER_Ar, bins=300, range=(-1, 1200))
+        hist_array[1] = np.histogram(ER_Ar_photo_total, bins=300, range=(-1, 1200))
+        hist_array[2] = np.histogram(ER_sum, bins=300, range=(-1, 1200))
 
         fig, ax = plt.subplots(1, 3, figsize=(16, 4))
         # ax[0].bar(hist_array[0][1][:-1], Rate_factor * hist_array[0][0], width=np.diff(hist_array[0][1]),
         #           align="edge",
         #           edgecolor="black")
-        print(type(hist_array[0][0]), hist_array[0][0])
-        hist_array[0][0]= np.insert(hist_array[0][0],0, 0)
-        ax[0].plot(hist_array[0][1], Rate_factor * hist_array[0][0])
+        ax[0].bar(hist_array[0][1], Rate_factor * hist_array[0][0])
         bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
         ax[0].set_xlabel("ER/keV per photo in LAr")
         ax[0].set_ylabel(" Rate mHz/(bin[" + str(bin0_len) + " keV])")
@@ -377,8 +375,7 @@ class SN():
         # ax[1].bar(hist_array[1][1][:-1], Rate_factor * hist_array[1][0], width=np.diff(hist_array[1][1]),
         #           align="edge",
         #           edgecolor="black")
-        hist_array[1][0]= np.insert(hist_array[1][0],0, 0)
-        ax[1].plot(hist_array[1][1], Rate_factor * hist_array[1][0])
+        ax[1].bar(hist_array[1][1], Rate_factor * hist_array[1][0])
         ax[1].set_xlabel("ER/keV per photo in LAr")
         bin1_len = int(hist_array[1][1][1] - hist_array[1][1][0])
         ax[1].set_ylabel("Rate mHz/([" + str(bin1_len) + " keV])")
@@ -392,8 +389,7 @@ class SN():
         # ax[2].bar(hist_array[2][1][:-1], Rate_factor * hist_array[2][0], width=np.diff(hist_array[2][1]),
         #           align="edge",
         #           edgecolor="black")
-        hist_array[2][0]= np.insert(hist_array[2][0],0, 0)
-        ax[2].plot(hist_array[2][1], Rate_factor * hist_array[2][0])
+        ax[2].bar(hist_array[2][1], Rate_factor * hist_array[2][0])
         ax[2].set_xlabel("ER/keV per deposition ")
         bin2_len = int(hist_array[2][1][1] - hist_array[2][1][0])
         ax[2].set_ylabel("Rate mHz/([" + str(bin2_len) + " keV])")
