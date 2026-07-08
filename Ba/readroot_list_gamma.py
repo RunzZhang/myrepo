@@ -134,11 +134,11 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_phot_track/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_phot_track/"
+        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_phot_track/"
+        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_phot_track/"
 
-        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_normal/"
-        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_normal/"
+        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_normal/"
+        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_normal/"
 
         self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
 
@@ -225,15 +225,15 @@ class ReadRoot():
         self.modify_df()
 
         # find all ER and save ER into csv
-        # self.allER()
-        # self.ER_distribution_primary()
-        # self.ER_distribution_counts()
+        self.allER()
+        self.ER_distribution_primary()
+        self.ER_distribution_counts()
 
         # find all NR
         # self.allNR()
 
         #xenon doping
-        self.xenon_doped_phot()
+        # self.xenon_doped_phot()
 
 
 
@@ -523,7 +523,7 @@ class ReadRoot():
 
         self.output_df.to_csv(self.info_all_path, index=False)
 
-        self.df[self.df["Event"] == 6391].to_csv(self.base_path + "LAr_ER_abnormalER.csv")
+        self.df[self.df["Event"] == 2930].to_csv(self.base_path + "LAr_ER_2930.csv")
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
     def delta_e_distribution(self):
         # this is is counts of all ER, uses for counting Compton and photo interaction times including secondary particles
