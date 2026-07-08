@@ -60,7 +60,7 @@ import csv
 # filename = "/data/runzezhang/Geant4Simulaions/g411_TN/dmx.root"
 def test_write():
     try:
-        f = uproot.open("/data/runzezhang/result/TN_sims_D/chunked_root_files_test/dmx_Cf_1E7_2.root")
+        f = uproot.open("/data/runzezhang/result/GR_sims/chunked_root_files_test/dmx_Cf_1E7_2.root")
         tree = f["tree"]  # Or whatever your tree name is
         print("Successfully opened the file!")
         columns= ["Event","name","Parent ID","Track ID","Step ID","X/mm","PreKinetic/MeV","Recoiled/MeV","Volume","Process"]
@@ -79,7 +79,7 @@ def find_entries():
     """
         Opens a ROOT file and returns the number of entries in a specified TTree.
         """
-    filepath= "/data/runzezhang/result/TN_sims_D/chunked_root_files_corrupted/dmx_Cf_1E7_1.root"
+    filepath= "/data/runzezhang/result/GR_sims/chunked_root_files_corrupted/dmx_Cf_1E7_1.root"
     tree_name="tree"
     try:
         with uproot.open(filepath) as file:
@@ -96,8 +96,8 @@ def find_entries():
 
 class RestructureRoot():
     def __init__(self):
-        self.filepath = "/data/runzezhang/result/TN_sims_D/chunked_root_files/dmx_Cf_1E7.root"
-        self.reconstruct_filepath = "/data/runzezhang/result/TN_sims_D/chunked_root_files/dmx_rcCf_1E7.csv"
+        self.filepath = "/data/runzezhang/result/GR_sims/chunked_root_files/dmx_Cf_1E7.root"
+        self.reconstruct_filepath = "/data/runzezhang/result/GR_sims/chunked_root_files/dmx_rcCf_1E7.csv"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
@@ -134,13 +134,13 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_normal/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_normal/"
+        self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
+        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
 
-        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_normal/"
-        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_normal/"
+        # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
+        # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
 
-        self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
+        self.plot_path = '/data/runzezhang/result/GR_sims/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.main_body(1)

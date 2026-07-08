@@ -11,23 +11,23 @@ class SN():
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.doped_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_phot_track/"
+        self.doped_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_phot_track/"
 
-        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/"
-        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E5_ar_inside/"  # for gamma path
-
-
-        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_CF4_inside/"
-        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_CF4_inside/"
-
-        # self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E6_phot/"
-        # self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_ar_1E6_phot/"
+        # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_ar_inside/"
+        # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_ar_inside/"  # for gamma path
 
 
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_normal/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_Ba_1E6_normal/"  # for gamma path
+        # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_CF4_inside/"
+        # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_CF4_inside/"
 
-        self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
+        # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_ar_1E6_phot/"
+        # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_ar_1E6_phot/"
+
+
+        self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
+        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"  # for gamma path
+
+        self.plot_path = '/data/runzezhang/result/GR_sims/plot/'
         self.false_1 = "PN_false1.csv"
         self.false_2 = "PN_false2.csv"
         self.signal = "PN_sig.csv"
@@ -913,7 +913,7 @@ class SN():
                        hist_array_primary, cumulative_threshold_per_scatter_array_primary[0],
                        cumulative_threshold_array_primary[0]]
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
-        with open("/data/runzezhang/result/TN_sims_D/Ba_output_5E6.pkl", "wb") as f:
+        with open("/data/runzezhang/result/GR_sims/Ba_output_5E6.pkl", "wb") as f:
             pickle.dump(output_list, f)
 
 
@@ -947,7 +947,7 @@ class SN():
 
         output_list = [Rate_factor ,hist_array, cumulative_threshold_per_scatter_array[0], cumulative_threshold_array[0]]
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
-        with open("/data/runzezhang/result/TN_sims_D/Ba_doped_output.pkl", "wb") as f:
+        with open("/data/runzezhang/result/GR_sims/Ba_doped_output.pkl", "wb") as f:
             pickle.dump(output_list, f)
     def read_ER_CF_per_deposit_rate_cumulative(self):
         # rate factor in mHz
