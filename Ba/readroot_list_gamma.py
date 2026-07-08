@@ -468,15 +468,25 @@ class ReadRoot():
         self.df['Y_next'] = self.df['Y_next'].fillna(self.df['Y/mm'])
         self.df['Z_next'] = self.df['Z_next'].fillna(self.df['Z/mm'])
 
+        # self.mom_gamma = self.df[
+        #         ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
+        #                     (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
+        #                     self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
+        # self.mom_gamma_group = self.mom_gamma.groupby("Event")
+        #
+        # self.kid_e = self.df[(self.df['name'] == 'e-') & (self.df['Step ID'] == 1) & (self.df['Parent ID'] == 1) & (
+        #         self.df["Event"].isin(self.electron_recoiled_event_list)) & ((self.df['Volume'] == 'LAr_phys') | (
+        #                 self.df['Volume'] == 'hydraulic_fluid_phys'))]
+        # self.kid_e_group = self.kid_e.groupby("Event")
+
         self.mom_gamma = self.df[
-                ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-                            (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
-                            self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
+            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
+                    (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
         self.mom_gamma_group = self.mom_gamma.groupby("Event")
 
-        self.kid_e = self.df[(self.df['name'] == 'e-') & (self.df['Step ID'] == 1) & (self.df['Parent ID'] == 1) & (
-                self.df["Event"].isin(self.electron_recoiled_event_list)) & ((self.df['Volume'] == 'LAr_phys') | (
-                        self.df['Volume'] == 'hydraulic_fluid_phys'))]
+        self.kid_e = self.df[(self.df['name'] == 'e-') & (self.df['Step ID'] == 1)  & (
+            self.df["Event"].isin(self.electron_recoiled_event_list)) & ((self.df['Volume'] == 'LAr_phys') | (
+                self.df['Volume'] == 'hydraulic_fluid_phys'))]
         self.kid_e_group = self.kid_e.groupby("Event")
 
         self.mom_gamma = self.mom_gamma.copy()
