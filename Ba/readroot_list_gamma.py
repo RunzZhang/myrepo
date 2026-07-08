@@ -149,7 +149,8 @@ class ReadRoot():
             try:
         # for i in range(1, 11):
                 self.main_body(i)
-            except:
+            except Exception as e:
+                print(e)
                 continue
     def main_body(self,i):
         print(i)
