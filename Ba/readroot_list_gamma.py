@@ -656,7 +656,7 @@ class ReadRoot():
 
         self.output_df.to_csv(self.info_primary_path, index=False)
 
-        self.df[self.df["Event"] == 6391].to_csv(self.base_path + "LAr_ER_abnormalER.csv")
+        self.df[self.df["Event"] == 6391].to_csv(self.base_path + "LAr_ER_6391.csv")
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
 
         self.output_df.to_csv(self.info_all_path, index=False)
