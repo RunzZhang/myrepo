@@ -344,7 +344,11 @@ class SN():
             self.merged_df_all[
                 (self.merged_df_all["Volume"] == "LAr_phys") & (self.merged_df_all["Process"] == "phot")][
                 "ER_near/eV"] / 1000
-
+        low_photo = self.merged_df_all[
+                (self.merged_df_all["Volume"] == "LAr_phys") & (self.merged_df_all["Process"] == "phot")
+                &(self.merged_df_all[
+                "ER_near/eV"]<4000)]
+        print("low photo list", low_photo)
         ER_sum = \
             self.merged_df_all[
                 (self.merged_df_all["Volume"] == "LAr_phys") & (self.merged_df_all["Process"] == "compt")][
