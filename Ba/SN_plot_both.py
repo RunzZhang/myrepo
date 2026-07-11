@@ -351,7 +351,7 @@ class SN():
         print("low photo list", low_photo)
         ER_sum = \
             self.merged_df_all[
-                (self.merged_df_all["Volume"] == "LAr_phys") & (self.merged_df_all["Process"] == "compt")][
+                (self.merged_df_all["Volume"] == "LAr_phys") ][
                 "ER_near/eV"] / 1000
 
         # ER_sum = \
@@ -988,7 +988,8 @@ class SN():
 
         hist_array_primary = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
-        hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=12000, range=(0, 1200))
+        # hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=12000, range=(0, 1200))
+        hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=300, range=(0, 1200))
         # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
         # we need 0.1 keV, and this gives us 4800 bins
 
@@ -1015,7 +1016,8 @@ class SN():
 
         hist_array_all = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
-        hist_array_all[0] = np.histogram(ER_Ar_all, bins=12000, range=(0, 1200))
+        # hist_array_all[0] = np.histogram(ER_Ar_all, bins=12000, range=(0, 1200))
+        hist_array_all[0] = np.histogram(ER_Ar_all, bins=300, range=(0, 1200))
         # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
         # we need 0.1 keV, and this gives us 4800 bins
 
