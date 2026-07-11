@@ -599,8 +599,7 @@ class ReadRoot():
                     self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
         self.mom_gamma_phot_group = self.mom_gamma_phot.groupby("Event")
 
-        self.mom_gamma_phot["ER_near/eV"] = (self.mom_gamma_phot["PreKinetic/MeV"] - self.mom_gamma_phot[
-            "PostKinetic/MeV"]) * 1e6
+        self.mom_gamma_phot["ER_near/eV"] = (self.mom_gamma_phot["PreKinetic/MeV"] - self.mom_gamma_phot["PostKinetic/MeV"]) * 1e6
 
 
         self.mom_gamma = pd.concat([self.mom_gamma_compt,self.mom_gamma_phot], ignore_index=True)
@@ -644,8 +643,7 @@ class ReadRoot():
                 (self.df['Process'] == "phot")) &  (self.df["Event"].isin(self.electron_recoiled_event_list))]
         self.mom_gamma_phot_group = self.mom_gamma_phot.groupby("Event")
 
-        self.mom_gamma_phot["ER_near/eV"] = (self.mom_gamma_phot["PreKinetic/MeV"] - self.mom_gamma_phot[
-            "PostKinetic/MeV"]) * 1e6
+        self.mom_gamma_phot["ER_near/eV"] = (self.mom_gamma_phot["PreKinetic/MeV"] - self.mom_gamma_phot["PostKinetic/MeV"]) * 1e6
 
         self.mom_gamma = pd.concat([self.mom_gamma_compt, self.mom_gamma_phot], ignore_index=True)
         self.mom_gamma["R/mm"] = 0
