@@ -132,7 +132,7 @@ class SN():
         # self.read_Ar_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
-        self.read_ER_Ar_CF_per_deposit_rate()
+        # self.read_ER_Ar_CF_per_deposit_rate()
         # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
         # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
@@ -146,7 +146,7 @@ class SN():
         # self.gamma_rejection_rate_vs_Setiz()
 
         # self.write_sims_results()
-
+        self.plot_sims_results()
 
         #doped analyasis
         # self.read_ER_Ar_doped()
@@ -867,6 +867,97 @@ class SN():
         # ax[1].set_yscale("log")
         print(hist_array[0][1][1] - hist_array[0][1][0], "keV width")
         plt.savefig(self.plot_path + "Co_cumulative_counts_function.pdf")
+    def plot_sims_results(self):
+        # rate factor in mHz
+
+        Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
+        ER_Ar_primary = self.merged_df_primary[self.merged_df_primary["Volume"] == "LAr_phys"][
+                            "ER_near/eV"] / 1000  # in keV
+
+        hist_array_primary = [None]
+        # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
+        hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=12000, range=(0, 1200))
+        # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
+        # we need 0.1 keV, and this gives us 4800 bins
+
+        # transfer edge to mid point per bin
+
+        # get probablity per scattering and the statistics
+        cumulative_threshold_per_scatter_array_primary = [None]
+
+        cumulative_threshold_per_scatter_array_primary[0] = np.array(
+            [sum(hist_array_primary[0][0][i:]) for i in range(len(hist_array_primary[0][0]))])
+
+        # histogram per scattering per keV
+        cumulative_threshold_array_primary = [None]
+        energy_deposit_list_primary = [hist_array_primary[0][0][i] * hist_array_primary[0][1][i] for i in
+                                       range(len(hist_array_primary[0][0]))]
+
+        cumulative_threshold_array_primary[0] = np.array(
+            [sum(energy_deposit_list_primary[i:]) for i in range(len(energy_deposit_list_primary))])
+        print("total count* energy Co", cumulative_threshold_per_scatter_array_primary[0][0],
+              cumulative_threshold_per_scatter_array_primary[0][0] / cumulative_threshold_array_primary[0][0])
+
+        ER_Ar_all = self.merged_df_all[self.merged_df_all["Volume"] == "LAr_phys"][
+                        "ER_near/eV"] / 1000  # in keV
+
+        hist_array_all = [None]
+        # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
+        hist_array_all[0] = np.histogram(ER_Ar_all, bins=12000, range=(0, 1200))
+        # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
+        # we need 0.1 keV, and this gives us 4800 bins
+
+        # transfer edge to mid point per bin
+
+        # get probablity per scattering and the statistics
+        cumulative_threshold_per_scatter_array_all = [None]
+
+        cumulative_threshold_per_scatter_array_all[0] = np.array(
+            [sum(hist_array_all[0][0][i:]) for i in range(len(hist_array_all[0][0]))])
+
+        # histogram per scattering per keV
+        cumulative_threshold_array_all = [None]
+        energy_deposit_list_all = [hist_array_all[0][0][i] * hist_array_all[0][1][i] for i in
+                                   range(len(hist_array_all[0][0]))]
+
+        cumulative_threshold_array_all[0] = np.array(
+            [sum(energy_deposit_list_all[i:]) for i in range(len(energy_deposit_list_all))])
+        print("total count* energy Co", cumulative_threshold_per_scatter_array_all[0][0],
+              cumulative_threshold_per_scatter_array_all[0][0] / cumulative_threshold_array_all[0][0])
+
+        output_list = [Rate_factor, hist_array_all, cumulative_threshold_per_scatter_array_all[0],
+                       cumulative_threshold_array_all[0],
+                       hist_array_primary, cumulative_threshold_per_scatter_array_primary[0],
+                       cumulative_threshold_array_primary[0]]
+
+        fig, ax = plt.subplots(1, 4, figsize=(23, 4))
+        ax[0].plot(hist_array_primary[0][1][:-1],hist_array_primary[0][1])
+        ax[0].set_xlabel("Energy [keV]")
+        ax[0].set_ylabel("Counts")
+        ax[0].set_xscale(0,1)
+
+        ax[1].plot(hist_array_primary[0][1], cumulative_threshold_per_scatter_array_primary[0])
+        ax[1].set_xlabel("Energy [keV]")
+        ax[1].set_ylabel("Cumulative Counts")
+        ax[1].set_xscale(0, 1)
+
+        ax[2].plot(hist_array_primary[0][1][:-1], energy_deposit_list_primary)
+        ax[2].set_xlabel("Energy [keV]")
+        ax[2].set_ylabel("Energy deposit per bin [keV]")
+        ax[2].set_xscale(0, 1)
+
+        ax[3].plot(hist_array_primary[0][1][:-1], cumulative_threshold_array_primary[0])
+        ax[3].set_xlabel("Energy [keV]")
+        ax[3].set_ylabel("Cumulative Energy Deposit [keV]")
+        ax[3].set_xscale(0, 1)
+
+        plt.savefig(self.plot_path+"output_spectrum.pdf")
+
+
+
+
+
+
     def write_sims_results(self):
         # rate factor in mHz
 
