@@ -922,7 +922,7 @@ class SN():
 
         cumulative_threshold_array_all[0] = np.array(
             [sum(energy_deposit_list_all[i:]) for i in range(len(energy_deposit_list_all))])
-        print("total count* energy Co", cumulative_threshold_per_scatter_array_all[0][0],
+        print("total count* energy", cumulative_threshold_per_scatter_array_all[0][0],
               cumulative_threshold_per_scatter_array_all[0][0] / cumulative_threshold_array_all[0][0])
 
         output_list = [Rate_factor, hist_array_all, cumulative_threshold_per_scatter_array_all[0],
@@ -934,22 +934,22 @@ class SN():
         ax[0].plot(hist_array_primary[0][1],hist_array_primary[0][1])
         ax[0].set_xlabel("Energy [keV]")
         ax[0].set_ylabel("Counts")
-        ax[0].set_xscale(0,1)
+        ax[0].set_xlim(0,1)
 
         ax[1].plot(hist_array_primary[0][1], cumulative_threshold_per_scatter_array_primary[0])
         ax[1].set_xlabel("Energy [keV]")
         ax[1].set_ylabel("Cumulative Counts")
-        ax[1].set_xscale(0, 1)
+        ax[1].set_xlim(0, 1)
 
         ax[2].plot(hist_array_primary[0][1], energy_deposit_list_primary)
         ax[2].set_xlabel("Energy [keV]")
         ax[2].set_ylabel("Energy deposit per bin [keV]")
-        ax[2].set_xscale(0, 1)
+        ax[2].set_xlim(0, 1)
 
         ax[3].plot(hist_array_primary[0][1][:-1], cumulative_threshold_array_primary[0])
         ax[3].set_xlabel("Energy [keV]")
         ax[3].set_ylabel("Cumulative Energy Deposit [keV]")
-        ax[3].set_xscale(0, 1)
+        ax[3].set_xlim(0, 1)
 
         plt.savefig(self.plot_path+"output_spectrum.pdf")
 
