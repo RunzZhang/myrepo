@@ -6,8 +6,8 @@ import os, time
 # change the mac name and chunk folder to save the macro configuration
 class ReadRoot:
     def __init__(self):
-        self.base_path = "/data/runzezhang/result//GR_sims/"
-        self.plot_path = '/data/runzezhang/result//GR_sims/plot/'
+        self.base_path = "/data/runzezhang/result/GR_sims/"
+        self.plot_path = '/data/runzezhang/result/GR_sims/plot/'
 
         # self.base_path = "/data/runzezhang/result/TN_box/"
         # self.plot_path = '/data/runzezhang/result/TN_box/plot/'
