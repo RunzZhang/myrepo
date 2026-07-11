@@ -932,7 +932,7 @@ class SN():
 
         fig, ax = plt.subplots(1, 4, figsize=(23, 4))
         print("counts pdf", hist_array_primary[0][1][:10])
-        ax[0].plot(hist_array_primary[0][1],hist_array_primary[0][1])
+        ax[0].plot(hist_array_primary[0][1][:-1],hist_array_primary[0][0])
         ax[0].set_xlabel("Energy [keV]")
         ax[0].set_ylabel("Counts")
         ax[0].set_xlim(0,1)
