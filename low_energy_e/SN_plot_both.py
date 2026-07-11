@@ -941,7 +941,7 @@ class SN():
         ax[1].set_ylabel("Cumulative Counts")
         ax[1].set_xlim(0, 1)
 
-        ax[2].plot(hist_array_primary[0][1], energy_deposit_list_primary)
+        ax[2].plot(hist_array_primary[0][1][:-1], energy_deposit_list_primary)
         ax[2].set_xlabel("Energy [keV]")
         ax[2].set_ylabel("Energy deposit per bin [keV]")
         ax[2].set_xlim(0, 1)
