@@ -943,7 +943,7 @@ class SN():
         ax[0,1].set_xlabel("Energy [eV]")
         ax[0,1].set_ylabel("Cumulative Counts")
         ax[0,1].set_xlim(0, 1000)
-        ax[0, 2].set_title("CDF Per Interaction")
+        ax[0, 1].set_title("CDF Per Interaction")
 
         ax[0,2].plot(hist_array_primary[0][1][:-1], energy_deposit_list_primary)
         ax[0,2].set_xlabel("Energy [keV]")
