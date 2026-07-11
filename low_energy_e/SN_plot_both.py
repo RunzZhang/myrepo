@@ -936,7 +936,7 @@ class SN():
         ax[0].set_ylabel("Counts")
         ax[0].set_xlim(0,1)
 
-        ax[1].plot(hist_array_primary[0][1], cumulative_threshold_per_scatter_array_primary[0])
+        ax[1].plot(hist_array_primary[0][1][:-1], cumulative_threshold_per_scatter_array_primary[0])
         ax[1].set_xlabel("Energy [keV]")
         ax[1].set_ylabel("Cumulative Counts")
         ax[1].set_xlim(0, 1)
