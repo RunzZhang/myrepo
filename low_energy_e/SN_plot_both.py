@@ -930,27 +930,47 @@ class SN():
                        hist_array_primary, cumulative_threshold_per_scatter_array_primary[0],
                        cumulative_threshold_array_primary[0]]
 
-        fig, ax = plt.subplots(1, 4, figsize=(23, 4))
+        fig, ax = plt.subplots(2, 4, figsize=(25, 10))
         print("counts pdf", hist_array_primary[0][0][:10])
-        ax[0].plot(hist_array_primary[0][1][:-1],hist_array_primary[0][0])
-        ax[0].set_xlabel("Energy [keV]")
-        ax[0].set_ylabel("Counts")
-        ax[0].set_xlim(0,1)
+        ax[0,0].plot(hist_array_primary[0][1][:-1],hist_array_primary[0][0])
+        ax[0,0].set_xlabel("Energy [keV]")
+        ax[0,0].set_ylabel("Counts")
+        ax[0,0].set_xlim(0,1)
 
-        ax[1].plot(hist_array_primary[0][1][:-1], cumulative_threshold_per_scatter_array_primary[0])
-        ax[1].set_xlabel("Energy [keV]")
-        ax[1].set_ylabel("Cumulative Counts")
-        ax[1].set_xlim(0, 1)
+        ax[0,1].plot(hist_array_primary[0][1][:-1], cumulative_threshold_per_scatter_array_primary[0])
+        ax[0,1].set_xlabel("Energy [keV]")
+        ax[0,1].set_ylabel("Cumulative Counts")
+        ax[0,1].set_xlim(0, 1)
 
-        ax[2].plot(hist_array_primary[0][1][:-1], energy_deposit_list_primary)
-        ax[2].set_xlabel("Energy [keV]")
-        ax[2].set_ylabel("Energy deposit per bin [keV]")
-        ax[2].set_xlim(0, 1)
+        ax[0,2].plot(hist_array_primary[0][1][:-1], energy_deposit_list_primary)
+        ax[0,2].set_xlabel("Energy [keV]")
+        ax[0,2].set_ylabel("Energy deposit per bin [keV]")
+        ax[0,2].set_xlim(0, 1)
 
-        ax[3].plot(hist_array_primary[0][1][:-1], cumulative_threshold_array_primary[0])
-        ax[3].set_xlabel("Energy [keV]")
-        ax[3].set_ylabel("Cumulative Energy Deposit [keV]")
-        ax[3].set_xlim(0, 1)
+        ax[0,3].plot(hist_array_primary[0][1][:-1], cumulative_threshold_array_primary[0])
+        ax[0,3].set_xlabel("Energy [keV]")
+        ax[0,3].set_ylabel("Cumulative Energy Deposit [keV]")
+        ax[0,3].set_xlim(0, 1)
+
+        ax[1,0].plot(hist_array_all[0][1][:-1], hist_array_all[0][0])
+        ax[1,0].set_xlabel("Energy [keV]")
+        ax[1,0].set_ylabel("Counts")
+        ax[1,0].set_xlim(0, 1)
+
+        ax[1,1].plot(hist_array_all[0][1][:-1], cumulative_threshold_per_scatter_array_all[0])
+        ax[1,1].set_xlabel("Energy [keV]")
+        ax[1,1].set_ylabel("Cumulative Counts")
+        ax[1,1].set_xlim(0, 1)
+
+        ax[1,2].plot(hist_array_all[0][1][:-1], energy_deposit_list_all)
+        ax[1,2].set_xlabel("Energy [keV]")
+        ax[1,2].set_ylabel("Energy deposit per bin [keV]")
+        ax[1,2].set_xlim(0, 1)
+
+        ax[1,3].plot(hist_array_all[0][1][:-1], cumulative_threshold_array_all[0])
+        ax[1,3].set_xlabel("Energy [keV]")
+        ax[1,3].set_ylabel("Cumulative Energy Deposit [keV]")
+        ax[1,3].set_xlim(0, 1)
 
         plt.savefig(self.plot_path+"output_spectrum.pdf")
 
