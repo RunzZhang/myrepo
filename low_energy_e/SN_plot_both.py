@@ -339,20 +339,19 @@ class SN():
         # MHz
         Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
         # ER_Ar = self.merge_df_primary[self.merged_df_primary["Volume"]=="LAr_phys"]["ER_near/eV"]/1000
-        ER_Ar = self.merged_df_phot[self.merged_df_phot["Volume"] == "LAr_phys"]["PreKinetic/MeV"] * 1000
+
+        ER_Ar = \
+            self.merged_df_primary[
+                (self.merged_df_all["Volume"] == "LAr_phys")][
+                "ER_near/eV"]
         ER_Ar_photo_total = \
             self.merged_df_all[
-                (self.merged_df_all["Volume"] == "LAr_phys") & (self.merged_df_all["Process"] == "phot")][
-                "ER_near/eV"] / 1000
-        low_photo = self.merged_df_all[
-                (self.merged_df_all["Volume"] == "LAr_phys") & (self.merged_df_all["Process"] == "phot")
-                &(self.merged_df_all[
-                "ER_near/eV"]<4000)]
-        print("low photo list", low_photo)
+                (self.merged_df_all["Volume"] == "LAr_phys") ][
+                "ER_near/eV"]
         ER_sum = \
             self.merged_df_all[
                 (self.merged_df_all["Volume"] == "LAr_phys") & (self.merged_df_all["Process"] == "compt")][
-                "ER_near/eV"] / 1000
+                "ER_near/eV"]
 
         # ER_sum = \
         #     self.merged_df_all[
@@ -365,9 +364,9 @@ class SN():
         print(len(ER_sum), len(self.merged_df_all["ER_near/eV"]))
         hist_array = [None] * 3
 
-        hist_array[0] = np.histogram(ER_Ar, bins=300, range=(-1, 1200))
-        hist_array[1] = np.histogram(ER_Ar_photo_total, bins=300, range=(-1, 1200))
-        hist_array[2] = np.histogram(ER_sum, bins=300, range=(-1, 1200))
+        hist_array[0] = np.histogram(ER_Ar, bins=1200, range=(-1, 1200))
+        hist_array[1] = np.histogram(ER_Ar_photo_total, bins=1200, range=(-1, 1200))
+        hist_array[2] = np.histogram(ER_sum, bins=1200, range=(-1, 1200))
 
         fig, ax = plt.subplots(1, 3, figsize=(16, 4))
         # ax[0].bar(hist_array[0][1][:-1], Rate_factor * hist_array[0][0], width=np.diff(hist_array[0][1]),
@@ -377,8 +376,8 @@ class SN():
 
         ax[0].plot(hist_array[0][1], Rate_factor * histarray0_1d)
         bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
-        ax[0].set_xlabel("ER/keV per photo in LAr")
-        ax[0].set_ylabel(" Rate mHz/(bin[" + str(bin0_len) + " keV])")
+        ax[0].set_xlabel("ER/eV per photo in LAr")
+        ax[0].set_ylabel(" Rate mHz/(bin[" + str(bin0_len) + " eV])")
         # ax[0].ticklabel_format(axis="y",style="sci", scilimits=(0, 0) )
         ax[0].set_yscale("log")
         ax[0].minorticks_on()
@@ -390,9 +389,9 @@ class SN():
         #           edgecolor="black")
         histarray1_1d = np.insert(hist_array[1][0], 0, 0)
         ax[1].plot(hist_array[1][1], Rate_factor * histarray1_1d)
-        ax[1].set_xlabel("ER/keV per photo in LAr")
+        ax[1].set_xlabel("ER/eV per photo in LAr")
         bin1_len = int(hist_array[1][1][1] - hist_array[1][1][0])
-        ax[1].set_ylabel("Rate mHz/([" + str(bin1_len) + " keV])")
+        ax[1].set_ylabel("Rate mHz/([" + str(bin1_len) + " eV])")
         ax[1].set_yscale("log")
         # ax[1].ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
         # ax[1].grid(True)
@@ -405,9 +404,9 @@ class SN():
         #           edgecolor="black")
         histarray2_1d = np.insert(hist_array[2][0], 0, 0)
         ax[2].plot(hist_array[2][1], Rate_factor *histarray2_1d)
-        ax[2].set_xlabel("ER/keV per deposition ")
+        ax[2].set_xlabel("ER/eV per deposition ")
         bin2_len = int(hist_array[2][1][1] - hist_array[2][1][0])
-        ax[2].set_ylabel("Rate mHz/([" + str(bin2_len) + " keV])")
+        ax[2].set_ylabel("Rate mHz/([" + str(bin2_len) + " eV])")
         # ax[2].ticklabel_format(axis="y", style="sci", scilimits=(0, 0))
         ax[2].set_yscale("log")
         # ax[2].grid(True)
