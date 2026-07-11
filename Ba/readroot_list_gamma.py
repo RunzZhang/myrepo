@@ -805,6 +805,14 @@ class ReadRoot():
         self.df[self.df["Event"] == 2930].to_csv(self.base_path + "LAr_ER_2930.csv")
 
 
+        # add shell information for both compt and photo
+        # xenon, K, L, M, if energy > K shell, evenly distributed KLM
+        # if energy between K and L, evenly LM
+        # if energy between L and M , only M
+        # prohibited in energy less than M
+        # I think for good statistics, process this after get the histogram of xenon absorption
+        # for energy a factor of 1/2,1/3 or 1
+
         self.df.to_csv(self.info_phot_path, index=False)
 
     def exclude_common(self,df1, df2): # exclude same ["Event"]

@@ -6,8 +6,8 @@ import os, time
 # change the mac name and chunk folder to save the macro configuration
 class ReadRoot:
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/"
-        self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
+        self.base_path = "/data/runzezhang/result//GR_sims/"
+        self.plot_path = '/data/runzezhang/result//GR_sims/plot/'
 
         # self.base_path = "/data/runzezhang/result/TN_box/"
         # self.plot_path = '/data/runzezhang/result/TN_box/plot/'
@@ -26,7 +26,7 @@ class ReadRoot:
         # self.signal_path_mid = self.base_path + self.signal_mid
         # self.signal_path = self.base_path + self.signal
 
-        self.filepath = self.base_path + "dmx_Cs_xe_1E5.root"
+        self.filepath = self.base_path + " dmx_Cs_5E6.root"
         # self.filepath = self.base_path + "dmx_AmLi.root" # test
         self.tree_name = "tree"  # Assuming your TTree is named "tree"
 
@@ -39,7 +39,7 @@ class ReadRoot:
 
     def chunk_and_write_root(self, num_chunks=20, output_dir=None):
         if output_dir is None:
-            output_dir = os.path.join(self.base_path, "chunked_root_files_Cs_ar_1E5")
+            output_dir = os.path.join(self.base_path, "chunked_root_files_Cs_5E6")
         os.makedirs(output_dir, exist_ok=True)
 
         with uproot.open(self.filepath) as file:
@@ -95,4 +95,4 @@ class ReadRoot:
 # Example usage:
 if __name__ == "__main__":
     reader = ReadRoot()
-    reader.chunk_and_write_root(num_chunks=1)
+    reader.chunk_and_write_root(num_chunks=50)
