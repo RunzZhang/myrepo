@@ -1062,7 +1062,6 @@ class SN():
             ax[0, 0].set_title("PDF Per Interaction Primary")
             ax[0, 0].set_yscale("log")
 
-
             ax[0, 1].plot(hist_array_primary[0][1][:-1], cumulative_threshold_per_scatter_array_primary[0])
             ax[0, 1].set_xlabel("Energy [keV]")
             ax[0, 1].set_ylabel("Cumulative Counts")
