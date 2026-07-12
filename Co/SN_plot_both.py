@@ -1018,7 +1018,7 @@ class SN():
 
         hist_array_all = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
-        hist_array_all[0] = np.histogram(ER_Ar_all, bins=14000, range=(0, 12400))
+        hist_array_all[0] = np.histogram(ER_Ar_all, bins=14000, range=(0, 1400))
         # hist_array_all[0] = np.histogram(ER_Ar_all, bins=300, range=(0, 1200))
         # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
         # we need 0.1 keV, and this gives us 4800 bins
