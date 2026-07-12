@@ -26,7 +26,7 @@ class ReadRoot:
         # self.signal_path_mid = self.base_path + self.signal_mid
         # self.signal_path = self.base_path + self.signal
 
-        self.filepath = self.base_path + "dmx_Ba_1E6_purexenon.root"
+        self.filepath = self.base_path + "dmx_Ba_1E6_pureargon.root"
         # self.filepath = self.base_path + "dmx_AmLi.root" # test
         self.tree_name = "tree"  # Assuming your TTree is named "tree"
 
@@ -39,7 +39,7 @@ class ReadRoot:
 
     def chunk_and_write_root(self, start_chunk_cum = 0,num_chunks=20, output_dir=None):
         if output_dir is None:
-            output_dir = os.path.join(self.base_path, "chunked_root_files_Ba_1E6_purexenon")
+            output_dir = os.path.join(self.base_path, "chunked_root_files_Ba_1E6_pureargon")
         os.makedirs(output_dir, exist_ok=True)
 
         with uproot.open(self.filepath) as file:
