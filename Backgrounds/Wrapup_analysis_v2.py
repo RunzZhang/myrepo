@@ -1970,7 +1970,7 @@ class integrated_analysis():
 
         plt.clf()
         # self.Qseitz_compound_xe_plot()
-        # self.Ratio_plot()
+        self.Ratio_plot()
         self.time_plot()
     def Qseitz_compound_xe_plot(self):
         fig, ax = plt.subplots(1, 2, figsize=(16, 6))
