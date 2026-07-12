@@ -2099,6 +2099,9 @@ class integrated_analysis():
         ax[0].axhline(
             y= (self.Cs_Rate_factor * self.Cs_counts_energy_cum_bin[0])/(self.Co_Rate_factor * self.Co_counts_energy_cum_bin[0]),
             label='sim per keV',color = 'g')
+
+        print("factor of scattering", (self.Cs_Rate_factor*self.Cs_counts_cum_bin[0]/(self.Co_Rate_factor*self.Co_counts_cum_bin[0])))
+        print("factor of phot", (self.Cs_Rate_factor * self.Cs_counts_energy_cum_bin[0])/(self.Co_Rate_factor * self.Co_counts_energy_cum_bin[0]))
         ax[0].axhline(
             y=(
                         self.Cs_doped_Rate_factor * self.Cs_doped_counts_cum_bin[0])/(self.Co_doped_Rate_factor * self.Co_doped_counts_cum_bin[0]),
