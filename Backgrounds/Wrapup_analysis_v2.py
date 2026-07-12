@@ -13,7 +13,7 @@ class integrated_analysis():
         self.output_path = '/data/runzezhang/result/gamma_rejection/'
         self.plot_path = '/data/runzezhang/result/gamma_rejection/plot/'
         self.Co_sim_path  ='/data/runzezhang/result/GR_sims/Co_output_5E6.pkl'
-        self.Cs_sim_path = '/data/runzezhang/result/GR_sims/Cs_output.pkl'
+        self.Cs_sim_path = '/data/runzezhang/result/GR_sims/Cs_output_5E6.pkl'
         self.Cf_simA_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_A.pkl'
         # self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_B.pkl'
         self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density095_config_B.pkl'
