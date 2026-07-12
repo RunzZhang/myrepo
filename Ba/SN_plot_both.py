@@ -99,7 +99,7 @@ class SN():
         self.gamma_rate = 2.58*1.67e4 # /s
 
 
-        self.G4_events_gamma =  5E6 # only 50 chunks
+        self.G4_events_gamma =  1E6 # only 50 chunks
         # self.G4_events_gamma = 1E8  # only 50 chunks
         self.G4_phot_gamma = 1E8
         self.ambient_bubble = 5 # /h
