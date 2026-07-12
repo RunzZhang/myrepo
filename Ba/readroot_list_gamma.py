@@ -137,11 +137,11 @@ class ReadRoot():
         # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
         # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
 
-        # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_pureargon/"
-        # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_pureargon/"
+        self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_pureargon/"
+        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_pureargon/"
 
-        self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
-        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
+        # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
+        # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
 
         self.plot_path = '/data/runzezhang/result/GR_sims/plot/'
 
@@ -229,9 +229,9 @@ class ReadRoot():
         self.modify_df()
 
         # find all ER and save ER into csv
-        self.allER()
-        self.ER_distribution_primary_v2()
-        self.ER_distribution_counts_v2()
+        # self.allER()
+        # self.ER_distribution_primary_v2()
+        # self.ER_distribution_counts_v2()
         # self.ER_distribution_primary()
         # self.ER_distribution_counts()
 
@@ -239,7 +239,7 @@ class ReadRoot():
         # self.allNR()
 
         #xenon doping
-        # self.xenon_doped_phot()
+        self.xenon_doped_phot()
 
 
 
