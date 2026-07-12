@@ -786,7 +786,7 @@ class ReadRoot():
         print("columns", self.df.columns)
 
         # print("low energy",self.df[(self.df["Volume"]=="LAr_phys")&(self.df["PreKinetic/MeV"]<0.006)][["Event"]])
-        print("compt", self.df[(self.df["Volume"]=="LAr_phys")&(self.df["Process"]=="compt")])
+        print("compt", self.df[(self.df["Process"]=="compt")])
         self.df[self.df["Event"] == 2930].to_csv(self.base_path + "LAr_ER_2930.csv")
 
 
