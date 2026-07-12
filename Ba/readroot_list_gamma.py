@@ -137,11 +137,11 @@ class ReadRoot():
         # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
         # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
 
-        self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_pureargon/"
-        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_pureargon/"
+        # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_pureargon/"
+        # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_pureargon/"
 
-        # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
-        # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
+        self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
+        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
 
         self.plot_path = '/data/runzezhang/result/GR_sims/plot/'
 
@@ -229,9 +229,9 @@ class ReadRoot():
         self.modify_df()
 
         # find all ER and save ER into csv
-        # self.allER()
-        # self.ER_distribution_primary_v2()
-        # self.ER_distribution_counts_v2()
+        self.allER()
+        self.ER_distribution_primary_v2()
+        self.ER_distribution_counts_v2()
         # self.ER_distribution_primary()
         # self.ER_distribution_counts()
 
@@ -239,7 +239,7 @@ class ReadRoot():
         # self.allNR()
 
         #xenon doping
-        self.xenon_doped_phot()
+        # self.xenon_doped_phot()
 
 
 
@@ -643,12 +643,12 @@ class ReadRoot():
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
         print("all len", len(self.mom_gamma), len(self.output_df))
         self.output_df.to_csv(self.info_all_path, index=False)
-        # file2930 = self.df[self.df["Event"] == 2930]
-        # columns_to_round1 = ["X/mm","Y/mm","Z/mm",]
-        # columns_to_round6 = ["PreKinetic/MeV", "PostKinetic/MeV", "Recoiled/MeV"]
-        # file2930[columns_to_round1] = file2930[columns_to_round1].round(1)
-        # file2930[columns_to_round6] = file2930[columns_to_round6].round(6)
-        # file2930.to_csv(self.base_path + "LAr_ER_2930.csv")
+        file514 = self.df[self.df["Event"] == 514]
+        columns_to_round1 = ["X/mm","Y/mm","Z/mm",]
+        columns_to_round6 = ["PreKinetic/MeV", "PostKinetic/MeV", "Recoiled/MeV"]
+        file514[columns_to_round1] = file514[columns_to_round1].round(1)
+        file514[columns_to_round6] = file514[columns_to_round6].round(6)
+        file514.to_csv(self.base_path + "LAr_ER_514.csv")
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
 
     def delta_e_distribution(self):
