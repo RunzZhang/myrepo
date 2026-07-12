@@ -872,7 +872,7 @@ class SN():
         print(hist_array[0][1][1] - hist_array[0][1][0], "keV width")
         plt.savefig(self.plot_path + "Co_cumulative_counts_function.pdf")
 
-    def write_sims_results(self, plot=True):
+    def write_sims_results_thesis(self, plot=True):
         # rate factor in mHz
 
         Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
@@ -941,7 +941,8 @@ class SN():
               cumulative_threshold_per_scatter_array_primary[0][0])
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
 
-
+        energy_deposit_list_primary_rate = [Rate_factor * i for i in energy_deposit_list_primary]
+        energy_deposit_list_all_rate = [Rate_factor * i for i in energy_deposit_list_all]
         # plot the graph
         if plot:
             fig, ax = plt.subplots(2, 4, figsize=(25, 10))
@@ -960,7 +961,7 @@ class SN():
             ax[0, 1].set_title("CDF Per Interaction Primary")
             ax[0, 1].set_yscale("log")
 
-            ax[0, 2].plot(hist_array_primary[0][1][:-1], Rate_factor*energy_deposit_list_primary)
+            ax[0, 2].plot(hist_array_primary[0][1][:-1], energy_deposit_list_primary_rate)
             ax[0, 2].set_xlabel("Energy [keV]")
             ax[0, 2].set_ylabel("Energy deposit per bin [keV]")
             ax[0, 2].set_xlim(0, 1400)
@@ -988,7 +989,7 @@ class SN():
             ax[1, 1].set_title("CDF Per Interaction All")
             ax[1, 1].set_yscale("log")
 
-            ax[1, 2].plot(hist_array_all[0][1][:-1], Rate_factor*energy_deposit_list_all)
+            ax[1, 2].plot(hist_array_all[0][1][:-1], energy_deposit_list_all_rate)
             ax[1, 2].set_xlabel("Energy [keV]")
             ax[1, 2].set_ylabel("Energy deposit per bin [keV]")
             ax[1, 2].set_xlim(0, 1400)
