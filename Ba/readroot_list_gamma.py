@@ -137,8 +137,8 @@ class ReadRoot():
         # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
         # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
 
-        self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_pureargon/"
-        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_pureargon/"
+        self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_pureargon/"
+        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_pureargon/"
 
         # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
         # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
