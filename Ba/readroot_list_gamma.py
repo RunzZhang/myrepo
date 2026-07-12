@@ -582,28 +582,18 @@ class ReadRoot():
         high_NRER = []
 
 
-        self.mom_gamma_compt = self.df[
+        self.mom_gamma= self.df[
             ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-                    (self.df['Process'] == "compt") ) & (
+                    (self.df['Process'] == "compt")| (self.df['Process'] == "phot")) & (
                     self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
-        self.mom_gamma_compt_group = self.mom_gamma_compt.groupby("Event")
+        self.mom_gamma_group = self.mom_gamma.groupby("Event")
 
 
-        self.mom_gamma_compt["ER_near/eV"] = (self.mom_gamma_compt["PreKinetic/MeV"] -self.mom_gamma_compt["PostKinetic/MeV"])* 1e6
+        self.mom_gamma["ER_near/eV"] = (self.mom_gamma["PreKinetic/MeV"] -self.mom_gamma["PostKinetic/MeV"])* 1e6
 
 
 
-        self.mom_gamma_phot = self.df[
-            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-                     (self.df['Process'] == "phot")) & (
-                    self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
-        self.mom_gamma_phot_group = self.mom_gamma_phot.groupby("Event")
 
-        self.mom_gamma_phot["ER_near/eV"] = (self.mom_gamma_phot["PreKinetic/MeV"] - self.mom_gamma_phot[
-            "PostKinetic/MeV"]) * 1e6
-
-
-        self.mom_gamma = pd.concat([self.mom_gamma_compt,self.mom_gamma_phot], ignore_index=True)
         self.mom_gamma["R/mm"] =0
         self.mom_gamma["Multiplicity"] = 0
 
@@ -631,23 +621,15 @@ class ReadRoot():
         print(self.electron_recoiled_event_list[:3])
         high_NRER = []
 
-        self.mom_gamma_compt = self.df[
+        self.mom_gamma= self.df[
             ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-                (self.df['Process'] == "compt"))  & (self.df["Event"].isin(self.electron_recoiled_event_list))]
-        self.mom_gamma_compt_group = self.mom_gamma_compt.groupby("Event")
+                (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))  & (self.df["Event"].isin(self.electron_recoiled_event_list))]
+        self.mom_gamma_group = self.mom_gamma.groupby("Event")
 
-        self.mom_gamma_compt["ER_near/eV"] = (self.mom_gamma_compt["PreKinetic/MeV"] - self.mom_gamma_compt[
+        self.mom_gamma["ER_near/eV"] = (self.mom_gamma["PreKinetic/MeV"] - self.mom_gamma[
             "PostKinetic/MeV"]) * 1e6
 
-        self.mom_gamma_phot = self.df[
-            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-                (self.df['Process'] == "phot")) &  (self.df["Event"].isin(self.electron_recoiled_event_list))]
-        self.mom_gamma_phot_group = self.mom_gamma_phot.groupby("Event")
 
-        self.mom_gamma_phot["ER_near/eV"] = (self.mom_gamma_phot["PreKinetic/MeV"] - self.mom_gamma_phot[
-            "PostKinetic/MeV"]) * 1e6
-
-        self.mom_gamma = pd.concat([self.mom_gamma_compt, self.mom_gamma_phot], ignore_index=True)
         self.mom_gamma["R/mm"] = 0
         self.mom_gamma["Multiplicity"] = 0
 
