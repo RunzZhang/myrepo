@@ -137,21 +137,24 @@ class ReadRoot():
         # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
         # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
 
-        self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
-        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
+        self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_purexenon/"
+        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_purexenon/"
+
+        # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
+        # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
 
         self.plot_path = '/data/runzezhang/result/GR_sims/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        # self.main_body(1)
-        for i in range(1,56):
-        # for i in range(26, 54):
-            try:
-        # for i in range(1, 11):
-                self.main_body(i)
-            except Exception as e:
-                print(e)
-                continue
+        self.main_body(1)
+        # for i in range(1,56):
+        # # for i in range(26, 54):
+        #     try:
+        # # for i in range(1, 11):
+        #         self.main_body(i)
+        #     except Exception as e:
+        #         print(e)
+        #         continue
     def main_body(self,i):
         print(i)
         self.ini_path = self.base_path+ f"Co_gamma_1E7_ini_part{i}.csv"
@@ -226,9 +229,9 @@ class ReadRoot():
         self.modify_df()
 
         # find all ER and save ER into csv
-        self.allER()
-        self.ER_distribution_primary_v2()
-        self.ER_distribution_counts_v2()
+        # self.allER()
+        # self.ER_distribution_primary_v2()
+        # self.ER_distribution_counts_v2()
         # self.ER_distribution_primary()
         # self.ER_distribution_counts()
 
@@ -236,7 +239,7 @@ class ReadRoot():
         # self.allNR()
 
         #xenon doping
-        # self.xenon_doped_phot()
+        self.xenon_doped_phot()
 
 
 
