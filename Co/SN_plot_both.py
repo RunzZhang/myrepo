@@ -134,7 +134,7 @@ class SN():
         # self.read_Ar_multiplicity()
         # ER distribution per row
         # self.read_ER_Ar_CF()
-        self.read_ER_Ar_CF_per_deposit_rate()
+        # self.read_ER_Ar_CF_per_deposit_rate()
         # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
         # self.read_ER_CF_per_deposit_rate_cumulative()
         # self.read_ER_Ar_CF_1d_sum()
@@ -1048,7 +1048,7 @@ class SN():
 
         print("all vs primary counts", cumulative_threshold_per_scatter_array_all[0][0],cumulative_threshold_per_scatter_array_primary[0][0])
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
-        with open("/data/runzezhang/result/GR_sims/Ba_output_5E6.pkl", "wb") as f:
+        with open("/data/runzezhang/result/GR_sims/Co_output_5E6.pkl", "wb") as f:
             pickle.dump(output_list, f)
 
         # plot the graph
@@ -1112,7 +1112,7 @@ class SN():
             ax[1, 3].set_xlim(0, 1000)
             ax[1, 3].set_yscale("log")
 
-            plt.savefig(self.plot_path + "Ba_output_spectrum.pdf")
+            plt.savefig(self.plot_path + "Co_output_spectrum.pdf")
 
     def write_doped_sims_results(self):
         # rate factor in mHz
