@@ -787,6 +787,9 @@ class ReadRoot():
 
         # print("low energy",self.df[(self.df["Volume"]=="LAr_phys")&(self.df["PreKinetic/MeV"]<0.006)][["Event"]])
         print("compt", self.df[(self.df["Process"]=="compt")])
+        self.doped_post_analysis = self.df.copy()
+        self.doped_post_analysis["E_binding/MeV"]  = self.doped_post_analysis["PreKinetic/MeV"] -self.doped_post_analysis["PostKinetic/MeV"]-self.doped_post_analysis["Recoiled/MeV"]
+        print("phot", self.df[(self.df["Process"]=="photo")])
         self.df[self.df["Event"] == 2930].to_csv(self.base_path + "LAr_ER_2930.csv")
 
 
