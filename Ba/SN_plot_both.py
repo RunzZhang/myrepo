@@ -148,6 +148,7 @@ class SN():
         # self.gamma_rejection_rate_vs_Setiz()
 
         self.write_sims_results()
+        self.write_sims_results_thesis()
 
 
         #doped analyasis
@@ -870,16 +871,18 @@ class SN():
         # ax[1].set_yscale("log")
         print(hist_array[0][1][1] - hist_array[0][1][0], "keV width")
         plt.savefig(self.plot_path + "Co_cumulative_counts_function.pdf")
-    def plot_sims_results(self):
+
+    def write_sims_results_thesis(self, plot=True):
         # rate factor in mHz
 
         Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
         ER_Ar_primary = self.merged_df_primary[self.merged_df_primary["Volume"] == "LAr_phys"][
-                            "ER_near/eV"] /1000 # in keV
+                            "ER_near/eV"] / 1000  # in keV
 
         hist_array_primary = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
-        hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=10000, range=(0, 1000))
+        # hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=12000, range=(0, 1200))
+        hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=250, range=(0, 1000))
         # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
         # we need 0.1 keV, and this gives us 4800 bins
 
@@ -898,15 +901,16 @@ class SN():
 
         cumulative_threshold_array_primary[0] = np.array(
             [sum(energy_deposit_list_primary[i:]) for i in range(len(energy_deposit_list_primary))])
-        print("total count", cumulative_threshold_per_scatter_array_primary[0][0],
+        print("total count* energy Co", cumulative_threshold_per_scatter_array_primary[0][0],
               cumulative_threshold_per_scatter_array_primary[0][0] / cumulative_threshold_array_primary[0][0])
 
         ER_Ar_all = self.merged_df_all[self.merged_df_all["Volume"] == "LAr_phys"][
-                        "ER_near/eV"]/1000  # in keV
+                        "ER_near/eV"] / 1000  # in keV
 
         hist_array_all = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
-        hist_array_all[0] = np.histogram(ER_Ar_all, bins=10000, range=(0, 1000))
+        # hist_array_all[0] = np.histogram(ER_Ar_all, bins=12000, range=(0, 1200))
+        hist_array_all[0] = np.histogram(ER_Ar_all, bins=250, range=(0, 1000))
         # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
         # we need 0.1 keV, and this gives us 4800 bins
 
@@ -925,7 +929,7 @@ class SN():
 
         cumulative_threshold_array_all[0] = np.array(
             [sum(energy_deposit_list_all[i:]) for i in range(len(energy_deposit_list_all))])
-        print("total count", cumulative_threshold_per_scatter_array_all[0][0],
+        print("total count* energy Co", cumulative_threshold_per_scatter_array_all[0][0],
               cumulative_threshold_per_scatter_array_all[0][0] / cumulative_threshold_array_all[0][0])
 
         output_list = [Rate_factor, hist_array_all, cumulative_threshold_per_scatter_array_all[0],
@@ -933,54 +937,72 @@ class SN():
                        hist_array_primary, cumulative_threshold_per_scatter_array_primary[0],
                        cumulative_threshold_array_primary[0]]
 
-        fig, ax = plt.subplots(2, 4, figsize=(25, 10))
-        print("counts pdf", hist_array_primary[0][0][:10])
-        ax[0,0].plot(hist_array_primary[0][1][:-1],hist_array_primary[0][0])
-        ax[0,0].set_xlabel("Energy [keV]")
-        ax[0,0].set_ylabel("Counts")
-        ax[0,0].set_xlim(0,1000)
-        ax[0, 0].set_title("PDF Per Interaction")
+        print("all vs primary counts", cumulative_threshold_per_scatter_array_all[0][0],
+              cumulative_threshold_per_scatter_array_primary[0][0])
 
 
-        ax[0,1].plot(hist_array_primary[0][1][:-1], cumulative_threshold_per_scatter_array_primary[0])
-        ax[0,1].set_xlabel("Energy [keV]")
-        ax[0,1].set_ylabel("Cumulative Counts")
-        ax[0,1].set_xlim(0, 1000)
-        ax[0, 1].set_title("CDF Per Interaction")
+        # plot the graph
+        if plot:
+            fig, ax = plt.subplots(2, 4, figsize=(25, 10))
+            print("counts pdf", hist_array_primary[0][0][:10])
+            ax[0, 0].plot(hist_array_primary[0][1][:-1], Rate_factor*hist_array_primary[0][0])
+            ax[0, 0].set_xlabel("Energy [keV]")
+            ax[0, 0].set_ylabel("Counts")
+            ax[0, 0].set_xlim(0, 1000)
+            ax[0, 0].set_title("PDF Per Interaction Primary")
+            ax[0, 0].set_yscale("log")
 
-        ax[0,2].plot(hist_array_primary[0][1][:-1], energy_deposit_list_primary)
-        ax[0,2].set_xlabel("Energy [keV]")
-        ax[0,2].set_ylabel("Energy deposit per bin [keV]")
-        ax[0,2].set_xlim(0, 1000)
-        ax[0, 2].set_title("PDF Per Energy Deposit")
+            ax[0, 1].plot(hist_array_primary[0][1][:-1], Rate_factor*cumulative_threshold_per_scatter_array_primary[0])
+            ax[0, 1].set_xlabel("Energy [keV]")
+            ax[0, 1].set_ylabel("Cumulative Counts")
+            ax[0, 1].set_xlim(0, 1000)
+            ax[0, 1].set_title("CDF Per Interaction Primary")
+            ax[0, 1].set_yscale("log")
 
-        ax[0,3].plot(hist_array_primary[0][1][:-1], cumulative_threshold_array_primary[0])
-        ax[0,3].set_xlabel("Energy [keV]")
-        ax[0,3].set_ylabel("Cumulative Energy Deposit [keV]")
-        ax[0,3].set_xlim(0, 1000)
-        ax[0, 3].set_title("CDF Per Energy Deposit")
+            ax[0, 2].plot(hist_array_primary[0][1][:-1], Rate_factor*energy_deposit_list_primary)
+            ax[0, 2].set_xlabel("Energy [keV]")
+            ax[0, 2].set_ylabel("Energy deposit per bin [keV]")
+            ax[0, 2].set_xlim(0, 1000)
+            ax[0, 2].set_title("PDF Per Energy Deposit Primary")
+            ax[0, 2].set_yscale("log")
 
-        ax[1,0].plot(hist_array_all[0][1][:-1], hist_array_all[0][0])
-        ax[1,0].set_xlabel("Energy [keV]")
-        ax[1,0].set_ylabel("Counts")
-        ax[1,0].set_xlim(0, 1000)
+            ax[0, 3].plot(hist_array_primary[0][1][:-1], Rate_factor*cumulative_threshold_array_primary[0])
+            ax[0, 3].set_xlabel("Energy [keV]")
+            ax[0, 3].set_ylabel("Cumulative Energy Deposit [keV]")
+            ax[0, 3].set_xlim(0, 1000)
+            ax[0, 3].set_title("CDF Per Energy Deposit Primary")
+            ax[0, 3].set_yscale("log")
 
-        ax[1,1].plot(hist_array_all[0][1][:-1], cumulative_threshold_per_scatter_array_all[0])
-        ax[1,1].set_xlabel("Energy [keV]")
-        ax[1,1].set_ylabel("Cumulative Counts")
-        ax[1,1].set_xlim(0, 1000)
+            ax[1, 0].plot(hist_array_all[0][1][:-1], Rate_factor*hist_array_all[0][0])
+            ax[1, 0].set_xlabel("Energy [keV]")
+            ax[1, 0].set_ylabel("Counts")
+            ax[1, 0].set_xlim(0, 1000)
+            ax[1, 0].set_title("PDF Per Interaction All")
+            ax[1, 0].set_yscale("log")
 
-        ax[1,2].plot(hist_array_all[0][1][:-1], energy_deposit_list_all)
-        ax[1,2].set_xlabel("Energy [keV]")
-        ax[1,2].set_ylabel("Energy deposit per bin [keV]")
-        ax[1,2].set_xlim(0, 1000)
+            ax[1, 1].plot(hist_array_all[0][1][:-1], Rate_factor*cumulative_threshold_per_scatter_array_all[0])
+            ax[1, 1].set_xlabel("Energy [keV]")
+            ax[1, 1].set_ylabel("Cumulative Counts")
+            ax[1, 1].set_xlim(0, 1000)
+            ax[1, 1].set_title("CDF Per Interaction All")
+            ax[1, 1].set_yscale("log")
 
-        ax[1,3].plot(hist_array_all[0][1][:-1], cumulative_threshold_array_all[0])
-        ax[1,3].set_xlabel("Energy [keV]")
-        ax[1,3].set_ylabel("Cumulative Energy Deposit [keV]")
-        ax[1,3].set_xlim(0, 1000)
+            ax[1, 2].plot(hist_array_all[0][1][:-1], Rate_factor*energy_deposit_list_all)
+            ax[1, 2].set_xlabel("Energy [keV]")
+            ax[1, 2].set_ylabel("Energy deposit per bin [keV]")
+            ax[1, 2].set_xlim(0, 1000)
+            ax[1, 2].set_title("PDF Per Energy Deposit All")
+            ax[1, 2].set_yscale("log")
 
-        plt.savefig(self.plot_path+"Ba_output_spectrum.pdf")
+            ax[1, 3].plot(hist_array_all[0][1][:-1], Rate_factor*cumulative_threshold_array_all[0])
+            ax[1, 3].set_xlabel("Energy [keV]")
+            ax[1, 3].set_ylabel("Cumulative Energy Deposit [keV]")
+            ax[1, 3].set_title("CDF Per Energy Deposit All")
+            ax[1, 3].set_xlim(0, 1000)
+            ax[1, 3].set_yscale("log")
+
+            plt.savefig(self.plot_path + "Ba_output_spectrum_thesis.pdf")
+
     def write_sims_results(self, plot= True):
         # rate factor in mHz
 
