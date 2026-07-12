@@ -143,15 +143,15 @@ class ReadRoot():
         self.plot_path = '/data/runzezhang/result/GR_sims/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        # self.main_body(1)
-        for i in range(1,56):
-        # for i in range(26, 54):
-            try:
-        # for i in range(1, 11):
-                self.main_body(i)
-            except Exception as e:
-                print(e)
-                continue
+        self.main_body(1)
+        # for i in range(1,56):
+        # # for i in range(26, 54):
+        #     try:
+        # # for i in range(1, 11):
+        #         self.main_body(i)
+        #     except Exception as e:
+        #         print(e)
+        #         continue
     def main_body(self,i):
         print(i)
         self.ini_path = self.base_path+ f"Co_gamma_1E7_ini_part{i}.csv"
@@ -599,7 +599,7 @@ class ReadRoot():
 
         self.output_df = self.mom_gamma[
             ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
-
+        print("primary len", len(self.mom_gamma))
         self.output_df.to_csv(self.info_primary_path, index=False)
 
         self.df[self.df["Event"] == 6391].to_csv(self.base_path + "LAr_ER_abnormalER.csv")
@@ -638,7 +638,7 @@ class ReadRoot():
 
 
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
-
+        print("all len", len(self.mom_gamma))
         self.output_df.to_csv(self.info_all_path, index=False)
         # file2930 = self.df[self.df["Event"] == 2930]
         # columns_to_round1 = ["X/mm","Y/mm","Z/mm",]
