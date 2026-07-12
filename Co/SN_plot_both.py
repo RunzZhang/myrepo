@@ -990,7 +990,7 @@ class SN():
 
         hist_array_primary = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
-        hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=12000, range=(0, 1200))
+        hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=14000, range=(0, 1400))
         # hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=300, range=(0, 1200))
         # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
         # we need 0.1 keV, and this gives us 4800 bins
@@ -1018,7 +1018,7 @@ class SN():
 
         hist_array_all = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
-        hist_array_all[0] = np.histogram(ER_Ar_all, bins=12000, range=(0, 1200))
+        hist_array_all[0] = np.histogram(ER_Ar_all, bins=14000, range=(0, 12400))
         # hist_array_all[0] = np.histogram(ER_Ar_all, bins=300, range=(0, 1200))
         # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
         # we need 0.1 keV, and this gives us 4800 bins
@@ -1058,7 +1058,7 @@ class SN():
             ax[0, 0].plot(hist_array_primary[0][1][:-1], hist_array_primary[0][0])
             ax[0, 0].set_xlabel("Energy [keV]")
             ax[0, 0].set_ylabel("Counts")
-            ax[0, 0].set_xlim(0, 1000)
+            ax[0, 0].set_xlim(0, 1400)
             ax[0, 0].set_title("PDF Per Interaction Primary")
             ax[0, 0].set_yscale("log")
 
@@ -1066,42 +1066,42 @@ class SN():
             ax[0, 1].plot(hist_array_primary[0][1][:-1], cumulative_threshold_per_scatter_array_primary[0])
             ax[0, 1].set_xlabel("Energy [keV]")
             ax[0, 1].set_ylabel("Cumulative Counts")
-            ax[0, 1].set_xlim(0, 1000)
+            ax[0, 1].set_xlim(0, 1400)
             ax[0, 1].set_title("CDF Per Interaction Primary")
             ax[0, 1].set_yscale("log")
 
             ax[0, 2].plot(hist_array_primary[0][1][:-1], energy_deposit_list_primary)
             ax[0, 2].set_xlabel("Energy [keV]")
             ax[0, 2].set_ylabel("Energy deposit per bin [keV]")
-            ax[0, 2].set_xlim(0, 1000)
+            ax[0, 2].set_xlim(0, 1400)
             ax[0, 2].set_title("PDF Per Energy Deposit Primary")
             ax[0, 2].set_yscale("log")
 
             ax[0, 3].plot(hist_array_primary[0][1][:-1], cumulative_threshold_array_primary[0])
             ax[0, 3].set_xlabel("Energy [keV]")
             ax[0, 3].set_ylabel("Cumulative Energy Deposit [keV]")
-            ax[0, 3].set_xlim(0, 1000)
+            ax[0, 3].set_xlim(0, 1400)
             ax[0, 3].set_title("CDF Per Energy Deposit Primary")
             ax[0, 3].set_yscale("log")
 
             ax[1, 0].plot(hist_array_all[0][1][:-1], hist_array_all[0][0])
             ax[1, 0].set_xlabel("Energy [keV]")
             ax[1, 0].set_ylabel("Counts")
-            ax[1, 0].set_xlim(0, 1000)
+            ax[1, 0].set_xlim(0, 1400)
             ax[1, 0].set_title("PDF Per Interaction All")
             ax[1, 0].set_yscale("log")
 
             ax[1, 1].plot(hist_array_all[0][1][:-1], cumulative_threshold_per_scatter_array_all[0])
             ax[1, 1].set_xlabel("Energy [keV]")
             ax[1, 1].set_ylabel("Cumulative Counts")
-            ax[1, 1].set_xlim(0, 1000)
+            ax[1, 1].set_xlim(0, 1400)
             ax[1, 1].set_title("CDF Per Interaction All")
             ax[1, 1].set_yscale("log")
 
             ax[1, 2].plot(hist_array_all[0][1][:-1], energy_deposit_list_all)
             ax[1, 2].set_xlabel("Energy [keV]")
             ax[1, 2].set_ylabel("Energy deposit per bin [keV]")
-            ax[1, 2].set_xlim(0, 1000)
+            ax[1, 2].set_xlim(0, 1400)
             ax[1, 2].set_title("PDF Per Energy Deposit All")
             ax[1, 2].set_yscale("log")
 
@@ -1109,7 +1109,7 @@ class SN():
             ax[1, 3].set_xlabel("Energy [keV]")
             ax[1, 3].set_ylabel("Cumulative Energy Deposit [keV]")
             ax[1, 3].set_title("CDF Per Energy Deposit All")
-            ax[1, 3].set_xlim(0, 1000)
+            ax[1, 3].set_xlim(0, 1400)
             ax[1, 3].set_yscale("log")
 
             plt.savefig(self.plot_path + "Co_output_spectrum.pdf")
