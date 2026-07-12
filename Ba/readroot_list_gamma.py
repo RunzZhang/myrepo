@@ -654,17 +654,16 @@ class ReadRoot():
         self.output_df = self.mom_gamma[
             ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
 
-        self.output_df.to_csv(self.info_primary_path, index=False)
 
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
 
         self.output_df.to_csv(self.info_all_path, index=False)
-        file2930 = self.df[self.df["Event"] == 2930]
-        columns_to_round1 = ["X/mm","Y/mm","Z/mm",]
-        columns_to_round6 = ["PreKinetic/MeV", "PostKinetic/MeV", "Recoiled/MeV"]
-        file2930[columns_to_round1] = file2930[columns_to_round1].round(1)
-        file2930[columns_to_round6] = file2930[columns_to_round6].round(6)
-        file2930.to_csv(self.base_path + "LAr_ER_2930.csv")
+        # file2930 = self.df[self.df["Event"] == 2930]
+        # columns_to_round1 = ["X/mm","Y/mm","Z/mm",]
+        # columns_to_round6 = ["PreKinetic/MeV", "PostKinetic/MeV", "Recoiled/MeV"]
+        # file2930[columns_to_round1] = file2930[columns_to_round1].round(1)
+        # file2930[columns_to_round6] = file2930[columns_to_round6].round(6)
+        # file2930.to_csv(self.base_path + "LAr_ER_2930.csv")
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
 
     def delta_e_distribution(self):
