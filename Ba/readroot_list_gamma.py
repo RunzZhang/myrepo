@@ -229,7 +229,7 @@ class ReadRoot():
         self.modify_df()
 
         # find all ER and save ER into csv
-        # self.allER()
+        self.allER()
         # self.ER_distribution_primary_v2()
         # self.ER_distribution_counts_v2()
         # self.ER_distribution_primary()
