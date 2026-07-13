@@ -709,7 +709,7 @@ class ReadRoot():
         self.output_df = self.df.head(100)
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
         print("all len", len(self.mom_gamma), len(self.output_df))
-        self.output_df.to_csv("100line.csv", index=False)
+        self.output_df.to_csv(self.base_path+"100line.csv", index=False)
 
     def shell_vacancy_analysis(self):
         # for compton, first calculate the xe or argon interaction, give it to target pre
