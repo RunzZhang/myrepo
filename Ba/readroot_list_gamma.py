@@ -133,12 +133,13 @@ class RestructureRoot():
         # uproot.writing._dask_write.dask_write(self.df, self.reconstruct_filepath/)
 
 class ReadRoot():
-    def __init__(self):
-        # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
-        # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
-
-        self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_halfargon/"
-        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_halfargon/"
+    def __init__(self, doped=False):
+        self.doped = doped
+        self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
+        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
+        if self.doped:
+            self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_halfargon/"
+            self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_halfargon/"
 
         # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
         # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
@@ -217,6 +218,10 @@ class ReadRoot():
         # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
         self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm",'Y/mm', 'Z/mm',"PreKinetic/MeV","PostKinetic/MeV",
                                  "Recoiled/MeV", "Volume", "Process"]
+        if self.doped:
+            self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", 'Y/mm', 'Z/mm',
+                                     "PreKinetic/MeV", "PostKinetic/MeV",
+                                     "Recoiled/MeV", "Volume", "Process", "Pre_Target"]
 
         self.bubble_threshold = 0.0001 # MeV bubble generate threshold
         self.rows = 1000
@@ -230,18 +235,22 @@ class ReadRoot():
 
         # find all ER and save ER into csv
         self.allER()
-        # self.ER_distribution_primary_v2()
-        # self.ER_distribution_counts_v2()
-        # self.ER_distribution_primary()
-        # self.ER_distribution_counts()
+        if not self.doped:
+            print("NORMAL TRACKING")
+            # self.ER_distribution_primary_v2()
+            # self.ER_distribution_counts_v2()
+            # self.ER_distribution_primary()
+            # self.ER_distribution_counts()
+        else:
+            print("doped mode")
+            # xenon doping
+            # self.xenon_doped_phot()
 
-        # find all NR
-        # self.allNR()
+            self.doped_check()
 
-        #xenon doping
-        # self.xenon_doped_phot()
 
-        self.doped_check()
+
+
 
 
 
@@ -656,7 +665,7 @@ class ReadRoot():
     def doped_check(self):
         self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-") & (self.df_electron["Event"] != 1)]
         # double check gamma
-
+        print(self.df.head(20))
         summed_values = self.tagged_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
 
         print(summed_values.head(20))
@@ -696,6 +705,58 @@ class ReadRoot():
             ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
 
 
+
+        self.output_df = self.df.head(100)
+        # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
+        print("all len", len(self.mom_gamma), len(self.output_df))
+        self.output_df.to_csv("100line.csv", index=False)
+
+    def shell_vacancy_analysis(self):
+        # for compton, first calculate the xe or argon interaction, give it to target pre
+        # for compton assign shell evenly for KLMN for xe and KLM for argon
+        #  for phot, find the child electron with maximum id at same location,
+        #  calculate the  binding energy by parent Pre-Post -Pre of child electron
+        self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-") & (self.df_electron["Event"] != 1)]
+        # double check gamma
+
+        summed_values = self.tagged_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
+
+        print(summed_values.head(20))
+
+        # add gamma up
+        self.electron_recoiled_list = summed_values["Recoiled/MeV"].to_list()
+        # save info
+
+        self.electron_recoiled_event_list = summed_values["Event"].to_list()
+        print(self.electron_recoiled_event_list[:3])
+        high_NRER = []
+
+        self.mom_gamma = self.df[
+            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
+                    (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
+                self.df["Event"].isin(self.electron_recoiled_event_list))]
+        self.mom_gamma_group = self.mom_gamma.groupby("Event")
+
+        self.mom_gamma["ER_near/eV"] = (self.mom_gamma["PreKinetic/MeV"] - self.mom_gamma[
+            "PostKinetic/MeV"]) * 1e6
+
+
+
+        # Recoiled is recording the taget atom for phot process for test version
+        self.phot = self.mom_gamma[(self.mom_gamma['Process'] == "phot")]
+        print("phot", self.phot.head(10))
+        import crosssection_calculate
+        self.phot["Target_Post"] = self.phot["PreKinetic/MeV"].apply(
+            lambda e: crosssection_calculate.calculate_doped_photoelectric_probabilities(e, 0.5, 0.5)[
+                "Xe_Interaction_Probability"])
+        total_probability_sum = self.phot["Target_Post"].sum()
+        zero_count = len(self.phot[self.phot["Recoiled/MeV"] == 1.0])
+        print("Simulation", self.phot[self.phot["Recoiled/MeV"] == 1.0])
+        print("Post analysis count", total_probability_sum, "Simulation result", zero_count, "total phot number",
+              len(self.phot))
+
+        self.output_df = self.mom_gamma[
+            ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
 
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
         print("all len", len(self.mom_gamma), len(self.output_df))
@@ -983,7 +1044,8 @@ class ReadRoot():
 
 if __name__ =="__main__":
     # ReR = RestructureRoot()
-    RR = ReadRoot()
+    RR = ReadRoot(doped=True)
+    # RR= ReadRoot(doped=False)
     # test_write()
 
     # find corrupted file entries
