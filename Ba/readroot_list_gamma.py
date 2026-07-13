@@ -137,8 +137,8 @@ class ReadRoot():
         # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
         # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
 
-        self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_pureargon/"
-        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_pureargon/"
+        self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_halfargon/"
+        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_halfargon/"
 
         # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
         # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
@@ -240,6 +240,8 @@ class ReadRoot():
 
         #xenon doping
         self.xenon_doped_phot()
+
+        seld.doped_check()
 
 
 
@@ -651,6 +653,51 @@ class ReadRoot():
         file514.to_csv(self.base_path + "LAr_ER_514.csv")
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
 
+    def doped_check(self):
+        self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-") & (self.df_electron["Event"] != 1)]
+        # double check gamma
+
+        summed_values = self.tagged_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
+
+        print(summed_values.head(20))
+
+        # add gamma up
+        self.electron_recoiled_list = summed_values["Recoiled/MeV"].to_list()
+        # save info
+
+        self.electron_recoiled_event_list = summed_values["Event"].to_list()
+        print(self.electron_recoiled_event_list[:3])
+        high_NRER = []
+
+        self.mom_gamma = self.df[
+            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
+                    (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
+                self.df["Event"].isin(self.electron_recoiled_event_list))]
+        self.mom_gamma_group = self.mom_gamma.groupby("Event")
+
+        self.mom_gamma["ER_near/eV"] = (self.mom_gamma["PreKinetic/MeV"] - self.mom_gamma[
+            "PostKinetic/MeV"]) * 1e6
+
+        self.mom_gamma["R/mm"] = 0
+        self.mom_gamma["Multiplicity"] = 0
+
+        # Recoiled is recording the taget atom for phot process for test version
+        self.phot = self.mom_gamma[(self.mom_gamma['Process'] == "phot")]
+        import crosssection_calculate
+        self.phot["Target_Post"] = self.phot["PreKinetic/MeV"].apply(
+    lambda e: crosssection_calculate.calculate_doped_photoelectric_probabilities(e, 0.5, 0.5)["Ar_Interaction_Probability"])
+        total_probability_sum = self.phot["Target_Post"].sum()
+        zero_count = len((self.phot["Recoiled/MeV"] == 0.0))
+        print("Post analysis count", total_probability_sum, "Simulation result", zero_count)
+
+        self.output_df = self.mom_gamma[
+            ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
+
+
+
+        # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
+        print("all len", len(self.mom_gamma), len(self.output_df))
+        self.output_df.to_csv(self.info_all_path, index=False)
     def delta_e_distribution(self):
         # this is is counts of all ER, uses for counting Compton and photo interaction times including secondary particles
 

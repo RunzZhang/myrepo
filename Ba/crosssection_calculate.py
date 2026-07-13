@@ -1,3 +1,5 @@
+from scipy.interpolate import interp1d
+import numpy as np
 """G4
 -> Found Active Target Material: GXe
    Energy [MeV] Photoelectric [cm2/g]      Compton [cm2/g]
@@ -304,3 +306,97 @@ ax2.legend(fontsize=10, loc="lower left")
 # Final polishing layout adjustments
 plt.tight_layout()
 plt.show()
+
+
+def _get_log_interpolator(df, energy_col, cross_section_col):
+    """Generates a log-log interpolator for continuous cross-section parsing."""
+    return interp1d(
+        np.log10(df[energy_col]),
+        np.log10(df[cross_section_col]),
+        kind="linear", fill_value="extrapolate"
+    )
+
+
+# ------------------------------------------------------------------
+# 3. EXPORTABLE PROBABILITY CALCULATORS
+# ------------------------------------------------------------------
+def calculate_doped_compton_probabilities(energy_mev, mass_fraction_xe, mass_fraction_ar):
+    """
+    Calculates the relative interaction probabilities for Compton scattering
+    on Argon vs Xenon within a doped mixture given target mass fractions.
+    """
+    total_mass = mass_fraction_xe + mass_fraction_ar
+    w_xe = mass_fraction_xe / total_mass
+    w_ar = mass_fraction_ar / total_mass
+
+    interp_comp_ar = _get_log_interpolator(df_nist_ar, "Energy_MeV", "Compton_cm2_g")
+    interp_comp_xe = _get_log_interpolator(df_nist_xe, "Energy_MeV", "Compton_cm2_g")
+
+    log_E = np.log10(energy_mev)
+    sigma_mass_ar = 10 ** interp_comp_ar(log_E)
+    sigma_mass_xe = 10 ** interp_comp_xe(log_E)
+
+    total_macroscopic_compton = (w_ar * sigma_mass_ar) + (w_xe * sigma_mass_xe)
+
+    return {
+        "Energy_MeV": energy_mev,
+        "Ar_Mass_CrossSection_cm2_g": sigma_mass_ar,
+        "Xe_Mass_CrossSection_cm2_g": sigma_mass_xe,
+        "Ar_Interaction_Probability": (w_ar * sigma_mass_ar) / total_macroscopic_compton,
+        "Xe_Interaction_Probability": (w_xe * sigma_mass_xe) / total_macroscopic_compton
+    }
+
+
+def calculate_doped_photoelectric_probabilities(energy_mev, mass_fraction_xe, mass_fraction_ar):
+    """
+    Calculates the relative interaction probabilities for the Photoelectric Effect
+    on Argon vs Xenon within a doped mixture given target mass fractions.
+    """
+    total_mass = mass_fraction_xe + mass_fraction_ar
+    w_xe = mass_fraction_xe / total_mass
+    w_ar = mass_fraction_ar / total_mass
+
+    interp_phot_ar = _get_log_interpolator(df_nist_ar, "Energy_MeV", "Photoelectric_cm2_g")
+    interp_phot_xe = _get_log_interpolator(df_nist_xe, "Energy_MeV", "Photoelectric_cm2_g")
+
+    log_E = np.log10(energy_mev)
+    sigma_mass_ar = 10 ** interp_phot_ar(log_E)
+    sigma_mass_xe = 10 ** interp_phot_xe(log_E)
+
+    total_macroscopic_photoelectric = (w_ar * sigma_mass_ar) + (w_xe * sigma_mass_xe)
+
+    return {
+        "Energy_MeV": energy_mev,
+        "Ar_Mass_CrossSection_cm2_g": sigma_mass_ar,
+        "Xe_Mass_CrossSection_cm2_g": sigma_mass_xe,
+        "Ar_Interaction_Probability": (w_ar * sigma_mass_ar) / total_macroscopic_photoelectric,
+        "Xe_Interaction_Probability": (w_xe * sigma_mass_xe) / total_macroscopic_photoelectric
+    }
+
+
+# ------------------------------------------------------------------
+# 4. STANDALONE TESTING DIAGNOSTICS
+# ------------------------------------------------------------------
+if __name__ == "__main__":
+    gamma_energy = 0.040  # 40 keV (near the Xenon K-edge region)
+    mass_xe = 0.01  # 1% Xenon dopant
+    mass_ar = 0.99  # 99% Argon base
+
+    print(f"--- Standalone Verification Analysis at {gamma_energy * 1000:.1f} keV ---")
+    print(f"Mixture: {mass_ar * 100:.1f}% Argon, {mass_xe * 100:.1f}% Xenon by mass\n")
+
+    # Run Compton Check
+    comp_res = calculate_doped_compton_probabilities(gamma_energy, mass_xe, mass_ar)
+    print(f"[COMPTON SCATTERING]")
+    print(f"  Ar Cross Section: {comp_res['Ar_Mass_CrossSection_cm2_g']:.4f} cm2/g")
+    print(f"  Xe Cross Section: {comp_res['Xe_Mass_CrossSection_cm2_g']:.4f} cm2/g")
+    print(f"  ==> Scatter off Ar: {comp_res['Ar_Interaction_Probability'] * 100:.2f}%")
+    print(f"  ==> Scatter off Xe: {comp_res['Xe_Interaction_Probability'] * 100:.2f}%\n")
+
+    # Run Photoelectric Check
+    phot_res = calculate_doped_photoelectric_probabilities(gamma_energy, mass_xe, mass_ar)
+    print(f"[PHOTOELECTRIC ABSORPTION]")
+    print(f"  Ar Cross Section: {phot_res['Ar_Mass_CrossSection_cm2_g']:.4f} cm2/g")
+    print(f"  Xe Cross Section: {phot_res['Xe_Mass_CrossSection_cm2_g']:.4f} cm2/g")
+    print(f"  ==> Absorb by Ar: {phot_res['Ar_Interaction_Probability'] * 100:.2f}%")
+    print(f"  ==> Absorb by Xe: {phot_res['Xe_Interaction_Probability'] * 100:.2f}%")
