@@ -698,7 +698,7 @@ class ReadRoot():
     lambda e: crosssection_calculate.calculate_doped_photoelectric_probabilities(e, 0.5, 0.5)["Xe_Interaction_Probability"])
         total_probability_sum = self.phot["Target_Post"].sum()
         zero_count = len(self.phot[self.phot["Pre_Target"] == 1.0])
-        print("Simulation", self.phot[self.phot["Recoiled/MeVPre_Target"] == 1.0])
+        print("Simulation", self.phot[self.phot["Pre_Target"] == 1.0])
         print("Post analysis count", total_probability_sum, "Simulation result", zero_count, "total phot number",len(self.phot))
 
         self.output_df = self.mom_gamma[
