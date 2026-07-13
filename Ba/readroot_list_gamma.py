@@ -239,9 +239,9 @@ class ReadRoot():
         # self.allNR()
 
         #xenon doping
-        self.xenon_doped_phot()
+        # self.xenon_doped_phot()
 
-        seld.doped_check()
+        self.doped_check()
 
 
 
