@@ -683,12 +683,13 @@ class ReadRoot():
 
         # Recoiled is recording the taget atom for phot process for test version
         self.phot = self.mom_gamma[(self.mom_gamma['Process'] == "phot")]
-        print(self.phot.head(10))
+        print("phot",self.phot.head(10))
         import crosssection_calculate
         self.phot["Target_Post"] = self.phot["PreKinetic/MeV"].apply(
     lambda e: crosssection_calculate.calculate_doped_photoelectric_probabilities(e, 0.5, 0.5)["Ar_Interaction_Probability"])
         total_probability_sum = self.phot["Target_Post"].sum()
-        zero_count = len((self.phot["Recoiled/MeV"] == 0.0))
+        zero_count = len(self.phot[self.phot["Recoiled/MeV"] == 0.0])
+        print("Simulation", self.phot[self.phot["Recoiled/MeV"] == 0.0])
         print("Post analysis count", total_probability_sum, "Simulation result", zero_count)
 
         self.output_df = self.mom_gamma[
