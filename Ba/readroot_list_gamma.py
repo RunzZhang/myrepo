@@ -690,7 +690,7 @@ class ReadRoot():
         total_probability_sum = self.phot["Target_Post"].sum()
         zero_count = len(self.phot[self.phot["Recoiled/MeV"] == 0.0])
         print("Simulation", self.phot[self.phot["Recoiled/MeV"] == 0.0])
-        print("Post analysis count", total_probability_sum, "Simulation result", zero_count)
+        print("Post analysis count", total_probability_sum, "Simulation result", zero_count, "total phot number",len(self.phot))
 
         self.output_df = self.mom_gamma[
             ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
