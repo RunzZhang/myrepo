@@ -35,7 +35,7 @@ class ReadRoot:
                                  "Recoiled/MeV", "Volume", "Process"]
         self.selected_columns_doped = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm",'Y/mm', 'Z/mm', "PreKinetic/MeV",
                                  "PostKinetic/MeV",
-                                 "Recoiled/MeV", "Volume", "Process", "Pre_Target"]
+                                 "Recoiled/MeV", "Volume", "Process", "Pre_Target", "X_post/mm","Y_post/mm","Z_post/mm"]
         if doped:
             self.selected_columns = self.selected_columns_doped
 

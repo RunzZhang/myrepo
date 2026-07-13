@@ -219,9 +219,9 @@ class ReadRoot():
         self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm",'Y/mm', 'Z/mm',"PreKinetic/MeV","PostKinetic/MeV",
                                  "Recoiled/MeV", "Volume", "Process"]
         if self.doped:
-            self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", 'Y/mm', 'Z/mm',
-                                     "PreKinetic/MeV", "PostKinetic/MeV",
-                                     "Recoiled/MeV", "Volume", "Process", "Pre_Target"]
+            self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm",'Y/mm', 'Z/mm', "PreKinetic/MeV",
+                                 "PostKinetic/MeV",
+                                 "Recoiled/MeV", "Volume", "Process", "Pre_Target", "X_post/mm","Y_post/mm","Z_post/mm"]
 
         self.bubble_threshold = 0.0001 # MeV bubble generate threshold
         self.rows = 1000
