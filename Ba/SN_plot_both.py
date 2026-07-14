@@ -1201,7 +1201,7 @@ class SN():
 
         # Randomly sample based on the calculated Xenon probability column
         random_rolls = np.random.rand(len(compt_df))
-        xe_compt_df = compt_df[random_rolls < compt_df["Target_Post"]]
+        xe_compt_df = compt_df[random_rolls < compt_df["Target_PXe"]]
 
         # Create the Compton histogram using keV bins
         compt_counts, _ = np.histogram(xe_compt_df["Energy_Deposited/keV"], bins=bins_kev)
