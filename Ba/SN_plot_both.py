@@ -1250,7 +1250,7 @@ class SN():
         all_xe_phot = phot_df[phot_df["Pre_Target"] == 1.0].copy()
 
         # Convert Binding Energy to keV
-        all_xe_phot["Binding_Energy_keV"] = all_xe_phot["Binding_Energy_MeV"] * 1000.0
+        all_xe_phot["Binding_Energy_keV"] = all_xe_phot["Binding_Energy/MeV"] * 1000.0
         valid_be_df = all_xe_phot[all_xe_phot["Binding_Energy_keV"] > 0]
         if plot:
             plt.figure(figsize=(10, 5))
