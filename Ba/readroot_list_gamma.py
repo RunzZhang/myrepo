@@ -248,7 +248,8 @@ class ReadRoot():
             # xenon doping
             # self.xenon_doped_phot()
 
-            self.doped_check()
+            
+            self.shell_vacancy_analysis(self.df)
 
 
 
