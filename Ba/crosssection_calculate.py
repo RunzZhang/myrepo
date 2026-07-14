@@ -316,19 +316,25 @@ def _get_log_interpolator(df, energy_col, cross_section_col):
         kind="linear", fill_value="extrapolate"
     )
 
-
+A_AR = 39.948
+A_XE = 131.293
 # ------------------------------------------------------------------
 # 3. EXPORTABLE PROBABILITY CALCULATORS
 # ------------------------------------------------------------------
 def calculate_doped_compton_probabilities(energy_mev, mass_fraction_xe, mass_fraction_ar):
     """
-    Calculates the relative interaction probabilities for Compton scattering
-    on Argon vs Xenon within a doped mixture given target mass fractions.
+    Calculates relative Compton interaction probabilities scaled with number density
+    and atomic cross-sections.
     """
     total_mass = mass_fraction_xe + mass_fraction_ar
     w_xe = mass_fraction_xe / total_mass
     w_ar = mass_fraction_ar / total_mass
 
+    # Compute relative number densities (atoms per unit mass of mixture)
+    n_ar = w_ar / A_AR
+    n_xe = w_xe / A_XE
+
+    # Interpolate mass cross-sections from NIST (cm2/g)
     interp_comp_ar = _get_log_interpolator(df_nist_ar, "Energy_MeV", "Compton_cm2_g")
     interp_comp_xe = _get_log_interpolator(df_nist_xe, "Energy_MeV", "Compton_cm2_g")
 
@@ -336,26 +342,38 @@ def calculate_doped_compton_probabilities(energy_mev, mass_fraction_xe, mass_fra
     sigma_mass_ar = 10 ** interp_comp_ar(log_E)
     sigma_mass_xe = 10 ** interp_comp_xe(log_E)
 
-    total_macroscopic_compton = (w_ar * sigma_mass_ar) + (w_xe * sigma_mass_xe)
+    # Convert mass cross-sections to relative atomic cross-sections (barns/atom equivalent)
+    sigma_atomic_ar = sigma_mass_ar * A_AR
+    sigma_atomic_xe = sigma_mass_xe * A_XE
+
+    # Macroscopic cross-sections (proportional to probability)
+    macro_ar = n_ar * sigma_atomic_ar
+    macro_xe = n_xe * sigma_atomic_xe
+    total_macro = macro_ar + macro_xe
 
     return {
         "Energy_MeV": energy_mev,
         "Ar_Mass_CrossSection_cm2_g": sigma_mass_ar,
         "Xe_Mass_CrossSection_cm2_g": sigma_mass_xe,
-        "Ar_Interaction_Probability": (w_ar * sigma_mass_ar) / total_macroscopic_compton,
-        "Xe_Interaction_Probability": (w_xe * sigma_mass_xe) / total_macroscopic_compton
+        "Ar_Interaction_Probability": macro_ar / total_macro,
+        "Xe_Interaction_Probability": macro_xe / total_macro
     }
 
 
 def calculate_doped_photoelectric_probabilities(energy_mev, mass_fraction_xe, mass_fraction_ar):
     """
-    Calculates the relative interaction probabilities for the Photoelectric Effect
-    on Argon vs Xenon within a doped mixture given target mass fractions.
+    Calculates relative Photoelectric interaction probabilities scaled with number density
+    and atomic cross-sections.
     """
     total_mass = mass_fraction_xe + mass_fraction_ar
     w_xe = mass_fraction_xe / total_mass
     w_ar = mass_fraction_ar / total_mass
 
+    # Compute relative number densities (atoms per unit mass of mixture)
+    n_ar = w_ar / A_AR
+    n_xe = w_xe / A_XE
+
+    # Interpolate mass cross-sections from NIST (cm2/g)
     interp_phot_ar = _get_log_interpolator(df_nist_ar, "Energy_MeV", "Photoelectric_cm2_g")
     interp_phot_xe = _get_log_interpolator(df_nist_xe, "Energy_MeV", "Photoelectric_cm2_g")
 
@@ -363,17 +381,22 @@ def calculate_doped_photoelectric_probabilities(energy_mev, mass_fraction_xe, ma
     sigma_mass_ar = 10 ** interp_phot_ar(log_E)
     sigma_mass_xe = 10 ** interp_phot_xe(log_E)
 
-    total_macroscopic_photoelectric = (w_ar * sigma_mass_ar) + (w_xe * sigma_mass_xe)
+    # Convert mass cross-sections to relative atomic cross-sections
+    sigma_atomic_ar = sigma_mass_ar * A_AR
+    sigma_atomic_xe = sigma_mass_xe * A_XE
+
+    # Macroscopic cross-sections (proportional to probability)
+    macro_ar = n_ar * sigma_atomic_ar
+    macro_xe = n_xe * sigma_atomic_xe
+    total_macro = macro_ar + macro_xe
 
     return {
         "Energy_MeV": energy_mev,
         "Ar_Mass_CrossSection_cm2_g": sigma_mass_ar,
         "Xe_Mass_CrossSection_cm2_g": sigma_mass_xe,
-        "Ar_Interaction_Probability": (w_ar * sigma_mass_ar) / total_macroscopic_photoelectric,
-        "Xe_Interaction_Probability": (w_xe * sigma_mass_xe) / total_macroscopic_photoelectric
+        "Ar_Interaction_Probability": macro_ar / total_macro,
+        "Xe_Interaction_Probability": macro_xe / total_macro
     }
-
-
 # ------------------------------------------------------------------
 # 4. STANDALONE TESTING DIAGNOSTICS
 # ------------------------------------------------------------------
