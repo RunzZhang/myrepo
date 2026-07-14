@@ -724,7 +724,7 @@ class ReadRoot():
         # Ar K (~3.20 keV), Ar L (~0.25 keV), Ar M (~0.02 keV)
         df["Shell_ID"] = -1
         df["Binding_Energy_MeV"] = -1.0
-        
+
         xe_bounds = [
             (df["Binding_Energy_MeV"] >= 0.03256) & (df["Binding_Energy_MeV"] <= 0.03656),  # K: 0
             (df["Binding_Energy_MeV"] >= 0.00470) & (df["Binding_Energy_MeV"] <= 0.00550),  # L: 1
@@ -796,13 +796,17 @@ class ReadRoot():
         # ------------------------------------------------------------------
         # PART 3: VECTORIZED SHELL ENVELOPE SELECTION via np.select
         # ------------------------------------------------------------------
+
+        xe_shells = np.select(xe_bounds, shell_choices, default=-1)
+        ar_shells = np.select(ar_bounds, shell_choices[:-1], default=-1)
+
         phot_xe_mask = (df["Process"] == "phot") & (df["name"] == "gamma") & (df["Pre_Target"] == 1.0)& (df['Volume'] == 'LAr_phys')
         phot_ar_mask = (df["Process"] == "phot") & (df["name"] == "gamma") & (df["Pre_Target"] == 0.0)& (df['Volume'] == 'LAr_phys')
 
         # Apply conditions across masks instantly
-        df.loc[phot_xe_mask, "Shell_ID"] = np.select([m & phot_xe_mask for m in xe_bounds], shell_choices, default=-1)
-        df.loc[phot_ar_mask, "Shell_ID"] = np.select([m & phot_ar_mask for m in ar_bounds], shell_choices[:-1],
-                                                     default=-1)
+        df.loc[phot_xe_mask, "Shell_ID"] = xe_shells[phot_xe_mask]
+        df.loc[phot_ar_mask, "Shell_ID"] = ar_shells[phot_ar_mask]
+        
         self.output_df = df[(df['Volume'] == 'LAr_phys')].head(100)
 
         self.output_df.to_csv(self.base_path + "100line_updated.csv", index=False)
