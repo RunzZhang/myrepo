@@ -164,7 +164,7 @@ class SN():
 
             # self.read_ER_Ar_doped()
             # self.write_doped_sims_results()
-            self.write_doped_sims_results_v2(self.merged_df_phot, bin_start_mev=0, bin_end_mev=1.4, bin_width_mev=0.0005, plot=True)
+            self.write_doped_sims_results_v2(self.merged_df_phot, bin_start_mev=0, bin_end_mev=0.4, bin_width_mev=0.0005, plot=True)
 
             # photo process analysis
             # self.read_ER_Ar_pho_per_deposit_rate()
@@ -1229,7 +1229,7 @@ class SN():
         total_counts = compt_counts_scaled + phot_counts
         bin_centers_kev = (bins_kev[:-1] + bins_kev[1:]) / 2.0
         if plot:
-            plt.figure(figsize=(10, 6))
+            plt.figure(figsize=(8, 6))
 
             # Clean standard line plots mapping straight to the bin center coordinates
             plt.plot(bin_centers_kev, total_counts, label='Total (Compt K + Phot K)', color='purple', lw=2.5)
