@@ -120,7 +120,7 @@ class SN():
             self.df_phot_list.append(temp_df_phot)
 
     def combine_df(self):
-        if self.doped:
+        if not self.doped:
             self.merged_df_primary = pd.concat(self.df_primary_list, ignore_index=True)
             print("primary len", len(self.merged_df_primary))
             self.merged_df_all = pd.concat(self.df_all_list, ignore_index=True)
@@ -1561,4 +1561,5 @@ class test_csv():
 
 if __name__=="__main__":
     sn = SN(doped=True)
+    # sn = SN(doped=False)
     # test = test_csv()
