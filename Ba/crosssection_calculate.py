@@ -402,8 +402,11 @@ def calculate_doped_photoelectric_probabilities(energy_mev, mass_fraction_xe, ma
 # ------------------------------------------------------------------
 if __name__ == "__main__":
     gamma_energy = 0.040  # 40 keV (near the Xenon K-edge region)
-    mass_xe = 0.01  # 1% Xenon dopant
-    mass_ar = 0.99  # 99% Argon base
+    # mass_xe = 0.01  # 1% Xenon dopant
+    # mass_ar = 0.99  # 99% Argon base
+
+    mass_xe = 0.5  # 1% Xenon dopant
+    mass_ar = 0.5  # 99% Argon base
 
     print(f"--- Standalone Verification Analysis at {gamma_energy * 1000:.1f} keV ---")
     print(f"Mixture: {mass_ar * 100:.1f}% Argon, {mass_xe * 100:.1f}% Xenon by mass\n")
