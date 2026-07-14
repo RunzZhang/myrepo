@@ -57,6 +57,7 @@ import uproot
 import matplotlib.pyplot as plt
 import numpy as np
 import csv
+import crosssection_calculate
 # filename = "/data/runzezhang/Geant4Simulaions/g411_TN/dmx.root"
 def test_write():
     try:
@@ -694,7 +695,7 @@ class ReadRoot():
         # Recoiled is recording the taget atom for phot process for test version
         self.phot = self.mom_gamma[(self.mom_gamma['Process'] == "phot")]
         print("phot",self.phot.head(10))
-        import crosssection_calculate
+
         self.phot["Target_Post"] = self.phot["Pre_Target"].apply(
     lambda e: crosssection_calculate.calculate_doped_photoelectric_probabilities(e, 0.5, 0.5)["Xe_Interaction_Probability"])
         total_probability_sum = self.phot["Target_Post"].sum()
@@ -712,56 +713,97 @@ class ReadRoot():
         print("all len", len(self.mom_gamma), len(self.output_df))
         self.output_df.to_csv(self.base_path+"100line.csv", index=False)
 
-    def shell_vacancy_analysis(self):
-        # for compton, first calculate the xe or argon interaction, give it to target pre
-        # for compton assign shell evenly for KLMN for xe and KLM for argon
-        #  for phot, find the child electron with maximum id at same location,
-        #  calculate the  binding energy by parent Pre-Post -Pre of child electron
-        self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-") & (self.df_electron["Event"] != 1)]
-        # double check gamma
 
-        summed_values = self.tagged_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
+    def shell_vacancy_analysis(self, df, mass_xe=0.5, mass_ar=0.5):
+        # ------------------------------------------------------------------
+        # 1. SETUP GLOBAL LOOKUP ARRAYS (Shell and Envelope Rules)
+        # ------------------------------------------------------------------
+        # Pre-calculate shell boundaries for np.select
+        # Xe K (~34.56 keV), Xe L (~4.78-5.45 keV), Xe M (~0.67-1.15 keV), Xe N (~0.07-0.15 keV)
+        # Ar K (~3.20 keV), Ar L (~0.25 keV), Ar M (~0.02 keV)
+        xe_bounds = [
+            (df["Binding_Energy_MeV"] >= 0.03256) & (df["Binding_Energy_MeV"] <= 0.03656),  # K: 0
+            (df["Binding_Energy_MeV"] >= 0.00470) & (df["Binding_Energy_MeV"] <= 0.00550),  # L: 1
+            (df["Binding_Energy_MeV"] >= 0.00050) & (df["Binding_Energy_MeV"] <= 0.00150),  # M: 2
+            (df["Binding_Energy_MeV"] >= 0.00002) & (df["Binding_Energy_MeV"] <= 0.00022),  # N: 3
+        ]
+        ar_bounds = [
+            (df["Binding_Energy_MeV"] >= 0.00270) & (df["Binding_Energy_MeV"] <= 0.00370),  # K: 0
+            (df["Binding_Energy_MeV"] >= 0.00015) & (df["Binding_Energy_MeV"] <= 0.00035),  # L: 1
+            (df["Binding_Energy_MeV"] >= 0.00001) & (df["Binding_Energy_MeV"] <= 0.00003),  # M: 2
+        ]
+        shell_choices = [0, 1, 2, 3]
 
-        print(summed_values.head(20))
+        # Initialize columns
 
-        # add gamma up
-        self.electron_recoiled_list = summed_values["Recoiled/MeV"].to_list()
-        # save info
+        df["Shell_ID"] = -1
+        df["Binding_Energy_MeV"] = -1.0
 
-        self.electron_recoiled_event_list = summed_values["Event"].to_list()
-        print(self.electron_recoiled_event_list[:3])
-        high_NRER = []
+        # ------------------------------------------------------------------
+        # PART 1: VECTORIZED COMPTON SAMPLING
+        # ------------------------------------------------------------------
+        compt_mask = (df["Process"] == "compt") & (df["name"] == "gamma") & (df['Volume'] == 'LAr_phys')
+        if compt_mask.any():
+            gamma_energies = df.loc[compt_mask, "PreKinetic/MeV"].values
 
-        self.mom_gamma = self.df[
-            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-                    (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
-                self.df["Event"].isin(self.electron_recoiled_event_list))]
-        self.mom_gamma_group = self.mom_gamma.groupby("Event")
+            # Pull continuous relative interaction cross-sections directly from your module
+            probs = [crosssection_calculate.calculate_doped_compton_probabilities(e, mass_xe, mass_ar) for e in gamma_energies]
 
-        self.mom_gamma["ER_near/eV"] = (self.mom_gamma["PreKinetic/MeV"] - self.mom_gamma[
-            "PostKinetic/MeV"]) * 1e6
+            # Directly store the continuous Argon interaction probability (no random sampling)
+            p_ar_array = np.array([p["Ar_Interaction_Probability"] for p in probs])
+            df.loc[compt_mask, "Target_Post"] = p_ar_array
 
+        # ------------------------------------------------------------------
+        # PART 2: VECTORIZED PHOTOELECTRIC CROSS-JOIN (The Core Speedup)
+        # ------------------------------------------------------------------
+        # Round coordinates to eliminate floating point mismatch errors without loops
+        coord_cols = ["Event", "X/mm", "Y/mm", "Z/mm"]
+        post_coord_cols = ["Event", "X_post/mm", "Y_post/mm", "Z_post/mm"]
 
+        # Create an isolated view of all primary photo-electrons
+        electrons = df[df["name"] == "e-"].copy()
+        for col in ["X/mm", "Y/mm", "Z/mm"]:
+            electrons[col] = electrons[col].round(3)
 
-        # Recoiled is recording the taget atom for phot process for test version
-        self.phot = self.mom_gamma[(self.mom_gamma['Process'] == "phot")]
-        print("phot", self.phot.head(10))
-        import crosssection_calculate
-        self.phot["Target_Post"] = self.phot["PreKinetic/MeV"].apply(
-            lambda e: crosssection_calculate.calculate_doped_photoelectric_probabilities(e, 0.5, 0.5)[
-                "Xe_Interaction_Probability"])
-        total_probability_sum = self.phot["Target_Post"].sum()
-        zero_count = len(self.phot[self.phot["Recoiled/MeV"] == 1.0])
-        print("Simulation", self.phot[self.phot["Recoiled/MeV"] == 1.0])
-        print("Post analysis count", total_probability_sum, "Simulation result", zero_count, "total phot number",
-              len(self.phot))
+        # Isolate the highest energy electron per interaction vertex using standard groupby
+        primary_electrons = electrons.loc[electrons.groupby(coord_cols)["PreKinetic/MeV"].idxmax()]
 
-        self.output_df = self.mom_gamma[
-            ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
+        # Isolate all photoelectric gammas
+        phot_gammas = df[(df["Process"] == "phot") & (df["name"] == "gamma")& (df['Volume'] == 'LAr_phys')].copy()
+        for col in post_coord_cols[1:]:
+            phot_gammas[col] = phot_gammas[col].round(3)
 
-        # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
-        print("all len", len(self.mom_gamma), len(self.output_df))
-        self.output_df.to_csv(self.info_all_path, index=False)
+        # Perform a fast relational merge (Parent Gamma Post -> Child Electron Pre)
+        merged = pd.merge(
+            phot_gammas,
+            primary_electrons[coord_cols + ["PreKinetic/MeV"]],
+            left_on=post_coord_cols,
+            right_on=coord_cols,
+            suffixes=('', '_child'),
+            how='left'
+        )
+
+        # Re-align index values to update original tracking layout
+        merged.index = phot_gammas.index
+
+        # Compute Vectorized Binding Energy
+        gamma_dep_energy = merged["PreKinetic/MeV"] - merged["PostKinetic/MeV"]
+        df.loc[phot_gammas.index, "Binding_Energy_MeV"] = gamma_dep_energy - merged["PreKinetic/MeV_child"]
+
+        # ------------------------------------------------------------------
+        # PART 3: VECTORIZED SHELL ENVELOPE SELECTION via np.select
+        # ------------------------------------------------------------------
+        phot_xe_mask = (df["Process"] == "phot") & (df["name"] == "gamma") & (df["Pre_Target"] == 1.0)& (df['Volume'] == 'LAr_phys')
+        phot_ar_mask = (df["Process"] == "phot") & (df["name"] == "gamma") & (df["Pre_Target"] == 0.0)& (df['Volume'] == 'LAr_phys')
+
+        # Apply conditions across masks instantly
+        df.loc[phot_xe_mask, "Shell_ID"] = np.select([m & phot_xe_mask for m in xe_bounds], shell_choices, default=-1)
+        df.loc[phot_ar_mask, "Shell_ID"] = np.select([m & phot_ar_mask for m in ar_bounds], shell_choices[:-1],
+                                                     default=-1)
+        self.output_df = df[(df['Volume'] == 'LAr_phys')].head(100)
+
+        self.output_df.to_csv(self.base_path + "100line_updated.csv", index=False)
+
     def delta_e_distribution(self):
         # this is is counts of all ER, uses for counting Compton and photo interaction times including secondary particles
 
