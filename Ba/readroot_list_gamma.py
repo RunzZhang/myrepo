@@ -806,8 +806,8 @@ class ReadRoot():
         # Apply conditions across masks instantly
         df.loc[phot_xe_mask, "Shell_ID"] = xe_shells[phot_xe_mask]
         df.loc[phot_ar_mask, "Shell_ID"] = ar_shells[phot_ar_mask]
-        
-        self.output_df = df[(df['Volume'] == 'LAr_phys')].head(100)
+
+        self.output_df = df[(df['Volume'] == 'LAr_phys')].head(1000)
 
         self.output_df.to_csv(self.base_path + "100line_updated.csv", index=False)
 
