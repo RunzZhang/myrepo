@@ -164,7 +164,7 @@ class SN():
 
             # self.read_ER_Ar_doped()
             # self.write_doped_sims_results()
-            self.write_doped_sims_results_v2(self.merged_df_phot, bin_start_mev=0, bin_end_mev=0.0014, bin_width_mev=0.0001)
+            self.write_doped_sims_results_v2(self.merged_df_phot, bin_start_mev=0, bin_end_mev=0.0014, bin_width_mev=0.0001, plot=True)
 
             # photo process analysis
             # self.read_ER_Ar_pho_per_deposit_rate()
@@ -1288,7 +1288,7 @@ class SN():
 
         cumulative_threshold_array[0] = np.array(
             [sum(energy_deposit_list[i:]) for i in range(len(energy_deposit_list))])
-        print("total count* energy Co", cumulative_threshold_per_scatter_array[0][0],
+        print("total count* energy Ba", cumulative_threshold_per_scatter_array[0][0],
               cumulative_threshold_per_scatter_array[0][0] / cumulative_threshold_array[0][0])
         Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
         output_list = [Rate_factor, hist_array, cumulative_threshold_per_scatter_array[0],
