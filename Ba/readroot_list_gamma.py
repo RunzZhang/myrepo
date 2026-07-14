@@ -753,8 +753,8 @@ class ReadRoot():
             df.loc[phot_mask, "Target_PXe"] = p_ar_array
 
         total_probability_sum = df.loc[phot_mask, "Target_PXe"].sum()
-        zero_count = len(df.loc[phot_mask& (df["Pre_Target"] == 0.0)])
-        print("Post analysis count", total_probability_sum, "Simulation result", zero_count, "total phot number",
+        zero_count = len(df.loc[phot_mask& (df["Pre_Target"] == 1.0)])
+        print("Post analysis count Xe", total_probability_sum, "Simulation result Xe", zero_count, "total phot number",
               len(df.loc[phot_mask]))
 
         # ------------------------------------------------------------------
