@@ -757,39 +757,34 @@ class ReadRoot():
             df.loc[compt_mask, "Target_Post"] = p_ar_array
 
         # ------------------------------------------------------------------
-        # PART 2: VECTORIZED PHOTOELECTRIC CROSS-JOIN (The Core Speedup)
+        # PART 2: VECTORIZED PHOTOELECTRIC VERTEX MATCHING (Min Track ID)
         # ------------------------------------------------------------------
-        # Round coordinates to eliminate floating point mismatch errors without loops
-        coord_cols = ["Event", "X/mm", "Y/mm", "Z/mm"]
-        post_coord_cols = ["Event", "X_post/mm", "Y_post/mm", "Z_post/mm"]
+        # Isolate all secondary electrons
+        electrons = df[(df["name"] == "e-")&(df['Volume'] == 'LAr_phys')].copy()
 
-        # Create an isolated view of all primary photo-electrons
-        electrons = df[df["name"] == "e-"].copy()
-        for col in ["X/mm", "Y/mm", "Z/mm"]:
-            electrons[col] = electrons[col].round(3)
-
-        # Isolate the highest energy electron per interaction vertex using standard groupby
-        primary_electrons = electrons.loc[electrons.groupby(coord_cols)["PreKinetic/MeV"].idxmax()]
+        # Find the primary photoelectron per gamma interaction vertex by grouping by
+        # Event and Parent ID, then taking the electron with the minimum Track ID
+        primary_electrons = electrons.loc[
+            electrons.groupby(["Event", "Parent ID"])["Track ID"].idxmin()
+        ]
 
         # Isolate all photoelectric gammas
-        phot_gammas = df[(df["Process"] == "phot") & (df["name"] == "gamma")& (df['Volume'] == 'LAr_phys')].copy()
-        for col in post_coord_cols[1:]:
-            phot_gammas[col] = phot_gammas[col].round(3)
+        phot_gammas = df[(df["Process"] == "phot") & (df["name"] == "gamma")&(df['Volume'] == 'LAr_phys')].copy()
 
-        # Perform a fast relational merge (Parent Gamma Post -> Child Electron Pre)
+        # Merge the gammas directly with their primary child electrons using [Event, Track ID -> Parent ID]
         merged = pd.merge(
             phot_gammas,
-            primary_electrons[coord_cols + ["PreKinetic/MeV"]],
-            left_on=post_coord_cols,
-            right_on=coord_cols,
-            suffixes=('', '_child'),
-            how='left'
+            primary_electrons[["Event", "Parent ID", "PreKinetic/MeV"]],
+            left_on=["Event", "Track ID"],
+            right_on=["Event", "Parent ID"],
+            suffixes=("", "_child"),
+            how="left"
         )
 
-        # Re-align index values to update original tracking layout
+        # Re-align index back to the main dataframe
         merged.index = phot_gammas.index
 
-        # Compute Vectorized Binding Energy
+        # Compute Vectorized True Binding Energy (E_gamma_dep - E_primary_electron)
         gamma_dep_energy = merged["PreKinetic/MeV"] - merged["PostKinetic/MeV"]
         df.loc[phot_gammas.index, "Binding_Energy_MeV"] = gamma_dep_energy - merged["PreKinetic/MeV_child"]
 
