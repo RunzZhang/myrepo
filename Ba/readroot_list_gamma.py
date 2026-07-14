@@ -248,7 +248,7 @@ class ReadRoot():
             # xenon doping
             # self.xenon_doped_phot()
 
-            
+
             self.shell_vacancy_analysis(self.df)
 
 
@@ -722,6 +722,9 @@ class ReadRoot():
         # Pre-calculate shell boundaries for np.select
         # Xe K (~34.56 keV), Xe L (~4.78-5.45 keV), Xe M (~0.67-1.15 keV), Xe N (~0.07-0.15 keV)
         # Ar K (~3.20 keV), Ar L (~0.25 keV), Ar M (~0.02 keV)
+        df["Shell_ID"] = -1
+        df["Binding_Energy_MeV"] = -1.0
+        
         xe_bounds = [
             (df["Binding_Energy_MeV"] >= 0.03256) & (df["Binding_Energy_MeV"] <= 0.03656),  # K: 0
             (df["Binding_Energy_MeV"] >= 0.00470) & (df["Binding_Energy_MeV"] <= 0.00550),  # L: 1
@@ -737,8 +740,7 @@ class ReadRoot():
 
         # Initialize columns
 
-        df["Shell_ID"] = -1
-        df["Binding_Energy_MeV"] = -1.0
+
 
         # ------------------------------------------------------------------
         # PART 1: VECTORIZED COMPTON SAMPLING
