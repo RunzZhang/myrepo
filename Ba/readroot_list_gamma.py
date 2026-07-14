@@ -756,6 +756,23 @@ class ReadRoot():
             p_ar_array = np.array([p["Ar_Interaction_Probability"] for p in probs])
             df.loc[compt_mask, "Target_Post"] = p_ar_array
 
+        phot_mask = (df["Process"] == "phot") & (df["name"] == "gamma") & (df['Volume'] == 'LAr_phys')
+        if phot_mask.any():
+            gamma_energies = df.loc[phot_mask, "PreKinetic/MeV"].values
+
+            # Pull continuous relative interaction cross-sections directly from your module
+            probs = [crosssection_calculate.calculate_doped_photoelectric_probabilities(e, mass_xe, mass_ar) for e in
+                     gamma_energies]
+
+            # Directly store the continuous Argon interaction probability (no random sampling)
+            p_ar_array = np.array([p["Ar_Interaction_Probability"] for p in probs])
+            df.loc[phot_mask, "Target_Post"] = p_ar_array
+
+        total_probability_sum = df.loc[phot_mask, "Target_Post"].sum()
+        zero_count = len(df.loc[phot_mask, "Pre_Target"] == 1.0)
+        print("Post analysis count", total_probability_sum, "Simulation result", zero_count, "total phot number",
+              len(df.loc[phot_mask]))
+
         # ------------------------------------------------------------------
         # PART 2: VECTORIZED PHOTOELECTRIC VERTEX MATCHING (Min Track ID)
         # ------------------------------------------------------------------
