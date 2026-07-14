@@ -1234,7 +1234,7 @@ class SN():
             # Clean standard line plots mapping straight to the bin center coordinates
             plt.plot(bin_centers_kev, total_counts, label='Total (Compt K + Phot K)', color='r', lw=2.5)
             plt.plot(bin_centers_kev, compt_counts_scaled, label='Compton (Xe Scaled)', color='blue',  lw=1.5)
-            plt.plot(bin_centers_kev, phot_counts, label='Photoelectric (Xe K-Shell)', color='brown',  lw=1.5)
+            plt.plot(bin_centers_kev, phot_counts, label='Photoelectric (Xe K-Shell)', color='orange',  lw=1.5)
 
             plt.title("Deposited Energy Spectrum in Xenon")
             plt.xlabel("Energy Deposited (keV)")
