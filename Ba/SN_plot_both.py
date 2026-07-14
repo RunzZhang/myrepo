@@ -164,7 +164,7 @@ class SN():
 
             # self.read_ER_Ar_doped()
             # self.write_doped_sims_results()
-            self.write_doped_sims_results_v2(self.merged_df_phot, bin_start_mev=0, bin_end_mev=0.0014, bin_width_mev=0.0001, plot=True)
+            self.write_doped_sims_results_v2(self.merged_df_phot, bin_start_mev=0, bin_end_mev=1.4, bin_width_mev=0.0005, plot=True)
 
             # photo process analysis
             # self.read_ER_Ar_pho_per_deposit_rate()
@@ -1241,7 +1241,7 @@ class SN():
             plt.ylabel(f"Counts / {bin_width_kev:.1f} keV Bin")
             plt.legend()
             plt.grid(True, alpha=0.3)
-            plt.yscale('log', nonpositive='clip')  # Toggle off if you prefer a linear scale layout
+            # plt.yscale('log', nonpositive='clip')  # Toggle off if you prefer a linear scale layout
             plt.savefig(self.plot_path +"Ba_doped_energy_dep.pdf")
 
         # ------------------------------------------------------------------
@@ -1253,9 +1253,9 @@ class SN():
         all_xe_phot["Binding_Energy_keV"] = all_xe_phot["Binding_Energy/MeV"] * 1000.0
         valid_be_df = all_xe_phot[all_xe_phot["Binding_Energy_keV"] > 0]
         if plot:
-            plt.figure(figsize=(10, 5))
+            plt.figure(figsize=(8, 5))
             # 0.5 keV bins tracking up to 45 keV bounds
-            be_bins_kev = np.arange(0.0, 45.0, 0.5)
+            be_bins_kev = np.arange(0.0, 45.0, 0.1)
 
             plt.hist(valid_be_df["Binding_Energy_keV"], bins=be_bins_kev, color='forestgreen', alpha=0.7,
                      edgecolor='black')
