@@ -239,8 +239,8 @@ class ReadRoot():
         self.allER()
         if not self.doped:
             print("NORMAL TRACKING")
-            # self.ER_distribution_primary_v2()
-            # self.ER_distribution_counts_v2()
+            self.ER_distribution_primary_v2()
+            self.ER_distribution_counts_v2()
             # self.ER_distribution_primary()
             # self.ER_distribution_counts()
         else:
@@ -823,7 +823,7 @@ class ReadRoot():
         # self.test_output_df = df[(df['Volume'] == 'LAr_phys')].head(1000)
         # self.test_output_df.to_csv(self.base_path + "100line_updated.csv", index=False)
         gamma_info = df[(df["name"] == "gamma")& (df['Volume'] == 'LAr_phys')]
-        gamma_info.to_csv(self.base_path + self.info_phot_path, index=False)
+        gamma_info.to_csv(self.info_phot_path, index=False)
 
     def delta_e_distribution(self):
         # this is is counts of all ER, uses for counting Compton and photo interaction times including secondary particles
