@@ -249,7 +249,7 @@ class ReadRoot():
             # self.xenon_doped_phot()
 
 
-            self.shell_vacancy_analysis(self.df)
+            self.shell_vacancy_analysis(self.df,  mass_xe=0.5, mass_ar=0.5)
 
 
 
@@ -720,16 +720,11 @@ class ReadRoot():
         # 1. SETUP GLOBAL LOOKUP ARRAYS (Shell and Envelope Rules)
         # ------------------------------------------------------------------
         # Pre-calculate shell boundaries for np.select
-        # Xe K (~34.56 keV), Xe L (~4.78-5.45 keV), Xe M (~0.67-1.15 keV), Xe N (~0.07-0.15 keV)
-        # Ar K (~3.20 keV), Ar L (~0.25 keV), Ar M (~0.02 keV)
+
         df["Shell_ID"] = -1
-        df["Binding_Energy_MeV"] = -1.0
-
-
+        df["Binding_Energy/MeV"] = -1.0
 
         # Initialize columns
-
-
 
         # ------------------------------------------------------------------
         # PART 1: VECTORIZED COMPTON SAMPLING
@@ -742,8 +737,8 @@ class ReadRoot():
             probs = [crosssection_calculate.calculate_doped_compton_probabilities(e, mass_xe, mass_ar) for e in gamma_energies]
 
             # Directly store the continuous Argon interaction probability (no random sampling)
-            p_ar_array = np.array([p["Ar_Interaction_Probability"] for p in probs])
-            df.loc[compt_mask, "Target_Post"] = p_ar_array
+            p_ar_array = np.array([p["Xe_Interaction_Probability"] for p in probs])
+            df.loc[compt_mask, "Target_PXe"] = p_ar_array
 
         phot_mask = (df["Process"] == "phot") & (df["name"] == "gamma") & (df['Volume'] == 'LAr_phys')
         if phot_mask.any():
@@ -754,10 +749,10 @@ class ReadRoot():
                      gamma_energies]
 
             # Directly store the continuous Argon interaction probability (no random sampling)
-            p_ar_array = np.array([p["Ar_Interaction_Probability"] for p in probs])
-            df.loc[phot_mask, "Target_Post"] = p_ar_array
+            p_ar_array = np.array([p["Xe_Interaction_Probability"] for p in probs])
+            df.loc[phot_mask, "Target_PXe"] = p_ar_array
 
-        total_probability_sum = df.loc[phot_mask, "Target_Post"].sum()
+        total_probability_sum = df.loc[phot_mask, "Target_PXe"].sum()
         zero_count = len(df.loc[phot_mask& (df["Pre_Target"] == 0.0)])
         print("Post analysis count", total_probability_sum, "Simulation result", zero_count, "total phot number",
               len(df.loc[phot_mask]))
@@ -795,24 +790,26 @@ class ReadRoot():
 
         # 5. Compute Vectorized True Binding Energy
         gamma_dep_energy = merged["PreKinetic/MeV"] - merged["PostKinetic/MeV"]
-        df.loc[phot_gammas.index, "Binding_Energy_MeV"] = gamma_dep_energy - merged["PreKinetic/MeV_child"]
+        df.loc[phot_gammas.index, "Binding_Energy/MeV"] = gamma_dep_energy - merged["PreKinetic/MeV_child"]
 
         # ------------------------------------------------------------------
         # PART 3: VECTORIZED SHELL ENVELOPE SELECTION via np.select
         # ------------------------------------------------------------------
+        # Xe K (~34.56 keV), Xe L (~4.78-5.45 keV), Xe M (~0.67-1.15 keV), Xe N (~0.07-0.15 keV)
+        # Ar K (~3.20 keV), Ar L (~0.25 keV), Ar M (~0.02 keV)
         xe_bounds = [
-            (df["Binding_Energy_MeV"] >= 0.03256) & (df["Binding_Energy_MeV"] <= 0.03656),  # K: 0
-            (df["Binding_Energy_MeV"] >= 0.00470) & (df["Binding_Energy_MeV"] <= 0.00550),  # L: 1
-            (df["Binding_Energy_MeV"] >= 0.00050) & (df["Binding_Energy_MeV"] <= 0.00150),  # M: 2
-            (df["Binding_Energy_MeV"] >= 0.00002) & (df["Binding_Energy_MeV"] <= 0.00022),  # N: 3
+            (df["Binding_Energy/MeV"] >= 0.03256) & (df["Binding_Energy/MeV"] <= 0.03656),  # K: 0
+            (df["Binding_Energy/MeV"] >= 0.00470) & (df["Binding_Energy/MeV"] <= 0.00550),  # L: 1
+            (df["Binding_Energy/MeV"] >= 0.00050) & (df["Binding_Energy/MeV"] <= 0.00150),  # M: 2
+            (df["Binding_Energy/MeV"] >= 0.00002) & (df["Binding_Energy/MeV"] <= 0.00022),  # N: 3
         ]
         ar_bounds = [
-            (df["Binding_Energy_MeV"] >= 0.00270) & (df["Binding_Energy_MeV"] <= 0.00370),  # K: 0
-            (df["Binding_Energy_MeV"] >= 0.00015) & (df["Binding_Energy_MeV"] <= 0.00035),  # L: 1
-            (df["Binding_Energy_MeV"] >= 0.00001) & (df["Binding_Energy_MeV"] <= 0.00003),  # M: 2
+            (df["Binding_Energy/MeV"] >= 0.00270) & (df["Binding_Energy/MeV"] <= 0.00370),  # K: 0
+            (df["Binding_Energy/MeV"] >= 0.00015) & (df["Binding_Energy/MeV"] <= 0.00035),  # L: 1
+            (df["Binding_Energy/MeV"] >= 0.00001) & (df["Binding_Energy/MeV"] <= 0.00003),  # M: 2
         ]
         shell_choices = [0, 1, 2, 3]
-        
+
         xe_shells = np.select(xe_bounds, shell_choices, default=-1)
         ar_shells = np.select(ar_bounds, shell_choices[:-1], default=-1)
 
@@ -823,9 +820,10 @@ class ReadRoot():
         df.loc[phot_xe_mask, "Shell_ID"] = xe_shells[phot_xe_mask]
         df.loc[phot_ar_mask, "Shell_ID"] = ar_shells[phot_ar_mask]
 
-        self.output_df = df[(df['Volume'] == 'LAr_phys')].head(1000)
-
-        self.output_df.to_csv(self.base_path + "100line_updated.csv", index=False)
+        # self.test_output_df = df[(df['Volume'] == 'LAr_phys')].head(1000)
+        # self.test_output_df.to_csv(self.base_path + "100line_updated.csv", index=False)
+        gamma_info = df[(df["name"] == "gamma")& (df['Volume'] == 'LAr_phys')]
+        gamma_info.to_csv(self.base_path + self.info_phot_path, index=False)
 
     def delta_e_distribution(self):
         # this is is counts of all ER, uses for counting Compton and photo interaction times including secondary particles

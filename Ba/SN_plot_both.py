@@ -5,13 +5,14 @@ import numpy as np
 import os
 import pickle
 class SN():
-    def __init__(self):
+    def __init__(self,doped= False):
         # after generate new files, you need to select the capture ratio/source for different configs in read_files function.
         # then choose the correct signal/noise of with clause in read files.
         # at last change the self.name and plot_name in plot function
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
-        self.doped_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_phot_track/"
+        self.doped = doped
+        self.doped_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_halfargon/"
 
         # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_ar_inside/"
         # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_ar_inside/"  # for gamma path
@@ -103,60 +104,68 @@ class SN():
         # self.G4_events_gamma = 1E8  # only 50 chunks
         self.G4_phot_gamma = 1E8
         self.ambient_bubble = 5 # /h
+        if not self.doped:
+            temp_df_primary = pd.read_csv(self.info_primary_path)
 
-        temp_df_primary = pd.read_csv(self.info_primary_path)
+            self.df_primary_list.append(temp_df_primary)
 
-        self.df_primary_list.append(temp_df_primary)
+            temp_df_all = pd.read_csv(self.info_all_path)
 
-        temp_df_all = pd.read_csv(self.info_all_path)
-
-        self.df_all_list.append(temp_df_all)
-
-        temp_df_phot = pd.read_csv(self.info_phot_path)
-        # print("phot temp", temp_df_phot)
-        self.df_phot_list.append(temp_df_phot)
+            self.df_all_list.append(temp_df_all)
+        else:
+            temp_df_phot = pd.read_csv(self.info_phot_path)
+            # print("phot temp", temp_df_phot)
+            self.df_phot_list.append(temp_df_phot)
 
     def combine_df(self):
-        self.merged_df_primary = pd.concat(self.df_primary_list, ignore_index=True)
-        print("primary len", len(self.merged_df_primary))
-        self.merged_df_all = pd.concat(self.df_all_list, ignore_index=True)
-        print("all len", len(self.merged_df_all))
-        # self.merged_df_phot = pd.concat(self.df_phot_list, ignore_index=True)
-        self.merged_df_phot = self.df_phot_list[0]  # usually photo_list only has 1 chunked file
+        if self.doped:
+            self.merged_df_primary = pd.concat(self.df_primary_list, ignore_index=True)
+            print("primary len", len(self.merged_df_primary))
+            self.merged_df_all = pd.concat(self.df_all_list, ignore_index=True)
+            print("all len", len(self.merged_df_all))
+        else:
+            # self.merged_df_phot = pd.concat(self.df_phot_list, ignore_index=True)
+            self.merged_df_phot = self.df_phot_list[0]  # usually photo_list only has 1 chunked file
 
     def data_analysis(self):
-        #position distributions histogram, dependisng on step number
-        # self.read_positions()
-        # self.read_positions_2d_hist()
-        # self.read_positions_zslice()
-        #mulitipliciy distribtuion depending on events
-        # self.read_multiplicity()
-        # self.read_Ar_multiplicity()
-        # ER distribution per row
-        # self.read_ER_Ar_CF()
-        self.read_ER_Ar_CF_per_deposit_rate()
-        # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
-        # self.read_ER_CF_per_deposit_rate_cumulative()
-        # self.read_ER_Ar_CF_1d_sum()
-        # self.read_ER_Ar_CF_2d_sum()
-        # self.read_ER_Ar_CF_1d_sum_rate()
-        # self.read_ER_Ar_CF_1d_sum_rate_cummulative()
-        # self.read_ER_Ar_CF_1d_sum_counts()
+        if not self.doped:
+            print("NORMAL analysis")
+            #position distributions histogram, dependisng on step number
+            # self.read_positions()
+            # self.read_positions_2d_hist()
+            # self.read_positions_zslice()
+            #mulitipliciy distribtuion depending on events
+            # self.read_multiplicity()
+            # self.read_Ar_multiplicity()
+            # ER distribution per row
+            # self.read_ER_Ar_CF()
+            # self.read_ER_Ar_CF_per_deposit_rate()
+            # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
+            # self.read_ER_CF_per_deposit_rate_cumulative()
+            # self.read_ER_Ar_CF_1d_sum()
+            # self.read_ER_Ar_CF_2d_sum()
+            # self.read_ER_Ar_CF_1d_sum_rate()
+            # self.read_ER_Ar_CF_1d_sum_rate_cummulative()
+            # self.read_ER_Ar_CF_1d_sum_counts()
 
-        # self.read_emit_spectrum()
-        # self.gamma_rejection_rate_per_keV_vs_Setiz()
-        # self.gamma_rejection_rate_vs_Setiz()
+            # self.read_emit_spectrum()
+            # self.gamma_rejection_rate_per_keV_vs_Setiz()
+            # self.gamma_rejection_rate_vs_Setiz()
 
-        self.write_sims_results()
-        self.write_sims_results_thesis()
+            # self.write_sims_results()
+            # self.write_sims_results_thesis()
 
 
-        #doped analyasis
-        # self.read_ER_Ar_doped()
-        # self.write_doped_sims_results()
+        else:
+            print("doping analysis")
+            #doped analyasis
 
-        # photo process analysis
-        # self.read_ER_Ar_pho_per_deposit_rate()
+            # self.read_ER_Ar_doped()
+            # self.write_doped_sims_results()
+            self.write_doped_sims_results_v2(self.merged_df_phot, bin_start_mev=0, bin_end_mev=0.0014, bin_width_mev=0.0001)
+
+            # photo process analysis
+            # self.read_ER_Ar_pho_per_deposit_rate()
     def read_emit_spectrum(self):
         df_init_emit = self.merged_df[(self.merged_df["Volume"]=='calibration_Be_phys')&(self.merged_df["name"]=='gamma')&(self.merged_df["Step ID"]==1)]
         fig, ax = plt.subplots()
@@ -1169,6 +1178,125 @@ class SN():
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
         with open("/data/runzezhang/result/GR_sims/Ba_doped_output.pkl", "wb") as f:
             pickle.dump(output_list, f)
+
+    
+    def write_doped_sims_results_v2(self, df, bin_start_mev=0.0, bin_end_mev=1.4, bin_width_mev=0.0001, plot= False):
+        # Filter out everything except gammas to ensure a clean starting dataset
+        gamma_df = df[df["name"] == "gamma"].copy()
+
+        # Define common bin configurations in MeV, then convert the final array to keV
+        bins_mev = np.arange(bin_start_mev, bin_end_mev + bin_width_mev, bin_width_mev)
+        bins_kev = bins_mev * 1000.0
+        bin_width_kev = bin_width_mev * 1000.0
+
+        # ------------------------------------------------------------------
+        # 1. COMPTON PROCESSING
+        # ------------------------------------------------------------------
+        compt_df = gamma_df[gamma_df["Process"] == "compt"].copy()
+
+        # Calculate energy deposited by Compton scatter (convert MeV -> keV)
+        compt_df["Energy_Deposited/keV"] = (compt_df["PreKinetic/MeV"] - compt_df["PostKinetic/MeV"]) * 1000.0
+
+        # Randomly sample based on the calculated Xenon probability column
+        random_rolls = np.random.rand(len(compt_df))
+        xe_compt_df = compt_df[random_rolls < compt_df["Target_Post"]]
+
+        # Create the Compton histogram using keV bins
+        compt_counts, _ = np.histogram(xe_compt_df["Energy_Deposited/keV"], bins=bins_kev)
+
+        # Scale by 1/4 to represent the average of the 4 shells (K, L, M, N) evenly
+        compt_counts_scaled = compt_counts / 4.0
+
+        # ------------------------------------------------------------------
+        # 2. PHOTOELECTRIC PROCESSING
+        # ------------------------------------------------------------------
+        # Isolate Xenon interactions (Pre_Target == 1.0) and restrict to K-shell (Shell_ID == 0)
+        phot_df = gamma_df[gamma_df["Process"] == "phot"].copy()
+        xe_k_phot_df = phot_df[(phot_df["Pre_Target"] == 1.0) & (phot_df["Shell_ID"] == 0)].copy()
+
+        # Calculate energy deposited (convert MeV -> keV)
+        xe_k_phot_df["Energy_Deposited/keV"] = (xe_k_phot_df["PreKinetic/MeV"] - xe_k_phot_df[
+            "PostKinetic/MeV"]) * 1000.0
+
+        # Create the Photoelectric histogram using keV bins
+        phot_counts, _ = np.histogram(xe_k_phot_df["Energy_Deposited/keV"], bins=bins_kev)
+
+        # ------------------------------------------------------------------
+        # 3. COMBINE AND PLOT TOTAL SPECTRUM (LINE PLOT IN keV)
+        # ------------------------------------------------------------------
+        total_counts = compt_counts_scaled + phot_counts
+        bin_centers_kev = (bins_kev[:-1] + bins_kev[1:]) / 2.0
+        if plot:
+            plt.figure(figsize=(10, 6))
+
+            # Clean standard line plots mapping straight to the bin center coordinates
+            plt.plot(bin_centers_kev, total_counts, label='Total (Compt K + Phot K)', color='purple', lw=2.5)
+            plt.plot(bin_centers_kev, compt_counts_scaled, label='Compton (Xe Scaled)', color='orange', ls='--', lw=1.5)
+            plt.plot(bin_centers_kev, phot_counts, label='Photoelectric (Xe K-Shell)', color='cyan', ls='--', lw=1.5)
+
+            plt.title("Deposited Energy Spectrum in Xenon")
+            plt.xlabel("Energy Deposited (keV)")
+            plt.ylabel(f"Counts / {bin_width_kev:.1f} keV Bin")
+            plt.legend()
+            plt.grid(True, alpha=0.3)
+            plt.yscale('log', nonpositive='clip')  # Toggle off if you prefer a linear scale layout
+            plt.savefig(self.plot_path +"Ba_doped_energy_dep.pdf")
+
+        # ------------------------------------------------------------------
+        # 4. PLOT BINDING ENERGY (ALL XENON PHOTOELECTRIC SHELLS IN keV)
+        # ------------------------------------------------------------------
+        all_xe_phot = phot_df[phot_df["Pre_Target"] == 1.0].copy()
+
+        # Convert Binding Energy to keV
+        all_xe_phot["Binding_Energy_keV"] = all_xe_phot["Binding_Energy_MeV"] * 1000.0
+        valid_be_df = all_xe_phot[all_xe_phot["Binding_Energy_keV"] > 0]
+        if plot:
+            plt.figure(figsize=(10, 5))
+            # 0.5 keV bins tracking up to 45 keV bounds
+            be_bins_kev = np.arange(0.0, 45.0, 0.5)
+
+            plt.hist(valid_be_df["Binding_Energy_keV"], bins=be_bins_kev, color='forestgreen', alpha=0.7,
+                     edgecolor='black')
+            plt.title("Reconstructed Photoelectric Binding Energy Spectrum (Xenon All Shells)")
+            plt.xlabel("Binding Energy (keV)")
+            plt.ylabel("Counts")
+            plt.grid(True, alpha=0.3)
+
+            # Reference guide line for the physical Xenon K-edge peak position
+            plt.axvline(x=34.56, color='r', linestyle=':', alpha=0.7, label='Expected Xe K-edge (~34.56 keV)')
+            plt.legend()
+            plt.savefig(self.plot_path+"Ba_binding_energy_xe.pdf")
+
+
+        # spectrum for xenon absorption only need total counts
+        # the sepctrum is energy deposition spectrum but only valuable variable is the total counts or the 1st bin number
+        # of the cumulative scatter
+        hist_array = [None]
+        # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
+        hist_array[0] = (total_counts, bins_kev)
+
+        cumulative_threshold_per_scatter_array = [None]
+
+        cumulative_threshold_per_scatter_array[0] = np.array(
+            [sum(hist_array[0][0][i:]) for i in range(len(hist_array[0][0]))])
+
+        # histogram per scattering per keV
+        cumulative_threshold_array = [None]
+        energy_deposit_list = [hist_array[0][0][i] * hist_array[0][1][i] for i in range(len(hist_array[0][0]))]
+
+        cumulative_threshold_array[0] = np.array(
+            [sum(energy_deposit_list[i:]) for i in range(len(energy_deposit_list))])
+        print("total count* energy Co", cumulative_threshold_per_scatter_array[0][0],
+              cumulative_threshold_per_scatter_array[0][0] / cumulative_threshold_array[0][0])
+        Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
+        output_list = [Rate_factor, hist_array, cumulative_threshold_per_scatter_array[0],
+                       cumulative_threshold_array[0]]
+        # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
+        with open("/data/runzezhang/result/GR_sims/Ba_doped_output_full_track.pkl", "wb") as f:
+            pickle.dump(output_list, f)
+
+        return total_counts, bins_kev
+    
     def read_ER_CF_per_deposit_rate_cumulative(self):
         # rate factor in mHz
         Rate_factor = self.gamma_rate*1000 / (self.G4_events_gamma)
@@ -1430,5 +1558,5 @@ class test_csv():
 
 
 if __name__=="__main__":
-    sn = SN()
+    sn = SN(doped=True)
     # test = test_csv()
