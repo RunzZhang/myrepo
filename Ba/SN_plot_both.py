@@ -12,7 +12,7 @@ class SN():
         # v2: change back to 2 backgrounds but with finer definitions
         # v4 kill duplicated NRERs
         self.doped = doped
-        self.doped_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_halfargon/"
+        self.doped_path = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Ba_1E8_shell/"
 
         # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_ar_inside/"
         # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_ar_inside/"  # for gamma path

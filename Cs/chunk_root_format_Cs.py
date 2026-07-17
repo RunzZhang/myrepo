@@ -2,15 +2,15 @@ import uproot
 import pandas as pd
 import os, time
 
-# cp /data/runzezhang/Geant4Simulaions/g411_TN/TN_source_AmLi_LZ.mac /data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_lead_gamma/
+# cp /lzdata/runzezhang/Geant4Simulaions/g411_TN/TN_source_AmLi_LZ.mac /lzdata/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_lead_gamma/
 # change the mac name and chunk folder to save the macro configuration
 class ReadRoot:
-    def __init__(self):
-        self.base_path = "/data/runzezhang/result/GR_sims/"
-        self.plot_path = '/data/runzezhang/result/GR_sims/plot/'
+    def __init__(self, doped = False):
+        self.base_path = "/lzdata/runzezhang/result/GR_sims/"
+        self.plot_path = '/lzdata/runzezhang/result/GR_sims/plot/'
 
-        # self.base_path = "/data/runzezhang/result/TN_box/"
-        # self.plot_path = '/data/runzezhang/result/TN_box/plot/'
+        # self.base_path = "/lzdata/runzezhang/result/TN_box/"
+        # self.plot_path = '/lzdata/runzezhang/result/TN_box/plot/'
 
         # self.false_1 = "AmLi_1E7_false1.csv"
         # self.false_2 = "AmLi_1E7_false2.csv"
@@ -26,20 +26,22 @@ class ReadRoot:
         # self.signal_path_mid = self.base_path + self.signal_mid
         # self.signal_path = self.base_path + self.signal
 
-        self.filepath = self.base_path + "dmx_Cs_5E6.root"
+        self.filepath = self.base_path + "dmx_Cs_1E8_shell.root"
         # self.filepath = self.base_path + "dmx_AmLi.root" # test
         self.tree_name = "tree"  # Assuming your TTree is named "tree"
 
         # Define the columns you want to read and write
-        # self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV","PostKinetic/MeV"
-        #                          "Recoiled/MeV", "Volume", "Process"]
-        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm",'Y/mm', 'Z/mm', "PreKinetic/MeV",
-                                 "PostKinetic/MeV",
+        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV","PostKinetic/MeV"
                                  "Recoiled/MeV", "Volume", "Process"]
+        self.selected_columns_doped = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm",'Y/mm', 'Z/mm', "PreKinetic/MeV",
+                                 "PostKinetic/MeV",
+                                 "Recoiled/MeV", "Volume", "Process", "Pre_Target", "X_post/mm","Y_post/mm","Z_post/mm"]
+        if doped:
+            self.selected_columns = self.selected_columns_doped
 
-    def chunk_and_write_root(self, num_chunks=20, output_dir=None):
+    def chunk_and_write_root(self, start_chunk_cum = 0,num_chunks=20, output_dir=None):
         if output_dir is None:
-            output_dir = os.path.join(self.base_path, "chunked_root_files_Cs_5E6")
+            output_dir = os.path.join(self.base_path, "chunked_root_files_Cs_1E8_shell")
         os.makedirs(output_dir, exist_ok=True)
 
         with uproot.open(self.filepath) as file:
@@ -61,7 +63,7 @@ class ReadRoot:
             # Convert to dictionary format as required by uproot.recreate
             branch_types = {col: tree[col].interpretation.numpy_dtype for col in self.selected_columns}
 
-            chunk_num = 0
+            chunk_num = start_chunk_cum
             start_entry = 0
             # Iterate through the ROOT file in chunks
             for arrays in tree.iterate(expressions=self.selected_columns, library="pd", entry_start=0,
@@ -94,5 +96,6 @@ class ReadRoot:
 
 # Example usage:
 if __name__ == "__main__":
-    reader = ReadRoot()
-    reader.chunk_and_write_root(num_chunks=50)
+    # reader = ReadRoot(doped=False)
+    reader = ReadRoot(doped=True)
+    reader.chunk_and_write_root(start_chunk_cum=0,num_chunks=50)

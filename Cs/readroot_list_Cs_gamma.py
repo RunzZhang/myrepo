@@ -57,6 +57,7 @@ import uproot
 import matplotlib.pyplot as plt
 import numpy as np
 import csv
+import crosssection_calculate
 # filename = "/data/runzezhang/Geant4Simulaions/g411_TN/dmx.root"
 def test_write():
     try:
@@ -96,8 +97,8 @@ def find_entries():
 
 class RestructureRoot():
     def __init__(self):
-        self.filepath = "/data/runzezhang/result/GR_sims/chunked_root_files/dmx_Cf_1E7.root"
-        self.reconstruct_filepath = "/data/runzezhang/result/GR_sims/chunked_root_files/dmx_rcCf_1E7.csv"
+        self.filepath = "/lzdata/runzezhang/result/GR_sims/chunked_root_files/dmx_Cf_1E7.root"
+        self.reconstruct_filepath = "/lzdata/runzezhang/result/GR_sims/chunked_root_files/dmx_rcCf_1E7.csv"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
@@ -133,14 +134,18 @@ class RestructureRoot():
         # uproot.writing._dask_write.dask_write(self.df, self.reconstruct_filepath/)
 
 class ReadRoot():
-    def __init__(self):
-        # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
-        # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
+    def __init__(self, doped=False):
+        self.doped = doped
+        self.base_path = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Cs_1E5_lar/"
+        self.base_path2 = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Cs_1E5_lar/"
+        if self.doped:
+            self.base_path = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Cs_1E8_shell/"
+            self.base_path2 = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Cs_1E8_shell/"
 
-        self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Cs_5E6/"
-        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Cs_5E6/"
+        # self.base_path = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
+        # self.base_path2 = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
 
-        self.plot_path = '/data/runzezhang/result/GR_sims/plot/'
+        self.plot_path = '/lzdata/runzezhang/result/GR_sims/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
         # self.main_body(1)
@@ -210,10 +215,15 @@ class ReadRoot():
 
         self.filepath = self.base_path + f"dmx_Co_1E7_{i}.root"
         self.file = uproot.open(self.filepath)["tree"]
-        # print("columns: ", self.file.keys())
+
+        print("columns: ", self.file.keys())
         # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
         self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm",'Y/mm', 'Z/mm',"PreKinetic/MeV","PostKinetic/MeV",
                                  "Recoiled/MeV", "Volume", "Process"]
+        if self.doped:
+            self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm",'Y/mm', 'Z/mm', "PreKinetic/MeV",
+                                 "PostKinetic/MeV",
+                                 "Recoiled/MeV", "Volume", "Process", "Pre_Target", "X_post/mm","Y_post/mm","Z_post/mm"]
 
         self.bubble_threshold = 0.0001 # MeV bubble generate threshold
         self.rows = 1000
@@ -227,16 +237,23 @@ class ReadRoot():
 
         # find all ER and save ER into csv
         self.allER()
-        self.ER_distribution_primary_v2()
-        self.ER_distribution_counts_v2()
-        # self.ER_distribution_primary()
-        # self.ER_distribution_counts()
+        if not self.doped:
+            print("NORMAL TRACKING")
+            self.ER_distribution_primary_v2()
+            self.ER_distribution_counts_v2()
+            # self.ER_distribution_primary()
+            # self.ER_distribution_counts()
+        else:
+            print("doped mode")
+            # xenon doping
+            # self.xenon_doped_phot()
 
-        # find all NR
-        # self.allNR()
 
-        #xenon doping
-        # self.xenon_doped_phot()
+            self.shell_vacancy_analysis(self.df,  mass_xe=0.00013, mass_ar=0.99987)
+
+
+
+
 
 
 
@@ -581,15 +598,20 @@ class ReadRoot():
         print(self.electron_recoiled_event_list[:3])
         high_NRER = []
 
-        self.mom_gamma = self.df[
+
+        self.mom_gamma= self.df[
             ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-                    (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
+                    (self.df['Process'] == "compt")| (self.df['Process'] == "phot")) & (
                     self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
         self.mom_gamma_group = self.mom_gamma.groupby("Event")
 
-        self.mom_gamma["ER_near/eV"] = (self.mom_gamma["PreKinetic/MeV"] - self.mom_gamma["PostKinetic/MeV"]) * 1e6
 
-        self.mom_gamma["R/mm"] = 0
+        self.mom_gamma["ER_near/eV"] = (self.mom_gamma["PreKinetic/MeV"] -self.mom_gamma["PostKinetic/MeV"])* 1e6
+
+
+
+
+        self.mom_gamma["R/mm"] =0
         self.mom_gamma["Multiplicity"] = 0
 
         self.output_df = self.mom_gamma[
@@ -616,6 +638,49 @@ class ReadRoot():
         print(self.electron_recoiled_event_list[:3])
         high_NRER = []
 
+        self.mom_gamma= self.df[
+            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
+                (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))  & (self.df["Event"].isin(self.electron_recoiled_event_list))]
+        self.mom_gamma_group = self.mom_gamma.groupby("Event")
+
+        self.mom_gamma["ER_near/eV"] = (self.mom_gamma["PreKinetic/MeV"] - self.mom_gamma[
+            "PostKinetic/MeV"]) * 1e6
+
+
+        self.mom_gamma["R/mm"] = 0
+        self.mom_gamma["Multiplicity"] = 0
+
+        self.output_df = self.mom_gamma[
+            ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
+
+
+        # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
+        print("all len", len(self.mom_gamma), len(self.output_df))
+        self.output_df.to_csv(self.info_all_path, index=False)
+        file514 = self.df[self.df["Event"] == 514]
+        columns_to_round1 = ["X/mm","Y/mm","Z/mm",]
+        columns_to_round6 = ["PreKinetic/MeV", "PostKinetic/MeV", "Recoiled/MeV"]
+        file514[columns_to_round1] = file514[columns_to_round1].round(1)
+        file514[columns_to_round6] = file514[columns_to_round6].round(6)
+        file514.to_csv(self.base_path + "LAr_ER_514.csv")
+        # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
+
+    def doped_check(self):
+        self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-") & (self.df_electron["Event"] != 1)]
+        # double check gamma
+        print(self.df.head(20))
+        summed_values = self.tagged_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
+
+        print(summed_values.head(20))
+
+        # add gamma up
+        self.electron_recoiled_list = summed_values["Recoiled/MeV"].to_list()
+        # save info
+
+        self.electron_recoiled_event_list = summed_values["Event"].to_list()
+        print(self.electron_recoiled_event_list[:3])
+        high_NRER = []
+
         self.mom_gamma = self.df[
             ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
                     (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
@@ -628,19 +693,137 @@ class ReadRoot():
         self.mom_gamma["R/mm"] = 0
         self.mom_gamma["Multiplicity"] = 0
 
+        # Recoiled is recording the taget atom for phot process for test version
+        self.phot = self.mom_gamma[(self.mom_gamma['Process'] == "phot")]
+        print("phot",self.phot.head(10))
+
+        self.phot["Target_Post"] = self.phot["Pre_Target"].apply(
+    lambda e: crosssection_calculate.calculate_doped_photoelectric_probabilities(e, 0.5, 0.5)["Xe_Interaction_Probability"])
+        total_probability_sum = self.phot["Target_Post"].sum()
+        zero_count = len(self.phot[self.phot["Pre_Target"] == 1.0])
+        print("Simulation", self.phot[self.phot["Pre_Target"] == 1.0])
+        print("Post analysis count", total_probability_sum, "Simulation result", zero_count, "total phot number",len(self.phot))
+
         self.output_df = self.mom_gamma[
             ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
 
+
+
+        self.output_df = self.df[(self.df['Volume'] == 'LAr_phys')].head(100)
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
         print("all len", len(self.mom_gamma), len(self.output_df))
-        self.output_df.to_csv(self.info_all_path, index=False)
-        # file2930 = self.df[self.df["Event"] == 2930]
-        # columns_to_round1 = ["X/mm","Y/mm","Z/mm",]
-        # columns_to_round6 = ["PreKinetic/MeV", "PostKinetic/MeV", "Recoiled/MeV"]
-        # file2930[columns_to_round1] = file2930[columns_to_round1].round(1)
-        # file2930[columns_to_round6] = file2930[columns_to_round6].round(6)
-        # file2930.to_csv(self.base_path + "LAr_ER_2930.csv")
-        # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
+        self.output_df.to_csv(self.base_path+"100line.csv", index=False)
+
+
+    def shell_vacancy_analysis(self, df, mass_xe=0.5, mass_ar=0.5):
+        # ------------------------------------------------------------------
+        # 1. SETUP GLOBAL LOOKUP ARRAYS (Shell and Envelope Rules)
+        # ------------------------------------------------------------------
+        # Pre-calculate shell boundaries for np.select
+
+        df["Shell_ID"] = -1
+        df["Binding_Energy/MeV"] = -1.0
+
+        # Initialize columns
+
+        # ------------------------------------------------------------------
+        # PART 1: VECTORIZED COMPTON SAMPLING
+        # ------------------------------------------------------------------
+        compt_mask = (df["Process"] == "compt") & (df["name"] == "gamma") & (df['Volume'] == 'LAr_phys')
+        if compt_mask.any():
+            gamma_energies = df.loc[compt_mask, "PreKinetic/MeV"].values
+
+            # Pull continuous relative interaction cross-sections directly from your module
+            probs = [crosssection_calculate.calculate_doped_compton_probabilities(e, mass_xe, mass_ar) for e in gamma_energies]
+
+            # Directly store the continuous Argon interaction probability (no random sampling)
+            p_ar_array = np.array([p["Xe_Interaction_Probability"] for p in probs])
+            df.loc[compt_mask, "Target_PXe"] = p_ar_array
+
+        phot_mask = (df["Process"] == "phot") & (df["name"] == "gamma") & (df['Volume'] == 'LAr_phys')
+        if phot_mask.any():
+            gamma_energies = df.loc[phot_mask, "PreKinetic/MeV"].values
+
+            # Pull continuous relative interaction cross-sections directly from your module
+            probs = [crosssection_calculate.calculate_doped_photoelectric_probabilities(e, mass_xe, mass_ar) for e in
+                     gamma_energies]
+
+            # Directly store the continuous Argon interaction probability (no random sampling)
+            p_ar_array = np.array([p["Xe_Interaction_Probability"] for p in probs])
+            df.loc[phot_mask, "Target_PXe"] = p_ar_array
+
+        total_probability_sum = df.loc[phot_mask, "Target_PXe"].sum()
+        zero_count = len(df.loc[phot_mask& (df["Pre_Target"] == 1.0)])
+        print("Post analysis count Xe", total_probability_sum, "Simulation result Xe", zero_count, "total phot number",
+              len(df.loc[phot_mask]))
+
+        # ------------------------------------------------------------------
+        # PART 2: VECTORIZED PHOTOELECTRIC VERTEX MATCHING (Min Track ID)
+        # ------------------------------------------------------------------
+        # 1. Isolate and round coordinates for all secondary electrons
+        electrons = df[df["name"] == "e-"].copy()
+        coord_cols = ["Event", "X/mm", "Y/mm", "Z/mm"]
+        for col in coord_cols[1:]:
+            electrons[col] = electrons[col].round(3)
+
+        # 2. Isolate and round terminal coordinates for photoelectric gammas
+        phot_gammas = df[(df["Process"] == "phot") & (df["name"] == "gamma")].copy()
+        post_coord_cols = ["Event", "X_post/mm", "Y_post/mm", "Z_post/mm"]
+        for col in post_coord_cols[1:]:
+            phot_gammas[col] = phot_gammas[col].round(3)
+
+        # 3. Find the entry with the MINIMUM Track ID at each unique spatial position
+        vertex_primary_electrons = electrons.loc[
+            electrons.groupby(coord_cols)["Track ID"].idxmin()
+        ]
+
+        # 4. Perform the fast relational merge using the 3D position keys
+        merged = pd.merge(
+            phot_gammas,
+            vertex_primary_electrons[coord_cols + ["PreKinetic/MeV"]],
+            left_on=post_coord_cols,
+            right_on=coord_cols,
+            suffixes=("", "_child"),
+            how="left"
+        )
+        merged.index = phot_gammas.index
+
+        # 5. Compute Vectorized True Binding Energy
+        gamma_dep_energy = merged["PreKinetic/MeV"] - merged["PostKinetic/MeV"]
+        df.loc[phot_gammas.index, "Binding_Energy/MeV"] = gamma_dep_energy - merged["PreKinetic/MeV_child"]
+
+        # ------------------------------------------------------------------
+        # PART 3: VECTORIZED SHELL ENVELOPE SELECTION via np.select
+        # ------------------------------------------------------------------
+        # Xe K (~34.56 keV), Xe L (~4.78-5.45 keV), Xe M (~0.67-1.15 keV), Xe N (~0.07-0.15 keV)
+        # Ar K (~3.20 keV), Ar L (~0.25 keV), Ar M (~0.02 keV)
+        xe_bounds = [
+            (df["Binding_Energy/MeV"] >= 0.03256) & (df["Binding_Energy/MeV"] <= 0.03656),  # K: 0
+            (df["Binding_Energy/MeV"] >= 0.00470) & (df["Binding_Energy/MeV"] <= 0.00550),  # L: 1
+            (df["Binding_Energy/MeV"] >= 0.00050) & (df["Binding_Energy/MeV"] <= 0.00150),  # M: 2
+            (df["Binding_Energy/MeV"] >= 0.00002) & (df["Binding_Energy/MeV"] <= 0.00022),  # N: 3
+        ]
+        ar_bounds = [
+            (df["Binding_Energy/MeV"] >= 0.00270) & (df["Binding_Energy/MeV"] <= 0.00370),  # K: 0
+            (df["Binding_Energy/MeV"] >= 0.00015) & (df["Binding_Energy/MeV"] <= 0.00035),  # L: 1
+            (df["Binding_Energy/MeV"] >= 0.00001) & (df["Binding_Energy/MeV"] <= 0.00003),  # M: 2
+        ]
+        shell_choices = [0, 1, 2, 3]
+
+        xe_shells = np.select(xe_bounds, shell_choices, default=-1)
+        ar_shells = np.select(ar_bounds, shell_choices[:-1], default=-1)
+
+        phot_xe_mask = (df["Process"] == "phot") & (df["name"] == "gamma") & (df["Pre_Target"] == 1.0)& (df['Volume'] == 'LAr_phys')
+        phot_ar_mask = (df["Process"] == "phot") & (df["name"] == "gamma") & (df["Pre_Target"] == 0.0)& (df['Volume'] == 'LAr_phys')
+
+        # Apply conditions across masks instantly
+        df.loc[phot_xe_mask, "Shell_ID"] = xe_shells[phot_xe_mask]
+        df.loc[phot_ar_mask, "Shell_ID"] = ar_shells[phot_ar_mask]
+
+        # self.test_output_df = df[(df['Volume'] == 'LAr_phys')].head(1000)
+        # self.test_output_df.to_csv(self.base_path + "100line_updated.csv", index=False)
+        gamma_info = df[(df["name"] == "gamma")& (df['Volume'] == 'LAr_phys')]
+        gamma_info.to_csv(self.info_phot_path, index=False)
 
     def delta_e_distribution(self):
         # this is is counts of all ER, uses for counting Compton and photo interaction times including secondary particles
@@ -776,7 +959,11 @@ class ReadRoot():
         print("df the whole list", self.df[self.df["Volume"]=="LAr_phys"])
         print("columns", self.df.columns)
 
-        print("low energy",self.df[(self.df["Volume"]=="LAr_phys")&(self.df["PreKinetic/MeV"]<0.006)][["Event"]])
+        # print("low energy",self.df[(self.df["Volume"]=="LAr_phys")&(self.df["PreKinetic/MeV"]<0.006)][["Event"]])
+        print("compt", self.df[(self.df["Process"]=="compt")])
+        self.doped_post_analysis = self.df.copy()
+        self.doped_post_analysis["E_binding/MeV"]  = self.doped_post_analysis["PreKinetic/MeV"] -self.doped_post_analysis["PostKinetic/MeV"]-self.doped_post_analysis["Recoiled/MeV"]
+        print("phot", self.doped_post_analysis[(self.doped_post_analysis["Process"]=="phot")])
         self.df[self.df["Event"] == 2930].to_csv(self.base_path + "LAr_ER_2930.csv")
 
 
@@ -921,7 +1108,8 @@ class ReadRoot():
 
 if __name__ =="__main__":
     # ReR = RestructureRoot()
-    RR = ReadRoot()
+    RR = ReadRoot(doped=True)
+    # RR= ReadRoot(doped=False)
     # test_write()
 
     # find corrupted file entries

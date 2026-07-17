@@ -97,8 +97,8 @@ def find_entries():
 
 class RestructureRoot():
     def __init__(self):
-        self.filepath = "/data/runzezhang/result/GR_sims/chunked_root_files/dmx_Cf_1E7.root"
-        self.reconstruct_filepath = "/data/runzezhang/result/GR_sims/chunked_root_files/dmx_rcCf_1E7.csv"
+        self.filepath = "/lzdata/runzezhang/result/GR_sims/chunked_root_files/dmx_Cf_1E7.root"
+        self.reconstruct_filepath = "/lzdata/runzezhang/result/GR_sims/chunked_root_files/dmx_rcCf_1E7.csv"
         self.file = uproot.open(self.filepath)["tree"]
         print("columns: ",self.file.keys())
         #['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
@@ -136,27 +136,27 @@ class RestructureRoot():
 class ReadRoot():
     def __init__(self, doped=False):
         self.doped = doped
-        self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
-        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
+        self.base_path = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
+        self.base_path2 = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
         if self.doped:
-            self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_halfargon/"
-            self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_halfargon/"
+            self.base_path = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Ba_1E8_shell/"
+            self.base_path2 = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Ba_1E8_shell/"
 
-        # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
-        # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
+        # self.base_path = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
+        # self.base_path2 = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
 
-        self.plot_path = '/data/runzezhang/result/GR_sims/plot/'
+        self.plot_path = '/lzdata/runzezhang/result/GR_sims/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        self.main_body(1)
-        # for i in range(1,56):
-        # # for i in range(26, 54):
-        #     try:
-        # # for i in range(1, 11):
-        #         self.main_body(i)
-        #     except Exception as e:
-        #         print(e)
-        #         continue
+        # self.main_body(1)
+        for i in range(1,56):
+        # for i in range(26, 54):
+            try:
+        # for i in range(1, 11):
+                self.main_body(i)
+            except Exception as e:
+                print(e)
+                continue
     def main_body(self,i):
         print(i)
         self.ini_path = self.base_path+ f"Co_gamma_1E7_ini_part{i}.csv"
@@ -249,7 +249,7 @@ class ReadRoot():
             # self.xenon_doped_phot()
 
 
-            self.shell_vacancy_analysis(self.df,  mass_xe=0.5, mass_ar=0.5)
+            self.shell_vacancy_analysis(self.df,  mass_xe=0.00013, mass_ar=0.99987)
 
 
 

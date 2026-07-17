@@ -2,15 +2,15 @@ import uproot
 import pandas as pd
 import os, time
 
-# cp /data/runzezhang/Geant4Simulaions/g411_TN/TN_source_AmLi_LZ.mac /data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_lead_gamma/
+# cp /lzdata/runzezhang/Geant4Simulaions/g411_TN/TN_source_AmLi_LZ.mac /lzdata/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E7_outside_lead_gamma/
 # change the mac name and chunk folder to save the macro configuration
 class ReadRoot:
     def __init__(self, doped = False):
-        self.base_path = "/data/runzezhang/result/GR_sims/"
-        self.plot_path = '/data/runzezhang/result/GR_sims/plot/'
+        self.base_path = "/lzdata/runzezhang/result/GR_sims/"
+        self.plot_path = '/lzdata/runzezhang/result/GR_sims/plot/'
 
-        # self.base_path = "/data/runzezhang/result/TN_box/"
-        # self.plot_path = '/data/runzezhang/result/TN_box/plot/'
+        # self.base_path = "/lzdata/runzezhang/result/TN_box/"
+        # self.plot_path = '/lzdata/runzezhang/result/TN_box/plot/'
 
         # self.false_1 = "AmLi_1E7_false1.csv"
         # self.false_2 = "AmLi_1E7_false2.csv"
@@ -26,7 +26,7 @@ class ReadRoot:
         # self.signal_path_mid = self.base_path + self.signal_mid
         # self.signal_path = self.base_path + self.signal
 
-        self.filepath = self.base_path + "dmx_Ba_1E5_halfargon.root"
+        self.filepath = self.base_path + "dmx_Ba_1E8_shell.root"
         # self.filepath = self.base_path + "dmx_AmLi.root" # test
         self.tree_name = "tree"  # Assuming your TTree is named "tree"
 
@@ -41,7 +41,7 @@ class ReadRoot:
 
     def chunk_and_write_root(self, start_chunk_cum = 0,num_chunks=20, output_dir=None):
         if output_dir is None:
-            output_dir = os.path.join(self.base_path, "chunked_root_files_Ba_1E5_halfargon")
+            output_dir = os.path.join(self.base_path, "chunked_root_files_Ba_1E8_shell")
         os.makedirs(output_dir, exist_ok=True)
 
         with uproot.open(self.filepath) as file:
@@ -98,4 +98,4 @@ class ReadRoot:
 if __name__ == "__main__":
     # reader = ReadRoot(doped=False)
     reader = ReadRoot(doped=True)
-    reader.chunk_and_write_root(start_chunk_cum=0,num_chunks=1)
+    reader.chunk_and_write_root(start_chunk_cum=0,num_chunks=50)
