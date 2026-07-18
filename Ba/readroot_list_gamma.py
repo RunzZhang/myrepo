@@ -136,8 +136,8 @@ class RestructureRoot():
 class ReadRoot():
     def __init__(self, doped=False):
         self.doped = doped
-        self.base_path = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
-        self.base_path2 = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
+        self.base_path = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Ba_5E6_ER/"
+        self.base_path2 = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Ba_5E6_ER/"
         if self.doped:
             self.base_path = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Ba_1E8_shell/"
             self.base_path2 = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Ba_1E8_shell/"
