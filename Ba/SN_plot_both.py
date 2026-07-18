@@ -24,8 +24,8 @@ class SN():
         # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_ar_1E6_phot/"
         # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_ar_1E6_phot/"
 
-        self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
-        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E6_normal/"
+        self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_5E6_ER/"
+        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_5E6_ER/"
         if self.doped:
             self.base_path =  self.doped_path
 
@@ -102,7 +102,7 @@ class SN():
         self.gamma_rate = 2.58*1.67e4 # /s
 
 
-        self.G4_events_gamma =  1E6 # only 50 chunks
+        self.G4_events_gamma =  5E6 # only 50 chunks
         # self.G4_events_gamma = 1E8  # only 50 chunks
         self.G4_phot_gamma = 1E8
         self.ambient_bubble = 5 # /h
@@ -1579,6 +1579,6 @@ class test_csv():
 
 
 if __name__=="__main__":
-    sn = SN(doped=True)
-    # sn = SN(doped=False)
+    # sn = SN(doped=True)
+    sn = SN(doped=False)
     # test = test_csv()
