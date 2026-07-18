@@ -26,13 +26,14 @@ class ReadRoot:
         # self.signal_path_mid = self.base_path + self.signal_mid
         # self.signal_path = self.base_path + self.signal
 
-        self.filepath = self.base_path + "dmx_Co_1E8_shell.root"
+        self.filepath = self.base_path + "dmx_Co_5E6_ER.root"
         # self.filepath = self.base_path + "dmx_AmLi.root" # test
         self.tree_name = "tree"  # Assuming your TTree is named "tree"
 
         # Define the columns you want to read and write
-        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV","PostKinetic/MeV"
-                                 "Recoiled/MeV", "Volume", "Process"]
+        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm",'Y/mm', 'Z/mm', "PreKinetic/MeV",
+                                 "PostKinetic/MeV",
+                                 "Recoiled/MeV", "Volume", "Process", "Pre_Target", "X_post/mm","Y_post/mm","Z_post/mm"]
         self.selected_columns_doped = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm",'Y/mm', 'Z/mm', "PreKinetic/MeV",
                                  "PostKinetic/MeV",
                                  "Recoiled/MeV", "Volume", "Process", "Pre_Target", "X_post/mm","Y_post/mm","Z_post/mm"]
@@ -41,11 +42,13 @@ class ReadRoot:
 
     def chunk_and_write_root(self, start_chunk_cum = 0,num_chunks=20, output_dir=None):
         if output_dir is None:
-            output_dir = os.path.join(self.base_path, "chunked_root_files_Co_1E8_shell")
+            output_dir = os.path.join(self.base_path, "chunked_root_files_Co_5E6_ER")
         os.makedirs(output_dir, exist_ok=True)
 
         with uproot.open(self.filepath) as file:
+
             tree = file[self.tree_name]
+            print("columns", tree.keys())
             total_entries = int(tree.num_entries)
             print(f"Total entries in original file: {total_entries}")
 
@@ -96,6 +99,6 @@ class ReadRoot:
 
 # Example usage:
 if __name__ == "__main__":
-    # reader = ReadRoot(doped=False)
-    reader = ReadRoot(doped=True)
-    reader.chunk_and_write_root(start_chunk_cum=0,num_chunks=50)
+    reader = ReadRoot(doped=False)
+    # reader = ReadRoot(doped=True)
+    reader.chunk_and_write_root(start_chunk_cum=0,num_chunks=20)

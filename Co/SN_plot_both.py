@@ -25,15 +25,15 @@ class SN():
         # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Co_ar_1E6_phot/"
         # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Co_ar_1E6_phot/"
 
-        self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Co_5E6/"
-        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Co_5E6/"
+        self.base_path = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Co_5E6_ER/"
+        self.base_path2 = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Co_5E6_ER/"
         if self.doped:
             self.base_path = self.doped_path
 
         # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Co_1E5_lar/"
         # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Co_1E5_lar/"  # for gamma path
 
-        self.plot_path = '/data/runzezhang/result/GR_sims/plot/'
+        self.plot_path = '/lzdata/runzezhang/result/GR_sims/plot/'
         self.false_1 = "PN_false1.csv"
         self.false_2 = "PN_false2.csv"
         self.signal = "PN_sig.csv"
@@ -122,7 +122,8 @@ class SN():
             print("all len", len(self.merged_df_all))
         else:
             # self.merged_df_phot = pd.concat(self.df_phot_list, ignore_index=True)
-            self.merged_df_phot = self.df_phot_list[0]  # usually photo_list only has 1 chunked file
+            self.merged_df_phot = pd.concat(self.df_phot_list, ignore_index=True)
+            # self.merged_df_phot = self.df_phot_list[0]  # usually photo_list only has 1 chunked file
 
     def data_analysis(self):
         if not self.doped:
@@ -149,7 +150,7 @@ class SN():
             # self.gamma_rejection_rate_per_keV_vs_Setiz()
             # self.gamma_rejection_rate_vs_Setiz()
 
-            # self.write_sims_results()
+            self.write_sims_results()
             # self.write_sims_results_thesis()
 
 
@@ -886,7 +887,7 @@ class SN():
         hist_array_primary = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
         # hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=12000, range=(0, 1200))
-        hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=1000, range=(0, 1000))
+        hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=1200, range=(0, 1200))
         # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
         # we need 0.1 keV, and this gives us 4800 bins
 
@@ -914,7 +915,7 @@ class SN():
         hist_array_all = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
         # hist_array_all[0] = np.histogram(ER_Ar_all, bins=12000, range=(0, 1200))
-        hist_array_all[0] = np.histogram(ER_Ar_all, bins=1000, range=(0, 1000))
+        hist_array_all[0] = np.histogram(ER_Ar_all, bins=1200, range=(0, 1200))
         # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
         # we need 0.1 keV, and this gives us 4800 bins
 
@@ -1019,7 +1020,7 @@ class SN():
         hist_array_primary = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
         # hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=12000, range=(0, 1200))
-        hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=2000, range=(0, 1000))
+        hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=1200, range=(0, 1200))
         # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
         # we need 0.1 keV, and this gives us 4800 bins
 
@@ -1047,7 +1048,7 @@ class SN():
         hist_array_all = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
         # hist_array_all[0] = np.histogram(ER_Ar_all, bins=12000, range=(0, 1200))
-        hist_array_all[0] = np.histogram(ER_Ar_all, bins=2000, range=(0, 1000))
+        hist_array_all[0] = np.histogram(ER_Ar_all, bins=1200, range=(0, 1200))
         # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
         # we need 0.1 keV, and this gives us 4800 bins
 
@@ -1077,7 +1078,7 @@ class SN():
         print("all vs primary counts", cumulative_threshold_per_scatter_array_all[0][0],
               cumulative_threshold_per_scatter_array_primary[0][0])
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
-        with open("/data/runzezhang/result/GR_sims/Co_output_5E6.pkl", "wb") as f:
+        with open("/data/runzezhang/result/GR_sims/Co_output_5E6_ERv2.pkl", "wb") as f:
             pickle.dump(output_list, f)
 
         # plot the graph
@@ -1202,7 +1203,7 @@ class SN():
         compt_counts, _ = np.histogram(xe_compt_df["Energy_Deposited/keV"], bins=bins_kev)
 
         # Scale by 1/4 to represent the average of the 4 shells (K, L, M, N) evenly
-        compt_counts_scaled = compt_counts / 4.0
+        compt_counts_scaled = compt_counts / 5.0
 
         # ------------------------------------------------------------------
         # 2. PHOTOELECTRIC PROCESSING
@@ -1231,13 +1232,14 @@ class SN():
             plt.plot(bin_centers_kev, compt_counts_scaled, label='Compton (Xe K Shell Scaled)', color='blue', lw=1.5)
             plt.plot(bin_centers_kev, phot_counts, label='Photoelectric (Xe K-Shell)', color='orange', lw=1.5)
 
-            plt.title("Deposited Energy Spectrum in Xenon")
+            plt.title("Gamma Deposited Energy Spectrum in Xenon")
             plt.xlabel("Energy Deposited (keV)")
             plt.ylabel(f"Counts / {bin_width_kev:.1f} keV Bin")
             plt.legend()
-            plt.grid(True, alpha=0.3)
+            # plt.grid(True, alpha=0.3)
             # plt.yscale('log', nonpositive='clip')  # Toggle off if you prefer a linear scale layout
             plt.savefig(self.plot_path + "Co_doped_energy_dep.pdf")
+            print('bin_width_kev', bin_width_kev)
 
         # ------------------------------------------------------------------
         # 4. PLOT BINDING ENERGY (ALL XENON PHOTOELECTRIC SHELLS IN keV)
@@ -1245,6 +1247,8 @@ class SN():
         all_xe_phot = phot_df[phot_df["Pre_Target"] == 1.0].copy()
 
         # Convert Binding Energy to keV
+        print("minimum binding", min(all_xe_phot["Binding_Energy/MeV"]))
+
         all_xe_phot["Binding_Energy/keV"] = all_xe_phot["Binding_Energy/MeV"] * 1000.0
         valid_be_df = all_xe_phot[all_xe_phot["Binding_Energy/keV"] > 0]
         if plot:
@@ -1253,27 +1257,30 @@ class SN():
             be_bins_kev = np.arange(0.0, 45.0, 0.1)
 
             total_xe_compton_counts = len(xe_compt_df)
-            compton_per_shell = total_xe_compton_counts / 4.0
+            compton_per_shell = total_xe_compton_counts / 5.0
+            print('compton_per_shell', compton_per_shell)
 
             # Nominal Xenon binding energy center points in keV
-            xe_shell_energies_kev = [34.56, 5.10, 1.00, 0.12]
+            xe_shell_energies_kev = [34.56, 5.10, 1.00, 0.12, 0.01]
 
             # Plot the Compton distributions as matching height spikes/bars
             # We use a small width matching the bin size to blend seamlessly into the histogram layout
-            plt.bar(xe_shell_energies_kev, [compton_per_shell] * 4, width=0.2, color='orange',
+            plt.bar(xe_shell_energies_kev, [compton_per_shell] * 5, width=0.1, color='orange',
                     edgecolor='darkorange', alpha=0.9, label='Compton (Xe All Shells)')
 
-            plt.hist(valid_be_df["Binding_Energy/keV"], bins=be_bins_kev, color='forestgreen', alpha=0.7,
-                     edgecolor='black', label='Photoelectric (Xe All Shells)')
+            plt.hist(valid_be_df["Binding_Energy/keV"], bins=be_bins_kev, color='green', alpha=0.7,
+                     label='Photoelectric (Xe All Shells)')
             plt.title("Reconstructed Photoelectric Binding Energy Spectrum (Xenon All Shells)")
             plt.xlabel("Binding Energy (keV)")
-            plt.ylabel("Counts")
-            plt.grid(True, alpha=0.3)
+            plt.ylabel(f"Counts  / {bin_width_kev:.1f} keV Bin")
+            # plt.grid(True, alpha=0.3)
 
             # Reference guide line for the physical Xenon K-edge peak position
             # plt.axvline(x=34.56, color='r', linestyle=':', alpha=0.7, label='Expected Xe K-edge (~34.56 keV)')
             plt.legend()
+            plt.yscale("log")
             plt.savefig(self.plot_path + "Co_binding_energy_xe.pdf")
+            print("BInding energy unique", valid_be_df["Binding_Energy/keV"].unique())
 
         # spectrum for xenon absorption only need total counts
         # the sepctrum is energy deposition spectrum but only valuable variable is the total counts or the 1st bin number
@@ -1549,6 +1556,6 @@ class test_csv():
 
 
 if __name__ == "__main__":
-    sn = SN(doped=True)
-    # sn = SN(doped=False)
+    # sn = SN(doped=True)
+    sn = SN(doped=False)
     # test = test_csv()

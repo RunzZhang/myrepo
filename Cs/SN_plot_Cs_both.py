@@ -25,15 +25,15 @@ class SN():
         # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Cs_ar_1E6_phot/"
         # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Cs_ar_1E6_phot/"
 
-        self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Cs_5E6/"
-        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Cs_5E6/"
+        self.base_path = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Cs_5E6_ER/"
+        self.base_path2 = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Cs_5E6_ER/"
         if self.doped:
             self.base_path = self.doped_path
 
         # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Cs_1E5_lar/"
         # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Cs_1E5_lar/"  # for gamma path
 
-        self.plot_path = '/data/runzezhang/result/GR_sims/plot/'
+        self.plot_path = '/lzdata/runzezhang/result/GR_sims/plot/'
         self.false_1 = "PN_false1.csv"
         self.false_2 = "PN_false2.csv"
         self.signal = "PN_sig.csv"
@@ -89,45 +89,7 @@ class SN():
         self.read_files()
 
         # self.read_files_s_to_N1()
-    def data_analysis(self):
-        if not self.doped:
-            print("NORMAL analysis")
-            #position distributions histogram, dependisng on step number
-            # self.read_positions()
-            # self.read_positions_2d_hist()
-            # self.read_positions_zslice()
-            #mulitipliciy distribtuion depending on events
-            # self.read_multiplicity()
-            # self.read_Ar_multiplicity()
-            # ER distribution per row
-            # self.read_ER_Ar_CF()
-            # self.read_ER_Ar_CF_per_deposit_rate()
-            # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
-            # self.read_ER_CF_per_deposit_rate_cumulative()
-            # self.read_ER_Ar_CF_1d_sum()
-            # self.read_ER_Ar_CF_2d_sum()
-            # self.read_ER_Ar_CF_1d_sum_rate()
-            # self.read_ER_Ar_CF_1d_sum_rate_cummulative()
-            # self.read_ER_Ar_CF_1d_sum_counts()
 
-            # self.read_emit_spectrum()
-            # self.gamma_rejection_rate_per_keV_vs_Setiz()
-            # self.gamma_rejection_rate_vs_Setiz()
-
-            self.write_sims_results()
-            # self.write_sims_results_thesis()
-
-
-        else:
-            print("doping analysis")
-            #doped analyasis
-
-            # self.read_ER_Ar_doped()
-            # self.write_doped_sims_results()
-            self.write_doped_sims_results_v2(self.merged_df_phot, bin_start_mev=0, bin_end_mev=0.8, bin_width_mev=0.0005, plot=True)
-
-            # photo process analysis
-            # self.read_ER_Ar_pho_per_deposit_rate()
     # main funtion we use
     def read_files(self):
         self.original_Activity = 5  # original activity in the paper
@@ -160,7 +122,49 @@ class SN():
             print("all len", len(self.merged_df_all))
         else:
             # self.merged_df_phot = pd.concat(self.df_phot_list, ignore_index=True)
-            self.merged_df_phot = self.df_phot_list[0]  # usually photo_list only has 1 chunked file
+            self.merged_df_phot = pd.concat(self.df_phot_list, ignore_index=True)
+            # self.merged_df_phot = self.df_phot_list[0]  # usually photo_list only has 1 chunked file
+
+    def data_analysis(self):
+        if not self.doped:
+            print("NORMAL analysis")
+            # position distributions histogram, dependisng on step number
+            # self.read_positions()
+            # self.read_positions_2d_hist()
+            # self.read_positions_zslice()
+            # mulitipliciy distribtuion depending on events
+            # self.read_multiplicity()
+            # self.read_Ar_multiplicity()
+            # ER distribution per row
+            # self.read_ER_Ar_CF()
+            # self.read_ER_Ar_CF_per_deposit_rate()
+            # self.read_ER_Ar_CF_per_deposit_rate_cumulative()
+            # self.read_ER_CF_per_deposit_rate_cumulative()
+            # self.read_ER_Ar_CF_1d_sum()
+            # self.read_ER_Ar_CF_2d_sum()
+            # self.read_ER_Ar_CF_1d_sum_rate()
+            # self.read_ER_Ar_CF_1d_sum_rate_cummulative()
+            # self.read_ER_Ar_CF_1d_sum_counts()
+
+            # self.read_emit_spectrum()
+            # self.gamma_rejection_rate_per_keV_vs_Setiz()
+            # self.gamma_rejection_rate_vs_Setiz()
+
+            self.write_sims_results()
+            # self.write_sims_results_thesis()
+
+
+        else:
+            print("doping analysis")
+            # doped analyasis
+
+            # self.read_ER_Ar_doped()
+            # self.write_doped_sims_results()
+            self.write_doped_sims_results_v2(self.merged_df_phot, bin_start_mev=0, bin_end_mev=0.4,
+                                             bin_width_mev=0.0005, plot=True)
+
+            # photo process analysis
+            # self.read_ER_Ar_pho_per_deposit_rate()
 
     def read_emit_spectrum(self):
         df_init_emit = self.merged_df[
@@ -272,7 +276,7 @@ class SN():
         ax[0].set_ylabel("Counts")
         ax[0].set_yscale("log")
         # ax[0].set_title("Co source - 1332 keV gamma")
-        ax[0].set_title("Cs source")
+        ax[0].set_title("Ba source")
 
         plt.savefig(self.plot_path + "Cs_1E6_ar_photo.pdf")
 
@@ -459,8 +463,7 @@ class SN():
                 print("500 keV edge CF4", cumulative_threshold_array[1][j])
                 break
         fig, ax = plt.subplots(1, 3, figsize=(16, 4))
-        ax[0].bar(hist_array[0][1][:-1], Rate_factor * cumulative_threshold_array[0],
-                  width=np.diff(hist_array[0][1]),
+        ax[0].bar(hist_array[0][1][:-1], Rate_factor * cumulative_threshold_array[0], width=np.diff(hist_array[0][1]),
                   align="edge",
                   edgecolor="black")
         bin0_len = int(hist_array[0][1][1] - hist_array[0][1][0])
@@ -472,8 +475,7 @@ class SN():
         # ax[0].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         # ax[0].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
-        ax[1].bar(hist_array[1][1][:-1], Rate_factor * cumulative_threshold_array[1],
-                  width=np.diff(hist_array[1][1]),
+        ax[1].bar(hist_array[1][1][:-1], Rate_factor * cumulative_threshold_array[1], width=np.diff(hist_array[1][1]),
                   align="edge",
                   edgecolor="black")
         ax[1].set_xlabel("ER/keV threshold per deposition in CF4")
@@ -486,8 +488,7 @@ class SN():
         # ax[1].grid(which="major", linestyle="-", linewidth=0.8, alpha=0.7)
         # ax[1].grid(which="minor", linestyle=":", linewidth=0.5, alpha=0.4)
 
-        ax[2].bar(hist_array[2][1][:-1], Rate_factor * cumulative_threshold_array[2],
-                  width=np.diff(hist_array[2][1]),
+        ax[2].bar(hist_array[2][1][:-1], Rate_factor * cumulative_threshold_array[2], width=np.diff(hist_array[2][1]),
                   align="edge",
                   edgecolor="black")
         ax[2].set_xlabel("ER/keV threshold per deposition ")
@@ -604,10 +605,9 @@ class SN():
                 for i in range(len(hist_array[0][1])):
                     if threshold >= hist_array[0][1][i]:
                         # rejection per scattering, PS meaning perscattering
-                        counts = cumulative_threshold_per_scatter_array[0][i] + (
-                                    threshold - hist_array[0][1][i]) * (
-                                         cumulative_threshold_per_scatter_array[0][i + 1] -
-                                         cumulative_threshold_per_scatter_array[0][i]) / (
+                        counts = cumulative_threshold_per_scatter_array[0][i] + (threshold - hist_array[0][1][i]) * (
+                                cumulative_threshold_per_scatter_array[0][i + 1] -
+                                cumulative_threshold_per_scatter_array[0][i]) / (
                                          hist_array[0][1][i + 1] - hist_array[0][1][i])
                         rate_PS = Rate_factor * (counts)
 
@@ -616,8 +616,7 @@ class SN():
                         rejection_PS = exp_rate_list[j] / rate_PS
                         rejection_PS_list.append(rejection_PS)
                         rejection_PS_sigma = np.sqrt(
-                            (exp_sigma_list[i] / rate_PS) ** 2 + (
-                                        exp_rate_list[i] * rate_PS_sigma / rate_PS ** 2) ** 2)
+                            (exp_sigma_list[i] / rate_PS) ** 2 + (exp_rate_list[i] * rate_PS_sigma / rate_PS ** 2) ** 2)
                         rejection_PS_sigma_list.append(rejection_PS_sigma)
 
                         # rejection per keV, PK meaning Per keV Per scattering
@@ -630,8 +629,7 @@ class SN():
                         rejection_PK = exp_rate_list[j] / rate_PK
                         rejection_PK_list.append(rejection_PK)
                         rejection_sigma = np.sqrt(
-                            (exp_sigma_list[i] / rate_PK) ** 2 + (
-                                        exp_rate_list[i] * rate_PK_sigma / rate_PK ** 2) ** 2)
+                            (exp_sigma_list[i] / rate_PK) ** 2 + (exp_rate_list[i] * rate_PK_sigma / rate_PK ** 2) ** 2)
                         rejection_PK_sigma_list.append(rejection_sigma)
                         break
             output_dict = {
@@ -697,26 +695,18 @@ class SN():
             print(Seitz_pressure_list)
             # keV
             Q_setiz = [1.3445287166423177, 1.4677096307281403, 1.6077252261931916, 1.7676644948295235,
-                       1.9513368144218666, 2.163478457894038, 2.41003021032974, 2.698514892785409,
-                       3.038557782566206,
-                       3.44261366411884, 3.9269986461894346, 4.513378617028501, 5.230956628311766,
-                       6.119753114689943,
+                       1.9513368144218666, 2.163478457894038, 2.41003021032974, 2.698514892785409, 3.038557782566206,
+                       3.44261366411884, 3.9269986461894346, 4.513378617028501, 5.230956628311766, 6.119753114689943,
                        7.235636873731044, 8.658238672578, 10.503756197125261]
             # keV
-            E_ion = [0.6935170594033994, 0.7463906266235716, 0.8055756681017613, 0.8721142361762,
-                     0.9472715210586028,
-                     1.0325954589172766, 1.12999567281159, 1.2418491587814853, 1.371143722549567,
-                     1.5216750993325374,
-                     1.6983220883949837, 1.907436620175941, 2.1574068879170554, 2.459486450041476,
-                     2.829041931492084,
+            E_ion = [0.6935170594033994, 0.7463906266235716, 0.8055756681017613, 0.8721142361762, 0.9472715210586028,
+                     1.0325954589172766, 1.12999567281159, 1.2418491587814853, 1.371143722549567, 1.5216750993325374,
+                     1.6983220883949837, 1.907436620175941, 2.1574068879170554, 2.459486450041476, 2.829041931492084,
                      3.2874775552634508, 3.865286624630827]
             # g / cc
-            rho_l = [1.190713998903872, 1.190901456615719, 1.1910886308789765, 1.1912755227862943,
-                     1.191462133423365,
-                     1.1916484638689993, 1.1918345151951764, 1.192020288467111, 1.192205784743309,
-                     1.1923910050756303,
-                     1.1925759505093436, 1.1927606220831863, 1.1929450208294252, 1.1931291477739037,
-                     1.1933130039361075,
+            rho_l = [1.190713998903872, 1.190901456615719, 1.1910886308789765, 1.1912755227862943, 1.191462133423365,
+                     1.1916484638689993, 1.1918345151951764, 1.192020288467111, 1.192205784743309, 1.1923910050756303,
+                     1.1925759505093436, 1.1927606220831863, 1.1929450208294252, 1.1931291477739037, 1.1933130039361075,
                      1.193496590329213, 1.1936799079601481]
             # nm
             Rl = [5.609511255785613, 5.807717275806958, 6.020272497298806, 6.248793390358893, 6.495148643090569,
@@ -804,10 +794,9 @@ class SN():
                 for i in range(len(hist_array[0][1])):
                     if threshold >= hist_array[0][1][i]:
                         # rejection per scattering, PS meaning perscattering
-                        counts = cumulative_threshold_per_scatter_array[0][i] + (
-                                    threshold - hist_array[0][1][i]) * (
-                                         cumulative_threshold_per_scatter_array[0][i + 1] -
-                                         cumulative_threshold_per_scatter_array[0][i]) / (
+                        counts = cumulative_threshold_per_scatter_array[0][i] + (threshold - hist_array[0][1][i]) * (
+                                cumulative_threshold_per_scatter_array[0][i + 1] -
+                                cumulative_threshold_per_scatter_array[0][i]) / (
                                          hist_array[0][1][i + 1] - hist_array[0][1][i])
                         rate_PS = Rate_factor * (counts)
 
@@ -1089,7 +1078,7 @@ class SN():
         print("all vs primary counts", cumulative_threshold_per_scatter_array_all[0][0],
               cumulative_threshold_per_scatter_array_primary[0][0])
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
-        with open("/data/runzezhang/result/GR_sims/Cs_output_5E6.pkl", "wb") as f:
+        with open("/data/runzezhang/result/GR_sims/Cs_output_5E6_ERv2.pkl", "wb") as f:
             pickle.dump(output_list, f)
 
         # plot the graph
@@ -1214,7 +1203,7 @@ class SN():
         compt_counts, _ = np.histogram(xe_compt_df["Energy_Deposited/keV"], bins=bins_kev)
 
         # Scale by 1/4 to represent the average of the 4 shells (K, L, M, N) evenly
-        compt_counts_scaled = compt_counts / 4.0
+        compt_counts_scaled = compt_counts / 5.0
 
         # ------------------------------------------------------------------
         # 2. PHOTOELECTRIC PROCESSING
@@ -1240,8 +1229,7 @@ class SN():
 
             # Clean standard line plots mapping straight to the bin center coordinates
             plt.plot(bin_centers_kev, total_counts, label='Total (Compt K + Phot K)', color='r', lw=2.5)
-            plt.plot(bin_centers_kev, compt_counts_scaled, label='Compton (Xe K Shell Scaled)', color='blue',
-                     lw=1.5)
+            plt.plot(bin_centers_kev, compt_counts_scaled, label='Compton (Xe K Shell Scaled)', color='blue', lw=1.5)
             plt.plot(bin_centers_kev, phot_counts, label='Photoelectric (Xe K-Shell)', color='orange', lw=1.5)
 
             plt.title("Gamma Deposited Energy Spectrum in Xenon")
@@ -1260,6 +1248,7 @@ class SN():
 
         # Convert Binding Energy to keV
         print("minimum binding", min(all_xe_phot["Binding_Energy/MeV"]))
+
         all_xe_phot["Binding_Energy/keV"] = all_xe_phot["Binding_Energy/MeV"] * 1000.0
         valid_be_df = all_xe_phot[all_xe_phot["Binding_Energy/keV"] > 0]
         if plot:
@@ -1269,6 +1258,7 @@ class SN():
 
             total_xe_compton_counts = len(xe_compt_df)
             compton_per_shell = total_xe_compton_counts / 5.0
+            print('compton_per_shell', compton_per_shell)
 
             # Nominal Xenon binding energy center points in keV
             xe_shell_energies_kev = [34.56, 5.10, 1.00, 0.12, 0.01]
@@ -1290,6 +1280,7 @@ class SN():
             plt.legend()
             plt.yscale("log")
             plt.savefig(self.plot_path + "Cs_binding_energy_xe.pdf")
+            print("BInding energy unique", valid_be_df["Binding_Energy/keV"].unique())
 
         # spectrum for xenon absorption only need total counts
         # the sepctrum is energy deposition spectrum but only valuable variable is the total counts or the 1st bin number
@@ -1309,7 +1300,7 @@ class SN():
 
         cumulative_threshold_array[0] = np.array(
             [sum(energy_deposit_list[i:]) for i in range(len(energy_deposit_list))])
-        print("total count* energy Cs", cumulative_threshold_per_scatter_array[0][0],
+        print("total count* energy Ba", cumulative_threshold_per_scatter_array[0][0],
               cumulative_threshold_per_scatter_array[0][0] / cumulative_threshold_array[0][0])
         Rate_factor = self.gamma_rate * 1000 / (self.G4_events_gamma)
         output_list = [Rate_factor, hist_array, cumulative_threshold_per_scatter_array[0],
@@ -1366,8 +1357,7 @@ class SN():
         # and sum rate is over both volume in Ar and CF4
 
         Rate_factor = self.gamma_rate / (3600 * self.G4_events_gamma)  # /h per geant run file
-        ER_Ar_sum = self.merged_df[self.merged_df["Volume"] == "LAr_phys"].groupby("Event")[
-                        "ER_near/eV"].sum() / 1000
+        ER_Ar_sum = self.merged_df[self.merged_df["Volume"] == "LAr_phys"].groupby("Event")["ER_near/eV"].sum() / 1000
         ER_CF4_sum = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"].groupby("Event")[
                          "ER_near/eV"].sum() / 1000
 
@@ -1413,8 +1403,7 @@ class SN():
         # and sum rate is over both volume in Ar and CF4
 
         Rate_factor = self.gamma_rate / (3600 * self.G4_events_gamma)  # /h per geant run file
-        ER_Ar_sum = self.merged_df[self.merged_df["Volume"] == "LAr_phys"].groupby("Event")[
-                        "ER_near/eV"].sum() / 1000
+        ER_Ar_sum = self.merged_df[self.merged_df["Volume"] == "LAr_phys"].groupby("Event")["ER_near/eV"].sum() / 1000
         ER_CF4_sum = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"].groupby("Event")[
                          "ER_near/eV"].sum() / 1000
 
@@ -1454,8 +1443,7 @@ class SN():
         # calcualte sum of ER classified in Ar and CF4 per event
         # cumulative, event rate above NR threshold
         Rate_factor = self.gamma_rate / (3600 * self.G4_events_gamma)  # /h per geant run file
-        ER_Ar_sum = self.merged_df[self.merged_df["Volume"] == "LAr_phys"].groupby("Event")[
-                        "ER_near/eV"].sum() / 1000
+        ER_Ar_sum = self.merged_df[self.merged_df["Volume"] == "LAr_phys"].groupby("Event")["ER_near/eV"].sum() / 1000
         ER_CF4_sum = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"].groupby("Event")[
                          "ER_near/eV"].sum() / 1000
 
@@ -1506,8 +1494,7 @@ class SN():
         # calcualte sum of ER classified in Ar and CF4 per event
         # 2d histogram
 
-        ER_Ar_sum = self.merged_df[self.merged_df["Volume"] == "LAr_phys"].groupby("Event")[
-                        "ER_near/eV"].sum() / 1000
+        ER_Ar_sum = self.merged_df[self.merged_df["Volume"] == "LAr_phys"].groupby("Event")["ER_near/eV"].sum() / 1000
         ER_CF4_sum = self.merged_df[self.merged_df["Volume"] == "hydraulic_fluid_phys"].groupby("Event")[
                          "ER_near/eV"].sum() / 1000
 
@@ -1551,6 +1538,7 @@ class SN():
 
         return df
 
+
 class test_csv():
     def __init__(self):
         list1 = [1, 3, 4.5, 6.7, 8.9]
@@ -1566,7 +1554,8 @@ class test_csv():
 
         print(number_list)
 
+
 if __name__ == "__main__":
-    sn = SN(doped=True)
-    # sn = SN(doped=False)
+    # sn = SN(doped=True)
+    sn = SN(doped=False)
     # test = test_csv()
