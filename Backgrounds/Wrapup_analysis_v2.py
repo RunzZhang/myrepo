@@ -12,12 +12,15 @@ class integrated_analysis():
 
         self.output_path = '/data/runzezhang/result/gamma_rejection/'
         self.plot_path = '/data/runzezhang/result/gamma_rejection/plot/'
-        self.Co_sim_path  ='/lzdata/runzezhang/result/GR_sims/Co_output_5E6.pkl'
-        self.Cs_sim_path = '/lzdata/runzezhang/result/GR_sims/Cs_output_5E6.pkl'
+        # self.Co_sim_path  ='/lzdata/runzezhang/result/GR_sims/Co_output_5E6.pkl'
+        # self.Cs_sim_path = '/lzdata/runzezhang/result/GR_sims/Cs_output_5E6.pkl'
+        self.Co_sim_path = '/lzdata/runzezhang/result/GR_sims/Co_output_5E6_ERv2.pkl'
+        self.Cs_sim_path = '/lzdata/runzezhang/result/GR_sims/Cs_output_5E6_ERv2.pkl'
         self.Cf_simA_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_A.pkl'
         # self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_B.pkl'
         self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density095_config_B.pkl'
-        self.Ba_sim_path = '/lzdata/runzezhang/result/GR_sims/Ba_output_5E6.pkl'
+        # self.Ba_sim_path = '/lzdata/runzezhang/result/GR_sims/Ba_output_5E6.pkl' # updated tracking, make poststep prestep matching, but still recording photon energy loss
+        self.Ba_sim_path = '/lzdata/runzezhang/result/GR_sims/Ba_output_5E6_ERv2.pkl'  # updated ER calculation
 
         # doped
         self.Co_sim_doped_path = '/data/runzezhang/result/GR_sims/Co_doped_output.pkl'
