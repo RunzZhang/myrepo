@@ -164,7 +164,7 @@ class SN():
 
             # self.read_ER_Ar_doped()
             # self.write_doped_sims_results()
-            self.write_doped_sims_results_v2(self.merged_df_phot, bin_start_mev=0, bin_end_mev=0.4, bin_width_mev=0.0005, plot=True)
+            self.write_doped_sims_results_v2(self.merged_df_phot, bin_start_mev=0, bin_end_mev=0.4, bin_width_mev=0.001, plot=True)
 
             # photo process analysis
             # self.read_ER_Ar_pho_per_deposit_rate()
