@@ -889,14 +889,15 @@ class ReadRoot():
             (df["Binding_Energy/MeV"] >= 0.03256) & (df["Binding_Energy/MeV"] <= 0.03656),  # K: 0
             (df["Binding_Energy/MeV"] >= 0.00470) & (df["Binding_Energy/MeV"] <= 0.00550),  # L: 1
             (df["Binding_Energy/MeV"] >= 0.00050) & (df["Binding_Energy/MeV"] <= 0.00150),  # M: 2
-            (df["Binding_Energy/MeV"] >= 0.00002) & (df["Binding_Energy/MeV"] <= 0.00022),  # N: 3
+            (df["Binding_Energy/MeV"] >= 0.00012) & (df["Binding_Energy/MeV"] <= 0.00022),  # N: 3
+            (df["Binding_Energy/MeV"] >= 0.00000) & (df["Binding_Energy/MeV"] <= 0.00005),
         ]
         ar_bounds = [
             (df["Binding_Energy/MeV"] >= 0.00270) & (df["Binding_Energy/MeV"] <= 0.00370),  # K: 0
             (df["Binding_Energy/MeV"] >= 0.00015) & (df["Binding_Energy/MeV"] <= 0.00035),  # L: 1
             (df["Binding_Energy/MeV"] >= 0.00001) & (df["Binding_Energy/MeV"] <= 0.00003),  # M: 2
         ]
-        shell_choices = [0, 1, 2, 3]
+        shell_choices = [0, 1, 2, 3,4]
 
         xe_shells = np.select(xe_bounds, shell_choices, default=-1)
         ar_shells = np.select(ar_bounds, shell_choices[:-1], default=-1)
