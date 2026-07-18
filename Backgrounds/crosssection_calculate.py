@@ -198,114 +198,116 @@ df_g4_ar = pd.read_csv(io.StringIO(g4_ar_data.strip()), sep=r"\s+")
 df_nist_ar = pd.read_csv(io.StringIO(nist_ar_data.strip()), sep=r"\s+")
 df_nist_xe = pd.read_csv(io.StringIO(nist_xe_data.strip()), sep=r"\s+")
 
-# ------------------------------------------------------------------
-# 3. PLOTTING INITIALIZATION
-# ------------------------------------------------------------------
-fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6), sharey=True)
 
-# Styling parameters
-linewidth = 1.8
-markersize = 7
+def plt_cross_section():
+    # ------------------------------------------------------------------
+    # 3. PLOTTING INITIALIZATION
+    # ------------------------------------------------------------------
+    fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6), sharey=True)
 
-# --- GRAPH 1: ARGON ---
-# NIST reference continuous lines
-ax1.plot(
-    df_nist_ar["Energy_MeV"],
-    df_nist_ar["Photoelectric_cm2_g"],
-    label="NIST Photoelectric",
-    color="darkred",
-    linestyle="-",
-    linewidth=linewidth,
-)
-ax1.plot(
-    df_nist_ar["Energy_MeV"],
-    df_nist_ar["Compton_cm2_g"],
-    label="NIST no coherent",
-    color="navy",
-    linestyle="-",
-    linewidth=linewidth,
-)
+    # Styling parameters
+    linewidth = 1.8
+    markersize = 7
 
-# Geant4 extracted discrete markers
-ax1.plot(
-    df_g4_ar["Energy_MeV"],
-    df_g4_ar["Photoelectric_cm2_g"],
-    label="Geant4 Photoelectric (LAr)",
-    color="orange",
-    marker="o",
-    linestyle="None",
-    markersize=markersize,
-    markeredgecolor="black",
-)
-ax1.plot(
-    df_g4_ar["Energy_MeV"],
-    df_g4_ar["Compton_cm2_g"],
-    label="Geant4 Compton (LAr)",
-    color="cyan",
-    marker="s",
-    linestyle="None",
-    markersize=markersize,
-    markeredgecolor="black",
-)
+    # --- GRAPH 1: ARGON ---
+    # NIST reference continuous lines
+    ax1.plot(
+        df_nist_ar["Energy_MeV"],
+        df_nist_ar["Photoelectric_cm2_g"],
+        label="NIST Photoelectric",
+        color="darkred",
+        linestyle="-",
+        linewidth=linewidth,
+    )
+    ax1.plot(
+        df_nist_ar["Energy_MeV"],
+        df_nist_ar["Compton_cm2_g"],
+        label="NIST no coherent",
+        color="navy",
+        linestyle="-",
+        linewidth=linewidth,
+    )
 
-ax1.set_title("Photon Cross Sections in Argon ($Z=18$)", fontsize=14, weight="bold")
-ax1.set_xlabel("Photon Energy [MeV]", fontsize=12)
-ax1.set_ylabel("Mass Cross Section [$\mathrm{cm}^2/\mathrm{g}$]", fontsize=12)
-ax1.set_xscale("log")
-ax1.set_yscale("log")
-# ax1.grid(True, which="both", linestyle="--", alpha=0.5)
-ax1.legend(fontsize=10, loc="lower left")
+    # Geant4 extracted discrete markers
+    ax1.plot(
+        df_g4_ar["Energy_MeV"],
+        df_g4_ar["Photoelectric_cm2_g"],
+        label="Geant4 Photoelectric (LAr)",
+        color="orange",
+        marker="o",
+        linestyle="None",
+        markersize=markersize,
+        markeredgecolor="black",
+    )
+    ax1.plot(
+        df_g4_ar["Energy_MeV"],
+        df_g4_ar["Compton_cm2_g"],
+        label="Geant4 Compton (LAr)",
+        color="cyan",
+        marker="s",
+        linestyle="None",
+        markersize=markersize,
+        markeredgecolor="black",
+    )
 
-# --- GRAPH 2: XENON ---
-# NIST reference continuous lines
-ax2.plot(
-    df_nist_xe["Energy_MeV"],
-    df_nist_xe["Photoelectric_cm2_g"],
-    label="NIST Photoelectric",
-    color="darkred",
-    linestyle="-",
-    linewidth=linewidth,
-)
-ax2.plot(
-    df_nist_xe["Energy_MeV"],
-    df_nist_xe["Compton_cm2_g"],
-    label="NIST no coherent",
-    color="navy",
-    linestyle="-",
-    linewidth=linewidth,
-)
+    ax1.set_title("Photon Cross Sections in Argon ($Z=18$)", fontsize=14, weight="bold")
+    ax1.set_xlabel("Photon Energy [MeV]", fontsize=12)
+    ax1.set_ylabel("Mass Cross Section [$\mathrm{cm}^2/\mathrm{g}$]", fontsize=12)
+    ax1.set_xscale("log")
+    ax1.set_yscale("log")
+    # ax1.grid(True, which="both", linestyle="--", alpha=0.5)
+    ax1.legend(fontsize=10, loc="lower left")
 
-# Geant4 extracted discrete markers
-ax2.plot(
-    df_g4_xe["Energy_MeV"],
-    df_g4_xe["Photoelectric_cm2_g"],
-    label="Geant4 Photoelectric (GXe)",
-    color="orange",
-    marker="o",
-    linestyle="None",
-    markersize=markersize,
-    markeredgecolor="black",
-)
-ax2.plot(
-    df_g4_xe["Energy_MeV"],
-    df_g4_xe["Compton_cm2_g"],
-    label="Geant4 Compton (GXe)",
-    color="cyan",
-    marker="s",
-    linestyle="None",
-    markersize=markersize,
-    markeredgecolor="black",
-)
+    # --- GRAPH 2: XENON ---
+    # NIST reference continuous lines
+    ax2.plot(
+        df_nist_xe["Energy_MeV"],
+        df_nist_xe["Photoelectric_cm2_g"],
+        label="NIST Photoelectric",
+        color="darkred",
+        linestyle="-",
+        linewidth=linewidth,
+    )
+    ax2.plot(
+        df_nist_xe["Energy_MeV"],
+        df_nist_xe["Compton_cm2_g"],
+        label="NIST no coherent",
+        color="navy",
+        linestyle="-",
+        linewidth=linewidth,
+    )
 
-ax2.set_title("Photon Cross Sections in Xenon ($Z=54$)", fontsize=14, weight="bold")
-ax2.set_xlabel("Photon Energy [MeV]", fontsize=12)
-ax2.set_xscale("log")
-# ax2.grid(True, which="both", linestyle="--", alpha=0.5)
-ax2.legend(fontsize=10, loc="lower left")
+    # Geant4 extracted discrete markers
+    ax2.plot(
+        df_g4_xe["Energy_MeV"],
+        df_g4_xe["Photoelectric_cm2_g"],
+        label="Geant4 Photoelectric (GXe)",
+        color="orange",
+        marker="o",
+        linestyle="None",
+        markersize=markersize,
+        markeredgecolor="black",
+    )
+    ax2.plot(
+        df_g4_xe["Energy_MeV"],
+        df_g4_xe["Compton_cm2_g"],
+        label="Geant4 Compton (GXe)",
+        color="cyan",
+        marker="s",
+        linestyle="None",
+        markersize=markersize,
+        markeredgecolor="black",
+    )
 
-# Final polishing layout adjustments
-plt.tight_layout()
-# plt.show()
+    ax2.set_title("Photon Cross Sections in Xenon ($Z=54$)", fontsize=14, weight="bold")
+    ax2.set_xlabel("Photon Energy [MeV]", fontsize=12)
+    ax2.set_xscale("log")
+    # ax2.grid(True, which="both", linestyle="--", alpha=0.5)
+    ax2.legend(fontsize=10, loc="lower left")
+
+    # Final polishing layout adjustments
+    plt.tight_layout()
+    # plt.show()
 
 
 def _get_log_interpolator(df, energy_col, cross_section_col):
