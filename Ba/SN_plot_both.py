@@ -1084,7 +1084,7 @@ class SN():
 
         print("all vs primary counts", cumulative_threshold_per_scatter_array_all[0][0],cumulative_threshold_per_scatter_array_primary[0][0])
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
-        with open("/data/runzezhang/result/GR_sims/Ba_output_5E6.pkl", "wb") as f:
+        with open("/data/runzezhang/result/GR_sims/Ba_output_5E6_ERv2.pkl", "wb") as f:
             pickle.dump(output_list, f)
 
         # plot the graph
