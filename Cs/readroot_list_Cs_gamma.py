@@ -157,10 +157,11 @@ class ReadRoot():
             except Exception as e:
                 print(e)
                 continue
-    def main_body(self,i):
+
+    def main_body(self, i):
         print(i)
-        self.ini_path = self.base_path+ f"Co_gamma_1E7_ini_part{i}.csv"
-        self.ar_ke_path = self.base_path+ f"Co_gamma_1E7_ke_part{i}.csv"
+        self.ini_path = self.base_path + f"Co_gamma_1E7_ini_part{i}.csv"
+        self.ar_ke_path = self.base_path + f"Co_gamma_1E7_ke_part{i}.csv"
         self.false_gamma_1 = f"Co_gamma_1E7_false1_part{i}.csv"
         self.false_gamma_2 = f"Co_gamma_1E7_false2_part{i}.csv"
         self.false_gamma_3 = f"Co_gamma_1E7_false3_part{i}.csv"
@@ -218,14 +219,17 @@ class ReadRoot():
 
         print("columns: ", self.file.keys())
         # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
-        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm",'Y/mm', 'Z/mm',"PreKinetic/MeV","PostKinetic/MeV",
+        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", 'Y/mm', 'Z/mm',
+                                 "PreKinetic/MeV", "PostKinetic/MeV",
                                  "Recoiled/MeV", "Volume", "Process"]
         if self.doped:
-            self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm",'Y/mm', 'Z/mm', "PreKinetic/MeV",
-                                 "PostKinetic/MeV",
-                                 "Recoiled/MeV", "Volume", "Process", "Pre_Target", "X_post/mm","Y_post/mm","Z_post/mm"]
+            self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", 'Y/mm', 'Z/mm',
+                                     "PreKinetic/MeV",
+                                     "PostKinetic/MeV",
+                                     "Recoiled/MeV", "Volume", "Process", "Pre_Target", "X_post/mm", "Y_post/mm",
+                                     "Z_post/mm"]
 
-        self.bubble_threshold = 0.0001 # MeV bubble generate threshold
+        self.bubble_threshold = 0.0001  # MeV bubble generate threshold
         self.rows = 1000
 
         # self.df = self.file.arrays(self.selected_columns, library="pd").head(self.rows)
@@ -239,8 +243,10 @@ class ReadRoot():
         self.allER()
         if not self.doped:
             print("NORMAL TRACKING")
-            self.ER_distribution_primary_v2()
-            self.ER_distribution_counts_v2()
+            self.ER_distribution_primary_v3(self.df)
+            self.ER_distribution_all_v3(self.df)
+            # self.ER_distribution_primary_v2()
+            # self.ER_distribution_counts_v2()
             # self.ER_distribution_primary()
             # self.ER_distribution_counts()
         else:
@@ -248,17 +254,11 @@ class ReadRoot():
             # xenon doping
             # self.xenon_doped_phot()
 
+            self.shell_vacancy_analysis(self.df, mass_xe=0.00013, mass_ar=0.99987)
 
-            self.shell_vacancy_analysis(self.df,  mass_xe=0.00013, mass_ar=0.99987)
+        # there was some 0 in event columns, set them to corresponding value
+        # for example 001002003 will be 001112223
 
-
-
-
-
-
-
-    # there was some 0 in event columns, set them to corresponding value
-    # for example 001002003 will be 001112223
     def reidx_event(self):
         event_number = self.df[:]["Event"].to_list()
         print(event_number[:100])
@@ -279,8 +279,9 @@ class ReadRoot():
 
         # put the updated event_number back to data frame
         self.df.update(pd.DataFrame({'Event': event_number}))
+
     def string_summary(self):
-        process_clean=[]
+        process_clean = []
         df_process = self.df[:]["Process"].to_list()
         for element in df_process:
             if element not in process_clean:
@@ -300,13 +301,14 @@ class ReadRoot():
             if element not in volume_clean:
                 volume_clean.append(element)
         print(volume_clean)
+
     def modify_df(self):
         # change column property. Mainly this change awkuard into str
         print(self.df.dtypes)
         self.df['name'] = self.df['name'].astype(str)
         self.df['Volume'] = self.df['Volume'].astype(str)
         self.df['Process'] = self.df['Process'].astype(str)
-        self.df.loc[self.df['Process']=="","Process"]="init"
+        self.df.loc[self.df['Process'] == "", "Process"] = "init"
         # this make event number correct
         self.reidx_event()
 
@@ -317,19 +319,22 @@ class ReadRoot():
         # so move line i process to line +1 in the same particle(track ID)
 
     def source_geometry(self):
-        print(self.df[(self.df["name"]=="neutron")&(self.df["Step ID"]==1)&(self.df["Parent ID"]==0)]["X/mm"])
-        self.x_range[0] = min(self.x_range[0],self.df[(self.df["name"]=="neutron")&(self.df["Step ID"]==1)&(self.df["Parent ID"]==0)]["X/mm"].min())
-        self.x_range[1] = max(self.x_range[1], self.df[(self.df["name"]=="neutron")&(self.df["Step ID"]==1)&(self.df["Parent ID"]==0)]["X/mm"].max())
+        print(self.df[(self.df["name"] == "neutron") & (self.df["Step ID"] == 1) & (self.df["Parent ID"] == 0)]["X/mm"])
+        self.x_range[0] = min(self.x_range[0], self.df[
+            (self.df["name"] == "neutron") & (self.df["Step ID"] == 1) & (self.df["Parent ID"] == 0)]["X/mm"].min())
+        self.x_range[1] = max(self.x_range[1], self.df[
+            (self.df["name"] == "neutron") & (self.df["Step ID"] == 1) & (self.df["Parent ID"] == 0)]["X/mm"].max())
         # self.y_range[0] = min(self.y_range[0], self.df["Y/mm"].min())
         # self.y_range[1] = max(self.y_range[1], self.df["Y/mm"].max())
         # self.z_range[0] = min(self.z_range[0], self.df["Z/mm"].min())
         # self.z_range[1] = max(self.z_range[1], self.df["Z/mm"].max())
-        print("x",self.x_range)
+        print("x", self.x_range)
         print("y", self.y_range)
         print("z", self.z_range)
 
     def allNR(self):
-        self.LAr_recoiled = self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))&(self.df["Recoiled/MeV"]>0) ]
+        self.LAr_recoiled = self.df[
+            ((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/MeV"] > 0)]
         self.LAr_recoiled_event_list = self.LAr_recoiled["Event"].unique().tolist()
 
         print(self.LAr_recoiled_event_list)
@@ -352,7 +357,7 @@ class ReadRoot():
         #     ((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys')) &( (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))& (self.df['Parent ID'] == 0)]
         self.gamma_Scint = self.df[
             ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-                        (self.df['Process'] == "compt") | (self.df['Process'] == "phot"))]
+                    (self.df['Process'] == "compt") | (self.df['Process'] == "phot"))]
 
         # record the positions and multiplicity
 
@@ -363,15 +368,16 @@ class ReadRoot():
         # find electrons are daughter of those gammas
         self.gamma_Scint_column = self.gamma_Scint[['Event', "Track ID"]]
         self.gamma_Scint_column.columns = ['Event', "Parent ID"]
-        self.df_electron = self.df[(self.df['name'] == 'e-') & ((self.df['Volume'] == 'LAr_phys')|(self.df['Volume'] == 'hydraulic_fluid_phys'))]
+        self.df_electron = self.df[(self.df['name'] == 'e-') & (
+                    (self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys'))]
         self.df_electron = self.keep_1st(self.df_electron)
         self.df_electron_gamma = pd.merge(self.df_electron, self.gamma_Scint_column, on=['Event', 'Parent ID'],
                                           how='inner')
-        print("electron gamma",self.df_electron_gamma.head(20)) #ok
+        print("electron gamma", self.df_electron_gamma.head(20))  # ok
 
     def ER_distribution_primary(self):
 
-       #     ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
+        #     ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
         self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-") & (self.df_electron["Event"] != 1)]
         # double check gamma
 
@@ -400,14 +406,14 @@ class ReadRoot():
         self.df['Z_next/mm'] = self.df['Z_next/mm'].fillna(self.df['Z/mm'])
 
         self.mom_gamma = self.df[
-                ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-                            (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
-                            self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
+            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
+                    (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
+                    self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
         self.mom_gamma_group = self.mom_gamma.groupby("Event")
 
         self.kid_e = self.df[(self.df['name'] == 'e-') & (self.df['Step ID'] == 1) & (self.df['Parent ID'] == 1) & (
-                self.df["Event"].isin(self.electron_recoiled_event_list)) & ((self.df['Volume'] == 'LAr_phys') | (
-                        self.df['Volume'] == 'hydraulic_fluid_phys'))]
+            self.df["Event"].isin(self.electron_recoiled_event_list)) & ((self.df['Volume'] == 'LAr_phys') | (
+                self.df['Volume'] == 'hydraulic_fluid_phys'))]
         self.kid_e_group = self.kid_e.groupby("Event")
 
         # self.mom_gamma = self.df[
@@ -509,7 +515,7 @@ class ReadRoot():
 
         self.mom_gamma = self.df[
             ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-                        (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
+                    (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
                 self.df["Event"].isin(self.electron_recoiled_event_list))]
         self.mom_gamma_group = self.mom_gamma.groupby("Event")
 
@@ -571,7 +577,6 @@ class ReadRoot():
         # for test only
         # self.mom_gamma["ER_near/eV"] = self.mom_gamma["PreKinetic/MeV"]*1e6
 
-
         self.output_df = self.mom_gamma[
             ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
 
@@ -598,20 +603,15 @@ class ReadRoot():
         print(self.electron_recoiled_event_list[:3])
         high_NRER = []
 
-
-        self.mom_gamma= self.df[
+        self.mom_gamma = self.df[
             ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-                    (self.df['Process'] == "compt")| (self.df['Process'] == "phot")) & (
+                    (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
                     self.df['Parent ID'] == 0) & (self.df["Event"].isin(self.electron_recoiled_event_list))]
         self.mom_gamma_group = self.mom_gamma.groupby("Event")
 
+        self.mom_gamma["ER_near/eV"] = (self.mom_gamma["PreKinetic/MeV"] - self.mom_gamma["PostKinetic/MeV"]) * 1e6
 
-        self.mom_gamma["ER_near/eV"] = (self.mom_gamma["PreKinetic/MeV"] -self.mom_gamma["PostKinetic/MeV"])* 1e6
-
-
-
-
-        self.mom_gamma["R/mm"] =0
+        self.mom_gamma["R/mm"] = 0
         self.mom_gamma["Multiplicity"] = 0
 
         self.output_df = self.mom_gamma[
@@ -638,14 +638,15 @@ class ReadRoot():
         print(self.electron_recoiled_event_list[:3])
         high_NRER = []
 
-        self.mom_gamma= self.df[
-            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-                (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))  & (self.df["Event"].isin(self.electron_recoiled_event_list))]
+        self.mom_gamma = self.df[
+            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phy'
+                                                                       's')) & (
+                    (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
+                self.df["Event"].isin(self.electron_recoiled_event_list))]
         self.mom_gamma_group = self.mom_gamma.groupby("Event")
 
         self.mom_gamma["ER_near/eV"] = (self.mom_gamma["PreKinetic/MeV"] - self.mom_gamma[
             "PostKinetic/MeV"]) * 1e6
-
 
         self.mom_gamma["R/mm"] = 0
         self.mom_gamma["Multiplicity"] = 0
@@ -653,17 +654,94 @@ class ReadRoot():
         self.output_df = self.mom_gamma[
             ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
 
-
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
         print("all len", len(self.mom_gamma), len(self.output_df))
         self.output_df.to_csv(self.info_all_path, index=False)
         file514 = self.df[self.df["Event"] == 514]
-        columns_to_round1 = ["X/mm","Y/mm","Z/mm",]
+        columns_to_round1 = ["X/mm", "Y/mm", "Z/mm", ]
         columns_to_round6 = ["PreKinetic/MeV", "PostKinetic/MeV", "Recoiled/MeV"]
         file514[columns_to_round1] = file514[columns_to_round1].round(1)
         file514[columns_to_round6] = file514[columns_to_round6].round(6)
         file514.to_csv(self.base_path + "LAr_ER_514.csv")
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
+
+    def ER_distribution_all_v3(self, df):
+
+        # 1. Isolate all electrons (e-) and round their starting coordinates
+        electrons = df[(df["name"] == "e-") & (df["Step ID"] == 1)].copy()
+        coord_cols = ["Event", "X/mm", "Y/mm", "Z/mm"]
+        for col in coord_cols[1:]:
+            electrons[col] = electrons[col].round(3)
+
+        # 2. Isolate photoelectric and Compton gammas and round terminal coordinates
+        gamma_processes = ["phot", "compt"]
+        gammas = df[(df["Process"].isin(gamma_processes)) & (df["name"] == "gamma")].copy()
+        post_coord_cols = ["Event", "X_post/mm", "Y_post/mm", "Z_post/mm"]
+        for col in post_coord_cols[1:]:
+            gammas[col] = gammas[col].round(3)
+
+        # 3. Sum electron energies by Parent ID AND Location
+        # This separates different gammas at the same location, AND the same gamma at different locations.
+        vertex_electron_energy = (
+            electrons.groupby(["Event", "Parent ID", "X/mm", "Y/mm", "Z/mm"])["PreKinetic/MeV"]
+            .sum()
+            .reset_index()
+            .rename(columns={"PreKinetic/MeV": "ER_near/MeV"})
+        )
+
+        # 4. Merge using BOTH tracking lineage AND 3D position keys
+        merged = pd.merge(
+            gammas,
+            vertex_electron_energy,
+            left_on=["Event", "Track ID", "X_post/mm", "Y_post/mm", "Z_post/mm"],
+            right_on=["Event", "Parent ID", "X/mm", "Y/mm", "Z/mm"],
+            how="left"
+        )
+        merged.index = gammas.index
+
+        # 5. Assign back to main DataFrame
+        df.loc[gammas.index, "ER_near/eV"] = merged[
+                                                 "ER_near/MeV"].fillna(0.0) * 1e6
+        df.to_csv(self.info_all_path, index=False)
+
+    def ER_distribution_primary_v3(self, df):
+
+        # 1. Isolate all electrons (e-) and round their starting coordinates
+        electrons = df[(df["name"] == "e-") & (df["Step ID"] == 1)].copy()
+        coord_cols = ["Event", "X/mm", "Y/mm", "Z/mm"]
+        for col in coord_cols[1:]:
+            electrons[col] = electrons[col].round(3)
+
+        # 2. Isolate photoelectric and Compton gammas and round terminal coordinates
+        gamma_processes = ["phot", "compt"]
+        gammas = df[(df["Process"].isin(gamma_processes)) & (df["name"] == "gamma") & (df["Parent ID"] == 0)].copy()
+        post_coord_cols = ["Event", "X_post/mm", "Y_post/mm", "Z_post/mm"]
+        for col in post_coord_cols[1:]:
+            gammas[col] = gammas[col].round(3)
+
+        # 3. Sum electron energies by Parent ID AND Location
+        # This separates different gammas at the same location, AND the same gamma at different locations.
+        vertex_electron_energy = (
+            electrons.groupby(["Event", "Parent ID", "X/mm", "Y/mm", "Z/mm"])["PreKinetic/MeV"]
+            .sum()
+            .reset_index()
+            .rename(columns={"PreKinetic/MeV": "ER_near/MeV"})
+        )
+
+        # 4. Merge using BOTH tracking lineage AND 3D position keys
+        merged = pd.merge(
+            gammas,
+            vertex_electron_energy,
+            left_on=["Event", "Track ID", "X_post/mm", "Y_post/mm", "Z_post/mm"],
+            right_on=["Event", "Parent ID", "X/mm", "Y/mm", "Z/mm"],
+            how="left"
+        )
+        merged.index = gammas.index
+
+        # 5. Assign back to main DataFrame
+        df.loc[gammas.index, "ER_near/eV"] = merged[
+                                                 "ER_near/MeV"].fillna(0.0) * 1e6
+        df.to_csv(self.info_primary_path, index=False)
 
     def doped_check(self):
         self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-") & (self.df_electron["Event"] != 1)]
@@ -695,25 +773,24 @@ class ReadRoot():
 
         # Recoiled is recording the taget atom for phot process for test version
         self.phot = self.mom_gamma[(self.mom_gamma['Process'] == "phot")]
-        print("phot",self.phot.head(10))
+        print("phot", self.phot.head(10))
 
         self.phot["Target_Post"] = self.phot["Pre_Target"].apply(
-    lambda e: crosssection_calculate.calculate_doped_photoelectric_probabilities(e, 0.5, 0.5)["Xe_Interaction_Probability"])
+            lambda e: crosssection_calculate.calculate_doped_photoelectric_probabilities(e, 0.5, 0.5)[
+                "Xe_Interaction_Probability"])
         total_probability_sum = self.phot["Target_Post"].sum()
         zero_count = len(self.phot[self.phot["Pre_Target"] == 1.0])
         print("Simulation", self.phot[self.phot["Pre_Target"] == 1.0])
-        print("Post analysis count", total_probability_sum, "Simulation result", zero_count, "total phot number",len(self.phot))
+        print("Post analysis count", total_probability_sum, "Simulation result", zero_count, "total phot number",
+              len(self.phot))
 
         self.output_df = self.mom_gamma[
             ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
 
-
-
         self.output_df = self.df[(self.df['Volume'] == 'LAr_phys')].head(100)
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
         print("all len", len(self.mom_gamma), len(self.output_df))
-        self.output_df.to_csv(self.base_path+"100line.csv", index=False)
-
+        self.output_df.to_csv(self.base_path + "100line.csv", index=False)
 
     def shell_vacancy_analysis(self, df, mass_xe=0.5, mass_ar=0.5):
         # ------------------------------------------------------------------
@@ -734,7 +811,8 @@ class ReadRoot():
             gamma_energies = df.loc[compt_mask, "PreKinetic/MeV"].values
 
             # Pull continuous relative interaction cross-sections directly from your module
-            probs = [crosssection_calculate.calculate_doped_compton_probabilities(e, mass_xe, mass_ar) for e in gamma_energies]
+            probs = [crosssection_calculate.calculate_doped_compton_probabilities(e, mass_xe, mass_ar) for e in
+                     gamma_energies]
 
             # Directly store the continuous Argon interaction probability (no random sampling)
             p_ar_array = np.array([p["Xe_Interaction_Probability"] for p in probs])
@@ -753,7 +831,7 @@ class ReadRoot():
             df.loc[phot_mask, "Target_PXe"] = p_ar_array
 
         total_probability_sum = df.loc[phot_mask, "Target_PXe"].sum()
-        zero_count = len(df.loc[phot_mask& (df["Pre_Target"] == 1.0)])
+        zero_count = len(df.loc[phot_mask & (df["Pre_Target"] == 1.0)])
         print("Post analysis count Xe", total_probability_sum, "Simulation result Xe", zero_count, "total phot number",
               len(df.loc[phot_mask]))
 
@@ -761,7 +839,7 @@ class ReadRoot():
         # PART 2: VECTORIZED PHOTOELECTRIC VERTEX MATCHING (Min Track ID)
         # ------------------------------------------------------------------
         # 1. Isolate and round coordinates for all secondary electrons
-        electrons = df[df["name"] == "e-"].copy()
+        electrons = df[(df["name"] == "e-") & (df["Step ID"] == 1)].copy()
         coord_cols = ["Event", "X/mm", "Y/mm", "Z/mm"]
         for col in coord_cols[1:]:
             electrons[col] = electrons[col].round(3)
@@ -773,18 +851,22 @@ class ReadRoot():
             phot_gammas[col] = phot_gammas[col].round(3)
 
         # 3. Find the entry with the MINIMUM Track ID at each unique spatial position
+        # same location, same track ID same Parent ID
+        lineage_coord_cols = ["Event", "Parent ID", "X/mm", "Y/mm", "Z/mm"]
         vertex_primary_electrons = electrons.loc[
-            electrons.groupby(coord_cols)["Track ID"].idxmin()
+            electrons.groupby(lineage_coord_cols)["Track ID"].idxmin()
         ]
 
         # 4. Perform the fast relational merge using the 3D position keys
         merged = pd.merge(
             phot_gammas,
-            vertex_primary_electrons[coord_cols + ["PreKinetic/MeV"]],
-            left_on=post_coord_cols,
-            right_on=coord_cols,
+            vertex_primary_electrons[
+                lineage_coord_cols + ["PreKinetic/MeV"]
+                ],  # Kept lineage_coord_cols here
+            left_on=["Event", "Track ID", "X_post/mm", "Y_post/mm", "Z_post/mm"],
+            right_on=lineage_coord_cols,
             suffixes=("", "_child"),
-            how="left"
+            how="left",
         )
         merged.index = phot_gammas.index
 
@@ -792,6 +874,7 @@ class ReadRoot():
         gamma_dep_energy = merged["PreKinetic/MeV"] - merged["PostKinetic/MeV"]
         df.loc[phot_gammas.index, "Binding_Energy/MeV"] = gamma_dep_energy - merged["PreKinetic/MeV_child"]
 
+        print("binding energy finished")
         # ------------------------------------------------------------------
         # PART 3: VECTORIZED SHELL ENVELOPE SELECTION via np.select
         # ------------------------------------------------------------------
@@ -801,20 +884,23 @@ class ReadRoot():
             (df["Binding_Energy/MeV"] >= 0.03256) & (df["Binding_Energy/MeV"] <= 0.03656),  # K: 0
             (df["Binding_Energy/MeV"] >= 0.00470) & (df["Binding_Energy/MeV"] <= 0.00550),  # L: 1
             (df["Binding_Energy/MeV"] >= 0.00050) & (df["Binding_Energy/MeV"] <= 0.00150),  # M: 2
-            (df["Binding_Energy/MeV"] >= 0.00002) & (df["Binding_Energy/MeV"] <= 0.00022),  # N: 3
+            (df["Binding_Energy/MeV"] >= 0.00012) & (df["Binding_Energy/MeV"] <= 0.00022),  # N: 3
+            (df["Binding_Energy/MeV"] >= 0.00000) & (df["Binding_Energy/MeV"] <= 0.00005),
         ]
         ar_bounds = [
             (df["Binding_Energy/MeV"] >= 0.00270) & (df["Binding_Energy/MeV"] <= 0.00370),  # K: 0
             (df["Binding_Energy/MeV"] >= 0.00015) & (df["Binding_Energy/MeV"] <= 0.00035),  # L: 1
             (df["Binding_Energy/MeV"] >= 0.00001) & (df["Binding_Energy/MeV"] <= 0.00003),  # M: 2
         ]
-        shell_choices = [0, 1, 2, 3]
+        shell_choices = [0, 1, 2, 3, 4]
 
         xe_shells = np.select(xe_bounds, shell_choices, default=-1)
         ar_shells = np.select(ar_bounds, shell_choices[:-1], default=-1)
 
-        phot_xe_mask = (df["Process"] == "phot") & (df["name"] == "gamma") & (df["Pre_Target"] == 1.0)& (df['Volume'] == 'LAr_phys')
-        phot_ar_mask = (df["Process"] == "phot") & (df["name"] == "gamma") & (df["Pre_Target"] == 0.0)& (df['Volume'] == 'LAr_phys')
+        phot_xe_mask = (df["Process"] == "phot") & (df["name"] == "gamma") & (df["Pre_Target"] == 1.0) & (
+                    df['Volume'] == 'LAr_phys')
+        phot_ar_mask = (df["Process"] == "phot") & (df["name"] == "gamma") & (df["Pre_Target"] == 0.0) & (
+                    df['Volume'] == 'LAr_phys')
 
         # Apply conditions across masks instantly
         df.loc[phot_xe_mask, "Shell_ID"] = xe_shells[phot_xe_mask]
@@ -822,7 +908,8 @@ class ReadRoot():
 
         # self.test_output_df = df[(df['Volume'] == 'LAr_phys')].head(1000)
         # self.test_output_df.to_csv(self.base_path + "100line_updated.csv", index=False)
-        gamma_info = df[(df["name"] == "gamma")& (df['Volume'] == 'LAr_phys')]
+        gamma_info = df[(df["name"] == "gamma") & (df['Volume'] == 'LAr_phys')]
+        print("shell select finished")
         gamma_info.to_csv(self.info_phot_path, index=False)
 
     def delta_e_distribution(self):
@@ -844,19 +931,18 @@ class ReadRoot():
         high_NRER = []
 
         self.test_mom = self.df[
-            (self.df['Volume'] == 'LAr_phys') & (self.df['Process'] == "phot") ]
-        print("test mom",self.test_mom[self.test_mom["PreKinetic/MeV"]<0.006])
-
+            (self.df['Volume'] == 'LAr_phys') & (self.df['Process'] == "phot")]
+        print("test mom", self.test_mom[self.test_mom["PreKinetic/MeV"] < 0.006])
 
         self.mom_gamma = self.df[
             ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
-                        (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
+                    (self.df['Process'] == "compt") | (self.df['Process'] == "phot")) & (
                 self.df["Event"].isin(self.electron_recoiled_event_list))]
         self.mom_gamma_group = self.mom_gamma.groupby("Event")
 
         self.kid_e = self.df[(self.df['name'] == 'e-') & (self.df['Step ID'] == 1) & (self.df['Parent ID'] == 1) & (
             self.df["Event"].isin(self.electron_recoiled_event_list)) & ((self.df['Volume'] == 'LAr_phys') | (
-                    self.df['Volume'] == 'hydraulic_fluid_phys'))]
+                self.df['Volume'] == 'hydraulic_fluid_phys'))]
         self.kid_e_group = self.kid_e.groupby("Event")
 
         self.mom_gamma = self.mom_gamma.copy()
@@ -908,7 +994,6 @@ class ReadRoot():
         # for test only
         # self.mom_gamma["ER_near/eV"] = self.mom_gamma["PreKinetic/MeV"]*1e6
 
-
         self.output_df = self.mom_gamma[
             ["Event", "name", "X/mm", "Y/mm", "R/mm", "Z/mm", "Volume", "Process", "ER_near/eV", "Multiplicity"]]
 
@@ -917,10 +1002,9 @@ class ReadRoot():
         self.df[self.df["Event"] == 6391].to_csv(self.base_path + "LAr_ER_abnormalER.csv")
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
 
-
     def gamma_ER(self):
 
-        self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-")&(self.df_electron["Event"] != 1)]
+        self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-") & (self.df_electron["Event"] != 1)]
         # double check gamma
 
         summed_values = self.tagged_gamma.groupby(['Event'])["Recoiled/MeV"].sum().reset_index()
@@ -945,7 +1029,7 @@ class ReadRoot():
         print("max", max(p_observed), "\n", "min", min(p_observed))
         print("exclusive ER", high_NRER)
         # p_observe only contains ER, if one event only has NR, it still produce bubbles that we need to compress
-        print("path",self.false_gamma_1_path)
+        print("path", self.false_gamma_1_path)
         # Co, just save the total ER in MeV
         with open(self.false_gamma_1_path, 'w', newline='') as myfile:
             wr = csv.writer(myfile)
@@ -956,16 +1040,17 @@ class ReadRoot():
     def xenon_doped_phot(self):
         ## test Xenon doping
         print("particle name", self.df['name'].unique())
-        print("df the whole list", self.df[self.df["Volume"]=="LAr_phys"])
+        print("df the whole list", self.df[self.df["Volume"] == "LAr_phys"])
         print("columns", self.df.columns)
 
         # print("low energy",self.df[(self.df["Volume"]=="LAr_phys")&(self.df["PreKinetic/MeV"]<0.006)][["Event"]])
-        print("compt", self.df[(self.df["Process"]=="compt")])
+        print("compt", self.df[(self.df["Process"] == "compt")])
         self.doped_post_analysis = self.df.copy()
-        self.doped_post_analysis["E_binding/MeV"]  = self.doped_post_analysis["PreKinetic/MeV"] -self.doped_post_analysis["PostKinetic/MeV"]-self.doped_post_analysis["Recoiled/MeV"]
-        print("phot", self.doped_post_analysis[(self.doped_post_analysis["Process"]=="phot")])
+        self.doped_post_analysis["E_binding/MeV"] = self.doped_post_analysis["PreKinetic/MeV"] - \
+                                                    self.doped_post_analysis["PostKinetic/MeV"] - \
+                                                    self.doped_post_analysis["Recoiled/MeV"]
+        print("phot", self.doped_post_analysis[(self.doped_post_analysis["Process"] == "phot")])
         self.df[self.df["Event"] == 2930].to_csv(self.base_path + "LAr_ER_2930.csv")
-
 
         # add shell information for both compt and photo
         # xenon, K, L, M, if energy > K shell, evenly distributed KLM
@@ -977,7 +1062,7 @@ class ReadRoot():
 
         self.df.to_csv(self.info_phot_path, index=False)
 
-    def exclude_common(self,df1, df2): # exclude same ["Event"]
+    def exclude_common(self, df1, df2):  # exclude same ["Event"]
         common_events = set(df1["Event"]) & set(df2["Event"])
 
         # 2. Drop common events from both
@@ -990,46 +1075,41 @@ class ReadRoot():
         # 4. Sort by Event
         df_combined = df_combined.sort_values("Event").reset_index()
         return df_combined
+
     def intersection(self, lst1, lst2):
         lst3 = [value for value in lst1 if value in lst2]
         return lst3
 
-
     def test_merge(self):
-        df_a = pd.DataFrame({ 'B':[3,5],'C':[5,7]})
-        df_b = pd.DataFrame({'B': [2,3,5,3], 'C': [3,5,7,5], 'F': [5,9,10,6], 'G': [8,10,7,9]})
-        print('a\n',df_a)
-        print('b\n',df_b)
-        merged_df = pd.merge(df_b, df_a, on=['B','C'], how='inner')
+        df_a = pd.DataFrame({'B': [3, 5], 'C': [5, 7]})
+        df_b = pd.DataFrame({'B': [2, 3, 5, 3], 'C': [3, 5, 7, 5], 'F': [5, 9, 10, 6], 'G': [8, 10, 7, 9]})
+        print('a\n', df_a)
+        print('b\n', df_b)
+        merged_df = pd.merge(df_b, df_a, on=['B', 'C'], how='inner')
 
         print(merged_df)
 
-
-
-
-
-
     def plot_elastic(self):
-        self.df = pd.read_csv(self.base_path +"dmx_argon_elastic.csv")
-        energy_list  = self.df["Recoiled/MeV"].to_list()
+        self.df = pd.read_csv(self.base_path + "dmx_argon_elastic.csv")
+        energy_list = self.df["Recoiled/MeV"].to_list()
         energy_ev = []
         energy_1kev = []
         energy_10kev = []
         for i in energy_list:
-            energy_ev.append(i*1000000)# actually Recoiled/MeV
-            if i*1E6> 1000:
-                energy_1kev.append(i*1E6)
-                if i*1E6> 10000:
-                    energy_10kev.append(i*1E6)
+            energy_ev.append(i * 1000000)  # actually Recoiled/MeV
+            if i * 1E6 > 1000:
+                energy_1kev.append(i * 1E6)
+                if i * 1E6 > 10000:
+                    energy_10kev.append(i * 1E6)
         plt.hist(energy_ev, np.logspace(np.log10(min(energy_ev)), np.log10(max(energy_ev)), 50))
         plt.yscale("log")
         plt.xscale("log")
         print("len", len(energy_ev))
-        print("1kev",len(energy_1kev))
+        print("1kev", len(energy_1kev))
         print("10kev", len(energy_10kev))
         plt.show()
 
-    def find_single_n_multi(self, df,Event="Event", Parent="Parent ID"):
+    def find_single_n_multi(self, df, Event="Event", Parent="Parent ID"):
 
         # if an entry has same event and parent ID but has different Track ID
         # df = self.keep_1st(df, ['Event', 'Track ID'])
@@ -1044,7 +1124,7 @@ class ReadRoot():
         filtered_df_multi = filtered_df_multi.drop(columns=['combined_tuple'])
         print("multi", filtered_df_multi.head(10))
         print("sing", filtered_df_sing.head(10))
-        return (filtered_df_sing,filtered_df_multi)
+        return (filtered_df_sing, filtered_df_multi)
 
     def distinguish_single_all(self, df, column1="Event", column2="Track ID"):
 
@@ -1069,8 +1149,6 @@ class ReadRoot():
         single_list = df_single["Event"].unique().tolist()
         multi_list = df_multi["Event"].unique().tolist()
 
-
-
         # df['combined_tuple'] = list(zip(df_LAr_bubble_NR.iloc[:][column1], df_LAr_bubble_NR.iloc[:][column2]))
         # multi_appearance_mask = df['combined_tuple'].duplicated(keep=False)
         # sing_appearance_mask = ~df['combined_tuple'].duplicated(keep=False)
@@ -1082,31 +1160,32 @@ class ReadRoot():
         # print("multi", filtered_df_multi.head(10))
         # print("sing", filtered_df_sing.head(10))
         # return (filtered_df_sing, filtered_df_multi)
-        return(df[df["Event"].isin(single_list)],df[df["Event"].isin(multi_list)])
-
+        return (df[df["Event"].isin(single_list)], df[df["Event"].isin(multi_list)])
 
     def Check_inelastic(self):
         # self.df_event168 =  self.df[self.df["Process"]=="neutronInelastic"]
-        self.df_event168 =  self.df[self.df["Event"]==168]
+        self.df_event168 = self.df[self.df["Event"] == 168]
         print(self.df_event168)
         # print(self.df_event168.head(20))
-        self.df_event168.to_csv(self.base_path +"event168.csv")
-    def keep_1st(self, df, columns=['Event','Track ID']):
+        self.df_event168.to_csv(self.base_path + "event168.csv")
+
+    def keep_1st(self, df, columns=['Event', 'Track ID']):
         # Assuming df is your DataFrame and column1, column2 are the column names
         df['combined_tuple'] = list(zip(df.iloc[:][columns[0]], df.iloc[:][columns[1]]))
         first_appearance_mask = ~df['combined_tuple'].duplicated(keep='first')
         filtered_df = df[first_appearance_mask]
         filtered_df = filtered_df.drop(columns=['combined_tuple'])
         return filtered_df
-    def test_event(self,event, name="dmx_argon_multi"):
 
-        self.df_test_merge = self.df[(self.df["Event"]==event)&((self.df["name"]=='Ar36')|(self.df["name"]=='Ar37')|(self.df["name"]=='Ar40')|(self.df["name"]=='Ar41')|(self.df["name"]=='neutron'))]
+    def test_event(self, event, name="dmx_argon_multi"):
 
-        self.df_test_merge.to_csv(self.base_path +name+".csv")
+        self.df_test_merge = self.df[(self.df["Event"] == event) & (
+                    (self.df["name"] == 'Ar36') | (self.df["name"] == 'Ar37') | (self.df["name"] == 'Ar40') | (
+                        self.df["name"] == 'Ar41') | (self.df["name"] == 'neutron'))]
 
+        self.df_test_merge.to_csv(self.base_path + name + ".csv")
 
-
-if __name__ =="__main__":
+if __name__ == "__main__":
     # ReR = RestructureRoot()
     RR = ReadRoot(doped=True)
     # RR= ReadRoot(doped=False)
