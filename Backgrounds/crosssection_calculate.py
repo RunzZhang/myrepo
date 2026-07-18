@@ -94,7 +94,7 @@ Energy    Scatter. Absorb.
 """
 
 import io
-import matplotlib.pyplot as plt
+
 import pandas as pd
 
 # ------------------------------------------------------------------
@@ -200,6 +200,7 @@ df_nist_xe = pd.read_csv(io.StringIO(nist_xe_data.strip()), sep=r"\s+")
 
 
 def plt_cross_section():
+    import matplotlib.pyplot as plt
     # ------------------------------------------------------------------
     # 3. PLOTTING INITIALIZATION
     # ------------------------------------------------------------------
