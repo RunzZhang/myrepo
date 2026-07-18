@@ -1190,7 +1190,7 @@ class SN():
         bins_mev = np.arange(bin_start_mev, bin_end_mev + bin_width_mev, bin_width_mev)
         bins_kev = bins_mev * 1000.0
         bin_width_kev = bin_width_mev * 1000.0
-        print('bin_width_kev', bin_width_kev)
+
 
         # ------------------------------------------------------------------
         # 1. COMPTON PROCESSING
@@ -1241,9 +1241,10 @@ class SN():
             plt.xlabel("Energy Deposited (keV)")
             plt.ylabel(f"Counts / {bin_width_kev:.1f} keV Bin")
             plt.legend()
-            plt.grid(True, alpha=0.3)
+            # plt.grid(True, alpha=0.3)
             # plt.yscale('log', nonpositive='clip')  # Toggle off if you prefer a linear scale layout
             plt.savefig(self.plot_path +"Ba_doped_energy_dep.pdf")
+            print('bin_width_kev', bin_width_kev)
 
         # ------------------------------------------------------------------
         # 4. PLOT BINDING ENERGY (ALL XENON PHOTOELECTRIC SHELLS IN keV)
@@ -1270,8 +1271,8 @@ class SN():
             plt.bar(xe_shell_energies_kev, [compton_per_shell] * 4, width=0.2, color='orange',
                     edgecolor='darkorange', alpha=0.9, label='Compton (Xe All Shells)')
             
-            plt.hist(valid_be_df["Binding_Energy/keV"], bins=be_bins_kev, color='forestgreen', alpha=0.7,
-                     edgecolor='black', label='Photoelectric (Xe All Shells)')
+            plt.hist(valid_be_df["Binding_Energy/keV"], bins=be_bins_kev, color='green', alpha=0.7,
+                      label='Photoelectric (Xe All Shells)')
             plt.title("Reconstructed Photoelectric Binding Energy Spectrum (Xenon All Shells)")
             plt.xlabel("Binding Energy (keV)")
             plt.ylabel("Counts")
