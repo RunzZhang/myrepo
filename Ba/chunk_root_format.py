@@ -46,7 +46,9 @@ class ReadRoot:
         os.makedirs(output_dir, exist_ok=True)
 
         with uproot.open(self.filepath) as file:
+
             tree = file[self.tree_name]
+            print("columns", tree.keys())
             total_entries = int(tree.num_entries)
             print(f"Total entries in original file: {total_entries}")
 
