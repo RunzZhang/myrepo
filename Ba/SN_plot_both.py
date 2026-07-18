@@ -1238,7 +1238,7 @@ class SN():
             plt.plot(bin_centers_kev, compt_counts_scaled, label='Compton (Xe K Shell Scaled)', color='blue',  lw=1.5)
             plt.plot(bin_centers_kev, phot_counts, label='Photoelectric (Xe K-Shell)', color='orange',  lw=1.5)
 
-            plt.title("Deposited Energy Spectrum in Xenon")
+            plt.title("Gamma Deposited Energy Spectrum in Xenon")
             plt.xlabel("Energy Deposited (keV)")
             plt.ylabel(f"Counts / {bin_width_kev:.1f} keV Bin")
             plt.legend()
@@ -1282,6 +1282,7 @@ class SN():
             # Reference guide line for the physical Xenon K-edge peak position
             # plt.axvline(x=34.56, color='r', linestyle=':', alpha=0.7, label='Expected Xe K-edge (~34.56 keV)')
             plt.legend()
+            plt.set_yscale("log")
             plt.savefig(self.plot_path+"Ba_binding_energy_xe.pdf")
 
 
