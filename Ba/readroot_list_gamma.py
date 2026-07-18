@@ -239,8 +239,10 @@ class ReadRoot():
         self.allER()
         if not self.doped:
             print("NORMAL TRACKING")
-            self.ER_distribution_primary_v2()
-            self.ER_distribution_counts_v2()
+            self.ER_distribution_primary_v3(self.df)
+            self.ER_distribution_all_v3(self.df)
+            # self.ER_distribution_primary_v2()
+            # self.ER_distribution_counts_v2()
             # self.ER_distribution_primary()
             # self.ER_distribution_counts()
         else:
@@ -639,7 +641,8 @@ class ReadRoot():
         high_NRER = []
 
         self.mom_gamma= self.df[
-            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phys')) & (
+            ((self.df['Volume'] == 'LAr_phys') | (self.df['Volume'] == 'hydraulic_fluid_phy'
+                                                                       's')) & (
                 (self.df['Process'] == "compt")|(self.df['Process'] == "phot"))  & (self.df["Event"].isin(self.electron_recoiled_event_list))]
         self.mom_gamma_group = self.mom_gamma.groupby("Event")
 
@@ -664,6 +667,86 @@ class ReadRoot():
         file514[columns_to_round6] = file514[columns_to_round6].round(6)
         file514.to_csv(self.base_path + "LAr_ER_514.csv")
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
+
+    def ER_distribution_all_v3(self,df):
+
+
+        # 1. Isolate all electrons (e-) and round their starting coordinates
+        electrons = df[(df["name"] == "e-")&(df["Step ID"] == 1)].copy()
+        coord_cols = ["Event", "X/mm", "Y/mm", "Z/mm"]
+        for col in coord_cols[1:]:
+            electrons[col] = electrons[col].round(3)
+
+        # 2. Isolate photoelectric and Compton gammas and round terminal coordinates
+        gamma_processes = ["phot", "compt"]
+        gammas = df[(df["Process"].isin(gamma_processes)) & (df["name"] == "gamma")].copy()
+        post_coord_cols = ["Event", "X_post/mm", "Y_post/mm", "Z_post/mm"]
+        for col in post_coord_cols[1:]:
+            gammas[col] = gammas[col].round(3)
+
+        # 3. Sum electron energies by Parent ID AND Location
+        # This separates different gammas at the same location, AND the same gamma at different locations.
+        vertex_electron_energy = (
+            electrons.groupby(["Event", "Parent ID", "X/mm", "Y/mm", "Z/mm"])["PreKinetic/MeV"]
+            .sum()
+            .reset_index()
+            .rename(columns={"PreKinetic/MeV": "ER_near/MeV"})
+        )
+
+        # 4. Merge using BOTH tracking lineage AND 3D position keys
+        merged = pd.merge(
+            gammas,
+            vertex_electron_energy,
+            left_on=["Event", "Track ID", "X_post/mm", "Y_post/mm", "Z_post/mm"],
+            right_on=["Event", "Parent ID", "X/mm", "Y/mm", "Z/mm"],
+            how="left"
+        )
+        merged.index = gammas.index
+
+        # 5. Assign back to main DataFrame
+        df.loc[gammas.index, "ER_near/eV"] = merged[
+            "ER_near/MeV"].fillna(0.0)*1e6
+        df.to_csv(self.info_all_path, index=False)
+
+    def ER_distribution_primary_v3(self,df):
+
+
+        # 1. Isolate all electrons (e-) and round their starting coordinates
+        electrons = df[(df["name"] == "e-")&(df["Step ID"] == 1)].copy()
+        coord_cols = ["Event", "X/mm", "Y/mm", "Z/mm"]
+        for col in coord_cols[1:]:
+            electrons[col] = electrons[col].round(3)
+
+        # 2. Isolate photoelectric and Compton gammas and round terminal coordinates
+        gamma_processes = ["phot", "compt"]
+        gammas = df[(df["Process"].isin(gamma_processes)) & (df["name"] == "gamma")&(df["Parent ID"] == 0)].copy()
+        post_coord_cols = ["Event", "X_post/mm", "Y_post/mm", "Z_post/mm"]
+        for col in post_coord_cols[1:]:
+            gammas[col] = gammas[col].round(3)
+
+        # 3. Sum electron energies by Parent ID AND Location
+        # This separates different gammas at the same location, AND the same gamma at different locations.
+        vertex_electron_energy = (
+            electrons.groupby(["Event", "Parent ID", "X/mm", "Y/mm", "Z/mm"])["PreKinetic/MeV"]
+            .sum()
+            .reset_index()
+            .rename(columns={"PreKinetic/MeV": "ER_near/MeV"})
+        )
+
+        # 4. Merge using BOTH tracking lineage AND 3D position keys
+        merged = pd.merge(
+            gammas,
+            vertex_electron_energy,
+            left_on=["Event", "Track ID", "X_post/mm", "Y_post/mm", "Z_post/mm"],
+            right_on=["Event", "Parent ID", "X/mm", "Y/mm", "Z/mm"],
+            how="left"
+        )
+        merged.index = gammas.index
+
+        # 5. Assign back to main DataFrame
+        df.loc[gammas.index, "ER_near/eV"] = merged[
+            "ER_near/MeV"].fillna(0.0)*1e6
+        df.to_csv(self.info_primary_path, index=False)
 
     def doped_check(self):
         self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-") & (self.df_electron["Event"] != 1)]
@@ -761,7 +844,7 @@ class ReadRoot():
         # PART 2: VECTORIZED PHOTOELECTRIC VERTEX MATCHING (Min Track ID)
         # ------------------------------------------------------------------
         # 1. Isolate and round coordinates for all secondary electrons
-        electrons = df[df["name"] == "e-"].copy()
+        electrons = df[(df["name"] == "e-")&(df["Step ID"] == 1)].copy()
         coord_cols = ["Event", "X/mm", "Y/mm", "Z/mm"]
         for col in coord_cols[1:]:
             electrons[col] = electrons[col].round(3)
@@ -773,8 +856,10 @@ class ReadRoot():
             phot_gammas[col] = phot_gammas[col].round(3)
 
         # 3. Find the entry with the MINIMUM Track ID at each unique spatial position
+        # same location, same track ID same Parent ID
+        lineage_coord_cols = ["Event", "Parent ID", "X/mm", "Y/mm", "Z/mm"]
         vertex_primary_electrons = electrons.loc[
-            electrons.groupby(coord_cols)["Track ID"].idxmin()
+            electrons.groupby(lineage_coord_cols)["Track ID"].idxmin()
         ]
 
         # 4. Perform the fast relational merge using the 3D position keys
