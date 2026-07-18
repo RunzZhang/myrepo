@@ -865,11 +865,13 @@ class ReadRoot():
         # 4. Perform the fast relational merge using the 3D position keys
         merged = pd.merge(
             phot_gammas,
-            vertex_primary_electrons[coord_cols + ["PreKinetic/MeV"]],
-            left_on=post_coord_cols,
-            right_on=coord_cols,
+            vertex_primary_electrons[
+                lineage_coord_cols + ["PreKinetic/MeV"]
+                ],  # Kept lineage_coord_cols here
+            left_on=["Event", "Track ID", "X_post/mm", "Y_post/mm", "Z_post/mm"],
+            right_on=lineage_coord_cols,
             suffixes=("", "_child"),
-            how="left"
+            how="left",
         )
         merged.index = phot_gammas.index
 
