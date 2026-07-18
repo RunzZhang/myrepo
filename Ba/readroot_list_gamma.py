@@ -148,15 +148,15 @@ class ReadRoot():
         self.plot_path = '/lzdata/runzezhang/result/GR_sims/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        # self.main_body(1)
-        for i in range(1,56):
-        # for i in range(26, 54):
-            try:
-        # for i in range(1, 11):
-                self.main_body(i)
-            except Exception as e:
-                print(e)
-                continue
+        self.main_body(1)
+        # for i in range(1,56):
+        # # for i in range(26, 54):
+        #     try:
+        # # for i in range(1, 11):
+        #         self.main_body(i)
+        #     except Exception as e:
+        #         print(e)
+        #         continue
     def main_body(self,i):
         print(i)
         self.ini_path = self.base_path+ f"Co_gamma_1E7_ini_part{i}.csv"
@@ -877,6 +877,7 @@ class ReadRoot():
         gamma_dep_energy = merged["PreKinetic/MeV"] - merged["PostKinetic/MeV"]
         df.loc[phot_gammas.index, "Binding_Energy/MeV"] = gamma_dep_energy - merged["PreKinetic/MeV_child"]
 
+        print("binding energy finished")
         # ------------------------------------------------------------------
         # PART 3: VECTORIZED SHELL ENVELOPE SELECTION via np.select
         # ------------------------------------------------------------------
@@ -908,6 +909,7 @@ class ReadRoot():
         # self.test_output_df = df[(df['Volume'] == 'LAr_phys')].head(1000)
         # self.test_output_df.to_csv(self.base_path + "100line_updated.csv", index=False)
         gamma_info = df[(df["name"] == "gamma")& (df['Volume'] == 'LAr_phys')]
+        print("shell select finished")
         gamma_info.to_csv(self.info_phot_path, index=False)
 
     def delta_e_distribution(self):
