@@ -140,7 +140,7 @@ class integrated_analysis():
         self.plot_spectrum()
         # self.gamma_rejection_plot()
         # self.gamma_rejection_plot_v2()
-        self.gamma_rejection_plot_v3()
+        # self.gamma_rejection_plot_v3()
         # self.doped_gamma_rejection_plot()
         # self.spectrums_plot()
 
