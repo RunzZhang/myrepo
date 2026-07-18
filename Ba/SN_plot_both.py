@@ -32,7 +32,7 @@ class SN():
         # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"
         # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_1E5_lar/"  # for gamma path
 
-        self.plot_path = '/data/runzezhang/result/GR_sims/plot/'
+        self.plot_path = '/lzdata/runzezhang/result/GR_sims/plot/'
         self.false_1 = "PN_false1.csv"
         self.false_2 = "PN_false2.csv"
         self.signal = "PN_sig.csv"
