@@ -57,6 +57,21 @@ import uproot
 import matplotlib.pyplot as plt
 import numpy as np
 import csv
+
+import sys
+from pathlib import Path
+
+# 1. Get the absolute path of the directory containing THIS script
+current_dir = Path(__file__).resolve().parent
+
+# 2. Navigate up and over to the target directory
+# (e.g., up one level, then into 'Background')
+background_path = current_dir.parent / "Backgrounds"
+
+# 3. Append it to sys.path if it isn't already there
+if str(background_path) not in sys.path:
+    sys.path.append(str(background_path))
+
 import crosssection_calculate
 # filename = "/data/runzezhang/Geant4Simulaions/g411_TN/dmx.root"
 def test_write():
