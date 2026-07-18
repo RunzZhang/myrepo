@@ -154,7 +154,7 @@ class SN():
             # self.gamma_rejection_rate_per_keV_vs_Setiz()
             # self.gamma_rejection_rate_vs_Setiz()
 
-            # self.write_sims_results()
+            self.write_sims_results()
             # self.write_sims_results_thesis()
 
 
@@ -1026,7 +1026,7 @@ class SN():
         hist_array_primary = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
         # hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=12000, range=(0, 1200))
-        hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=2000, range=(0, 1000))
+        hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=1000, range=(0, 1000))
         # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
         # we need 0.1 keV, and this gives us 4800 bins
 
@@ -1054,7 +1054,7 @@ class SN():
         hist_array_all = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
         # hist_array_all[0] = np.histogram(ER_Ar_all, bins=12000, range=(0, 1200))
-        hist_array_all[0] = np.histogram(ER_Ar_all, bins=2000, range=(0, 1000))
+        hist_array_all[0] = np.histogram(ER_Ar_all, bins=1000, range=(0, 1000))
         # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
         # we need 0.1 keV, and this gives us 4800 bins
 

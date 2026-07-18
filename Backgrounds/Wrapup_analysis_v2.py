@@ -12,12 +12,12 @@ class integrated_analysis():
 
         self.output_path = '/data/runzezhang/result/gamma_rejection/'
         self.plot_path = '/data/runzezhang/result/gamma_rejection/plot/'
-        self.Co_sim_path  ='/data/runzezhang/result/GR_sims/Co_output_5E6.pkl'
-        self.Cs_sim_path = '/data/runzezhang/result/GR_sims/Cs_output_5E6.pkl'
+        self.Co_sim_path  ='/lzdata/runzezhang/result/GR_sims/Co_output_5E6.pkl'
+        self.Cs_sim_path = '/lzdata/runzezhang/result/GR_sims/Cs_output_5E6.pkl'
         self.Cf_simA_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_A.pkl'
         # self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_B.pkl'
         self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density095_config_B.pkl'
-        self.Ba_sim_path = '/data/runzezhang/result/GR_sims/Ba_output_5E6.pkl'
+        self.Ba_sim_path = '/lzdata/runzezhang/result/GR_sims/Ba_output_5E6.pkl'
 
         # doped
         self.Co_sim_doped_path = '/data/runzezhang/result/GR_sims/Co_doped_output.pkl'
@@ -25,7 +25,7 @@ class integrated_analysis():
         # self.Ba_sim_doped_path = '/data/runzezhang/result/GR_sims/Ba_doped_output.pkl'
         self.Ba_sim_doped_path = '/data/runzezhang/result/GR_sims/Ba_doped_output.pkl'
 
-        self.xe_shell_threshold = 34.56
+        self.xe_shell_threshold = 0
 
         # self.density_name_list = ['density104','density125','density150','density175','density2']
         # self.density_path_list = []
@@ -137,6 +137,7 @@ class integrated_analysis():
 
         # plot gamma
         # self.bkg_plot()
+        self.plot_spectrum()
         # self.gamma_rejection_plot()
         # self.gamma_rejection_plot_v2()
         self.gamma_rejection_plot_v3()
@@ -2199,6 +2200,107 @@ class integrated_analysis():
         ax.legend(loc='upper right', fontsize=14)
         plt.tight_layout()
         plt.savefig(self.plot_path + "Time_stability.pdf")
+    def plot_spectrum(self):
+
+        self.sim_list = [self.Cs_sims, self.Co_sims, self.Ba_sims]
+        self.sim_doped_list = [self.Cs_sims_doped, self.Co_sims_doped, self.Ba_sims_doped]
+        self.sim_tag = [r"$^{137}$Cs", r"$^{60}$Co", r"$^{133}$Ba"]
+        fig, ax = plt.subplots(1, 3, figsize=(15, 4))
+
+        for i in range(len(self.sim_list)):
+            sim_result = self.sim_list[i]
+            sim_doped_result = self.sim_doped_list[i]
+            Rate_factor = sim_result[0]
+            energy_edges_all = sim_result[1][0][1]
+            energy_counts_all = sim_result[1][0][0]
+            energy_edges_primary = sim_result[4][0][1]
+            energy_counts_primary = sim_result[4][0][0]
+            counts_energy_cum_bin_primary = sim_result[6]
+
+
+            Rate_factor_doped = sim_doped_result[0]
+            energy_edges_doped = sim_doped_result[1][0][1]
+            energy_counts_doped = sim_doped_result[1][0][0]
+            counts_cum_bin_doped = sim_doped_result[2]
+            counts_energy_cum_bin_doped = sim_doped_result[3]
+
+            edges_p5, counts_p5 = self.rebin_to_5kev(
+                energy_edges_all, energy_counts_all
+            )
+            ax[0].step(
+                edges_p5[:-1],
+                Rate_factor * counts_p5,
+                where="post",
+                label=self.sim_tag[i],
+            )
+
+            # --- Ax[1]: Differential Energy from Cumulative Array (Re-binned) ---
+            # Convert cumulative to differential spectrum
+            differential_counts_primary = np.diff(counts_energy_cum_bin_primary)
+            # The diff array is shorter by 1 element, pad it or match to the edges
+            edges_all_cut = energy_edges_primary[:-1]
+
+            edges_all5, counts_all5 = self.rebin_to_5kev(
+                edges_all_cut, differential_counts_primary
+            )
+            ax[1].step(
+                edges_all5[:-1],
+                Rate_factor * counts_all5,
+                where="post",
+                label=self.sim_tag[i],
+            )
+
+            # --- Ax[2]: Xenon-Doped Target Interactions (Re-binned) ---
+            edges_d5, counts_d5 = self.rebin_to_5kev(
+                energy_edges_doped, energy_counts_doped
+            )
+            ax[2].step(
+                edges_d5[:-1],
+                Rate_factor_doped * counts_d5,
+                where="post",
+                label=self.sim_tag[i],
+            )
+
+        # --- Polish Axis 0 ---
+        # --- Polish Axis 0 ---
+        ax[0].set_xlabel("Deposited Energy $E$ [keV]", fontsize=11)
+        ax[0].set_ylabel("Event Rate [mHz / 5 keV]", fontsize=11)
+        ax[0].set_title("Gamma Event Rate Spectrum\n(All Interaction Vertices)")
+        ax[0].set_xlim(0, 1200)
+        ax[0].legend(frameon=True)
+
+        # --- Polish Axis 1 ---
+        ax[1].set_xlabel("Deposited Energy $E$ [keV]", fontsize=11)
+        # Expressing it as energy-weighted rate makes the math clear to the reader
+        ax[1].set_ylabel("Energy-Weighted Rate [keV$\cdot$mHz / 5 keV]", fontsize=11)
+        ax[1].set_title("Energy Deposition Rate\n(Primary Gamma Vertices)")
+        ax[1].set_xlim(0, 1200)
+        ax[1].legend(frameon=True)
+
+        # --- Polish Axis 2 ---
+        ax[2].set_xlabel("Deposited Energy [keV]", fontsize=11)
+        ax[2].set_ylabel("Event Rate [mHz / 5 keV]", fontsize=11)
+        ax[2].set_title(" Events Rate Spectrum \n(Tagged by Xenon K Shell Vacancy)")
+        ax[2].set_xlim(0, 1200)
+        ax[2].legend(frameon=True)
+
+        plt.savefig(self.plot_path +"spectrum_comparision")
+
+    def rebin_to_5kev(self, original_edges, original_counts, target_bin_width=5.0):
+        """Aggregates arbitrary fine bins into uniform 5 keV bins."""
+        max_energy = original_edges[-1]
+        # Create the new uniform 5 keV bin grid
+        new_edges = np.arange(0, max_energy + target_bin_width, target_bin_width)
+
+        # Use the centers of the original bins as the data points
+        bin_centers = (original_edges[:-1] + original_edges[1:]) / 2.0
+
+        # Re-histogram the counts into the new 5 keV bins
+        rebinned_counts, _ = np.histogram(
+            bin_centers, bins=new_edges, weights=original_counts
+        )
+        return new_edges, rebinned_counts
+
     def concat_PT_condition(self, df):
 
         df_combined = df.groupby(['Pressure [bara]', 'Seitz [keV]', 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]', 'Q_rl-1_rhol-1 [GeVcm**2 g-1]' , 'Eion [keV]'], as_index=False).agg({
