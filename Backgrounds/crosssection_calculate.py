@@ -305,7 +305,7 @@ ax2.legend(fontsize=10, loc="lower left")
 
 # Final polishing layout adjustments
 plt.tight_layout()
-plt.show()
+# plt.show()
 
 
 def _get_log_interpolator(df, energy_col, cross_section_col):
