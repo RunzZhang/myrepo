@@ -1264,6 +1264,7 @@ class SN():
 
             total_xe_compton_counts = len(xe_compt_df)
             compton_per_shell = total_xe_compton_counts / 5.0
+            print('compton_per_shell',compton_per_shell)
 
             # Nominal Xenon binding energy center points in keV
             xe_shell_energies_kev = [34.56, 5.10, 1.00, 0.12, 0.01]
