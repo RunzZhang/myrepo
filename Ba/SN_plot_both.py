@@ -1190,6 +1190,7 @@ class SN():
         bins_mev = np.arange(bin_start_mev, bin_end_mev + bin_width_mev, bin_width_mev)
         bins_kev = bins_mev * 1000.0
         bin_width_kev = bin_width_mev * 1000.0
+        print('bin_width_kev', bin_width_kev)
 
         # ------------------------------------------------------------------
         # 1. COMPTON PROCESSING
