@@ -218,8 +218,9 @@ class ReadRoot():
 
         print("columns: ", self.file.keys())
         # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
-        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm",'Y/mm', 'Z/mm',"PreKinetic/MeV","PostKinetic/MeV",
-                                 "Recoiled/MeV", "Volume", "Process"]
+        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm",'Y/mm', 'Z/mm', "PreKinetic/MeV",
+                                 "PostKinetic/MeV",
+                                 "Recoiled/MeV", "Volume", "Process", "Pre_Target", "X_post/mm","Y_post/mm","Z_post/mm"]
         if self.doped:
             self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm",'Y/mm', 'Z/mm', "PreKinetic/MeV",
                                  "PostKinetic/MeV",
@@ -706,7 +707,7 @@ class ReadRoot():
         # 5. Assign back to main DataFrame
         df.loc[gammas.index, "ER_near/eV"] = merged[
             "ER_near/MeV"].fillna(0.0)*1e6
-        df.to_csv(self.info_all_path, index=False)
+        df.loc[gammas.index].to_csv(self.info_all_path, index=False)
 
     def ER_distribution_primary_v3(self,df):
 
@@ -746,7 +747,7 @@ class ReadRoot():
         # 5. Assign back to main DataFrame
         df.loc[gammas.index, "ER_near/eV"] = merged[
             "ER_near/MeV"].fillna(0.0)*1e6
-        df.to_csv(self.info_primary_path, index=False)
+        df.loc[gammas.index].to_csv(self.info_primary_path, index=False)
 
     def doped_check(self):
         self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-") & (self.df_electron["Event"] != 1)]

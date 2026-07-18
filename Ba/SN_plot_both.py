@@ -1209,7 +1209,7 @@ class SN():
         compt_counts, _ = np.histogram(xe_compt_df["Energy_Deposited/keV"], bins=bins_kev)
 
         # Scale by 1/4 to represent the average of the 4 shells (K, L, M, N) evenly
-        compt_counts_scaled = compt_counts / 4.0
+        compt_counts_scaled = compt_counts / 5.0
 
         # ------------------------------------------------------------------
         # 2. PHOTOELECTRIC PROCESSING
@@ -1254,6 +1254,7 @@ class SN():
 
         # Convert Binding Energy to keV
         print("minimum binding" , min(all_xe_phot["Binding_Energy/MeV"]) )
+
         all_xe_phot["Binding_Energy/keV"] = all_xe_phot["Binding_Energy/MeV"] * 1000.0
         valid_be_df = all_xe_phot[all_xe_phot["Binding_Energy/keV"] > 0]
         if plot:
@@ -1265,11 +1266,11 @@ class SN():
             compton_per_shell = total_xe_compton_counts / 5.0
 
             # Nominal Xenon binding energy center points in keV
-            xe_shell_energies_kev = [34.56, 5.10, 1.00, 0.12,0.01]
+            xe_shell_energies_kev = [34.56, 5.10, 1.00, 0.12, 0.01]
 
             # Plot the Compton distributions as matching height spikes/bars
             # We use a small width matching the bin size to blend seamlessly into the histogram layout
-            plt.bar(xe_shell_energies_kev, [compton_per_shell] * 5, width=0.1, color='orange',
+            plt.bar(xe_shell_energies_kev, [compton_per_shell], width=0.1, color='orange',
                     edgecolor='darkorange', alpha=0.9, label='Compton (Xe All Shells)')
             
             plt.hist(valid_be_df["Binding_Energy/keV"], bins=be_bins_kev, color='green', alpha=0.7,
@@ -1284,6 +1285,7 @@ class SN():
             plt.legend()
             plt.yscale("log")
             plt.savefig(self.plot_path+"Ba_binding_energy_xe.pdf")
+            print("BInding energy unique",valid_be_df["Binding_Energy/keV"].unique() )
 
 
         # spectrum for xenon absorption only need total counts
