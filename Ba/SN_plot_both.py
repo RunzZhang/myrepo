@@ -1274,7 +1274,7 @@ class SN():
             plt.title("Reconstructed Photoelectric Binding Energy Spectrum (Xenon All Shells)")
             plt.xlabel("Binding Energy (keV)")
             plt.ylabel("Counts")
-            plt.grid(True, alpha=0.3)
+            # plt.grid(True, alpha=0.3)
 
             # Reference guide line for the physical Xenon K-edge peak position
             # plt.axvline(x=34.56, color='r', linestyle=':', alpha=0.7, label='Expected Xe K-edge (~34.56 keV)')
