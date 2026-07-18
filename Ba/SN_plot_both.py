@@ -1271,7 +1271,7 @@ class SN():
 
             # Plot the Compton distributions as matching height spikes/bars
             # We use a small width matching the bin size to blend seamlessly into the histogram layout
-            plt.bar(xe_shell_energies_kev, [compton_per_shell], width=0.1, color='orange',
+            plt.bar(xe_shell_energies_kev, [compton_per_shell]*5, width=0.1, color='orange',
                     edgecolor='darkorange', alpha=0.9, label='Compton (Xe All Shells)')
             
             plt.hist(valid_be_df["Binding_Energy/keV"], bins=be_bins_kev, color='green', alpha=0.7,
