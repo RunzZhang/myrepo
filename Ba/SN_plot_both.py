@@ -24,8 +24,8 @@ class SN():
         # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_ar_1E6_phot/"
         # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_ar_1E6_phot/"
 
-        self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_5E6_ER/"
-        self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Ba_5E6_ER/"
+        self.base_path = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Ba_5E6_ER/"
+        self.base_path2 = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Ba_5E6_ER/"
         if self.doped:
             self.base_path =  self.doped_path
 
