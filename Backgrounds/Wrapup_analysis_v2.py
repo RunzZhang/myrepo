@@ -2284,7 +2284,7 @@ class integrated_analysis():
         ax[2].set_xlim(0, 1200)
         ax[2].legend(frameon=True)
 
-        plt.savefig(self.plot_path +"spectrum_comparision")
+        plt.savefig(self.plot_path +"spectrum_comparision.pdf")
 
     def rebin_to_5kev(self, original_edges, original_counts, target_bin_width=5.0):
         """Aggregates arbitrary fine bins into uniform 5 keV bins."""
