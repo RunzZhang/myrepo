@@ -127,7 +127,8 @@ class SN():
             print("all len", len(self.merged_df_all))
         else:
             # self.merged_df_phot = pd.concat(self.df_phot_list, ignore_index=True)
-            self.merged_df_phot = self.df_phot_list[0]  # usually photo_list only has 1 chunked file
+            self.merged_df_phot = pd.concat(self.df_phot_list, ignore_index=True)
+            # self.merged_df_phot = self.df_phot_list[0]  # usually photo_list only has 1 chunked file
 
     def data_analysis(self):
         if not self.doped:
