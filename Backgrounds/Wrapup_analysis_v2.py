@@ -2236,7 +2236,7 @@ class integrated_analysis():
 
             # --- Ax[1]: Differential Energy from Cumulative Array (Re-binned) ---
             # Convert cumulative to differential spectrum
-            differential_counts_primary = np.diff(counts_energy_cum_bin_primary)
+            differential_counts_primary = -np.diff(counts_energy_cum_bin_primary)
             # The diff array is shorter by 1 element, pad it or match to the edges
             edges_all_cut = energy_edges_primary[:-1]
 
@@ -2267,6 +2267,7 @@ class integrated_analysis():
         ax[0].set_ylabel("Event Rate [mHz / 5 keV]", fontsize=11)
         ax[0].set_title("Gamma Event Rate Spectrum\n(All Interaction Vertices)")
         ax[0].set_xlim(0, 1200)
+        ax[0].set_yscale("log")
         ax[0].legend(frameon=True)
 
         # --- Polish Axis 1 ---
@@ -2275,6 +2276,7 @@ class integrated_analysis():
         ax[1].set_ylabel("Energy-Weighted Rate [keV$\cdot$mHz / 5 keV]", fontsize=11)
         ax[1].set_title("Energy Deposition Rate\n(Primary Gamma Vertices)")
         ax[1].set_xlim(0, 1200)
+        ax[1].set_yscale("log")
         ax[1].legend(frameon=True)
 
         # --- Polish Axis 2 ---
@@ -2282,6 +2284,7 @@ class integrated_analysis():
         ax[2].set_ylabel("Event Rate [mHz / 5 keV]", fontsize=11)
         ax[2].set_title(" Events Rate Spectrum \n(Tagged by Xenon K Shell Vacancy)")
         ax[2].set_xlim(0, 1200)
+        ax[2].set_yscale("log")
         ax[2].legend(frameon=True)
 
         plt.savefig(self.plot_path +"spectrum_comparision.pdf")
