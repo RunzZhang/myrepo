@@ -1282,7 +1282,7 @@ class SN():
             # Reference guide line for the physical Xenon K-edge peak position
             # plt.axvline(x=34.56, color='r', linestyle=':', alpha=0.7, label='Expected Xe K-edge (~34.56 keV)')
             plt.legend()
-            plt.set_yscale("log")
+            plt.yscale("log")
             plt.savefig(self.plot_path+"Ba_binding_energy_xe.pdf")
 
 
