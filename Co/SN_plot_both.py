@@ -16,22 +16,22 @@ class SN():
         self.doped = doped
         self.doped_path = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Co_1E8_shell/"
 
-        # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Co_1E5_ar_inside/"
-        # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Co_1E5_ar_inside/"  # for gamma path
+        # self.base_path = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Co_1E5_ar_inside/"
+        # self.base_path2 = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Co_1E5_ar_inside/"  # for gamma path
 
-        # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Co_1E6_CF4_inside/"
-        # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Co_1E6_CF4_inside/"
+        # self.base_path = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Co_1E6_CF4_inside/"
+        # self.base_path2 = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Co_1E6_CF4_inside/"
 
-        # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Co_ar_1E6_phot/"
-        # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Co_ar_1E6_phot/"
+        # self.base_path = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Co_ar_1E6_phot/"
+        # self.base_path2 = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Co_ar_1E6_phot/"
 
         self.base_path = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Co_5E6_ER/"
         self.base_path2 = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Co_5E6_ER/"
         if self.doped:
             self.base_path = self.doped_path
 
-        # self.base_path = "/data/runzezhang/result/GR_sims/chunked_root_files_Co_1E5_lar/"
-        # self.base_path2 = "/data/runzezhang/result/GR_sims/chunked_root_files_Co_1E5_lar/"  # for gamma path
+        # self.base_path = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Co_1E5_lar/"
+        # self.base_path2 = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_Co_1E5_lar/"  # for gamma path
 
         self.plot_path = '/lzdata/runzezhang/result/GR_sims/plot/'
         self.false_1 = "PN_false1.csv"
@@ -1078,7 +1078,7 @@ class SN():
         print("all vs primary counts", cumulative_threshold_per_scatter_array_all[0][0],
               cumulative_threshold_per_scatter_array_primary[0][0])
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
-        with open("/data/runzezhang/result/GR_sims/Co_output_5E6_ERv2.pkl", "wb") as f:
+        with open("/lzdata/runzezhang/result/GR_sims/Co_output_5E6_ERv2.pkl", "wb") as f:
             pickle.dump(output_list, f)
 
         # plot the graph
@@ -1175,7 +1175,7 @@ class SN():
         output_list = [Rate_factor, hist_array, cumulative_threshold_per_scatter_array[0],
                        cumulative_threshold_array[0]]
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
-        with open("/data/runzezhang/result/GR_sims/Co_doped_output.pkl", "wb") as f:
+        with open("/lzdata/runzezhang/result/GR_sims/Co_doped_output.pkl", "wb") as f:
             pickle.dump(output_list, f)
 
     def write_doped_sims_results_v2(self, df, bin_start_mev=0.0, bin_end_mev=1.4, bin_width_mev=0.0001, plot=False):
@@ -1306,7 +1306,7 @@ class SN():
         output_list = [Rate_factor, hist_array, cumulative_threshold_per_scatter_array[0],
                        cumulative_threshold_array[0]]
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
-        with open("/data/runzezhang/result/GR_sims/Co_doped_output_full_track.pkl", "wb") as f:
+        with open("/lzdata/runzezhang/result/GR_sims/Co_doped_output_full_track.pkl", "wb") as f:
             pickle.dump(output_list, f)
 
         return total_counts, bins_kev
