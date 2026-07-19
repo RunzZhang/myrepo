@@ -161,15 +161,15 @@ class ReadRoot():
         self.plot_path = '/lzdata/runzezhang/result/GR_sims/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        self.main_body(1)
-        # for i in range(1,56):
-        # # for i in range(26, 54):
-        #     try:
-        # # for i in range(1, 11):
-        #         self.main_body(i)
-        #     except Exception as e:
-        #         print(e)
-        #         continue
+        # self.main_body(1)
+        for i in range(1,56):
+        # for i in range(26, 54):
+            try:
+        # for i in range(1, 11):
+                self.main_body(i)
+            except Exception as e:
+                print(e)
+                continue
     def main_body(self,i):
         print(i)
         self.ini_path = self.base_path+ f"Co_gamma_1E7_ini_part{i}.csv"
@@ -914,7 +914,7 @@ class ReadRoot():
         shell_choices = [0, 1, 2, 3,4]
 
         xe_shells = np.select(xe_bounds, shell_choices, default=-1)
-        ar_shells = np.select(ar_bounds, shell_choices[:-1], default=-1)
+        ar_shells = np.select(ar_bounds, shell_choices[:-2], default=-1)
 
         phot_xe_mask = (df["Process"] == "phot") & (df["name"] == "gamma") & (df["Pre_Target"] == 1.0)& (df['Volume'] == 'LAr_phys')
         phot_ar_mask = (df["Process"] == "phot") & (df["name"] == "gamma") & (df["Pre_Target"] == 0.0)& (df['Volume'] == 'LAr_phys')
