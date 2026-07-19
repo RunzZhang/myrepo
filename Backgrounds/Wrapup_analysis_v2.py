@@ -23,10 +23,14 @@ class integrated_analysis():
         self.Ba_sim_path = '/lzdata/runzezhang/result/GR_sims/Ba_output_5E6_ERv2.pkl'  # updated ER calculation
 
         # doped
-        self.Co_sim_doped_path = '/data/runzezhang/result/GR_sims/Co_doped_output.pkl'
-        self.Cs_sim_doped_path = '/data/runzezhang/result/GR_sims/Cs_doped_output.pkl'
+        # self.Co_sim_doped_path = '/data/runzezhang/result/GR_sims/Co_doped_output.pkl'
+        # self.Cs_sim_doped_path = '/data/runzezhang/result/GR_sims/Cs_doped_output.pk
+        # # self.Ba_sim_doped_path = '/data/runzezhang/result/GR_sims/Ba_doped_output.pkl'
         # self.Ba_sim_doped_path = '/data/runzezhang/result/GR_sims/Ba_doped_output.pkl'
-        self.Ba_sim_doped_path = '/data/runzezhang/result/GR_sims/Ba_doped_output.pkl'
+
+        self.Co_sim_doped_path = '/data/runzezhang/result/GR_sims/Co_doped_output_full_track.pkl.pkl'
+        self.Cs_sim_doped_path = '/data/runzezhang/result/GR_sims/Cs_doped_output_full_track.pkl.pkl'
+        self.Ba_sim_doped_path = '/data/runzezhang/result/GR_sims/Ba_doped_output_full_track.pkl.pkl'
 
         self.xe_shell_threshold = 0
 
