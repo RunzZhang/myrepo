@@ -144,10 +144,10 @@ class integrated_analysis():
 
         # plot gamma
         # self.bkg_plot()
-        self.plot_spectrum()
+        # self.plot_spectrum()
         # self.gamma_rejection_plot()
         # self.gamma_rejection_plot_v2()
-        # self.gamma_rejection_plot_v3()
+        self.gamma_rejection_plot_v3()
         # self.doped_gamma_rejection_plot()
         # self.spectrums_plot()
 
@@ -1977,7 +1977,7 @@ class integrated_analysis():
         plt.savefig(self.plot_path + "gamma_rejection_v2.pdf")
 
         plt.clf()
-        # self.Qseitz_compound_xe_plot()
+        self.Qseitz_compound_xe_plot()
         self.Ratio_plot()
         self.time_plot()
     def Qseitz_compound_xe_plot(self):
@@ -2031,7 +2031,7 @@ class integrated_analysis():
 
 
 
-        plt.savefig(self.plot_path + "Qseitz_compound_xe.pdf")
+        plt.savefig(self.plot_path + "Qseitz_compound_xe_updated.pdf")
 
         plt.clf()
     def Ratio_plot(self):
@@ -2142,7 +2142,7 @@ class integrated_analysis():
         ax[1].legend(loc='lower left', fontsize=14)
 
 
-        plt.savefig(self.plot_path + "Ratio_compare.pdf")
+        plt.savefig(self.plot_path + "Ratio_compare_updated.pdf")
         
     def time_plot(self):
         import matplotlib.dates as mdates
@@ -2206,7 +2206,7 @@ class integrated_analysis():
         ax.set_ylabel("Background Substracted Rate [mHz]", fontsize=12)
         ax.legend(loc='upper right', fontsize=14)
         plt.tight_layout()
-        plt.savefig(self.plot_path + "Time_stability.pdf")
+        plt.savefig(self.plot_path + "Time_stability_updated.pdf")
     def plot_spectrum(self):
 
         self.sim_list = [self.Cs_sims, self.Co_sims, self.Ba_sims]
@@ -2294,7 +2294,7 @@ class integrated_analysis():
         ax[2].set_yscale("log")
         ax[2].legend(frameon=True)
 
-        plt.savefig(self.plot_path +"spectrum_comparision.pdf")
+        plt.savefig(self.plot_path +"spectrum_comparision_updated.pdf")
 
     def rebin_to_5kev(self, original_edges, original_counts, target_bin_width=5.0):
         """Aggregates arbitrary fine bins into uniform 5 keV bins."""
