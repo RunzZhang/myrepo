@@ -2273,7 +2273,7 @@ class integrated_analysis():
         ax[0].set_xlabel("Deposited Energy $E$ [keV]", fontsize=11)
         ax[0].set_ylabel("Event Rate [mHz / 5 keV]", fontsize=11)
         ax[0].set_title("Gamma Event Rate Spectrum\n(All Interaction Vertices)")
-        ax[0].set_xlim(0, 1200)
+        ax[0].set_xlim(0, 1400)
         ax[0].set_yscale("log")
         ax[0].legend(frameon=True)
 
@@ -2282,7 +2282,7 @@ class integrated_analysis():
         # Expressing it as energy-weighted rate makes the math clear to the reader
         ax[1].set_ylabel("Energy-Weighted Rate [keV$\cdot$mHz / 5 keV]", fontsize=11)
         ax[1].set_title("Energy Deposition Rate\n(Primary Gamma Vertices)")
-        ax[1].set_xlim(0, 1200)
+        ax[1].set_xlim(0, 1400)
         ax[1].set_yscale("log")
         ax[1].legend(frameon=True)
 
@@ -2290,7 +2290,7 @@ class integrated_analysis():
         ax[2].set_xlabel("Deposited Energy [keV]", fontsize=11)
         ax[2].set_ylabel("Event Rate [mHz / 5 keV]", fontsize=11)
         ax[2].set_title(" Events Rate Spectrum \n(Tagged by Xenon K Shell Vacancy)")
-        ax[2].set_xlim(0, 1200)
+        ax[2].set_xlim(0, 1400)
         ax[2].set_yscale("log")
         ax[2].legend(frameon=True)
 
