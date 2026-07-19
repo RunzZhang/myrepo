@@ -916,7 +916,7 @@ class ReadRoot():
         shell_choices = [0, 1, 2, 3,4]
 
         xe_shells = np.select(xe_bounds, shell_choices, default=-1)
-        ar_shells = np.select(ar_bounds, shell_choices[:-1], default=-1)
+        ar_shells = np.select(ar_bounds, shell_choices[:-2], default=-1)
 
         phot_xe_mask = (df["Process"] == "phot") & (df["name"] == "gamma") & (df["Pre_Target"] == 1.0)& (df['Volume'] == 'LAr_phys')
         phot_ar_mask = (df["Process"] == "phot") & (df["name"] == "gamma") & (df["Pre_Target"] == 0.0)& (df['Volume'] == 'LAr_phys')
