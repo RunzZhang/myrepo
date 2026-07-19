@@ -2212,7 +2212,7 @@ class integrated_analysis():
         self.sim_list = [self.Cs_sims, self.Co_sims, self.Ba_sims]
         self.sim_doped_list = [self.Cs_sims_doped, self.Co_sims_doped, self.Ba_sims_doped]
         self.sim_tag = [r"$^{137}$Cs", r"$^{60}$Co", r"$^{133}$Ba"]
-        fig, ax = plt.subplots(1, 3, figsize=(13, 4))
+        fig, ax = plt.subplots(1, 3, figsize=(16, 5))
 
         for i in range(len(self.sim_list)):
             sim_result = self.sim_list[i]
