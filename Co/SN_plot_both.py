@@ -887,7 +887,7 @@ class SN():
         hist_array_primary = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
         # hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=12000, range=(0, 1200))
-        hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=1200, range=(0, 1200))
+        hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=1400, range=(0, 1400))
         # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
         # we need 0.1 keV, and this gives us 4800 bins
 
@@ -915,7 +915,7 @@ class SN():
         hist_array_all = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
         # hist_array_all[0] = np.histogram(ER_Ar_all, bins=12000, range=(0, 1200))
-        hist_array_all[0] = np.histogram(ER_Ar_all, bins=1200, range=(0, 1200))
+        hist_array_all[0] = np.histogram(ER_Ar_all, bins=1400, range=(0, 1400))
         # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
         # we need 0.1 keV, and this gives us 4800 bins
 
@@ -1556,6 +1556,6 @@ class test_csv():
 
 
 if __name__ == "__main__":
-    sn = SN(doped=True)
-    # sn = SN(doped=False)
+    # sn = SN(doped=True)
+    sn = SN(doped=False)
     # test = test_csv()

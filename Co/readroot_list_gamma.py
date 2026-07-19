@@ -1214,8 +1214,8 @@ class ReadRoot():
 
 if __name__ =="__main__":
     # ReR = RestructureRoot()
-    RR = ReadRoot(doped=True)
-    # RR= ReadRoot(doped=False)
+    # RR = ReadRoot(doped=True)
+    RR= ReadRoot(doped=False)
     # test_write()
 
     # find corrupted file entries
