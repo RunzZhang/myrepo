@@ -308,7 +308,7 @@ def plt_cross_section():
 
     # Final polishing layout adjustments
     plt.tight_layout()
-    # plt.show()
+    plt.show()
 
 
 def _get_log_interpolator(df, energy_col, cross_section_col):
@@ -384,6 +384,8 @@ if __name__ == "__main__":
     gamma_energy = 0.040  # 40 keV (near the Xenon K-edge region)
     mass_xe = 0.01  # 1% Xenon dopant
     mass_ar = 0.99  # 99% Argon base
+
+    plt_cross_section()
 
     print(f"--- Standalone Verification Analysis at {gamma_energy * 1000:.1f} keV ---")
     print(f"Mixture: {mass_ar * 100:.1f}% Argon, {mass_xe * 100:.1f}% Xenon by mass\n")
