@@ -1955,8 +1955,8 @@ class integrated_analysis():
                 ax_ij.set_xlabel(x_cfg["xlabel"])
                 ax_ij.set_ylabel(y_cfg["ylabel"])
                 ax_ij.set_yscale("log")
-                ax_ij.legend()
                 ax_ij.legend(loc='lower left', fontsize=14)
+
 
 
 
@@ -1973,6 +1973,7 @@ class integrated_analysis():
                 ax_ij = ax[j, i]
                 ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],label = f"Fitting A= {round(fitting_matrix[i][j][0],2)}, B = {round(fitting_matrix[i][j][1],2)}",
                       color="black")
+                ax_ij.legend(loc='lower left', fontsize=14)
 
 
         plt.savefig(self.plot_path + "gamma_rejection_v2.pdf")
