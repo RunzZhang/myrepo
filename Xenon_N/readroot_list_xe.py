@@ -250,7 +250,7 @@ class ReadRoot():
         # self.lead_interaction()
 
         # check  xenon recoiled spectrum
-        self.xenon_recoiled()
+        self.xenon_recoiled(df = self.df)
 
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
