@@ -374,6 +374,7 @@ class ReadRoot():
             (merged_df['Y/mm_xe'] - merged_df['Y_post/mm_neutron']) ** 2 +
             (merged_df['Z/mm_xe'] - merged_df['Z_post/mm_neutron']) ** 2
         )
+
         matched_df = merged_df[dist <0.01].copy()  # 0.01 mm tolerance
         print("matched df", len(matched_df))
         # matched_df = merged_df
@@ -397,6 +398,9 @@ class ReadRoot():
         print(offset_events.head(10))
         df_76 = df [df["Event"]==76]
         df_76.to_csv(self.base_path+"df_76.csv")
+
+        df_merged_76 = merged_df[merged_df["Event"] == 76]
+        df_merged_76.to_csv(self.base_path + "df_merged_76.csv")
 
 
 
