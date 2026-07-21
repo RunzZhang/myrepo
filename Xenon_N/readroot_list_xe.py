@@ -420,19 +420,37 @@ class ReadRoot():
         elastic_recoils = matched_df[matched_df['scatter_type'] == 'Elastic']['recoil_energy_keV']
         inelastic_recoils = matched_df[matched_df['scatter_type'] == 'Inelastic']['recoil_energy_keV']
 
-        bins = np.logspace(np.log10(max(1e-2, matched_df['recoil_energy_keV'].min())),
-                           np.log10(matched_df['recoil_energy_keV'].max()), 50)
+        # Define a wider log-spaced binning range (e.g., 0.1 keV to 10 MeV / 10,000 keV)
+        x_min = 1e-1  # 0.1 keV floor
+        x_max = 1e4  # 10,000 keV (10 MeV) ceiling
+        bins = np.logspace(np.log10(x_min), np.log10(x_max), 80)
 
-        axes[1].hist(elastic_recoils, bins=bins, alpha=0.6, label=f'Elastic ({len(elastic_recoils)})',
-                     color='royalblue')
-        axes[1].hist(inelastic_recoils, bins=bins, alpha=0.6, label=f'Inelastic ({len(inelastic_recoils)})',
-                     color='darkorange')
+        # Step line histograms using histtype='step'
+        axes[1].hist(
+            elastic_recoils,
+            bins=bins,
+            histtype='step',
+            linewidth=1.8,
+            label=f'Elastic ({len(elastic_recoils)})',
+            color='royalblue'
+        )
+
+        axes[1].hist(
+            inelastic_recoils,
+            bins=bins,
+            histtype='step',
+            linewidth=1.8,
+            label=f'Inelastic ({len(inelastic_recoils)})',
+            color='darkorange'
+        )
 
         axes[1].set_xscale('log')
         axes[1].set_yscale('log')
+        axes[1].set_xlim(x_min, x_max)  # Force wider x-axis limits
+
         axes[1].set_title('Xenon Isotope Recoil Energy Spectrum', fontsize=12)
         axes[1].set_xlabel('Recoil Energy [keV]', fontsize=11)
-        axes[1].set_ylabel('Counts', fontsize=11)
+        axes[1].set_ylabel('Counts / Bin', fontsize=11)
         axes[1].legend(loc='upper right', frameon=True)
 
         plt.tight_layout()
