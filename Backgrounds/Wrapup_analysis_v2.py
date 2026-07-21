@@ -1973,8 +1973,10 @@ class integrated_analysis():
                 ax_ij = ax[j, i]
                 a_val = fitting_matrix[i][j][0]
                 b_val = fitting_matrix[i][j][1]
-                label_text = f"A = {a_val:.2e},\nB = {b_val:.2e}"
 
+                # ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
+                #            color="black")
+                label_text = f"A = {a_val:.2e},\nB = {b_val:.2e}"
                 ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],label = label_text,
                       color="black")
                 ax_ij.legend(loc='lower left', fontsize=14)
@@ -2025,8 +2027,10 @@ class integrated_analysis():
 
         ax[0].plot(self.df_Ba_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_Ba_116_plot["Rejection Rate Xenon Abs[]"],
                    label="Ba 116K 95% CL \nUpper Limit", marker='v', linestyle='None')
-
-        ax[0].plot(result_Q2_xe[2], result_Q2_xe[3],
+        a_val = result_Q2_xe[0]
+        b_val = result_Q2_xe[1]
+        label_text = f"A = {a_val:.2e},\nB = {b_val:.2e}"
+        ax[0].plot(result_Q2_xe[2], result_Q2_xe[3], label = label_text,
                    color="black")
 
         ax[0].set_xlabel(r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
