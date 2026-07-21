@@ -102,4 +102,4 @@ class ReadRoot:
 if __name__ == "__main__":
     reader = ReadRoot(doped=False)
     # reader = ReadRoot(doped=True)
-    reader.chunk_and_write_root(start_chunk_cum=0,num_chunks=1)
+    reader.chunk_and_write_root(start_chunk_cum=0,num_chunks=3)
