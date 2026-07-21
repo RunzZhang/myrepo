@@ -382,7 +382,7 @@ class ReadRoot():
 
         #check location matching
 
-        offset_events = merged_df[merged_df['dist_mm'] > 0.01].copy()
+        offset_events = merged_df[dist > 0.01].copy()
 
         print(f"Total topological matches: {len(merged_df)}")
         print(f"Events with spatial mismatch (> 0.01 mm): {len(offset_events)}")
