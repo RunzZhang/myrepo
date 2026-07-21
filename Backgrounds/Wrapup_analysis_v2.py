@@ -1955,6 +1955,7 @@ class integrated_analysis():
                 ax_ij.set_xlabel(x_cfg["xlabel"])
                 ax_ij.set_ylabel(y_cfg["ylabel"])
                 ax_ij.set_yscale("log")
+                ax_ij.legend()
                 ax_ij.legend(loc='lower left', fontsize=14)
 
 
