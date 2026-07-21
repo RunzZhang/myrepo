@@ -1971,7 +1971,11 @@ class integrated_analysis():
                 y_cfg = y_config[i]
                 x_cfg = x_config[j]
                 ax_ij = ax[j, i]
-                ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],label = f"Fitting A= {round(fitting_matrix[i][j][0],2)}, B = {round(fitting_matrix[i][j][1],2)}",
+                a_val = fitting_matrix[i][j][0]
+                b_val = fitting_matrix[i][j][1]
+                label_text = f"A = {a_val:.2e}, B = {b_val:.2e}"
+                
+                ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],label = label_text,
                       color="black")
                 ax_ij.legend(loc='lower left', fontsize=14)
 
