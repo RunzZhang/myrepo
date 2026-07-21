@@ -320,7 +320,7 @@ class ReadRoot():
 
         # Expected columns:
         # ['Event', 'Track ID', 'Parent ID', 'Step ID', 'name', 
-        #  'Process', 'x', 'y', 'z', 'preKineticEnergy', 'postKineticEnergy']
+        #  'Process', 'x', 'y', 'z', 'PreKinetic/MeV', 'PostKinetic/MeV']
 
         # -----------------------------------------------------------------------------
         # 2. Extract Primary Neutrons (Parent ID = 0, Step ID = 1)
@@ -377,7 +377,7 @@ class ReadRoot():
         # matched_df = merged_df[dist < 0.01].copy()  # 0.01 mm tolerance
         matched_df = merged_df
         # Recoil kinetic energy of the produced Xenon nucleus (in keV or MeV)
-        matched_df['recoil_energy_keV'] = matched_df['preKineticEnergy_xe'] * 1000.0  # Convert MeV to keV
+        matched_df['recoil_energy_keV'] = matched_df['PreKinetic/MeV_xe'] * 1000.0  # Convert MeV to keV
 
         # -----------------------------------------------------------------------------
         # 6. Plotting
@@ -386,7 +386,7 @@ class ReadRoot():
         fig, axes = plt.subplots(1, 2, figsize=(14, 5))
 
         # --- Plot 1: Primary Neutron Energy Spectrum ---
-        axes[0].hist(primary_neutrons['preKineticEnergy'], bins=50, color='crimson', histtype='stepfilled', alpha=0.7,
+        axes[0].hist(primary_neutrons['PreKinetic/MeV'], bins=50, color='crimson', histtype='stepfilled', alpha=0.7,
                      edgecolor='k')
         axes[0].set_title('Primary Incident Neutron Energy (Parent ID=0, Step ID=1)', fontsize=12)
         axes[0].set_xlabel('Energy [MeV]', fontsize=11)
