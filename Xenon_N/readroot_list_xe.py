@@ -433,19 +433,21 @@ class ReadRoot():
         # -----------------------------------------------------------------------------
         # Print Results
         # -----------------------------------------------------------------------------
+        normalized_factor = len(df["Event"].unique())
+        print(normalized_factor)
         n_elastic = len(elastic_recoils)
         n_inelastic = len(inelastic_recoils)
         print("=== Elastic Recoils ===")
         print(f"Total Elastic: {n_elastic}")
         if n_elastic > 0:
-            print(f"  6 - 200 keV: {len(e_6_200)} ({len(e_6_200) /1e5 * 100:.2f}%)")
-            print(f"  > 200 keV:   {len(e_above_200)} ({len(e_above_200) / 1e5 * 100:.2f}%)")
+            print(f"  6 - 200 keV: {len(e_6_200)} ({len(e_6_200) /normalized_factor * 100:.2f}%)")
+            print(f"  > 200 keV:   {len(e_above_200)} ({len(e_above_200) / normalized_factor * 100:.2f}%)")
 
         print("\n=== Inelastic Recoils ===")
         print(f"Total Inelastic: {n_inelastic}")
         if n_inelastic > 0:
-            print(f"  6 - 200 keV: {len(i_6_200)} ({len(i_6_200) / 1e5 * 100:.2f}%)")
-            print(f"  > 200 keV:   {len(i_above_200)} ({len(i_above_200) / 1e5 * 100:.2f}%)")
+            print(f"  6 - 200 keV: {len(i_6_200)} ({len(i_6_200) / normalized_factor * 100:.2f}%)")
+            print(f"  > 200 keV:   {len(i_above_200)} ({len(i_above_200) / normalized_factor * 100:.2f}%)")
 
         # Define linear binning across a wider range (0 to 300 keV)
         x_min = 0.0  # 0 keV
