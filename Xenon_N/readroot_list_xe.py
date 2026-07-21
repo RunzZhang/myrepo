@@ -423,7 +423,7 @@ class ReadRoot():
 
         # Define linear binning across a wider range (0 to 300 keV)
         x_min = 0.0  # 0 keV
-        x_max = 1000.0  # 300 keV (adjust as needed depending on max recoil expected)
+        x_max = 4000.0  # 300 keV (adjust as needed depending on max recoil expected)
         bins = np.linspace(x_min, x_max, 100)
 
         # Outlined step line histograms
