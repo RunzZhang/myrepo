@@ -379,6 +379,24 @@ class ReadRoot():
         # Recoil kinetic energy of the produced Xenon nucleus (in keV or MeV)
         matched_df['recoil_energy_keV'] = matched_df['PreKinetic/MeV_xe'] * 1000.0  # Convert MeV to keV
 
+
+        #check location matching
+
+        offset_events = merged_df[merged_df['dist_mm'] > 0.01].copy()
+
+        print(f"Total topological matches: {len(merged_df)}")
+        print(f"Events with spatial mismatch (> 0.01 mm): {len(offset_events)}")
+
+        # Display the first 10 offending events with key diagnostics
+        cols_to_show = [
+            'Event', 'Parent ID_xe', 'Track ID_xe', 'name_xe', 'Process_xe',
+            'dist_mm', 'X/mm_xe', 'X_post/mm_neutron', 'Process_neutron'
+        ]
+        print("\n--- Sample Mismatched Events ---")
+
+
+
+
         # -----------------------------------------------------------------------------
         # 6. Plotting
         # -----------------------------------------------------------------------------
