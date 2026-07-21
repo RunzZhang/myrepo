@@ -346,6 +346,7 @@ class ReadRoot():
         # -----------------------------------------------------------------------------
         # Filter neutron scattering steps
         neutron_steps = df[(df['name'] == 'neutron')&df['Volume'] == 'phys_xenon_t'].copy()
+        print(neutron_steps.head(10))
 
         # Standard Geant4 process names for hadronic scattering
         elastic_steps = neutron_steps[neutron_steps['Process'] == 'hadElastic'].copy()
@@ -396,11 +397,7 @@ class ReadRoot():
         ]
         print("\n--- Sample Mismatched Events ---")
         print(offset_events.head(10))
-        df_76 = df [df["Event"]==76]
-        df_76.to_csv(self.base_path+"df_76.csv")
 
-        df_merged_76 = merged_df[merged_df["Event"] == 76]
-        df_merged_76.to_csv(self.base_path + "df_merged_76.csv")
 
 
 
