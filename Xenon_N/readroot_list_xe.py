@@ -394,6 +394,8 @@ class ReadRoot():
         ]
         print("\n--- Sample Mismatched Events ---")
         print(offset_events.head(10))
+        df_76 = df [df["Event"]==76]
+        df_76.to_csv(self.base_path+"df_76.csv")
 
 
 
