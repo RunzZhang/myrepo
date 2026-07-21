@@ -368,14 +368,14 @@ class ReadRoot():
             suffixes=('_xe', '_neutron')
         )
 
-        # # Spatial matching tolerance (~10 microns to account for step vertex location)
-        # dist = np.sqrt(
-        #     (merged_df['x_xe'] - merged_df['x_neutron']) ** 2 +
-        #     (merged_df['y_xe'] - merged_df['y_neutron']) ** 2 +
-        #     (merged_df['z_xe'] - merged_df['z_neutron']) ** 2
-        # )
-        # matched_df = merged_df[dist < 0.01].copy()  # 0.01 mm tolerance
-        matched_df = merged_df
+        # Spatial matching tolerance (~10 microns to account for step vertex location)
+        dist = np.sqrt(
+            (merged_df['x_xe'] - merged_df['x_neutron']) ** 2 +
+            (merged_df['y_xe'] - merged_df['y_neutron']) ** 2 +
+            (merged_df['z_xe'] - merged_df['z_neutron']) ** 2
+        )
+        matched_df = merged_df[dist < 0.01].copy()  # 0.01 mm tolerance
+        # matched_df = merged_df
         # Recoil kinetic energy of the produced Xenon nucleus (in keV or MeV)
         matched_df['recoil_energy_keV'] = matched_df['PreKinetic/MeV_xe'] * 1000.0  # Convert MeV to keV
 
