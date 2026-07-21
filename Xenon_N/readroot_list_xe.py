@@ -345,7 +345,7 @@ class ReadRoot():
         # 4. Extract Scattering Interactions (Elastic vs Inelastic)
         # -----------------------------------------------------------------------------
         # Filter neutron scattering steps
-        neutron_steps = df[df['name'] == 'neutron'].copy()
+        neutron_steps = df[(df['name'] == 'neutron')&df['Volume'] == 'phys_xenon_t'].copy()
 
         # Standard Geant4 process names for hadronic scattering
         elastic_steps = neutron_steps[neutron_steps['Process'] == 'hadElastic'].copy()
