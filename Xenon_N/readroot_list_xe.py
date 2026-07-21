@@ -134,9 +134,9 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside/"
-        self.base_path2 = "/data/runzezhang/result/TN_sims_D/chunked_root_files_pn_1E6_outside/"
-        self.plot_path = '/data/runzezhang/result/TN_sims_D/plot/'
+        self.base_path = "/lzdata/runzezhang/result/TN_sims_D/chunked_root_files_xenon_tank_10mev_1e5/"
+        self.base_path2 = "/lzdata/runzezhang/result/TN_sims_D/chunked_root_files_xenon_tank_10mev_1e5/"
+        self.plot_path = '/lzdata/runzezhang/result/GR_rejection/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
         self.main_body(1)
@@ -201,8 +201,9 @@ class ReadRoot():
         self.file = uproot.open(self.filepath)["tree"]
         # print("columns: ", self.file.keys())
         # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
-        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm","PreKinetic/MeV","PostKinetic/MeV",
-                                 "Recoiled/MeV", "Volume", "Process"]
+        self.selected_columns = ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm",'Y/mm', 'Z/mm', "PreKinetic/MeV",
+                                 "PostKinetic/MeV",
+                                 "Recoiled/MeV", "Volume", "Process", "Pre_Target", "X_post/mm","Y_post/mm","Z_post/mm"]
 
         self.bubble_threshold = 0.0001 # MeV bubble generate threshold
         self.rows = 1000
@@ -247,6 +248,9 @@ class ReadRoot():
 
         # check lead interaction
         self.lead_interaction()
+
+        # check  xenon recoiled spectrum
+        self.xenon_recoiled()
 
     # there was some 0 in event columns, set them to corresponding value
     # for example 001002003 will be 001112223
@@ -310,6 +314,106 @@ class ReadRoot():
         print("x",self.x_range)
         print("y", self.y_range)
         print("z", self.z_range)
+
+    def xenon_recoiled(self, df):
+        
+
+        # Expected columns:
+        # ['Event', 'Track ID', 'Parent ID', 'Step ID', 'name', 
+        #  'Process', 'x', 'y', 'z', 'preKineticEnergy', 'postKineticEnergy']
+
+        # -----------------------------------------------------------------------------
+        # 2. Extract Primary Neutrons (Parent ID = 0, Step ID = 1)
+        # -----------------------------------------------------------------------------
+        primary_neutrons = df[
+            (df['Parent ID'] == 0) &
+            (df['Step ID'] == 1) &
+            (df['name'] == 'neutron')
+            ].copy()
+
+        # -----------------------------------------------------------------------------
+        # 3. Extract First Step of Recoil Xenon Isotopes
+        # -----------------------------------------------------------------------------
+        # Filter for any Xenon isotope (using 'Xe' prefix)
+        is_xenon = df['name'].str.startswith('Xe', na=False)
+        xenon_df = df[is_xenon].copy()
+
+        # Find the first step (creation step) for each Xenon recoil track in each event
+        xenon_first_steps = xenon_df.sort_values('Step ID').groupby(['Event', 'Track ID']).first().reset_index()
+
+        # -----------------------------------------------------------------------------
+        # 4. Extract Scattering Interactions (Elastic vs Inelastic)
+        # -----------------------------------------------------------------------------
+        # Filter neutron scattering steps
+        neutron_steps = df[df['name'] == 'neutron'].copy()
+
+        # Standard Geant4 process names for hadronic scattering
+        elastic_steps = neutron_steps[neutron_steps['Process'] == 'hadElastic'].copy()
+        inelastic_steps = neutron_steps[neutron_steps['Process'].isin(['neutronInelastic', 'inelastic'])].copy()
+
+        elastic_steps['scatter_type'] = 'Elastic'
+        inelastic_steps['scatter_type'] = 'Inelastic'
+
+        scatter_steps = pd.concat([elastic_steps, inelastic_steps], ignore_index=True)
+
+        # -----------------------------------------------------------------------------
+        # 5. Merge Xenon Recoils with Scattering Neutrons
+        # -----------------------------------------------------------------------------
+        # Matching Condition: Parent ID of Xenon == Track ID of Neutron
+        merged_df = pd.merge(
+            xenon_first_steps,
+            scatter_steps,
+            left_on=['Event', 'Parent ID'],
+            right_on=['Event', 'Track ID'],
+            suffixes=('_xe', '_neutron')
+        )
+
+        # # Spatial matching tolerance (~10 microns to account for step vertex location)
+        # dist = np.sqrt(
+        #     (merged_df['x_xe'] - merged_df['x_neutron']) ** 2 +
+        #     (merged_df['y_xe'] - merged_df['y_neutron']) ** 2 +
+        #     (merged_df['z_xe'] - merged_df['z_neutron']) ** 2
+        # )
+        # matched_df = merged_df[dist < 0.01].copy()  # 0.01 mm tolerance
+        matched_df = merged_df
+        # Recoil kinetic energy of the produced Xenon nucleus (in keV or MeV)
+        matched_df['recoil_energy_keV'] = matched_df['preKineticEnergy_xe'] * 1000.0  # Convert MeV to keV
+
+        # -----------------------------------------------------------------------------
+        # 6. Plotting
+        # -----------------------------------------------------------------------------
+        plt.style.use('seaborn-v0_8-whitegrid' if 'seaborn-v0_8-whitegrid' in plt.style.available else 'default')
+        fig, axes = plt.subplots(1, 2, figsize=(14, 5))
+
+        # --- Plot 1: Primary Neutron Energy Spectrum ---
+        axes[0].hist(primary_neutrons['preKineticEnergy'], bins=50, color='crimson', histtype='stepfilled', alpha=0.7,
+                     edgecolor='k')
+        axes[0].set_title('Primary Incident Neutron Energy (Parent ID=0, Step ID=1)', fontsize=12)
+        axes[0].set_xlabel('Energy [MeV]', fontsize=11)
+        axes[0].set_ylabel('Counts', fontsize=11)
+        axes[0].set_yscale('log')
+
+        # --- Plot 2: Xenon Recoil Energy (Elastic vs Inelastic) ---
+        elastic_recoils = matched_df[matched_df['scatter_type'] == 'Elastic']['recoil_energy_keV']
+        inelastic_recoils = matched_df[matched_df['scatter_type'] == 'Inelastic']['recoil_energy_keV']
+
+        bins = np.logspace(np.log10(max(1e-2, matched_df['recoil_energy_keV'].min())),
+                           np.log10(matched_df['recoil_energy_keV'].max()), 50)
+
+        axes[1].hist(elastic_recoils, bins=bins, alpha=0.6, label=f'Elastic ({len(elastic_recoils)})',
+                     color='royalblue')
+        axes[1].hist(inelastic_recoils, bins=bins, alpha=0.6, label=f'Inelastic ({len(inelastic_recoils)})',
+                     color='darkorange')
+
+        axes[1].set_xscale('log')
+        axes[1].set_yscale('log')
+        axes[1].set_title('Xenon Isotope Recoil Energy Spectrum', fontsize=12)
+        axes[1].set_xlabel('Recoil Energy [keV]', fontsize=11)
+        axes[1].set_ylabel('Counts', fontsize=11)
+        axes[1].legend(loc='upper right', frameon=True)
+
+        plt.tight_layout()
+        plt.show()
     def single_ncap(self):
         self.nCapture_NR()
         self.nCapture_gamma()
@@ -624,6 +728,122 @@ class ReadRoot():
         plt.xlabel("scatter energy per Event")
         # plt.show()
         # plt.savefig(self.plot_path+"n_huge_scatter_ene_PN2.png")
+
+    def Huge_scatter_wt_inelastic_spectrum(self):
+        self.df_Nscatter = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'hadElastic') & (self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Volume', 'Track ID', 'Parent ID']]
+        self.df_Ninelastic = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'neutronInelastic') & (
+                    self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Volume', 'Track ID', 'Parent ID']]
+
+        self.df_capture = self.df[
+            (self.df["name"] == 'neutron') & (self.df["Process"] == 'nCapture') & (self.df["Volume"] == 'LAr_phys')][
+            ['Event', 'Volume', 'Track ID']]
+        self.df_capture[["Event"]].to_csv(self.base_path2 + "capture_event_list.csv", index=False)
+        print("Ela", len(self.df_Nscatter["Event"].unique()))
+        print("capture", self.df_capture.head(10))
+        print("inelastic", len(self.df_Ninelastic["Event"].unique()), self.df_Ninelastic.head(10))
+
+        (self.df_sing_Nscatter, self.df_multi_Nscatter) = self.find_single_n_multi(self.df_Nscatter, "Event", "Volume")
+
+        print("sing", self.df_sing_Nscatter)
+        print("multi", self.df_multi_Nscatter)
+        # self.df_cap_gamma = pd.DataFrame('Event','Track ID')
+        # elastic
+        merged_df = pd.merge(self.df_sing_Nscatter, self.df_Ninelastic, on=['Event'], how='left', indicator=True)
+        filtered_df = merged_df[merged_df['_merge'] == 'left_only'].drop(columns=['_merge'])
+        # inelastic
+        # merged_df = pd.merge(self.df_sing_Nscatter, self.df_Nscatter, on=['Event'], how='left', indicator=True)
+        filtered_df_inela = self.df_Ninelastic
+        print("merged_xor,\n", filtered_df_inela.head(10))
+        # 2nd filter filter out ncapture recoiled energy
+        # elastic
+        merged_df2 = pd.merge(filtered_df, self.df_capture, on=['Event'], how='left', indicator=True)
+
+        filtered_df2 = merged_df2[merged_df2['_merge'] == 'left_only'].drop(columns=['_merge'])
+
+        merged_df3 = pd.merge(filtered_df_inela, self.df_capture, on=['Event'], how='left', indicator=True)
+
+        filtered_df3 = merged_df3[merged_df3['_merge'] == 'left_only'].drop(columns=['_merge'])
+
+        print("merged_xor,\n", filtered_df2.head(10))
+
+        self.LAr_recoiled = \
+        self.df[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (self.df["Recoiled/MeV"] > 0.001)][
+            ['Event']]
+
+        # print("LAr recoiled",self.LAr_recoiled)
+        # filtered df to remove nCapture event
+        # elastic and inelastic
+        self.LAr_n_merged = pd.merge(filtered_df2, self.LAr_recoiled, on=['Event'], how='inner')
+        self.LAr_n_merged_inela = pd.merge(filtered_df3, self.LAr_recoiled, on=['Event'], how='inner')
+
+        n_list = self.LAr_n_merged["Event"].to_list()
+        self.N_check = self.df[self.df["Event"].isin(n_list) & (
+                (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))]
+        self.N_check.to_csv(self.false_2_path_mid, index=False)
+
+        n_list_inela = self.LAr_n_merged_inela["Event"].to_list()
+        print("Ncheck_ inel", n_list_inela)
+        self.N_check_inela = self.df[self.df["Event"].isin(n_list_inela) & (
+                (self.df["name"] == 'neutron') | (self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36') | (
+                    self.df["name"] == 'gamma'))]
+        self.N_check_inela.to_csv(self.false_3_path_mid, index=False)
+
+        # print(self.LAr_n_merged)
+        # print("simutanous", len(self.LAr_n_merged["Event"].unique()))
+
+        max_values = self.N_check[((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36'))].groupby(['Event'])[
+            "Recoiled/MeV"].max().reset_index()
+        print(max_values.head(20))
+
+        # add gamma up
+        self.Ar_recoiled_list = max_values["Recoiled/MeV"].to_list()
+        self.Ar_recoiled_event_list = max_values["Event"].to_list()
+        p_observed = [0]
+        scatter_ene = []  # in eV
+        for i in range(len(self.Ar_recoiled_list)):
+            # 10 /MeV 0.03 and 0.2 PCE and PDE
+            if self.Ar_recoiled_list[i] > 1E-6:
+                pho_num = self.Ar_recoiled_list[i] * 1E6 * 10 * 0.03 * 0.2 / (1000)
+                scatter_ene.append(self.Ar_recoiled_list[i] * 1E6)
+                if pho_num > 1:
+                    p_observed.append(pho_num)
+
+        num = 0
+        for i in p_observed:
+            if i >= 1:
+                num += 1
+        print("photon observed number ", num, len(p_observed))
+        print("max", max(p_observed), "\n", "min", min(p_observed))
+        # plt.hist(self.Ar_recoiled_list, bins=100)
+        # check event 1256
+        self.df_event_1542 = self.df[
+            self.df["Event"] == 1542][
+            ["Event", "name", "Parent ID", "Track ID", "Step ID", "X/mm", "PreKinetic/MeV", "Recoiled/MeV", "Volume",
+             "Process"]]
+        self.df_event_1542.to_csv("/data/runzezhang/result/TN_sims3/event1542.csv", index=False)
+        with open(self.false_2_path, 'w', newline='') as myfile:
+            wr = csv.writer(myfile)
+            wr.writerow(p_observed)
+
+        self.p_observed = p_observed
+        # print photon number
+        # plt.hist(p_observed, bins=100)
+        # plt.xlabel("Obeserved Photon per Event")
+
+        # print scatter scatter
+        plt.hist(scatter_ene, bins=100)
+        plt.xscale("log")
+        plt.yscale("Log")
+        print("scatter number", len(scatter_ene))
+        # before 6846
+        # after including inelastic scattering 8681
+        plt.xlabel("scatter energy per Event")
+        # plt.show()
+        plt.savefig(self.plot_path + "n_huge_scatter_ene_PN2.png")
 
     def Huge_scatter_wt_inelastic_spectrum(self):
         self.df_Nscatter = self.df[
@@ -2199,7 +2419,7 @@ class ReadRoot():
             ((self.df["name"] == 'Ar40') | (self.df["name"] == 'Ar36')) & (
                     self.df["Volume"] == 'LAr_phys') & (self.df["Recoiled/MeV"] >= self.bubble_threshold)][
             ['Event', 'Volume', 'Track ID',
-             'Parent ID']]  # this to judgge whether multi bubbles. if two different TrackID > bubble threhosld in one event
+             'Parent ID']]  # this to judgge whether multi bubbles. if two different Track ID > bubble threhosld in one event
         df_LAr_bubble_NR = self.keep_1st(df_LAr_bubble_NR)
 
         # Count distinct Track IDs per Event
