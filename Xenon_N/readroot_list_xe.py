@@ -346,8 +346,7 @@ class ReadRoot():
         # -----------------------------------------------------------------------------
         # Filter neutron scattering steps
         neutron_steps = df[(df['name'] == 'neutron')&(df['Volume'] == 'phys_xenon_t')].copy()
-        neutron_steps_xenon = df[(df['name'] == 'neutron')].copy()["Volume"].unique()
-        print(neutron_steps_xenon)
+
 
         # Standard Geant4 process names for hadronic scattering
         elastic_steps = neutron_steps[neutron_steps['Process'] == 'hadElastic'].copy()
@@ -377,7 +376,7 @@ class ReadRoot():
             (merged_df['Z/mm_xe'] - merged_df['Z_post/mm_neutron']) ** 2
         )
 
-        matched_df = merged_df[dist <0.01].copy()  # 0.01 mm tolerance
+        matched_df = merged_df[dist ==0.0].copy()  # 0.01 mm tolerance
         print("matched df", len(matched_df))
         # matched_df = merged_df
         # Recoil kinetic energy of the produced Xenon nucleus (in keV or MeV)
