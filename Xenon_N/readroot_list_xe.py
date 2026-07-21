@@ -417,15 +417,16 @@ class ReadRoot():
         axes[0].set_yscale('log')
 
         # --- Plot 2: Xenon Recoil Energy (Elastic vs Inelastic) ---
+        # --- Plot 2: Xenon Recoil Energy Spectrum (Linear X-Axis Line Plot) ---
         elastic_recoils = matched_df[matched_df['scatter_type'] == 'Elastic']['recoil_energy_keV']
         inelastic_recoils = matched_df[matched_df['scatter_type'] == 'Inelastic']['recoil_energy_keV']
 
-        # Define a wider log-spaced binning range (e.g., 0.1 keV to 10 MeV / 10,000 keV)
-        x_min = 1e-3  # 0.1 keV floor
-        x_max = 1e3  # 10,000 keV (10 MeV) ceiling
-        bins = np.logspace(np.log10(x_min), np.log10(x_max), 80)
+        # Define linear binning across a wider range (0 to 300 keV)
+        x_min = 0.0  # 0 keV
+        x_max = 1000.0  # 300 keV (adjust as needed depending on max recoil expected)
+        bins = np.linspace(x_min, x_max, 100)
 
-        # Step line histograms using histtype='step'
+        # Outlined step line histograms
         axes[1].hist(
             elastic_recoils,
             bins=bins,
@@ -444,9 +445,10 @@ class ReadRoot():
             color='darkorange'
         )
 
-        axes[1].set_xscale('log')
+        # Linear scale on X, keep log scale on Y to see small inelastic counts
+        axes[1].set_xscale('linear')
         axes[1].set_yscale('log')
-        axes[1].set_xlim(x_min, x_max)  # Force wider x-axis limits
+        axes[1].set_xlim(x_min, x_max)
 
         axes[1].set_title('Xenon Isotope Recoil Energy Spectrum', fontsize=12)
         axes[1].set_xlabel('Recoil Energy [keV]', fontsize=11)
