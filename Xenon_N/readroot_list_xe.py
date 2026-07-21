@@ -370,9 +370,9 @@ class ReadRoot():
 
         # Spatial matching tolerance (~10 microns to account for step vertex location)
         dist = np.sqrt(
-            (merged_df['X/mm_xe'] - merged_df['X/mm_neutron']) ** 2 +
-            (merged_df['Y/mm_xe'] - merged_df['Y/mm_neutron']) ** 2 +
-            (merged_df['Z/mm_xe'] - merged_df['Z/mm_neutron']) ** 2
+            (merged_df['X/mm_xe'] - merged_df['X_post/mm_neutron']) ** 2 +
+            (merged_df['Y/mm_xe'] - merged_df['Y_post/mm_neutron']) ** 2 +
+            (merged_df['Z/mm_xe'] - merged_df['Z_post/mm_neutron']) ** 2
         )
         matched_df = merged_df[dist < 0.01].copy()  # 0.01 mm tolerance
         # matched_df = merged_df
