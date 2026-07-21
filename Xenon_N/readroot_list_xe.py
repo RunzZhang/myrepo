@@ -421,8 +421,8 @@ class ReadRoot():
         inelastic_recoils = matched_df[matched_df['scatter_type'] == 'Inelastic']['recoil_energy_keV']
 
         # Define a wider log-spaced binning range (e.g., 0.1 keV to 10 MeV / 10,000 keV)
-        x_min = 1e-1  # 0.1 keV floor
-        x_max = 1e4  # 10,000 keV (10 MeV) ceiling
+        x_min = 1e-3  # 0.1 keV floor
+        x_max = 1e3  # 10,000 keV (10 MeV) ceiling
         bins = np.logspace(np.log10(x_min), np.log10(x_max), 80)
 
         # Step line histograms using histtype='step'
