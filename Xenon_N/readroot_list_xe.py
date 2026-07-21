@@ -393,7 +393,7 @@ class ReadRoot():
             'dist_mm', 'X/mm_xe', 'X_post/mm_neutron', 'Process_neutron'
         ]
         print("\n--- Sample Mismatched Events ---")
-        print(offset_events[cols_to_show].head(10))
+        print(offset_events.head(10))
 
 
 
