@@ -134,8 +134,8 @@ class RestructureRoot():
 
 class ReadRoot():
     def __init__(self):
-        self.base_path = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_xenon_tank_50mev_1e5/"
-        self.base_path2 = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_xenon_tank_50mev_1e5/"
+        self.base_path = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_xenon_tank_10mev_1e5/"
+        self.base_path2 = "/lzdata/runzezhang/result/GR_sims/chunked_root_files_xenon_tank_10mev_1e5/"
         self.plot_path = '/lzdata/runzezhang/result/GR_sims/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
@@ -338,8 +338,11 @@ class ReadRoot():
         is_xenon = df['name'].str.startswith('Xe', na=False)
         xenon_df = df[is_xenon].copy()
 
-        # Find the first step (creation step) for each Xenon recoil track in each event
-        xenon_first_steps = xenon_df.sort_values('Step ID').groupby(['Event', 'Track ID']).first().reset_index()
+        # 2. Sort by Track ID and Step ID to ensure the EARLIEST track and FIRST step come first
+        xenon_sorted = xenon_df.sort_values(['Track ID', 'Step ID'])
+
+        # 3. Group by 'Event' alone to take the absolute first Xenon creation in each event
+        xenon_first_steps = xenon_sorted.groupby('Event').first().reset_index()
 
         # -----------------------------------------------------------------------------
         # 4. Extract Scattering Interactions (Elastic vs Inelastic)
@@ -401,7 +404,6 @@ class ReadRoot():
 
 
 
-
         # -----------------------------------------------------------------------------
         # 6. Plotting
         # -----------------------------------------------------------------------------
@@ -420,6 +422,30 @@ class ReadRoot():
         # --- Plot 2: Xenon Recoil Energy Spectrum (Linear X-Axis Line Plot) ---
         elastic_recoils = matched_df[matched_df['scatter_type'] == 'Elastic']['recoil_energy_keV']
         inelastic_recoils = matched_df[matched_df['scatter_type'] == 'Inelastic']['recoil_energy_keV']
+
+        e_6_200 = elastic_recoils[(elastic_recoils >= 6.0) & (elastic_recoils <= 200.0)]
+        e_above_200 = elastic_recoils[elastic_recoils > 200.0]
+
+        # Inelastic breakdown
+        i_6_200 = inelastic_recoils[(inelastic_recoils >= 6.0) & (inelastic_recoils <= 200.0)]
+        i_above_200 = inelastic_recoils[inelastic_recoils > 200.0]
+
+        # -----------------------------------------------------------------------------
+        # Print Results
+        # -----------------------------------------------------------------------------
+        n_elastic = len(elastic_recoils)
+        n_inelastic = len(inelastic_recoils)
+        print("=== Elastic Recoils ===")
+        print(f"Total Elastic: {n_elastic}")
+        if n_elastic > 0:
+            print(f"  6 - 200 keV: {len(e_6_200)} ({len(e_6_200) /1e5 * 100:.2f}%)")
+            print(f"  > 200 keV:   {len(e_above_200)} ({len(e_above_200) / 1e5 * 100:.2f}%)")
+
+        print("\n=== Inelastic Recoils ===")
+        print(f"Total Inelastic: {n_inelastic}")
+        if n_inelastic > 0:
+            print(f"  6 - 200 keV: {len(i_6_200)} ({len(i_6_200) / 1e5 * 100:.2f}%)")
+            print(f"  > 200 keV:   {len(i_above_200)} ({len(i_above_200) / 1e5 * 100:.2f}%)")
 
         # Define linear binning across a wider range (0 to 300 keV)
         x_min = 0.0  # 0 keV
