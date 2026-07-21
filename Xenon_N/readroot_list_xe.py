@@ -247,7 +247,7 @@ class ReadRoot():
         # self.Check_inelastic()
 
         # check lead interaction
-        self.lead_interaction()
+        # self.lead_interaction()
 
         # check  xenon recoiled spectrum
         self.xenon_recoiled()
