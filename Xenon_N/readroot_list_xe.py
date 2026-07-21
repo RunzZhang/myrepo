@@ -374,7 +374,7 @@ class ReadRoot():
             (merged_df['Y/mm_xe'] - merged_df['Y_post/mm_neutron']) ** 2 +
             (merged_df['Z/mm_xe'] - merged_df['Z_post/mm_neutron']) ** 2
         )
-        matched_df = merged_df[dist ==0.00].copy()  # 0.01 mm tolerance
+        matched_df = merged_df[dist <0.01].copy()  # 0.01 mm tolerance
         print("matched df", len(matched_df))
         # matched_df = merged_df
         # Recoil kinetic energy of the produced Xenon nucleus (in keV or MeV)
