@@ -2482,7 +2482,8 @@ class integrated_analysis():
         ax[0].set_ylabel("Nucleation probability\n(per xenon K shell photoabsorption)",fontsize=16)
         ax[0].set_yscale("log")
         ax[0].legend(loc='lower left', fontsize=14)
-        box_content = (    f"$y = A e^{{-Bx}}$\n" f"A = ${a_str}$ K-phot$^{{-1}}$\n"    f"B = ${b_str}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
+        # box_content = (    f"$y = A e^{{-Bx}}$\n" f"A = ${a_str}$ K-phot$^{{-1}}$\n"    f"B = ${b_str}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
+        box_content = (            f"$y = A e^{{-Bx}}$\n" f"A = ${a_val}$ K-phot$^{{-1}}$\n"    f"B = ${b_val}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
 
         ax[0].text(0.95, 0.95,box_content,
         transform=ax[0].transAxes,
