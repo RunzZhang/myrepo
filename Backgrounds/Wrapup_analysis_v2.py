@@ -2400,7 +2400,7 @@ class integrated_analysis():
                 if i==1 & j==1:
                     a_str = self.fmt_sci_tex(a_val)
                     b_str = self.fmt_sci_tex(b_val)
-                    box_content = (
+                    box_content = (  f"$y = A e^{{-Bx}}$\n"
                         f"A = ${a_str}$ keV$^{{-1}}$\n"    f"B = ${b_str}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
 
                     ax_ij.text(0.95, 0.95, box_content,
@@ -2412,7 +2412,7 @@ class integrated_analysis():
                                linespacing=1.4,  # Extra padding between lines
                                bbox=dict(
                                    facecolor='white',  # Black background
-                                   edgecolor='lightgray',  # No border outline
+                                   edgecolor='white',  # No border outline
                                    alpha=0.9  # Slight transparency so gridlines don't completely disappear
                                ))
 
@@ -2482,7 +2482,7 @@ class integrated_analysis():
         ax[0].set_ylabel("Nucleation probability\n(per xenon K shell photoabsorption)",fontsize=16)
         ax[0].set_yscale("log")
         ax[0].legend(loc='lower left', fontsize=14)
-        box_content = (    f"A = ${a_str}$ K-phot$^{{-1}}$\n"    f"B = ${b_str}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
+        box_content = (    f"$y = A e^{{-Bx}}$\n" f"A = ${a_str}$ K-phot$^{{-1}}$\n"    f"B = ${b_str}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
 
         ax[0].text(0.95, 0.95,box_content,
         transform=ax[0].transAxes,
@@ -2493,7 +2493,7 @@ class integrated_analysis():
         linespacing=1.4,                 # Extra padding between lines
         bbox=dict(
             facecolor='white',          # Black background
-            edgecolor='lightgray',           # No border outline
+            edgecolor='white',           # No border outline
             alpha=0.9                   # Slight transparency so gridlines don't completely disappear
         ))
 
