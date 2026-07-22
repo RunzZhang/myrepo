@@ -2454,19 +2454,37 @@ class integrated_analysis():
         #            label="Ba 116K 95% CL \nUpper Limit", marker='v', linestyle='None')
         a_val = result_Q2_xe[0]
         b_val = result_Q2_xe[1]
+        a_str = self.fmt_sci_tex(a_val)
+        b_str = self.fmt_sci_tex(b_val)
+
+        # 2. Build string with LaTeX formatting for numbers and upright unit powers
+        box_content = (
+            rf"$A = {a_str}\ \mathrm{{K\text{{-}}phot}}^{{-1}}$" "\n"
+            rf"$B = {b_str}\ \mathrm{{GeV}}^{{-1}}\cdot\mathrm{{cm}}^{{-2}}\cdot\mathrm{{g}}$"
+        )
         label_text = f"A = {a_val:.2e},\nB = {b_val:.2e}"
         ax[0].plot(result_Q2_xe[2], result_Q2_xe[3],
                    color="black")
 
         ax[0].set_xlabel(r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]",fontsize=16)
-        ax[0].set_ylabel("Nucleation probability (per xenon K shell photoabsorption)",fontsize=16)
+        ax[0].set_ylabel("Nucleation probability\n(per xenon K shell photoabsorption)",fontsize=16)
         ax[0].set_yscale("log")
         ax[0].legend(loc='lower left', fontsize=16)
         box_content = (    rf"$A = {a_val:.2e}\ \mathrm{{K-phot}}^{{-1}}$" "\n"    rf"$B = {b_val:.2e}\ \mathrm{{GeV}}^{{-1}}\cdot\mathrm{{cm}}^{{-2}}\cdot\mathrm{{g}}$")
 
-        ax[0].text(0.95, 0.95, box_content,
-                   transform=ax[0].transAxes,
-                   fontsize=16, va='top', ha='right')
+        ax[0].text(0.95, 0.95,box_content,
+        transform=ax[0].transAxes,
+        fontsize=11,
+        color='white',                  # White text color
+        verticalalignment='top',
+        horizontalalignment='right',
+        linespacing=1.4,                 # Extra padding between lines
+        bbox=dict(
+            boxstyle='round,pad=0.5',
+            facecolor='black',          # Black background
+            edgecolor='none',           # No border outline
+            alpha=0.9                   # Slight transparency so gridlines don't completely disappear
+        ))
 
 
 
@@ -2474,6 +2492,14 @@ class integrated_analysis():
         plt.savefig(self.plot_path + "Qseitz_compound_xe_PSN.pdf")
 
         plt.clf()
+
+    def fmt_sci_tex(self, val):
+        """Converts a float to LaTeX scientific notation (e.g., 3.25 \times 10^{-1})."""
+        if val == 0:
+            return r"0"
+        s = f"{val:.2e}"
+        base, exp = s.split('e')
+        return f"{base} \\times 10^{{{int(exp)}}}"
     def plot_spectrum(self):
 
         self.sim_list = [self.Cs_sims, self.Co_sims, self.Ba_sims]
