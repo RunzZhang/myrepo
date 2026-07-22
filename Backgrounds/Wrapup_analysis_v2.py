@@ -2474,7 +2474,7 @@ class integrated_analysis():
 
         ax[0].text(0.95, 0.95,box_content,
         transform=ax[0].transAxes,
-        fontsize=11,
+        fontsize=16,
         color='black',                  # White text color
         verticalalignment='top',
         horizontalalignment='right',
