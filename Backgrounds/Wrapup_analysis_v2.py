@@ -2481,7 +2481,7 @@ class integrated_analysis():
         linespacing=1.4,                 # Extra padding between lines
         bbox=dict(
             facecolor='white',          # Black background
-            edgecolor='gray',           # No border outline
+            edgecolor='lightgray',           # No border outline
             alpha=0.9                   # Slight transparency so gridlines don't completely disappear
         ))
 
