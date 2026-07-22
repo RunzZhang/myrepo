@@ -2469,12 +2469,12 @@ class integrated_analysis():
         ax[0].set_xlabel(r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]",fontsize=16)
         ax[0].set_ylabel("Nucleation probability\n(per xenon K shell photoabsorption)",fontsize=16)
         ax[0].set_yscale("log")
-        ax[0].legend(loc='lower left', fontsize=16)
+        ax[0].legend(loc='lower left', fontsize=14)
         box_content = (    f"A = ${a_str}$ K-phot$^{{-1}}$\n"    f"B = ${b_str}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
 
         ax[0].text(0.95, 0.95,box_content,
         transform=ax[0].transAxes,
-        fontsize=16,
+        fontsize=14,
         color='black',                  # White text color
         verticalalignment='top',
         horizontalalignment='right',
