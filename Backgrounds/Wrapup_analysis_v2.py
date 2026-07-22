@@ -2398,8 +2398,7 @@ class integrated_analysis():
                 ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
                       color="black")
                 if i==2 & j==1:
-                    box_content = (rf"$A = {a_val:.2e}\ \text{{keV}}^{{-1}}$" "\n"
-                                    rf"$B = {b_val:.2e}\ \text{{GeV}}^{{-1}}\cdot\text{{cm}}^{{-2}}\cdot\text{{g}}$")
+                    box_content = (    rf"$A = {a_val:.2e}\ \mathrm{{keV}}^{{-1}}$" "\n"    rf"$B = {b_val:.2e}\ \mathrm{{GeV}}^{{-1}}\cdot\mathrm{{cm}}^{{-2}}\cdot\mathrm{{g}}$")
 
                     ax_ij.text(0.95, 0.95,box_content,
                     transform = ax_ij.transAxes,
@@ -2463,8 +2462,7 @@ class integrated_analysis():
         ax[0].set_ylabel("Nucleation probability (per xenon K shell photoabsorption)",fontsize=16)
         ax[0].set_yscale("log")
         ax[0].legend(loc='lower left', fontsize=16)
-        box_content = (rf"$A = {a_val:.2e}\ \text{{K-phot}}^{{-1}}$" "\n"
-                       rf"$B = {b_val:.2e}\ \text{{GeV}}^{{-1}}\cdot\text{{cm}}^{{-2}}\cdot\text{{g}}$")
+        box_content = (    rf"$A = {a_val:.2e}\ \mathrm{{K-phot}}^{{-1}}$" "\n"    rf"$B = {b_val:.2e}\ \mathrm{{GeV}}^{{-1}}\cdot\mathrm{{cm}}^{{-2}}\cdot\mathrm{{g}}$")
 
         ax[0].text(0.95, 0.95, box_content,
                    transform=ax[0].transAxes,
