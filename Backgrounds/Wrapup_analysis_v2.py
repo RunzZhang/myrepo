@@ -2470,18 +2470,18 @@ class integrated_analysis():
         ax[0].set_ylabel("Nucleation probability\n(per xenon K shell photoabsorption)",fontsize=16)
         ax[0].set_yscale("log")
         ax[0].legend(loc='lower left', fontsize=16)
-        box_content = (    rf"$A = {a_val:.2e}\ \mathrm{{K-phot}}^{{-1}}$" "\n"    rf"$B = {b_val:.2e}\ \mathrm{{GeV}}^{{-1}}\cdot\mathrm{{cm}}^{{-2}}\cdot\mathrm{{g}}$")
+        box_content = (            rf"$A = {a_str}\ \mathrm{{K\text{{-}}phot}}^{{-1}}$" "\n"        rf"$B = {b_str}\ \mathrm{{GeV}}^{{-1}}\cdot\mathrm{{cm}}^{{-2}}\cdot\mathrm{{g}}$"        )
 
         ax[0].text(0.95, 0.95,box_content,
         transform=ax[0].transAxes,
         fontsize=11,
-        color='white',                  # White text color
+        color='black',                  # White text color
         verticalalignment='top',
         horizontalalignment='right',
         linespacing=1.4,                 # Extra padding between lines
         bbox=dict(
             boxstyle='round,pad=0.5',
-            facecolor='black',          # Black background
+            facecolor='white',          # Black background
             edgecolor='none',           # No border outline
             alpha=0.9                   # Slight transparency so gridlines don't completely disappear
         ))
