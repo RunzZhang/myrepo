@@ -147,8 +147,8 @@ class integrated_analysis():
         # self.plot_spectrum()
         # self.gamma_rejection_plot()
         # self.gamma_rejection_plot_v2()
-        # self.gamma_rejection_plot_v3()
-        self.gamma_rejection_plot_PSN()
+        self.gamma_rejection_plot_v3()
+        # self.gamma_rejection_plot_PSN()
         # self.doped_gamma_rejection_plot()
         # self.spectrums_plot()
 
@@ -2163,12 +2163,12 @@ class integrated_analysis():
             "11/17/2025",  # Row 0: 3.00 bara
             "11/17/2025",  # Row 1: 3.50 bara
             "11/17/2025",  # Row 2: 4.00 bara
-            "12/01/2025",  # Row 3: 2.25 bara
+            "12/02/2025",  # Row 3: 2.25 bara
             "12/01/2025",  # Row 4: 2.50 bara (Same run batch)
             "12/01/2025",  # Row 5: 3.00 bara
             "12/01/2025",  # Row 6: 3.50 bara
             "12/01/2025",  # Row 7: 4.50 bara
-            "12/10/2025",  # Row 8: 2.25 bara
+            "12/12/2025",  # Row 8: 2.25 bara
             "12/10/2025",  # Row 9: 2.50 bara
             "12/10/2025",  # Row 10: 3.00 bara
             "12/10/2025",  # Row 11: 3.50 bara
