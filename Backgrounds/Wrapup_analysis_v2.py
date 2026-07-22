@@ -2371,7 +2371,7 @@ class integrated_analysis():
                 ax_ij.set_xlabel(x_cfg["xlabel"],fontsize=16)
                 ax_ij.set_ylabel(y_cfg["ylabel"], fontsize=16)
                 ax_ij.set_yscale("log")
-                ax_ij.legend(loc='lower left', fontsize=16)
+                ax_ij.legend(loc='lower left', fontsize=14)
 
 
 
@@ -2398,11 +2398,23 @@ class integrated_analysis():
                 ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
                       color="black")
                 if i==2 & j==1:
-                    box_content = (    rf"$A = {a_val:.2e}\ \mathrm{{keV}}^{{-1}}$" "\n"    rf"$B = {b_val:.2e}\ \mathrm{{GeV}}^{{-1}}\cdot\mathrm{{cm}}^{{-2}}\cdot\mathrm{{g}}$")
+                    a_str = self.fmt_sci_tex(a_val)
+                    b_str = self.fmt_sci_tex(b_val)
+                    box_content = (
+                        f"A = ${a_str}$ keV$^{{-1}}$\n"    f"B = ${b_str}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
 
-                    ax_ij.text(0.95, 0.95,box_content,
-                    transform = ax_ij.transAxes,
-                    fontsize = 16,va = 'top',ha = 'right')
+                    ax_ij.text(0.95, 0.95, box_content,
+                               transform=ax_ij.transAxes,
+                               fontsize=14,
+                               color='black',  # White text color
+                               verticalalignment='top',
+                               horizontalalignment='right',
+                               linespacing=1.4,  # Extra padding between lines
+                               bbox=dict(
+                                   facecolor='white',  # Black background
+                                   edgecolor='lightgray',  # No border outline
+                                   alpha=0.9  # Slight transparency so gridlines don't completely disappear
+                               ))
 
 
                 # bbox = dict(boxstyle='round', facecolor='whitesmoke', alpha=0.85, edgecolor='lightgray')
