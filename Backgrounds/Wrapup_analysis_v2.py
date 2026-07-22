@@ -2400,8 +2400,11 @@ class integrated_analysis():
                 if i==1 & j==1:
                     a_str = self.fmt_sci_tex(a_val)
                     b_str = self.fmt_sci_tex(b_val)
-                    box_content = (  f"$y = A e^{{-Bx}}$\n"
-                        f"A = ${a_str}$ keV$^{{-1}}$\n"    f"B = ${b_str}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
+                    print("value",a_str,b_str)
+                    # box_content = (  f"$y = A e^{{-Bx}}$\n"
+                    #     f"A = ${a_str}$ keV$^{{-1}}$\n"    f"B = ${b_str}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
+                    box_content = (f"$y = A e^{{-Bx}}$\n"
+                                   f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
 
                     ax_ij.text(0.95, 0.95, box_content,
                                transform=ax_ij.transAxes,
@@ -2483,7 +2486,8 @@ class integrated_analysis():
         ax[0].set_yscale("log")
         ax[0].legend(loc='lower left', fontsize=14)
         # box_content = (    f"$y = A e^{{-Bx}}$\n" f"A = ${a_str}$ K-phot$^{{-1}}$\n"    f"B = ${b_str}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
-        box_content = (            f"$y = A e^{{-Bx}}$\n" f"A = ${a_val}$ K-phot$^{{-1}}$\n"    f"B = ${b_val}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
+        print("value", a_str, b_str)
+        box_content = (            f"$y = A e^{{-Bx}}$\n" f"A = 0.33 K-phot$^{{-1}}$\n"    f"B = 3.76 GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
 
         ax[0].text(0.95, 0.95,box_content,
         transform=ax[0].transAxes,
