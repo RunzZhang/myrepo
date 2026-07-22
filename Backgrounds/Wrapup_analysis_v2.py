@@ -2397,7 +2397,7 @@ class integrated_analysis():
 
                 ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
                       color="black")
-                if i==2 & j==1:
+                if i==1 & j==1:
                     a_str = self.fmt_sci_tex(a_val)
                     b_str = self.fmt_sci_tex(b_val)
                     box_content = (
