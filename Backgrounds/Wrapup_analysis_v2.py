@@ -2406,7 +2406,7 @@ class integrated_analysis():
                     box_content = (f"$\\mathcal{{P}} = A e^{{-B E_{{ion}} / r_\\ell \\rho_\\ell}}$\n"
                                    f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 GeV$^{{-1}}$cm$^{{-2}}$g" )
                     ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16)
-                    ax_ij.text(0.55, 0.95, box_content,
+                    ax_ij.text(0.60, 0.95, box_content,
                                transform=ax_ij.transAxes,
                                fontsize=16,
                                color='black',  # White text color
