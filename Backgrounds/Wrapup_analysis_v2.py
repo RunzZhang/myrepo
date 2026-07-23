@@ -2503,7 +2503,7 @@ class integrated_analysis():
         ))
 
 
-
+        plt.show()
 
         plt.savefig(self.plot_path + "Qseitz_compound_xe_PSN.pdf")
 
