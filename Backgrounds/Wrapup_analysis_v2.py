@@ -2356,13 +2356,13 @@ class integrated_analysis():
                 ax_ij = ax[j, i]
 
                 ax_ij.errorbar(self.df_Cs_116_plot[x_cfg["x"]], self.df_Cs_116_plot[y_cfg["y"]],
-                           yerr=self.df_Cs_116_plot[y_cfg["y_err"]], label="Cs 116K", fmt='o',markersize=8)
+                           yerr=self.df_Cs_116_plot[y_cfg["y_err"]], label="Cs 116K", fmt='o',markersize=8,color = "r")
                 ax_ij.errorbar(self.df_Cs_119_plot[x_cfg["x"]], self.df_Cs_119_plot[y_cfg["y"]],
-                           yerr=self.df_Cs_119_plot[y_cfg["y_err"]], label="Cs 119K", fmt='^',markersize=8)
+                           yerr=self.df_Cs_119_plot[y_cfg["y_err"]], label="Cs 119K", fmt='^',markersize=8,color = "orange")
                 ax_ij.errorbar(self.df_Co_116_plot[x_cfg["x"]], self.df_Co_116_plot[y_cfg["y"]],
-                           yerr=self.df_Co_116_plot[y_cfg["y_err"]], label="Co 116K", fmt='D',markersize=8)
+                           yerr=self.df_Co_116_plot[y_cfg["y_err"]], label="Co 116K", fmt='D',markersize=8,color = "green")
                 ax_ij.errorbar(self.df_Co_119_plot[x_cfg["x"]], self.df_Co_119_plot[y_cfg["y"]],
-                           yerr=self.df_Co_119_plot[y_cfg["y_err"]], label="Co 119K", fmt='s',markersize=8)
+                           yerr=self.df_Co_119_plot[y_cfg["y_err"]], label="Co 119K", fmt='s',markersize=8,color = "blue")
                 # ax_ij.errorbar(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
                 #            yerr=self.df_Ba_116_plot[y_cfg["y_err"]], label="Ba 116K", fmt='o')
                 # ax_ij.plot(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
@@ -2403,10 +2403,10 @@ class integrated_analysis():
                     print("value",a_str,b_str)
                     # box_content = (  f"$y = A e^{{-Bx}}$\n"
                     #     f"A = ${a_str}$ keV$^{{-1}}$\n"    f"B = ${b_str}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
-                    box_content = (f"$y = A e^{{-Bx}}$\n"
+                    box_content = (f"$\\mathcal{{P}} = A e^{{-B E_{{ion}} / r_\\ell \\rho_\\ell}}$\n"
                                    f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 GeV$^{{-1}}\$cm$^{{-2}}\$g")
-
-                    ax_ij.text(0.95, 0.95, box_content,
+                    ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16)
+                    ax_ij.text(0.55, 0.95, box_content,
                                transform=ax_ij.transAxes,
                                fontsize=16,
                                color='black',  # White text color
