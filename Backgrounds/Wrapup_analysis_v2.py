@@ -2031,8 +2031,10 @@ class integrated_analysis():
         a_val = result_Q2_xe[0]
         b_val = result_Q2_xe[1]
         label_text = f"A = {a_val:.2e},\nB = {b_val:.2e}"
-        ax[0].plot(result_Q2_xe[2], result_Q2_xe[3],
+        ax[0].plot(result_Q2_xe[2], result_Q2_xe[3], label=label_text,
                    color="black")
+        # ax[0].plot(result_Q2_xe[2], result_Q2_xe[3],
+        #            color="black")
 
         ax[0].set_xlabel(r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]",fontsize=16 )
         ax[0].set_ylabel("Nucleation probability \n (per xenon K shell photoabsorption) ",fontsize=16)
