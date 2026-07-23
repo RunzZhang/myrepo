@@ -2487,9 +2487,9 @@ class integrated_analysis():
         ax[0].legend(loc='lower left', fontsize=16)
         # box_content = (    f"$y = A e^{{-Bx}}$\n" f"A = ${a_str}$ K-phot$^{{-1}}$\n"    f"B = ${b_str}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
         print("value", a_str, b_str)
-        box_content = ( f"$\\mathcal{{P}} = A e^{{-B Q_{{Seitz}} / (r_\\ell \\rho_\\ell)}}$\n" f"A = 0.33 K-phot$^{{-1}}$\n"    f"B = 3.76 GeV$^{{-1}}\$cm$^{{-2}}\$g")
+        box_content = ( f"$\\mathcal{{P}} = A e^{{-B Q_{{Seitz}} / r_\\ell \\rho_\\ell}}$\n" f"A = 0.33 K-phot$^{{-1}}$\n"    fr"B = 3.76 $\text{{GeV}}^{{-1}} \text{{cm}}^{{-2}} \text{{g}}$")
 
-        ax[0].text(0.3, 0.95,box_content,
+        ax[0].text(0.43, 0.95,box_content,
         transform=ax[0].transAxes,
         fontsize=16,
         color='black',                  # White text color
