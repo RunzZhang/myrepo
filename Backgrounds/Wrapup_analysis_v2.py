@@ -2356,13 +2356,13 @@ class integrated_analysis():
                 ax_ij = ax[j, i]
 
                 ax_ij.errorbar(self.df_Cs_116_plot[x_cfg["x"]], self.df_Cs_116_plot[y_cfg["y"]],
-                           yerr=self.df_Cs_116_plot[y_cfg["y_err"]], label="Cs 116K", fmt='o')
+                           yerr=self.df_Cs_116_plot[y_cfg["y_err"]], label="Cs 116K", fmt='o',markersize=8)
                 ax_ij.errorbar(self.df_Cs_119_plot[x_cfg["x"]], self.df_Cs_119_plot[y_cfg["y"]],
-                           yerr=self.df_Cs_119_plot[y_cfg["y_err"]], label="Cs 119K", fmt='^')
+                           yerr=self.df_Cs_119_plot[y_cfg["y_err"]], label="Cs 119K", fmt='^',markersize=8)
                 ax_ij.errorbar(self.df_Co_116_plot[x_cfg["x"]], self.df_Co_116_plot[y_cfg["y"]],
-                           yerr=self.df_Co_116_plot[y_cfg["y_err"]], label="Co 116K", fmt='D')
+                           yerr=self.df_Co_116_plot[y_cfg["y_err"]], label="Co 116K", fmt='D',markersize=8)
                 ax_ij.errorbar(self.df_Co_119_plot[x_cfg["x"]], self.df_Co_119_plot[y_cfg["y"]],
-                           yerr=self.df_Co_119_plot[y_cfg["y_err"]], label="Co 119K", fmt='s')
+                           yerr=self.df_Co_119_plot[y_cfg["y_err"]], label="Co 119K", fmt='s',markersize=8)
                 # ax_ij.errorbar(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
                 #            yerr=self.df_Ba_116_plot[y_cfg["y_err"]], label="Ba 116K", fmt='o')
                 # ax_ij.plot(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
@@ -2371,7 +2371,7 @@ class integrated_analysis():
                 ax_ij.set_xlabel(x_cfg["xlabel"],fontsize=16)
                 ax_ij.set_ylabel(y_cfg["ylabel"], fontsize=16)
                 ax_ij.set_yscale("log")
-                ax_ij.legend(loc='lower left', fontsize=14)
+                ax_ij.legend(loc='lower left', fontsize=16)
 
 
 
@@ -2404,14 +2404,14 @@ class integrated_analysis():
                     # box_content = (  f"$y = A e^{{-Bx}}$\n"
                     #     f"A = ${a_str}$ keV$^{{-1}}$\n"    f"B = ${b_str}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
                     box_content = (f"$y = A e^{{-Bx}}$\n"
-                                   f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
+                                   f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 GeV$^{{-1}}\$cm$^{{-2}}\$g")
 
                     ax_ij.text(0.95, 0.95, box_content,
                                transform=ax_ij.transAxes,
-                               fontsize=14,
+                               fontsize=16,
                                color='black',  # White text color
                                verticalalignment='top',
-                               horizontalalignment='right',
+                               horizontalalignment='left',
                                linespacing=1.4,  # Extra padding between lines
                                bbox=dict(
                                    facecolor='white',  # Black background
@@ -2441,25 +2441,25 @@ class integrated_analysis():
 
         ax[0].errorbar(self.df_Cs_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'],
                        self.df_Cs_116_plot["Rejection Rate Xenon Abs[]"],
-                       yerr=self.df_Cs_116_plot["Rejection Sigma Xenon Abs[]"], label="Cs 116K", fmt='o')
+                       yerr=self.df_Cs_116_plot["Rejection Sigma Xenon Abs[]"], label="Cs 116K", fmt='o',markersize=8)
 
         # ax[1].errorbar(self.df_Co_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_Co_116_plot["Rejection Rate KeV[/keV]"],
         #                   yerr=self.df_Co_116_plot["Rejection Sigma KeV[/keV]"], label="Co 116K", fmt='o')
 
         ax[0].errorbar(self.df_Cs_119_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'],
                        self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"],
-                       yerr=self.df_Cs_119_plot["Rejection Sigma Xenon Abs[]"], label="Cs 119K", fmt='^')
+                       yerr=self.df_Cs_119_plot["Rejection Sigma Xenon Abs[]"], label="Cs 119K", fmt='^',markersize=8)
 
         # ax[1].errorbar(self.df_Co_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_Co_116_plot["Rejection Rate KeV[/keV]"],
         #                yerr=self.df_Co_116_plot["Rejection Sigma KeV[/keV]"], label="Co 116K", fmt='o')
 
         ax[0].errorbar(self.df_Co_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'],
                        self.df_Co_116_plot["Rejection Rate Xenon Abs[]"],
-                       yerr=self.df_Co_116_plot["Rejection Sigma Xenon Abs[]"], label="Co 116K", fmt='D')
+                       yerr=self.df_Co_116_plot["Rejection Sigma Xenon Abs[]"], label="Co 116K", fmt='D',markersize=8)
 
         ax[0].errorbar(self.df_Co_119_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'],
                        self.df_Co_119_plot["Rejection Rate Xenon Abs[]"],
-                       yerr=self.df_Co_119_plot["Rejection Sigma Xenon Abs[]"], label="Co 119K", fmt='s')
+                       yerr=self.df_Co_119_plot["Rejection Sigma Xenon Abs[]"], label="Co 119K", fmt='s',markersize=8)
 
         # ax[0].errorbar(self.df_Ba_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'],
         #                self.df_Ba_116_plot["Rejection Rate Xenon Abs[]"],
@@ -2484,17 +2484,17 @@ class integrated_analysis():
         ax[0].set_xlabel(r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]",fontsize=16)
         ax[0].set_ylabel("Nucleation probability\n(per xenon K shell photoabsorption)",fontsize=16)
         ax[0].set_yscale("log")
-        ax[0].legend(loc='lower left', fontsize=14)
+        ax[0].legend(loc='lower left', fontsize=6)
         # box_content = (    f"$y = A e^{{-Bx}}$\n" f"A = ${a_str}$ K-phot$^{{-1}}$\n"    f"B = ${b_str}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
         print("value", a_str, b_str)
-        box_content = (            f"$y = A e^{{-Bx}}$\n" f"A = 0.33 K-phot$^{{-1}}$\n"    f"B = 3.76 GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
+        box_content = (            f"$\mathcal{{P}} = A e^{{-B Q_{{Seitz}} r_l^{{-1}} \rho_l^{{-1}}}}$\n" f"A = 0.33 K-phot$^{{-1}}$\n"    f"B = 3.76 GeV$^{{-1}}\$cm$^{{-2}}\$g")
 
         ax[0].text(0.95, 0.95,box_content,
         transform=ax[0].transAxes,
-        fontsize=14,
+        fontsize=16,
         color='black',                  # White text color
         verticalalignment='top',
-        horizontalalignment='right',
+        horizontalalignment='left',
         linespacing=1.4,                 # Extra padding between lines
         bbox=dict(
             facecolor='white',          # Black background
