@@ -2489,7 +2489,7 @@ class integrated_analysis():
         print("value", a_str, b_str)
         box_content = ( f"$\\mathcal{{P}} = A e^{{-B Q_{{Seitz}} / r_\\ell \\rho_\\ell}}$\n" f"A = 0.33 K-phot$^{{-1}}$\n"    f"B = 3.76 GeV$^{{-1}}$cm$^{{-2}}$g")
 
-        ax[0].text(0.4, 0.95,box_content,
+        ax[0].text(0.55, 0.95,box_content,
         transform=ax[0].transAxes,
         fontsize=16,
         color='black',                  # White text color
