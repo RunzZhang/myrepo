@@ -2142,13 +2142,13 @@ class integrated_analysis():
                     self.Cs_doped_Rate_factor * self.Cs_doped_counts_cum_bin[0])/(self.Ba_doped_Rate_factor * self.Ba_doped_counts_cum_bin[0]),
             label='sim per xe photo', color= 'brown')
 
-        ax[0].set_xlabel(r"$Q_{Seitz} [keV]$")
-        ax[0].set_ylabel("Cs/Co Ratio [] ")
+        ax[0].set_xlabel(r"$Q_{Seitz} [keV]$", fontsize=14)
+        ax[0].set_ylabel("Cs/Co Ratio [] ", fontsize=14)
         # ax[0].set_yscale("log")
         ax[0].legend(loc='upper right', fontsize=14)
 
-        ax[1].set_xlabel(r"$Q_{Seitz} [keV]$")
-        ax[1].set_ylabel("Cs/Ba Ratio [] ")
+        ax[1].set_xlabel(r"$Q_{Seitz} [keV]$", fontsize=14)
+        ax[1].set_ylabel("Cs/Ba Ratio [] ", fontsize=14)
         ax[1].set_yscale("log")
         ax[1].legend(loc='upper right', fontsize=14)
 
