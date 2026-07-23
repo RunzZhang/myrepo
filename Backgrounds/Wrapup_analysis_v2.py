@@ -147,8 +147,8 @@ class integrated_analysis():
         # self.plot_spectrum()
         # self.gamma_rejection_plot()
         # self.gamma_rejection_plot_v2()
-        # self.gamma_rejection_plot_v3()
-        self.gamma_rejection_plot_PSN()
+        self.gamma_rejection_plot_v3()
+        # self.gamma_rejection_plot_PSN()
         # self.doped_gamma_rejection_plot()
         # self.spectrums_plot()
 
@@ -1923,9 +1923,9 @@ class integrated_analysis():
         y_config = [{"y": "Rejection Rate Scattering[]", "y_err": "Rejection Sigma Scattering[]",
                      "ylabel": "Nucleation probability (per interaction) "},
                     {"y": "Rejection Rate KeV[/keV]", "y_err": "Rejection Sigma KeV[/keV]",
-                     "ylabel": "Probability per energy deposited (events/keV) "},
+                     "ylabel": "Probability per energy deposited \n (events/keV) "},
                     {"y": "Rejection Rate Xenon Abs[]", "y_err": "Rejection Sigma Xenon Abs[]",
-                     "ylabel": "Nucleation probability (per xenon photoabsorption in K shell) "},
+                     "ylabel": "Nucleation probability \n (per xenon photoabsorption in K shell) "},
                     {"y": "Clean Rate [mHz]", "y_err": 'Clean Rate Sigma [mHz]',
                      "ylabel": "Background Substacted Rate [mHz]"}]
         x_config = [{"x": "Seitz [keV]", "xlabel": r"Seitz threshold [keV]"},
@@ -1941,20 +1941,20 @@ class integrated_analysis():
                 ax_ij = ax[j, i]
 
                 ax_ij.errorbar(self.df_Cs_116_plot[x_cfg["x"]], self.df_Cs_116_plot[y_cfg["y"]],
-                           yerr=self.df_Cs_116_plot[y_cfg["y_err"]], label="Cs 116K", fmt='o')
+                           yerr=self.df_Cs_116_plot[y_cfg["y_err"]], label="Cs 116K", fmt='o',markersize=8)
                 ax_ij.errorbar(self.df_Cs_119_plot[x_cfg["x"]], self.df_Cs_119_plot[y_cfg["y"]],
-                           yerr=self.df_Cs_119_plot[y_cfg["y_err"]], label="Cs 119K", fmt='o')
+                           yerr=self.df_Cs_119_plot[y_cfg["y_err"]], label="Cs 119K", fmt='o',markersize=8)
                 ax_ij.errorbar(self.df_Co_116_plot[x_cfg["x"]], self.df_Co_116_plot[y_cfg["y"]],
-                           yerr=self.df_Co_116_plot[y_cfg["y_err"]], label="Co 116K", fmt='o')
+                           yerr=self.df_Co_116_plot[y_cfg["y_err"]], label="Co 116K", fmt='o',markersize=8)
                 ax_ij.errorbar(self.df_Co_119_plot[x_cfg["x"]], self.df_Co_119_plot[y_cfg["y"]],
-                           yerr=self.df_Co_119_plot[y_cfg["y_err"]], label="Co 119K", fmt='o')
+                           yerr=self.df_Co_119_plot[y_cfg["y_err"]], label="Co 119K", fmt='o',markersize=8)
                 # ax_ij.errorbar(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
                 #            yerr=self.df_Ba_116_plot[y_cfg["y_err"]], label="Ba 116K", fmt='o')
                 ax_ij.plot(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
-                               label="Ba 116K 95% CL \nUpper Limit", marker='v',linestyle='None')
+                               label="Ba 116K 95% CL \nUpper Limit", marker='v',linestyle='None',markersize=8)
 
-                ax_ij.set_xlabel(x_cfg["xlabel"])
-                ax_ij.set_ylabel(y_cfg["ylabel"])
+                ax_ij.set_xlabel(x_cfg["xlabel"],fontsize=16)
+                ax_ij.set_ylabel(y_cfg["ylabel"],fontsize=16)
                 ax_ij.set_yscale("log")
                 ax_ij.legend(loc='lower left', fontsize=16)
 
@@ -2002,25 +2002,25 @@ class integrated_analysis():
 
         ax[0].errorbar(self.df_Cs_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'],
                        self.df_Cs_116_plot["Rejection Rate Xenon Abs[]"],
-                       yerr=self.df_Cs_116_plot["Rejection Sigma Xenon Abs[]"], label="Cs 116K", fmt='o')
+                       yerr=self.df_Cs_116_plot["Rejection Sigma Xenon Abs[]"], label="Cs 116K", fmt='o',markersize=8)
 
         # ax[1].errorbar(self.df_Co_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_Co_116_plot["Rejection Rate KeV[/keV]"],
         #                   yerr=self.df_Co_116_plot["Rejection Sigma KeV[/keV]"], label="Co 116K", fmt='o')
 
         ax[0].errorbar(self.df_Cs_119_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'],
                        self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"],
-                       yerr=self.df_Cs_119_plot["Rejection Sigma Xenon Abs[]"], label="Cs 119K", fmt='o')
+                       yerr=self.df_Cs_119_plot["Rejection Sigma Xenon Abs[]"], label="Cs 119K", fmt='o',markersize=8)
 
         # ax[1].errorbar(self.df_Co_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_Co_116_plot["Rejection Rate KeV[/keV]"],
         #                yerr=self.df_Co_116_plot["Rejection Sigma KeV[/keV]"], label="Co 116K", fmt='o')
 
         ax[0].errorbar(self.df_Co_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'],
                        self.df_Co_116_plot["Rejection Rate Xenon Abs[]"],
-                       yerr=self.df_Co_116_plot["Rejection Sigma Xenon Abs[]"], label="Co 116K", fmt='o')
+                       yerr=self.df_Co_116_plot["Rejection Sigma Xenon Abs[]"], label="Co 116K", fmt='o',markersize=8)
 
         ax[0].errorbar(self.df_Co_119_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'],
                        self.df_Co_119_plot["Rejection Rate Xenon Abs[]"],
-                       yerr=self.df_Co_119_plot["Rejection Sigma Xenon Abs[]"], label="Co 119K", fmt='o')
+                       yerr=self.df_Co_119_plot["Rejection Sigma Xenon Abs[]"], label="Co 119K", fmt='o',markersize=8)
 
         # ax[0].errorbar(self.df_Ba_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'],
         #                self.df_Ba_116_plot["Rejection Rate Xenon Abs[]"],
@@ -2034,10 +2034,10 @@ class integrated_analysis():
         ax[0].plot(result_Q2_xe[2], result_Q2_xe[3], label = label_text,
                    color="black")
 
-        ax[0].set_xlabel(r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]")
-        ax[0].set_ylabel("Nucleation probability (per xenon K shell photoabsorption) ")
+        ax[0].set_xlabel(r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]",fontsize=16 )
+        ax[0].set_ylabel("Nucleation probability \n (per xenon K shell photoabsorption) ",fontsize=16)
         ax[0].set_yscale("log")
-        ax[0].legend(loc='lower left', fontsize=12)
+        ax[0].legend(loc='lower left', fontsize=14)
 
 
 
