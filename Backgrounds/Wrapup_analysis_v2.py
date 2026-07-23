@@ -1978,9 +1978,9 @@ class integrated_analysis():
                 # ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
                 #            color="black")
                 label_text = f"A = {a_val:.2e},\nB = {b_val:.2e}"
-                ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],label = label_text,
-                      color="black")
-                ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3], label=label_text,
+                # ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],label = label_text,
+                #       color="black")
+                ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
                            color="black", labels=label_text)
                 # ax_ij.legend(loc='lower left', fontsize=16)
 
