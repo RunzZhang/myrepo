@@ -1956,7 +1956,7 @@ class integrated_analysis():
                 ax_ij.set_xlabel(x_cfg["xlabel"])
                 ax_ij.set_ylabel(y_cfg["ylabel"])
                 ax_ij.set_yscale("log")
-                ax_ij.legend(loc='lower left', fontsize=14)
+                ax_ij.legend(loc='lower left', fontsize=16)
 
 
 
@@ -1980,7 +1980,7 @@ class integrated_analysis():
                 label_text = f"A = {a_val:.2e},\nB = {b_val:.2e}"
                 ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],label = label_text,
                       color="black")
-                ax_ij.legend(loc='lower left', fontsize=14)
+                ax_ij.legend(loc='lower left', fontsize=16)
 
 
         plt.savefig(self.plot_path + "gamma_rejection_v2.pdf")
@@ -2145,12 +2145,12 @@ class integrated_analysis():
         ax[0].set_xlabel(r"$Q_{Seitz} [keV]$")
         ax[0].set_ylabel("Cs/Co Ratio [] ")
         # ax[0].set_yscale("log")
-        ax[0].legend(loc='lower left', fontsize=14)
+        ax[0].legend(loc='upper right', fontsize=14)
 
         ax[1].set_xlabel(r"$Q_{Seitz} [keV]$")
         ax[1].set_ylabel("Cs/Ba Ratio [] ")
         ax[1].set_yscale("log")
-        ax[1].legend(loc='lower left', fontsize=14)
+        ax[1].legend(loc='upper right', fontsize=14)
 
 
         plt.savefig(self.plot_path + "Ratio_compare_updated.pdf")
@@ -2371,7 +2371,7 @@ class integrated_analysis():
                 ax_ij.set_xlabel(x_cfg["xlabel"],fontsize=16)
                 ax_ij.set_ylabel(y_cfg["ylabel"], fontsize=16)
                 ax_ij.set_yscale("log")
-                ax_ij.legend(loc='lower left', fontsize=16)
+                ax_ij.legend(loc='lower left', fontsize=16,frameon=False)
 
 
 
@@ -2405,7 +2405,7 @@ class integrated_analysis():
                     #     f"A = ${a_str}$ keV$^{{-1}}$\n"    f"B = ${b_str}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
                     box_content = (f"$\\mathcal{{P}} = A e^{{-B E_{{ion}} / r_\\ell \\rho_\\ell}}$\n"
                                    f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 GeV$^{{-1}}$cm$^{{-2}}$g" )
-                    ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16)
+                    ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
                     ax_ij.text(0.60, 0.95, box_content,
                                transform=ax_ij.transAxes,
                                fontsize=16,
@@ -2484,7 +2484,7 @@ class integrated_analysis():
         ax[0].set_xlabel(r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]",fontsize=16)
         ax[0].set_ylabel("Nucleation probability\n(per xenon K shell photoabsorption)",fontsize=16)
         ax[0].set_yscale("log")
-        ax[0].legend(loc='lower left', fontsize=16,title="Source and \nTemperature",title_fontsize=16)
+        ax[0].legend(loc='lower left', fontsize=16,title="Source and \nTemperature",title_fontsize=16,frameon=False)
         # box_content = (    f"$y = A e^{{-Bx}}$\n" f"A = ${a_str}$ K-phot$^{{-1}}$\n"    f"B = ${b_str}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
         print("value", a_str, b_str)
         box_content = ( f"$\\mathcal{{P}} = A e^{{-B Q_{{Seitz}} / r_\\ell \\rho_\\ell}}$\n" f"A = 0.33 K-phot$^{{-1}}$\n"    f"B = 3.76 GeV$^{{-1}}$cm$^{{-2}}$g")
