@@ -2404,7 +2404,7 @@ class integrated_analysis():
                     # box_content = (  f"$y = A e^{{-Bx}}$\n"
                     #     f"A = ${a_str}$ keV$^{{-1}}$\n"    f"B = ${b_str}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
                     box_content = (f"$\\mathcal{{P}} = A e^{{-B E_{{ion}} / r_\\ell \\rho_\\ell}}$\n"
-                                   f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 GeV$^{{-1}}\$cm$^{{-2}}\$g")
+                                   f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 GeV$^{{-1}}$cm$^{{-2}}$g" )
                     ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16)
                     ax_ij.text(0.55, 0.95, box_content,
                                transform=ax_ij.transAxes,
