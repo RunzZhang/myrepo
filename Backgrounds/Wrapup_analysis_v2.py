@@ -2344,7 +2344,7 @@ class integrated_analysis():
         ratio_119 = self.df_Cs_119_plot["Rejection Rate KeV[/keV]"][0] / \
                     self.df_Cs_119_plot["Rejection Sigma Xenon Abs[]"][0]
         print("ratio_116",ratio_116,'ratio_119',ratio_119)
-        SCALE_FACTOR = (ratio_116)**(-1)  # Xenon Abs = Rate [/keV] * SCALE_FACTOR
+        SCALE_FACTOR = (ratio_119)**(-1)  # Xenon Abs = Rate [/keV] * SCALE_FACTOR
 
         # Fix: changed subplots(1, 0) to subplots()
         fig, ax = plt.subplots(figsize=(6, 4))
@@ -2373,7 +2373,7 @@ class integrated_analysis():
 
         # Set main (left) y-axis and x-axis labels
         ax.set_xlabel(r"Seitz threshold [keV]", fontsize=16)
-        ax.set_ylabel("Rejection Rate KeV[/keV]", fontsize=16)
+        ax.set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
         ax.set_yscale("log")
         ax.legend(loc='lower left', fontsize=16, title="Temperature", title_fontsize=16,frameon=False)
 
