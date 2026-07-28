@@ -2373,6 +2373,9 @@ class integrated_analysis():
         ax.set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
         ax.set_yscale("log")
         ax.legend(loc='lower left', fontsize=16, title="Temperature", title_fontsize=16,frameon=False)
+        ax.yaxis.label.set_color("red")
+        ax.tick_params(axis='y', colors="red", which='both')  # 'both' colors major & minor ticks
+        ax.spines['left'].set_color("red")
 
 
         # Add secondary (right) y-axis with proportional mapping
@@ -2384,6 +2387,9 @@ class integrated_analysis():
 
         secax = ax.secondary_yaxis('right', functions=(forward, inverse))
         secax.set_ylabel("Nucleation probability\n(per xenon photoabsorption in K shell) ", fontsize=16)
+        secax.yaxis.label.set_color("blue")
+        secax.tick_params(axis='y', colors="blue", which='both')
+        secax.spines['right'].set_color("blue")
 
         self.Cs_df = pd.concat(self.Cs_fitting_list, ignore_index=True)
         [result_Q_scatter, result_Q_keV, result_Q_xe, result_Eion_scatter, result_Eion_keV, result_Eion_xe,
