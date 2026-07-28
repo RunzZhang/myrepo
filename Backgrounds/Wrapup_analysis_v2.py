@@ -2272,9 +2272,6 @@ class integrated_analysis():
         self.df_Cs_116_plot = pd.concat(self.df_Cs_116_plot_list, ignore_index=True)
         self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
 
-        self.df_Cs_116_time_plot=self.df_Cs_116_plot
-        # make Cs 116 show just as one series
-        self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
 
 
 
@@ -2357,7 +2354,7 @@ class integrated_analysis():
             label="116K",
             fmt='o',
             markersize=8,
-            color="tab:blue"  # Give datasets distinct colors
+            color="tab:brown"  # Give datasets distinct colors
         )
 
         # Plot Cs 119K ONCE on the left axis
@@ -2368,7 +2365,7 @@ class integrated_analysis():
             label="119K",
             fmt='s',
             markersize=8,
-            color="tab:red"
+            color="tab:green"
         )
 
         # Set main (left) y-axis and x-axis labels
@@ -2387,6 +2384,11 @@ class integrated_analysis():
 
         secax = ax.secondary_yaxis('right', functions=(forward, inverse))
         secax.set_ylabel("Nucleation probability\n(per xenon photoabsorption in K shell) ", fontsize=16)
+
+        self.Cs_df = pd.concat(self.Cs_fitting_list, ignore_index=True)
+        [result_Q_scatter, result_Q_keV, result_Q_xe, result_Eion_scatter, result_Eion_keV, result_Eion_xe,
+         result_Q2_xe, result_Q_rate] = self.fitting_gamma_rejection_v2(self.Cs_df)
+        ax.plot(result_Q_keV[2], result_Q_keV[3])
 
         ax.legend()
         plt.tight_layout()
