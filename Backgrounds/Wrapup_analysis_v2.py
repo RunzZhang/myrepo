@@ -2400,9 +2400,11 @@ class integrated_analysis():
         SBC_Q_list = result_Q_keV[2]
         SBC_keV_list = result_Q_keV[3]
         SBC_Q2_list = result_Q2_xe[2]
+        SBC_Eion_list = result_Eion_keV[2]
 
         # Compute ratio list
         SBC_rrho_list = [SBC_Q_list[i] / SBC_Q2_list[i] for i in range(len(SBC_Q_list))]
+        SBC_Eion_list = [SBC_Q_list[i] / SBC_Eion_list[i] for i in range(len(SBC_Q_list))]
 
         # Drexel Q2 to Xenon calculations
         SBC_fitting_len = len(SBC_Q_list)
@@ -2411,8 +2413,17 @@ class integrated_analysis():
         Drex_phot_list = 58 * np.exp(-Drex_Q2_list / 0.2877)
         Drex_Q_list = [Drex_Q2_list[i] * SBC_rrho_list[i] for i in range(len(Drex_Q2_list))]
 
+        # PICO Eion to keV calculations
+        SBC_fitting_len = len(SBC_Q_list)
+        # Use np.linspace so length matches SBC_fitting_len exactly
+        PICO_Eion_list = np.linspace(0.8, 1.5, SBC_fitting_len)
+        PICO_keV_list = 17e3 * np.exp(-PICO_Eion_list / 37e-3)
+        PICO_Q_list = [PICO_Eion_list[i] * SBC_Eion_list[i] for i in range(len(Drex_Q2_list))]
+
+
         ax.plot(SBC_Q_list, SBC_keV_list, label="SBC Fit", color="tab:blue")
-        ax.plot(Drex_Q_list, Drex_phot_list, label="Drexel Model", linestyle="--", color="tab:orange")
+        secaxax.plot(Drex_Q_list, Drex_phot_list, label="Drexel Model", linestyle="--", color="tab:orange")
+        ax.plot(PICO_Q_list, PICO_keV_list, label="PICO Model", linestyle="--", color="tab:orange")
 
 
 
