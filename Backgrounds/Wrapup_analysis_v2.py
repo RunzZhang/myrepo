@@ -2422,7 +2422,7 @@ class integrated_analysis():
 
 
         ax.plot(SBC_Q_list, SBC_keV_list, label="SBC Fit", color="tab:blue")
-        secaxax.plot(Drex_Q_list, Drex_phot_list, label="Drexel Model", linestyle="--", color="tab:orange")
+        secax.plot(Drex_Q_list, Drex_phot_list, label="Drexel Model", linestyle="--", color="tab:orange")
         ax.plot(PICO_Q_list, PICO_keV_list, label="PICO Model", linestyle="--", color="tab:orange")
 
 
