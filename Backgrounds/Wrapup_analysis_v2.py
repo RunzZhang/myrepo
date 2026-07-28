@@ -2271,7 +2271,7 @@ class integrated_analysis():
             self.Cs_fitting_list.append(df_fit)
         self.df_Cs_116_plot = pd.concat(self.df_Cs_116_plot_list, ignore_index=True)
         self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
-
+        self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
 
 
 
@@ -2391,10 +2391,37 @@ class integrated_analysis():
         secax.tick_params(axis='y', colors="blue", which='both')
         secax.spines['right'].set_color("blue")
 
+        # plot the fitting lines
         self.Cs_df = pd.concat(self.Cs_fitting_list, ignore_index=True)
         [result_Q_scatter, result_Q_keV, result_Q_xe, result_Eion_scatter, result_Eion_keV, result_Eion_xe,
          result_Q2_xe, result_Q_rate] = self.fitting_gamma_rejection_v2(self.Cs_df)
-        ax.plot(result_Q_keV[2], result_Q_keV[3])
+
+        # SBC
+        SBC_Q_list = result_Q_keV[2]
+        SBC_keV_list = result_Q_keV[3]
+        SBC_Q2_list = result_Q2_xe[2]
+
+        # Compute ratio list
+        SBC_rrho_list = [SBC_Q_list[i] / SBC_Q2_list[i] for i in range(len(SBC_Q_list))]
+
+        # Drexel Q2 to Xenon calculations
+        SBC_fitting_len = len(SBC_Q_list)
+        # Use np.linspace so length matches SBC_fitting_len exactly
+        Drex_Q2_list = np.linspace(1.5, 4, SBC_fitting_len)
+        Drex_phot_list = 58 * np.exp(-Drex_Q2_list / 0.2877)
+        Drex_Q_list = [Drex_Q2_list[i] * SBC_rrho_list[i] for i in range(len(Drex_Q2_list))]
+
+        ax.plot(SBC_Q_list, SBC_keV_list, label="SBC Fit", color="tab:blue")
+        ax.plot(Drex_Q_list, Drex_phot_list, label="Drexel Model", linestyle="--", color="tab:orange")
+
+
+
+
+
+        # PICO Eion_keV
+
+
+
 
         ax.legend()
         plt.tight_layout()
