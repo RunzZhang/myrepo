@@ -1203,7 +1203,7 @@ class SN():
         compt_counts, _ = np.histogram(xe_compt_df["Energy_Deposited/keV"], bins=bins_kev)
 
         # Scale by 1/4 to represent the average of the 4 shells (K, L, M, N) evenly
-        compt_counts_scaled = compt_counts / 5.0
+        compt_counts_scaled = compt_counts *2/ 54.0
 
         # ------------------------------------------------------------------
         # 2. PHOTOELECTRIC PROCESSING
@@ -1257,7 +1257,8 @@ class SN():
             be_bins_kev = np.arange(0.0, 45.0, 0.1)
 
             total_xe_compton_counts = len(xe_compt_df)
-            compton_per_shell = total_xe_compton_counts / 5.0
+            electron_per_shell = [2/54 , 8/54, 18/54, 18/54, 8/54]
+            compton_per_shell = [total_xe_compton_counts for i in electron_per_shell]
             print('compton_per_shell', compton_per_shell)
 
             # Nominal Xenon binding energy center points in keV
@@ -1265,7 +1266,7 @@ class SN():
 
             # Plot the Compton distributions as matching height spikes/bars
             # We use a small width matching the bin size to blend seamlessly into the histogram layout
-            plt.bar(xe_shell_energies_kev, [compton_per_shell] * 5, width=0.1, color='orange',
+            plt.bar(xe_shell_energies_kev, compton_per_shell, width=0.1, color='orange',
                     edgecolor='darkorange', alpha=0.9, label='Compton (Xe All Shells)')
 
             plt.hist(valid_be_df["Binding_Energy/keV"], bins=be_bins_kev, color='green', alpha=0.7,
