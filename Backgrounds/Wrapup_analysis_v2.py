@@ -2427,9 +2427,9 @@ class integrated_analysis():
             Drex_phot_list / SCALE_FACTOR,
             label="Drexel Model",
             linestyle="--",
-            color="tab:orange"
+            color="tab:blue"
         )
-        ax.plot(PICO_Q_list, PICO_keV_list, label="PICO Model", linestyle="--", color="tab:orange")
+        ax.plot(PICO_Q_list, PICO_keV_list, label="PICO Model", linestyle="--", color="tab:red")
 
 
 
