@@ -2421,15 +2421,15 @@ class integrated_analysis():
         PICO_Q_list = [PICO_Eion_list[i] * SBC_Eion_list[i] for i in range(len(Drex_Q2_list))]
 
 
-        ax.plot(SBC_Q_list, SBC_keV_list, label="SBC Fit", color="tab:blue")
+        ax.plot(SBC_Q_list, SBC_keV_list, label="SBC Fit", color="black")
         ax.plot(
             Drex_Q_list,
             Drex_phot_list / SCALE_FACTOR,
             label="Drexel Model",
-            linestyle="--",
-            color="tab:blue"
+
+            color="blue"
         )
-        ax.plot(PICO_Q_list, PICO_keV_list, label="PICO Model", linestyle="--", color="tab:red")
+        ax.plot(PICO_Q_list, PICO_keV_list, label="PICO Model", color="red")
 
 
 
