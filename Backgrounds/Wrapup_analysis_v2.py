@@ -147,8 +147,9 @@ class integrated_analysis():
         # self.plot_spectrum()
         # self.gamma_rejection_plot()
         # self.gamma_rejection_plot_v2()
-        self.gamma_rejection_plot_v3()
+        # self.gamma_rejection_plot_v3()
         # self.gamma_rejection_plot_PSN()
+        self.gamma_rejection_plot_PSN_v2()
         # self.doped_gamma_rejection_plot()
         # self.spectrums_plot()
 
@@ -2338,112 +2339,155 @@ class integrated_analysis():
         self.df_Ba_116_plot = pd.concat(self.df_Ba_116_plot_list, ignore_index=True)
         # self.df_Ba_119_plot = pd.concat(self.df_Ba_119_plot_list, ignore_index=True)
 
-        fig, ax = plt.subplots(1, 0, figsize=(6, 4))
 
-        ax.errorbar(self.df_Cs_116_plot[x_cfg["x"]], self.df_Cs_116_plot[y_cfg["y"]],
-                       yerr=self.df_Cs_116_plot[y_cfg["y_err"]], label="Cs 116K", fmt='o', markersize=8, color="r")
-        ax.errorbar(self.df_Cs_119_plot[x_cfg["x"]], self.df_Cs_119_plot[y_cfg["y"]],
-                       yerr=self.df_Cs_119_plot[y_cfg["y_err"]], label="Cs 119K", fmt='^', markersize=8, color="orange")
+        ratio_116 = self.df_Cs_116_plot["Rejection Rate KeV[/keV]"][0]/self.df_Cs_116_plot["Rejection Sigma Xenon Abs[]"][0]
+        ratio_119 = self.df_Cs_119_plot["Rejection Rate KeV[/keV]"][0] / \
+                    self.df_Cs_119_plot["Rejection Sigma Xenon Abs[]"][0]
+        print("ratio_116",ratio_116,'ratio_119',ratio_119)
+        SCALE_FACTOR = (ratio_116)**(-1)  # Xenon Abs = Rate [/keV] * SCALE_FACTOR
 
+        # Fix: changed subplots(1, 0) to subplots()
+        fig, ax = plt.subplots(figsize=(6, 4))
 
-        fig, ax = plt.subplots(3, 4, figsize=(40, 24))
-        # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
+        # Plot Cs 116K ONCE on the left axis
+        ax.errorbar(
+            self.df_Cs_116_plot["Seitz [keV]"],
+            self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
+            yerr=self.df_Cs_116_plot["Rejection Sigma KeV[/keV]"],
+            label="116K",
+            fmt='o',
+            markersize=8,
+            color="tab:blue"  # Give datasets distinct colors
+        )
 
+        # Plot Cs 119K ONCE on the left axis
+        ax.errorbar(
+            self.df_Cs_119_plot["Seitz [keV]"],
+            self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
+            yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
+            label="119K",
+            fmt='s',
+            markersize=8,
+            color="tab:red"
+        )
 
-
-        y_config = [{"y": "Rejection Rate Scattering[]", "y_err": "Rejection Sigma Scattering[]",
-                     "ylabel": "Nucleation probability (per interaction) "},
-                    {"y": "Rejection Rate KeV[/keV]", "y_err": "Rejection Sigma KeV[/keV]",
-                     "ylabel": "Probability per energy deposited (events/keV) "},
-                    {"y": "Rejection Rate Xenon Abs[]", "y_err": "Rejection Sigma Xenon Abs[]",
-                     "ylabel": "Nucleation probability (per xenon photoabsorption in K shell) "},
-                    {"y": "Clean Rate [mHz]", "y_err": 'Clean Rate Sigma [mHz]',
-                     "ylabel": "Background Substacted Rate [mHz]"}]
-        x_config = [{"x": "Seitz [keV]", "xlabel": r"Seitz threshold [keV]"},
-                    {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
-                     "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
-                    {"x": "Eion [keV]", "xlabel": r"$E_{ion}$"}]
-
-        for i in range(4):
-            for j in range(3):
-                # Extract the configuration for this specific slot
-                y_cfg = y_config[i]
-                x_cfg = x_config[j]
-                ax_ij = ax[j, i]
-
-                ax_ij.errorbar(self.df_Cs_116_plot[x_cfg["x"]], self.df_Cs_116_plot[y_cfg["y"]],
-                           yerr=self.df_Cs_116_plot[y_cfg["y_err"]], label="Cs 116K", fmt='o',markersize=8,color = "r")
-                ax_ij.errorbar(self.df_Cs_119_plot[x_cfg["x"]], self.df_Cs_119_plot[y_cfg["y"]],
-                           yerr=self.df_Cs_119_plot[y_cfg["y_err"]], label="Cs 119K", fmt='^',markersize=8,color = "orange")
-                ax_ij.errorbar(self.df_Co_116_plot[x_cfg["x"]], self.df_Co_116_plot[y_cfg["y"]],
-                           yerr=self.df_Co_116_plot[y_cfg["y_err"]], label="Co 116K", fmt='D',markersize=8,color = "green")
-                ax_ij.errorbar(self.df_Co_119_plot[x_cfg["x"]], self.df_Co_119_plot[y_cfg["y"]],
-                           yerr=self.df_Co_119_plot[y_cfg["y_err"]], label="Co 119K", fmt='s',markersize=8,color = "blue")
-                # ax_ij.errorbar(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
-                #            yerr=self.df_Ba_116_plot[y_cfg["y_err"]], label="Ba 116K", fmt='o')
-                # ax_ij.plot(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
-                #                label="Ba 116K 95% CL \nUpper Limit", marker='v',linestyle='None')
-
-                ax_ij.set_xlabel(x_cfg["xlabel"],fontsize=16)
-                ax_ij.set_ylabel(y_cfg["ylabel"], fontsize=16)
-                ax_ij.set_yscale("log")
-                ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
+        # Set main (left) y-axis and x-axis labels
+        ax.set_xlabel(r"Seitz threshold [keV]", fontsize=16)
+        ax.set_ylabel("Rejection Rate KeV[/keV]", fontsize=16)
+        ax.set_yscale("log")
+        ax.legend(loc='lower left', fontsize=16, title="Temperature", title_fontsize=16,frameon=False)
 
 
+        # Add secondary (right) y-axis with proportional mapping
+        def forward(y):
+            return y * SCALE_FACTOR
+
+        def inverse(y):
+            return y / SCALE_FACTOR
+
+        secax = ax.secondary_yaxis('right', functions=(forward, inverse))
+        secax.set_ylabel("Nucleation probability\n(per xenon photoabsorption in K shell) ", fontsize=16)
+
+        ax.legend()
+        plt.tight_layout()
+        plt.show()
+
+        # fig, ax = plt.subplots(3, 4, figsize=(40, 24)
 
 
 
+        # y_config = [{"y": "Rejection Rate Scattering[]", "y_err": "Rejection Sigma Scattering[]",
+        #              "ylabel": "Nucleation probability (per interaction) "},
+        #             {"y": "Rejection Rate KeV[/keV]", "y_err": "Rejection Sigma KeV[/keV]",
+        #              "ylabel": "Probability per energy deposited (events/keV) "},
+        #             {"y": "Rejection Rate Xenon Abs[]", "y_err": "Rejection Sigma Xenon Abs[]",
+        #              "ylabel": "Nucleation probability (per xenon photoabsorption in K shell) "},
+        #             {"y": "Clean Rate [mHz]", "y_err": 'Clean Rate Sigma [mHz]',
+        #              "ylabel": "Background Substacted Rate [mHz]"}]
+        # x_config = [{"x": "Seitz [keV]", "xlabel": r"Seitz threshold [keV]"},
+        #             {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+        #              "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
+        #             {"x": "Eion [keV]", "xlabel": r"$E_{ion}$"}]
+        #
+        # for i in range(4):
+        #     for j in range(3):
+        #         # Extract the configuration for this specific slot
+        #         y_cfg = y_config[i]
+        #         x_cfg = x_config[j]
+        #         ax_ij = ax[j, i]
+        #
+        #         ax_ij.errorbar(self.df_Cs_116_plot[x_cfg["x"]], self.df_Cs_116_plot[y_cfg["y"]],
+        #                    yerr=self.df_Cs_116_plot[y_cfg["y_err"]], label="Cs 116K", fmt='o',markersize=8,color = "r")
+        #         ax_ij.errorbar(self.df_Cs_119_plot[x_cfg["x"]], self.df_Cs_119_plot[y_cfg["y"]],
+        #                    yerr=self.df_Cs_119_plot[y_cfg["y_err"]], label="Cs 119K", fmt='^',markersize=8,color = "orange")
+        #         ax_ij.errorbar(self.df_Co_116_plot[x_cfg["x"]], self.df_Co_116_plot[y_cfg["y"]],
+        #                    yerr=self.df_Co_116_plot[y_cfg["y_err"]], label="Co 116K", fmt='D',markersize=8,color = "green")
+        #         ax_ij.errorbar(self.df_Co_119_plot[x_cfg["x"]], self.df_Co_119_plot[y_cfg["y"]],
+        #                    yerr=self.df_Co_119_plot[y_cfg["y_err"]], label="Co 119K", fmt='s',markersize=8,color = "blue")
+        #         # ax_ij.errorbar(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
+        #         #            yerr=self.df_Ba_116_plot[y_cfg["y_err"]], label="Ba 116K", fmt='o')
+        #         # ax_ij.plot(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
+        #         #                label="Ba 116K 95% CL \nUpper Limit", marker='v',linestyle='None')
+        #
+        #         ax_ij.set_xlabel(x_cfg["xlabel"],fontsize=16)
+        #         ax_ij.set_ylabel(y_cfg["ylabel"], fontsize=16)
+        #         ax_ij.set_yscale("log")
+        #         ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
+        #
+        #
+        #
+        #
+        #
+        #
+        # self.fitting_df = pd.concat(self.fitting_list, ignore_index=True)
+        # fitting_matrix = self.fitting_gamma_rejection_v3(self.fitting_df,x_config,y_config)
+        #
+        #
+        # # plot the fitting function
+        # for i in range(4):
+        #     for j in range(3):
+        #         # Extract the configuration for this specific slot
+        #         y_cfg = y_config[i]
+        #         x_cfg = x_config[j]
+        #         ax_ij = ax[j, i]
+        #         a_val = fitting_matrix[i][j][0]
+        #         b_val = fitting_matrix[i][j][1]
+        #
+        #         # ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
+        #         #            color="black")
+        #
+        #         ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
+        #               color="black")
+        #         if i==1 & j==1:
+        #             a_str = self.fmt_sci_tex(a_val)
+        #             b_str = self.fmt_sci_tex(b_val)
+        #             print("value",a_str,b_str)
+        #             # box_content = (  f"$y = A e^{{-Bx}}$\n"
+        #             #     f"A = ${a_str}$ keV$^{{-1}}$\n"    f"B = ${b_str}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
+        #             box_content = (f"$\\mathcal{{P}} = A e^{{-B E_{{ion}} / r_\\ell \\rho_\\ell}}$\n"
+        #                            f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 GeV$^{{-1}}$cm$^{{-2}}$g" )
+        #             # ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
+        #             ax_ij.text(0.60, 0.95, box_content,
+        #                        transform=ax_ij.transAxes,
+        #                        fontsize=16,
+        #                        color='black',  # White text color
+        #                        verticalalignment='top',
+        #                        horizontalalignment='left',
+        #                        linespacing=1.4,  # Extra padding between lines
+        #                        bbox=dict(
+        #                            facecolor='white',  # Black background
+        #                            edgecolor='white',  # No border outline
+        #                            alpha=0.9  # Slight transparency so gridlines don't completely disappear
+        #                        ))
+        #
+        #
+        #         # bbox = dict(boxstyle='round', facecolor='whitesmoke', alpha=0.85, edgecolor='lightgray')
+        #         # ax_ij.legend(loc='lower left', fontsize=14)
 
-        self.fitting_df = pd.concat(self.fitting_list, ignore_index=True)
-        fitting_matrix = self.fitting_gamma_rejection_v3(self.fitting_df,x_config,y_config)
+
+        plt.savefig(self.plot_path + "gamma_rejection_PSN_v2.pdf")
 
 
-        # plot the fitting function
-        for i in range(4):
-            for j in range(3):
-                # Extract the configuration for this specific slot
-                y_cfg = y_config[i]
-                x_cfg = x_config[j]
-                ax_ij = ax[j, i]
-                a_val = fitting_matrix[i][j][0]
-                b_val = fitting_matrix[i][j][1]
-
-                # ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
-                #            color="black")
-
-                ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
-                      color="black")
-                if i==1 & j==1:
-                    a_str = self.fmt_sci_tex(a_val)
-                    b_str = self.fmt_sci_tex(b_val)
-                    print("value",a_str,b_str)
-                    # box_content = (  f"$y = A e^{{-Bx}}$\n"
-                    #     f"A = ${a_str}$ keV$^{{-1}}$\n"    f"B = ${b_str}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
-                    box_content = (f"$\\mathcal{{P}} = A e^{{-B E_{{ion}} / r_\\ell \\rho_\\ell}}$\n"
-                                   f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 GeV$^{{-1}}$cm$^{{-2}}$g" )
-                    # ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
-                    ax_ij.text(0.60, 0.95, box_content,
-                               transform=ax_ij.transAxes,
-                               fontsize=16,
-                               color='black',  # White text color
-                               verticalalignment='top',
-                               horizontalalignment='left',
-                               linespacing=1.4,  # Extra padding between lines
-                               bbox=dict(
-                                   facecolor='white',  # Black background
-                                   edgecolor='white',  # No border outline
-                                   alpha=0.9  # Slight transparency so gridlines don't completely disappear
-                               ))
-
-
-                # bbox = dict(boxstyle='round', facecolor='whitesmoke', alpha=0.85, edgecolor='lightgray')
-                # ax_ij.legend(loc='lower left', fontsize=14)
-
-
-        plt.savefig(self.plot_path + "gamma_rejection_PSN.pdf")
-
-        plt.clf()
-        self.Qseitz_compound_xe_plot_PSN()
     def gamma_rejection_plot_PSN(self):
         # print Q vs per keV and Eion per interaction
 
