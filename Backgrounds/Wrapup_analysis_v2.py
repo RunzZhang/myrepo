@@ -2515,7 +2515,7 @@ class integrated_analysis():
         Drex_phot_list = 58 * np.exp(-Drex_Q2_list / 0.2877)
         Drex_Q_116_list = self.interpolate_all_keys_vectorized("Q_rl-1_rhol-1 [GeVcm**2 g-1]", Drex_Q2_list , thermal_116_table)["Seitz [keV]"]
 
-        Drex_Q_119_list = [+0.5e-5 for i in Drex_Q_116_list]
+        Drex_Q_119_list = [i+0.05 for i in Drex_Q_116_list]
         # Drex_Q_119_list = \
         # self.interpolate_all_keys_vectorized("Q_rl-1_rhol-1 [GeVcm**2 g-1]", Drex_Q2_list, thermal_119_table)[
         #     "Seitz [keV]"]
@@ -2527,13 +2527,13 @@ class integrated_analysis():
         PICO_keV_list = 17e3 * np.exp(-PICO_Eion_list / 37e-3)
         PICO_Q_116_list = self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list , thermal_116_table)["Seitz [keV]"]
 
-        PICO_Q_119_list = [i+0.5e-5 for i in PICO_Q_116_list]
+        PICO_Q_119_list = [i+0.05 for i in PICO_Q_116_list]
         # PICO_Q_119_list = \
         # self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list, thermal_119_table)[
         #     "Seitz [keV]"]
 
 
-        ax.plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
+
         ax.plot(
             Drex_Q_116_list,
             Drex_phot_list / SCALE_FACTOR,
@@ -2551,15 +2551,35 @@ class integrated_analysis():
         ax.plot(PICO_Q_116_list, PICO_keV_list, label="PICO C$_3$F$_8$ 116K", color="red")
         ax.plot(PICO_Q_119_list, PICO_keV_list, label="PICO C$_3$F$_8$ 119K",  linestyle= '--', color="red")
 
+        ax.plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
+
         # fitting parameter
+
+        box_content0 = (f"$\\mathcal{{P}}_{{phot}} = A_{{phot}} e^{{-B_{{phot}} Q_{{Seitz}}}}$\n"
+                        f"A_{{phot}} = 0.13 MeV$^{{-1}}$\n"    f"B_{{phot}} = 8.75 GeV$^{{-1}}$cm$^{{-2}}$g")
+
+        ax.text(0.70, 0.95, box_content0,
+                transform=ax.transAxes,
+                fontsize=16,
+                color='black',  # White text color
+                verticalalignment='top',
+                horizontalalignment='left',
+                linespacing=1.4,  # Extra padding between lines
+                bbox=dict(
+                    facecolor='none',  # Black background
+                    edgecolor='none',  # No border outline
+                    alpha=0.9  # Slight transparency so gridlines don't completely disappear
+                ))
         box_content1 = (f"$\\mathcal{{P}} = A e^{{-B E_{{ion}} / r_\\ell \\rho_\\ell}}$\n"
                        f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 GeV$^{{-1}}$cm$^{{-2}}$g")
 
-        box_content1 = (f"$\\mathcal{{P}} = A e^{{-B E_{{ion}} / r_\\ell \\rho_\\ell}}$\n"
-                        f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 GeV$^{{-1}}$cm$^{{-2}}$g")
 
 
-        ax.text(0.60, 0.95, box_content1,
+        box_content1 = (f"$\\mathcal{{P}}_{{edep}} = A_{{edep}} e^{{-B_{{edep}} Q_{{Seitz}}}}$\n"
+                        f"A_{{edep}} = 0.13 MeV$^{{-1}}$\n"    f"B_{{edep}} = 8.75 GeV$^{{-1}}$cm$^{{-2}}$g")
+
+
+        ax.text(0.30, 0.95, box_content1,
                    transform=ax.transAxes,
                    fontsize=16,
                    color='black',  # White text color
@@ -2612,7 +2632,7 @@ class integrated_analysis():
 
 
 
-        ax.legend(loc='lower left', fontsize=16, title="Temperature", title_fontsize=16,frameon=False)
+        ax.legend(loc='lower left', fontsize=16, title=" ", title_fontsize=16,frameon=False)
         plt.tight_layout()
         plt.show()
 
