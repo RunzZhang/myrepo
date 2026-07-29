@@ -163,15 +163,15 @@ class ReadRoot():
         self.plot_path = '/lzdata/runzezhang/result/GR_sims/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        self.main_body(1)
-        # for i in range(1,56):
-        # # for i in range(26, 54):
-        #     try:
-        # # for i in range(1, 11):
-        #         self.main_body(i)
-        #     except Exception as e:
-        #         print(e)
-        #         continue
+        # self.main_body(1)
+        for i in range(1,56):
+        # for i in range(26, 54):
+            try:
+        # for i in range(1, 11):
+                self.main_body(i)
+            except Exception as e:
+                print(e)
+                continue
     def main_body(self,i):
         print(i)
         self.ini_path = self.base_path+ f"Co_gamma_1E7_ini_part{i}.csv"
@@ -1227,8 +1227,8 @@ class ReadRoot():
 
 if __name__ =="__main__":
     # ReR = RestructureRoot()
-    # RR = ReadRoot(doped=True)
-    RR= ReadRoot(doped=False)
+    RR = ReadRoot(doped=True)
+    # RR= ReadRoot(doped=False)
     # test_write()
 
     # find corrupted file entries
