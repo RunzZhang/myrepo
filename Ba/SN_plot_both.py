@@ -151,11 +151,11 @@ class SN():
             # self.read_ER_Ar_CF_1d_sum_rate_cummulative()
             # self.read_ER_Ar_CF_1d_sum_counts()
 
-            # self.read_emit_spectrum()
+            self.read_emit_spectrum()
             # self.gamma_rejection_rate_per_keV_vs_Setiz()
             # self.gamma_rejection_rate_vs_Setiz()
 
-            self.write_sims_results()
+            # self.write_sims_results()
             # self.write_sims_results_thesis()
 
 
@@ -170,11 +170,16 @@ class SN():
             # photo process analysis
             # self.read_ER_Ar_pho_per_deposit_rate()
     def read_emit_spectrum(self):
-        df_init_emit = self.merged_df[(self.merged_df["Volume"]=='calibration_Be_phys')&(self.merged_df["name"]=='gamma')&(self.merged_df["Step ID"]==1)]
+        df_init_emit = self.merged_df_primary[(self.merged_df_primary["Volume"] == 'calibration_Be_phys') & (
+                    self.merged_df_primary["name"] == 'gamma') & (self.merged_df_primary["Step ID"] == 1)]
         fig, ax = plt.subplots()
-        ax.hist(df_init_emit["PreKinetic/MeV"]*1000, bins=1200, range=(0,600))
+        hist_counts, hist_edges, _ = ax.hist(df_init_emit["PreKinetic/MeV"] * 1000, bins=600, range=(0, 600))
+        for i in range(len(hist_counts)):
+            if hist_counts[i] != 0:
+                print(hist_counts[i], "counts", hist_edges[i], "keV")
         ax.set_xlabel("Gamma Energy/keV")
         ax.set_ylabel("Counts")
+        ax.set_yscale("log")
         plt.savefig(self.plot_path + "Ba_init_spectrum.pdf")
 
     def read_positions(self):
@@ -1580,6 +1585,6 @@ class test_csv():
 
 
 if __name__=="__main__":
-    sn = SN(doped=True)
-    # sn = SN(doped=False)
+    # sn = SN(doped=True)
+    sn = SN(doped=False)
     # test = test_csv()
