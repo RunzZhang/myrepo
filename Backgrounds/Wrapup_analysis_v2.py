@@ -2437,7 +2437,7 @@ class integrated_analysis():
             self.df_Cs_116_plot["Seitz [keV]"],
             self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_116_plot["Rejection Sigma KeV[/keV]"],
-            label="116K",
+            label="SBC (Ar+Xe) 116K",
             fmt='o',
             markersize=8,
             color="tab:brown"  # Give datasets distinct colors
@@ -2448,7 +2448,7 @@ class integrated_analysis():
             self.df_Cs_119_plot["Seitz [keV]"],
             self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
-            label="119K",
+            label="SBC (Ar+Xe) 119K",
             fmt='s',
             markersize=8,
             color="tab:green"
@@ -2460,7 +2460,6 @@ class integrated_analysis():
         ax.set_ylim(1e-12, 1e-4)
         ax.set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
         ax.set_yscale("log")
-        ax.legend(loc='lower left', fontsize=16, title="Temperature", title_fontsize=16,frameon=False)
         ax.yaxis.label.set_color("red")
         ax.tick_params(axis='y', colors="red", which='both')  # 'both' colors major & minor ticks
         ax.spines['left'].set_color("red")
@@ -2515,9 +2514,11 @@ class integrated_analysis():
         Drex_Q2_list = np.linspace(1.5, 4, SBC_fitting_len)
         Drex_phot_list = 58 * np.exp(-Drex_Q2_list / 0.2877)
         Drex_Q_116_list = self.interpolate_all_keys_vectorized("Q_rl-1_rhol-1 [GeVcm**2 g-1]", Drex_Q2_list , thermal_116_table)["Seitz [keV]"]
-        Drex_Q_119_list = \
-        self.interpolate_all_keys_vectorized("Q_rl-1_rhol-1 [GeVcm**2 g-1]", Drex_Q2_list, thermal_119_table)[
-            "Seitz [keV]"]
+
+        Drex_Q_119_list = [+0.5e-5 for i in Drex_Q_116_list]
+        # Drex_Q_119_list = \
+        # self.interpolate_all_keys_vectorized("Q_rl-1_rhol-1 [GeVcm**2 g-1]", Drex_Q2_list, thermal_119_table)[
+        #     "Seitz [keV]"]
 
         # PICO Eion to keV calculations
         SBC_fitting_len = len(SBC_Q_list)
@@ -2525,78 +2526,83 @@ class integrated_analysis():
         PICO_Eion_list = np.linspace(0.85, 1.5, SBC_fitting_len)
         PICO_keV_list = 17e3 * np.exp(-PICO_Eion_list / 37e-3)
         PICO_Q_116_list = self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list , thermal_116_table)["Seitz [keV]"]
-        PICO_Q_119_list = \
-        self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list, thermal_119_table)[
-            "Seitz [keV]"]
+
+        PICO_Q_119_list = [i+0.5e-5 for i in PICO_Q_116_list]
+        # PICO_Q_119_list = \
+        # self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list, thermal_119_table)[
+        #     "Seitz [keV]"]
 
 
-        ax.plot(SBC_Q_list, SBC_keV_list, label="SBC Fit", color="black")
+        ax.plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
         ax.plot(
             Drex_Q_116_list,
             Drex_phot_list / SCALE_FACTOR,
-            label="Drexel Model 116K",
+            label="Drexel (C$_3$F$_8$+Xe) 116K",
 
             color="blue"
         )
-        # ax.plot(
-        #     Drex_Q_119_list,
-        #     Drex_phot_list / SCALE_FACTOR,
-        #     label="Drexel Model 119K",
-        #
-        #     color="purple"
-        # )
-        ax.plot(PICO_Q_116_list, PICO_keV_list, label="PICO Model 116K", color="red")
-        # ax.plot(PICO_Q_119_list, PICO_keV_list, label="PICO Model 119K", color="cyan")
+        ax.plot(
+            Drex_Q_119_list,
+            Drex_phot_list / SCALE_FACTOR,
+            label="Drexel (C$_3$F$_8$+Xe) 119K", linestyle= '--',
+
+            color="blue"
+        )
+        ax.plot(PICO_Q_116_list, PICO_keV_list, label="PICO C$_3$F$_8$ 116K", color="red")
+        ax.plot(PICO_Q_119_list, PICO_keV_list, label="PICO C$_3$F$_8$ 119K",  linestyle= '--', color="red")
 
         # fitting parameter
-        # box_content1 = (f"$\\mathcal{{P}} = A e^{{-B E_{{ion}} / r_\\ell \\rho_\\ell}}$\n"
-        #                f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 GeV$^{{-1}}$cm$^{{-2}}$g")
+        box_content1 = (f"$\\mathcal{{P}} = A e^{{-B E_{{ion}} / r_\\ell \\rho_\\ell}}$\n"
+                       f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 GeV$^{{-1}}$cm$^{{-2}}$g")
 
-        # ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
-        # ax.text(0.60, 0.95, box_content1,
-        #            transform=ax.transAxes,
-        #            fontsize=16,
-        #            color='black',  # White text color
-        #            verticalalignment='top',
-        #            horizontalalignment='left',
-        #            linespacing=1.4,  # Extra padding between lines
-        #            bbox=dict(
-        #                facecolor='none',  # Black background
-        #                edgecolor='none',  # No border outline
-        #                alpha=0.9  # Slight transparency so gridlines don't completely disappear
-        #            ))
+        box_content1 = (f"$\\mathcal{{P}} = A e^{{-B E_{{ion}} / r_\\ell \\rho_\\ell}}$\n"
+                        f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 GeV$^{{-1}}$cm$^{{-2}}$g")
+
+
+        ax.text(0.60, 0.95, box_content1,
+                   transform=ax.transAxes,
+                   fontsize=16,
+                   color='black',  # White text color
+                   verticalalignment='top',
+                   horizontalalignment='left',
+                   linespacing=1.4,  # Extra padding between lines
+                   bbox=dict(
+                       facecolor='none',  # Black background
+                       edgecolor='none',  # No border outline
+                       alpha=0.9  # Slight transparency so gridlines don't completely disappear
+                   ))
         #
-        box_content2 = (f"Drexel (C$_3$F$_8$+Xe)")
+        # box_content2 = (f"Drexel (C$_3$F$_8$+Xe)")
+        #
+        # ax.text(0.60, 0.85, box_content2,
+        #         transform=ax.transAxes,
+        #         fontsize=16,
+        #         color='blue',  # White text color
+        #         verticalalignment='top',
+        #         horizontalalignment='left',
+        #         linespacing=1.4,  # Extra padding between lines
+        #         bbox=dict(
+        #             facecolor='none',  # Black background
+        #             edgecolor='none',  # No border outline
+        #             alpha=0.9  # Slight transparency so gridlines don't completely disappear
+        #         ))
+        #
+        # box_content3 = (f"PICO C$_3$F$_8$")
+        #
+        # # ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
+        # ax.text(0.30, 0.65, box_content3,
+        #         transform=ax.transAxes,
+        #         fontsize=16,
+        #         color='red',  # White text color
+        #         verticalalignment='top',
+        #         horizontalalignment='left',
+        #         linespacing=1.4,  # Extra padding between lines
+        #         bbox=dict(
+        #             facecolor='none',  # Black background
+        #             edgecolor='none',  # No border outline
+        #             alpha=0.9  # Slight transparency so gridlines don't completely disappear
+        #         ))
 
-        # ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
-        ax.text(0.60, 0.85, box_content2,
-                transform=ax.transAxes,
-                fontsize=16,
-                color='blue',  # White text color
-                verticalalignment='top',
-                horizontalalignment='left',
-                linespacing=1.4,  # Extra padding between lines
-                bbox=dict(
-                    facecolor='none',  # Black background
-                    edgecolor='none',  # No border outline
-                    alpha=0.9  # Slight transparency so gridlines don't completely disappear
-                ))
-
-        box_content3 = (f"PICO C$_3$F$_8$")
-
-        # ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
-        ax.text(0.30, 0.65, box_content3,
-                transform=ax.transAxes,
-                fontsize=16,
-                color='red',  # White text color
-                verticalalignment='top',
-                horizontalalignment='left',
-                linespacing=1.4,  # Extra padding between lines
-                bbox=dict(
-                    facecolor='none',  # Black background
-                    edgecolor='none',  # No border outline
-                    alpha=0.9  # Slight transparency so gridlines don't completely disappear
-                ))
 
 
 
@@ -2606,10 +2612,11 @@ class integrated_analysis():
 
 
 
+        ax.legend(loc='lower left', fontsize=16, title="Temperature", title_fontsize=16,frameon=False)
         plt.tight_layout()
-        # plt.show()
+        plt.show()
 
-        # fig, ax = plt.subplots(3, 4, figsize=(40, 24)
+
 
 
 
@@ -2626,80 +2633,7 @@ class integrated_analysis():
         #              "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
         #             {"x": "Eion [keV]", "xlabel": r"$E_{ion}$"}]
         #
-        # for i in range(4):
-        #     for j in range(3):
-        #         # Extract the configuration for this specific slot
-        #         y_cfg = y_config[i]
-        #         x_cfg = x_config[j]
-        #         ax_ij = ax[j, i]
-        #
-        #         ax_ij.errorbar(self.df_Cs_116_plot[x_cfg["x"]], self.df_Cs_116_plot[y_cfg["y"]],
-        #                    yerr=self.df_Cs_116_plot[y_cfg["y_err"]], label="Cs 116K", fmt='o',markersize=8,color = "r")
-        #         ax_ij.errorbar(self.df_Cs_119_plot[x_cfg["x"]], self.df_Cs_119_plot[y_cfg["y"]],
-        #                    yerr=self.df_Cs_119_plot[y_cfg["y_err"]], label="Cs 119K", fmt='^',markersize=8,color = "orange")
-        #         ax_ij.errorbar(self.df_Co_116_plot[x_cfg["x"]], self.df_Co_116_plot[y_cfg["y"]],
-        #                    yerr=self.df_Co_116_plot[y_cfg["y_err"]], label="Co 116K", fmt='D',markersize=8,color = "green")
-        #         ax_ij.errorbar(self.df_Co_119_plot[x_cfg["x"]], self.df_Co_119_plot[y_cfg["y"]],
-        #                    yerr=self.df_Co_119_plot[y_cfg["y_err"]], label="Co 119K", fmt='s',markersize=8,color = "blue")
-        #         # ax_ij.errorbar(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
-        #         #            yerr=self.df_Ba_116_plot[y_cfg["y_err"]], label="Ba 116K", fmt='o')
-        #         # ax_ij.plot(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
-        #         #                label="Ba 116K 95% CL \nUpper Limit", marker='v',linestyle='None')
-        #
-        #         ax_ij.set_xlabel(x_cfg["xlabel"],fontsize=16)
-        #         ax_ij.set_ylabel(y_cfg["ylabel"], fontsize=16)
-        #         ax_ij.set_yscale("log")
-        #         ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
-        #
-        #
-        #
-        #
-        #
-        #
-        # self.fitting_df = pd.concat(self.fitting_list, ignore_index=True)
-        # fitting_matrix = self.fitting_gamma_rejection_v3(self.fitting_df,x_config,y_config)
-        #
-        #
-        # # plot the fitting function
-        # for i in range(4):
-        #     for j in range(3):
-        #         # Extract the configuration for this specific slot
-        #         y_cfg = y_config[i]
-        #         x_cfg = x_config[j]
-        #         ax_ij = ax[j, i]
-        #         a_val = fitting_matrix[i][j][0]
-        #         b_val = fitting_matrix[i][j][1]
-        #
-        #         # ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
-        #         #            color="black")
-        #
-        #         ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
-        #               color="black")
-        #         if i==1 & j==1:
-        #             a_str = self.fmt_sci_tex(a_val)
-        #             b_str = self.fmt_sci_tex(b_val)
-        #             print("value",a_str,b_str)
-        #             # box_content = (  f"$y = A e^{{-Bx}}$\n"
-        #             #     f"A = ${a_str}$ keV$^{{-1}}$\n"    f"B = ${b_str}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
-        #             box_content = (f"$\\mathcal{{P}} = A e^{{-B E_{{ion}} / r_\\ell \\rho_\\ell}}$\n"
-        #                            f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 GeV$^{{-1}}$cm$^{{-2}}$g" )
-        #             # ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
-        #             ax_ij.text(0.60, 0.95, box_content,
-        #                        transform=ax_ij.transAxes,
-        #                        fontsize=16,
-        #                        color='black',  # White text color
-        #                        verticalalignment='top',
-        #                        horizontalalignment='left',
-        #                        linespacing=1.4,  # Extra padding between lines
-        #                        bbox=dict(
-        #                            facecolor='white',  # Black background
-        #                            edgecolor='white',  # No border outline
-        #                            alpha=0.9  # Slight transparency so gridlines don't completely disappear
-        #                        ))
-        #
-        #
-        #         # bbox = dict(boxstyle='round', facecolor='whitesmoke', alpha=0.85, edgecolor='lightgray')
-        #         # ax_ij.legend(loc='lower left', fontsize=14)
+
 
 
         plt.savefig(self.plot_path + "gamma_rejection_PSN_v2.pdf")
