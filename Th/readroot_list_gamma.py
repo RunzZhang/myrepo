@@ -163,15 +163,15 @@ class ReadRoot():
         self.plot_path = '/lzdata/runzezhang/result/GR_sims/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        # self.main_body(1)
-        for i in range(1,56):
-        # for i in range(26, 54):
-            try:
-        # for i in range(1, 11):
-                self.main_body(i)
-            except Exception as e:
-                print(e)
-                continue
+        self.main_body(1)
+        # for i in range(1,56):
+        # # for i in range(26, 54):
+        #     try:
+        # # for i in range(1, 11):
+        #         self.main_body(i)
+        #     except Exception as e:
+        #         print(e)
+        #         continue
     def main_body(self,i):
         print(i)
         self.ini_path = self.base_path+ f"Co_gamma_1E7_ini_part{i}.csv"
@@ -257,6 +257,7 @@ class ReadRoot():
             print("NORMAL TRACKING")
             self.ER_distribution_primary_v3(self.df)
             self.ER_distribution_all_v3(self.df)
+            self.get_init_info(self.df, i)
             # self.ER_distribution_primary_v2()
             # self.ER_distribution_counts_v2()
             # self.ER_distribution_primary()
@@ -723,7 +724,19 @@ class ReadRoot():
         df.loc[gammas.index, "ER_near/eV"] = merged[
             "ER_near/MeV"].fillna(0.0)*1e6
         df.loc[gammas.index].to_csv(self.info_all_path, index=False)
-
+    def get_init_info(self, df,i):
+        if i ==1:
+            gammas = df[ (df["name"] == "gamma") & (df["Parent ID"] == 0)& (df["Step ID"] == 1)].copy()
+            fig, ax = plt.subplots()
+            hist_counts, hist_edges, _ = ax.hist(gammas["PreKinetic/MeV"] * 1000, bins=600, range=(0, 600))
+            for i in range(len(hist_counts)):
+                if hist_counts[i] != 0:
+                    print(hist_counts[i], "counts", hist_edges[i], "keV")
+            ax.set_xlabel("Gamma Energy/keV")
+            ax.set_ylabel("Counts")
+            ax.set_yscale("log")
+            plt.show()
+            # plt.savefig(self.plot_path + "Th_init_spectrum.pdf")
     def ER_distribution_primary_v3(self,df):
 
 
