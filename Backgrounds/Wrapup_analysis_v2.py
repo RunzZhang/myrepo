@@ -2436,9 +2436,9 @@ class integrated_analysis():
         PICO_Eion_list = np.linspace(0.85, 1.5, SBC_fitting_len)
         PICO_keV_list = 17e3 * np.exp(-PICO_Eion_list / 37e-3)
         PICO_Q_116_list = self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list , thermal_116_table)["Seitz [keV]"]
-        # PICO_Q_119_list = \
-        # self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list, thermal_119_table)[
-        #     "Seitz [keV]"]
+        PICO_Q_119_list = \
+        self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list, thermal_119_table)[
+            "Seitz [keV]"]
 
 
         ax.plot(SBC_Q_list, SBC_keV_list, label="SBC Fit", color="black")
@@ -2457,7 +2457,7 @@ class integrated_analysis():
             color="purple"
         )
         ax.plot(PICO_Q_116_list, PICO_keV_list, label="PICO Model 116K", color="red")
-        # ax.plot(PICO_Q_119_list, PICO_keV_list, label="PICO Model 119K", color="cyan")
+        ax.plot(PICO_Q_119_list, PICO_keV_list, label="PICO Model 119K", color="cyan")
 
 
         # PICO Eion_keV
