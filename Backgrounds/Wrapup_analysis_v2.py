@@ -2607,7 +2607,7 @@ class integrated_analysis():
 
 
         plt.tight_layout()
-        plt.show()
+        # plt.show()
 
         # fig, ax = plt.subplots(3, 4, figsize=(40, 24)
 
