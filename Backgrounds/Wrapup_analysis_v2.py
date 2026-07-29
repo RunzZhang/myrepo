@@ -7,6 +7,7 @@ import pickle
 from scipy.optimize import curve_fit
 import math
 from scipy.stats import norm
+from scipy.interpolate import interp1d
 class integrated_analysis():
     def __init__(self):
 
@@ -2402,6 +2403,10 @@ class integrated_analysis():
         SBC_Q2_list = result_Q2_xe[2]
         SBC_Eion_list = result_Eion_keV[2]
 
+
+
+
+
         # Compute ratio list
         SBC_rrho_list = [SBC_Q_list[i] / SBC_Q2_list[i] for i in range(len(SBC_Q_list))]
         SBC_Eion_list = [SBC_Q_list[i] / SBC_Eion_list[i] for i in range(len(SBC_Q_list))]
@@ -2431,10 +2436,10 @@ class integrated_analysis():
         )
         ax.plot(PICO_Q_list, PICO_keV_list, label="PICO Model", color="red")
 
-
-
-
-
+        thermal_116_table = self.dict_energy_116_tab
+        thermal_119_table  = self.dict_energy_119_tab
+        result = self.interpolate_dict_values("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", 0.9, thermal_116_table)
+        print(result)
         # PICO Eion_keV
 
 
@@ -2539,7 +2544,32 @@ class integrated_analysis():
 
         plt.savefig(self.plot_path + "gamma_rejection_PSN_v2.pdf")
 
+    def interpolate_all_keys(self, target_key, target_value, data_dict):
+        """
+        Given a target_key and its value target_value, interpolates and returns
+        the corresponding interpolated values for ALL keys in data_dict.
+        """
+        if target_key not in data_dict:
+            raise KeyError(f"Key '{target_key}' not found in data dictionary.")
 
+        # x is the array corresponding to the input key
+        x = np.array(data_dict[target_key])
+
+        # np.interp requires x-coordinates to be strictly increasing
+        sort_idx = np.argsort(x)
+        x_sorted = x[sort_idx]
+
+        result = {}
+        for key, values in data_dict.items():
+            if key == target_key:
+                result[key] = float(target_value)
+            else:
+                y_sorted = np.array(values)[sort_idx]
+                # Interpolate y at target_value based on x
+                interpolated_val = np.interp(target_value, x_sorted, y_sorted)
+                result[key] = float(interpolated_val)
+
+        return result
     def gamma_rejection_plot_PSN(self):
         # print Q vs per keV and Eion per interaction
 
