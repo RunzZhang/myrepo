@@ -2371,6 +2371,8 @@ class integrated_analysis():
 
         # Set main (left) y-axis and x-axis labels
         ax.set_xlabel(r"Seitz threshold [keV]", fontsize=16)
+        ax.set_xlim(0.65, 2.8)
+        ax.set_ylim(1e-12, 1e-4)
         ax.set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
         ax.set_yscale("log")
         ax.legend(loc='lower left', fontsize=16, title="Temperature", title_fontsize=16,frameon=False)
@@ -2434,9 +2436,9 @@ class integrated_analysis():
         PICO_Eion_list = np.linspace(0.85, 1.5, SBC_fitting_len)
         PICO_keV_list = 17e3 * np.exp(-PICO_Eion_list / 37e-3)
         PICO_Q_116_list = self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list , thermal_116_table)["Seitz [keV]"]
-        PICO_Q_119_list = \
-        self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list, thermal_119_table)[
-            "Seitz [keV]"]
+        # PICO_Q_119_list = \
+        # self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list, thermal_119_table)[
+        #     "Seitz [keV]"]
 
 
         ax.plot(SBC_Q_list, SBC_keV_list, label="SBC Fit", color="black")
@@ -2455,7 +2457,7 @@ class integrated_analysis():
             color="purple"
         )
         ax.plot(PICO_Q_116_list, PICO_keV_list, label="PICO Model 116K", color="red")
-        ax.plot(PICO_Q_119_list, PICO_keV_list, label="PICO Model 119K", color="cyan")
+        # ax.plot(PICO_Q_119_list, PICO_keV_list, label="PICO Model 119K", color="cyan")
 
 
         # PICO Eion_keV
@@ -2463,7 +2465,7 @@ class integrated_analysis():
 
 
 
-        ax.legend()
+
         plt.tight_layout()
         plt.show()
 
