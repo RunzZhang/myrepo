@@ -2428,7 +2428,7 @@ class integrated_analysis():
         # PICO Eion to keV calculations
         SBC_fitting_len = len(SBC_Q_list)
         # Use np.linspace so length matches SBC_fitting_len exactly
-        PICO_Eion_list = np.linspace(0.8, 1.5, SBC_fitting_len)
+        PICO_Eion_list = np.linspace(0.85, 1.5, SBC_fitting_len)
         PICO_keV_list = 17e3 * np.exp(-PICO_Eion_list / 37e-3)
         PICO_Q_116_list = self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list , thermal_116_table)["Seitz [keV]"]
 
