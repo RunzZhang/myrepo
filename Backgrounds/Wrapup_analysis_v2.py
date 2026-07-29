@@ -2430,7 +2430,7 @@ class integrated_analysis():
         SCALE_FACTOR = (ratio_119)**(-1)  # Xenon Abs = Rate [/keV] * SCALE_FACTOR
 
         # Fix: changed subplots(1, 0) to subplots()
-        fig, ax = plt.subplots(figsize=(6, 4))
+        fig, ax = plt.subplots(figsize=(12, 8))
 
         # Plot Cs 116K ONCE on the left axis
         ax.errorbar(
