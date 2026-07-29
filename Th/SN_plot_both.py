@@ -170,7 +170,7 @@ class SN():
             # photo process analysis
             # self.read_ER_Ar_pho_per_deposit_rate()
     def read_emit_spectrum(self):
-        df_init_emit = self.merged_df_all[(self.merged_df_all["Volume"]=='calibration_Be_phys')&(self.merged_df_all["name"]=='gamma')&(self.merged_df_all["Step ID"]==1)]
+        df_init_emit = self.merged_df_primary[(self.merged_df_primary["Volume"]=='calibration_Be_phys')&(self.merged_df_primary["name"]=='gamma')&(self.merged_df_primary["Step ID"]==1)]
         fig, ax = plt.subplots()
         ax.hist(df_init_emit["PreKinetic/MeV"]*1000, bins=1200, range=(0,600))
         ax.set_xlabel("Gamma Energy/keV")
