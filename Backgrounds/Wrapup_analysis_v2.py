@@ -2438,7 +2438,7 @@ class integrated_analysis():
 
         thermal_116_table = self.dict_energy_116_tab
         thermal_119_table  = self.dict_energy_119_tab
-        result = self.interpolate_all_keys("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", 0.9, thermal_116_table)
+        result = self.interpolate_all_keys("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", 0.8, thermal_116_table)
         print(result)
         # PICO Eion_keV
 
