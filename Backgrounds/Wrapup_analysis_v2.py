@@ -2430,7 +2430,7 @@ class integrated_analysis():
         SCALE_FACTOR = (ratio_119)**(-1)  # Xenon Abs = Rate [/keV] * SCALE_FACTOR
 
         # Fix: changed subplots(1, 0) to subplots()
-        fig, ax = plt.subplots(figsize=(12, 8))
+        fig, ax = plt.subplots(figsize=(10, 7))
 
         # Plot Cs 116K ONCE on the left axis
         ax.errorbar(
@@ -2566,7 +2566,7 @@ class integrated_analysis():
         #                alpha=0.9  # Slight transparency so gridlines don't completely disappear
         #            ))
         #
-        box_content2 = (f"Drexel (C_3F_8+Xe)")
+        box_content2 = (f"Drexel (C$_3$F$_8$+Xe)")
 
         # ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
         ax.text(0.60, 0.85, box_content2,
@@ -2582,7 +2582,7 @@ class integrated_analysis():
                     alpha=0.9  # Slight transparency so gridlines don't completely disappear
                 ))
 
-        box_content3 = (f"PICO C3F8")
+        box_content3 = (f"PICO C$_3$F$_8$")
 
         # ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
         ax.text(0.30, 0.65, box_content3,
