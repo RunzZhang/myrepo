@@ -2569,7 +2569,7 @@ class integrated_analysis():
         box_content2 = (f"Drexel (C_3F_8+Xe)")
 
         # ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
-        ax.text(0.60, 0.95, box_content2,
+        ax.text(0.60, 0.85, box_content2,
                 transform=ax.transAxes,
                 fontsize=16,
                 color='blue',  # White text color
@@ -2585,10 +2585,10 @@ class integrated_analysis():
         box_content3 = (f"PICO C3F8")
 
         # ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
-        ax.text(0.40, 0.65, box_content3,
+        ax.text(0.30, 0.65, box_content3,
                 transform=ax.transAxes,
                 fontsize=16,
-                color='black',  # White text color
+                color='red',  # White text color
                 verticalalignment='top',
                 horizontalalignment='left',
                 linespacing=1.4,  # Extra padding between lines
