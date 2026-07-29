@@ -2542,8 +2542,10 @@ class integrated_analysis():
         #     color="purple"
         # )
         ax.plot(PICO_Q_116_list, PICO_keV_list, label="PICO Model 116K", color="red")
+        # ax.plot(PICO_Q_119_list, PICO_keV_list, label="PICO Model 119K", color="cyan")
         box_content1 = (f"$\\mathcal{{P}} = A e^{{-B E_{{ion}} / r_\\ell \\rho_\\ell}}$\n"
                        f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 GeV$^{{-1}}$cm$^{{-2}}$g")
+
         # ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
         ax.text(0.60, 0.95, box_content1,
                    transform=ax.transAxes,
@@ -2553,11 +2555,11 @@ class integrated_analysis():
                    horizontalalignment='left',
                    linespacing=1.4,  # Extra padding between lines
                    bbox=dict(
-                       facecolor='white',  # Black background
-                       edgecolor='white',  # No border outline
+                       facecolor='none',  # Black background
+                       edgecolor='none',  # No border outline
                        alpha=0.9  # Slight transparency so gridlines don't completely disappear
                    ))
-        # ax.plot(PICO_Q_119_list, PICO_keV_list, label="PICO Model 119K", color="cyan")
+
 
 
         # PICO Eion_keV
