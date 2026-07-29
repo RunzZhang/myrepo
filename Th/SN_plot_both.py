@@ -175,6 +175,7 @@ class SN():
         ax.hist(df_init_emit["PreKinetic/MeV"]*1000, bins=1200, range=(0,600))
         ax.set_xlabel("Gamma Energy/keV")
         ax.set_ylabel("Counts")
+        ax.set_yscale("log")
         plt.savefig(self.plot_path + "Th_init_spectrum.pdf")
 
     def read_positions(self):
