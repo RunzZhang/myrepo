@@ -151,11 +151,11 @@ class SN():
             # self.read_ER_Ar_CF_1d_sum_rate_cummulative()
             # self.read_ER_Ar_CF_1d_sum_counts()
 
-            self.read_emit_spectrum()
+            # self.read_emit_spectrum()
             # self.gamma_rejection_rate_per_keV_vs_Setiz()
             # self.gamma_rejection_rate_vs_Setiz()
 
-            # self.write_sims_results()
+            self.write_sims_results()
             # self.write_sims_results_thesis()
 
 
