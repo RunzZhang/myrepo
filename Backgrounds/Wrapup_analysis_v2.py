@@ -2547,22 +2547,56 @@ class integrated_analysis():
         # )
         ax.plot(PICO_Q_116_list, PICO_keV_list, label="PICO Model 116K", color="red")
         # ax.plot(PICO_Q_119_list, PICO_keV_list, label="PICO Model 119K", color="cyan")
-        box_content1 = (f"$\\mathcal{{P}} = A e^{{-B E_{{ion}} / r_\\ell \\rho_\\ell}}$\n"
-                       f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 GeV$^{{-1}}$cm$^{{-2}}$g")
+
+        # fitting parameter
+        # box_content1 = (f"$\\mathcal{{P}} = A e^{{-B E_{{ion}} / r_\\ell \\rho_\\ell}}$\n"
+        #                f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 GeV$^{{-1}}$cm$^{{-2}}$g")
 
         # ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
-        ax.text(0.60, 0.95, box_content1,
-                   transform=ax.transAxes,
-                   fontsize=16,
-                   color='black',  # White text color
-                   verticalalignment='top',
-                   horizontalalignment='left',
-                   linespacing=1.4,  # Extra padding between lines
-                   bbox=dict(
-                       facecolor='none',  # Black background
-                       edgecolor='none',  # No border outline
-                       alpha=0.9  # Slight transparency so gridlines don't completely disappear
-                   ))
+        # ax.text(0.60, 0.95, box_content1,
+        #            transform=ax.transAxes,
+        #            fontsize=16,
+        #            color='black',  # White text color
+        #            verticalalignment='top',
+        #            horizontalalignment='left',
+        #            linespacing=1.4,  # Extra padding between lines
+        #            bbox=dict(
+        #                facecolor='none',  # Black background
+        #                edgecolor='none',  # No border outline
+        #                alpha=0.9  # Slight transparency so gridlines don't completely disappear
+        #            ))
+        #
+        box_content2 = (f"Drexel (C_3F_8+Xe)")
+
+        # ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
+        ax.text(0.60, 0.95, box_content2,
+                transform=ax.transAxes,
+                fontsize=16,
+                color='blue',  # White text color
+                verticalalignment='top',
+                horizontalalignment='left',
+                linespacing=1.4,  # Extra padding between lines
+                bbox=dict(
+                    facecolor='none',  # Black background
+                    edgecolor='none',  # No border outline
+                    alpha=0.9  # Slight transparency so gridlines don't completely disappear
+                ))
+
+        box_content3 = (f"PICO C3F8")
+
+        # ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
+        ax.text(0.40, 0.65, box_content3,
+                transform=ax.transAxes,
+                fontsize=16,
+                color='black',  # White text color
+                verticalalignment='top',
+                horizontalalignment='left',
+                linespacing=1.4,  # Extra padding between lines
+                bbox=dict(
+                    facecolor='none',  # Black background
+                    edgecolor='none',  # No border outline
+                    alpha=0.9  # Slight transparency so gridlines don't completely disappear
+                ))
 
 
 
