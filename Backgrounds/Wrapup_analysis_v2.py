@@ -2575,8 +2575,8 @@ class integrated_analysis():
 
 
 
-        box_content1 = (f"$\\mathcal{{P}}_{{edep}} = A_{{edep}} e^{{-B_{{edep}} Q_{{Seitz}}}}$\n"
-                        f"$\\mathcal{{A}}_{{edep}} = 0.13 MeV$^{{-1}}$\n"    f"$\\mathcal{{B}}_{{edep}} = 8.75 GeV$^{{-1}}$cm$^{{-2}}$g")
+        # box_content1 = (f"$\\mathcal{{P}}_{{edep}} = A_{{edep}} e^{{-B_{{edep}} Q_{{Seitz}}}}$\n"
+        #                 f"$\\mathcal{{A}}_{{edep}} = 0.13 MeV$^{{-1}}$\n"    f"$\\mathcal{{B}}_{{edep}} = 8.75 GeV$^{{-1}}$cm$^{{-2}}$g")
 
 
         ax.text(0.30, 0.95, box_content1,
