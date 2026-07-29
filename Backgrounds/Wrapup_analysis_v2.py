@@ -2408,6 +2408,13 @@ class integrated_analysis():
 
 
         # Compute ratio list
+
+        thermal_116_table = self.dict_energy_116_tab
+        thermal_119_table = self.dict_energy_119_tab
+
+        # result = self.interpolate_all_keys("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", 0.8, thermal_116_table)
+        # print(result)
+
         SBC_rrho_list = [SBC_Q_list[i] / SBC_Q2_list[i] for i in range(len(SBC_Q_list))]
         SBC_Eion_list = [SBC_Q_list[i] / SBC_Eion_list[i] for i in range(len(SBC_Q_list))]
 
@@ -2416,30 +2423,27 @@ class integrated_analysis():
         # Use np.linspace so length matches SBC_fitting_len exactly
         Drex_Q2_list = np.linspace(1.5, 4, SBC_fitting_len)
         Drex_phot_list = 58 * np.exp(-Drex_Q2_list / 0.2877)
-        Drex_Q_list = [Drex_Q2_list[i] * SBC_rrho_list[i] for i in range(len(Drex_Q2_list))]
+        Drex_Q_116_list = self.interpolate_all_keys_vectorized("Q_rl-1_rhol-1 [GeVcm**2 g-1]", Drex_Q2_list , thermal_116_table)["Seitz [keV]"]
 
         # PICO Eion to keV calculations
         SBC_fitting_len = len(SBC_Q_list)
         # Use np.linspace so length matches SBC_fitting_len exactly
         PICO_Eion_list = np.linspace(0.8, 1.5, SBC_fitting_len)
         PICO_keV_list = 17e3 * np.exp(-PICO_Eion_list / 37e-3)
-        PICO_Q_list = [PICO_Eion_list[i] * SBC_Eion_list[i] for i in range(len(Drex_Q2_list))]
+        PICO_Q_116_list = self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list , thermal_116_table)["Seitz [keV]"]
 
 
         ax.plot(SBC_Q_list, SBC_keV_list, label="SBC Fit", color="black")
         ax.plot(
-            Drex_Q_list,
+            Drex_Q_116_list,
             Drex_phot_list / SCALE_FACTOR,
-            label="Drexel Model",
+            label="Drexel Model 116K",
 
             color="blue"
         )
-        ax.plot(PICO_Q_list, PICO_keV_list, label="PICO Model", color="red")
+        ax.plot(PICO_Q_116_list, PICO_keV_list, label="PICO Model 116K", color="red")
 
-        thermal_116_table = self.dict_energy_116_tab
-        thermal_119_table  = self.dict_energy_119_tab
-        result = self.interpolate_all_keys("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", 0.8, thermal_116_table)
-        print(result)
+
         # PICO Eion_keV
 
 
@@ -2543,6 +2547,33 @@ class integrated_analysis():
 
 
         plt.savefig(self.plot_path + "gamma_rejection_PSN_v2.pdf")
+
+    def interpolate_all_keys_vectorized(self, target_key, target_values, data_dict):
+        """
+        Given a target_key and an array/list of target_values, returns a dictionary
+        where each key contains the array of interpolated values.
+        """
+        if target_key not in data_dict:
+            raise KeyError(f"Key '{target_key}' not found in data dictionary.")
+
+        # Ensure inputs are NumPy arrays
+        x = np.asarray(data_dict[target_key], dtype=float)
+        target_values = np.asarray(target_values, dtype=float)
+
+        # Sort x once
+        sort_idx = np.argsort(x)
+        x_sorted = x[sort_idx]
+
+        result = {}
+        for key, values in data_dict.items():
+            if key == target_key:
+                result[key] = target_values
+            else:
+                y_sorted = np.asarray(values, dtype=float)[sort_idx]
+                # np.interp evaluates the ENTIRE array target_values instantly in C
+                result[key] = np.interp(target_values, x_sorted, y_sorted)
+
+        return result
 
     def interpolate_all_keys(self, target_key, target_value, data_dict):
         """
