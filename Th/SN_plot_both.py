@@ -172,7 +172,7 @@ class SN():
     def read_emit_spectrum(self):
         df_init_emit = self.merged_df_primary[(self.merged_df_primary["Volume"]=='calibration_Be_phys')&(self.merged_df_primary["name"]=='gamma')&(self.merged_df_primary["Step ID"]==1)]
         fig, ax = plt.subplots()
-        hist_counts, hist_edges = ax.hist(df_init_emit["PreKinetic/MeV"]*1000, bins=600, range=(0,600))
+        hist_counts, hist_edges, _ = ax.hist(df_init_emit["PreKinetic/MeV"]*1000, bins=600, range=(0,600))
         for i in range(len(hist_counts)):
             if hist_counts[i]!=0:
                 print(hist_counts[i],"counts", hist_edges[i], "keV")
