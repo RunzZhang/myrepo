@@ -3153,11 +3153,11 @@ class integrated_analysis():
                 # bbox = dict(boxstyle='round', facecolor='whitesmoke', alpha=0.85, edgecolor='lightgray')
                 # ax_ij.legend(loc='lower left', fontsize=14)
 
-
-        plt.savefig(self.plot_path + "gamma_rejection_PSN.pdf")
-
-        plt.clf()
-        self.Qseitz_compound_xe_plot_PSN()
+        plt.show()
+        # plt.savefig(self.plot_path + "gamma_rejection_PSN.pdf")
+        #
+        # plt.clf()
+        # self.Qseitz_compound_xe_plot_PSN()
     def Qseitz_compound_xe_plot_PSN(self):
         fig, ax = plt.subplots(1, 2, figsize=(16, 6))
         [result_Q_scatter, result_Q_keV, result_Q_xe, result_Eion_scatter, result_Eion_keV, result_Eion_xe,
