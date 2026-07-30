@@ -163,15 +163,15 @@ class ReadRoot():
         self.plot_path = '/lzdata/runzezhang/result/GR_sims/plot/'
 
         # self.filepath = self.base_path +"dmx_lr.root"
-        self.main_body(1)
-        # for i in range(1,56):
-        # # for i in range(26, 54):
-        #     try:
-        # # for i in range(1, 11):
-        #         self.main_body(i)
-        #     except Exception as e:
-        #         print(e)
-        #         continue
+        # self.main_body(1)
+        for i in range(1,56):
+        # for i in range(26, 54):
+            try:
+        # for i in range(1, 11):
+                self.main_body(i)
+            except Exception as e:
+                print(e)
+                continue
     def main_body(self,i):
         print(i)
         self.ini_path = self.base_path+ f"Co_gamma_1E7_ini_part{i}.csv"
@@ -257,7 +257,7 @@ class ReadRoot():
             print("NORMAL TRACKING")
             self.ER_distribution_primary_v3(self.df)
             self.ER_distribution_all_v3(self.df)
-            self.get_init_info(self.df, i)
+            # self.get_init_info(self.df, i)
             # self.ER_distribution_primary_v2()
             # self.ER_distribution_counts_v2()
             # self.ER_distribution_primary()
