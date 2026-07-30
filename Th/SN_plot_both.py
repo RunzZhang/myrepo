@@ -99,7 +99,7 @@ class SN():
         self.original_Activity = 5 # original activity in the paper
         self.Activity = 5  # source practical activity in mivro curie for 50 bubbles/hour
 
-        self.gamma_rate = 2.58*1.67e4 # /s
+        self.gamma_rate = 1.37*1.74e5 # /s
 
 
         self.G4_events_gamma =  5E6 # only 50 chunks
@@ -165,7 +165,7 @@ class SN():
 
             # self.read_ER_Ar_doped()
             # self.write_doped_sims_results()
-            self.write_doped_sims_results_v2(self.merged_df_phot, bin_start_mev=0, bin_end_mev=0.4, bin_width_mev=0.0005, plot=True)
+            self.write_doped_sims_results_v2(self.merged_df_phot, bin_start_mev=0, bin_end_mev=1, bin_width_mev=0.0005, plot=True)
 
             # photo process analysis
             # self.read_ER_Ar_pho_per_deposit_rate()
