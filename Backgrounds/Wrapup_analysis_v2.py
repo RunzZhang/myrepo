@@ -2634,7 +2634,7 @@ class integrated_analysis():
 
         ax.legend(loc='lower left', fontsize=16, title=" ", title_fontsize=16,frameon=False)
         plt.tight_layout()
-        plt.show()
+        # plt.show()
 
 
 
