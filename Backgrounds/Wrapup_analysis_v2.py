@@ -17,8 +17,7 @@ class integrated_analysis():
         # self.Cs_sim_path = '/lzdata/runzezhang/result/GR_sims/Cs_output_5E6.pkl'
         self.Co_sim_path = '/lzdata/runzezhang/result/GR_sims/Co_output_5E6_ERv2.pkl'
         self.Cs_sim_path = '/lzdata/runzezhang/result/GR_sims/Cs_output_5E6_ERv2.pkl'
-        # self.Hot_Cs_sim_path = '/lzdata/runzezhang/result/GR_sims/Hot_Cs_output_5E6_ERv2.pkl'
-        self.Hot_Cs_sim_path = '/lzdata/runzezhang/result/GR_sims/Cs_output_5E6_ERv2.pkl'
+        self.Hot_Cs_sim_path = '/lzdata/runzezhang/result/GR_sims/Hot_Cs_output_5E6_ERv2.pkl'
         self.Cf_simA_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_A.pkl'
         # self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_B.pkl'
         self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density095_config_B.pkl'
@@ -37,9 +36,8 @@ class integrated_analysis():
         self.Cs_sim_doped_path = '/lzdata/runzezhang/result/GR_sims/Cs_doped_output_full_track.pkl'
         self.Ba_sim_doped_path = '/lzdata/runzezhang/result/GR_sims/Ba_doped_output_full_track.pkl'
         # self.Th_sim_doped_path = '/lzdata/runzezhang/result/GR_sims/Th_doped_output_full_track.pkl'
-        # self.Hot_Cs_sim_doped_path = '/lzdata/runzezhang/result/GR_sims/Hot_Cs_doped_output_full_track.pkl'
+        self.Hot_Cs_sim_doped_path = '/lzdata/runzezhang/result/GR_sims/Hot_Cs_doped_output_full_track.pkl'
         self.Th_sim_doped_path = '/lzdata/runzezhang/result/GR_sims/Ba_doped_output_full_track.pkl'
-        self.Hot_Cs_sim_doped_path = '/lzdata/runzezhang/result/GR_sims/Ba_doped_output_full_track.pkl'
 
         self.xe_shell_threshold = 0
 
@@ -3153,8 +3151,8 @@ class integrated_analysis():
                 # bbox = dict(boxstyle='round', facecolor='whitesmoke', alpha=0.85, edgecolor='lightgray')
                 # ax_ij.legend(loc='lower left', fontsize=14)
 
-        plt.show()
-        # plt.savefig(self.plot_path + "gamma_rejection_PSN.pdf")
+        # plt.show()
+        plt.savefig(self.plot_path + "gamma_rejection_PSN.pdf")
         #
         # plt.clf()
         # self.Qseitz_compound_xe_plot_PSN()
