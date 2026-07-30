@@ -142,7 +142,8 @@ class integrated_analysis():
         self.read_raw_Cs_exp()
         self.read_raw_Cf_exp()
         self.read_raw_Ba_exp()
-
+        self.read_raw_Hot_Cs_exp()
+        self.read_raw_Th_exp()
         self.read_raw_backgrounds_exp()
 
         # caculate the average background
