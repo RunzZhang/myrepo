@@ -267,7 +267,7 @@ class integrated_analysis():
         print("self.Cs_sims",self.Ba_sims)
 
         with open(self.Hot_Cs_sim_path, "rb") as f:
-            self.Hot_CsBa_sims = pickle.load(f)
+            self.Hot_Cs_sims = pickle.load(f)
         print("self.Cs_sims",self.Hot_Cs_sims)
 
 
