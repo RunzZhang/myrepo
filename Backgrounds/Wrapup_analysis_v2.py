@@ -2558,7 +2558,7 @@ class integrated_analysis():
         box_content0 = (f"$\\mathcal{{P}}_{{phot}} = A_{{phot}} e^{{-B_{{phot}} Q_{{Seitz}}}}$\n"
                         f"$A_{{phot}}$ = 0.014 K-phot$^{{-1}}$\n"    f"$B_{{phot}}$ = 4.289 keV$^{{-1}}$")
 
-        ax.text(0.70, 0.78, box_content0,
+        ax.text(0.65, 0.78, box_content0,
                 transform=ax.transAxes,
                 fontsize=16,
                 color='black',  # White text color
@@ -2579,7 +2579,7 @@ class integrated_analysis():
                         f"$A_{{edep}}$ = 2.468 GeV$^{{-1}}$\n"    f"$B_{{edep}}$ = 4.289 keV$^{{-1}}$")
 
 
-        ax.text(0.70, 0.98, box_content1,
+        ax.text(0.65, 0.98, box_content1,
                    transform=ax.transAxes,
                    fontsize=16,
                    color='black',  # White text color
