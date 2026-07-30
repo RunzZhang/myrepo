@@ -27,7 +27,7 @@ class ReadRoot:
         # self.signal_path = self.base_path + self.signal
 
         self.filepath = self.base_path + "dmx_Th_1E8_100ppm.root"
-        # self.filepath = self.base_path + "dmx_AmLi.root" # test
+        # self.filepath = self.base_path + "dmx_Th_5E6_ER.root" # test
         self.tree_name = "tree"  # Assuming your TTree is named "tree"
 
         # Define the columns you want to read and write
