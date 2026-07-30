@@ -257,7 +257,7 @@ class ReadRoot():
             print("NORMAL TRACKING")
             self.ER_distribution_primary_v3(self.df)
             self.ER_distribution_all_v3(self.df)
-            # self.get_init_info(self.df, i)
+            self.get_init_info(self.df, i)
             # self.ER_distribution_primary_v2()
             # self.ER_distribution_counts_v2()
             # self.ER_distribution_primary()
