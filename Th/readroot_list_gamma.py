@@ -735,8 +735,8 @@ class ReadRoot():
             ax.set_xlabel("Gamma Energy/keV")
             ax.set_ylabel("Counts")
             ax.set_yscale("log")
-            plt.show()
-            # plt.savefig(self.plot_path + "Th_init_spectrum.pdf")
+            # plt.show()
+            plt.savefig(self.plot_path + "Th_init_spectrum.pdf")
     def ER_distribution_primary_v3(self,df):
 
 
