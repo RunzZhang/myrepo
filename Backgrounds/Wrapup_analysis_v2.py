@@ -3092,7 +3092,7 @@ class integrated_analysis():
                 # ax_ij.errorbar(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
                 #            yerr=self.df_Ba_116_plot[y_cfg["y_err"]], label="Ba 116K", fmt='o')
                 ax_ij.errorbar(self.df_Hot_Cs_116_plot[x_cfg["x"]], self.df_Hot_Cs_116_plot[y_cfg["y"]],
-                           yerr=self.df_Hot_Cs_116_plot[y_cfg["y_err"]], label="Hot_Cs 116K", fmt='o',markersize=8,color = "purple")
+                           yerr=self.df_Hot_Cs_116_plot[y_cfg["y_err"]], label="Hot Cs 116K", fmt='o',markersize=8,color = "purple")
                 ax_ij.errorbar(self.df_Th_116_plot[x_cfg["x"]], self.df_Th_116_plot[y_cfg["y"]],
                            yerr=self.df_Th_116_plot[y_cfg["y_err"]], label="Th 116K", fmt='o',markersize=8,color = "brown")
                 # ax_ij.plot(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],

@@ -95,7 +95,8 @@ class SN():
         self.original_Activity = 5  # original activity in the paper
         self.Activity = 5  # source practical activity in mivro curie for 50 bubbles/hour
 
-        self.gamma_rate = 2.44e6  # /s
+        # self.gamma_rate = 2.44e6  # /s
+        self.gamma_rate = 1.8e7  # /s $ hot
 
         self.G4_events_gamma = 5E6  # only 50 chunks
         # self.G4_events_gamma = 1E8  # only 50 chunks
@@ -1141,7 +1142,8 @@ class SN():
             ax[1, 3].set_xlim(0, 1000)
             ax[1, 3].set_yscale("log")
 
-            plt.savefig(self.plot_path + "Cs_output_spectrum.pdf")
+            # plt.savefig(self.plot_path + "Cs_output_spectrum.pdf")
+            plt.savefig(self.plot_path + "Hot_Cs_output_spectrum.pdf")
 
     def write_doped_sims_results(self):
         # rate factor in mHz
@@ -1307,7 +1309,9 @@ class SN():
         output_list = [Rate_factor, hist_array, cumulative_threshold_per_scatter_array[0],
                        cumulative_threshold_array[0]]
         # output form, rate facotr to mHz, enenrgy edges, counts above the bin edge, counts* counts above the bin edge
-        with open("/lzdata/runzezhang/result/GR_sims/Cs_doped_output_full_track.pkl", "wb") as f:
+        # with open("/lzdata/runzezhang/result/GR_sims/Cs_doped_output_full_track.pkl", "wb") as f:
+        #     pickle.dump(output_list, f)
+        with open("/lzdata/runzezhang/result/GR_sims/Hot_Cs_doped_output_full_track.pkl", "wb") as f:
             pickle.dump(output_list, f)
 
         return total_counts, bins_kev
