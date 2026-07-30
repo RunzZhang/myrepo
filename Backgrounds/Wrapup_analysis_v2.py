@@ -2556,7 +2556,7 @@ class integrated_analysis():
         # fitting parameter
 
         box_content0 = (f"$\\mathcal{{P}}_{{phot}} = A_{{phot}} e^{{-B_{{phot}} Q_{{Seitz}}}}$\n"
-                        f"$A_{{phot}}$ = 0.014 $\mathrm{{K\text{{-}}phot}}^{{-1}}$\n"    f"$B_{{phot}}$ = 4.289 keV$^{{-1}}")
+                        f"$A_{{phot}}$ = 0.014 K-phot$^{{-1}}$\n"    f"$B_{{phot}}$ = 4.289 keV$^{{-1}}$")
 
         ax.text(0.60, 0.78, box_content0,
                 transform=ax.transAxes,
@@ -2576,7 +2576,7 @@ class integrated_analysis():
 
 
         box_content1 = (f"$\\mathcal{{P}}_{{edep}} = A_{{edep}} e^{{-B_{{edep}} Q_{{Seitz}}}}$\n"
-                        f"$A_{{edep}}$ = 2.468 GeV$^{{-1}}$\n"    f"$B_{{edep}}$ = 4.289 keV$^{{-1}}")
+                        f"$A_{{edep}}$ = 2.468 GeV$^{{-1}}$\n"    f"$B_{{edep}}$ = 4.289 keV$^{{-1}}$")
 
 
         ax.text(0.60, 0.98, box_content1,
