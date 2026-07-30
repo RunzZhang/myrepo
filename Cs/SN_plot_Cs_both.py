@@ -1561,6 +1561,6 @@ class test_csv():
 
 
 if __name__ == "__main__":
-    sn = SN(doped=True)
-    # sn = SN(doped=False)
+    # sn = SN(doped=True)
+    sn = SN(doped=False)
     # test = test_csv()
