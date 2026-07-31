@@ -165,7 +165,7 @@ class SN():
 
             # self.read_ER_Ar_doped()
             # self.write_doped_sims_results()
-            self.write_doped_sims_results_v2(self.merged_df_phot, bin_start_mev=0, bin_end_mev=1, bin_width_mev=0.0005, plot=True)
+            self.write_doped_sims_results_v2(self.merged_df_phot, bin_start_mev=0, bin_end_mev=2.80, bin_width_mev=0.0005, plot=True)
 
             # photo process analysis
             # self.read_ER_Ar_pho_per_deposit_rate()
@@ -1031,7 +1031,7 @@ class SN():
         hist_array_primary = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
         # hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=12000, range=(0, 1200))
-        hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=1000, range=(0, 1000))
+        hist_array_primary[0] = np.histogram(ER_Ar_primary, bins=2800, range=(0, 2800))
         # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
         # we need 0.1 keV, and this gives us 4800 bins
 
@@ -1059,7 +1059,7 @@ class SN():
         hist_array_all = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
         # hist_array_all[0] = np.histogram(ER_Ar_all, bins=12000, range=(0, 1200))
-        hist_array_all[0] = np.histogram(ER_Ar_all, bins=1000, range=(0, 1000))
+        hist_array_all[0] = np.histogram(ER_Ar_all, bins=2800, range=(0, 2800))
         # 12 keV -> 1 Setiz threshold there is no change for gamma rejection
         # we need 0.1 keV, and this gives us 4800 bins
 
