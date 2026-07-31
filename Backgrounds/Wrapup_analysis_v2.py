@@ -3193,7 +3193,7 @@ class integrated_analysis():
         ax[0].errorbar(self.df_Hot_Cs_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'],
                        self.df_Hot_Cs_116_plot["Rejection Rate Xenon Abs[]"],
                        yerr=self.df_Hot_Cs_116_plot["Rejection Sigma Xenon Abs[]"], label="Hot Cs 116K", fmt='s', markersize=8,
-                       color="blue")
+                       color="purple")
 
         # ax[0].errorbar(self.df_Ba_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'],
         #                self.df_Ba_116_plot["Rejection Rate Xenon Abs[]"],
