@@ -26,8 +26,8 @@ class ReadRoot:
         # self.signal_path_mid = self.base_path + self.signal_mid
         # self.signal_path = self.base_path + self.signal
 
-        self.filepath = self.base_path + "dmx_Th_1E8_100ppm.root"
-        # self.filepath = self.base_path + "dmx_Th_5E6_ER.root" # test
+        # self.filepath = self.base_path + "dmx_Th_1E8_100ppm.root"
+        self.filepath = self.base_path + "dmx_Th_5E6_ER.root" # test
         self.tree_name = "tree"  # Assuming your TTree is named "tree"
 
         # Define the columns you want to read and write
@@ -99,6 +99,6 @@ class ReadRoot:
 
 # Example usage:
 if __name__ == "__main__":
-    # reader = ReadRoot(doped=False)
-    reader = ReadRoot(doped=True)
-    reader.chunk_and_write_root(start_chunk_cum=0,num_chunks=50)
+    reader = ReadRoot(doped=False)
+    # reader = ReadRoot(doped=True)
+    reader.chunk_and_write_root(start_chunk_cum=0,num_chunks=20)
