@@ -3155,8 +3155,8 @@ class integrated_analysis():
         # plt.show()
         plt.savefig(self.plot_path + "gamma_rejection_PSN.pdf")
         #
-        # plt.clf()
-        # self.Qseitz_compound_xe_plot_PSN()
+        plt.clf()
+        self.Qseitz_compound_xe_plot_PSN()
     def Qseitz_compound_xe_plot_PSN(self):
         fig, ax = plt.subplots(1, 2, figsize=(16, 6))
         [result_Q_scatter, result_Q_keV, result_Q_xe, result_Eion_scatter, result_Eion_keV, result_Eion_xe,
@@ -3189,6 +3189,11 @@ class integrated_analysis():
         ax[0].errorbar(self.df_Co_119_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'],
                        self.df_Co_119_plot["Rejection Rate Xenon Abs[]"],
                        yerr=self.df_Co_119_plot["Rejection Sigma Xenon Abs[]"], label="Co 119K", fmt='s',markersize=8,color = "blue")
+
+        ax[0].errorbar(self.df_Hot_Cs_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'],
+                       self.df_Hot_Cs_116_plot["Rejection Rate Xenon Abs[]"],
+                       yerr=self.df_Hot_Cs_116_plot["Rejection Sigma Xenon Abs[]"], label="Hot Cs 116K", fmt='s', markersize=8,
+                       color="blue")
 
         # ax[0].errorbar(self.df_Ba_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'],
         #                self.df_Ba_116_plot["Rejection Rate Xenon Abs[]"],
