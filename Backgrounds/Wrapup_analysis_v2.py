@@ -1368,7 +1368,7 @@ class integrated_analysis():
 
 
     def read_Seitz_info_C3F8(self):
-        Seitz_pressure_list = np.arange(0, 50, 5)
+        Seitz_pressure_list = np.arange(0, 51, 5)
 
         Seitz_10 = [1.85,2.16,2.55,3.05,3.71,4.6,5.82,7.56,10.15,14.2,20.94]  # in keV
         # keV
