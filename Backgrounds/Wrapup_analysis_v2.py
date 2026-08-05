@@ -2679,10 +2679,10 @@ class integrated_analysis():
         Drex_phot_list = 58 * np.exp(-Drex_Q2_list / 0.2877)
         Drex_Q_116_list = self.interpolate_all_keys_vectorized("Q_rl-1_rhol-1 [GeVcm**2 g-1]", Drex_Q2_list , thermal_116_table)["Seitz [keV]"]
 
-        Drex_Q_119_list = [i+0.05 for i in Drex_Q_116_list]
-        # Drex_Q_119_list = \
-        # self.interpolate_all_keys_vectorized("Q_rl-1_rhol-1 [GeVcm**2 g-1]", Drex_Q2_list, thermal_119_table)[
-        #     "Seitz [keV]"]
+        # Drex_Q_119_list = [i+0.05 for i in Drex_Q_116_list]
+        Drex_Q_119_list = \
+        self.interpolate_all_keys_vectorized("Q_rl-1_rhol-1 [GeVcm**2 g-1]", Drex_Q2_list, thermal_119_table)[
+            "Seitz [keV]"]
 
         # PICO Eion to keV calculations
         SBC_fitting_len = len(SBC_Q_list)
@@ -2691,10 +2691,10 @@ class integrated_analysis():
         PICO_keV_list = 17e3 * np.exp(-PICO_Eion_list / 37e-3)
         PICO_Q_116_list = self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list , thermal_116_table)["Seitz [keV]"]
 
-        PICO_Q_119_list = [i+0.05 for i in PICO_Q_116_list]
-        # PICO_Q_119_list = \
-        # self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list, thermal_119_table)[
-        #     "Seitz [keV]"]
+        # PICO_Q_119_list = [i+0.05 for i in PICO_Q_116_list]
+        PICO_Q_119_list = \
+        self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list, thermal_119_table)[
+            "Seitz [keV]"]
 
 
 
