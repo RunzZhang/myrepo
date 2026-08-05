@@ -3074,7 +3074,7 @@ class integrated_analysis():
 
         #compare to Drexel
         plt.tight_layout()
-        plt.show()
+        # plt.show()
         plt.savefig(self.plot_path + "gamma_rejection_PSN_v2.pdf")
 
     def interpolate_all_keys_vectorized(self, target_key, target_values, data_dict):
