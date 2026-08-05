@@ -135,6 +135,7 @@ class integrated_analysis():
 
         # read the Seitz energy thresholds
         self.read_Seitz_info()
+        self.read_Seitz_info_C3F8()
 
         # read experimental txt file, drop the non-sense values, and write to clean dataframe
         self.read_raw_Co_exp()
