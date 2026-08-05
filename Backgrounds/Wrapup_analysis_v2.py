@@ -2730,7 +2730,7 @@ class integrated_analysis():
             PICO_Q_119_list,
             color="blue",
             alpha=0.3,
-            label="PICO (C$_3$F$_8$)"
+            label="PICO (C$_3$F$_8$)")
 
 
 
