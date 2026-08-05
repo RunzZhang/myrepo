@@ -3125,13 +3125,32 @@ class integrated_analysis():
                 #            color="black")
 
                 ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
-                      color="black")
+                      color="black", labels="SBC Best Fit")
                 if i==1 & j==1:
+
+                    # pICO result
+                    A = 17e-3  # 0.017
+                    B = 37e-3  # 0.037
+
+                    # Generate x array (e.g., 100 evenly spaced points from 0.8 to 1.5)
+                    x_pico = np.linspace(0.8, 1.5, 100)
+
+                    # Calculate y array
+                    y_pico = A * np.exp(- x_pico / B)
+                    ax_ij.plot(x_pico, y_pico,
+                               color="black", linestyle= '--', labels="PICO Best Fit")
+
+                   #
+
+
+
                     a_str = self.fmt_sci_tex(a_val)
                     b_str = self.fmt_sci_tex(b_val)
                     print("value",a_str,b_str)
                     # box_content = (  f"$y = A e^{{-Bx}}$\n"
                     #     f"A = ${a_str}$ keV$^{{-1}}$\n"    f"B = ${b_str}$ GeV$^{{-1}}\\cdot$cm$^{{-2}}\\cdot$g")
+
+
                     box_content = (f"$\\mathcal{{P}} = A e^{{-B E_{{ion}} / r_\\ell \\rho_\\ell}}$\n"
                                    f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 GeV$^{{-1}}$cm$^{{-2}}$g" )
                     # ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
@@ -3217,9 +3236,24 @@ class integrated_analysis():
             rf"$A = {a_str}\ \mathrm{{K\text{{-}}phot}}^{{-1}}$" "\n"
             rf"$B = {b_str}\ \mathrm{{GeV}}^{{-1}}\cdot\mathrm{{cm}}^{{-2}}\cdot\mathrm{{g}}$"
         )
-        label_text = f"A = {a_val:.2e},\nB = {b_val:.2e}"
+
         ax[0].plot(result_Q2_xe[2], result_Q2_xe[3],
                    color="black")
+
+        #Drexel result
+        A = 58e-3  # 0.017
+        B = 0.287  # 0.037
+
+        # Generate x array (e.g., 100 evenly spaced points from 0.8 to 1.5)
+        x_drexel = np.linspace(0.8, 1.5, 100)
+
+        # Calculate y array
+        y_drexel = A * np.exp(- x_drexel / B)
+        ax[0].plot(x_drexel, y_drexel,
+                   color="black", linestyle='--', labels="Drexel Best Fit")
+
+        label_text = f"A = {a_val:.2e},\nB = {b_val:.2e}"
+
 
         ax[0].set_xlabel(r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]",fontsize=16)
         ax[0].set_ylabel("Nucleation probability\n(per xenon K shell photoabsorption)",fontsize=16)
