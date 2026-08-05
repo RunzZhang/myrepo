@@ -2698,22 +2698,41 @@ class integrated_analysis():
 
 
 
-        ax[0,0].plot(
+        # ax[0,0].plot(
+        #     Drex_Q_116_list,
+        #     Drex_phot_list / SCALE_FACTOR,
+        #     label="Drexel (C$_3$F$_8$+Xe) 116K",
+        #
+        #     color="blue"
+        # )
+        # ax[0,0].plot(
+        #     Drex_Q_119_list,
+        #     Drex_phot_list / SCALE_FACTOR,
+        #     label="Drexel (C$_3$F$_8$+Xe) 119K", linestyle= '--',
+        #
+        #     color="blue"
+        # )
+
+        ax[0, 0].fill_betweenx(
+            Drex_phot_list / SCALE_FACTOR,
             Drex_Q_116_list,
-            Drex_phot_list / SCALE_FACTOR,
-            label="Drexel (C$_3$F$_8$+Xe) 116K",
-
-            color="blue"
-        )
-        ax[0,0].plot(
             Drex_Q_119_list,
-            Drex_phot_list / SCALE_FACTOR,
-            label="Drexel (C$_3$F$_8$+Xe) 119K", linestyle= '--',
-
-            color="blue"
+            color="blue",
+            alpha=0.3,
+            label="Drexel (C$_3$F$_8$+Xe)"
         )
-        ax[0,0].plot(PICO_Q_116_list, PICO_keV_list, label="PICO C$_3$F$_8$ 116K", color="red")
-        ax[0,0].plot(PICO_Q_119_list, PICO_keV_list, label="PICO C$_3$F$_8$ 119K",  linestyle= '--', color="red")
+
+        # ax[0,0].plot(PICO_Q_116_list, PICO_keV_list, label="PICO C$_3$F$_8$ 116K", color="red")
+        # ax[0,0].plot(PICO_Q_119_list, PICO_keV_list, label="PICO C$_3$F$_8$ 119K",  linestyle= '--', color="red")
+        ax[0, 0].fill_betweenx(
+            PICO_keV_list,
+            PICO_Q_116_list,
+            PICO_Q_119_list,
+            color="blue",
+            alpha=0.3,
+            label="PICO (C$_3$F$_8$)"
+
+
 
         ax[0,0].plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
 
