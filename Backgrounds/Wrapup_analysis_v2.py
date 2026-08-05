@@ -3018,7 +3018,7 @@ class integrated_analysis():
 
         # Set main (left) y-axis and x-axis labels
         ax[1, 0].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]", fontsize=16)
-        ax[1, 0].set_xlim(0.7, 1.4)
+        ax[1, 0].set_xlim(0.7, 1.5)
         ax[1, 0].set_ylim(1e-12, 1e-5)
         ax[1, 0].set_ylabel("Probability per energy deposited [events/keV] ", fontsize=16)
         ax[1, 0].set_yscale("log")
@@ -3061,7 +3061,7 @@ class integrated_analysis():
                    color="black", linestyle='--', label="Drexel Best Fit")
 
         ax[1, 1].set_xlabel(r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]", fontsize=16)
-        ax[1, 1].set_xlim(1.2, 4)
+        ax[1, 1].set_xlim(1.2, 3.2)
         ax[1, 1].set_ylim(1e-7, 1e0)
         ax[1, 1].set_ylabel("Nucleation probability\n[per xenon K shell photoabsorption]", fontsize=16)
         ax[1, 1].set_yscale("log")
