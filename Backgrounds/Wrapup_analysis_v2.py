@@ -3061,8 +3061,8 @@ class integrated_analysis():
                    color="black", linestyle='--', label="Drexel Best Fit")
 
         ax[1, 1].set_xlabel(r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]", fontsize=16)
-        ax[1, 1].set_xlim(1.2, 4)
-        ax[1, 1].set_ylim(1e-8, 1e-3)
+        ax[1, 1].set_xlim(1.2, 3)
+        ax[1, 1].set_ylim(1e-6, 1e1)
         ax[1, 1].set_ylabel("Nucleation probability\n[per xenon K shell photoabsorption]", fontsize=16)
         ax[1, 1].set_yscale("log")
         ax[1, 1].tick_params(axis='y', which='both')  # 'both' colors major & minor ticks
