@@ -2906,7 +2906,7 @@ class integrated_analysis():
         ax[1, 1].set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
         ax[1, 1].set_yscale("log")
         ax[1, 1].tick_params(axis='y', colors="red", which='both')  # 'both' colors major & minor ticks
-        ax[1, 01].legend(loc='lower left', fontsize=16, title=" ", title_fontsize=16, frameon=False)
+        ax[1, 1].legend(loc='lower left', fontsize=16, title=" ", title_fontsize=16, frameon=False)
 
 
 
