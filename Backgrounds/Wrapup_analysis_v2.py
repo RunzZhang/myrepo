@@ -166,8 +166,8 @@ class integrated_analysis():
         # self.gamma_rejection_plot()
         # self.gamma_rejection_plot_v2()
         # self.gamma_rejection_plot_v3()
-        self.gamma_rejection_plot_PSN()
-        # self.gamma_rejection_plot_PSN_v2()
+        # self.gamma_rejection_plot_PSN()
+        self.gamma_rejection_plot_PSN_v2()
         # self.doped_gamma_rejection_plot()
         # self.spectrums_plot()
 
