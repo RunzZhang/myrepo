@@ -2728,7 +2728,7 @@ class integrated_analysis():
             PICO_keV_list,
             PICO_Q_116_list,
             PICO_Q_119_list,
-            color="blue",
+            color="red",
             alpha=0.3,
             label="PICO (C$_3$F$_8$)")
 
