@@ -2594,7 +2594,7 @@ class integrated_analysis():
         SCALE_FACTOR = (ratio_119)**(-1)  # Xenon Abs = Rate [/keV] * SCALE_FACTOR
 
         # Fix: changed subplots(1, 0) to subplots()
-        fig, ax = plt.subplots(2,2, figsize=(20, 16))
+        fig, ax = plt.subplots(2,2, figsize=(15, 13))
 
         # Plot Cs 116K ONCE on the left axis
         ax[0,0].errorbar(
@@ -2698,63 +2698,63 @@ class integrated_analysis():
 
 
 
-        # ax[0,0].plot(
-        #     Drex_Q_116_list,
-        #     Drex_phot_list / SCALE_FACTOR,
-        #     label="Drexel (C$_3$F$_8$+Xe) 116K",
-        #
-        #     color="blue"
-        # )
-        # ax[0,0].plot(
-        #     Drex_Q_119_list,
-        #     Drex_phot_list / SCALE_FACTOR,
-        #     label="Drexel (C$_3$F$_8$+Xe) 119K", linestyle= '--',
-        #
-        #     color="blue"
-        # )
-        # ax[0,0].plot(PICO_Q_116_list, PICO_keV_list, label="PICO C$_3$F$_8$ 116K", color="red")
-        # ax[0,0].plot(PICO_Q_119_list, PICO_keV_list, label="PICO C$_3$F$_8$ 119K",  linestyle= '--', color="red")
+        ax[0,0].plot(
+            Drex_Q_116_list,
+            Drex_phot_list / SCALE_FACTOR,
+            label="Drexel (C$_3$F$_8$+Xe) 116K",
+
+            color="blue"
+        )
+        ax[0,0].plot(
+            Drex_Q_119_list,
+            Drex_phot_list / SCALE_FACTOR,
+            label="Drexel (C$_3$F$_8$+Xe) 119K", linestyle= '--',
+
+            color="blue"
+        )
+        ax[0,0].plot(PICO_Q_116_list, PICO_keV_list, label="PICO C$_3$F$_8$ 116K", color="red")
+        ax[0,0].plot(PICO_Q_119_list, PICO_keV_list, label="PICO C$_3$F$_8$ 119K",  linestyle= '--', color="red")
 
         ax[0,0].plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
 
         # fitting parameter
 
-        box_content0 = (f"$\\mathcal{{P}}_{{phot}} = A_{{phot}} e^{{-B_{{phot}} Q_{{Seitz}}}}$\n"
-                        f"$A_{{phot}}$ = 0.014 K-phot$^{{-1}}$\n"    f"$B_{{phot}}$ = 4.289 keV$^{{-1}}$")
-
-        ax[0,0].text(0.65, 0.78, box_content0,
-                transform=ax[0,0].transAxes,
-                fontsize=16,
-                color='black',  # White text color
-                verticalalignment='top',
-                horizontalalignment='left',
-                linespacing=1.4,  # Extra padding between lines
-                bbox=dict(
-                    facecolor='none',  # Black background
-                    edgecolor='none',  # No border outline
-                    alpha=0.9  # Slight transparency so gridlines don't completely disappear
-                ))
-        box_content1 = (f"$\\mathcal{{P}} = A e^{{-B E_{{ion}} / r_\\ell \\rho_\\ell}}$\n"
-                       f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 keV$^{{-1}}$cm$^{{-2}}$g")
-
-
-
-        box_content1 = (f"$\\mathcal{{P}}_{{edep}} = A_{{edep}} e^{{-B_{{edep}} Q_{{Seitz}}}}$\n"
-                        f"$A_{{edep}}$ = 2.468 GeV$^{{-1}}$\n"    f"$B_{{edep}}$ = 4.289 keV$^{{-1}}$")
-
-
-        ax[0,0].text(0.65, 0.98, box_content1,
-                   transform=ax[0,0].transAxes,
-                   fontsize=16,
-                   color='black',  # White text color
-                   verticalalignment='top',
-                   horizontalalignment='left',
-                   linespacing=1.4,  # Extra padding between lines
-                   bbox=dict(
-                       facecolor='none',  # Black background
-                       edgecolor='none',  # No border outline
-                       alpha=0.9  # Slight transparency so gridlines don't completely disappear
-                   ))
+        # box_content0 = (f"$\\mathcal{{P}}_{{phot}} = A_{{phot}} e^{{-B_{{phot}} Q_{{Seitz}}}}$\n"
+        #                 f"$A_{{phot}}$ = 0.014 K-phot$^{{-1}}$\n"    f"$B_{{phot}}$ = 4.289 keV$^{{-1}}$")
+        #
+        # ax[0,0].text(0.65, 0.78, box_content0,
+        #         transform=ax[0,0].transAxes,
+        #         fontsize=16,
+        #         color='black',  # White text color
+        #         verticalalignment='top',
+        #         horizontalalignment='left',
+        #         linespacing=1.4,  # Extra padding between lines
+        #         bbox=dict(
+        #             facecolor='none',  # Black background
+        #             edgecolor='none',  # No border outline
+        #             alpha=0.9  # Slight transparency so gridlines don't completely disappear
+        #         ))
+        # box_content1 = (f"$\\mathcal{{P}} = A e^{{-B E_{{ion}} / r_\\ell \\rho_\\ell}}$\n"
+        #                f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 keV$^{{-1}}$cm$^{{-2}}$g")
+        #
+        #
+        #
+        # box_content1 = (f"$\\mathcal{{P}}_{{edep}} = A_{{edep}} e^{{-B_{{edep}} Q_{{Seitz}}}}$\n"
+        #                 f"$A_{{edep}}$ = 2.468 GeV$^{{-1}}$\n"    f"$B_{{edep}}$ = 4.289 keV$^{{-1}}$")
+        #
+        #
+        # ax[0,0].text(0.65, 0.98, box_content1,
+        #            transform=ax[0,0].transAxes,
+        #            fontsize=16,
+        #            color='black',  # White text color
+        #            verticalalignment='top',
+        #            horizontalalignment='left',
+        #            linespacing=1.4,  # Extra padding between lines
+        #            bbox=dict(
+        #                facecolor='none',  # Black background
+        #                edgecolor='none',  # No border outline
+        #                alpha=0.9  # Slight transparency so gridlines don't completely disappear
+        #            ))
         #
         # box_content2 = (f"Drexel (C$_3$F$_8$+Xe)")
         #
@@ -2797,7 +2797,7 @@ class integrated_analysis():
 
 
         ax[0,0].legend(loc='lower left', fontsize=16, title=" ", title_fontsize=16,frameon=False)
-        plt.tight_layout()
+
         # plt.show()
 
 
@@ -2858,13 +2858,13 @@ class integrated_analysis():
 
         # Set main (left) y-axis and x-axis labels
         ax[1, 0].set_xlabel(r"Seitz threshold [keV]", fontsize=16)
-        ax[1, 0].set_xlim(0.65, 2.8)
-        ax[1, 0].set_ylim(1e-12, 1e-6)
+        ax[1, 0].set_xlim(0.5, 1.5)
+        ax[1, 0].set_ylim(1e-12, 1e-5)
         ax[1, 0].set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
         ax[1, 0].set_yscale("log")
-        ax[1, 0].yaxis.label.set_color("red")
         ax[1, 0].tick_params(axis='y', colors="red", which='both')  # 'both' colors major & minor ticks
-        ax[1, 0].spines['left'].set_color("red")
+
+        ax[1, 0].legend(loc='lower left', fontsize=16, title=" ", title_fontsize=16, frameon=False)
 
         # Drexel result
         ax[1, 1].errorbar(
@@ -2893,17 +2893,27 @@ class integrated_analysis():
         B = 0.287  # 0.037
 
         # Generate x array (e.g., 100 evenly spaced points from 0.8 to 1.5)
-        x_drexel = np.linspace(0.8, 1.5, 100)
+        x_drexel = np.linspace(1.5, 4, 100)
 
         # Calculate y array
         y_drexel = A * np.exp(- x_drexel / B)
         ax[1,1].plot(x_drexel, y_drexel,
                    color="black", linestyle='--', label="Drexel Best Fit")
 
+        ax[1, 1].set_xlabel(r"Seitz threshold [keV]", fontsize=16)
+        ax[1, 1].set_xlim(0.5, 1.5)
+        ax[1, 1].set_ylim(1e-8, 1e-3)
+        ax[1, 1].set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
+        ax[1, 1].set_yscale("log")
+        ax[1, 1].tick_params(axis='y', colors="red", which='both')  # 'both' colors major & minor ticks
+        ax[1, 01].legend(loc='lower left', fontsize=16, title=" ", title_fontsize=16, frameon=False)
+
+
+
 
 
         #compare to Drexel
-
+        plt.tight_layout()
         plt.show()
         plt.savefig(self.plot_path + "gamma_rejection_PSN_v2.pdf")
 
