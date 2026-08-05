@@ -3129,7 +3129,7 @@ class integrated_analysis():
                 if i==1 & j==1:
 
                     # pICO result
-                    A = 17e-3  # 0.017
+                    A = 17e3  # 0.017
                     B = 37e-3  # 0.037
 
                     # Generate x array (e.g., 100 evenly spaced points from 0.8 to 1.5)
