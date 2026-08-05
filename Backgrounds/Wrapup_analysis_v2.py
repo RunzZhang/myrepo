@@ -2901,7 +2901,7 @@ class integrated_analysis():
                    color="black", linestyle='--', label="Drexel Best Fit")
 
         ax[1, 1].set_xlabel(r"Seitz threshold [keV]", fontsize=16)
-        ax[1, 1].set_xlim(0.5, 1.5)
+        ax[1, 1].set_xlim(1.2, 4)
         ax[1, 1].set_ylim(1e-8, 1e-3)
         ax[1, 1].set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
         ax[1, 1].set_yscale("log")
