@@ -1365,6 +1365,46 @@ class integrated_analysis():
                                     "Q_rl-1_rhol-1 [GeVcm**2 g-1]": Q_compound_x_119}
         self.df_energy_119_tab = pd.DataFrame(self.dict_energy_119_tab)
 
+
+    def read_Seitz_info_C3F8(self):
+        Seitz_pressure_list = np.arange(0, 50, 5)
+
+        Seitz_10 = [1.85,2.16,2.55,3.05,3.71,4.6,5.82,7.56,10.15,14.2,20.94]  # in keV
+        # keV
+        E_ion_10 = [1.03,1.18,1.36,1.58,1.86,2.23,2.72,3.38,4.31,5.69,7.85]
+
+
+        compound_x_10 = [1.14,1.22,1.31,1.42,1.55,1.7,1.89,2.12,2.42,2.81,3.34]
+
+
+
+        Q_compound_x_10 = [2.04, 2.23, 2.46,2.74,3.08,3.51,4.04,4.75,5.69,7.0, 8.92]
+
+
+        self.dict_energy_10_tab = {"Pressure [bara]":Seitz_pressure_list,
+                                    "Seitz [keV]": Seitz_10,
+                                    "Eion [keV]": E_ion_10,
+                                    "Eion_rl-1_rhol-1 [GeVcm**2 g-1]": compound_x_10, "Q_rl-1_rhol-1 [GeVcm**2 g-1]": Q_compound_x_10}
+        self.df_energy_10_tab = pd.DataFrame(self.dict_energy_10_tab)
+
+        Seitz_24 = [0.4, 0.45, 0.49, 0.55, 0.62, 0.69, 0.79, 0.9, 1.04, 1.22, 1.44]  # in keV
+        # keV
+        E_ion_24 = [0.25,0.27,0.3,0.33,0.36,0.4,0.45,0.5,0.57,0.65,0.75]
+
+
+        compound_x_24 = [0.5,0.52,0.55,0.57,0.6,0.64,0.67,0.71,0.76,0.82,0.88]
+
+
+        Q_compound_x_24 = [0.81, 0.86, 0.91, 0.97, 1.03, 1.1, 1.19, 1.28, 1.4, 1.53, 1.69]
+
+
+        self.dict_energy_24_tab = {"Pressure [bara]": Seitz_pressure_list,
+                                    "Seitz [keV]": Seitz_24,
+                                    "Eion [keV]": E_ion_24,
+                                    "Eion_rl-1_rhol-1 [GeVcm**2 g-1]": compound_x_24,
+                                    "Q_rl-1_rhol-1 [GeVcm**2 g-1]": Q_compound_x_24}
+        self.df_energy_24_tab = pd.DataFrame(self.dict_energy_24_tab)
+
     def gamma_rejection_calculation(self):
         
         for i in range(len(self.Cs_exp_rate_path)):
@@ -2811,31 +2851,131 @@ class integrated_analysis():
 
         # PICO Eion_keV
 
-
-
-
-
         ax[0,0].legend(loc='lower left', fontsize=16, title=" ", title_fontsize=16,frameon=False)
 
-        # plt.show()
+       # 2nd graph that use c3F8 mapping:
+        ax[0, 1].errorbar(
+            self.df_Cs_116_plot["Seitz [keV]"],
+            self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
+            yerr=self.df_Cs_116_plot["Rejection Sigma KeV[/keV]"],
+            label="SBC (Ar+Xe) 116K",
+            fmt='o',
+            markersize=8,
+            color="tab:brown"  # Give datasets distinct colors
+        )
+
+        # Plot Cs 119K ONCE on the left axis
+        ax[0, 1].errorbar(
+            self.df_Cs_119_plot["Seitz [keV]"],
+            self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
+            yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
+            label="SBC (Ar+Xe) 119K",
+            fmt='s',
+            markersize=8,
+            color="tab:green"
+        )
+
+        # Set main (left) y-axis and x-axis labels
+        ax[0, 1].set_xlabel(r"Seitz threshold [keV]", fontsize=16)
+        ax[0, 1].set_xlim(0.65, 2.8)
+        ax[0, 1].set_ylim(1e-12, 1e-4)
+        ax[0, 1].set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
+        ax[0, 1].set_yscale("log")
+        ax[0, 1].yaxis.label.set_color("red")
+        ax[0, 1].tick_params(axis='y', colors="red", which='both')  # 'both' colors major & minor ticks
+        ax[0, 1].spines['left'].set_color("red")
+
+        # Add secondary (right) y-axis with proportional mapping
+        def forward(y):
+            return y * SCALE_FACTOR
+
+        def inverse(y):
+            return y / SCALE_FACTOR
+
+        secax1 = ax[0, 1].secondary_yaxis('right', functions=(forward, inverse))
+        secax1.set_ylabel("Nucleation probability\n(per xenon photoabsorption in K shell) ", fontsize=16)
+        secax1.yaxis.label.set_color("blue")
+        secax1.tick_params(axis='y', colors="blue", which='both')
+        secax1.spines['right'].set_color("blue")
+
+        # plot the fitting lines
+        self.Cs_df = pd.concat(self.Cs_fitting_list, ignore_index=True)
+        [result_Q_scatter, result_Q_keV, result_Q_xe, result_Eion_scatter, result_Eion_keV, result_Eion_xe,
+         result_Q2_xe, result_Q_rate] = self.fitting_gamma_rejection_v2(self.Cs_df)
+
+        # SBC
+        SBC_Q_list = result_Q_keV[2]
+        SBC_keV_list = result_Q_keV[3]
+        SBC_Q2_list = result_Q2_xe[2]
+        SBC_Eion_list = result_Eion_keV[2]
+        SBC_Q_kev_fitting = (result_Q_keV[0], result_Q_keV[1])
+        SBC_Q_xe_fitting = (result_Q_xe[0], result_Q_xe[1])
+        print("fitting  SBC_Q_kev_fitting", SBC_Q_kev_fitting)
+        print("fitting SBC_Q_xe_fitting ", SBC_Q_xe_fitting)
+
+        # Compute ratio list
+
+        thermal_10_table = self.dict_energy_10_tab
+        thermal_24_table = self.dict_energy_24_tab
+
+        # result = self.interpolate_all_keys("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", 0.8, thermal_10_table)
+        # print(result)
+
+        SBC_rrho_list = [SBC_Q_list[i] / SBC_Q2_list[i] for i in range(len(SBC_Q_list))]
+        SBC_Eion_list = [SBC_Q_list[i] / SBC_Eion_list[i] for i in range(len(SBC_Q_list))]
+
+        # Drexel Q2 to Xenon calculations
+        SBC_fitting_len = len(SBC_Q_list)
+        # Use np.linspace so length matches SBC_fitting_len exactly
+        Drex_Q2_list = np.linspace(1.5, 4, SBC_fitting_len)
+        Drex_phot_list = 58 * np.exp(-Drex_Q2_list / 0.2877)
+        Drex_Q_10_list = \
+        self.interpolate_all_keys_vectorized("Q_rl-1_rhol-1 [GeVcm**2 g-1]", Drex_Q2_list, thermal_10_table)[
+            "Seitz [keV]"]
+
+        # Drex_Q_24_list = [i+0.05 for i in Drex_Q_10_list]
+        Drex_Q_24_list = \
+            self.interpolate_all_keys_vectorized("Q_rl-1_rhol-1 [GeVcm**2 g-1]", Drex_Q2_list, thermal_24_table)[
+                "Seitz [keV]"]
+
+        # PICO Eion to keV calculations
+        SBC_fitting_len = len(SBC_Q_list)
+        # Use np.linspace so length matches SBC_fitting_len exactly
+        PICO_Eion_list = np.linspace(0.85, 1.5, SBC_fitting_len)
+        PICO_keV_list = 17e3 * np.exp(-PICO_Eion_list / 37e-3)
+        PICO_Q_10_list = \
+        self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list, thermal_10_table)[
+            "Seitz [keV]"]
+
+        # PICO_Q_24_list = [i+0.05 for i in PICO_Q_10_list]
+        PICO_Q_24_list = \
+            self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list, thermal_24_table)[
+                "Seitz [keV]"]
 
 
 
+        ax[0, 1].fill_betweenx(
+            Drex_phot_list / SCALE_FACTOR,
+            Drex_Q_10_list,
+            Drex_Q_24_list,
+            color="blue",
+            alpha=0.3,
+            label="Drexel (C$_3$F$_8$+Xe)"
+        )
+
+        ax[0, 1].fill_betweenx(
+            PICO_keV_list,
+            PICO_Q_10_list,
+            PICO_Q_24_list,
+            color="red",
+            alpha=0.3,
+            label="PICO (C$_3$F$_8$)")
+
+        ax[0, 1].plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
+
+        ax[0, 1].legend(loc='lower left', fontsize=16, title=" ", title_fontsize=16, frameon=False)
 
 
-        # y_config = [{"y": "Rejection Rate Scattering[]", "y_err": "Rejection Sigma Scattering[]",
-        #              "ylabel": "Nucleation probability (per interaction) "},
-        #             {"y": "Rejection Rate KeV[/keV]", "y_err": "Rejection Sigma KeV[/keV]",
-        #              "ylabel": "Probability per energy deposited (events/keV) "},
-        #             {"y": "Rejection Rate Xenon Abs[]", "y_err": "Rejection Sigma Xenon Abs[]",
-        #              "ylabel": "Nucleation probability (per xenon photoabsorption in K shell) "},
-        #             {"y": "Clean Rate [mHz]", "y_err": 'Clean Rate Sigma [mHz]',
-        #              "ylabel": "Background Substacted Rate [mHz]"}]
-        # x_config = [{"x": "Seitz [keV]", "xlabel": r"Seitz threshold [keV]"},
-        #             {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
-        #              "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
-        #             {"x": "Eion [keV]", "xlabel": r"$E_{ion}$"}]
-        #
 
 
                      # compare to PICO
@@ -2935,33 +3075,6 @@ class integrated_analysis():
         plt.tight_layout()
         plt.show()
         plt.savefig(self.plot_path + "gamma_rejection_PSN_v2.pdf")
-
-    # def interpolate_all_keys_vectorized(self, target_key, target_values, data_dict):
-    #     """
-    #     Given a target_key and an array/list of target_values, returns a dictionary
-    #     where each key contains the array of interpolated values.
-    #     """
-    #     if target_key not in data_dict:
-    #         raise KeyError(f"Key '{target_key}' not found in data dictionary.")
-    #
-    #     # Ensure inputs are NumPy arrays
-    #     x = np.asarray(data_dict[target_key], dtype=float)
-    #     target_values = np.asarray(target_values, dtype=float)
-    #
-    #     # Sort x once
-    #     sort_idx = np.argsort(x)
-    #     x_sorted = x[sort_idx]
-    #
-    #     result = {}
-    #     for key, values in data_dict.items():
-    #         if key == target_key:
-    #             result[key] = target_values
-    #         else:
-    #             y_sorted = np.asarray(values, dtype=float)[sort_idx]
-    #             # np.interp evaluates the ENTIRE array target_values instantly in C
-    #             result[key] = np.interp(target_values, x_sorted, y_sorted)
-    #
-    #     return result
 
     def interpolate_all_keys_vectorized(self, target_key, target_values, data_dict):
         """
