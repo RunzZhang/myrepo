@@ -2594,10 +2594,10 @@ class integrated_analysis():
         SCALE_FACTOR = (ratio_119)**(-1)  # Xenon Abs = Rate [/keV] * SCALE_FACTOR
 
         # Fix: changed subplots(1, 0) to subplots()
-        fig, ax = plt.subplots(figsize=(10, 7))
+        fig, ax = plt.subplots(2,2, figsize=(20, 16))
 
         # Plot Cs 116K ONCE on the left axis
-        ax.errorbar(
+        ax[0,0].errorbar(
             self.df_Cs_116_plot["Seitz [keV]"],
             self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_116_plot["Rejection Sigma KeV[/keV]"],
@@ -2608,7 +2608,7 @@ class integrated_analysis():
         )
 
         # Plot Cs 119K ONCE on the left axis
-        ax.errorbar(
+        ax[0,0].errorbar(
             self.df_Cs_119_plot["Seitz [keV]"],
             self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
@@ -2619,14 +2619,14 @@ class integrated_analysis():
         )
 
         # Set main (left) y-axis and x-axis labels
-        ax.set_xlabel(r"Seitz threshold [keV]", fontsize=16)
-        ax.set_xlim(0.65, 2.8)
-        ax.set_ylim(1e-12, 1e-6)
-        ax.set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
-        ax.set_yscale("log")
-        ax.yaxis.label.set_color("red")
-        ax.tick_params(axis='y', colors="red", which='both')  # 'both' colors major & minor ticks
-        ax.spines['left'].set_color("red")
+        ax[0,0].set_xlabel(r"Seitz threshold [keV]", fontsize=16)
+        ax[0,0].set_xlim(0.65, 2.8)
+        ax[0,0].set_ylim(1e-12, 1e-6)
+        ax[0,0].set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
+        ax[0,0].set_yscale("log")
+        ax[0,0].yaxis.label.set_color("red")
+        ax[0,0].tick_params(axis='y', colors="red", which='both')  # 'both' colors major & minor ticks
+        ax[0,0].spines['left'].set_color("red")
 
 
         # Add secondary (right) y-axis with proportional mapping
@@ -2636,11 +2636,11 @@ class integrated_analysis():
         def inverse(y):
             return y / SCALE_FACTOR
 
-        secax = ax.secondary_yaxis('right', functions=(forward, inverse))
-        secax.set_ylabel("Nucleation probability\n(per xenon photoabsorption in K shell) ", fontsize=16)
-        secax.yaxis.label.set_color("blue")
-        secax.tick_params(axis='y', colors="blue", which='both')
-        secax.spines['right'].set_color("blue")
+        secax0 = ax[0,0].secondary_yaxis('right', functions=(forward, inverse))
+        secax0.set_ylabel("Nucleation probability\n(per xenon photoabsorption in K shell) ", fontsize=16)
+        secax0.yaxis.label.set_color("blue")
+        secax0.tick_params(axis='y', colors="blue", which='both')
+        secax0.spines['right'].set_color("blue")
 
         # plot the fitting lines
         self.Cs_df = pd.concat(self.Cs_fitting_list, ignore_index=True)
@@ -2698,32 +2698,32 @@ class integrated_analysis():
 
 
 
-        # ax.plot(
+        # ax[0,0].plot(
         #     Drex_Q_116_list,
         #     Drex_phot_list / SCALE_FACTOR,
         #     label="Drexel (C$_3$F$_8$+Xe) 116K",
         #
         #     color="blue"
         # )
-        # ax.plot(
+        # ax[0,0].plot(
         #     Drex_Q_119_list,
         #     Drex_phot_list / SCALE_FACTOR,
         #     label="Drexel (C$_3$F$_8$+Xe) 119K", linestyle= '--',
         #
         #     color="blue"
         # )
-        # ax.plot(PICO_Q_116_list, PICO_keV_list, label="PICO C$_3$F$_8$ 116K", color="red")
-        # ax.plot(PICO_Q_119_list, PICO_keV_list, label="PICO C$_3$F$_8$ 119K",  linestyle= '--', color="red")
+        # ax[0,0].plot(PICO_Q_116_list, PICO_keV_list, label="PICO C$_3$F$_8$ 116K", color="red")
+        # ax[0,0].plot(PICO_Q_119_list, PICO_keV_list, label="PICO C$_3$F$_8$ 119K",  linestyle= '--', color="red")
 
-        ax.plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
+        ax[0,0].plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
 
         # fitting parameter
 
         box_content0 = (f"$\\mathcal{{P}}_{{phot}} = A_{{phot}} e^{{-B_{{phot}} Q_{{Seitz}}}}$\n"
                         f"$A_{{phot}}$ = 0.014 K-phot$^{{-1}}$\n"    f"$B_{{phot}}$ = 4.289 keV$^{{-1}}$")
 
-        ax.text(0.65, 0.78, box_content0,
-                transform=ax.transAxes,
+        ax[0,0].text(0.65, 0.78, box_content0,
+                transform=ax[0,0].transAxes,
                 fontsize=16,
                 color='black',  # White text color
                 verticalalignment='top',
@@ -2743,8 +2743,8 @@ class integrated_analysis():
                         f"$A_{{edep}}$ = 2.468 GeV$^{{-1}}$\n"    f"$B_{{edep}}$ = 4.289 keV$^{{-1}}$")
 
 
-        ax.text(0.65, 0.98, box_content1,
-                   transform=ax.transAxes,
+        ax[0,0].text(0.65, 0.98, box_content1,
+                   transform=ax[0,0].transAxes,
                    fontsize=16,
                    color='black',  # White text color
                    verticalalignment='top',
@@ -2758,8 +2758,8 @@ class integrated_analysis():
         #
         # box_content2 = (f"Drexel (C$_3$F$_8$+Xe)")
         #
-        # ax.text(0.60, 0.85, box_content2,
-        #         transform=ax.transAxes,
+        # ax[0,0].text(0.60, 0.85, box_content2,
+        #         transform=ax[0,0].transAxes,
         #         fontsize=16,
         #         color='blue',  # White text color
         #         verticalalignment='top',
@@ -2774,8 +2774,8 @@ class integrated_analysis():
         # box_content3 = (f"PICO C$_3$F$_8$")
         #
         # # ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
-        # ax.text(0.30, 0.65, box_content3,
-        #         transform=ax.transAxes,
+        # ax[0,0].text(0.30, 0.65, box_content3,
+        #         transform=ax[0,0].transAxes,
         #         fontsize=16,
         #         color='red',  # White text color
         #         verticalalignment='top',
@@ -2796,7 +2796,7 @@ class integrated_analysis():
 
 
 
-        ax.legend(loc='lower left', fontsize=16, title=" ", title_fontsize=16,frameon=False)
+        ax[0,0].legend(loc='lower left', fontsize=16, title=" ", title_fontsize=16,frameon=False)
         plt.tight_layout()
         # plt.show()
 
@@ -2819,7 +2819,92 @@ class integrated_analysis():
         #
 
 
+                     # compare to PICO
+        ax[1, 0].errorbar(
+            self.df_Cs_116_plot["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"],
+            self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
+            yerr=self.df_Cs_116_plot["Rejection Sigma KeV[/keV]"],
+            label="SBC (Ar+Xe) 116K",
+            fmt='o',
+            markersize=8,
+            color="tab:brown"  # Give datasets distinct colors
+        )
 
+        # Plot Cs 119K ONCE on the left axis
+        ax[1, 0].errorbar(
+            self.df_Cs_119_plot["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"],
+            self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
+            yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
+            label="SBC (Ar+Xe) 119K",
+            fmt='s',
+            markersize=8,
+            color="tab:green"
+        )
+        ax[1, 0].plot(result_Eion_keV[2], result_Eion_keV[3], label="SBC Best Fit", color="black")
+
+
+        # pICO result
+        A = 17e3  # 0.017
+        B = 37e-3  # 0.037
+
+        # Generate x array (e.g., 100 evenly spaced points from 0.8 to 1.5)
+        x_pico = np.linspace(0.8, 1.5, 100)
+
+        # Calculate y array
+        y_pico = A * np.exp(- x_pico / B)
+        print("y_pico", y_pico[:10])
+        ax[1, 0].plot(x_pico, y_pico,
+                   color="black", linestyle='--', label="PICO Best Fit")
+
+        # Set main (left) y-axis and x-axis labels
+        ax[1, 0].set_xlabel(r"Seitz threshold [keV]", fontsize=16)
+        ax[1, 0].set_xlim(0.65, 2.8)
+        ax[1, 0].set_ylim(1e-12, 1e-6)
+        ax[1, 0].set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
+        ax[1, 0].set_yscale("log")
+        ax[1, 0].yaxis.label.set_color("red")
+        ax[1, 0].tick_params(axis='y', colors="red", which='both')  # 'both' colors major & minor ticks
+        ax[1, 0].spines['left'].set_color("red")
+
+        # Drexel result
+        ax[1, 1].errorbar(
+            self.df_Cs_116_plot["Q_rl-1_rhol-1 [GeVcm**2 g-1]"],
+            self.df_Cs_116_plot["Rejection Rate Xenon Abs[]"],
+            yerr=self.df_Cs_116_plot["Rejection Sigma Xenon Abs[]"],
+            label="SBC (Ar+Xe) 116K",
+            fmt='o',
+            markersize=8,
+            color="tab:brown"  # Give datasets distinct colors
+        )
+
+        # Plot Cs 119K ONCE on the left axis
+        ax[1, 1].errorbar(
+            self.df_Cs_119_plot["Q_rl-1_rhol-1 [GeVcm**2 g-1]"],
+            self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"],
+            yerr=self.df_Cs_119_plot["Rejection Sigma Xenon Abs[]"],
+            label="SBC (Ar+Xe) 119K",
+            fmt='s',
+            markersize=8,
+            color="tab:green"
+        )
+        ax[1, 1].plot(result_Q2_xe[2], result_Q2_xe[3], label="SBC Best Fit", color="black")
+
+        A = 58e-3  # 0.017
+        B = 0.287  # 0.037
+
+        # Generate x array (e.g., 100 evenly spaced points from 0.8 to 1.5)
+        x_drexel = np.linspace(0.8, 1.5, 100)
+
+        # Calculate y array
+        y_drexel = A * np.exp(- x_drexel / B)
+        ax[1,1].plot(x_drexel, y_drexel,
+                   color="black", linestyle='--', label="Drexel Best Fit")
+
+
+
+        #compare to Drexel
+
+        plt.show()
         plt.savefig(self.plot_path + "gamma_rejection_PSN_v2.pdf")
 
     def interpolate_all_keys_vectorized(self, target_key, target_values, data_dict):
@@ -3128,20 +3213,6 @@ class integrated_analysis():
                       color="black", label="SBC Best Fit")
                 if i==1 & j==1:
 
-                    # pICO result
-                    A = 17e3  # 0.017
-                    B = 37e-3  # 0.037
-
-                    # Generate x array (e.g., 100 evenly spaced points from 0.8 to 1.5)
-                    x_pico = np.linspace(0.8, 1.5, 100)
-
-                    # Calculate y array
-                    y_pico = A * np.exp(- x_pico / B)
-                    print("y_pico",y_pico[:10])
-                    ax_ij.plot(x_pico, y_pico,
-                               color="black", linestyle= '--', label="PICO Best Fit")
-
-                   #
 
 
 
@@ -3170,7 +3241,7 @@ class integrated_analysis():
 
 
                 # bbox = dict(boxstyle='round', facecolor='whitesmoke', alpha=0.85, edgecolor='lightgray')
-                ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
+                # ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
 
         # plt.show()
         plt.savefig(self.plot_path + "gamma_rejection_PSN.pdf")
@@ -3241,17 +3312,7 @@ class integrated_analysis():
         ax[0].plot(result_Q2_xe[2], result_Q2_xe[3],
                    color="black")
 
-        #Drexel result
-        A = 58e-3  # 0.017
-        B = 0.287  # 0.037
 
-        # Generate x array (e.g., 100 evenly spaced points from 0.8 to 1.5)
-        x_drexel = np.linspace(0.8, 1.5, 100)
-
-        # Calculate y array
-        y_drexel = A * np.exp(- x_drexel / B)
-        ax[0].plot(x_drexel, y_drexel,
-                   color="black", linestyle='--', label="Drexel Best Fit")
 
         label_text = f"A = {a_val:.2e},\nB = {b_val:.2e}"
 
