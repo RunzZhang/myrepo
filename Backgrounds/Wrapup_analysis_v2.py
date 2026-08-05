@@ -3125,7 +3125,7 @@ class integrated_analysis():
                 #            color="black")
 
                 ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
-                      color="black", labels="SBC Best Fit")
+                      color="black", label="SBC Best Fit")
                 if i==1 & j==1:
 
                     # pICO result
@@ -3138,7 +3138,7 @@ class integrated_analysis():
                     # Calculate y array
                     y_pico = A * np.exp(- x_pico / B)
                     ax_ij.plot(x_pico, y_pico,
-                               color="black", linestyle= '--', labels="PICO Best Fit")
+                               color="black", linestyle= '--', label="PICO Best Fit")
 
                    #
 
@@ -3250,7 +3250,7 @@ class integrated_analysis():
         # Calculate y array
         y_drexel = A * np.exp(- x_drexel / B)
         ax[0].plot(x_drexel, y_drexel,
-                   color="black", linestyle='--', labels="Drexel Best Fit")
+                   color="black", linestyle='--', label="Drexel Best Fit")
 
         label_text = f"A = {a_val:.2e},\nB = {b_val:.2e}"
 
