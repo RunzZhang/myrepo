@@ -99,7 +99,7 @@ class SN():
         self.original_Activity = 5 # original activity in the paper
         self.Activity = 5  # source practical activity in mivro curie for 50 bubbles/hour
 
-        self.gamma_rate = 1.37*1.74e5 # /s
+        self.gamma_rate = 1.75*1.74e5 # /s
 
 
         self.G4_events_gamma =  5E6 # only 50 chunks
