@@ -3049,7 +3049,7 @@ class integrated_analysis():
         )
         ax[1, 1].plot(result_Q2_xe[2], result_Q2_xe[3], label="SBC Best Fit", color="black")
 
-        A = 58e-3  # 0.017
+        A = 58  # 0.017
         B = 0.287  # 0.037
 
         # Generate x array (e.g., 100 evenly spaced points from 0.8 to 1.5)
