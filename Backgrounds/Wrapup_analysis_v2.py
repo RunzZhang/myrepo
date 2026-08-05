@@ -3137,6 +3137,7 @@ class integrated_analysis():
 
                     # Calculate y array
                     y_pico = A * np.exp(- x_pico / B)
+                    print("y_pico",y_pico[:10])
                     ax_ij.plot(x_pico, y_pico,
                                color="black", linestyle= '--', label="PICO Best Fit")
 
@@ -3169,7 +3170,7 @@ class integrated_analysis():
 
 
                 # bbox = dict(boxstyle='round', facecolor='whitesmoke', alpha=0.85, edgecolor='lightgray')
-                # ax_ij.legend(loc='lower left', fontsize=14)
+                ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
 
         # plt.show()
         plt.savefig(self.plot_path + "gamma_rejection_PSN.pdf")
