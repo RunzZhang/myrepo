@@ -2936,10 +2936,37 @@ class integrated_analysis():
         plt.show()
         plt.savefig(self.plot_path + "gamma_rejection_PSN_v2.pdf")
 
+    # def interpolate_all_keys_vectorized(self, target_key, target_values, data_dict):
+    #     """
+    #     Given a target_key and an array/list of target_values, returns a dictionary
+    #     where each key contains the array of interpolated values.
+    #     """
+    #     if target_key not in data_dict:
+    #         raise KeyError(f"Key '{target_key}' not found in data dictionary.")
+    #
+    #     # Ensure inputs are NumPy arrays
+    #     x = np.asarray(data_dict[target_key], dtype=float)
+    #     target_values = np.asarray(target_values, dtype=float)
+    #
+    #     # Sort x once
+    #     sort_idx = np.argsort(x)
+    #     x_sorted = x[sort_idx]
+    #
+    #     result = {}
+    #     for key, values in data_dict.items():
+    #         if key == target_key:
+    #             result[key] = target_values
+    #         else:
+    #             y_sorted = np.asarray(values, dtype=float)[sort_idx]
+    #             # np.interp evaluates the ENTIRE array target_values instantly in C
+    #             result[key] = np.interp(target_values, x_sorted, y_sorted)
+    #
+    #     return result
+
     def interpolate_all_keys_vectorized(self, target_key, target_values, data_dict):
         """
         Given a target_key and an array/list of target_values, returns a dictionary
-        where each key contains the array of interpolated values.
+        where each key contains the array of interpolated and extrapolated values.
         """
         if target_key not in data_dict:
             raise KeyError(f"Key '{target_key}' not found in data dictionary.")
@@ -2958,8 +2985,10 @@ class integrated_analysis():
                 result[key] = target_values
             else:
                 y_sorted = np.asarray(values, dtype=float)[sort_idx]
-                # np.interp evaluates the ENTIRE array target_values instantly in C
-                result[key] = np.interp(target_values, x_sorted, y_sorted)
+
+                # Create a linear interpolator with extrapolation enabled
+                f = interp1d(x_sorted, y_sorted, kind='linear', fill_value='extrapolate')
+                result[key] = f(target_values)
 
         return result
 
