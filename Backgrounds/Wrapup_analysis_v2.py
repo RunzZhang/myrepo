@@ -2857,12 +2857,12 @@ class integrated_analysis():
                    color="black", linestyle='--', label="PICO Best Fit")
 
         # Set main (left) y-axis and x-axis labels
-        ax[1, 0].set_xlabel(r"Seitz threshold [keV]", fontsize=16)
-        ax[1, 0].set_xlim(0.5, 1.5)
+        ax[1, 0].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]", fontsize=16)
+        ax[1, 0].set_xlim(0.7, 1.4)
         ax[1, 0].set_ylim(1e-12, 1e-5)
-        ax[1, 0].set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
+        ax[1, 0].set_ylabel("Probability per energy deposited [events/keV] ", fontsize=16)
         ax[1, 0].set_yscale("log")
-        ax[1, 0].tick_params(axis='y', colors="red", which='both')  # 'both' colors major & minor ticks
+        ax[1, 0].tick_params(axis='y',  which='both')  # 'both' colors major & minor ticks
 
         ax[1, 0].legend(loc='lower left', fontsize=16, title=" ", title_fontsize=16, frameon=False)
 
@@ -2900,12 +2900,12 @@ class integrated_analysis():
         ax[1,1].plot(x_drexel, y_drexel,
                    color="black", linestyle='--', label="Drexel Best Fit")
 
-        ax[1, 1].set_xlabel(r"Seitz threshold [keV]", fontsize=16)
+        ax[1, 1].set_xlabel(r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]", fontsize=16)
         ax[1, 1].set_xlim(1.2, 4)
         ax[1, 1].set_ylim(1e-8, 1e-3)
-        ax[1, 1].set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
+        ax[1, 1].set_ylabel("Nucleation probability\n[per xenon K shell photoabsorption]", fontsize=16)
         ax[1, 1].set_yscale("log")
-        ax[1, 1].tick_params(axis='y', colors="red", which='both')  # 'both' colors major & minor ticks
+        ax[1, 1].tick_params(axis='y', which='both')  # 'both' colors major & minor ticks
         ax[1, 1].legend(loc='lower left', fontsize=16, title=" ", title_fontsize=16, frameon=False)
 
 
