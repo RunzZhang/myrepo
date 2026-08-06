@@ -2940,7 +2940,7 @@ class integrated_analysis():
                 "Seitz [keV]"]
         # avoid cross
         for i in range(len(Drex_Q_24_list)):
-            if Drex_Q_24_list[i] > Drex_Q_10_list[i]:
+            if Drex_Q_24_list[i] < Drex_Q_10_list[i]:
                 Drex_Q_24_list[i] = Drex_Q_10_list[i]
 
         # PICO Eion to keV calculations
