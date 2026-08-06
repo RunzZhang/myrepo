@@ -2938,6 +2938,10 @@ class integrated_analysis():
         Drex_Q_24_list = \
             self.interpolate_all_keys_vectorized("Q_rl-1_rhol-1 [GeVcm**2 g-1]", Drex_Q2_list, thermal_24_table)[
                 "Seitz [keV]"]
+        # avoid cross
+        for i in range(len(Drex_Q_24_list)):
+            if Drex_Q_24_list[i] > Drex_Q_10_list[i]:
+                Drex_Q_24_list[i] = Drex_Q_10_list[i]
 
         # PICO Eion to keV calculations
         SBC_fitting_len = len(SBC_Q_list)
