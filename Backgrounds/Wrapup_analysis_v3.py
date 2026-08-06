@@ -18,24 +18,24 @@ class integrated_analysis():
         self.base_path = "/lzdata/runzezhang/result/GR_sims/"
 
         self.gamma_source_group = {"Cs":{"sim":{"pure_address":None,"pure_data":None, "doped_address":None,"doped_data":None},
-                                         "exp":{"116K":{"raw_path":["Cold-Cs-11_17-18_exposures_mix","Cold-Cs-12_01_exposures_mix","Cold-Cs-12_10-11_exposures_mix","Cold-Cs-1_20-21_exposures_mix"],"sorted_path":[],"rate_path":[],"rejection_path":[],"plot_list":[],"plot":None},
-                                                "119K":{"raw_path":["Cold-Cs-2_2-3_exposures_zoom"],"sorted_path":[],"rate_path":[],"rejection_path":[],"plot_list":[],"plot":None}}},
+                                         "exp":{"116K":{"raw_path":["Cold-Cs-11_17-18_exposures_mix","Cold-Cs-12_01_exposures_mix","Cold-Cs-12_10-11_exposures_mix","Cold-Cs-1_20-21_exposures_mix"],"sorted_path":[],"rate_path":[],"rejection_path":[],"plot_list":[],"plot":pd.DataFrame()},
+                                                "119K":{"raw_path":["Cold-Cs-2_2-3_exposures_zoom"],"sorted_path":[],"rate_path":[],"rejection_path":[],"plot_list":[],"plot":pd.DataFrame()}}},
                                    "Co": {"sim": {"pure_address": None, "pure_data": None, "doped_address": None,
                                                   "doped_data": None},
-                                          "exp": {"116K": {"raw_path": ["60Co-Source-12_15-16_exposures_mix"],"sorted_path":[], "rate_path": [], "rejection_path": [],"plot_list":[],"plot":None},
-                                                  "119K": {"raw_path": ["60Co-Source-02_06_exposures_mix"], "sorted_path":[],"rate_path": [], "rejection_path": [],"plot_list":[],"plot":None}}},
+                                          "exp": {"116K": {"raw_path": ["60Co-Source-12_15-16_exposures_mix"],"sorted_path":[], "rate_path": [], "rejection_path": [],"plot_list":[],"plot":pd.DataFrame()},
+                                                  "119K": {"raw_path": ["60Co-Source-02_06_exposures_mix"], "sorted_path":[],"rate_path": [], "rejection_path": [],"plot_list":[],"plot":pd.DataFrame()}}},
                                    "Ba": {"sim": {"pure_address": None, "pure_data": None, "doped_address": None,
                                                   "doped_data": None},
-                                          "exp": {"116K": {"raw_path": ["Ba-11_19-24_exposures_mix"], "sorted_path":[],"rate_path": [], "rejection_path": [],"plot_list":[],"plot":None},
-                                                  "119K": {"raw_path": [], "rate_path": [], "sorted_path":[],"rejection_path": [],"plot_list":[],"plot":None}}},
+                                          "exp": {"116K": {"raw_path": ["Ba-11_19-24_exposures_mix"], "sorted_path":[],"rate_path": [], "rejection_path": [],"plot_list":[],"plot":pd.DataFrame()},
+                                                  "119K": {"raw_path": [], "rate_path": [], "sorted_path":[],"rejection_path": [],"plot_list":[],"plot":pd.DataFrame()}}},
                                    "Th": {"sim": {"pure_address": None, "pure_data": None, "doped_address": None,
                                                   "doped_data": None},
-                                          "exp": {"116K": {"raw_path": ["228Th-Source-11_20-21_exposures_mix"],"sorted_path":[], "rate_path": [], "rejection_path": [],"plot_list":[],"plot":None},
-                                                  "119K": {"raw_path": [], "rate_path": [], "sorted_path":[],"rejection_path": [],"plot_list":[],"plot":None}}},
+                                          "exp": {"116K": {"raw_path": ["228Th-Source-11_20-21_exposures_mix"],"sorted_path":[], "rate_path": [], "rejection_path": [],"plot_list":[],"plot":pd.DataFrame()},
+                                                  "119K": {"raw_path": [], "rate_path": [], "sorted_path":[],"rejection_path": [],"plot_list":[],"plot":pd.DataFrame()}}},
                                    "Hot_Cs": {"sim": {"pure_address": None, "pure_data": None, "doped_address": None,
                                                   "doped_data": None},
-                                          "exp": {"116K": {"raw_path": ["Hot-Cs-11_11-12_exposures_mix"], "sorted_path":[],"rate_path": [], "rejection_path": [],"plot_list":[],"plot":None},
-                                                  "119K": {"raw_path": [], "rate_path": [], "sorted_path":[],"rejection_path": [],"plot_list":[],"plot":None}}},
+                                          "exp": {"116K": {"raw_path": ["Hot-Cs-11_11-12_exposures_mix"], "sorted_path":[],"rate_path": [], "rejection_path": [],"plot_list":[],"plot":pd.DataFrame()},
+                                                  "119K": {"raw_path": [], "rate_path": [], "sorted_path":[],"rejection_path": [],"plot_list":[],"plot":pd.DataFrame()}}},
                                     }
         self.Co_sim_path = '/lzdata/runzezhang/result/GR_sims/Co_output_5E6_ERv2.pkl'
         self.Cs_sim_path = '/lzdata/runzezhang/result/GR_sims/Cs_output_5E6_ERv2.pkl'
@@ -2442,7 +2442,7 @@ class integrated_analysis():
                 for source, source_config in self.gamma_source_group.items():
                     # read_source exp data
                     for temperature, temp_config in source_config["exp"].items():
-                        if not temp_config["plot"].empty:
+                        if temp_config["plot"] != None:
                             ax_ij.errorbar(temp_config["plot"][x_cfg["x"]], temp_config["plot"][y_cfg["y"]],
                                            yerr=temp_config["plot"][y_cfg["y_err"]], label=str(source)+" "+str(temperature), fmt='o',
                                            markersize=8)
