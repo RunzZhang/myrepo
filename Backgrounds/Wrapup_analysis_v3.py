@@ -2442,7 +2442,7 @@ class integrated_analysis():
                 for source, source_config in self.gamma_source_group.items():
                     # read_source exp data
                     for temperature, temp_config in source_config["exp"].items():
-                        if temp_config["plot"] != None:
+                        if not temp_config["plot"].empty:
                             ax_ij.errorbar(temp_config["plot"][x_cfg["x"]], temp_config["plot"][y_cfg["y"]],
                                            yerr=temp_config["plot"][y_cfg["y_err"]], label=str(source)+" "+str(temperature), fmt='o',
                                            markersize=8)
