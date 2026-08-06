@@ -305,7 +305,7 @@ class integrated_analysis():
 
 
         # source data
-        for source, source_config in self.gamma_source_group:
+        for source, source_config in self.gamma_source_group.items():
             print(source_config,source)
             source_config["sim"]["pure_address"] = self.base_path+source+"_output_5E6_ERv2.pkl"
             source_config["sim"]["doped_address"] = self.base_path + source + "_doped_output_full_track.pkl"
