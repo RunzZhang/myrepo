@@ -771,16 +771,27 @@ class integrated_analysis():
                 if temp_config["sorted_path"] !=[]:
                     for sorted_path_index in range(len(temp_config["sorted_path"])):
                         # combine the Seitz to the exp data
-                        print("Cs ",temperature, temp_config["sorted_path"])
+                        # print("Cs ",temperature, temp_config["sorted_path"])
                         exposure_df = pd.read_csv(temp_config["sorted_path"][sorted_path_index])
                         # merge both has the pressure value, on pressure
-                        merged_df = pd.merge(self.df_bkg_116, exposure_df, on='Pressure [bara]', how="inner")
+                        if temperature =="116K":
+                            merged_df = pd.merge(self.df_bkg_116, exposure_df, on='Pressure [bara]', how="inner")
+                        elif temperature=="119K":
+                            merged_df = pd.merge(self.df_bkg_119, exposure_df, on='Pressure [bara]', how="inner")
+                        else:
+                            print("wrong temp")
                         # clean rate!
                         merged_df['Clean Rate [mHz]'] = merged_df['Exp Rate [mHz]'] - merged_df['Bkg Rate [mHz]']
                         merged_df['Clean Rate Sigma [mHz]'] = np.sqrt(
                             merged_df['Exp Rate Sigma [mHz]'] ** 2 + merged_df['Bkg Rate Sigma [mHz]'] ** 2)
                         # add Seitz and Eion unit
-                        merged_df = pd.merge(merged_df, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
+                        if temperature =="116K":
+                            merged_df = pd.merge(merged_df, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
+                        elif temperature=="119K":
+                            merged_df = pd.merge(merged_df, self.df_energy_119_tab, on='Pressure [bara]', how="inner")
+                        else:
+                            print("wrong temp")
+
                         # add sims analysis to get rejection
 
                         merged_df.to_csv(temp_config["rate_path"][sorted_path_index], index=False)
