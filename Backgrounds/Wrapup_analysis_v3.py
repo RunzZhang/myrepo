@@ -37,95 +37,10 @@ class integrated_analysis():
                                           "exp": {"116K": {"raw_path": ["Hot-Cs-11_11-12_exposures_mix"], "sorted_path":[],"rate_path": [], "rejection_path": [],"plot_list":[],"plot":pd.DataFrame()},
                                                   "119K": {"raw_path": [], "rate_path": [], "sorted_path":[],"rejection_path": [],"plot_list":[],"plot":pd.DataFrame()}}},
                                     }
-        self.Co_sim_path = '/lzdata/runzezhang/result/GR_sims/Co_output_5E6_ERv2.pkl'
-        self.Cs_sim_path = '/lzdata/runzezhang/result/GR_sims/Cs_output_5E6_ERv2.pkl'
-        self.Hot_Cs_sim_path = '/lzdata/runzezhang/result/GR_sims/Hot_Cs_output_5E6_ERv2.pkl'
-        self.Cf_simA_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_A.pkl'
-        # self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_config_B.pkl'
-        self.Cf_simB_path = '/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density095_config_B.pkl'
-        # self.Ba_sim_path = '/lzdata/runzezhang/result/GR_sims/Ba_output_5E6.pkl' # updated tracking, make poststep prestep matching, but still recording photon energy loss
-        self.Ba_sim_path = '/lzdata/runzezhang/result/GR_sims/Ba_output_5E6_ERv2.pkl'  # updated ER calculation
-        self.Th_sim_path = '/lzdata/runzezhang/result/GR_sims/Th_output_5E6_ERv2.pkl'
-        # self.Th_sim_path = '/lzdata/runzezhang/result/GR_sims/Ba_output_5E6_ERv2.pkl'
 
-        # doped
-        # self.Co_sim_doped_path = '/data/runzezhang/result/GR_sims/Co_doped_output.pkl'
-        # self.Cs_sim_doped_path = '/data/runzezhang/result/GR_sims/Cs_doped_output.pk
-        # # self.Ba_sim_doped_path = '/data/runzezhang/result/GR_sims/Ba_doped_output.pkl'
-        # self.Ba_sim_doped_path = '/data/runzezhang/result/GR_sims/Ba_doped_output.pkl'
-
-        self.Co_sim_doped_path = '/lzdata/runzezhang/result/GR_sims/Co_doped_output_full_track.pkl'
-        self.Cs_sim_doped_path = '/lzdata/runzezhang/result/GR_sims/Cs_doped_output_full_track.pkl'
-        self.Ba_sim_doped_path = '/lzdata/runzezhang/result/GR_sims/Ba_doped_output_full_track.pkl'
-        self.Th_sim_doped_path = '/lzdata/runzezhang/result/GR_sims/Th_doped_output_full_track.pkl'
-        # self.Th_sim_doped_path = '/lzdata/runzezhang/result/GR_sims/Ba_doped_output_full_track.pkl'
-        self.Hot_Cs_sim_doped_path = '/lzdata/runzezhang/result/GR_sims/Hot_Cs_doped_output_full_track.pkl'
         #
 
         self.xe_shell_threshold = 0
-
-        # self.density_name_list = ['density104','density125','density150','density175','density2']
-        # self.density_path_list = []
-        # for i in self.density_name_list:
-        #     self.density_name_list.append(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_{i}_config_B.pkl")
-        self.Cf_Density104_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density104_config_B.pkl"
-        self.Cf_Density125_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density125_config_B.pkl"
-        self.Cf_Density150_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density150_config_B.pkl"
-        self.Cf_Density175_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density175_config_B.pkl"
-
-        self.Cf_density20_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_density2_config_B.pkl"
-
-        # self.location_name_list = ['zp20', 'zp10', 'zm10', 'zm20']
-        # self.location_path_list = []
-        # for i in self.location_name_list:
-        #     self.density_name_list.append(f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_{i}_config_B.pkl")
-        self.Cf_location_p20_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zp20_config_B.pkl"
-        self.Cf_location_p10_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zp10_config_B.pkl"
-        self.Cf_location_m10_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zm10_config_B.pkl"
-        self.Cf_location_m20_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_zm20_config_B.pkl"
-        self.Cf_location_top_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_top_config_B.pkl"
-        self.Cf_location_bare_top_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_bare_top_config_B.pkl"
-
-
-
-        self.Cf_CF4temp_100K_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_100K_config_B.pkl"
-        self.Cf_CF4temp_110K_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_110K_config_B.pkl"
-        self.Cf_CF4temp_120K_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_120K_config_B.pkl"
-        self.Cf_CF4temp_140K_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_140K_config_B.pkl"
-
-        self.Cf_Boron00_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_boron0_config_B.pkl"
-        self.Cf_Boron10_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_boron10_config_B.pkl"
-
-        # wrong test_panel_path
-        self.Cf_test_panel_path = f"/data/runzezhang/result/TN_sims_D/Cf_output_1E7_boron10_config_B.pkl"
-
-        self.Cs_exp_116_raw_path = ["Cold-Cs-11_17-18_exposures_mix","Cold-Cs-12_01_exposures_mix",
-                                    "Cold-Cs-12_10-11_exposures_mix","Cold-Cs-1_20-21_exposures_mix"]
-
-
-        self.Cs_exp_116_raw_len = len(self.Cs_exp_116_raw_path)
-        self.Cs_exp_119_raw_path = ["Cold-Cs-2_2-3_exposures_zoom"]
-        # self.Cs_exp_119_raw_path = ["Cold-Cs-2_2-3_exposures_mix"] # updated slight change
-        # self.Co_exp_116_raw_path = ["60Co-12_15-16_exposures"]
-        self.Co_exp_116_raw_path = ["60Co-Source-12_15-16_exposures_mix"]
-        self.Co_exp_116_raw_len = len(self.Co_exp_116_raw_path)
-        self.Co_exp_119_raw_path = ["60Co-Source-02_06_exposures_mix"]
-        self.Co_exp_119_raw_len = len(self.Co_exp_119_raw_path)
-
-        self.Ba_exp_116_raw_path = ["Ba-11_19-24_exposures_mix"]
-        self.Ba_exp_116_raw_len = len(self.Ba_exp_116_raw_path)
-
-        self.Hot_Cs_exp_116_raw_path = ["Hot-Cs-11_11-12_exposures_mix"]
-        self.Hot_Cs_exp_116_raw_len = len(self.Hot_Cs_exp_116_raw_path)
-
-        self.Th_exp_116_raw_path = ["228Th-Source-11_20-21_exposures_mix"]
-        self.Th_exp_116_raw_len = len(self.Th_exp_116_raw_path)
-
-
-        self.Cf_exp_116A_raw_path = ['252Cf-Coffin-A-1_7-8_exposures']
-        self.Cf_exp_116A_raw_len = len(self.Cf_exp_116A_raw_path)
-        self.Cf_exp_116B_raw_path = ['252Cf-Coffin-B-1_8-9_exposures']
-        self.Cf_exp_116B_raw_len = len(self.Cf_exp_116B_raw_path)
 
         self.background_116_sorted_path = ['Background-11_7-8_exposures',"Background-11_15-17_exposures",
                                     "Background-11_26-30_exposures", "Background-12_5-8_exposures",
@@ -133,14 +48,6 @@ class integrated_analysis():
         self.background_exp_116_raw_len = len(self.background_116_sorted_path)
         self.background_119_sorted_path = ["Background-1_30-2_2_exposures","Background-2_17-20_exposures",
                                            "Background-2_6-12_exposures","Background-2_28-3_2_exposures"]
-
-        self.Co_exp_raw_path = self.Co_exp_116_raw_path+self.Co_exp_119_raw_path
-        self.Cs_exp_raw_path = self.Cs_exp_116_raw_path+self.Cs_exp_119_raw_path
-        self.Ba_exp_raw_path = self.Ba_exp_116_raw_path
-        self.Hot_Cs_exp_raw_path = self.Hot_Cs_exp_116_raw_path
-        self.Th_exp_raw_path = self.Th_exp_116_raw_path
-
-
 
         self.backgrounds_exp_raw_path = self.background_116_sorted_path+self.background_119_sorted_path
 
