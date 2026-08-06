@@ -307,8 +307,8 @@ class integrated_analysis():
         # source data
         for source, source_config in self.gamma_source_group:
             print(source_config,source)
-            source_config["sims"]["pure_address"] = self.base_path+source+"_output_5E6_ERv2.pkl"
-            source_config["sims"]["doped_address"] = self.base_path + source + "_doped_output_full_track.pkl"
+            source_config["sim"]["pure_address"] = self.base_path+source+"_output_5E6_ERv2.pkl"
+            source_config["sim"]["doped_address"] = self.base_path + source + "_doped_output_full_track.pkl"
 
             for temperature, temp_config in source_config["exp"]:
                 if temp_config["raw_path"] !=[]:
@@ -317,13 +317,13 @@ class integrated_analysis():
                         temp_config["rate_path"].append(self.output_path + raw_path + "_ratev2.csv")
                         temp_config["rejection_path"].append(self.output_path + raw_path + "_rejectionv2.csv")
             # read sims
-            with open(source_config["sims"]["pure_address"], "rb") as f:
-                source_config["sims"]["pure_data"] = pickle.load(f)
-            print(source, "sims", source_config["sims"]["pure_data"])
+            with open(source_config["sim"]["pure_address"], "rb") as f:
+                source_config["sim"]["pure_data"] = pickle.load(f)
+            print(source, "sims", source_config["sim"]["pure_data"])
 
-            with open(source_config["sims"]["doped_address"], "rb") as f:
-                source_config["sims"]["doped_data"] = pickle.load(f)
-            print(source, "sims", source_config["sims"]["doped_data"])
+            with open(source_config["sim"]["doped_address"], "rb") as f:
+                source_config["sim"]["doped_data"] = pickle.load(f)
+            print(source, "sims", source_config["sim"]["doped_data"])
 
             # read_source exp data
             for temperature, temp_config in source_config["exp"]:
@@ -1673,11 +1673,11 @@ class integrated_analysis():
 
         return output
 
-    #source_config["sims"]["pure_address"]
+    #source_config["sim"]["pure_address"]
     def calculate_rejection_by_row_v2(self, row, source):
         try:
-            self.sim_list = self.gamma_source_group[source]["sims"]["pure_address"]
-            self.sim_doped_list = self.gamma_source_group[source]["sims"]["doped_address"]
+            self.sim_list = self.gamma_source_group[source]["sim"]["pure_address"]
+            self.sim_doped_list = self.gamma_source_group[source]["sim"]["doped_address"]
         except:
             print("NA sources")
 
