@@ -1617,8 +1617,8 @@ class integrated_analysis():
         return df
     def calculate_bkg_uplimit_by_row(self, row, source):
         try:
-            self.sim_list = self.gamma_source_group[source]["sim"]["pure_address"]
-            self.sim_doped_list = self.gamma_source_group[source]["sim"]["doped_address"]
+            self.sim_list = self.gamma_source_group[source]["sim"]["pure_data"]
+            self.sim_doped_list = self.gamma_source_group[source]["sim"]["doped_data"]
         except:
             print("NA sources")
 
@@ -1681,8 +1681,8 @@ class integrated_analysis():
     #source_config["sim"]["pure_address"]
     def calculate_rejection_by_row_v2(self, row, source):
         try:
-            self.sim_list = self.gamma_source_group[source]["sim"]["pure_address"]
-            self.sim_doped_list = self.gamma_source_group[source]["sim"]["doped_address"]
+            self.sim_list = self.gamma_source_group[source]["sim"]["pure_data"]
+            self.sim_doped_list = self.gamma_source_group[source]["sim"]["doped_data"]
         except:
             print("NA sources")
 
