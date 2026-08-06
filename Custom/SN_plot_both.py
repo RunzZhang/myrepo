@@ -1035,7 +1035,7 @@ class SN():
 
             plt.savefig(self.plot_path + f"{self.source}{self.volume}_output_spectrum_thesis.pdf")
 
-    def write_sims_results(self, plot= True):
+    def write_sims_results(self, plot= False):
 
 
         # volume cut for both analysis
@@ -1645,6 +1645,6 @@ class test_csv():
 
 
 if __name__=="__main__":
-    # sn = SN(doped=True)
-    sn = SN(doped=False, source="Cs", volume="bulk")
+    sn = SN(doped=True, source="Cs", volume="bulk")
+    # sn = SN(doped=False, source="Cs", volume="bulk")
     # test = test_csv()
