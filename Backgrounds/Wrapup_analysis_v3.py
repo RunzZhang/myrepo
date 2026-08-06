@@ -18,24 +18,24 @@ class integrated_analysis():
         self.base_path = "/lzdata/runzezhang/result/GR_sims/"
 
         self.gamma_source_group = {"Cs":{"sim":{"pure_address":None,"pure_data":None, "doped_address":None,"doped_data":None},
-                                         "exp":{"116K":{"raw_path":["Cold-Cs-11_17-18_exposures_mix","Cold-Cs-12_01_exposures_mix","Cold-Cs-12_10-11_exposures_mix","Cold-Cs-1_20-21_exposures_mix"],"sorted_path":[],"rate_path":[],"rejection_path":[]},
-                                                "119K":{"raw_path":["Cold-Cs-2_2-3_exposures_zoom"],"sorted_path":[],"rate_path":[],"rejection_path":[]}}},
+                                         "exp":{"116K":{"raw_path":["Cold-Cs-11_17-18_exposures_mix","Cold-Cs-12_01_exposures_mix","Cold-Cs-12_10-11_exposures_mix","Cold-Cs-1_20-21_exposures_mix"],"sorted_path":[],"rate_path":[],"rejection_path":[],"plot_list":[],"plot":None},
+                                                "119K":{"raw_path":["Cold-Cs-2_2-3_exposures_zoom"],"sorted_path":[],"rate_path":[],"rejection_path":[],"plot_list":[],"plot":None}}},
                                    "Co": {"sim": {"pure_address": None, "pure_data": None, "doped_address": None,
                                                   "doped_data": None},
-                                          "exp": {"116K": {"raw_path": ["60Co-Source-12_15-16_exposures_mix"],"sorted_path":[], "rate_path": [], "rejection_path": []},
-                                                  "119K": {"raw_path": ["60Co-Source-02_06_exposures_mix"], "sorted_path":[],"rate_path": [], "rejection_path": []}}},
+                                          "exp": {"116K": {"raw_path": ["60Co-Source-12_15-16_exposures_mix"],"sorted_path":[], "rate_path": [], "rejection_path": [],"plot_list":[],"plot":None},
+                                                  "119K": {"raw_path": ["60Co-Source-02_06_exposures_mix"], "sorted_path":[],"rate_path": [], "rejection_path": [],"plot_list":[],"plot":None}}},
                                    "Ba": {"sim": {"pure_address": None, "pure_data": None, "doped_address": None,
                                                   "doped_data": None},
-                                          "exp": {"116K": {"raw_path": ["Ba-11_19-24_exposures_mix"], "sorted_path":[],"rate_path": [], "rejection_path": []},
-                                                  "119K": {"raw_path": [], "rate_path": [], "sorted_path":[],"rejection_path": []}}},
+                                          "exp": {"116K": {"raw_path": ["Ba-11_19-24_exposures_mix"], "sorted_path":[],"rate_path": [], "rejection_path": [],"plot_list":[],"plot":None},
+                                                  "119K": {"raw_path": [], "rate_path": [], "sorted_path":[],"rejection_path": [],"plot_list":[],"plot":None}}},
                                    "Th": {"sim": {"pure_address": None, "pure_data": None, "doped_address": None,
                                                   "doped_data": None},
-                                          "exp": {"116K": {"raw_path": ["228Th-Source-11_20-21_exposures_mix"],"sorted_path":[], "rate_path": [], "rejection_path": []},
-                                                  "119K": {"raw_path": [], "rate_path": [], "sorted_path":[],"rejection_path": []}}},
+                                          "exp": {"116K": {"raw_path": ["228Th-Source-11_20-21_exposures_mix"],"sorted_path":[], "rate_path": [], "rejection_path": [],"plot_list":[],"plot":None},
+                                                  "119K": {"raw_path": [], "rate_path": [], "sorted_path":[],"rejection_path": [],"plot_list":[],"plot":None}}},
                                    "Hot_Cs": {"sim": {"pure_address": None, "pure_data": None, "doped_address": None,
                                                   "doped_data": None},
-                                          "exp": {"116K": {"raw_path": ["Hot-Cs-11_11-12_exposures_mix"], "sorted_path":[],"rate_path": [], "rejection_path": []},
-                                                  "119K": {"raw_path": [], "rate_path": [], "sorted_path":[],"rejection_path": []}}},
+                                          "exp": {"116K": {"raw_path": ["Hot-Cs-11_11-12_exposures_mix"], "sorted_path":[],"rate_path": [], "rejection_path": [],"plot_list":[],"plot":None},
+                                                  "119K": {"raw_path": [], "rate_path": [], "sorted_path":[],"rejection_path": [],"plot_list":[],"plot":None}}},
                                     }
         self.Co_sim_path = '/lzdata/runzezhang/result/GR_sims/Co_output_5E6_ERv2.pkl'
         self.Cs_sim_path = '/lzdata/runzezhang/result/GR_sims/Cs_output_5E6_ERv2.pkl'
@@ -156,6 +156,8 @@ class integrated_analysis():
 
 
         self.bkg_subtracted_analysis()
+
+        self.gamma_rejection_plot_v3()
 
 
 
@@ -2368,118 +2370,49 @@ class integrated_analysis():
         # ax[2].legend(loc='lower left', fontsize=7)
 
     def gamma_rejection_plot_v3(self):
-        # print Q vs per keV and Eion per interaction
 
         self.fitting_list = []
         self.Cs_fitting_list = []
         self.Co_fitting_list = []
         self.Ba_fitting_list = []
-        self.df_Cs_116_plot_list = []
-        self.df_Cs_119_plot_list = []
-        self.df_Co_116_plot_list = []
-        self.df_Co_119_plot_list = []
-        self.df_Ba_116_plot_list = []
-        self.df_Ba_119_plot_list = []
+
+        for source, source_config in self.gamma_source_group.items():
+            # read_source exp data
+            for temperature, temp_config in source_config["exp"].items():
+                if temp_config["rejection_path"] !=[]:
+                    for rejection_path_index in range(len(temp_config["rejection_path"])):
+                        # combine the Seitz to the exp data
+                        df = pd.read_csv(temp_config["rejection_path"][rejection_path_index])
+
+
+                        pressure_drop_list = []
+                        df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
+                        # only positive rate
+                        df = df[df['Clean Rate [mHz]'] > 0]
+                        temp_config["plot_list"].append(df)
+
+
+                        df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+                                     "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]',
+                                     "Rejection Rate Xenon Abs[]",
+                                     'Clean Rate [mHz]', "Eion [keV]"]]
+
+                        self.fitting_list.append(df_fit)
+                        if source =="Cs":
+                            self.Cs_fitting_list.append(df_fit)
+                    temp_config["plot"] = self.concat_PT_condition(temp_config["plot_list"])
+
+        # print Q vs per keV and Eion per interaction
+
+
+
+
         self.Cs_116_label = ["Cs 11/17/2025 116K", "Cs 12/01/2025 116K", "Cs 12/10/2025 116K", "Cs 01/20/2026 116K"]
         self.Cs_119_label = ["Cs 02/02/2026 119K"]
         self.Co_116_label = ["Co 12/15/2026 116K"]
         self.Co_119_label = ["Co 02/06/2026 119K"]
         self.Ba_116_label = ["Ba 11/19/2025 116K"]
 
-        for i in range(len(self.Cs_exp_rejection_path)):
-            df = pd.read_csv(self.Cs_exp_rejection_path[i])
-            # print(df.columns)
-            # doc_label = self.Cs_exp_raw_path[i].replace('_exposures', '')
-            # doc_label = self.Cs_label[i]
-            doc_label = "Cs"
-            print('doc_label', doc_label)
-            # signal
-            # drop 2.75,3.25, 3.75 bara pressure
-            # pressure_drop_list = [2.75,3.25,3.75]
-            pressure_drop_list = []
-            df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
-            # only positive rate
-            df = df[df['Clean Rate [mHz]'] > 0]
-            if i <= 3:
-                self.df_Cs_116_plot_list.append(df)
-            else:
-                self.df_Cs_119_plot_list.append(df)
-
-            df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
-                         "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
-                         'Clean Rate [mHz]', "Eion [keV]"]]
-
-            self.fitting_list.append(df_fit)
-            self.Cs_fitting_list.append(df_fit)
-        self.df_Cs_116_plot = pd.concat(self.df_Cs_116_plot_list, ignore_index=True)
-        self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
-
-        self.df_Cs_116_time_plot=self.df_Cs_116_plot
-        # make Cs 116 show just as one series
-        self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
-
-
-
-
-        # ax[2].errorbar(df['Q_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate Xenon Abs[]"],
-        #                yerr=df["Rejection Sigma Xenon Abs[]"], label=doc_label, fmt='o')
-
-        for i in range(len(self.Co_exp_rejection_path)):
-            df = pd.read_csv(self.Co_exp_rejection_path[i])
-            # print(df.columns)
-            # doc_label = self.Co_exp_raw_path[i].rstrip("_exposures")
-            # doc_label = self.Co_label[i]
-            doc_label = "Co"
-            # signal
-            # drop 2.75,3.25, 3.75 bara pressure
-            # pressure_drop_list = [2.75,3.25,3.75]
-            pressure_drop_list = []
-            df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
-            df = df[df['Clean Rate [mHz]'] > 0]
-
-            df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
-                         "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
-                         'Clean Rate [mHz]', "Eion [keV]"]]
-
-            if i <= 0:
-                self.df_Co_116_plot_list.append(df)
-            else:
-                self.df_Co_119_plot_list.append(df)
-            self.fitting_list.append(df_fit)
-            self.Co_fitting_list.append(df_fit)
-
-        self.df_Co_116_plot = pd.concat(self.df_Co_116_plot_list, ignore_index=True)
-        self.df_Co_119_plot = pd.concat(self.df_Co_119_plot_list, ignore_index=True)
-
-
-
-        for i in range(len(self.Ba_exp_rejection_path)):
-            df = pd.read_csv(self.Ba_exp_rejection_path[i])
-            # print(df.columns)
-            # doc_label = self.Co_exp_raw_path[i].rstrip("_exposures")
-            # doc_label = self.Co_label[i]
-            doc_label = "Co"
-            # signal
-            # drop 2.75,3.25, 3.75 bara pressure
-            # pressure_drop_list = [2.75,3.25,3.75]
-            pressure_drop_list = []
-            df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
-            # df = df[df['Clean Rate [mHz]'] > 0]
-            print("ba" ,df[['Clean Rate [mHz]','Clean Rate Sigma [mHz]', 'Exp Rate [mHz]','Exp Rate Sigma [mHz]','Bkg Rate [mHz]','Bkg Rate Sigma [mHz]']])
-
-            df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
-                         "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
-                         'Clean Rate [mHz]',"Eion [keV]"]]
-
-            if i <= 0:
-                self.df_Ba_116_plot_list.append(df)
-            else:
-                self.df_Ba_119_plot_list.append(df)
-            # self.fitting_list.append(df_fit)
-            # self.Ba_fitting_list.append(df_fit)
-        # print("Ba", self.df_Ba_116_plot_list)
-        self.df_Ba_116_plot = pd.concat(self.df_Ba_116_plot_list, ignore_index=True)
-        # self.df_Ba_119_plot = pd.concat(self.df_Ba_119_plot_list, ignore_index=True)
 
         fig, ax = plt.subplots(3, 4, figsize=(40, 24))
         # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
@@ -2504,18 +2437,14 @@ class integrated_analysis():
                 x_cfg = x_config[j]
                 ax_ij = ax[j, i]
 
-                ax_ij.errorbar(self.df_Cs_116_plot[x_cfg["x"]], self.df_Cs_116_plot[y_cfg["y"]],
-                           yerr=self.df_Cs_116_plot[y_cfg["y_err"]], label="Cs 116K", fmt='o',markersize=8)
-                ax_ij.errorbar(self.df_Cs_119_plot[x_cfg["x"]], self.df_Cs_119_plot[y_cfg["y"]],
-                           yerr=self.df_Cs_119_plot[y_cfg["y_err"]], label="Cs 119K", fmt='o',markersize=8)
-                ax_ij.errorbar(self.df_Co_116_plot[x_cfg["x"]], self.df_Co_116_plot[y_cfg["y"]],
-                           yerr=self.df_Co_116_plot[y_cfg["y_err"]], label="Co 116K", fmt='o',markersize=8)
-                ax_ij.errorbar(self.df_Co_119_plot[x_cfg["x"]], self.df_Co_119_plot[y_cfg["y"]],
-                           yerr=self.df_Co_119_plot[y_cfg["y_err"]], label="Co 119K", fmt='o',markersize=8)
-                # ax_ij.errorbar(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
-                #            yerr=self.df_Ba_116_plot[y_cfg["y_err"]], label="Ba 116K", fmt='o')
-                ax_ij.plot(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
-                               label="Ba 116K 95% CL \nUpper Limit", marker='v',linestyle='None',markersize=8)
+                for source, source_config in self.gamma_source_group.items():
+                    # read_source exp data
+                    for temperature, temp_config in source_config["exp"].items():
+                        if temp_config["plot"] != None:
+                            ax_ij.errorbar(temp_config["plot"][x_cfg["x"]], temp_config["plot"][y_cfg["y"]],
+                                           yerr=temp_config["plot"][y_cfg["y_err"]], label=str(source)+" "+str(temperature), fmt='o',
+                                           markersize=8)
+
 
                 ax_ij.set_xlabel(x_cfg["xlabel"],fontsize=16)
                 ax_ij.set_ylabel(y_cfg["ylabel"],fontsize=16)
@@ -2548,13 +2477,13 @@ class integrated_analysis():
                            color="black", label=label_text)
                 ax_ij.legend(loc='lower left', fontsize=13)
 
-
-        plt.savefig(self.plot_path + "gamma_rejection_v2.pdf")
+        plt.show()
+        plt.savefig(self.plot_path + "gamma_rejection_v3.pdf")
 
         plt.clf()
-        self.Qseitz_compound_xe_plot()
-        self.Ratio_plot()
-        self.time_plot()
+        # self.Qseitz_compound_xe_plot()
+        # self.Ratio_plot()
+        # self.time_plot()
     def Qseitz_compound_xe_plot(self):
         fig, ax = plt.subplots(1, 2, figsize=(16, 6))
         [result_Q_scatter, result_Q_keV, result_Q_xe, result_Eion_scatter, result_Eion_keV, result_Eion_xe,
