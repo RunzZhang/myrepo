@@ -306,11 +306,11 @@ class integrated_analysis():
 
         # source data
         for source, source_config in self.gamma_source_group.items():
-            print(source_config,source)
+            # print(source_config,source)
             source_config["sim"]["pure_address"] = self.base_path+source+"_output_5E6_ERv2.pkl"
             source_config["sim"]["doped_address"] = self.base_path + source + "_doped_output_full_track.pkl"
 
-            for temperature, temp_config in source_config["exp"]:
+            for temperature, temp_config in source_config["exp"].items():
                 if temp_config["raw_path"] !=[]:
                     for raw_path in temp_config["raw_path"]:
                         temp_config["sorted_path"].append(self.output_path+raw_path+"_sortedv2.csv")
@@ -326,7 +326,7 @@ class integrated_analysis():
             print(source, "sims", source_config["sim"]["doped_data"])
 
             # read_source exp data
-            for temperature, temp_config in source_config["exp"]:
+            for temperature, temp_config in source_config["exp"].items():
                 if temp_config["raw_path"] !=[]:
                     for raw_path_index in range(len(temp_config["raw_path"])):
                         exposure_df = self.read_exposure(temp_config["raw_path"][raw_path_index] + ".txt")
@@ -761,11 +761,11 @@ class integrated_analysis():
             'Lifetime Error [s]': 'Bkg Lifetime Error [s]'
         })
 
-        for source, source_config in self.gamma_source_group:
+        for source, source_config in self.gamma_source_group.items():
 
 
             # read_source exp data
-            for temperature, temp_config in source_config["exp"]:
+            for temperature, temp_config in source_config["exp"].items():
                 if temp_config["sorted_path"] !=[]:
                     for sorted_path_index in range(len(temp_config["sorted_path"])):
                         # combine the Seitz to the exp data
