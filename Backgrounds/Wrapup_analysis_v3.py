@@ -2479,7 +2479,7 @@ class integrated_analysis():
                            color="black", label=label_text)
                 ax_ij.legend(loc='lower left', fontsize=13)
 
-        plt.show()
+        # plt.show()
         plt.savefig(self.plot_path + "gamma_rejection_v3.pdf")
 
         plt.clf()
