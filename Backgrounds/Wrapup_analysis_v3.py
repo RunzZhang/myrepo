@@ -2401,7 +2401,8 @@ class integrated_analysis():
                         if source =="Cs":
                             self.Cs_fitting_list.append(df_fit)
                     print(temp_config["plot_list"])
-                    temp_config["plot"] = self.concat_PT_condition(temp_config["plot_list"])
+                    temp_config["plot"] = pd.concat(temp_config["plot_list"], ignore_index=True)
+                    temp_config["plot"] = self.concat_PT_condition(temp_config["plot"])
 
         # print Q vs per keV and Eion per interaction
 
