@@ -1616,17 +1616,22 @@ class integrated_analysis():
 
         return df
     def calculate_bkg_uplimit_by_row(self, row, source):
-
-        if source == "Co":
-            self.sim_list = self.Co_sims
-        elif source == "Cs":
-            self.sim_list = self.Cs_sims
-        elif source == "Cs_doped":
-            self.sim_list = self.Cs_sims_doped
-        elif source == "Co_doped":
-            self.sim_list = self.Co_sims_doped
-        else:
+        try:
+            self.sim_list = self.gamma_source_group[source]["sim"]["pure_address"]
+            self.sim_doped_list = self.gamma_source_group[source]["sim"]["doped_address"]
+        except:
             print("NA sources")
+
+        # if source == "Co":
+        #     self.sim_list = self.Co_sims
+        # elif source == "Cs":
+        #     self.sim_list = self.Cs_sims
+        # elif source == "Cs_doped":
+        #     self.sim_list = self.Cs_sims_doped
+        # elif source == "Co_doped":
+        #     self.sim_list = self.Co_sims_doped
+        # else:
+        #     print("NA sources")
 
         self.Rate_factor = self.sim_list[0]
         # print("self.Rate_factor",self.Rate_factor)
