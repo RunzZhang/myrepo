@@ -364,6 +364,7 @@ class integrated_analysis():
 
     def bkg_subtracted_analysis(self, plot=False):
         self.df_bkg_116 = pd.read_csv(self.background_group["116K"]["average_path"])
+        print("bkg 116", self.df_bkg_116)
         # self.df_bkg_116.columns = ['Pressure [bara]','Bkg Lifetime [s]','Bkg Lifetime Error [s]','Bkg Rate [mHz]', 'Bkg Rate Sigma [mHz]']
         self.df_bkg_116 = self.df_bkg_116.rename(columns={
             'Lifetime [s]': 'Bkg Lifetime [s]',
