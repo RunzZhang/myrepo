@@ -95,7 +95,7 @@ class integrated_analysis():
             self.background_group = {"116K": {"raw_path": ['Background-11_7-8_fiducial_mix',"Background-11_15-17_fiducial_mix",
                                         "Background-11_26-30_fiducial_mix", "Background-12_5-8_fiducial_mix",
                                         'Background-1_12-13_fiducial_mix','Background-1_17-20_fiducial_mix'],"sorted_path":[],"average_path":"", "full_info_path":""},
-                                   "119K": { "raw_path": ["Background-1_30-2_2_fiducial_mix","Background-2_17-20_fiducial_mix",
+                                   "119K": { "raw_path": ["Background-1_30-2_2_fiducial_mix","Background-2_17-20-QUIET_fiducial_mix",
                                                "Background-2_6-12_fiducial_mix","Background-2_28-3_2_fiducial_mix"],"sorted_path":[],"average_path":"", "full_info_path":""},
                                      "total": {"raw_path": [],
                                                "sorted_path": [],"average_path":"", "full_info_path":""}}
