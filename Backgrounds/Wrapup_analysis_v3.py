@@ -443,7 +443,7 @@ class integrated_analysis():
             ax.set_ylabel("Bkg Rate [mHz]")
             ax.legend()
             plt.show()
-            # plt.savefig(self.plot_path + f"average_bkg_{self.volume_option}rate.pdf")
+            # plt.savefig(self.plot_path + f"average_source_{self.volume_option}rate.pdf")
 
 
 
