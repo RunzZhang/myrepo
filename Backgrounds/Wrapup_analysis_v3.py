@@ -895,32 +895,33 @@ class integrated_analysis():
         self.Ba_fitting_list = []
 
         for source, source_config in self.gamma_source_group.items():
+            if source != "Ba":
             # read_source exp data
-            for temperature, temp_config in source_config["exp"].items():
-                if temp_config["rejection_path"] !=[]:
-                    for rejection_path_index in range(len(temp_config["rejection_path"])):
-                        # combine the Seitz to the exp data
-                        df = pd.read_csv(temp_config["rejection_path"][rejection_path_index])
-                        print("df.columns",source,rejection_path_index,df.columns)
+                for temperature, temp_config in source_config["exp"].items():
+                    if temp_config["rejection_path"] !=[]:
+                        for rejection_path_index in range(len(temp_config["rejection_path"])):
+                            # combine the Seitz to the exp data
+                            df = pd.read_csv(temp_config["rejection_path"][rejection_path_index])
+                            print("df.columns",source,rejection_path_index,df.columns)
 
 
-                        pressure_drop_list = []
-                        df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
-                        # only positive rate
-                        df = df[df['Clean Rate [mHz]'] > 0]
-                        temp_config["plot_list"].append(df)
+                            pressure_drop_list = []
+                            df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
+                            # only positive rate
+                            df = df[df['Clean Rate [mHz]'] > 0]
+                            temp_config["plot_list"].append(df)
 
-                        df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
-                                     "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]',
-                                     "Rejection Rate Xenon Abs[]",
-                                     'Clean Rate [mHz]', "Eion [keV]"]]
+                            df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+                                         "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]',
+                                         "Rejection Rate Xenon Abs[]",
+                                         'Clean Rate [mHz]', "Eion [keV]"]]
 
-                        self.fitting_list.append(df_fit)
-                        if source =="Cs":
-                            self.Cs_fitting_list.append(df_fit)
-                    print(temp_config["plot_list"])
-                    temp_config["plot"] = pd.concat(temp_config["plot_list"], ignore_index=True)
-                    temp_config["plot"] = self.concat_PT_condition(temp_config["plot"])
+                            self.fitting_list.append(df_fit)
+                            if source =="Cs":
+                                self.Cs_fitting_list.append(df_fit)
+                        print(temp_config["plot_list"])
+                        temp_config["plot"] = pd.concat(temp_config["plot_list"], ignore_index=True)
+                        temp_config["plot"] = self.concat_PT_condition(temp_config["plot"])
 
         # print Q vs per keV and Eion per interaction
 
