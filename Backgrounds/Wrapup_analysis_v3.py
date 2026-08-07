@@ -197,7 +197,15 @@ class integrated_analysis():
                             exposure_df['Lifetime [s]']) ** 2
                         # exposure_df = exposure_df.drop(columns=['Exponential Fit 2xNLL',
                         #                                         'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]'])
-                        exposure_df.to_csv(temp_config["sorted_path"][raw_path_index], index=False)
+                        if source=="Cs" and raw_path_index==3:
+                            print("Cs", exposure_df.empty, exposure_df)
+                        if exposure_df.empty:
+                            temp_config["raw_path"].pop(raw_path_index)
+                            temp_config["sorted_path"].pop(raw_path_index)
+                            temp_config["rate_path"].pop(raw_path_index)
+                            temp_config["rejection_path"].pop(raw_path_index)
+                        else:
+                            exposure_df.to_csv(temp_config["sorted_path"][raw_path_index], index=False)
 
 
     def pre_background_analysis(self):
@@ -728,112 +736,104 @@ class integrated_analysis():
             self.sim_doped_list = self.gamma_source_group[source]["sim"]["doped_data"]
         except:
             print("NA sources")
-        if source =="Cs":
-            print(row,row.isna().any().any())
-        if not row.isna().any().any():
-            self.Rate_factor = self.sim_list[0]
 
-            # print("self.Rate_factor",self.Rate_factor)
-            self.energy_edges = self.sim_list[1][0][1]
-            # print("self.energy_edges", self.energy_edges)
-            self.counts_cum_bin = self.sim_list[2]
-            # print("self.counts_cum_bin", self.counts_cum_bin)
-            self.counts_energy_cum_bin = self.sim_list[6]
-            # print("self.counts_energy_cum_bin", self.counts_energy_cum_bin)
-            rejection_PS = 0
-            rejection_PS_sigma = 0
-            rejection_PK = 0
-            rejection_PK_sigma = 0
-            rejection_uplimit_PS = 0
-            rejection_uplimit_PK = 0
-            for i in range(len(self.energy_edges)):
-                if row['Seitz [keV]'] >= self.energy_edges[i]:
-                    # rejection per scattering, PS meaning perscattering
-                    counts = self.counts_cum_bin[i] + (row['Seitz [keV]'] - self.energy_edges[i]) * (
-                            self.counts_cum_bin[i + 1] -
-                            self.counts_cum_bin[i]) / (
-                                     self.energy_edges[i + 1] - self.energy_edges[i])
-                    rate_PS = self.Rate_factor * (counts)
 
-                    rate_PS_sigma = rate_PS / np.sqrt(counts)
+        self.Rate_factor = self.sim_list[0]
 
-                    rejection_PS = row['Clean Rate [mHz]'] / rate_PS
-                    # rejection_uplimit_PS = row['Bkg Rate Sigma [mHz]']/rate_PS
+        # print("self.Rate_factor",self.Rate_factor)
+        self.energy_edges = self.sim_list[1][0][1]
+        # print("self.energy_edges", self.energy_edges)
+        self.counts_cum_bin = self.sim_list[2]
+        # print("self.counts_cum_bin", self.counts_cum_bin)
+        self.counts_energy_cum_bin = self.sim_list[6]
+        # print("self.counts_energy_cum_bin", self.counts_energy_cum_bin)
+        rejection_PS = 0
+        rejection_PS_sigma = 0
+        rejection_PK = 0
+        rejection_PK_sigma = 0
+        rejection_uplimit_PS = 0
+        rejection_uplimit_PK = 0
+        for i in range(len(self.energy_edges)):
+            if row['Seitz [keV]'] >= self.energy_edges[i]:
+                # rejection per scattering, PS meaning perscattering
+                counts = self.counts_cum_bin[i] + (row['Seitz [keV]'] - self.energy_edges[i]) * (
+                        self.counts_cum_bin[i + 1] -
+                        self.counts_cum_bin[i]) / (
+                                 self.energy_edges[i + 1] - self.energy_edges[i])
+                rate_PS = self.Rate_factor * (counts)
 
-                    # will be returned
-                    rejection_PS_sigma = np.sqrt(
-                        (row['Clean Rate Sigma [mHz]'] / rate_PS) ** 2 + (
-                                    row['Clean Rate [mHz]'] * rate_PS_sigma / rate_PS ** 2) ** 2)
-                    # will be returned
-                    break
-            for i in range(len(self.energy_edges)):
-                if row['Eion [keV]'] >= self.energy_edges[i]:
-                    counts_times_keV = self.counts_energy_cum_bin[0]  # all energy
-                    counts_Eion = self.counts_cum_bin[i] + (row['Eion [keV]'] - self.energy_edges[i]) * (
-                            self.counts_cum_bin[i + 1] -
-                            self.counts_cum_bin[i]) / (
-                                          self.energy_edges[i + 1] - self.energy_edges[i])
+                rate_PS_sigma = rate_PS / np.sqrt(counts)
 
-                    rate_PK = self.Rate_factor * (counts_times_keV)
-                    rate_PK_sigma = rate_PK / np.sqrt(counts_Eion)
-                    rejection_PK = row['Clean Rate [mHz]'] / rate_PK
+                rejection_PS = row['Clean Rate [mHz]'] / rate_PS
+                # rejection_uplimit_PS = row['Bkg Rate Sigma [mHz]']/rate_PS
 
-                    rejection_PK_sigma = np.sqrt(
-                        (row['Clean Rate Sigma [mHz]'] / rate_PK) ** 2 + (
-                                    row['Clean Rate [mHz]'] * rate_PK_sigma / rate_PK ** 2) ** 2)
-                    # rejection_uplimit_PK = row['Bkg Rate Sigma [mHz]'] / rate_PK
-                    break
-            # for xenon k shell absorption
-            # only counts interactions that > 34.56 keV
-            self.Rate_factor_doped = self.sim_doped_list[0]
-            # print("self.Rate_factor",self.Rate_factor)
-            self.energy_edges_doped = self.sim_doped_list[1][0][1]
-            # print("self.energy_edges", self.energy_edges)
-            self.counts_cum_bin_doped = self.sim_doped_list[2]
-            # print("self.counts_cum_bin", self.counts_cum_bin)
-            self.counts_energy_cum_bin_doped = self.sim_doped_list[3]
-            rejection_PX = 0
-            rejection_PX_sigma = 0
-            energy_K = 34.56
+                # will be returned
+                rejection_PS_sigma = np.sqrt(
+                    (row['Clean Rate Sigma [mHz]'] / rate_PS) ** 2 + (
+                                row['Clean Rate [mHz]'] * rate_PS_sigma / rate_PS ** 2) ** 2)
+                # will be returned
+                break
+        for i in range(len(self.energy_edges)):
+            if row['Eion [keV]'] >= self.energy_edges[i]:
+                counts_times_keV = self.counts_energy_cum_bin[0]  # all energy
+                counts_Eion = self.counts_cum_bin[i] + (row['Eion [keV]'] - self.energy_edges[i]) * (
+                        self.counts_cum_bin[i + 1] -
+                        self.counts_cum_bin[i]) / (
+                                      self.energy_edges[i + 1] - self.energy_edges[i])
 
-            for i in range(len(self.energy_edges_doped)):
-                # if row['Seitz [keV]']>= self.energy_edges[i]:
-                #     # rejection per xenon photo absorption in k shell, PX meaning per xenon
-                #     counts = self.counts_cum_bin[i] + (row['Seitz [keV]'] - self.energy_edges[i]) * (
-                #             self.counts_cum_bin[i + 1] -
-                #             self.counts_cum_bin[i]) / (
-                #                      self.energy_edges[i + 1] - self.energy_edges[i])
-                if self.energy_edges_doped[i] >= self.xe_shell_threshold:
-                    counts = self.counts_cum_bin_doped[i]
+                rate_PK = self.Rate_factor * (counts_times_keV)
+                rate_PK_sigma = rate_PK / np.sqrt(counts_Eion)
+                rejection_PK = row['Clean Rate [mHz]'] / rate_PK
 
-                    rate_PX = self.Rate_factor_doped * (counts)
+                rejection_PK_sigma = np.sqrt(
+                    (row['Clean Rate Sigma [mHz]'] / rate_PK) ** 2 + (
+                                row['Clean Rate [mHz]'] * rate_PK_sigma / rate_PK ** 2) ** 2)
+                # rejection_uplimit_PK = row['Bkg Rate Sigma [mHz]'] / rate_PK
+                break
+        # for xenon k shell absorption
+        # only counts interactions that > 34.56 keV
+        self.Rate_factor_doped = self.sim_doped_list[0]
+        # print("self.Rate_factor",self.Rate_factor)
+        self.energy_edges_doped = self.sim_doped_list[1][0][1]
+        # print("self.energy_edges", self.energy_edges)
+        self.counts_cum_bin_doped = self.sim_doped_list[2]
+        # print("self.counts_cum_bin", self.counts_cum_bin)
+        self.counts_energy_cum_bin_doped = self.sim_doped_list[3]
+        rejection_PX = 0
+        rejection_PX_sigma = 0
+        energy_K = 34.56
 
-                    rate_PX_sigma = rate_PX / np.sqrt(counts)
+        for i in range(len(self.energy_edges_doped)):
+            # if row['Seitz [keV]']>= self.energy_edges[i]:
+            #     # rejection per xenon photo absorption in k shell, PX meaning per xenon
+            #     counts = self.counts_cum_bin[i] + (row['Seitz [keV]'] - self.energy_edges[i]) * (
+            #             self.counts_cum_bin[i + 1] -
+            #             self.counts_cum_bin[i]) / (
+            #                      self.energy_edges[i + 1] - self.energy_edges[i])
+            if self.energy_edges_doped[i] >= self.xe_shell_threshold:
+                counts = self.counts_cum_bin_doped[i]
 
-                    rejection_PX = row['Clean Rate [mHz]'] / rate_PX
-                    # rejection_uplimit_PX = row['Bkg Rate Sigma [mHz]']/rate_PX
+                rate_PX = self.Rate_factor_doped * (counts)
 
-                    # will be returned
-                    rejection_PX_sigma = np.sqrt(
-                        (row['Clean Rate Sigma [mHz]'] / rate_PX) ** 2 + (
-                                    row['Clean Rate [mHz]'] * rate_PX_sigma / rate_PX ** 2) ** 2)
-                    # will be returned
-                    break
-            output = pd.Series({"Rejection Rate Scattering[]": rejection_PS,
-                                "Rejection Sigma Scattering[]": rejection_PS_sigma,
-                                "Rejection Rate KeV[/keV]": rejection_PK,
-                                "Rejection Sigma KeV[/keV]": rejection_PK_sigma,
-                                "Rejection Rate Xenon Abs[]": rejection_PX,
-                                "Rejection Sigma Xenon Abs[]": rejection_PX_sigma,
-                                })
-        else:
-            output = pd.Series({"Rejection Rate Scattering[]": 0,
-                                "Rejection Sigma Scattering[]": 0,
-                                "Rejection Rate KeV[/keV]": 0,
-                                "Rejection Sigma KeV[/keV]": 0,
-                                "Rejection Rate Xenon Abs[]": 0,
-                                "Rejection Sigma Xenon Abs[]": 0,
-                                })
+                rate_PX_sigma = rate_PX / np.sqrt(counts)
+
+                rejection_PX = row['Clean Rate [mHz]'] / rate_PX
+                # rejection_uplimit_PX = row['Bkg Rate Sigma [mHz]']/rate_PX
+
+                # will be returned
+                rejection_PX_sigma = np.sqrt(
+                    (row['Clean Rate Sigma [mHz]'] / rate_PX) ** 2 + (
+                                row['Clean Rate [mHz]'] * rate_PX_sigma / rate_PX ** 2) ** 2)
+                # will be returned
+                break
+        output = pd.Series({"Rejection Rate Scattering[]": rejection_PS,
+                            "Rejection Sigma Scattering[]": rejection_PS_sigma,
+                            "Rejection Rate KeV[/keV]": rejection_PK,
+                            "Rejection Sigma KeV[/keV]": rejection_PK_sigma,
+                            "Rejection Rate Xenon Abs[]": rejection_PX,
+                            "Rejection Sigma Xenon Abs[]": rejection_PX_sigma,
+                            })
+
         print("source", source, "Rate[mHz]:", self.Rate_factor * self.counts_cum_bin[0], "Energy deposit [keV]",
               self.Rate_factor * self.counts_energy_cum_bin[0],
               "Xe abs Rate[mHz]: ", self.Rate_factor_doped * self.counts_cum_bin_doped[0])
