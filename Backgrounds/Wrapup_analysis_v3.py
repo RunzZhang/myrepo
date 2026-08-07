@@ -130,7 +130,8 @@ class integrated_analysis():
         # self.average_background_analysis()
         #
         #
-        self.bkg_subtracted_analysis()
+        # self.bkg_subtracted_analysis()
+        self.bkg_subtracted_analysis(plot=True)
 
         self.gamma_rejection_plot_v3()
 
@@ -273,26 +274,26 @@ class integrated_analysis():
                 result_df_full_info.to_csv(temp_config["full_info_path"], index=False)
                 self.bkg_plot()
 
-    def bkg_plot(self):
+    def bkg_plot(self,plot=False):
         self.df_bkg_116 = pd.read_csv(self.background_group["116K"]["average_path"])
         self.df_bkg_116 = pd.merge(self.df_bkg_116, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
         print('self.df_bkg_116', self.df_bkg_116)
         self.df_bkg_119 = pd.read_csv(self.background_group["119K"]["average_path"])
         self.df_bkg_119 = pd.merge(self.df_bkg_119, self.df_energy_119_tab, on='Pressure [bara]', how="inner")
         print('self.df_bkg_119', self.df_bkg_119)
-
-        fig, ax = plt.subplots()
-        ax.errorbar(self.df_bkg_116['Seitz [keV]'], self.df_bkg_116["Bkg Rate [mHz]"],
-                    yerr=self.df_bkg_116["Bkg Rate Sigma [mHz]"], label="combined bkg 116.7 K ", fmt='o', color='r')
-        ax.errorbar(self.df_bkg_119['Seitz [keV]'], self.df_bkg_119["Bkg Rate [mHz]"],
-                    yerr=self.df_bkg_119["Bkg Rate Sigma [mHz]"], label="combined bkg 119.6 K ", fmt='o', color='b')
-        ax.set_xlim(0.4, 3.6)
-        ax.set_ylim(5, 55)
-        ax.set_xlabel("Seitz [keV]")
-        ax.set_ylabel("Bkg Rate [mHz]")
-        ax.legend()
-        plt.show()
-        plt.savefig(self.plot_path + f"average_bkg_{self.volume_option}rate.pdf")
+        if plot:
+            fig, ax = plt.subplots()
+            ax.errorbar(self.df_bkg_116['Seitz [keV]'], self.df_bkg_116["Bkg Rate [mHz]"],
+                        yerr=self.df_bkg_116["Bkg Rate Sigma [mHz]"], label="combined bkg 116.7 K ", fmt='o', color='r')
+            ax.errorbar(self.df_bkg_119['Seitz [keV]'], self.df_bkg_119["Bkg Rate [mHz]"],
+                        yerr=self.df_bkg_119["Bkg Rate Sigma [mHz]"], label="combined bkg 119.6 K ", fmt='o', color='b')
+            ax.set_xlim(0.4, 3.6)
+            ax.set_ylim(5, 55)
+            ax.set_xlabel("Seitz [keV]")
+            ax.set_ylabel("Bkg Rate [mHz]")
+            ax.legend()
+            # plt.show()
+            plt.savefig(self.plot_path + f"average_bkg_{self.volume_option}rate.pdf")
 
     def read_raw_backgrounds_exp(self):
         # read file, delete unreasonable rows and rewrite
@@ -361,7 +362,7 @@ class integrated_analysis():
         result_df_119_full_info.to_csv(self.Bkg_average_119_full_info_path, index=False)
 
 
-    def bkg_subtracted_analysis(self):
+    def bkg_subtracted_analysis(self, plot=False):
         self.df_bkg_116 = pd.read_csv(self.background_group["116K"]["average_path"])
         # self.df_bkg_116.columns = ['Pressure [bara]','Bkg Lifetime [s]','Bkg Lifetime Error [s]','Bkg Rate [mHz]', 'Bkg Rate Sigma [mHz]']
         self.df_bkg_116 = self.df_bkg_116.rename(columns={
@@ -374,6 +375,12 @@ class integrated_analysis():
             'Lifetime [s]': 'Bkg Lifetime [s]',
             'Lifetime Error [s]': 'Bkg Lifetime Error [s]'
         })
+        if plot:
+            fig, ax = plt.subplots()
+            ax.errorbar(self.df_bkg_116['Seitz [keV]'], self.df_bkg_116["Bkg Rate [mHz]"],
+                        yerr=self.df_bkg_116["Bkg Rate Sigma [mHz]"], label="combined bkg 116.7 K ", fmt='o', color='r')
+            ax.errorbar(self.df_bkg_119['Seitz [keV]'], self.df_bkg_119["Bkg Rate [mHz]"],
+                        yerr=self.df_bkg_119["Bkg Rate Sigma [mHz]"], label="combined bkg 119.6 K ", fmt='o', color='b')
 
         for source, source_config in self.gamma_source_group.items():
 
@@ -409,6 +416,10 @@ class integrated_analysis():
 
 
                         merged_df.to_csv(temp_config["rate_path"][sorted_path_index], index=False)
+                        if plot:
+                            ax.errorbar(merged_df['Seitz [keV]'], merged_df['Exp Rate [mHz]'],
+                                        yerr=merged_df['Exp Rate Sigma [mHz]'], label=f"{source} {temperature}",
+                                        fmt='o')
 
                         # cacluate rejection
 
@@ -423,6 +434,16 @@ class integrated_analysis():
                         merged_df_rejection = pd.concat([exp_df, columns_added], axis=1)
                         # print('Cs print(merged_df)',self.Cs_exp_rate_path[i],'\n',merged_df)
                         merged_df_rejection.to_csv(temp_config["rejection_path"][sorted_path_index], index=False)
+
+
+        if plot:
+            ax.set_xlim(0.4, 3.6)
+            ax.set_ylim(5, 55)
+            ax.set_xlabel("Seitz [keV]")
+            ax.set_ylabel("Bkg Rate [mHz]")
+            ax.legend()
+            plt.show()
+            # plt.savefig(self.plot_path + f"average_bkg_{self.volume_option}rate.pdf")
 
 
 
