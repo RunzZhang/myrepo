@@ -130,7 +130,7 @@ class integrated_analysis():
         # self.average_background_analysis()
         #
         #
-        # self.bkg_subtracted_analysis()
+        self.bkg_subtracted_analysis()
 
         self.gamma_rejection_plot_v3()
 
