@@ -859,7 +859,7 @@ class integrated_analysis():
               "Xe abs Rate[mHz]: ", self.Rate_factor_doped * self.counts_cum_bin_doped[0])
         return output
 
-    
+
 
 
     def gamma_rejection_plot_v3(self):
@@ -2738,6 +2738,6 @@ class integrated_analysis():
 
 
 if __name__=="__main__":
-    IA =  integrated_analysis(volume="dome")
-    # IA = integrated_analysis(volume="bulk")
+    # IA =  integrated_analysis(volume="dome")
+    IA = integrated_analysis(volume="bulk")
     # test = test_csv()
