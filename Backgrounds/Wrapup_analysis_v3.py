@@ -18,7 +18,7 @@ class integrated_analysis():
         self.base_path = "/lzdata/runzezhang/result/GR_sims/"
 
         self.volume_option =  volume
-        if self.volume_option== ""or "all":
+        if self.volume_option== ""or self.volume_option== "all":
             self.gamma_source_group = {"Cs":{"sim":{"pure_address":None,"pure_data":None, "doped_address":None,"doped_data":None},
                                              "exp":{"116K":{"raw_path":["Cold-Cs-11_17-18_exposures_mix","Cold-Cs-12_01_exposures_mix","Cold-Cs-12_10-11_exposures_mix","Cold-Cs-1_20-21_exposures_mix"],"sorted_path":[],"rate_path":[],"rejection_path":[],"plot_list":[],"plot":pd.DataFrame()},
                                                     "119K":{"raw_path":["Cold-Cs-2_2-3_exposures_zoom"],"sorted_path":[],"rate_path":[],"rejection_path":[],"plot_list":[],"plot":pd.DataFrame()}}},
@@ -39,7 +39,7 @@ class integrated_analysis():
                                               "exp": {"116K": {"raw_path": ["Hot-Cs-11_11-12_exposures_mix"], "sorted_path":[],"rate_path": [], "rejection_path": [],"plot_list":[],"plot":pd.DataFrame()},
                                                       "119K": {"raw_path": [], "rate_path": [], "sorted_path":[],"rejection_path": [],"plot_list":[],"plot":pd.DataFrame()}}},
                                         }
-        elif self.volume_option =="dome" or "bulk":
+        elif self.volume_option =="dome" or self.volume_option =="bulk":
             self.gamma_source_group = {
                 "Cs": {"sim": {"pure_address": None, "pure_data": None, "doped_address": None, "doped_data": None},
                        "exp": {"116K": {"raw_path": ["Cold-Cs-11_17-18_fiducial_mix", "Cold-Cs-12_01_fiducial_mix",
@@ -83,7 +83,7 @@ class integrated_analysis():
         #
 
         self.xe_shell_threshold = 0
-        if self.volume_option == "" or "all":
+        if self.volume_option == "" or self.volume_option == "all":
             self.background_group = {"116K": {"raw_path": ['Background-11_7-8_exposures',"Background-11_15-17_exposures",
                                         "Background-11_26-30_exposures", "Background-12_5-8_exposures",
                                         'Background-1_12-13_exposures','Background-1_17-20_exposures'],"sorted_path":[],"average_path":"", "full_info_path":""},
@@ -154,7 +154,7 @@ class integrated_analysis():
         #     self.Bkg_exp_sorted_path.append(self.output_path + exp_name + "_sorted.csv")
 
 
-        print("self.gamma_source_group",self.gamma_source_group)
+
         # source data
         for source, source_config in self.gamma_source_group.items():
             # print
