@@ -643,7 +643,7 @@ class integrated_analysis():
                           'Exponential Fit 2xNLL',
                           'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]']
             df = df[['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]']]
-            print("Column doesn't match")
+            print("Column doesn't match", num_cols)
 
 
         return df
