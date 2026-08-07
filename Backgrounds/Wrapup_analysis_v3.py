@@ -154,7 +154,7 @@ class integrated_analysis():
         #     self.Bkg_exp_sorted_path.append(self.output_path + exp_name + "_sorted.csv")
 
 
-
+        print("self.gamma_source_group",self.gamma_source_group)
         # source data
         for source, source_config in self.gamma_source_group.items():
             # print
@@ -613,7 +613,7 @@ class integrated_analysis():
         # sep='\s+' handles any number of spaces or tabs as delimiters
         df = pd.read_csv(file_path, sep='\s+', skiprows=1, header=None)
         num_cols = len(df.columns)
-        print(file_path, df.head(1))
+        # print(file_path, df.head(1))
         if  num_cols ==24:
             df.columns = ['Pressure [bara]',	'Lifetime [s]',	'Lifetime Error [s]',
                           'N quality events',	'N Bulk',	'Bulk Fraction'	,'Bulk Fraction Error',
