@@ -376,6 +376,8 @@ class integrated_analysis():
                             print("wrong temp")
 
                         # add sims analysis to get rejection
+                        if source=="Cs" and sorted_path_index==2:
+                            print("export Rejection Cs3",merged_df )
 
                         merged_df.to_csv(temp_config["rate_path"][sorted_path_index], index=False)
 
