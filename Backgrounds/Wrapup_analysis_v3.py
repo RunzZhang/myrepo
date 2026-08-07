@@ -2716,5 +2716,5 @@ class integrated_analysis():
 
 
 if __name__=="__main__":
-    IA =  integrated_analysis(volume="bulk")
+    IA =  integrated_analysis(volume="dome")
     # test = test_csv()
