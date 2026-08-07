@@ -386,7 +386,7 @@ class integrated_analysis():
 
                         exp_df = pd.read_csv(temp_config["rate_path"][sorted_path_index])
 
-                            columns_added = exp_df.apply(self.calculate_rejection_by_row_v2, axis=1, args=(source,))
+                        columns_added = exp_df.apply(self.calculate_rejection_by_row_v2, axis=1, args=(source,))
 
 
 
