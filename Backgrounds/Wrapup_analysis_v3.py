@@ -120,15 +120,40 @@ class integrated_analysis():
         #
 
         self.xe_shell_threshold = 0
-
-        self.background_116_sorted_path = ['Background-11_7-8_exposures',"Background-11_15-17_exposures",
-                                    "Background-11_26-30_exposures", "Background-12_5-8_exposures",
-                                    'Background-1_12-13_exposures','Background-1_17-20_exposures']
-        self.background_exp_116_raw_len = len(self.background_116_sorted_path)
-        self.background_119_sorted_path = ["Background-1_30-2_2_exposures","Background-2_17-20_exposures",
-                                           "Background-2_6-12_exposures","Background-2_28-3_2_exposures"]
-
-        self.backgrounds_exp_raw_path = self.background_116_sorted_path+self.background_119_sorted_path
+        if self.volume_option == "" or "all":
+            self.background_group = {"116K": {"sorted_path": ['Background-11_7-8_exposures',"Background-11_15-17_exposures",
+                                        "Background-11_26-30_exposures", "Background-12_5-8_exposures",
+                                        'Background-1_12-13_exposures','Background-1_17-20_exposures'],"average_path":"", "full_info_path":""},
+                                   "119K": { "sorted_path": ["Background-1_30-2_2_exposures","Background-2_17-20_exposures",
+                                               "Background-2_6-12_exposures","Background-2_28-3_2_exposures"],"average_path":"", "full_info_path":""},
+                                     "total": {"raw_path": [],
+                                               "sorted_path": [],"average_path":"", "full_info_path":""}}
+        else:
+            self.background_group = {"116K": {"sorted_path": ['Background-11_7-8_exposures',"Background-11_15-17_exposures",
+                                        "Background-11_26-30_exposures", "Background-12_5-8_exposures",
+                                        'Background-1_12-13_exposures','Background-1_17-20_exposures'],"average_path":"", "full_info_path":""},
+                                   "119K": { "sorted_path": ["Background-1_30-2_2_exposures","Background-2_17-20_exposures",
+                                               "Background-2_6-12_exposures","Background-2_28-3_2_exposures"],"average_path":"", "full_info_path":""},
+                                     "total": {"raw_path": [],
+                                               "sorted_path": [],"average_path":"", "full_info_path":""}}
+        # if self.volume_option=="":
+        #     self.background_116_sorted_path = ['Background-11_7-8_exposures',"Background-11_15-17_exposures",
+        #                                 "Background-11_26-30_exposures", "Background-12_5-8_exposures",
+        #                                 'Background-1_12-13_exposures','Background-1_17-20_exposures']
+        #     self.background_exp_116_raw_len = len(self.background_116_sorted_path)
+        #     self.background_119_sorted_path = ["Background-1_30-2_2_exposures","Background-2_17-20_exposures",
+        #                                        "Background-2_6-12_exposures","Background-2_28-3_2_exposures"]
+        #
+        #     self.backgrounds_exp_raw_path = self.background_116_sorted_path+self.background_119_sorted_path
+        # else:
+        #     self.background_116_sorted_path = ['Background-11_7-8_exposures', "Background-11_15-17_exposures",
+        #                                        "Background-11_26-30_exposures", "Background-12_5-8_exposures",
+        #                                        'Background-1_12-13_exposures', 'Background-1_17-20_exposures']
+        #     self.background_exp_116_raw_len = len(self.background_116_sorted_path)
+        #     self.background_119_sorted_path = ["Background-1_30-2_2_exposures", "Background-2_17-20_exposures",
+        #                                        "Background-2_6-12_exposures", "Background-2_28-3_2_exposures"]
+        #
+        #     self.backgrounds_exp_raw_path = self.background_116_sorted_path + self.background_119_sorted_path
 
 
         self.main_v2()
@@ -137,11 +162,12 @@ class integrated_analysis():
 
         self.read_Seitz_info()
         self.read_Seitz_info_C3F8()
-        self.read_raw_backgrounds_exp()
-        self.average_background_analysis()
-
-
-        self.bkg_subtracted_analysis()
+        self.pre_background_analysis()
+        # self.read_raw_backgrounds_exp()
+        # self.average_background_analysis()
+        #
+        #
+        # self.bkg_subtracted_analysis()
 
         self.gamma_rejection_plot_v3()
 
@@ -153,16 +179,16 @@ class integrated_analysis():
 
     def predata_process(self):
 
-        # bkg data
-        self.Bkg_exp_sorted_path = []
-        self.Bkg_average_116_path = self.output_path + "background_116_average" + ".csv"
-        self.Bkg_average_119_path = self.output_path + "background_119_average" + ".csv"
-        # bkg table containing seitz infos
-        # separate this from above because of clean signal need to merge only on pressure column
-        self.Bkg_average_116_full_info_path = self.output_path + "background_116_average_full_info" + ".csv"
-        self.Bkg_average_119_full_info_path = self.output_path + "background_119_average_full_info" + ".csv"
-        for exp_name in self.backgrounds_exp_raw_path:
-            self.Bkg_exp_sorted_path.append(self.output_path + exp_name + "_sorted.csv")
+        # # bkg data
+        # self.Bkg_exp_sorted_path = []
+        # self.Bkg_average_116_path = self.output_path + "background_116_average" + ".csv"
+        # self.Bkg_average_119_path = self.output_path + "background_119_average" + ".csv"
+        # # bkg table containing seitz infos
+        # # separate this from above because of clean signal need to merge only on pressure column
+        # self.Bkg_average_116_full_info_path = self.output_path + "background_116_average_full_info" + ".csv"
+        # self.Bkg_average_119_full_info_path = self.output_path + "background_119_average_full_info" + ".csv"
+        # for exp_name in self.backgrounds_exp_raw_path:
+        #     self.Bkg_exp_sorted_path.append(self.output_path + exp_name + "_sorted.csv")
 
 
 
@@ -192,11 +218,11 @@ class integrated_analysis():
             for temperature, temp_config in source_config["exp"].items():
                 if temp_config["raw_path"] !=[]:
                     for raw_path_index in range(len(temp_config["raw_path"])):
-                        exposure_df = self.read_exposure(temp_config["raw_path"][raw_path_index] + ".txt")
-                        exposure_df = exposure_df.iloc[:, :7]
-                        exposure_df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]',
-                                               'Exponential Fit 2xNLL',
-                                               'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]']
+                        exposure_df = self.read_exposure(temp_config["raw_path"][raw_path_index] + ".txt", volume=self.volume_option)
+                        # exposure_df = exposure_df.iloc[:, :7]
+                        # exposure_df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]',
+                        #                        'Exponential Fit 2xNLL',
+                        #                        'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]']
                         exposure_df = exposure_df[
                             (exposure_df['Lifetime [s]'] <= 6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
                         exposure_df = exposure_df[
@@ -205,18 +231,81 @@ class integrated_analysis():
                         exposure_df['Exp Rate [mHz]'] = 1000 / exposure_df['Lifetime [s]']
                         exposure_df['Exp Rate Sigma [mHz]'] = exposure_df['Lifetime Error [s]'] * 1000 / (
                             exposure_df['Lifetime [s]']) ** 2
-                        exposure_df = exposure_df.drop(columns=['Exponential Fit 2xNLL',
-                                                                'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]'])
+                        # exposure_df = exposure_df.drop(columns=['Exponential Fit 2xNLL',
+                        #                                         'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]'])
                         exposure_df.to_csv(temp_config["sorted_path"][raw_path_index], index=False)
 
+
+    def pre_background_analysis(self):
+
+        self.background_group["total"]["raw_path"] = self.background_group["116K"]["sorted_path"]+self.background_group["119K"]["sorted_path"]
+        for temp, temp_config in self.background_group.items():
+            if temp != "total":
+                temp_config["average_path"] = self.output_path + f"background_{temp}_average.csv"
+                temp_config["full_info_path"]=self.output_path + f"background_{temp}_average_full_info" + ".csv"
+            else:
+                for exp in temp_config["raw_path"]:
+                    temp_config["sorted_path"].append(self.output_path + exp + "_sorted.csv")
+
+        # calcuate the rate
+        for i in range(len(self.background_group["total"]["raw_path"])):
+            exposure_df = self.read_exposure(self.background_group["total"]["raw_path"][i] + ".txt", volume=self.volume_option)
+            # exposure_df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]', 'Exponential Fit 2xNLL',
+            #                        'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]']
+            exposure_df = exposure_df[
+                (exposure_df['Lifetime [s]'] <= 6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
+            exposure_df = exposure_df[
+                (exposure_df['Lifetime Error [s]'] / exposure_df['Lifetime [s]'] <= 0.3)]
+            exposure_df['Bkg Rate [mHz]'] = 1000 / exposure_df['Lifetime [s]']
+            exposure_df['Bkg Rate Sigma [mHz]'] = exposure_df['Lifetime Error [s]'] * 1000 / (
+                exposure_df['Lifetime [s]']) ** 2
+            # exposure_df = exposure_df.drop(columns=['Exponential Fit 2xNLL',
+            #                        'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]'])
+            exposure_df.to_csv(self.background_group["total"]["sorted_path"][i], index=False)
+
+
+        # average
+
+        for temp, temp_config in self.background_group.items():
+            if temp != "total":
+                temp_config["average_path"] = self.output_path + f"background_{temp}_average.csv"
+                temp_config["full_info_path"]=self.output_path + f"background_{temp}_average_full_info" + ".csv"
+                bkg_df_list = []
+                for i in range(len(temp_config["sorted_path"])):
+
+                    bkg_df = pd.read_csv(temp_config["sorted_path"][i])
+                    bkg_df_list.append(bkg_df)
+                combined_df = pd.concat(bkg_df_list, ignore_index=True)
+                result_df = combined_df.groupby('Pressure [bara]').agg({
+                    'Lifetime [s]': 'mean',  # Simple average
+                    'Lifetime Error [s]': self.calculate_rss,  # Custom square root math,
+                    'Bkg Rate [mHz]': 'mean',
+                    'Bkg Rate Sigma [mHz]': self.calculate_rss
+                }).reset_index()
+                print('result_df_116', result_df)
+                result_df.to_csv(temp_config["average_path"], index=False)
+
+                # add different source uplimit
+
+                result_df_full_info = pd.merge(result_df, self.df_energy_116_tab, on='Pressure [bara]',
+                                                   how="inner")
+                columns_added_Cs = result_df_full_info.apply(self.calculate_bkg_uplimit_by_row, axis=1,
+                                                                 args=("Cs",))
+                columns_added_Co = result_df_full_info.apply(self.calculate_bkg_uplimit_by_row, axis=1,
+                                                                 args=("Co",))
+
+                result_df_full_info = pd.concat([result_df_full_info, columns_added_Cs, columns_added_Co],
+                                                    axis=1)
+                # print('result_df_116_full_info.columns',result_df_116_full_info.columns)
+                result_df_full_info.to_csv(temp_config["full_info_path"], index=False)
 
 
     def read_raw_backgrounds_exp(self):
         # read file, delete unreasonable rows and rewrite
         for i in range(len(self.backgrounds_exp_raw_path)):
-            exposure_df = self.read_exposure(self.backgrounds_exp_raw_path[i] + ".txt")
-            exposure_df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]', 'Exponential Fit 2xNLL',
-                                   'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]']
+            exposure_df = self.read_exposure(self.backgrounds_exp_raw_path[i] + ".txt", volume=self.volume_option)
+            # exposure_df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]', 'Exponential Fit 2xNLL',
+            #                        'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]']
             exposure_df = exposure_df[
                 (exposure_df['Lifetime [s]'] <= 6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
             exposure_df = exposure_df[
@@ -224,8 +313,8 @@ class integrated_analysis():
             exposure_df['Bkg Rate [mHz]'] = 1000 / exposure_df['Lifetime [s]']
             exposure_df['Bkg Rate Sigma [mHz]'] = exposure_df['Lifetime Error [s]'] * 1000 / (
             exposure_df['Lifetime [s]']) ** 2
-            exposure_df = exposure_df.drop(columns=['Exponential Fit 2xNLL',
-                                   'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]'])
+            # exposure_df = exposure_df.drop(columns=['Exponential Fit 2xNLL',
+            #                        'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]'])
             exposure_df.to_csv(self.Bkg_exp_sorted_path[i], index=False)
     def average_background_analysis(self):
         # np array operations, keep the pressure and average value if not NA
@@ -279,13 +368,13 @@ class integrated_analysis():
 
 
     def bkg_subtracted_analysis(self):
-        self.df_bkg_116 = pd.read_csv(self.Bkg_average_116_path)
+        self.df_bkg_116 = pd.read_csv(self.background_group["116K"]["average_path"])
         # self.df_bkg_116.columns = ['Pressure [bara]','Bkg Lifetime [s]','Bkg Lifetime Error [s]','Bkg Rate [mHz]', 'Bkg Rate Sigma [mHz]']
         self.df_bkg_116 = self.df_bkg_116.rename(columns={
             'Lifetime [s]': 'Bkg Lifetime [s]',
             'Lifetime Error [s]': 'Bkg Lifetime Error [s]'
         })
-        self.df_bkg_119 =  pd.read_csv(self.Bkg_average_119_path)
+        self.df_bkg_119 =  pd.read_csv(self.background_group["119K"]["average_path"])
         # self.df_bkg_119.columns = ['Pressure [bara]', 'Bkg Lifetime [s]', 'Bkg Lifetime Error [s]','Bkg Rate [mHz]', 'Bkg Rate Sigma [mHz]']
         self.df_bkg_119 = self.df_bkg_116.rename(columns={
             'Lifetime [s]': 'Bkg Lifetime [s]',
@@ -551,13 +640,46 @@ class integrated_analysis():
 
 
 
-    def read_exposure(self,filename):
+    def read_exposure(self,filename, volume=""):
         # Define your path (we'll use a relative path)
         file_path = os.path.join('..', 'exp_exposure', filename)
 
         # Read the file
         # sep='\s+' handles any number of spaces or tabs as delimiters
         df = pd.read_csv(file_path, sep='\s+', skiprows=1, header=None)
+        num_cols = len(df.columns)
+        if  num_cols ==24:
+            df.columns = ['Pressure [bara]',	'Lifetime [s]',	'Lifetime Error [s]',
+                          'N quality events',	'N Bulk',	'Bulk Fraction'	,'Bulk Fraction Error',
+                          'Bulk Lifetime [s]',	'Bulk Lifetime Error [s]',	'N Wall',	'Wall Fraction',
+                          'Wall Fraction Error',	'Wall Lifetime [s]',	'Wall Lifetime Error [s]',
+                          'N Dome',	'Dome Fraction',	'Dome Fraction Error',	'Dome Lifetime [s]',
+                          'Dome Lifetime Error [s]',	'N Bottom',	'Bottom Fraction',	'Bottom Fraction Error',
+                          'Bottom Lifetime [s]'	,'Bottom Lifetime Error [s]']
+            if volume == "":
+                df = df[['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]']]
+            elif volume =="bulk":
+                df = df[['Pressure [bara]', 'Bulk Lifetime [s]', 'Bulk Lifetime Error [s]']]
+                df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]']
+            elif volume =="dome":
+                df = df[['Pressure [bara]', 'Dome Lifetime [s]', 'Dome Lifetime Error [s]']]
+                df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]']
+            else:
+                df = df[['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]']]
+
+        elif num_cols ==7:
+            df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]',
+                               'Exponential Fit 2xNLL',
+                               'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]']
+            df = df[['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]']]
+        else:
+            df = df.iloc[:, :7]
+            df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]',
+                          'Exponential Fit 2xNLL',
+                          'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]']
+            df = df[['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]']]
+            print("Column doesn't match")
+
 
         return df
     def calculate_bkg_uplimit_by_row(self, row, source):
