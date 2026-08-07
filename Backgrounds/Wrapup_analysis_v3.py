@@ -121,19 +121,19 @@ class integrated_analysis():
 
         self.xe_shell_threshold = 0
         if self.volume_option == "" or "all":
-            self.background_group = {"116K": {"sorted_path": ['Background-11_7-8_exposures',"Background-11_15-17_exposures",
+            self.background_group = {"116K": {"raw_path": ['Background-11_7-8_exposures',"Background-11_15-17_exposures",
                                         "Background-11_26-30_exposures", "Background-12_5-8_exposures",
-                                        'Background-1_12-13_exposures','Background-1_17-20_exposures'],"average_path":"", "full_info_path":""},
-                                   "119K": { "sorted_path": ["Background-1_30-2_2_exposures","Background-2_17-20_exposures",
-                                               "Background-2_6-12_exposures","Background-2_28-3_2_exposures"],"average_path":"", "full_info_path":""},
+                                        'Background-1_12-13_exposures','Background-1_17-20_exposures'],"sorted_path":[],"average_path":"", "full_info_path":""},
+                                   "119K": { "raw_path": ["Background-1_30-2_2_exposures","Background-2_17-20_exposures",
+                                               "Background-2_6-12_exposures","Background-2_28-3_2_exposures"],"sorted_path":[],"average_path":"", "full_info_path":""},
                                      "total": {"raw_path": [],
                                                "sorted_path": [],"average_path":"", "full_info_path":""}}
         else:
-            self.background_group = {"116K": {"sorted_path": ['Background-11_7-8_exposures',"Background-11_15-17_exposures",
+            self.background_group = {"116K": {"raw_path": ['Background-11_7-8_exposures',"Background-11_15-17_exposures",
                                         "Background-11_26-30_exposures", "Background-12_5-8_exposures",
-                                        'Background-1_12-13_exposures','Background-1_17-20_exposures'],"average_path":"", "full_info_path":""},
-                                   "119K": { "sorted_path": ["Background-1_30-2_2_exposures","Background-2_17-20_exposures",
-                                               "Background-2_6-12_exposures","Background-2_28-3_2_exposures"],"average_path":"", "full_info_path":""},
+                                        'Background-1_12-13_exposures','Background-1_17-20_exposures'],"sorted_path":[],"average_path":"", "full_info_path":""},
+                                   "119K": { "raw_path": ["Background-1_30-2_2_exposures","Background-2_17-20_exposures",
+                                               "Background-2_6-12_exposures","Background-2_28-3_2_exposures"],"sorted_path":[],"average_path":"", "full_info_path":""},
                                      "total": {"raw_path": [],
                                                "sorted_path": [],"average_path":"", "full_info_path":""}}
         # if self.volume_option=="":
@@ -238,11 +238,13 @@ class integrated_analysis():
 
     def pre_background_analysis(self):
 
-        self.background_group["total"]["raw_path"] = self.background_group["116K"]["sorted_path"]+self.background_group["119K"]["sorted_path"]
+        self.background_group["total"]["raw_path"] = self.background_group["116K"]["raw_path"]+self.background_group["119K"]["raw_path"]
         for temp, temp_config in self.background_group.items():
             if temp != "total":
                 temp_config["average_path"] = self.output_path + f"background_{temp}_average.csv"
                 temp_config["full_info_path"]=self.output_path + f"background_{temp}_average_full_info" + ".csv"
+                for exp in temp_config["raw_path"]:
+                    temp_config["sorted_path"].append(self.output_path + exp + "_sorted.csv")
             else:
                 for exp in temp_config["raw_path"]:
                     temp_config["sorted_path"].append(self.output_path + exp + "_sorted.csv")
