@@ -901,7 +901,7 @@ class integrated_analysis():
         x_config = [{"x": "Seitz [keV]", "xlabel": r"Seitz threshold [keV]"},
                     {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                      "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
-                    {"x": "'Q_rl-1_rhol-1 [GeVcm**2 g-1]'", "xlabel": r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"}]
+                    {"x": "Q_rl-1_rhol-1 [GeVcm**2 g-1]", "xlabel": r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"}]
 
         for i in range(4):
             for j in range(3):
