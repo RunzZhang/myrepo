@@ -728,7 +728,8 @@ class integrated_analysis():
             self.sim_doped_list = self.gamma_source_group[source]["sim"]["doped_data"]
         except:
             print("NA sources")
-        print(row.empty)
+        if source =="Cs":
+            print(row)
         if not row.empty:
             self.Rate_factor = self.sim_list[0]
 
