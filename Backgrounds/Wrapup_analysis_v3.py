@@ -229,7 +229,7 @@ class integrated_analysis():
             exposure_df = exposure_df[
                 (exposure_df['Lifetime [s]'] <= 6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
             exposure_df = exposure_df[
-                (exposure_df['Lifetime Error [s]'] / exposure_df['Lifetime [s]'] <= 0.3)]
+                (exposure_df['Lifetime Error [s]'] / exposure_df['Lifetime [s]'] <= 0.4)]
             exposure_df['Bkg Rate [mHz]'] = 1000 / exposure_df['Lifetime [s]']
             exposure_df['Bkg Rate Sigma [mHz]'] = exposure_df['Lifetime Error [s]'] * 1000 / (
                 exposure_df['Lifetime [s]']) ** 2
