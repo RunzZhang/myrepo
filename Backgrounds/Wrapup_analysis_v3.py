@@ -383,6 +383,8 @@ class integrated_analysis():
 
                         exp_df = pd.read_csv(temp_config["rate_path"][sorted_path_index])
                         columns_added = exp_df.apply(self.calculate_rejection_by_row_v2, axis=1, args=(source,))
+                        if source=="Cs" and sorted_path_index==3:
+                            print("export Rejection Cs3",exp_df,columns_added )
                         merged_df_rejection = pd.concat([exp_df, columns_added], axis=1)
                         # print('Cs print(merged_df)',self.Cs_exp_rate_path[i],'\n',merged_df)
                         merged_df_rejection.to_csv(temp_config["rejection_path"][sorted_path_index], index=False)
@@ -863,7 +865,6 @@ class integrated_analysis():
                         # only positive rate
                         df = df[df['Clean Rate [mHz]'] > 0]
                         temp_config["plot_list"].append(df)
-
 
                         df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                                      "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]',
