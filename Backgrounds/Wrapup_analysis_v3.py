@@ -171,11 +171,11 @@ class integrated_analysis():
             # read sims
             with open(source_config["sim"]["pure_address"], "rb") as f:
                 source_config["sim"]["pure_data"] = pickle.load(f)
-            print(source, "sims", source_config["sim"]["pure_data"])
+            # print(source, "sims", source_config["sim"]["pure_data"])
 
             with open(source_config["sim"]["doped_address"], "rb") as f:
                 source_config["sim"]["doped_data"] = pickle.load(f)
-            print(source, "sims", source_config["sim"]["doped_data"])
+            # print(source, "sims", source_config["sim"]["doped_data"])
 
             # read_source exp data
             for temperature, temp_config in source_config["exp"].items():
