@@ -855,7 +855,7 @@ class integrated_analysis():
                     for rejection_path_index in range(len(temp_config["rejection_path"])):
                         # combine the Seitz to the exp data
                         df = pd.read_csv(temp_config["rejection_path"][rejection_path_index])
-                        print("df.columns",source,df.columns)
+                        print("df.columns",source,rejection_path_index,df.columns)
 
 
                         pressure_drop_list = []
