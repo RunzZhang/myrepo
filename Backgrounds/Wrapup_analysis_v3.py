@@ -422,7 +422,7 @@ class integrated_analysis():
                         merged_df.to_csv(temp_config["rate_path"][sorted_path_index], index=False)
                         if plot:
                             ax.errorbar(merged_df['Seitz [keV]'], merged_df['Exp Rate [mHz]'],
-                                        yerr=merged_df['Exp Rate Sigma [mHz]'], label=f"{source} {temperature}", color=self.color_code[source]
+                                        yerr=merged_df['Exp Rate Sigma [mHz]'], label=f"{source} {temperature}", color=self.color_code[source],
                                         fmt='o')
 
                         # cacluate rejection
