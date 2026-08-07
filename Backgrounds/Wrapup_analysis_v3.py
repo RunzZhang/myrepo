@@ -859,26 +859,7 @@ class integrated_analysis():
               "Xe abs Rate[mHz]: ", self.Rate_factor_doped * self.counts_cum_bin_doped[0])
         return output
 
-    def bkg_plot(self):
-        self.df_bkg_116 = pd.read_csv(self.Bkg_average_116_path)
-        self.df_bkg_116 = pd.merge(self.df_bkg_116, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
-        print('self.df_bkg_116',self.df_bkg_116)
-        self.df_bkg_119 = pd.read_csv(self.Bkg_average_119_path)
-        self.df_bkg_119 = pd.merge(self.df_bkg_119, self.df_energy_119_tab, on='Pressure [bara]', how="inner")
-        print('self.df_bkg_119', self.df_bkg_119)
-
-        fig, ax = plt.subplots()
-        ax.errorbar(self.df_bkg_116['Seitz [keV]'],self.df_bkg_116["Bkg Rate [mHz]"],
-                   yerr = self.df_bkg_116["Bkg Rate Sigma [mHz]"],label="combined bkg 116.7 K ",fmt = 'o',color = 'r')
-        ax.errorbar(self.df_bkg_119['Seitz [keV]'], self.df_bkg_119["Bkg Rate [mHz]"],
-                    yerr=self.df_bkg_119["Bkg Rate Sigma [mHz]"], label="combined bkg 119.6 K ",fmt = 'o', color='b')
-        ax.set_xlim(0.4,3.6)
-        ax.set_ylim(5,55)
-        ax.set_xlabel("Seitz [keV]")
-        ax.set_ylabel("Bkg Rate [mHz]")
-        ax.legend()
-
-        plt.savefig(self.plot_path + "average_bkg_rate.pdf")
+    
 
 
     def gamma_rejection_plot_v3(self):
