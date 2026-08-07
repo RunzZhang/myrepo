@@ -2642,7 +2642,7 @@ class integrated_analysis():
             self.df_Cs_116_plot["Seitz [keV]"],
             self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_116_plot["Rejection Sigma KeV[/keV]"],
-            label="SBC (Ar+Xe) 116K",
+            label="SBC (Ar+Xe) 116.7K",
             fmt='o',
             markersize=8,
             color="tab:brown"  # Give datasets distinct colors
@@ -2653,7 +2653,7 @@ class integrated_analysis():
             self.df_Cs_119_plot["Seitz [keV]"],
             self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
-            label="SBC (Ar+Xe) 119K",
+            label="SBC (Ar+Xe) 119.6K",
             fmt='s',
             markersize=8,
             color="tab:green"
@@ -2859,7 +2859,7 @@ class integrated_analysis():
             self.df_Cs_116_plot["Seitz [keV]"],
             self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_116_plot["Rejection Sigma KeV[/keV]"],
-            label="SBC (Ar+Xe) 116K",
+            label="SBC (Ar+Xe) 116.7K",
             fmt='o',
             markersize=8,
             color="tab:brown"  # Give datasets distinct colors
@@ -2870,7 +2870,7 @@ class integrated_analysis():
             self.df_Cs_119_plot["Seitz [keV]"],
             self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
-            label="SBC (Ar+Xe) 119K",
+            label="SBC (Ar+Xe) 119.6K",
             fmt='s',
             markersize=8,
             color="tab:green"
@@ -2988,7 +2988,7 @@ class integrated_analysis():
             self.df_Cs_116_plot["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"],
             self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_116_plot["Rejection Sigma KeV[/keV]"],
-            label="SBC (Ar+Xe) 116K",
+            label="SBC (Ar+Xe) 116.7K",
             fmt='o',
             markersize=8,
             color="tab:brown"  # Give datasets distinct colors
@@ -2999,7 +2999,7 @@ class integrated_analysis():
             self.df_Cs_119_plot["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"],
             self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
-            label="SBC (Ar+Xe) 119K",
+            label="SBC (Ar+Xe) 119.6K",
             fmt='s',
             markersize=8,
             color="tab:green"
@@ -3035,7 +3035,7 @@ class integrated_analysis():
             self.df_Cs_116_plot["Q_rl-1_rhol-1 [GeVcm**2 g-1]"],
             self.df_Cs_116_plot["Rejection Rate Xenon Abs[]"],
             yerr=self.df_Cs_116_plot["Rejection Sigma Xenon Abs[]"],
-            label="SBC (Ar+Xe) 116K",
+            label="SBC (Ar+Xe) 116.7K",
             fmt='o',
             markersize=8,
             color="tab:brown"  # Give datasets distinct colors
@@ -3046,7 +3046,7 @@ class integrated_analysis():
             self.df_Cs_119_plot["Q_rl-1_rhol-1 [GeVcm**2 g-1]"],
             self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"],
             yerr=self.df_Cs_119_plot["Rejection Sigma Xenon Abs[]"],
-            label="SBC (Ar+Xe) 119K",
+            label="SBC (Ar+Xe) 119.6K",
             fmt='s',
             markersize=8,
             color="tab:green"
