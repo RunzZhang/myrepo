@@ -182,6 +182,8 @@ class integrated_analysis():
                 if temp_config["raw_path"] !=[]:
                     for raw_path_index in range(len(temp_config["raw_path"])):
                         exposure_df = self.read_exposure(temp_config["raw_path"][raw_path_index] + ".txt", volume=self.volume_option)
+                        if source=="Cs" and raw_path_index==3:
+                            print("export Rejection Cs3",exposure_df )
                         # exposure_df = exposure_df.iloc[:, :7]
                         # exposure_df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]',
                         #                        'Exponential Fit 2xNLL',
@@ -356,8 +358,7 @@ class integrated_analysis():
                         # combine the Seitz to the exp data
                         # print("Cs ",temperature, temp_config["sorted_path"])
                         exposure_df = pd.read_csv(temp_config["sorted_path"][sorted_path_index])
-                        if source=="Cs" and sorted_path_index==3:
-                            print("export Rejection Cs3",exposure_df )
+
                         # merge both has the pressure value, on pressure
                         if temperature =="116K":
                             merged_df = pd.merge(self.df_bkg_116, exposure_df, on='Pressure [bara]', how="inner")
@@ -378,8 +379,7 @@ class integrated_analysis():
                             print("wrong temp")
 
                         # add sims analysis to get rejection
-                        if source=="Cs" and sorted_path_index==3:
-                            print("export Rejection Cs3",merged_df )
+
 
                         merged_df.to_csv(temp_config["rate_path"][sorted_path_index], index=False)
 
@@ -387,8 +387,7 @@ class integrated_analysis():
 
                         exp_df = pd.read_csv(temp_config["rate_path"][sorted_path_index])
                         columns_added = exp_df.apply(self.calculate_rejection_by_row_v2, axis=1, args=(source,))
-                        if source=="Cs" and sorted_path_index==3:
-                            print("export Rejection Cs3",exp_df,columns_added )
+
                         merged_df_rejection = pd.concat([exp_df, columns_added], axis=1)
                         # print('Cs print(merged_df)',self.Cs_exp_rate_path[i],'\n',merged_df)
                         merged_df_rejection.to_csv(temp_config["rejection_path"][sorted_path_index], index=False)
