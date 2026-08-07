@@ -16,7 +16,7 @@ class integrated_analysis():
         # self.Co_sim_path  ='/lzdata/runzezhang/result/GR_sims/Co_output_5E6.pkl'
         # self.Cs_sim_path = '/lzdata/runzezhang/result/GR_sims/Cs_output_5E6.pkl'
         self.base_path = "/lzdata/runzezhang/result/GR_sims/"
-
+        self.color_code = {"Cs":"green", "Co": "cyan", "Ba": "orange", "Th":"brown", "Hot_Cs":"gray"}
         self.volume_option =  volume
         if self.volume_option== ""or self.volume_option== "all":
             self.gamma_source_group = {"Cs":{"sim":{"pure_address":None,"pure_data":None, "doped_address":None,"doped_data":None},
@@ -422,7 +422,7 @@ class integrated_analysis():
                         merged_df.to_csv(temp_config["rate_path"][sorted_path_index], index=False)
                         if plot:
                             ax.errorbar(merged_df['Seitz [keV]'], merged_df['Exp Rate [mHz]'],
-                                        yerr=merged_df['Exp Rate Sigma [mHz]'], label=f"{source} {temperature}",
+                                        yerr=merged_df['Exp Rate Sigma [mHz]'], label=f"{source} {temperature}", color=self.color_code[source]
                                         fmt='o')
 
                         # cacluate rejection
