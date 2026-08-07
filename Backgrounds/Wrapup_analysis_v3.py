@@ -729,7 +729,7 @@ class integrated_analysis():
         except:
             print("NA sources")
         if source =="Cs":
-            print(row)
+            print(row,row.isna().any().any())
         if not row.empty:
             self.Rate_factor = self.sim_list[0]
 
