@@ -613,6 +613,7 @@ class integrated_analysis():
         # sep='\s+' handles any number of spaces or tabs as delimiters
         df = pd.read_csv(file_path, sep='\s+', skiprows=1, header=None)
         num_cols = len(df.columns)
+        print(file_path, df.head(1))
         if  num_cols ==24:
             df.columns = ['Pressure [bara]',	'Lifetime [s]',	'Lifetime Error [s]',
                           'N quality events',	'N Bulk',	'Bulk Fraction'	,'Bulk Fraction Error',
