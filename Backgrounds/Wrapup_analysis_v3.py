@@ -377,11 +377,14 @@ class integrated_analysis():
             'Lifetime Error [s]': 'Bkg Lifetime Error [s]'
         })
         if plot:
+            bkg_df_plot116 = pd.merge(self.df_bkg_116, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
+            bkg_df_plot119 = pd.merge(self.df_bkg_119, self.df_energy_119_tab, on='Pressure [bara]', how="inner")
             fig, ax = plt.subplots()
-            ax.errorbar(self.df_bkg_116['Seitz [keV]'], self.df_bkg_116["Bkg Rate [mHz]"],
-                        yerr=self.df_bkg_116["Bkg Rate Sigma [mHz]"], label="combined bkg 116.7 K ", fmt='o', color='r')
-            ax.errorbar(self.df_bkg_119['Seitz [keV]'], self.df_bkg_119["Bkg Rate [mHz]"],
-                        yerr=self.df_bkg_119["Bkg Rate Sigma [mHz]"], label="combined bkg 119.6 K ", fmt='o', color='b')
+                
+            ax.errorbar(bkg_df_plot116['Seitz [keV]'], bkg_df_plot116["Bkg Rate [mHz]"],
+                        yerr=bkg_df_plot116["Bkg Rate Sigma [mHz]"], label="combined bkg 116.7 K ", fmt='o', color='r')
+            ax.errorbar(bkg_df_plot119['Seitz [keV]'], bkg_df_plot119["Bkg Rate [mHz]"],
+                        yerr=bkg_df_plot119["Bkg Rate Sigma [mHz]"], label="combined bkg 119.6 K ", fmt='o', color='b')
 
         for source, source_config in self.gamma_source_group.items():
 
