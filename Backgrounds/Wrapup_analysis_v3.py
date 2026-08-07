@@ -441,8 +441,8 @@ class integrated_analysis():
 
 
         if plot:
-            ax.set_xlim(0.4, 3.6)
-            ax.set_ylim(5, 55)
+            # ax.set_xlim(0.4, 3.6)
+            # ax.set_ylim(5, 55)
             ax.set_xlabel("Seitz [keV]")
             ax.set_ylabel("Bkg Rate [mHz]")
             ax.legend()
