@@ -356,6 +356,8 @@ class integrated_analysis():
                         # combine the Seitz to the exp data
                         # print("Cs ",temperature, temp_config["sorted_path"])
                         exposure_df = pd.read_csv(temp_config["sorted_path"][sorted_path_index])
+                        if source=="Cs" and sorted_path_index==3:
+                            print("export Rejection Cs3",exposure_df )
                         # merge both has the pressure value, on pressure
                         if temperature =="116K":
                             merged_df = pd.merge(self.df_bkg_116, exposure_df, on='Pressure [bara]', how="inner")
