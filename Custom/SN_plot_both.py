@@ -1058,7 +1058,7 @@ class SN():
 
         print('df_primary_origin','z bound', df_primary_origin["Z/mm"].max(), df_primary_origin["Z/mm"].min())
         print('df_primary_vedge', 'z bound', df_primary_vedge["Z/mm"].max(), df_primary_vedge["Z/mm"].min())
-        print('df_primary_hedge', 'x bound', df_primary_hedge["X/mm"].max(), df_primary_hedge["X/mm"].min())
+        print('df_primary_hedge', 'x bound', df_primary_hedge["X/mm"].abs().max(), df_primary_hedge["X/mm"].abs().min())
 
 
 
