@@ -928,7 +928,7 @@ class integrated_analysis():
                             else:
                                 continue
                         print(temp_config["plot_list"])
-                        if len(temp_config["plot_list"])>1:
+                        if len(temp_config["plot_list"])>=1:
                             temp_config["plot"] = pd.concat(temp_config["plot_list"], ignore_index=True)
                             temp_config["plot"] = self.concat_PT_condition(temp_config["plot"])
 
