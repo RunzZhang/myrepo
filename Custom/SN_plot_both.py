@@ -174,7 +174,9 @@ class SN():
             # self.gamma_rejection_rate_per_keV_vs_Setiz()
             # self.gamma_rejection_rate_vs_Setiz()
 
-            self.write_sims_results()
+
+            self.find_boundary()
+            # self.write_sims_results()
             # self.write_sims_results_thesis()
 
 
@@ -1041,6 +1043,25 @@ class SN():
 
             plt.savefig(self.plot_path + f"{self.source}{self.volume}_output_spectrum_thesis.pdf")
 
+    def find_boundary(self):
+        volume_condition_primary_origin = (self.merged_df_primary["X/mm"] ** 2 + self.merged_df_primary[
+            "Y/mm"] ** 2 <= 1**2)&(self.merged_df_primary["Volume"] == "LAr_phys")
+        volume_condition_primary_vedge = ((self.merged_df_primary["X/mm"] ** 2 + self.merged_df_primary[
+            "Y/mm"].between(114**2,115**2)))&(self.merged_df_primary["Volume"] == "LAr_phys")
+
+        volume_condition_primary_hedge = ((self.merged_df_primary["Z/mm"].between(200, 300))) & (self.merged_df_primary["Volume"] == "LAr_phys")
+
+
+        df_primary_origin= self.merged_df_primary[volume_condition_primary_origin]
+        df_primary_vedge = self.merged_df_primary[volume_condition_primary_vedge]
+        df_primary_hedge = self.merged_df_primary[volume_condition_primary_hedge]
+
+        print('df_primary_origin','z bound', df_primary_origin["Z/mm"].max(), df_primary_origin["Z/mm"].min())
+        print('df_primary_vedge', 'z bound', df_primary_vedge["Z/mm"].max(), df_primary_vedge["Z/mm"].min())
+        print('df_primary_hedge', 'x bound', df_primary_hedge["X/mm"].max(), df_primary_hedge["X/mm"].min())
+
+
+
     def write_sims_results(self, plot= False):
 
 
@@ -1662,8 +1683,8 @@ class test_csv():
 if __name__=="__main__":
     # sn = SN(doped=True, source="Cs", volume="bulk")
     # sn = SN(doped=True, source="Cs", volume="dome")
-    # sn = SN(doped=False, source="Cs", volume="bulk")
-    # sn = SN(doped=False, source="Cs", volume="dome")
+    sn = SN(doped=False, source="Cs", volume="bulk")
+    sn = SN(doped=False, source="Cs", volume="dome")
 
     # sn = SN(doped=True, source="Co", volume="bulk")
     # sn = SN(doped=True, source="Co", volume="dome")
@@ -1677,8 +1698,8 @@ if __name__=="__main__":
     #
     # sn = SN(doped=True, source="Th", volume="bulk")
     # sn = SN(doped=True, source="Th", volume="dome")
-    sn = SN(doped=False, source="Th", volume="bulk")
-    sn = SN(doped=False, source="Th", volume="dome")
+    # sn = SN(doped=False, source="Th", volume="bulk")
+    # sn = SN(doped=False, source="Th", volume="dome")
     #
     # sn = SN(doped=True, source="Hot_Cs", volume="bulk")
     # sn = SN(doped=True, source="Hot_Cs", volume="dome")
