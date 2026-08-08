@@ -418,7 +418,7 @@ class integrated_analysis():
                             # add sims analysis to get rejection
 
                             if source=="Co" and sorted_path_index==0:
-                                print("source Co columns 0", columns_added, merged_df)
+                                print("source Co columns 0", merged_df)
 
                             merged_df.to_csv(temp_config["rate_path"][sorted_path_index], index=False)
                             if plot:
@@ -437,9 +437,9 @@ class integrated_analysis():
                             merged_df_rejection = pd.concat([exp_df, columns_added], axis=1)
                             # print('Cs print(merged_df)',self.Cs_exp_rate_path[i],'\n',merged_df)
                             if source=="Co" and sorted_path_index==0:
-                                print("source Co columns 0", columns_added, merged_df)
-                                print("source Co columns 1", columns_added, exp_df)
-                                print("source Co columns 2", columns_added,merged_df_rejection)
+                                print("source Co columns 0",  merged_df)
+                                print("source Co columns 1",  exp_df)
+                                print("source Co columns 2", merged_df_rejection)
 
                             merged_df_rejection.to_csv(temp_config["rejection_path"][sorted_path_index], index=False)
                         else:
