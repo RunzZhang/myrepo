@@ -200,6 +200,8 @@ class integrated_analysis():
                             exposure_df['Lifetime [s]']) ** 2
                         # exposure_df = exposure_df.drop(columns=['Exponential Fit 2xNLL',
                         #                                         'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]'])
+                        if source=="Co" and raw_path_index==0:
+                            print("Co test",exposure_df)
 
                         if exposure_df.empty:
                             temp_config["raw_path"].pop(raw_path_index)
