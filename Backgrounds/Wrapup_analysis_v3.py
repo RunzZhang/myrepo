@@ -200,16 +200,9 @@ class integrated_analysis():
                             exposure_df['Lifetime [s]']) ** 2
                         # exposure_df = exposure_df.drop(columns=['Exponential Fit 2xNLL',
                         #                                         'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]'])
-                        if source=="Co" and raw_path_index==0:
-                            print("Co test",exposure_df)
 
-                        if exposure_df.empty:
-                            temp_config["raw_path"].pop(raw_path_index)
-                            temp_config["sorted_path"].pop(raw_path_index)
-                            temp_config["rate_path"].pop(raw_path_index)
-                            temp_config["rejection_path"].pop(raw_path_index)
-                        else:
-                            exposure_df.to_csv(temp_config["sorted_path"][raw_path_index], index=False)
+
+                        exposure_df.to_csv(temp_config["sorted_path"][raw_path_index], index=False)
 
 
     def pre_background_analysis(self):
@@ -260,7 +253,7 @@ class integrated_analysis():
                     'Bkg Rate [mHz]': 'mean',
                     'Bkg Rate Sigma [mHz]': self.calculate_rss
                 }).reset_index()
-                print('result_df_116', result_df)
+                # print('result_df_116', result_df)
                 result_df.to_csv(temp_config["average_path"], index=False)
 
                 # add different source uplimit
@@ -282,10 +275,10 @@ class integrated_analysis():
     def bkg_plot(self,plot=False):
         self.df_bkg_116 = pd.read_csv(self.background_group["116K"]["average_path"])
         self.df_bkg_116 = pd.merge(self.df_bkg_116, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
-        print('self.df_bkg_116', self.df_bkg_116)
+        # print('self.df_bkg_116', self.df_bkg_116)
         self.df_bkg_119 = pd.read_csv(self.background_group["119K"]["average_path"])
         self.df_bkg_119 = pd.merge(self.df_bkg_119, self.df_energy_119_tab, on='Pressure [bara]', how="inner")
-        print('self.df_bkg_119', self.df_bkg_119)
+        # print('self.df_bkg_119', self.df_bkg_119)
         if plot:
             fig, ax = plt.subplots()
             ax.errorbar(self.df_bkg_116['Seitz [keV]'], self.df_bkg_116["Bkg Rate [mHz]"],
@@ -329,7 +322,7 @@ class integrated_analysis():
             'Bkg Rate [mHz]':'mean',
             'Bkg Rate Sigma [mHz]':self.calculate_rss
         }).reset_index()
-        print('result_df_116',result_df_116)
+        # print('result_df_116',result_df_116)
         result_df_116.to_csv(self.Bkg_average_116_path, index=False)
 
         # add different source uplimit
@@ -356,7 +349,7 @@ class integrated_analysis():
             'Bkg Rate Sigma [mHz]': self.calculate_rss
         }).reset_index()
 
-        print('result_df_119',result_df_119)
+        # print('result_df_119',result_df_119)
         result_df_119.to_csv(self.Bkg_average_119_path, index=False)
 
         result_df_119_full_info = pd.merge(result_df_119, self.df_energy_119_tab, on='Pressure [bara]', how="inner")
@@ -401,48 +394,50 @@ class integrated_analysis():
                         # combine the Seitz to the exp data
                         # print("Cs ",temperature, temp_config["sorted_path"])
                         exposure_df = pd.read_csv(temp_config["sorted_path"][sorted_path_index])
+                        if not exposure_df.empty:
 
-                        # merge both has the pressure value, on pressure
-                        if temperature =="116K":
-                            merged_df = pd.merge(self.df_bkg_116, exposure_df, on='Pressure [bara]', how="inner")
-                        elif temperature=="119K":
-                            merged_df = pd.merge(self.df_bkg_119, exposure_df, on='Pressure [bara]', how="inner")
+                            # merge both has the pressure value, on pressure
+                            if temperature =="116K":
+                                merged_df = pd.merge(self.df_bkg_116, exposure_df, on='Pressure [bara]', how="inner")
+                            elif temperature=="119K":
+                                merged_df = pd.merge(self.df_bkg_119, exposure_df, on='Pressure [bara]', how="inner")
+                            else:
+                                print("wrong temp")
+                            # clean rate!
+                            merged_df['Clean Rate [mHz]'] = merged_df['Exp Rate [mHz]'] - merged_df['Bkg Rate [mHz]']
+                            merged_df['Clean Rate Sigma [mHz]'] = np.sqrt(
+                                merged_df['Exp Rate Sigma [mHz]'] ** 2 + merged_df['Bkg Rate Sigma [mHz]'] ** 2)
+                            # add Seitz and Eion unit
+                            if temperature =="116K":
+                                merged_df = pd.merge(merged_df, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
+                            elif temperature=="119K":
+                                merged_df = pd.merge(merged_df, self.df_energy_119_tab, on='Pressure [bara]', how="inner")
+                            else:
+                                print("wrong temp")
+
+                            # add sims analysis to get rejection
+
+
+                            merged_df.to_csv(temp_config["rate_path"][sorted_path_index], index=False)
+                            if plot:
+                                ax.errorbar(merged_df['Seitz [keV]'], merged_df['Exp Rate [mHz]'],
+                                            yerr=merged_df['Exp Rate Sigma [mHz]'], label=f"{source} {temperature}", color=self.color_code[source],
+                                            fmt='o')
+
+                            # cacluate rejection
+
+                            exp_df = pd.read_csv(temp_config["rate_path"][sorted_path_index])
+
+                            columns_added = exp_df.apply(self.calculate_rejection_by_row_v2, axis=1, args=(source,))
+
+
+
+                            merged_df_rejection = pd.concat([exp_df, columns_added], axis=1)
+                            # print('Cs print(merged_df)',self.Cs_exp_rate_path[i],'\n',merged_df)
+                            merged_df_rejection.to_csv(temp_config["rejection_path"][sorted_path_index], index=False)
                         else:
-                            print("wrong temp")
-                        # clean rate!
-                        merged_df['Clean Rate [mHz]'] = merged_df['Exp Rate [mHz]'] - merged_df['Bkg Rate [mHz]']
-                        merged_df['Clean Rate Sigma [mHz]'] = np.sqrt(
-                            merged_df['Exp Rate Sigma [mHz]'] ** 2 + merged_df['Bkg Rate Sigma [mHz]'] ** 2)
-                        # add Seitz and Eion unit
-                        if temperature =="116K":
-                            merged_df = pd.merge(merged_df, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
-                        elif temperature=="119K":
-                            merged_df = pd.merge(merged_df, self.df_energy_119_tab, on='Pressure [bara]', how="inner")
-                        else:
-                            print("wrong temp")
-
-                        # add sims analysis to get rejection
-
-
-                        merged_df.to_csv(temp_config["rate_path"][sorted_path_index], index=False)
-                        if plot:
-                            ax.errorbar(merged_df['Seitz [keV]'], merged_df['Exp Rate [mHz]'],
-                                        yerr=merged_df['Exp Rate Sigma [mHz]'], label=f"{source} {temperature}", color=self.color_code[source],
-                                        fmt='o')
-
-                        # cacluate rejection
-
-                        exp_df = pd.read_csv(temp_config["rate_path"][sorted_path_index])
-
-                        columns_added = exp_df.apply(self.calculate_rejection_by_row_v2, axis=1, args=(source,))
-                        if source=="Cs" and sorted_path_index==3:
-                            print("Cs fault", columns_added)
-
-
-
-                        merged_df_rejection = pd.concat([exp_df, columns_added], axis=1)
-                        # print('Cs print(merged_df)',self.Cs_exp_rate_path[i],'\n',merged_df)
-                        merged_df_rejection.to_csv(temp_config["rejection_path"][sorted_path_index], index=False)
+                            exposure_df.to_csv(temp_config["rate_path"][sorted_path_index], index=False)
+                            exposure_df.to_csv(temp_config["rejection_path"][sorted_path_index], index=False)
 
 
         if plot:
@@ -905,25 +900,28 @@ class integrated_analysis():
                 for temperature, temp_config in source_config["exp"].items():
                     if temp_config["rejection_path"] !=[]:
                         for rejection_path_index in range(len(temp_config["rejection_path"])):
+
                             # combine the Seitz to the exp data
                             df = pd.read_csv(temp_config["rejection_path"][rejection_path_index])
                             print("df.columns",source,rejection_path_index,df.columns)
 
+                            if not df.empty:
+                                pressure_drop_list = []
+                                df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
+                                # only positive rate
+                                df = df[df['Clean Rate [mHz]'] > 0]
+                                temp_config["plot_list"].append(df)
 
-                            pressure_drop_list = []
-                            df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
-                            # only positive rate
-                            df = df[df['Clean Rate [mHz]'] > 0]
-                            temp_config["plot_list"].append(df)
+                                df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+                                             "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]',
+                                             "Rejection Rate Xenon Abs[]",
+                                             'Clean Rate [mHz]', "Eion [keV]"]]
 
-                            df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
-                                         "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]',
-                                         "Rejection Rate Xenon Abs[]",
-                                         'Clean Rate [mHz]', "Eion [keV]"]]
-
-                            self.fitting_list.append(df_fit)
-                            if source =="Cs":
-                                self.Cs_fitting_list.append(df_fit)
+                                self.fitting_list.append(df_fit)
+                                if source =="Cs":
+                                    self.Cs_fitting_list.append(df_fit)
+                            else:
+                                continue
                         print(temp_config["plot_list"])
                         temp_config["plot"] = pd.concat(temp_config["plot_list"], ignore_index=True)
                         temp_config["plot"] = self.concat_PT_condition(temp_config["plot"])
