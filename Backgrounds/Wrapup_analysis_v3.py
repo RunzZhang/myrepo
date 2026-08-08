@@ -417,6 +417,8 @@ class integrated_analysis():
 
                             # add sims analysis to get rejection
 
+                            if source=="Co" and sorted_path_index==0:
+                                print("source Co columns 0", columns_added, merged_df)
 
                             merged_df.to_csv(temp_config["rate_path"][sorted_path_index], index=False)
                             if plot:
