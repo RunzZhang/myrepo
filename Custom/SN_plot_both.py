@@ -1066,6 +1066,7 @@ class SN():
         print('df_primary_vedge2', 'z bound', df_primary_vedge2["Z/mm"].max(), df_primary_vedge2["Z/mm"].min())
         if plot==True:
             from matplotlib.ticker import FuncFormatter
+            from matplotlib.colors import LogNorm
 
             df_filtered = self.merged_df_primary[
                 self.merged_df_primary["Volume"] == "LAr_phys"
@@ -1088,7 +1089,7 @@ class SN():
             # Plot 1: Standard 2D Histogram (R vs Z)
             # -------------------------------------------------------------
             counts1, r_edges, z_edges, im1 = axes[0].hist2d(
-                r, z, bins=num_bins, cmap="viridis"
+                r, z, bins=num_bins, cmap="viridis", norm=LogNorm()
             )
             axes[0].set_title("Standard Density Histogram ($R$ vs $Z$)")
             axes[0].set_xlabel("$R$ [mm]")
@@ -1099,7 +1100,7 @@ class SN():
             # Plot 2: Equal-Volume Bins ($R^2$ scale on X-axis with $R^2$ label format)
             # -------------------------------------------------------------
             counts2, r2_edges, z_edges2, im2 = axes[1].hist2d(
-                r_sq, z, bins=num_bins, cmap="viridis"
+                r_sq, z, bins=num_bins, cmap="viridis", norm=LogNorm()
             )
             axes[1].set_title("Equal-Volume Density Histogram ($R^2$ vs $Z$)")
             axes[1].set_xlabel("$R^2$ [$\text{mm}^2$]")
