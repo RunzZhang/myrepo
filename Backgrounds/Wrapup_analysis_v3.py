@@ -272,7 +272,7 @@ class integrated_analysis():
                                                     axis=1)
                 # print('result_df_116_full_info.columns',result_df_116_full_info.columns)
                 result_df_full_info.to_csv(temp_config["full_info_path"], index=False)
-                self.bkg_plot()
+        self.bkg_plot(plot=True)
 
     def bkg_plot(self,plot=False):
         self.df_bkg_116 = pd.read_csv(self.background_group["116K"]["average_path"])
@@ -2766,5 +2766,5 @@ class integrated_analysis():
 if __name__=="__main__":
     IA = integrated_analysis(volume="")
     IA =  integrated_analysis(volume="dome")
-    # IA = integrated_analysis(volume="bulk")
+    IA = integrated_analysis(volume="bulk")
     # test = test_csv()
