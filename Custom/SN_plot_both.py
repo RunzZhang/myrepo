@@ -1068,8 +1068,9 @@ class SN():
             from matplotlib.ticker import FuncFormatter
             from matplotlib.colors import LogNorm
 
-            df_filtered = self.merged_df_primary[
-                self.merged_df_primary["Volume"] == "LAr_phys"
+            df_filtered = self.merged_df_primary[(
+                self.merged_df_primary["Volume"] == "LAr_phys")&(
+                self.merged_df_primary["ER_near/eV"] > 0 )
                 ]
 
             x = df_filtered["X/mm"].values
