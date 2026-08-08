@@ -1742,9 +1742,9 @@ class test_csv():
 
 
 if __name__=="__main__":
-    sn = SN(doped=True, source="Cs", volume="bulk")
+    # sn = SN(doped=True, source="Cs", volume="bulk")
     # sn = SN(doped=True, source="Cs", volume="dome")
-    # sn = SN(doped=False, source="Cs", volume="bulk")
+    sn = SN(doped=False, source="Cs", volume="bulk")
     # sn = SN(doped=False, source="Cs", volume="dome")
     #
     # sn = SN(doped=True, source="Co", volume="bulk")
