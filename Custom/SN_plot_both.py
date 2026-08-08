@@ -1094,6 +1094,8 @@ class SN():
             axes[0].set_title("Standard Density Histogram ($R$ vs $Z$)")
             axes[0].set_xlabel("$R$ [mm]")
             axes[0].set_ylabel("$Z$ [mm]")
+            axes[0].set_xlim(0, 116)
+            axes[0].set_ylim(200, 620)
             fig.colorbar(im1, ax=axes[0], label="Probability Density")
 
             # -------------------------------------------------------------
@@ -1103,7 +1105,9 @@ class SN():
                 r_sq, z, bins=num_bins, cmap="viridis", norm=LogNorm()
             )
             axes[1].set_title("Equal-Volume Density Histogram ($R^2$ vs $Z$)")
-            axes[1].set_xlabel("$R^2$ [$\text{mm}^2$]")
+            axes[1].set_xlabel("$R^2$ [$mm^2$]")
+            axes[1].set_xlim(0, 116)
+            axes[1].set_ylim(200, 620)
             axes[1].set_ylabel("$Z$ [mm]")
 
             # Format X-axis tick labels to display as base^2 (e.g. 10^2, 20^2) instead of flat numbers
