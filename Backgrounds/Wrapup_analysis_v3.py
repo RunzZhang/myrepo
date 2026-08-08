@@ -274,7 +274,8 @@ class integrated_analysis():
                                                     axis=1)
                 # print('result_df_116_full_info.columns',result_df_116_full_info.columns)
                 result_df_full_info.to_csv(temp_config["full_info_path"], index=False)
-        self.bkg_plot(plot=True)
+        # self.bkg_plot(plot=True)
+        self.bkg_plot()
 
     def bkg_plot(self,plot=False):
         self.df_bkg_116 = pd.read_csv(self.background_group["116K"]["average_path"])
@@ -448,8 +449,8 @@ class integrated_analysis():
             ax.set_xlabel("Seitz [keV]")
             ax.set_ylabel("Bkg Rate [mHz]")
             ax.legend()
-            # plt.show()
-            plt.savefig(self.plot_path + f"average_source_{self.volume_option}rate.pdf")
+            plt.show()
+            # plt.savefig(self.plot_path + f"average_source_{self.volume_option}rate.pdf")
 
 
 
