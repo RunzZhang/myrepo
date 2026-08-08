@@ -175,7 +175,7 @@ class SN():
             # self.gamma_rejection_rate_vs_Setiz()
 
 
-            self.find_boundary()
+            self.find_boundary(plot=True)
             # self.write_sims_results()
             # self.write_sims_results_thesis()
 
