@@ -435,6 +435,7 @@ class integrated_analysis():
                             merged_df_rejection = pd.concat([exp_df, columns_added], axis=1)
                             # print('Cs print(merged_df)',self.Cs_exp_rate_path[i],'\n',merged_df)
                             if source=="Co" and sorted_path_index==0:
+                                print("source Co columns 0", columns_added, merged_df)
                                 print("source Co columns 1", columns_added, exp_df)
                                 print("source Co columns 2", columns_added,merged_df_rejection)
 
