@@ -130,8 +130,8 @@ class integrated_analysis():
         # self.average_background_analysis()
         #
         #
-        self.bkg_subtracted_analysis()
-        # self.bkg_subtracted_analysis(plot=True)
+        # self.bkg_subtracted_analysis()
+        self.bkg_subtracted_analysis(plot=True)
 
         self.gamma_rejection_plot_v3()
 
@@ -446,8 +446,8 @@ class integrated_analysis():
             ax.set_xlabel("Seitz [keV]")
             ax.set_ylabel("Bkg Rate [mHz]")
             ax.legend()
-            plt.show()
-            # plt.savefig(self.plot_path + f"average_source_{self.volume_option}rate.pdf")
+            # plt.show()
+            plt.savefig(self.plot_path + f"average_source_{self.volume_option}rate.pdf")
 
 
 
