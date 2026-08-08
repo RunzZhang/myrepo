@@ -1072,15 +1072,15 @@ class SN():
                             "ER_near/eV"] / 1000  # in keV
         # auto choose the range
         max_gamma_int = int(round(ER_Ar_primary.max())) + 100
-        print(self.volume,self.source,'len', len(ER_Ar_primary))
-        # max_x = self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys")&volume_condition_primary][ "X/mm"].max()
-        # max_y = self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys") & volume_condition_primary][
-        #     "Y/mm"].max()
-        # max_z = self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys") & volume_condition_primary][
-        #     "Z/mm"].max()
-        # min_z= self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys") & volume_condition_primary][
-        #     "Z/mm"].min()
-        # print(self.volume,self.source,"bounds", 'max_x', max_x, 'max_y',max_y,'max_z',max_z,"min_z",min_z)
+        print(self.volume,self.source,'len', len(ER_Ar_primary),max_gamma_int)
+        max_x = self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys")&volume_condition_primary][ "X/mm"].max()
+        max_y = self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys") & volume_condition_primary][
+            "Y/mm"].max()
+        max_z = self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys") & volume_condition_primary][
+            "Z/mm"].max()
+        min_z= self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys") & volume_condition_primary][
+            "Z/mm"].min()
+        print(self.volume,self.source,"bounds", 'max_x', max_x, 'max_y',max_y,'max_z',max_z,"min_z",min_z)
 
         hist_array_primary = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
