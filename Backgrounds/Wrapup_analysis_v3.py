@@ -294,8 +294,8 @@ class integrated_analysis():
             ax.set_xlabel("Seitz [keV]")
             ax.set_ylabel("Bkg Rate [mHz]")
             ax.legend()
-            plt.show()
-            # plt.savefig(self.plot_path + f"average_bkg_{self.volume_option}rate.pdf")
+            # plt.show()
+            plt.savefig(self.plot_path + f"average_bkg_{self.volume_option}rate.pdf")
 
     def read_raw_backgrounds_exp(self):
         # read file, delete unreasonable rows and rewrite
