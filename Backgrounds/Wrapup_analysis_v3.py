@@ -17,6 +17,8 @@ class integrated_analysis():
         # self.Cs_sim_path = '/lzdata/runzezhang/result/GR_sims/Cs_output_5E6.pkl'
         self.base_path = "/lzdata/runzezhang/result/GR_sims/"
         self.color_code = {"Cs":"green", "Co": "cyan", "Ba": "orange", "Th":"brown", "Hot_Cs":"gray"}
+        self.bkg_uncertainty_cut = {"":0.3, "dome":0.15, "bulk":0.2}
+        self.exp_uncertainty_cut = {"":0.4, "dome":0.4, "bulk":0.4}
         self.volume_option =  volume
         if self.volume_option== ""or self.volume_option== "all":
             self.gamma_source_group = {"Cs":{"sim":{"pure_address":None,"pure_data":None, "doped_address":None,"doped_data":None},
@@ -191,7 +193,7 @@ class integrated_analysis():
                         exposure_df = exposure_df[
                             (exposure_df['Lifetime [s]'] <= 6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
                         exposure_df = exposure_df[
-                            (exposure_df['Lifetime Error [s]'] / exposure_df['Lifetime [s]'] <= 0.4)]
+                            (exposure_df['Lifetime Error [s]'] / exposure_df['Lifetime [s]'] <= self.exp_uncertainty_cut[self.volume_option])]
                         # add rate column
                         exposure_df['Exp Rate [mHz]'] = 1000 / exposure_df['Lifetime [s]']
                         exposure_df['Exp Rate Sigma [mHz]'] = exposure_df['Lifetime Error [s]'] * 1000 / (
@@ -229,7 +231,7 @@ class integrated_analysis():
             exposure_df = exposure_df[
                 (exposure_df['Lifetime [s]'] <= 6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
             exposure_df = exposure_df[
-                (exposure_df['Lifetime Error [s]'] / exposure_df['Lifetime [s]'] <= 0.2)]
+                (exposure_df['Lifetime Error [s]'] / exposure_df['Lifetime [s]'] <= self.bkg_uncertainty_cut[self.volume_option])]
             exposure_df['Bkg Rate [mHz]'] = 1000 / exposure_df['Lifetime [s]']
             exposure_df['Bkg Rate Sigma [mHz]'] = exposure_df['Lifetime Error [s]'] * 1000 / (
                 exposure_df['Lifetime [s]']) ** 2
@@ -292,8 +294,8 @@ class integrated_analysis():
             ax.set_xlabel("Seitz [keV]")
             ax.set_ylabel("Bkg Rate [mHz]")
             ax.legend()
-            # plt.show()
-            plt.savefig(self.plot_path + f"average_bkg_{self.volume_option}rate.pdf")
+            plt.show()
+            # plt.savefig(self.plot_path + f"average_bkg_{self.volume_option}rate.pdf")
 
     def read_raw_backgrounds_exp(self):
         # read file, delete unreasonable rows and rewrite
@@ -2764,7 +2766,7 @@ class integrated_analysis():
 
 
 if __name__=="__main__":
-    IA = integrated_analysis(volume="")
+    # IA = integrated_analysis(volume="")
     IA =  integrated_analysis(volume="dome")
-    IA = integrated_analysis(volume="bulk")
+    # IA = integrated_analysis(volume="bulk")
     # test = test_csv()
