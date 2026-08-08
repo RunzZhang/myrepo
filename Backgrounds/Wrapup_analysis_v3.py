@@ -908,8 +908,8 @@ class integrated_analysis():
                             df = pd.read_csv(temp_config["rejection_path"][rejection_path_index])
                             print("df.columns",source,rejection_path_index,df.columns)
 
-                            if source == "Co" and rejection_path_index == 0 and temperature=="116K":
-                                print("source Co columns 0", df)
+                            # if source == "Co" and rejection_path_index == 0 and temperature=="116K":
+                            #     print("source Co columns 0", df)
                             if not df.empty:
                                 pressure_drop_list = []
                                 df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
@@ -2773,7 +2773,7 @@ class integrated_analysis():
 
 
 if __name__=="__main__":
-    # IA = integrated_analysis(volume="")
+    IA = integrated_analysis(volume="")
     IA =  integrated_analysis(volume="dome")
-    # IA = integrated_analysis(volume="bulk")
+    IA = integrated_analysis(volume="bulk")
     # test = test_csv()
