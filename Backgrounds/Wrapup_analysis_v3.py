@@ -287,8 +287,8 @@ class integrated_analysis():
                         yerr=self.df_bkg_116["Bkg Rate Sigma [mHz]"], label="combined bkg 116.7 K ", fmt='o', color='r')
             ax.errorbar(self.df_bkg_119['Seitz [keV]'], self.df_bkg_119["Bkg Rate [mHz]"],
                         yerr=self.df_bkg_119["Bkg Rate Sigma [mHz]"], label="combined bkg 119.6 K ", fmt='o', color='b')
-            ax.set_xlim(0.4, 3.6)
-            ax.set_ylim(5, 55)
+            ax.set_xlim(0.0, 3.6)
+            ax.set_ylim(0, 55)
             ax.set_xlabel("Seitz [keV]")
             ax.set_ylabel("Bkg Rate [mHz]")
             ax.legend()
