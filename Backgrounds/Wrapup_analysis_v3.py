@@ -132,10 +132,10 @@ class integrated_analysis():
         # self.average_background_analysis()
         #
         #
-        # self.bkg_subtracted_analysis()
-        self.bkg_subtracted_analysis(plot=True)
+        self.bkg_subtracted_analysis()
+        # self.bkg_subtracted_analysis(plot=True)
 
-        # self.gamma_rejection_plot_v3()
+        self.gamma_rejection_plot_v3()
 
 
 
@@ -905,6 +905,8 @@ class integrated_analysis():
                             df = pd.read_csv(temp_config["rejection_path"][rejection_path_index])
                             print("df.columns",source,rejection_path_index,df.columns)
 
+                            if source=="Co":
+                                print("Co" ,df)
                             if not df.empty:
                                 pressure_drop_list = []
                                 df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
