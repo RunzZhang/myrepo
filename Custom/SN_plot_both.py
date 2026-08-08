@@ -1051,7 +1051,7 @@ class SN():
 
         volume_condition_primary_hedge = ((self.merged_df_primary["Z/mm"].between(200, 300))) &((self.merged_df_primary["Y/mm"].between(-2, 2)))& (self.merged_df_primary["Volume"] == "LAr_phys")
         volume_condition_primary_vedge2 = ((self.merged_df_primary["X/mm"] ** 2 + self.merged_df_primary[
-            "Y/mm"] ** 2).between(103 ** 2, 104.1 ** 2)) & (self.merged_df_primary["Volume"] == "LAr_phys")
+            "Y/mm"] ** 2).between(104 ** 2, 104.8 ** 2)) & (self.merged_df_primary["Volume"] == "LAr_phys")
 
 
         df_primary_origin= self.merged_df_primary[volume_condition_primary_origin]
@@ -1062,7 +1062,7 @@ class SN():
         print('df_primary_origin','z bound', df_primary_origin["Z/mm"].max(), df_primary_origin["Z/mm"].min())
         print('df_primary_vedge', 'z bound', df_primary_vedge["Z/mm"].max(), df_primary_vedge["Z/mm"].min())
         print('df_primary_hedge', 'x bound', df_primary_hedge["X/mm"].abs().max(), df_primary_hedge["X/mm"].abs().min())
-        print('df_primary_vedge2', 'z bound', df_primary_vedge["Z/mm"].max(), df_primary_vedge["Z/mm"].min())
+        print('df_primary_vedge2', 'z bound', df_primary_vedge2["Z/mm"].max(), df_primary_vedge2["Z/mm"].min())
 
 
 
