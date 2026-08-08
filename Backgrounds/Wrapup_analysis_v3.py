@@ -132,10 +132,10 @@ class integrated_analysis():
         # self.average_background_analysis()
         #
         #
-        self.bkg_subtracted_analysis()
-        # self.bkg_subtracted_analysis(plot=True)
+        # self.bkg_subtracted_analysis()
+        self.bkg_subtracted_analysis(plot=True)
 
-        self.gamma_rejection_plot_v3()
+        # self.gamma_rejection_plot_v3()
 
 
 
@@ -425,7 +425,8 @@ class integrated_analysis():
                                             fmt='o')
 
                             # cacluate rejection
-
+                            if source=="Co" and sorted_path_index==1:
+                                print("source Co", merged_df)
                             exp_df = pd.read_csv(temp_config["rate_path"][sorted_path_index])
 
                             columns_added = exp_df.apply(self.calculate_rejection_by_row_v2, axis=1, args=(source,))
