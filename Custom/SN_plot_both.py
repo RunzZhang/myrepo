@@ -175,8 +175,8 @@ class SN():
             # self.gamma_rejection_rate_vs_Setiz()
 
 
-            # self.find_boundary()
-            self.write_sims_results()
+            self.find_boundary()
+            # self.write_sims_results()
             # self.write_sims_results_thesis()
 
 
@@ -1043,7 +1043,7 @@ class SN():
 
             plt.savefig(self.plot_path + f"{self.source}{self.volume}_output_spectrum_thesis.pdf")
 
-    def find_boundary(self):
+    def find_boundary(self,plot=False):
         volume_condition_primary_origin = (self.merged_df_primary["X/mm"] ** 2 + self.merged_df_primary[
             "Y/mm"] ** 2 <= 1**2)&(self.merged_df_primary["Volume"] == "LAr_phys")
         volume_condition_primary_vedge = ((self.merged_df_primary["X/mm"] ** 2 + self.merged_df_primary[
@@ -1063,6 +1063,63 @@ class SN():
         print('df_primary_vedge', 'z bound', df_primary_vedge["Z/mm"].max(), df_primary_vedge["Z/mm"].min())
         print('df_primary_hedge', 'x bound', df_primary_hedge["X/mm"].abs().max(), df_primary_hedge["X/mm"].abs().min())
         print('df_primary_vedge2', 'z bound', df_primary_vedge2["Z/mm"].max(), df_primary_vedge2["Z/mm"].min())
+        if plot==True:
+            from matplotlib.ticker import FuncFormatter
+
+            df_filtered = self.merged_df_primary[
+                self.merged_df_primary["Volume"] == "LAr_phys"
+                ]
+
+            x = df_filtered["X/mm"].values
+            y = df_filtered["Y/mm"].values
+            z = df_filtered["Z/mm"].values
+
+            r = np.sqrt(x ** 2 + y ** 2)
+            r_sq = r ** 2
+
+            # Define bins
+            num_bins = 100
+
+            # Create figure with 2 subplots
+            fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+
+            # -------------------------------------------------------------
+            # Plot 1: Standard 2D Histogram (R vs Z)
+            # -------------------------------------------------------------
+            counts1, r_edges, z_edges, im1 = axes[0].hist2d(
+                r, z, bins=num_bins, cmap="viridis", density=True
+            )
+            axes[0].set_title("Standard Density Histogram ($R$ vs $Z$)")
+            axes[0].set_xlabel("$R$ [mm]")
+            axes[0].set_ylabel("$Z$ [mm]")
+            fig.colorbar(im1, ax=axes[0], label="Probability Density")
+
+            # -------------------------------------------------------------
+            # Plot 2: Equal-Volume Bins ($R^2$ scale on X-axis with $R^2$ label format)
+            # -------------------------------------------------------------
+            counts2, r2_edges, z_edges2, im2 = axes[1].hist2d(
+                r_sq, z, bins=num_bins, cmap="viridis", density=True
+            )
+            axes[1].set_title("Equal-Volume Density Histogram ($R^2$ vs $Z$)")
+            axes[1].set_xlabel("$R^2$ [$\text{mm}^2$]")
+            axes[1].set_ylabel("$Z$ [mm]")
+
+            # Format X-axis tick labels to display as base^2 (e.g. 10^2, 20^2) instead of flat numbers
+            def square_formatter(val, pos):
+                if val < 0:
+                    return "0"
+                base = np.sqrt(val)
+                # Format cleanly if base is an integer or pretty number
+                if base.is_integer():
+                    return f"${int(base)}^2$"
+                return f"${base:.1f}^2$"
+
+            axes[1].xaxis.set_major_formatter(FuncFormatter(square_formatter))
+
+            fig.colorbar(im2, ax=axes[1], label="Probability Density")
+
+            plt.tight_layout()
+            plt.show()
 
 
 
@@ -1686,28 +1743,28 @@ class test_csv():
 
 if __name__=="__main__":
     sn = SN(doped=True, source="Cs", volume="bulk")
-    sn = SN(doped=True, source="Cs", volume="dome")
-    sn = SN(doped=False, source="Cs", volume="bulk")
-    sn = SN(doped=False, source="Cs", volume="dome")
-
-    sn = SN(doped=True, source="Co", volume="bulk")
-    sn = SN(doped=True, source="Co", volume="dome")
-    sn = SN(doped=False, source="Co", volume="bulk")
-    sn = SN(doped=False, source="Co", volume="dome")
-
-    sn = SN(doped=True, source="Ba", volume="bulk")
-    sn = SN(doped=True, source="Ba", volume="dome")
-    sn = SN(doped=False, source="Ba", volume="bulk")
-    sn = SN(doped=False, source="Ba", volume="dome")
-
-    sn = SN(doped=True, source="Th", volume="bulk")
-    sn = SN(doped=True, source="Th", volume="dome")
-    sn = SN(doped=False, source="Th", volume="bulk")
-    sn = SN(doped=False, source="Th", volume="dome")
-
-    sn = SN(doped=True, source="Hot_Cs", volume="bulk")
-    sn = SN(doped=True, source="Hot_Cs", volume="dome")
-    sn = SN(doped=False, source="Hot_Cs", volume="bulk")
-    sn = SN(doped=False, source="Hot_Cs", volume="dome")
+    # sn = SN(doped=True, source="Cs", volume="dome")
+    # sn = SN(doped=False, source="Cs", volume="bulk")
+    # sn = SN(doped=False, source="Cs", volume="dome")
+    #
+    # sn = SN(doped=True, source="Co", volume="bulk")
+    # sn = SN(doped=True, source="Co", volume="dome")
+    # sn = SN(doped=False, source="Co", volume="bulk")
+    # sn = SN(doped=False, source="Co", volume="dome")
+    #
+    # sn = SN(doped=True, source="Ba", volume="bulk")
+    # sn = SN(doped=True, source="Ba", volume="dome")
+    # sn = SN(doped=False, source="Ba", volume="bulk")
+    # sn = SN(doped=False, source="Ba", volume="dome")
+    #
+    # sn = SN(doped=True, source="Th", volume="bulk")
+    # sn = SN(doped=True, source="Th", volume="dome")
+    # sn = SN(doped=False, source="Th", volume="bulk")
+    # sn = SN(doped=False, source="Th", volume="dome")
+    #
+    # sn = SN(doped=True, source="Hot_Cs", volume="bulk")
+    # sn = SN(doped=True, source="Hot_Cs", volume="dome")
+    # sn = SN(doped=False, source="Hot_Cs", volume="bulk")
+    # sn = SN(doped=False, source="Hot_Cs", volume="dome")
 
     # test = test_csv()
