@@ -1072,6 +1072,14 @@ class SN():
                             "ER_near/eV"] / 1000  # in keV
         # auto choose the range
         max_gamma_int = int(round(ER_Ar_primary.max())) + 100
+        max_x = self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys")&volume_condition_primary][ "X/mm"].max()
+        max_y = self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys") & volume_condition_primary][
+            "Y/mm"].max()
+        max_z = self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys") & volume_condition_primary][
+            "Z/mm"].max()
+        min_z= self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys") & volume_condition_primary][
+            "Z/mm"].min()
+        print(self.volume,self.source,"bounds", 'max_x', max_x, 'max_y',max_y,'max_z',max_z,"min_z",min_z)
 
         hist_array_primary = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
@@ -1653,8 +1661,8 @@ class test_csv():
 if __name__=="__main__":
     # sn = SN(doped=True, source="Cs", volume="bulk")
     # sn = SN(doped=True, source="Cs", volume="dome")
-    # sn = SN(doped=False, source="Cs", volume="bulk")
-    # sn = SN(doped=False, source="Cs", volume="dome")
+    sn = SN(doped=False, source="Cs", volume="bulk")
+    sn = SN(doped=False, source="Cs", volume="dome")
     #
     # sn = SN(doped=True, source="Co", volume="bulk")
     # sn = SN(doped=True, source="Co", volume="dome")
@@ -1671,9 +1679,9 @@ if __name__=="__main__":
     # sn = SN(doped=False, source="Th", volume="bulk")
     # sn = SN(doped=False, source="Th", volume="dome")
 
-    sn = SN(doped=True, source="Hot_Cs", volume="bulk")
-    sn = SN(doped=True, source="Hot_Cs", volume="dome")
-    sn = SN(doped=False, source="Hot_Cs", volume="bulk")
-    sn = SN(doped=False, source="Hot_Cs", volume="dome")
+    # sn = SN(doped=True, source="Hot_Cs", volume="bulk")
+    # sn = SN(doped=True, source="Hot_Cs", volume="dome")
+    # sn = SN(doped=False, source="Hot_Cs", volume="bulk")
+    # sn = SN(doped=False, source="Hot_Cs", volume="dome")
 
     # test = test_csv()
