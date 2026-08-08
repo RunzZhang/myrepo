@@ -132,10 +132,10 @@ class integrated_analysis():
         # self.average_background_analysis()
         #
         #
-        # self.bkg_subtracted_analysis()
-        self.bkg_subtracted_analysis(plot=True)
+        self.bkg_subtracted_analysis()
+        # self.bkg_subtracted_analysis(plot=True)
 
-        # self.gamma_rejection_plot_v3()
+        self.gamma_rejection_plot_v3()
 
 
 
@@ -417,8 +417,7 @@ class integrated_analysis():
 
                             # add sims analysis to get rejection
 
-                            if source=="Co" and sorted_path_index==0:
-                                print("source Co columns 0", merged_df)
+
 
                             merged_df.to_csv(temp_config["rate_path"][sorted_path_index], index=False)
                             if plot:
@@ -436,10 +435,7 @@ class integrated_analysis():
 
                             merged_df_rejection = pd.concat([exp_df, columns_added], axis=1)
                             # print('Cs print(merged_df)',self.Cs_exp_rate_path[i],'\n',merged_df)
-                            if source=="Co" and sorted_path_index==0:
-                                print("source Co columns 0",  merged_df)
-                                print("source Co columns 1",  exp_df)
-                                print("source Co columns 2", merged_df_rejection)
+
 
                             merged_df_rejection.to_csv(temp_config["rejection_path"][sorted_path_index], index=False)
                         else:
@@ -912,8 +908,8 @@ class integrated_analysis():
                             df = pd.read_csv(temp_config["rejection_path"][rejection_path_index])
                             print("df.columns",source,rejection_path_index,df.columns)
 
-                            if source=="Co":
-                                print("Co" ,df)
+                            if source == "Co" and rejection_path_index == 0 and temperature=="116K":
+                                print("source Co columns 0", df)
                             if not df.empty:
                                 pressure_drop_list = []
                                 df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
