@@ -425,7 +425,7 @@ class integrated_analysis():
                                             fmt='o')
 
                             # cacluate rejection
-                            if source=="Co" and sorted_path_index==1:
+                            if source=="Co" and sorted_path_index==0:
                                 print("source Co", merged_df)
                             exp_df = pd.read_csv(temp_config["rate_path"][sorted_path_index])
 
