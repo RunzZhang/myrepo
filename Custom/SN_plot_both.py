@@ -1049,9 +1049,9 @@ class SN():
             volume_condition_primary = True
             volume_condition_all = True
         elif self.volume =="bulk":
-            volume_condition_primary = (self.merged_df_primary["X/mm"]**2+self.merged_df_primary["Y/mm"]**2 <= 121)&self.merged_df_primary["Z/mm"].between(400, 400+170)
+            volume_condition_primary = (self.merged_df_primary["X/mm"]**2+self.merged_df_primary["Y/mm"]**2 <= 12100)&self.merged_df_primary["Z/mm"].between(400, 400+170)
             volume_condition_all = (
-                        self.merged_df_all["X/mm"] ** 2 + self.merged_df_all["Y/mm"] ** 2 <= 121)&self.merged_df_all["Z/mm"].between(400, 400+170)
+                        self.merged_df_all["X/mm"] ** 2 + self.merged_df_all["Y/mm"] ** 2 <= 12100)&self.merged_df_all["Z/mm"].between(400, 400+170)
         elif self.volume=="dome":
             volume_condition_primary = (
                         self.merged_df_primary["Z/mm"] >= 400+ 170)
@@ -1072,14 +1072,14 @@ class SN():
                             "ER_near/eV"] / 1000  # in keV
         # auto choose the range
         max_gamma_int = int(round(ER_Ar_primary.max())) + 100
-        max_x = self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys")&volume_condition_primary][ "X/mm"].max()
-        max_y = self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys") & volume_condition_primary][
-            "Y/mm"].max()
-        max_z = self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys") & volume_condition_primary][
-            "Z/mm"].max()
-        min_z= self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys") & volume_condition_primary][
-            "Z/mm"].min()
-        print(self.volume,self.source,"bounds", 'max_x', max_x, 'max_y',max_y,'max_z',max_z,"min_z",min_z)
+        # max_x = self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys")&volume_condition_primary][ "X/mm"].max()
+        # max_y = self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys") & volume_condition_primary][
+        #     "Y/mm"].max()
+        # max_z = self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys") & volume_condition_primary][
+        #     "Z/mm"].max()
+        # min_z= self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys") & volume_condition_primary][
+        #     "Z/mm"].min()
+        # print(self.volume,self.source,"bounds", 'max_x', max_x, 'max_y',max_y,'max_z',max_z,"min_z",min_z)
 
         hist_array_primary = [None]
         # hist_array[0] = np.histogram(ER_Ar, bins=100, range=(0, 1200))
@@ -1247,7 +1247,7 @@ class SN():
         if self.volume=="":
             volume_condition = True
         elif self.volume =="bulk":
-            volume_condition = (df["X/mm"]**2+df["Y/mm"]**2 <= 121)&(df["Z/mm"].between(400, 400+170))
+            volume_condition = (df["X/mm"]**2+df["Y/mm"]**2 <= 12100)&(df["Z/mm"].between(400, 400+170))
 
         elif self.volume=="dome":
             volume_condition = (
