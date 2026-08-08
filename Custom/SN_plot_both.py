@@ -175,8 +175,8 @@ class SN():
             # self.gamma_rejection_rate_vs_Setiz()
 
 
-            self.find_boundary()
-            # self.write_sims_results()
+            # self.find_boundary()
+            self.write_sims_results()
             # self.write_sims_results_thesis()
 
 
@@ -1074,14 +1074,14 @@ class SN():
             volume_condition_primary = True
             volume_condition_all = True
         elif self.volume =="bulk":
-            volume_condition_primary = (self.merged_df_primary["X/mm"]**2+self.merged_df_primary["Y/mm"]**2 <= 12100)&self.merged_df_primary["Z/mm"].between(400, 400+170)
+            volume_condition_primary = (self.merged_df_primary["X/mm"]**2+self.merged_df_primary["Y/mm"]**2 <= 12100)&self.merged_df_primary["Z/mm"].between(422, 422+170)
             volume_condition_all = (
-                        self.merged_df_all["X/mm"] ** 2 + self.merged_df_all["Y/mm"] ** 2 <= 12100)&self.merged_df_all["Z/mm"].between(400, 400+170)
+                        self.merged_df_all["X/mm"] ** 2 + self.merged_df_all["Y/mm"] ** 2 <= 12100)&self.merged_df_all["Z/mm"].between(422, 422+170)
         elif self.volume=="dome":
             volume_condition_primary = (
-                        self.merged_df_primary["Z/mm"] >= 400+ 170)
+                        self.merged_df_primary["Z/mm"] >= 422+ 170)
             volume_condition_all = (
-                self.merged_df_all["Z/mm"] >= 400 + 170)
+                self.merged_df_all["Z/mm"] >= 422 + 170)
         else:
             volume_condition_primary = True
             volume_condition_all = True
