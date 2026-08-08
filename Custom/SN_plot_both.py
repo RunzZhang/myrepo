@@ -176,6 +176,7 @@ class SN():
 
 
             self.find_boundary(plot=True)
+            # self.find_boundary()
             # self.write_sims_results()
             # self.write_sims_results_thesis()
 
@@ -1087,7 +1088,7 @@ class SN():
             # Plot 1: Standard 2D Histogram (R vs Z)
             # -------------------------------------------------------------
             counts1, r_edges, z_edges, im1 = axes[0].hist2d(
-                r, z, bins=num_bins, cmap="viridis", density=True
+                r, z, bins=num_bins, cmap="viridis"
             )
             axes[0].set_title("Standard Density Histogram ($R$ vs $Z$)")
             axes[0].set_xlabel("$R$ [mm]")
@@ -1098,7 +1099,7 @@ class SN():
             # Plot 2: Equal-Volume Bins ($R^2$ scale on X-axis with $R^2$ label format)
             # -------------------------------------------------------------
             counts2, r2_edges, z_edges2, im2 = axes[1].hist2d(
-                r_sq, z, bins=num_bins, cmap="viridis", density=True
+                r_sq, z, bins=num_bins, cmap="viridis"
             )
             axes[1].set_title("Equal-Volume Density Histogram ($R^2$ vs $Z$)")
             axes[1].set_xlabel("$R^2$ [$\text{mm}^2$]")
