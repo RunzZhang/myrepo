@@ -1101,22 +1101,6 @@ class SN():
             fig.colorbar(im1, ax=axes[0], label="Probability Density")
 
 
-            #find the first columns number
-            first_r_column_density = counts1[0, :]  # Density values for all Z bins at R bin 0
-
-
-
-            # 4. Iterate over Z bins from HIGH Z to LOW Z
-            # z_edges has length (num_z_bins + 1), so bin i spans z_edges[i] to z_edges[i+1]
-            num_z_bins = len(z_edges) - 1
-
-            # Loop backwards through Z bins (high to low)
-            for z_idx in range(num_z_bins - 1, -1, -1):
-                z_high = z_edges[z_idx + 1]
-                z_low = z_edges[z_idx]
-                density_val = first_r_column_density[z_idx]
-
-                print(f"{z_high:12.4f} | {z_low:12.4f} | {density_val:15.6e}")
 
             # -------------------------------------------------------------
             # Plot 2: Equal-Volume Bins ($R^2$ scale on X-axis with $R^2$ label format)
@@ -1139,6 +1123,21 @@ class SN():
                 if base.is_integer():
                     return f"${int(base)}^2$"
                 return f"${base:.1f}^2$"
+
+            # find the first columns number
+            first_r_column_density = counts2[0, :]  # Density values for all Z bins at R bin 0
+
+            # 4. Iterate over Z bins from HIGH Z to LOW Z
+            # z_edges has length (num_z_bins + 1), so bin i spans z_edges[i] to z_edges[i+1]
+            num_z_bins = len(z_edges2) - 1
+
+            # Loop backwards through Z bins (high to low)
+            for z_idx in range(num_z_bins - 1, -1, -1):
+                z_high = z_edges2[z_idx + 1]
+                z_low = z_edges2[z_idx]
+                density_val = first_r_column_density[z_idx]
+
+                print(f"{z_high:12.4f} | {z_low:12.4f} | {density_val:15.6e}")
 
             axes[1].xaxis.set_major_formatter(FuncFormatter(square_formatter))
 
