@@ -1339,7 +1339,7 @@ class integrated_analysis():
         # Set main (left) y-axis and x-axis labels
         ax[0,0].set_xlabel(r"Seitz threshold [keV]", fontsize=16)
         ax[0,0].set_xlim(0.50, 2.8)
-        ax[0,0].set_ylim(1e-13, 1e-4)
+        ax[0,0].set_ylim(1e-12, 1e-4)
         ax[0,0].set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
         ax[0,0].set_yscale("log")
         ax[0,0].yaxis.label.set_color("red")
@@ -1530,7 +1530,7 @@ class integrated_analysis():
         # PICO Eion_keV
 
         # ax[0,0].legend(loc='lower left', fontsize=15, title=" ", title_fontsize=16,frameon=False)
-        ax[0, 0].legend(loc='upper right', fontsize=16, title=" ", title_fontsize=16, frameon=False,borderaxespad=0,  # Eliminates space between legend and upper/right boundary
+        ax[0, 0].legend(loc='upper right', fontsize=16,  frameon=False,borderaxespad=0, 
     alignment="left")
 
        # 2nd graph that use c3F8 mapping:
@@ -1558,7 +1558,7 @@ class integrated_analysis():
         # Set main (left) y-axis and x-axis labels
         ax[0, 1].set_xlabel(r"Seitz threshold [keV]", fontsize=16)
         ax[0, 1].set_xlim(0.50, 2.8)
-        ax[0, 1].set_ylim(1e-13, 1e-4)
+        ax[0, 1].set_ylim(1e-12, 1e-4)
         ax[0, 1].set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
         ax[0, 1].set_yscale("log")
         ax[0, 1].yaxis.label.set_color("red")
@@ -1654,7 +1654,7 @@ class integrated_analysis():
         ax[0, 1].plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
 
         # ax[0, 1].legend(loc='lower left', fontsize=16, title=" ", title_fontsize=15, frameon=False)
-        ax[0, 1].legend(loc='upper right', fontsize=16, title=" ", title_fontsize=16, frameon=False,borderaxespad=0,  # Eliminates space between legend and upper/right boundary
+        ax[0, 1].legend(loc='upper right', fontsize=16, frameon=False,borderaxespad=0,  # Eliminates space between legend and upper/right boundary
     alignment="left")
 
 
