@@ -408,6 +408,7 @@ class integrated_analysis():
                             merged_df['Clean Rate [mHz]'] = merged_df['Exp Rate [mHz]'] - merged_df['Bkg Rate [mHz]']
                             merged_df['Clean Rate Sigma [mHz]'] = np.sqrt(
                                 merged_df['Exp Rate Sigma [mHz]'] ** 2 + merged_df['Bkg Rate Sigma [mHz]'] ** 2)
+                            merged_df =  merged_df[merged_df['Clean Rate [mHz]']>0]
                             # add Seitz and Eion unit
                             if temperature =="116K":
                                 merged_df = pd.merge(merged_df, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
