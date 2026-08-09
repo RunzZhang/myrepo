@@ -890,7 +890,570 @@ class integrated_analysis():
         return output
 
 
+    def gamma_rejection_plot_PSN_v2(self):
+        # print Q vs per keV and Eion per interaction
 
+        self.fitting_list = []
+        self.Cs_fitting_list = []
+        self.Co_fitting_list = []
+        self.Ba_fitting_list = []
+        self.df_Cs_116_plot_list = []
+        self.df_Cs_119_plot_list = []
+        self.df_Co_116_plot_list = []
+        self.df_Co_119_plot_list = []
+        self.df_Ba_116_plot_list = []
+        self.df_Ba_119_plot_list = []
+        self.Cs_116_label = ["Cs 11/17/2025 116K", "Cs 12/01/2025 116K", "Cs 12/10/2025 116K", "Cs 01/20/2026 116K"]
+        self.Cs_119_label = ["Cs 02/02/2026 119K"]
+        self.Co_116_label = ["Co 12/15/2026 116K"]
+        self.Co_119_label = ["Co 02/06/2026 119K"]
+        self.Ba_116_label = ["Ba 11/19/2025 116K"]
+
+        for i in range(len(self.Cs_exp_rejection_path)):
+            df = pd.read_csv(self.Cs_exp_rejection_path[i])
+            # print(df.columns)
+            # doc_label = self.Cs_exp_raw_path[i].replace('_exposures', '')
+            # doc_label = self.Cs_label[i]
+            doc_label = "Cs"
+            print('doc_label', doc_label)
+            # signal
+            # drop 2.75,3.25, 3.75 bara pressure
+            # pressure_drop_list = [2.75,3.25,3.75]
+            pressure_drop_list = []
+            df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
+            # only positive rate
+            df = df[df['Clean Rate [mHz]'] > 0]
+            if i <= 3:
+                self.df_Cs_116_plot_list.append(df)
+            else:
+                self.df_Cs_119_plot_list.append(df)
+
+            df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+                         "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
+                         'Clean Rate [mHz]', "Eion [keV]"]]
+
+            self.fitting_list.append(df_fit)
+            self.Cs_fitting_list.append(df_fit)
+        self.df_Cs_116_plot = pd.concat(self.df_Cs_116_plot_list, ignore_index=True)
+        self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
+        self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
+
+
+
+
+        # ax[2].errorbar(df['Q_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate Xenon Abs[]"],
+        #                yerr=df["Rejection Sigma Xenon Abs[]"], label=doc_label, fmt='o')
+
+        for i in range(len(self.Co_exp_rejection_path)):
+            df = pd.read_csv(self.Co_exp_rejection_path[i])
+            # print(df.columns)
+            # doc_label = self.Co_exp_raw_path[i].rstrip("_exposures")
+            # doc_label = self.Co_label[i]
+            doc_label = "Co"
+            # signal
+            # drop 2.75,3.25, 3.75 bara pressure
+            # pressure_drop_list = [2.75,3.25,3.75]
+            pressure_drop_list = []
+            df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
+            df = df[df['Clean Rate [mHz]'] > 0]
+
+            df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+                         "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
+                         'Clean Rate [mHz]', "Eion [keV]"]]
+
+            if i <= 0:
+                self.df_Co_116_plot_list.append(df)
+            else:
+                self.df_Co_119_plot_list.append(df)
+            self.fitting_list.append(df_fit)
+            self.Co_fitting_list.append(df_fit)
+
+        self.df_Co_116_plot = pd.concat(self.df_Co_116_plot_list, ignore_index=True)
+        self.df_Co_119_plot = pd.concat(self.df_Co_119_plot_list, ignore_index=True)
+
+
+
+        for i in range(len(self.Ba_exp_rejection_path)):
+            df = pd.read_csv(self.Ba_exp_rejection_path[i])
+            # print(df.columns)
+            # doc_label = self.Co_exp_raw_path[i].rstrip("_exposures")
+            # doc_label = self.Co_label[i]
+            doc_label = "Co"
+            # signal
+            # drop 2.75,3.25, 3.75 bara pressure
+            # pressure_drop_list = [2.75,3.25,3.75]
+            pressure_drop_list = []
+            df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
+            # df = df[df['Clean Rate [mHz]'] > 0]
+            print("ba" ,df[['Clean Rate [mHz]','Clean Rate Sigma [mHz]', 'Exp Rate [mHz]','Exp Rate Sigma [mHz]','Bkg Rate [mHz]','Bkg Rate Sigma [mHz]']])
+
+            df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+                         "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
+                         'Clean Rate [mHz]',"Eion [keV]"]]
+
+            if i <= 0:
+                self.df_Ba_116_plot_list.append(df)
+            else:
+                self.df_Ba_119_plot_list.append(df)
+            # self.fitting_list.append(df_fit)
+            # self.Ba_fitting_list.append(df_fit)
+        # print("Ba", self.df_Ba_116_plot_list)
+        self.df_Ba_116_plot = pd.concat(self.df_Ba_116_plot_list, ignore_index=True)
+        # self.df_Ba_119_plot = pd.concat(self.df_Ba_119_plot_list, ignore_index=True)
+
+
+        ratio_116 = self.df_Cs_116_plot["Rejection Rate KeV[/keV]"][0]/self.df_Cs_116_plot["Rejection Rate Xenon Abs[]"][0]
+        ratio_119 = self.df_Cs_119_plot["Rejection Rate KeV[/keV]"][0] / \
+                    self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"][0]
+        print("ratio_116",ratio_116,'ratio_119',ratio_119)
+        SCALE_FACTOR = (ratio_119)**(-1)  # Xenon Abs = Rate [/keV] * SCALE_FACTOR
+
+        # Fix: changed subplots(1, 0) to subplots()
+        fig, ax = plt.subplots(2,2, figsize=(15, 13))
+
+        # Plot Cs 116K ONCE on the left axis
+        ax[0,0].errorbar(
+            self.df_Cs_116_plot["Seitz [keV]"],
+            self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
+            yerr=self.df_Cs_116_plot["Rejection Sigma KeV[/keV]"],
+            label="SBC (Ar+Xe) 116.7K",
+            fmt='o',
+            markersize=8,
+            color="tab:brown"  # Give datasets distinct colors
+        )
+
+        # Plot Cs 119K ONCE on the left axis
+        ax[0,0].errorbar(
+            self.df_Cs_119_plot["Seitz [keV]"],
+            self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
+            yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
+            label="SBC (Ar+Xe) 119.6K",
+            fmt='s',
+            markersize=8,
+            color="tab:green"
+        )
+
+        # Set main (left) y-axis and x-axis labels
+        ax[0,0].set_xlabel(r"Seitz threshold [keV]", fontsize=16)
+        ax[0,0].set_xlim(0.65, 2.8)
+        ax[0,0].set_ylim(1e-12, 1e-4)
+        ax[0,0].set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
+        ax[0,0].set_yscale("log")
+        ax[0,0].yaxis.label.set_color("red")
+        ax[0,0].tick_params(axis='y', colors="red", which='both')  # 'both' colors major & minor ticks
+        ax[0,0].spines['left'].set_color("red")
+
+
+        # Add secondary (right) y-axis with proportional mapping
+        def forward(y):
+            return y * SCALE_FACTOR
+
+        def inverse(y):
+            return y / SCALE_FACTOR
+
+        secax0 = ax[0,0].secondary_yaxis('right', functions=(forward, inverse))
+        secax0.set_ylabel("Nucleation probability\n(per xenon photoabsorption in K shell) ", fontsize=16)
+        secax0.yaxis.label.set_color("blue")
+        secax0.tick_params(axis='y', colors="blue", which='both')
+        secax0.spines['right'].set_color("blue")
+
+        # plot the fitting lines
+        self.Cs_df = pd.concat(self.Cs_fitting_list, ignore_index=True)
+        [result_Q_scatter, result_Q_keV, result_Q_xe, result_Eion_scatter, result_Eion_keV, result_Eion_xe,
+         result_Q2_xe, result_Q_rate] = self.fitting_gamma_rejection_v2(self.Cs_df)
+
+        # SBC
+        SBC_Q_list = result_Q_keV[2]
+        SBC_keV_list = result_Q_keV[3]
+        SBC_Q2_list = result_Q2_xe[2]
+        SBC_Eion_list = result_Eion_keV[2]
+        SBC_Q_kev_fitting = (result_Q_keV[0],result_Q_keV[1])
+        SBC_Q_xe_fitting = (result_Q_xe[0], result_Q_xe[1])
+        print("fitting  SBC_Q_kev_fitting", SBC_Q_kev_fitting)
+        print("fitting SBC_Q_xe_fitting ", SBC_Q_xe_fitting )
+
+
+
+
+
+        # Compute ratio list
+
+        thermal_116_table = self.dict_energy_116_tab
+        thermal_119_table = self.dict_energy_119_tab
+
+        # result = self.interpolate_all_keys("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", 0.8, thermal_116_table)
+        # print(result)
+
+        SBC_rrho_list = [SBC_Q_list[i] / SBC_Q2_list[i] for i in range(len(SBC_Q_list))]
+        SBC_Eion_list = [SBC_Q_list[i] / SBC_Eion_list[i] for i in range(len(SBC_Q_list))]
+
+        # Drexel Q2 to Xenon calculations
+        SBC_fitting_len = len(SBC_Q_list)
+        # Use np.linspace so length matches SBC_fitting_len exactly
+        Drex_Q2_list = np.linspace(1.5, 4, SBC_fitting_len)
+        Drex_phot_list = 58 * np.exp(-Drex_Q2_list / 0.2877)
+        Drex_Q_116_list = self.interpolate_all_keys_vectorized("Q_rl-1_rhol-1 [GeVcm**2 g-1]", Drex_Q2_list , thermal_116_table)["Seitz [keV]"]
+
+        # Drex_Q_119_list = [i+0.05 for i in Drex_Q_116_list]
+        Drex_Q_119_list = \
+        self.interpolate_all_keys_vectorized("Q_rl-1_rhol-1 [GeVcm**2 g-1]", Drex_Q2_list, thermal_119_table)[
+            "Seitz [keV]"]
+
+        # PICO Eion to keV calculations
+        SBC_fitting_len = len(SBC_Q_list)
+        # Use np.linspace so length matches SBC_fitting_len exactly
+        PICO_Eion_list = np.linspace(0.85, 1.5, SBC_fitting_len)
+        PICO_keV_list = 17e3 * np.exp(-PICO_Eion_list / 37e-3)
+        PICO_Q_116_list = self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list , thermal_116_table)["Seitz [keV]"]
+
+        # PICO_Q_119_list = [i+0.05 for i in PICO_Q_116_list]
+        PICO_Q_119_list = \
+        self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list, thermal_119_table)[
+            "Seitz [keV]"]
+
+
+
+        # ax[0,0].plot(
+        #     Drex_Q_116_list,
+        #     Drex_phot_list / SCALE_FACTOR,
+        #     label="Drexel (C$_3$F$_8$+Xe) 116K",
+        #
+        #     color="blue"
+        # )
+        # ax[0,0].plot(
+        #     Drex_Q_119_list,
+        #     Drex_phot_list / SCALE_FACTOR,
+        #     label="Drexel (C$_3$F$_8$+Xe) 119K", linestyle= '--',
+        #
+        #     color="blue"
+        # )
+
+        ax[0, 0].fill_betweenx(
+            Drex_phot_list / SCALE_FACTOR,
+            Drex_Q_116_list,
+            Drex_Q_119_list,
+            color="blue",
+            alpha=0.3,
+            label="Drexel (C$_3$F$_8$+Xe)"
+        )
+
+        # ax[0,0].plot(PICO_Q_116_list, PICO_keV_list, label="PICO C$_3$F$_8$ 116K", color="red")
+        # ax[0,0].plot(PICO_Q_119_list, PICO_keV_list, label="PICO C$_3$F$_8$ 119K",  linestyle= '--', color="red")
+        ax[0, 0].fill_betweenx(
+            PICO_keV_list,
+            PICO_Q_116_list,
+            PICO_Q_119_list,
+            color="red",
+            alpha=0.3,
+            label="PICO (C$_3$F$_8$)")
+
+
+
+        ax[0,0].plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
+
+        # fitting parameter
+
+        # box_content0 = (f"$\\mathcal{{P}}_{{phot}} = A_{{phot}} e^{{-B_{{phot}} Q_{{Seitz}}}}$\n"
+        #                 f"$A_{{phot}}$ = 0.014 K-phot$^{{-1}}$\n"    f"$B_{{phot}}$ = 4.289 keV$^{{-1}}$")
+        #
+        # ax[0,0].text(0.65, 0.78, box_content0,
+        #         transform=ax[0,0].transAxes,
+        #         fontsize=16,
+        #         color='black',  # White text color
+        #         verticalalignment='top',
+        #         horizontalalignment='left',
+        #         linespacing=1.4,  # Extra padding between lines
+        #         bbox=dict(
+        #             facecolor='none',  # Black background
+        #             edgecolor='none',  # No border outline
+        #             alpha=0.9  # Slight transparency so gridlines don't completely disappear
+        #         ))
+        # box_content1 = (f"$\\mathcal{{P}} = A e^{{-B E_{{ion}} / r_\\ell \\rho_\\ell}}$\n"
+        #                f"A = 0.13 MeV$^{{-1}}$\n"    f"B = 8.75 keV$^{{-1}}$cm$^{{-2}}$g")
+        #
+        #
+        #
+        # box_content1 = (f"$\\mathcal{{P}}_{{edep}} = A_{{edep}} e^{{-B_{{edep}} Q_{{Seitz}}}}$\n"
+        #                 f"$A_{{edep}}$ = 2.468 GeV$^{{-1}}$\n"    f"$B_{{edep}}$ = 4.289 keV$^{{-1}}$")
+        #
+        #
+        # ax[0,0].text(0.65, 0.98, box_content1,
+        #            transform=ax[0,0].transAxes,
+        #            fontsize=16,
+        #            color='black',  # White text color
+        #            verticalalignment='top',
+        #            horizontalalignment='left',
+        #            linespacing=1.4,  # Extra padding between lines
+        #            bbox=dict(
+        #                facecolor='none',  # Black background
+        #                edgecolor='none',  # No border outline
+        #                alpha=0.9  # Slight transparency so gridlines don't completely disappear
+        #            ))
+        #
+        # box_content2 = (f"Drexel (C$_3$F$_8$+Xe)")
+        #
+        # ax[0,0].text(0.60, 0.85, box_content2,
+        #         transform=ax[0,0].transAxes,
+        #         fontsize=16,
+        #         color='blue',  # White text color
+        #         verticalalignment='top',
+        #         horizontalalignment='left',
+        #         linespacing=1.4,  # Extra padding between lines
+        #         bbox=dict(
+        #             facecolor='none',  # Black background
+        #             edgecolor='none',  # No border outline
+        #             alpha=0.9  # Slight transparency so gridlines don't completely disappear
+        #         ))
+        #
+        # box_content3 = (f"PICO C$_3$F$_8$")
+        #
+        # # ax_ij.legend(loc='lower left', fontsize=16, title="Source and \nTemperature", title_fontsize=16,frameon=False)
+        # ax[0,0].text(0.30, 0.65, box_content3,
+        #         transform=ax[0,0].transAxes,
+        #         fontsize=16,
+        #         color='red',  # White text color
+        #         verticalalignment='top',
+        #         horizontalalignment='left',
+        #         linespacing=1.4,  # Extra padding between lines
+        #         bbox=dict(
+        #             facecolor='none',  # Black background
+        #             edgecolor='none',  # No border outline
+        #             alpha=0.9  # Slight transparency so gridlines don't completely disappear
+        #         ))
+
+
+
+
+        # PICO Eion_keV
+
+        ax[0,0].legend(loc='lower left', fontsize=16, title=" ", title_fontsize=16,frameon=False)
+
+       # 2nd graph that use c3F8 mapping:
+        ax[0, 1].errorbar(
+            self.df_Cs_116_plot["Seitz [keV]"],
+            self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
+            yerr=self.df_Cs_116_plot["Rejection Sigma KeV[/keV]"],
+            label="SBC (Ar+Xe) 116.7K",
+            fmt='o',
+            markersize=8,
+            color="tab:brown"  # Give datasets distinct colors
+        )
+
+        # Plot Cs 119K ONCE on the left axis
+        ax[0, 1].errorbar(
+            self.df_Cs_119_plot["Seitz [keV]"],
+            self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
+            yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
+            label="SBC (Ar+Xe) 119.6K",
+            fmt='s',
+            markersize=8,
+            color="tab:green"
+        )
+
+        # Set main (left) y-axis and x-axis labels
+        ax[0, 1].set_xlabel(r"Seitz threshold [keV]", fontsize=16)
+        ax[0, 1].set_xlim(0.65, 2.8)
+        ax[0, 1].set_ylim(1e-12, 1e-4)
+        ax[0, 1].set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
+        ax[0, 1].set_yscale("log")
+        ax[0, 1].yaxis.label.set_color("red")
+        ax[0, 1].tick_params(axis='y', colors="red", which='both')  # 'both' colors major & minor ticks
+        ax[0, 1].spines['left'].set_color("red")
+
+        # Add secondary (right) y-axis with proportional mapping
+        def forward(y):
+            return y * SCALE_FACTOR
+
+        def inverse(y):
+            return y / SCALE_FACTOR
+
+        secax1 = ax[0, 1].secondary_yaxis('right', functions=(forward, inverse))
+        secax1.set_ylabel("Nucleation probability\n(per xenon photoabsorption in K shell) ", fontsize=16)
+        secax1.yaxis.label.set_color("blue")
+        secax1.tick_params(axis='y', colors="blue", which='both')
+        secax1.spines['right'].set_color("blue")
+
+        # plot the fitting lines
+        self.Cs_df = pd.concat(self.Cs_fitting_list, ignore_index=True)
+        [result_Q_scatter, result_Q_keV, result_Q_xe, result_Eion_scatter, result_Eion_keV, result_Eion_xe,
+         result_Q2_xe, result_Q_rate] = self.fitting_gamma_rejection_v2(self.Cs_df)
+
+        # SBC
+        SBC_Q_list = result_Q_keV[2]
+        SBC_keV_list = result_Q_keV[3]
+        SBC_Q2_list = result_Q2_xe[2]
+        SBC_Eion_list = result_Eion_keV[2]
+        SBC_Q_kev_fitting = (result_Q_keV[0], result_Q_keV[1])
+        SBC_Q_xe_fitting = (result_Q_xe[0], result_Q_xe[1])
+        print("fitting  SBC_Q_kev_fitting", SBC_Q_kev_fitting)
+        print("fitting SBC_Q_xe_fitting ", SBC_Q_xe_fitting)
+
+        # Compute ratio list
+
+        thermal_10_table = self.dict_energy_10_tab
+        thermal_24_table = self.dict_energy_24_tab
+
+        # result = self.interpolate_all_keys("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", 0.8, thermal_10_table)
+        # print(result)
+
+        SBC_rrho_list = [SBC_Q_list[i] / SBC_Q2_list[i] for i in range(len(SBC_Q_list))]
+        SBC_Eion_list = [SBC_Q_list[i] / SBC_Eion_list[i] for i in range(len(SBC_Q_list))]
+
+        # Drexel Q2 to Xenon calculations
+        SBC_fitting_len = len(SBC_Q_list)
+        # Use np.linspace so length matches SBC_fitting_len exactly
+        Drex_Q2_list = np.linspace(1.5, 4, SBC_fitting_len)
+        Drex_phot_list = 58 * np.exp(-Drex_Q2_list / 0.2877)
+        Drex_Q_10_list = \
+        self.interpolate_all_keys_vectorized("Q_rl-1_rhol-1 [GeVcm**2 g-1]", Drex_Q2_list, thermal_10_table)[
+            "Seitz [keV]"]
+
+        # Drex_Q_24_list = [i+0.05 for i in Drex_Q_10_list]
+        Drex_Q_24_list = \
+            self.interpolate_all_keys_vectorized("Q_rl-1_rhol-1 [GeVcm**2 g-1]", Drex_Q2_list, thermal_24_table)[
+                "Seitz [keV]"]
+        # avoid cross
+        for i in range(len(Drex_Q_24_list)):
+            if Drex_Q_24_list[i] < Drex_Q_10_list[i]:
+                Drex_Q_24_list[i] = Drex_Q_10_list[i]
+
+        # PICO Eion to keV calculations
+        SBC_fitting_len = len(SBC_Q_list)
+        # Use np.linspace so length matches SBC_fitting_len exactly
+        PICO_Eion_list = np.linspace(0.85, 1.5, SBC_fitting_len)
+        PICO_keV_list = 17e3 * np.exp(-PICO_Eion_list / 37e-3)
+        PICO_Q_10_list = \
+        self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list, thermal_10_table)[
+            "Seitz [keV]"]
+
+        # PICO_Q_24_list = [i+0.05 for i in PICO_Q_10_list]
+        PICO_Q_24_list = \
+            self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list, thermal_24_table)[
+                "Seitz [keV]"]
+
+
+
+        ax[0, 1].fill_betweenx(
+            Drex_phot_list / SCALE_FACTOR,
+            Drex_Q_10_list,
+            Drex_Q_24_list,
+            color="blue",
+            alpha=0.3,
+            label="Drexel (C$_3$F$_8$+Xe)"
+        )
+
+        ax[0, 1].fill_betweenx(
+            PICO_keV_list,
+            PICO_Q_10_list,
+            PICO_Q_24_list,
+            color="red",
+            alpha=0.3,
+            label="PICO (C$_3$F$_8$)")
+
+        ax[0, 1].plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
+
+        ax[0, 1].legend(loc='lower left', fontsize=16, title=" ", title_fontsize=16, frameon=False)
+
+
+
+
+                     # compare to PICO
+        ax[1, 0].errorbar(
+            self.df_Cs_116_plot["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"],
+            self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
+            yerr=self.df_Cs_116_plot["Rejection Sigma KeV[/keV]"],
+            label="SBC (Ar+Xe) 116.7K",
+            fmt='o',
+            markersize=8,
+            color="tab:brown"  # Give datasets distinct colors
+        )
+
+        # Plot Cs 119K ONCE on the left axis
+        ax[1, 0].errorbar(
+            self.df_Cs_119_plot["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"],
+            self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
+            yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
+            label="SBC (Ar+Xe) 119.6K",
+            fmt='s',
+            markersize=8,
+            color="tab:green"
+        )
+        ax[1, 0].plot(result_Eion_keV[2], result_Eion_keV[3], label="SBC Best Fit", color="black")
+
+
+        # pICO result
+        A = 17e3  # 0.017
+        B = 37e-3  # 0.037
+
+        # Generate x array (e.g., 100 evenly spaced points from 0.8 to 1.5)
+        x_pico = np.linspace(0.8, 1.5, 100)
+
+        # Calculate y array
+        y_pico = A * np.exp(- x_pico / B)
+        print("y_pico", y_pico[:10])
+        ax[1, 0].plot(x_pico, y_pico,
+                   color="black", linestyle='--', label="PICO Best Fit")
+
+        # Set main (left) y-axis and x-axis labels
+        ax[1, 0].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]", fontsize=16)
+        ax[1, 0].set_xlim(0.7, 1.5)
+        ax[1, 0].set_ylim(1e-12, 1e-5)
+        ax[1, 0].set_ylabel("Probability per energy deposited [events/keV] ", fontsize=16)
+        ax[1, 0].set_yscale("log")
+        ax[1, 0].tick_params(axis='y',  which='both')  # 'both' colors major & minor ticks
+
+        ax[1, 0].legend(loc='lower left', fontsize=16, title=" ", title_fontsize=16, frameon=False)
+
+        # Drexel result
+        ax[1, 1].errorbar(
+            self.df_Cs_116_plot["Q_rl-1_rhol-1 [GeVcm**2 g-1]"],
+            self.df_Cs_116_plot["Rejection Rate Xenon Abs[]"],
+            yerr=self.df_Cs_116_plot["Rejection Sigma Xenon Abs[]"],
+            label="SBC (Ar+Xe) 116.7K",
+            fmt='o',
+            markersize=8,
+            color="tab:brown"  # Give datasets distinct colors
+        )
+
+        # Plot Cs 119K ONCE on the left axis
+        ax[1, 1].errorbar(
+            self.df_Cs_119_plot["Q_rl-1_rhol-1 [GeVcm**2 g-1]"],
+            self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"],
+            yerr=self.df_Cs_119_plot["Rejection Sigma Xenon Abs[]"],
+            label="SBC (Ar+Xe) 119.6K",
+            fmt='s',
+            markersize=8,
+            color="tab:green"
+        )
+        ax[1, 1].plot(result_Q2_xe[2], result_Q2_xe[3], label="SBC Best Fit", color="black")
+
+        A = 58  # 0.017
+        B = 0.287  # 0.037
+
+        # Generate x array (e.g., 100 evenly spaced points from 0.8 to 1.5)
+        x_drexel = np.linspace(1.5, 4, 100)
+
+        # Calculate y array
+        y_drexel = A * np.exp(- x_drexel / B)
+        ax[1,1].plot(x_drexel, y_drexel,
+                   color="black", linestyle='--', label="Drexel Best Fit")
+
+        ax[1, 1].set_xlabel(r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]", fontsize=16)
+        ax[1, 1].set_xlim(1.2, 3.2)
+        ax[1, 1].set_ylim(1e-7, 1e0)
+        ax[1, 1].set_ylabel("Nucleation probability\n[per xenon K shell photoabsorption]", fontsize=16)
+        ax[1, 1].set_yscale("log")
+        ax[1, 1].tick_params(axis='y', which='both')  # 'both' colors major & minor ticks
+        ax[1, 1].legend(loc='lower left', fontsize=16, title=" ", title_fontsize=16, frameon=False)
+
+
+
+
+
+        #compare to Drexel
+        plt.tight_layout()
+        # plt.show()
+        plt.savefig(self.plot_path + f"gamma_rejection_PSN{self.volume_option}_v2.pdf")
 
     def gamma_rejection_plot_v3(self):
 
@@ -1265,31 +1828,36 @@ class integrated_analysis():
         self.Co_119_label = ["Co 02/06/2026 119K"]
         self.Ba_116_label = ["Ba 11/19/2025 116K"]
 
-        for i in range(len(self.Cs_exp_rejection_path)):
-            df = pd.read_csv(self.Cs_exp_rejection_path[i])
-            # print(df.columns)
-            # doc_label = self.Cs_exp_raw_path[i].replace('_exposures', '')
-            # doc_label = self.Cs_label[i]
-            doc_label = "Cs"
-            print('doc_label', doc_label)
-            # signal
-            # drop 2.75,3.25, 3.75 bara pressure
-            # pressure_drop_list = [2.75,3.25,3.75]
-            pressure_drop_list = []
-            df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
-            # only positive rate
-            df = df[df['Clean Rate [mHz]'] > 0]
-            if i <= 3:
-                self.df_Cs_116_plot_list.append(df)
-            else:
-                self.df_Cs_119_plot_list.append(df)
+        for source, source_config in self.gamma_source_group.items():
+            if source == "Cs":
+                for temperature, temp_config in source_config["exp"].items():
+                    for i in range(len(temp_config["exp"]["rejection_path"])):
+                        df = pd.read_csv(temp_config["exp"]["rejection_path"][i])
 
-            df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
-                         "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
-                         'Clean Rate [mHz]', "Eion [keV]"]]
+                        # print(df.columns)
+                        # doc_label = self.Cs_exp_raw_path[i].replace('_exposures', '')
+                        # doc_label = self.Cs_label[i]
+                        doc_label = "Cs"
+                        print('doc_label', doc_label)
+                        # signal
+                        # drop 2.75,3.25, 3.75 bara pressure
+                        # pressure_drop_list = [2.75,3.25,3.75]
+                        pressure_drop_list = []
+                        df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
+                        # only positive rate
+                        df = df[df['Clean Rate [mHz]'] > 0]
+                        if temperature=="116K":
+                            self.df_Cs_116_plot_list.append(df)
+                        elif temperature=="119K":
+                            self.df_Cs_119_plot_list.append(df)
+                        else:
+                            print("wrong temp")
+                        df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+                                     "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
+                                     'Clean Rate [mHz]', "Eion [keV]"]]
 
-            self.fitting_list.append(df_fit)
-            self.Cs_fitting_list.append(df_fit)
+                        self.fitting_list.append(df_fit)
+                        self.Cs_fitting_list.append(df_fit)
         self.df_Cs_116_plot = pd.concat(self.df_Cs_116_plot_list, ignore_index=True)
         self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
         self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
@@ -1297,65 +1865,6 @@ class integrated_analysis():
 
 
 
-        # ax[2].errorbar(df['Q_rl-1_rhol-1 [GeVcm**2 g-1]'], df["Rejection Rate Xenon Abs[]"],
-        #                yerr=df["Rejection Sigma Xenon Abs[]"], label=doc_label, fmt='o')
-
-        for i in range(len(self.Co_exp_rejection_path)):
-            df = pd.read_csv(self.Co_exp_rejection_path[i])
-            # print(df.columns)
-            # doc_label = self.Co_exp_raw_path[i].rstrip("_exposures")
-            # doc_label = self.Co_label[i]
-            doc_label = "Co"
-            # signal
-            # drop 2.75,3.25, 3.75 bara pressure
-            # pressure_drop_list = [2.75,3.25,3.75]
-            pressure_drop_list = []
-            df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
-            df = df[df['Clean Rate [mHz]'] > 0]
-
-            df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
-                         "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
-                         'Clean Rate [mHz]', "Eion [keV]"]]
-
-            if i <= 0:
-                self.df_Co_116_plot_list.append(df)
-            else:
-                self.df_Co_119_plot_list.append(df)
-            self.fitting_list.append(df_fit)
-            self.Co_fitting_list.append(df_fit)
-
-        self.df_Co_116_plot = pd.concat(self.df_Co_116_plot_list, ignore_index=True)
-        self.df_Co_119_plot = pd.concat(self.df_Co_119_plot_list, ignore_index=True)
-
-
-
-        for i in range(len(self.Ba_exp_rejection_path)):
-            df = pd.read_csv(self.Ba_exp_rejection_path[i])
-            # print(df.columns)
-            # doc_label = self.Co_exp_raw_path[i].rstrip("_exposures")
-            # doc_label = self.Co_label[i]
-            doc_label = "Co"
-            # signal
-            # drop 2.75,3.25, 3.75 bara pressure
-            # pressure_drop_list = [2.75,3.25,3.75]
-            pressure_drop_list = []
-            df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
-            # df = df[df['Clean Rate [mHz]'] > 0]
-            print("ba" ,df[['Clean Rate [mHz]','Clean Rate Sigma [mHz]', 'Exp Rate [mHz]','Exp Rate Sigma [mHz]','Bkg Rate [mHz]','Bkg Rate Sigma [mHz]']])
-
-            df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
-                         "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
-                         'Clean Rate [mHz]',"Eion [keV]"]]
-
-            if i <= 0:
-                self.df_Ba_116_plot_list.append(df)
-            else:
-                self.df_Ba_119_plot_list.append(df)
-            # self.fitting_list.append(df_fit)
-            # self.Ba_fitting_list.append(df_fit)
-        # print("Ba", self.df_Ba_116_plot_list)
-        self.df_Ba_116_plot = pd.concat(self.df_Ba_116_plot_list, ignore_index=True)
-        # self.df_Ba_119_plot = pd.concat(self.df_Ba_119_plot_list, ignore_index=True)
 
 
         ratio_116 = self.df_Cs_116_plot["Rejection Rate KeV[/keV]"][0]/self.df_Cs_116_plot["Rejection Rate Xenon Abs[]"][0]
@@ -1804,8 +2313,8 @@ class integrated_analysis():
 
         #compare to Drexel
         plt.tight_layout()
-        # plt.show()
-        plt.savefig(self.plot_path + "gamma_rejection_PSN_v2.pdf")
+        plt.show()
+        # plt.savefig(self.plot_path + "gamma_rejection_PSN_v2.pdf")
 
     def interpolate_all_keys_vectorized(self, target_key, target_values, data_dict):
         """
@@ -2781,6 +3290,6 @@ class integrated_analysis():
 
 if __name__=="__main__":
     # IA = integrated_analysis(volume="")
-    IA =  integrated_analysis(volume="dome")
+    # IA =  integrated_analysis(volume="dome")
     IA = integrated_analysis(volume="bulk")
     # test = test_csv()
