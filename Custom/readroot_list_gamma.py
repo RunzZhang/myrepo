@@ -686,6 +686,7 @@ class ReadRoot():
         file514.to_csv(self.base_path + "LAr_ER_514.csv")
         # self.df[(self.df["Event"].isin(self.electron_recoiled_event_list))].to_csv(self.base_path+"LAr_ER_sample_preprocess_laststep_v2.csv")
 
+
     def ER_distribution_all_v3(self,df):
 
 
@@ -776,6 +777,44 @@ class ReadRoot():
         # 5. Assign back to main DataFrame
         df.loc[gammas.index, "ER_near/eV"] = merged[
             "ER_near/MeV"].fillna(0.0)*1e6
+        df.loc[gammas.index].to_csv(self.info_primary_path, index=False)
+
+    def boundary_ER_primary(self, df):
+        # 1. Isolate all electrons (e-) and round their starting coordinates
+        electrons = df[(df["name"] == "e-") & (df["Step ID"] == 1)].copy()
+        coord_cols = ["Event", "X/mm", "Y/mm", "Z/mm"]
+        for col in coord_cols[1:]:
+            electrons[col] = electrons[col].round(3)
+
+        # 2. Isolate photoelectric and Compton gammas and round terminal coordinates
+        gamma_processes = ["phot", "compt"]
+        gammas = df[(df["Process"].isin(gamma_processes)) & (df["name"] == "gamma") & (df["Parent ID"] == 0)].copy()
+        post_coord_cols = ["Event", "X_post/mm", "Y_post/mm", "Z_post/mm"]
+        for col in post_coord_cols[1:]:
+            gammas[col] = gammas[col].round(3)
+
+        # 3. Sum electron energies by Parent ID AND Location
+        # This separates different gammas at the same location, AND the same gamma at different locations.
+        vertex_electron_energy = (
+            electrons.groupby(["Event", "Parent ID", "X/mm", "Y/mm", "Z/mm"])["PreKinetic/MeV"]
+            .sum()
+            .reset_index()
+            .rename(columns={"PreKinetic/MeV": "ER_near/MeV"})
+        )
+
+        # 4. Merge using BOTH tracking lineage AND 3D position keys
+        merged = pd.merge(
+            gammas,
+            vertex_electron_energy,
+            left_on=["Event", "Track ID", "X_post/mm", "Y_post/mm", "Z_post/mm"],
+            right_on=["Event", "Parent ID", "X/mm", "Y/mm", "Z/mm"],
+            how="left"
+        )
+        merged.index = gammas.index
+
+        # 5. Assign back to main DataFrame
+        df.loc[gammas.index, "ER_near/eV"] = merged[
+                                                 "ER_near/MeV"].fillna(0.0) * 1e6
         df.loc[gammas.index].to_csv(self.info_primary_path, index=False)
 
     def doped_check(self):

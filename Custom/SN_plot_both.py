@@ -75,14 +75,15 @@ class SN():
         self.false_3 = f"{self.source}_1E7_false3_part{i}.csv"
         self.false_gamma_1 = f"{self.source}_gamma_1E7_false1_part{i}.csv"
         self.signal = f"{self.source}_1E7_sig_part{i}.csv"
+        try:
+            self.info_primary_path = self.base_path + f"{self.source}_gamma_1E6_info_primary_scube_part{i}.csv"
+            self.info_all_path = self.base_path + f"{self.source}_gamma_1E6_info_scube_all_part{i}.csv"
+            self.info_phot_path = self.doped_path + f"{self.source}_gamma_1E6_info_scube_phot_part{i}.csv"
+        except:
 
-        # self.info_primary_path = self.base_path + f"{self.source}_gamma_1E6_info_primary_scube_part{i}.csv"
-        # self.info_all_path = self.base_path + f"{self.source}_gamma_1E6_info_scube_all_part{i}.csv"
-        # self.info_phot_path = self.doped_path + f"{self.source}_gamma_1E6_info_scube_phot_part{i}.csv"
-
-        self.info_primary_path = self.base_path + f"Cs_gamma_1E6_info_primary_scube_part{i}.csv"
-        self.info_all_path = self.base_path + f"Cs_gamma_1E6_info_scube_all_part{i}.csv"
-        self.info_phot_path = self.doped_path + f"Cs_gamma_1E6_info_scube_phot_part{i}.csv"
+            self.info_primary_path = self.base_path + f"Cs_gamma_1E6_info_primary_scube_part{i}.csv"
+            self.info_all_path = self.base_path + f"Cs_gamma_1E6_info_scube_all_part{i}.csv"
+            self.info_phot_path = self.doped_path + f"Cs_gamma_1E6_info_scube_phot_part{i}.csv"
 
 
 
@@ -1098,6 +1099,24 @@ class SN():
             axes[0].set_xlim(0, 116)
             axes[0].set_ylim(200, 620)
             fig.colorbar(im1, ax=axes[0], label="Probability Density")
+
+
+            #find the first columns number
+            first_r_column_density = counts1[0, :]  # Density values for all Z bins at R bin 0
+
+
+
+            # 4. Iterate over Z bins from HIGH Z to LOW Z
+            # z_edges has length (num_z_bins + 1), so bin i spans z_edges[i] to z_edges[i+1]
+            num_z_bins = len(z_edges) - 1
+
+            # Loop backwards through Z bins (high to low)
+            for z_idx in range(num_z_bins - 1, -1, -1):
+                z_high = z_edges[z_idx + 1]
+                z_low = z_edges[z_idx]
+                density_val = first_r_column_density[z_idx]
+
+                print(f"{z_high:12.4f} | {z_low:12.4f} | {density_val:15.6e}")
 
             # -------------------------------------------------------------
             # Plot 2: Equal-Volume Bins ($R^2$ scale on X-axis with $R^2$ label format)
