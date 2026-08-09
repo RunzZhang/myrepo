@@ -235,8 +235,9 @@ class ReadRoot():
             self.file = uproot.open(self.filepath)["tree"]
         except:
             try:
-                self.file = uproot.open(self.filepath_backup)["tree"]
 
+                self.file = uproot.open(self.filepath_backup)["tree"]
+                print("read old files")
             except:
                 print("no corrret file")
 
