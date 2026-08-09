@@ -1319,7 +1319,7 @@ class integrated_analysis():
             self.df_Cs_116_plot["Seitz [keV]"],
             self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_116_plot["Rejection Sigma KeV[/keV]"],
-            label="SBC (Ar+Xe) 116K",
+            label="SBC (Ar+CF$_4$+Xe) 116K",
             fmt='o',
             markersize=8,
             color="tab:brown"  # Give datasets distinct colors
@@ -1330,7 +1330,7 @@ class integrated_analysis():
             self.df_Cs_119_plot["Seitz [keV]"],
             self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
-            label="SBC (Ar+Xe) 119K",
+            label="SBC (Ar+CF$_4$+Xe) 119K",
             fmt='s',
             markersize=8,
             color="tab:green"
@@ -1338,8 +1338,8 @@ class integrated_analysis():
 
         # Set main (left) y-axis and x-axis labels
         ax[0,0].set_xlabel(r"Seitz threshold [keV]", fontsize=16)
-        ax[0,0].set_xlim(0.65, 2.8)
-        ax[0,0].set_ylim(1e-12, 1e-4)
+        ax[0,0].set_xlim(0.50, 2.8)
+        ax[0,0].set_ylim(1e-13, 1e-4)
         ax[0,0].set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
         ax[0,0].set_yscale("log")
         ax[0,0].yaxis.label.set_color("red")
@@ -1536,7 +1536,7 @@ class integrated_analysis():
             self.df_Cs_116_plot["Seitz [keV]"],
             self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_116_plot["Rejection Sigma KeV[/keV]"],
-            label="SBC (Ar+Xe) 116K",
+            label="SBC (Ar+CF$_4$+Xe) 116K",
             fmt='o',
             markersize=8,
             color="tab:brown"  # Give datasets distinct colors
@@ -1547,7 +1547,7 @@ class integrated_analysis():
             self.df_Cs_119_plot["Seitz [keV]"],
             self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
-            label="SBC (Ar+Xe) 119K",
+            label="SBC (Ar+CF$_4$+Xe) 119K",
             fmt='s',
             markersize=8,
             color="tab:green"
@@ -1555,8 +1555,8 @@ class integrated_analysis():
 
         # Set main (left) y-axis and x-axis labels
         ax[0, 1].set_xlabel(r"Seitz threshold [keV]", fontsize=16)
-        ax[0, 1].set_xlim(0.65, 2.8)
-        ax[0, 1].set_ylim(1e-12, 1e-4)
+        ax[0, 1].set_xlim(0.50, 2.8)
+        ax[0, 1].set_ylim(1e-13, 1e-4)
         ax[0, 1].set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
         ax[0, 1].set_yscale("log")
         ax[0, 1].yaxis.label.set_color("red")
@@ -1661,7 +1661,7 @@ class integrated_analysis():
             self.df_Cs_116_plot["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"],
             self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_116_plot["Rejection Sigma KeV[/keV]"],
-            label="SBC (Ar+Xe) 116K",
+            label=r"SBC (Ar+CF$_4$+Xe) 116K",
             fmt='o',
             markersize=8,
             color="tab:brown"  # Give datasets distinct colors
@@ -1672,7 +1672,7 @@ class integrated_analysis():
             self.df_Cs_119_plot["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"],
             self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
-            label="SBC (Ar+Xe) 119K",
+            label=r"SBC (Ar+CF$_4$+Xe) 119K",
             fmt='s',
             markersize=8,
             color="tab:green"
@@ -1708,7 +1708,7 @@ class integrated_analysis():
             self.df_Cs_116_plot["Q_rl-1_rhol-1 [GeVcm**2 g-1]"],
             self.df_Cs_116_plot["Rejection Rate Xenon Abs[]"],
             yerr=self.df_Cs_116_plot["Rejection Sigma Xenon Abs[]"],
-            label="SBC (Ar+Xe) 116K",
+            label=r"SBC (Ar+CF$_4$+Xe) 116K",
             fmt='o',
             markersize=8,
             color="tab:brown"  # Give datasets distinct colors
@@ -1719,7 +1719,7 @@ class integrated_analysis():
             self.df_Cs_119_plot["Q_rl-1_rhol-1 [GeVcm**2 g-1]"],
             self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"],
             yerr=self.df_Cs_119_plot["Rejection Sigma Xenon Abs[]"],
-            label="SBC (Ar+Xe) 119K",
+            label=r"SBC (Ar+CF$_4$+Xe) 119K",
             fmt='s',
             markersize=8,
             color="tab:green"
