@@ -2688,6 +2688,11 @@ class integrated_analysis():
                 y_min = min(y)
                 y_max = max(y)
                 fit_output = self.fit_combination(x, y, y_max, y_min, x_max, x_min)
+                if i==1 and j==1:
+                    print(f"{i}{j}, x",x_min, x_max,x)
+                    print(f"{i}{j}, y", y_min, y_max, y)
+                    print(fit_output)
+
                 row_result.append(fit_output)
             result.append(row_result)
 
