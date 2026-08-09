@@ -75,15 +75,15 @@ class SN():
         self.false_3 = f"{self.source}_1E7_false3_part{i}.csv"
         self.false_gamma_1 = f"{self.source}_gamma_1E7_false1_part{i}.csv"
         self.signal = f"{self.source}_1E7_sig_part{i}.csv"
-        try:
-            self.info_primary_path = self.base_path + f"{self.source}_gamma_1E6_info_primary_scube_part{i}.csv"
-            self.info_all_path = self.base_path + f"{self.source}_gamma_1E6_info_scube_all_part{i}.csv"
-            self.info_phot_path = self.doped_path + f"{self.source}_gamma_1E6_info_scube_phot_part{i}.csv"
-        except:
 
-            self.info_primary_path = self.base_path + f"Cs_gamma_1E6_info_primary_scube_part{i}.csv"
-            self.info_all_path = self.base_path + f"Cs_gamma_1E6_info_scube_all_part{i}.csv"
-            self.info_phot_path = self.doped_path + f"Cs_gamma_1E6_info_scube_phot_part{i}.csv"
+        # self.info_primary_path = self.base_path + f"{self.source}_gamma_1E6_info_primary_scube_part{i}.csv"
+        # self.info_all_path = self.base_path + f"{self.source}_gamma_1E6_info_scube_all_part{i}.csv"
+        # self.info_phot_path = self.doped_path + f"{self.source}_gamma_1E6_info_scube_phot_part{i}.csv"
+
+
+        self.info_primary_path = self.base_path + f"Cs_gamma_1E6_info_primary_scube_part{i}.csv"
+        self.info_all_path = self.base_path + f"Cs_gamma_1E6_info_scube_all_part{i}.csv"
+        self.info_phot_path = self.doped_path + f"Cs_gamma_1E6_info_scube_phot_part{i}.csv"
 
 
 
