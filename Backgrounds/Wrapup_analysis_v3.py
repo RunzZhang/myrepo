@@ -48,8 +48,8 @@ class integrated_analysis():
                                                      "Cold-Cs-12_10-11_fiducial_mix", "Cold-Cs-1_20-21_fiducial_mix"],
                                         "sorted_path": [], "rate_path": [], "rejection_path": [], "plot_list": [],
                                         "plot": pd.DataFrame()},
-                               # "119K": {"raw_path": ["Cold-Cs-2_2-3_fiducial_mix"], "sorted_path": [],
-                               "119K": {"raw_path": [], "sorted_path": [],
+                               "119K": {"raw_path": ["Cold-Cs-2_2-3_fiducial_mix"], "sorted_path": [],
+                               # "119K": {"raw_path": [], "sorted_path": [],
                                         "rate_path": [], "rejection_path": [], "plot_list": [],
                                         "plot": pd.DataFrame()}}},
                 "Co": {"sim": {"pure_address": None, "pure_data": None, "doped_address": None,
@@ -1832,8 +1832,8 @@ class integrated_analysis():
         for source, source_config in self.gamma_source_group.items():
             if source == "Cs":
                 for temperature, temp_config in source_config["exp"].items():
-                    for i in range(len(temp_config["exp"]["rejection_path"])):
-                        df = pd.read_csv(temp_config["exp"]["rejection_path"][i])
+                    for i in range(len(temp_config["rejection_path"])):
+                        df = pd.read_csv(temp_config["rejection_path"][i])
 
                         # print(df.columns)
                         # doc_label = self.Cs_exp_raw_path[i].replace('_exposures', '')
