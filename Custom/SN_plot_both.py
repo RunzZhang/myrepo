@@ -1055,7 +1055,7 @@ class SN():
         volume_condition_primary_vedge2 = ((self.merged_df_primary["X/mm"] ** 2 + self.merged_df_primary[
             "Y/mm"] ** 2).between(104 ** 2, 104.8 ** 2)) & (self.merged_df_primary["Volume"] == "LAr_phys")
 
-        volume_condition_primary_bright = ((self.merged_df_primary["Z/mm"].between(613.61, 617.91))) &(self.merged_df_primary["Y/mm"]**2+self.merged_df_primary["X/mm"]**2<=1.15**2)& (self.merged_df_primary["Volume"] == "LAr_phys")
+        volume_condition_primary_bright = ((self.merged_df_primary["Z/mm"].between(613.61, 617.91))) &(self.merged_df_primary["Y/mm"]**2+self.merged_df_primary["X/mm"]**2<=1.32e2)& (self.merged_df_primary["Volume"] == "LAr_phys")
 
 
         df_primary_origin= self.merged_df_primary[volume_condition_primary_origin]
