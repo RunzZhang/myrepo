@@ -229,7 +229,7 @@ class ReadRoot():
         self.y_range = [0, 0]
         self.z_range = [0, 0]
 
-        # self.filepath = self.base_path + f"dmx_{self.source}_{i}.root"
+        self.filepath = self.base_path + f"dmx_{self.source}_{i}.root"
         self.filepath_backup = self.base_path + f"dmx_Co_1E7_{i}.root"
         try:
             self.file = uproot.open(self.filepath)["tree"]
