@@ -130,6 +130,7 @@ class SN():
             temp_df_primary = pd.read_csv(self.info_primary_path)
 
             self.df_primary_list.append(temp_df_primary)
+            print("primary_columns", temp_df_primary.columns)
 
             temp_df_all = pd.read_csv(self.info_all_path)
 
