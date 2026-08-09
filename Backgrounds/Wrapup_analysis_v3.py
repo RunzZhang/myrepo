@@ -136,7 +136,8 @@ class integrated_analysis():
         self.bkg_subtracted_analysis()
         # self.bkg_subtracted_analysis(plot=True)
 
-        self.gamma_rejection_plot_v3()
+        # self.gamma_rejection_plot_v3()
+        self.gamma_rejection_plot_PSN_v2()
 
 
 
