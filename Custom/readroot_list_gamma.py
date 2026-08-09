@@ -265,7 +265,7 @@ class ReadRoot():
 
 
 
-            self.boundary_ER_primary()
+            self.boundary_ER_primary(self.df)
         else:
             print("doped mode")
             # xenon doping
