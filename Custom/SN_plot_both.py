@@ -1070,7 +1070,7 @@ class SN():
         print('df_primary_vedge2', 'z bound', df_primary_vedge2["Z/mm"].max(), df_primary_vedge2["Z/mm"].min())
 
 
-        print('df primary bright events',volume_condition_primary_bright["Event"].tolist(),"\n",volume_condition_primary_bright.head(10))
+        # print('df primary bright events',volume_condition_primary_bright["Event"].tolist(),"\n",volume_condition_primary_bright.head(10))
         if plot==True:
             from matplotlib.ticker import FuncFormatter
             from matplotlib.colors import LogNorm
@@ -1146,7 +1146,7 @@ class SN():
             #     density_val = first_r_column_density[z_idx]
             #
             #     print(f"{z_high:12.4f} | {z_low:12.4f} | {density_val:15.6e}")
-            print("r2 edgees",r2_edges[:3])
+            # print("r2 edgees",r2_edges[:3])
 
 
             axes[1].xaxis.set_major_formatter(FuncFormatter(square_formatter))

@@ -256,13 +256,13 @@ class ReadRoot():
         self.allER()
         if not self.doped:
             print("NORMAL TRACKING")
-            self.ER_distribution_primary_v3(self.df)
-            self.ER_distribution_all_v3(self.df)
-            self.get_init_info(self.df, i)
-            # self.ER_distribution_primary_v2()
-            # self.ER_distribution_counts_v2()
-            # self.ER_distribution_primary()
-            # self.ER_distribution_counts()
+            # self.ER_distribution_primary_v3(self.df)
+            # self.ER_distribution_all_v3(self.df)
+            # self.get_init_info(self.df, i)
+
+
+
+            self.boundary_ER_primary()
         else:
             print("doped mode")
             # xenon doping
@@ -780,42 +780,9 @@ class ReadRoot():
         df.loc[gammas.index].to_csv(self.info_primary_path, index=False)
 
     def boundary_ER_primary(self, df):
-        # 1. Isolate all electrons (e-) and round their starting coordinates
-        electrons = df[(df["name"] == "e-") & (df["Step ID"] == 1)].copy()
-        coord_cols = ["Event", "X/mm", "Y/mm", "Z/mm"]
-        for col in coord_cols[1:]:
-            electrons[col] = electrons[col].round(3)
-
-        # 2. Isolate photoelectric and Compton gammas and round terminal coordinates
-        gamma_processes = ["phot", "compt"]
-        gammas = df[(df["Process"].isin(gamma_processes)) & (df["name"] == "gamma") & (df["Parent ID"] == 0)].copy()
-        post_coord_cols = ["Event", "X_post/mm", "Y_post/mm", "Z_post/mm"]
-        for col in post_coord_cols[1:]:
-            gammas[col] = gammas[col].round(3)
-
-        # 3. Sum electron energies by Parent ID AND Location
-        # This separates different gammas at the same location, AND the same gamma at different locations.
-        vertex_electron_energy = (
-            electrons.groupby(["Event", "Parent ID", "X/mm", "Y/mm", "Z/mm"])["PreKinetic/MeV"]
-            .sum()
-            .reset_index()
-            .rename(columns={"PreKinetic/MeV": "ER_near/MeV"})
-        )
-
-        # 4. Merge using BOTH tracking lineage AND 3D position keys
-        merged = pd.merge(
-            gammas,
-            vertex_electron_energy,
-            left_on=["Event", "Track ID", "X_post/mm", "Y_post/mm", "Z_post/mm"],
-            right_on=["Event", "Parent ID", "X/mm", "Y/mm", "Z/mm"],
-            how="left"
-        )
-        merged.index = gammas.index
-
-        # 5. Assign back to main DataFrame
-        df.loc[gammas.index, "ER_near/eV"] = merged[
-                                                 "ER_near/MeV"].fillna(0.0) * 1e6
-        df.loc[gammas.index].to_csv(self.info_primary_path, index=False)
+        bright_event = [4860.0, 12246.0, 13017.0, 13705.0, 14304.0, 14841.0, 20169.0, 22189.0, 23971.0, 25502.0, 27111.0, 28451.0, 29883.0, 36881.0,]
+        df_bright = df[df["Event"].isin(bright_event)].copy()
+        df_bright.to_csv(self.base_path+"bright_event", index=False)
 
     def doped_check(self):
         self.tagged_gamma = self.df_electron[(self.df_electron["name"] == "e-") & (self.df_electron["Event"] != 1)]
