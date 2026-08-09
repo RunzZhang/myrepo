@@ -1046,16 +1046,16 @@ class SN():
             plt.savefig(self.plot_path + f"{self.source}{self.volume}_output_spectrum_thesis.pdf")
 
     def find_boundary(self,plot=False):
-        volume_condition_primary_origin = (self.merged_df_primary["X/mm"] ** 2 + self.merged_df_primary[
-            "Y/mm"] ** 2 <= 1**2)&(self.merged_df_primary["Volume"] == "LAr_phys")
-        volume_condition_primary_vedge = ((self.merged_df_primary["X/mm"] ** 2 + self.merged_df_primary[
-            "Y/mm"]**2).between(114**2,115**2))&(self.merged_df_primary["Volume"] == "LAr_phys")
+        volume_condition_primary_origin = (self.merged_df_primary["Post_X/mm"] ** 2 + self.merged_df_primary[
+            "Post_Y/mm"] ** 2 <= 1**2)&(self.merged_df_primary["Volume"] == "LAr_phys")
+        volume_condition_primary_vedge = ((self.merged_df_primary["Post_X/mm"] ** 2 + self.merged_df_primary[
+            "Post_Y/mm"]**2).between(114**2,115**2))&(self.merged_df_primary["Volume"] == "LAr_phys")
 
-        volume_condition_primary_hedge = ((self.merged_df_primary["Z/mm"].between(200, 300))) &((self.merged_df_primary["Y/mm"].between(-2, 2)))& (self.merged_df_primary["Volume"] == "LAr_phys")
-        volume_condition_primary_vedge2 = ((self.merged_df_primary["X/mm"] ** 2 + self.merged_df_primary[
-            "Y/mm"] ** 2).between(104 ** 2, 104.8 ** 2)) & (self.merged_df_primary["Volume"] == "LAr_phys")
+        volume_condition_primary_hedge = ((self.merged_df_primary["Post_Z/mm"].between(200, 300))) &((self.merged_df_primary["Post_Y/mm"].between(-2, 2)))& (self.merged_df_primary["Volume"] == "LAr_phys")
+        volume_condition_primary_vedge2 = ((self.merged_df_primary["Post_X/mm"] ** 2 + self.merged_df_primary[
+            "Post_Y/mm"] ** 2).between(104 ** 2, 104.8 ** 2)) & (self.merged_df_primary["Volume"] == "LAr_phys")
 
-        volume_condition_primary_bright = ((self.merged_df_primary["Z/mm"].between(613.61, 617.91))) &(self.merged_df_primary["Y/mm"]**2+self.merged_df_primary["X/mm"]**2<=1.32e2)& (self.merged_df_primary["Volume"] == "LAr_phys")
+        volume_condition_primary_bright = ((self.merged_df_primary["Post_Z/mm"].between(613.61, 617.91))) &(self.merged_df_primary["Post_Y/mm"]**2+self.merged_df_primary["Post_X/mm"]**2<=1.32e2)& (self.merged_df_primary["Volume"] == "LAr_phys")
 
 
         df_primary_origin= self.merged_df_primary[volume_condition_primary_origin]
@@ -1064,10 +1064,10 @@ class SN():
         df_primary_vedge2 = self.merged_df_primary[volume_condition_primary_vedge2]
         volume_condition_primary_bright = self.merged_df_primary[volume_condition_primary_bright]
 
-        print('df_primary_origin','z bound', df_primary_origin["Z/mm"].max(), df_primary_origin["Z/mm"].min())
-        print('df_primary_vedge', 'z bound', df_primary_vedge["Z/mm"].max(), df_primary_vedge["Z/mm"].min())
-        print('df_primary_hedge', 'x bound', df_primary_hedge["X/mm"].abs().max(), df_primary_hedge["X/mm"].abs().min())
-        print('df_primary_vedge2', 'z bound', df_primary_vedge2["Z/mm"].max(), df_primary_vedge2["Z/mm"].min())
+        print('df_primary_origin','z bound', df_primary_origin["Post_Z/mm"].max(), df_primary_origin["Post_Z/mm"].min())
+        print('df_primary_vedge', 'z bound', df_primary_vedge["Post_Z/mm"].max(), df_primary_vedge["Post_Z/mm"].min())
+        print('df_primary_hedge', 'x bound', df_primary_hedge["Post_X/mm"].abs().max(), df_primary_hedge["Post_X/mm"].abs().min())
+        print('df_primary_vedge2', 'z bound', df_primary_vedge2["Post_Z/mm"].max(), df_primary_vedge2["Post_Z/mm"].min())
 
 
         # print('df primary bright events',volume_condition_primary_bright["Event"].tolist(),"\n",volume_condition_primary_bright.head(10))
@@ -1080,9 +1080,9 @@ class SN():
                 self.merged_df_primary["ER_near/eV"] > 0 )
                 ]
 
-            x = df_filtered["X/mm"].values
-            y = df_filtered["Y/mm"].values
-            z = df_filtered["Z/mm"].values
+            x = df_filtered["Post_X/mm"].values
+            y = df_filtered["Post_Y/mm"].values
+            z = df_filtered["Post_Z/mm"].values
 
             r = np.sqrt(x ** 2 + y ** 2)
             r_sq = r ** 2
@@ -1166,14 +1166,14 @@ class SN():
             volume_condition_primary = True
             volume_condition_all = True
         elif self.volume =="bulk":
-            volume_condition_primary = (self.merged_df_primary["X/mm"]**2+self.merged_df_primary["Y/mm"]**2 <= 12100)&self.merged_df_primary["Z/mm"].between(422, 422+170)
+            volume_condition_primary = (self.merged_df_primary["Post_X/mm"]**2+self.merged_df_primary["Post_Y/mm"]**2 <= 12100)&self.merged_df_primary["Post_Z/mm"].between(422, 422+170)
             volume_condition_all = (
-                        self.merged_df_all["X/mm"] ** 2 + self.merged_df_all["Y/mm"] ** 2 <= 12100)&self.merged_df_all["Z/mm"].between(422, 422+170)
+                        self.merged_df_all["Post_X/mm"] ** 2 + self.merged_df_all["Post_Y/mm"] ** 2 <= 12100)&self.merged_df_all["Post_Z/mm"].between(422, 422+170)
         elif self.volume=="dome":
             volume_condition_primary = (
-                        self.merged_df_primary["Z/mm"] >= 422+ 170)
+                        self.merged_df_primary["Post_Z/mm"] >= 422+ 170)
             volume_condition_all = (
-                self.merged_df_all["Z/mm"] >= 422 + 170)
+                self.merged_df_all["Post_Z/mm"] >= 422 + 170)
         else:
             volume_condition_primary = True
             volume_condition_all = True
@@ -1190,13 +1190,13 @@ class SN():
         # auto choose the range
         max_gamma_int = int(round(ER_Ar_primary.max())) + 100
         print(self.volume,self.source,'len', len(ER_Ar_primary),max_gamma_int)
-        max_x = self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys")&volume_condition_primary][ "X/mm"].max()
+        max_x = self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys")&volume_condition_primary][ "Post_X/mm"].max()
         max_y = self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys") & volume_condition_primary][
-            "Y/mm"].max()
+            "Post_Y/mm"].max()
         max_z = self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys") & volume_condition_primary][
-            "Z/mm"].max()
+            "Post_Z/mm"].max()
         min_z= self.merged_df_primary[(self.merged_df_primary["Volume"] == "LAr_phys") & volume_condition_primary][
-            "Z/mm"].min()
+            "Post_Z/mm"].min()
         print(self.volume,self.source,"bounds", 'max_x', max_x, 'max_y',max_y,'max_z',max_z,"min_z",min_z)
 
         hist_array_primary = [None]
@@ -1365,11 +1365,11 @@ class SN():
         if self.volume=="":
             volume_condition = True
         elif self.volume =="bulk":
-            volume_condition = (df["X/mm"]**2+df["Y/mm"]**2 <= 12100)&(df["Z/mm"].between(400, 400+170))
+            volume_condition = (df["Post_X/mm"]**2+df["Post_Y/mm"]**2 <= 12100)&(df["Post_Z/mm"].between(400, 400+170))
 
         elif self.volume=="dome":
             volume_condition = (
-                        df["Z/mm"] >= 400+ 170)
+                        df["Post_Z/mm"] >= 400+ 170)
 
         else:
             volume_condition = True
