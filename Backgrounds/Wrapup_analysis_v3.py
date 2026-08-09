@@ -18,7 +18,7 @@ class integrated_analysis():
         self.base_path = "/lzdata/runzezhang/result/GR_sims/"
         self.color_code = {"Cs":"green", "Co": "cyan", "Ba": "orange", "Th":"brown", "Hot_Cs":"gray"}
         self.bkg_uncertainty_cut = {"":0.3, "dome":0.15, "bulk":0.2}
-        self.exp_uncertainty_cut = {"":0.3, "dome":0.3, "bulk":0.4}
+        self.exp_uncertainty_cut = {"":0.3, "dome":0.2, "bulk":0.4}
         self.volume_option =  volume
         if self.volume_option== ""or self.volume_option== "all":
             self.gamma_source_group = {"Cs":{"sim":{"pure_address":None,"pure_data":None, "doped_address":None,"doped_data":None},
