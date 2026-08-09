@@ -1146,6 +1146,7 @@ class SN():
             #     density_val = first_r_column_density[z_idx]
             #
             #     print(f"{z_high:12.4f} | {z_low:12.4f} | {density_val:15.6e}")
+            print("r2 edgees",r2_edges[:3])
 
 
             axes[1].xaxis.set_major_formatter(FuncFormatter(square_formatter))
