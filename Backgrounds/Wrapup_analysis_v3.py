@@ -2744,7 +2744,7 @@ class integrated_analysis():
         return [(a_fit_scatter, b_fit_scatter,x_fitted_scatter,y_fitted_scatter),(a_fit_keV, b_fit_keV,x_fitted_keV,y_fitted_keV)]
 
     def fit_combination(self,x,y,y_max,y_min,x_max,x_min):
-        b_guess_per_scattering = -(np.log(y_max) - np.log(y_min)) / (x_max - x_min)
+        b_guess_per_scattering = (np.log(y_max) - np.log(y_min)) / (x_max - x_min)
         a_guess_scattering = (y_max+y_min)/2
         initial_guess_scatter = [a_guess_scattering, b_guess_per_scattering]
         popt_scatter, pcov_scatter = curve_fit(self.exp_func, x, y, p0=initial_guess_scatter)
