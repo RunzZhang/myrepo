@@ -1055,16 +1055,22 @@ class SN():
         volume_condition_primary_vedge2 = ((self.merged_df_primary["X/mm"] ** 2 + self.merged_df_primary[
             "Y/mm"] ** 2).between(104 ** 2, 104.8 ** 2)) & (self.merged_df_primary["Volume"] == "LAr_phys")
 
+        volume_condition_primary_bright = ((self.merged_df_primary["Z/mm"].between(613.61, 617.91))) &(self.merged_df_primary["Y/mm"]**2+self.merged_df_primary["X/mm"]**2<=1.15**2)& (self.merged_df_primary["Volume"] == "LAr_phys")
+
 
         df_primary_origin= self.merged_df_primary[volume_condition_primary_origin]
         df_primary_vedge = self.merged_df_primary[volume_condition_primary_vedge]
         df_primary_hedge = self.merged_df_primary[volume_condition_primary_hedge]
         df_primary_vedge2 = self.merged_df_primary[volume_condition_primary_vedge2]
+        volume_condition_primary_bright = self.merged_df_primary[volume_condition_primary_bright]
 
         print('df_primary_origin','z bound', df_primary_origin["Z/mm"].max(), df_primary_origin["Z/mm"].min())
         print('df_primary_vedge', 'z bound', df_primary_vedge["Z/mm"].max(), df_primary_vedge["Z/mm"].min())
         print('df_primary_hedge', 'x bound', df_primary_hedge["X/mm"].abs().max(), df_primary_hedge["X/mm"].abs().min())
         print('df_primary_vedge2', 'z bound', df_primary_vedge2["Z/mm"].max(), df_primary_vedge2["Z/mm"].min())
+
+
+        print('df primary bright events',volume_condition_primary_bright.head(20))
         if plot==True:
             from matplotlib.ticker import FuncFormatter
             from matplotlib.colors import LogNorm
@@ -1124,20 +1130,23 @@ class SN():
                     return f"${int(base)}^2$"
                 return f"${base:.1f}^2$"
 
-            # find the first columns number
-            first_r_column_density = counts2[0, :]  # Density values for all Z bins at R bin 0
+            # # find the first columns number
+            # first_r_column_density = counts2[0, :]  # Density values for all Z bins at R bin 0
+            #
+            # # 613.61mm to 617.79  r 0 to 1.15**2
+            #
+            # # 4. Iterate over Z bins from HIGH Z to LOW Z
+            # # z_edges has length (num_z_bins + 1), so bin i spans z_edges[i] to z_edges[i+1]
+            # num_z_bins = len(z_edges2) - 1
+            #
+            # # Loop backwards through Z bins (high to low)
+            # for z_idx in range(num_z_bins - 1, -1, -1):
+            #     z_high = z_edges2[z_idx + 1]
+            #     z_low = z_edges2[z_idx]
+            #     density_val = first_r_column_density[z_idx]
+            #
+            #     print(f"{z_high:12.4f} | {z_low:12.4f} | {density_val:15.6e}")
 
-            # 4. Iterate over Z bins from HIGH Z to LOW Z
-            # z_edges has length (num_z_bins + 1), so bin i spans z_edges[i] to z_edges[i+1]
-            num_z_bins = len(z_edges2) - 1
-
-            # Loop backwards through Z bins (high to low)
-            for z_idx in range(num_z_bins - 1, -1, -1):
-                z_high = z_edges2[z_idx + 1]
-                z_low = z_edges2[z_idx]
-                density_val = first_r_column_density[z_idx]
-
-                print(f"{z_high:12.4f} | {z_low:12.4f} | {density_val:15.6e}")
 
             axes[1].xaxis.set_major_formatter(FuncFormatter(square_formatter))
 
