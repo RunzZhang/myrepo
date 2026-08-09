@@ -1529,8 +1529,8 @@ class integrated_analysis():
 
         # PICO Eion_keV
 
-        # ax[0,0].legend(loc='lower left', fontsize=16, title=" ", title_fontsize=16,frameon=False)
-        ax[0, 0].legend(loc='upper right', fontsize=16, title=" ", title_fontsize=16, frameon=False)
+        ax[0,0].legend(loc='lower left', fontsize=15, title=" ", title_fontsize=16,frameon=False)
+        # ax[0, 0].legend(loc='upper right', fontsize=16, title=" ", title_fontsize=16, frameon=False)
 
        # 2nd graph that use c3F8 mapping:
         ax[0, 1].errorbar(
@@ -1652,8 +1652,8 @@ class integrated_analysis():
 
         ax[0, 1].plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
 
-        # ax[0, 1].legend(loc='lower left', fontsize=16, title=" ", title_fontsize=16, frameon=False)
-        ax[0, 1].legend(loc='upper right', fontsize=16, title=" ", title_fontsize=16, frameon=False)
+        ax[0, 1].legend(loc='lower left', fontsize=16, title=" ", title_fontsize=15, frameon=False)
+        # ax[0, 1].legend(loc='upper right', fontsize=16, title=" ", title_fontsize=16, frameon=False)
 
 
 
