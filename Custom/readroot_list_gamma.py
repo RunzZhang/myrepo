@@ -229,15 +229,11 @@ class ReadRoot():
         self.y_range = [0, 0]
         self.z_range = [0, 0]
 
-        self.filepath = self.base_path + f"dmx_{self.source}_{i}.root"
-        self.filepath_backup = self.base_path + f"dmx_Co_{i}.root"
-        try:
-            self.file = uproot.open(self.filepath)["tree"]
-        except:
-            try:
-                self.file = uproot.open(self.filepath_backup)["tree"]
-            except:
-                print("no files")
+        # self.filepath = self.base_path + f"dmx_{self.source}_{i}.root"
+        self.filepath = self.base_path + f"dmx_Co_1E7_1.root"
+        self.file = uproot.open(self.filepath)["tree"]
+
+
 
         print("columns: ", self.file.keys())
         # ['Event', 'name', 'Parent ID', 'Track ID', 'Step ID', 'X/mm', 'Y/mm', 'Z/mm', 'Kinetic/MeV', 'Recoiled/MeV', 'Volume', 'Process']
