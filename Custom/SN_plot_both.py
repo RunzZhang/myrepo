@@ -176,9 +176,9 @@ class SN():
             # self.gamma_rejection_rate_vs_Setiz()
 
 
-            self.find_boundary(plot=True)
+            # self.find_boundary(plot=True)
             # self.find_boundary()
-            # self.write_sims_results()
+            self.write_sims_results()
             # self.write_sims_results_thesis()
 
 
@@ -1365,15 +1365,14 @@ class SN():
         if self.volume=="":
             volume_condition = True
         elif self.volume =="bulk":
-            volume_condition = (df["X_post/mm"]**2+df["Y_post/mm"]**2 <= 12100)&(df["Z_post/mm"].between(400, 400+170))
+            volume_condition = (df["X_post/mm"]**2+df["Y_post/mm"]**2 <= 12100)&(df["Z_post/mm"].between(422, 422+170))
 
         elif self.volume=="dome":
             volume_condition = (
-                        df["Z_post/mm"] >= 400+ 170)
+                        df["Z_post/mm"] >= 422+ 170)
 
         else:
             volume_condition = True
-
 
 
         # Filter out everything except gammas to ensure a clean starting dataset
@@ -1777,29 +1776,29 @@ class test_csv():
 
 
 if __name__=="__main__":
-    # sn = SN(doped=True, source="Cs", volume="bulk")
-    # sn = SN(doped=True, source="Cs", volume="dome")
+    sn = SN(doped=True, source="Cs", volume="bulk")
+    sn = SN(doped=True, source="Cs", volume="dome")
     sn = SN(doped=False, source="Cs", volume="bulk")
-    # sn = SN(doped=False, source="Cs", volume="dome")
-    #
-    # sn = SN(doped=True, source="Co", volume="bulk")
-    # sn = SN(doped=True, source="Co", volume="dome")
-    # sn = SN(doped=False, source="Co", volume="bulk")
-    # sn = SN(doped=False, source="Co", volume="dome")
-    #
-    # sn = SN(doped=True, source="Ba", volume="bulk")
-    # sn = SN(doped=True, source="Ba", volume="dome")
-    # sn = SN(doped=False, source="Ba", volume="bulk")
-    # sn = SN(doped=False, source="Ba", volume="dome")
-    #
-    # sn = SN(doped=True, source="Th", volume="bulk")
-    # sn = SN(doped=True, source="Th", volume="dome")
-    # sn = SN(doped=False, source="Th", volume="bulk")
-    # sn = SN(doped=False, source="Th", volume="dome")
-    #
-    # sn = SN(doped=True, source="Hot_Cs", volume="bulk")
-    # sn = SN(doped=True, source="Hot_Cs", volume="dome")
-    # sn = SN(doped=False, source="Hot_Cs", volume="bulk")
-    # sn = SN(doped=False, source="Hot_Cs", volume="dome")
+    sn = SN(doped=False, source="Cs", volume="dome")
+
+    sn = SN(doped=True, source="Co", volume="bulk")
+    sn = SN(doped=True, source="Co", volume="dome")
+    sn = SN(doped=False, source="Co", volume="bulk")
+    sn = SN(doped=False, source="Co", volume="dome")
+
+    sn = SN(doped=True, source="Ba", volume="bulk")
+    sn = SN(doped=True, source="Ba", volume="dome")
+    sn = SN(doped=False, source="Ba", volume="bulk")
+    sn = SN(doped=False, source="Ba", volume="dome")
+
+    sn = SN(doped=True, source="Th", volume="bulk")
+    sn = SN(doped=True, source="Th", volume="dome")
+    sn = SN(doped=False, source="Th", volume="bulk")
+    sn = SN(doped=False, source="Th", volume="dome")
+
+    sn = SN(doped=True, source="Hot_Cs", volume="bulk")
+    sn = SN(doped=True, source="Hot_Cs", volume="dome")
+    sn = SN(doped=False, source="Hot_Cs", volume="bulk")
+    sn = SN(doped=False, source="Hot_Cs", volume="dome")
 
     # test = test_csv()
