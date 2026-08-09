@@ -1070,7 +1070,7 @@ class SN():
         print('df_primary_vedge2', 'z bound', df_primary_vedge2["Z/mm"].max(), df_primary_vedge2["Z/mm"].min())
 
 
-        print('df primary bright events',volume_condition_primary_bright["Event"],"\n",volume_condition_primary_bright.head(10))
+        print('df primary bright events',volume_condition_primary_bright["Event"].tolist(),"\n",volume_condition_primary_bright.head(10))
         if plot==True:
             from matplotlib.ticker import FuncFormatter
             from matplotlib.colors import LogNorm
