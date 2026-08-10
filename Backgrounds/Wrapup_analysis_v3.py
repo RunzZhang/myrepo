@@ -18,7 +18,7 @@ class integrated_analysis():
         self.base_path = "/lzdata/runzezhang/result/GR_sims/"
         self.color_code = {"Cs":"green", "Co": "cyan", "Ba": "orange", "Th":"brown", "Hot_Cs":"gray"}
         self.bkg_uncertainty_cut = {"":0.3, "dome":0.15, "bulk":0.2}
-        self.exp_uncertainty_cut = {"":0.3, "dome":0.3, "bulk":0.4}
+        self.exp_uncertainty_cut = {"":0.3, "dome":0.3, "bulk":1}
         self.volume_option =  volume
         if self.volume_option== ""or self.volume_option== "all":
             self.gamma_source_group = {"Cs":{"sim":{"pure_address":None,"pure_data":None, "doped_address":None,"doped_data":None},
@@ -136,8 +136,8 @@ class integrated_analysis():
         self.bkg_subtracted_analysis()
         # self.bkg_subtracted_analysis(plot=True)
 
-        # self.gamma_rejection_plot_v3()
-        self.gamma_rejection_plot_PSN_v2()
+        self.gamma_rejection_plot_v3()
+        # self.gamma_rejection_plot_PSN_v2()
 
 
 
@@ -409,6 +409,8 @@ class integrated_analysis():
                             merged_df['Clean Rate [mHz]'] = merged_df['Exp Rate [mHz]'] - merged_df['Bkg Rate [mHz]']
                             merged_df['Clean Rate Sigma [mHz]'] = np.sqrt(
                                 merged_df['Exp Rate Sigma [mHz]'] ** 2 + merged_df['Bkg Rate Sigma [mHz]'] ** 2)
+
+
                             merged_df =  merged_df[merged_df['Clean Rate [mHz]']>0]
                             # add Seitz and Eion unit
                             if temperature =="116K":
@@ -1530,7 +1532,7 @@ class integrated_analysis():
         # PICO Eion_keV
 
         # ax[0,0].legend(loc='lower left', fontsize=15, title=" ", title_fontsize=16,frameon=False)
-        ax[0, 0].legend(loc='upper right', fontsize=16,  frameon=False,borderaxespad=0, 
+        ax[0, 0].legend(loc='upper right', fontsize=16,  frameon=False,borderaxespad=0,
     alignment="left")
 
        # 2nd graph that use c3F8 mapping:
