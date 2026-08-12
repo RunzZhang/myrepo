@@ -1444,7 +1444,7 @@ class integrated_analysis():
             self.df_Cs_116_plot["Seitz [keV]"],
             self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_116_plot["Rejection Sigma KeV[/keV]"],
-            label="SBC (Ar+CF$_4$+Xe) 116K",
+            label="SBC (Ar+CF$_4$+Xe) 116.7 K",
             fmt='o',
             markersize=8,
             color="tab:brown"  # Give datasets distinct colors
@@ -1455,7 +1455,7 @@ class integrated_analysis():
             self.df_Cs_119_plot["Seitz [keV]"],
             self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
-            label="SBC (Ar+CF$_4$+Xe) 119K",
+            label="SBC (Ar+CF$_4$+Xe) 119.6 K",
             fmt='s',
             markersize=8,
             color="tab:green"
