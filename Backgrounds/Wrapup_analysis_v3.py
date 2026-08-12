@@ -18,7 +18,7 @@ class integrated_analysis():
         self.base_path = "/lzdata/runzezhang/result/GR_sims/"
         self.color_code = {"Cs":"green", "Co": "cyan", "Ba": "orange", "Th":"brown", "Hot_Cs":"gray"}
         self.bkg_uncertainty_cut = {"":0.3, "dome":0.15, "bulk":0.2}
-        self.exp_uncertainty_cut = {"":0.3, "dome":0.3, "bulk":1}
+        self.exp_uncertainty_cut = {"":0.3, "dome":0.3, "bulk":0.4}
         self.volume_option =  volume
         if self.volume_option== ""or self.volume_option== "all":
             self.gamma_source_group = {"Cs":{"sim":{"pure_address":None,"pure_data":None, "doped_address":None,"doped_data":None},
@@ -136,8 +136,8 @@ class integrated_analysis():
         self.bkg_subtracted_analysis()
         # self.bkg_subtracted_analysis(plot=True)
 
-        self.gamma_rejection_plot_v3()
-        # self.gamma_rejection_plot_PSN_v2()
+        # self.gamma_rejection_plot_v3()
+        self.gamma_rejection_plot_PSN_v2()
 
 
 
@@ -893,7 +893,129 @@ class integrated_analysis():
         return output
 
 
+    def gamma_rejection_plot_output(self):
 
+        self.fitting_list = []
+        self.Cs_fitting_list = []
+        self.Co_fitting_list = []
+        self.Ba_fitting_list = []
+
+        for source, source_config in self.gamma_source_group.items():
+            # if source != "Ba" and source != "Th":
+            if source != "Ba":
+            # read_source exp data
+                for temperature, temp_config in source_config["exp"].items():
+                    if temp_config["rejection_path"] !=[]:
+                        for rejection_path_index in range(len(temp_config["rejection_path"])):
+
+                            # combine the Seitz to the exp data
+                            df = pd.read_csv(temp_config["rejection_path"][rejection_path_index])
+                            print("df.columns",source,rejection_path_index,df.columns)
+
+                            # if source == "Co" and rejection_path_index == 0 and temperature=="116K":
+                            #     print("source Co columns 0", df)
+                            if not df.empty:
+                                pressure_drop_list = []
+                                df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
+                                # only positive rate
+                                df = df[df['Clean Rate [mHz]'] > 0]
+                                temp_config["plot_list"].append(df)
+
+                                df_fit = df[['Pressure [bara]','Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+                                             "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]',
+                                             "Rejection Rate Xenon Abs[]",
+                                             'Clean Rate [mHz]', "Eion [keV]"]]
+
+                                self.fitting_list.append(df_fit)
+                                if source =="Cs":
+                                    self.Cs_fitting_list.append(df_fit)
+                            else:
+                                continue
+                        print(temp_config["plot_list"])
+                        if len(temp_config["plot_list"])>=1:
+                            temp_config["plot"] = pd.concat(temp_config["plot_list"], ignore_index=True)
+                            temp_config["plot"] = self.concat_PT_condition(temp_config["plot"])
+
+        # print Q vs per keV and Eion per interaction
+
+
+
+
+        self.Cs_116_label = ["Cs 11/17/2025 116K", "Cs 12/01/2025 116K", "Cs 12/10/2025 116K", "Cs 01/20/2026 116K"]
+        self.Cs_119_label = ["Cs 02/02/2026 119K"]
+        self.Co_116_label = ["Co 12/15/2026 116K"]
+        self.Co_119_label = ["Co 02/06/2026 119K"]
+        self.Ba_116_label = ["Ba 11/19/2025 116K"]
+
+
+        fig, ax = plt.subplots(3, 4, figsize=(40, 24))
+        # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
+
+        y_config = [{"y": "Rejection Rate Scattering[]", "y_err": "Rejection Sigma Scattering[]",
+                     "ylabel": "Nucleation probability (per interaction) "},
+                    {"y": "Rejection Rate KeV[/keV]", "y_err": "Rejection Sigma KeV[/keV]",
+                     "ylabel": "Probability per energy deposited \n (events/keV) "},
+                    {"y": "Rejection Rate Xenon Abs[]", "y_err": "Rejection Sigma Xenon Abs[]",
+                     "ylabel": "Nucleation probability \n (per xenon photoabsorption in K shell) "},
+                    {"y": "Clean Rate [mHz]", "y_err": 'Clean Rate Sigma [mHz]',
+                     "ylabel": "Background Substacted Rate [mHz]"}]
+        x_config = [{"x": "Seitz [keV]", "xlabel": r"Seitz threshold [keV]"},
+                    {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+                     "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
+                    {"x": "Q_rl-1_rhol-1 [GeVcm**2 g-1]", "xlabel": r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"}]
+
+        for i in range(4):
+            for j in range(3):
+                # Extract the configuration for this specific slot
+                y_cfg = y_config[i]
+                x_cfg = x_config[j]
+                ax_ij = ax[j, i]
+
+                for source, source_config in self.gamma_source_group.items():
+                    # read_source exp data
+                    for temperature, temp_config in source_config["exp"].items():
+                        if not temp_config["plot"].empty:
+                            ax_ij.errorbar(temp_config["plot"][x_cfg["x"]], temp_config["plot"][y_cfg["y"]],
+                                           yerr=temp_config["plot"][y_cfg["y_err"]], label=str(source)+" "+str(temperature), fmt='o',
+                                           markersize=8)
+
+
+                ax_ij.set_xlabel(x_cfg["xlabel"],fontsize=16)
+                ax_ij.set_ylabel(y_cfg["ylabel"],fontsize=16)
+                ax_ij.set_yscale("log")
+                ax_ij.legend(loc='lower left', fontsize=13)
+
+
+        self.fitting_df = pd.concat(self.fitting_list, ignore_index=True)
+        fitting_matrix = self.fitting_gamma_rejection_v3(self.fitting_df,x_config,y_config)
+
+
+        # plot the fitting function
+        for i in range(4):
+            for j in range(3):
+                # Extract the configuration for this specific slot
+                y_cfg = y_config[i]
+                x_cfg = x_config[j]
+                ax_ij = ax[j, i]
+                a_val = fitting_matrix[i][j][0]
+                b_val = fitting_matrix[i][j][1]
+
+                # ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
+                #            color="black")
+                label_text = f"A = {a_val:.2e},\nB = {b_val:.2e}"
+                # ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],label = label_text,
+                #       color="black")
+                ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
+                           color="black", label=label_text)
+                ax_ij.legend(loc='lower left', fontsize=13)
+
+        # plt.show()
+        plt.savefig(self.plot_path + f"gamma_rejection_{self.volume_option}v3.pdf")
+
+        plt.clf()
+        # self.Qseitz_compound_xe_plot()
+        # self.Ratio_plot()
+        # self.time_plot()
 
     def gamma_rejection_plot_v3(self):
 
@@ -903,7 +1025,8 @@ class integrated_analysis():
         self.Ba_fitting_list = []
 
         for source, source_config in self.gamma_source_group.items():
-            if source != "Ba" and source != "Th":
+            # if source != "Ba" and source != "Th":
+            if source != "Ba":
             # read_source exp data
                 for temperature, temp_config in source_config["exp"].items():
                     if temp_config["rejection_path"] !=[]:
@@ -1540,7 +1663,7 @@ class integrated_analysis():
             self.df_Cs_116_plot["Seitz [keV]"],
             self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_116_plot["Rejection Sigma KeV[/keV]"],
-            label="SBC (Ar+CF$_4$+Xe) 116K",
+            label="SBC (Ar+CF$_4$+Xe) 116.7 K",
             fmt='o',
             markersize=8,
             color="tab:brown"  # Give datasets distinct colors
@@ -1551,7 +1674,7 @@ class integrated_analysis():
             self.df_Cs_119_plot["Seitz [keV]"],
             self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
-            label="SBC (Ar+CF$_4$+Xe) 119K",
+            label="SBC (Ar+CF$_4$+Xe) 119.6 K",
             fmt='s',
             markersize=8,
             color="tab:green"
