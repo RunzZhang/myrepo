@@ -1397,7 +1397,9 @@ class integrated_analysis():
                 for temperature, temp_config in source_config["exp"].items():
                     for i in range(len(temp_config["rejection_path"])):
                         df = pd.read_csv(temp_config["rejection_path"][i])
-
+                        df_cols_to_divide = ["Rejection Rate Scattering[]",
+                                             "Rejection Rate KeV[/keV]", "Rejection Rate Xenon Abs[]",
+                                             'Clean Rate [mHz]']
                         # print(df.columns)
                         # doc_label = self.Cs_exp_raw_path[i].replace('_exposures', '')
                         # doc_label = self.Cs_label[i]
@@ -1410,6 +1412,9 @@ class integrated_analysis():
                         df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
                         # only positive rate
                         df = df[df['Clean Rate [mHz]'] > 0]
+                        if rate_cut:
+
+                            df[df_cols_to_divide] = df[df_cols_to_divide]*4
                         if temperature=="116K":
                             self.df_Cs_116_plot_list.append(df)
                         elif temperature=="119K":
@@ -1419,11 +1424,6 @@ class integrated_analysis():
                         df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                                      "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
                                      'Clean Rate [mHz]', "Eion [keV]"]]
-                        if rate_cut:
-                            df_cols_to_divide = [ "Rejection Rate Scattering[]",
-                                     "Rejection Rate KeV[/keV]",  "Rejection Rate Xenon Abs[]",
-                                     'Clean Rate [mHz]']
-                            df[df_cols_to_divide] = df[df_cols_to_divide]*4
 
                         self.fitting_list.append(df_fit)
                         self.Cs_fitting_list.append(df_fit)
