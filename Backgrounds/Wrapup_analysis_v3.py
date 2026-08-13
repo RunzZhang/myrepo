@@ -1506,6 +1506,9 @@ class integrated_analysis():
         print("fitting  SBC_Q_kev_fitting", SBC_Q_kev_fitting)
         print("fitting SBC_Q_xe_fitting ", SBC_Q_xe_fitting )
 
+        print("fitting  SBC_Eion_kev_fitting", result_Eion_keV)
+        print("fitting SBC_Q2_xe_fitting ", result_Q2_xe)
+
 
 
 
