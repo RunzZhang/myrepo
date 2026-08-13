@@ -137,7 +137,8 @@ class integrated_analysis():
         # self.bkg_subtracted_analysis(plot=True)
 
         # self.gamma_rejection_plot_v3()
-        self.gamma_rejection_plot_PSN_v2()
+        # self.gamma_rejection_plot_PSN_v2()
+        self.gamma_rejection_plot_PSN_v2(rate_cut=True)
 
 
 
@@ -1372,7 +1373,7 @@ class integrated_analysis():
         plt.tight_layout()
         plt.savefig(self.plot_path + "Time_stability_updated.pdf")
 
-    def gamma_rejection_plot_PSN_v2(self):
+    def gamma_rejection_plot_PSN_v2(self, rate_cut = False):
         # print Q vs per keV and Eion per interaction
 
         self.fitting_list = []
@@ -1418,6 +1419,11 @@ class integrated_analysis():
                         df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                                      "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
                                      'Clean Rate [mHz]', "Eion [keV]"]]
+                        if rate_cut:
+                            df_cols_to_divide = [ "Rejection Rate Scattering[]",
+                                     "Rejection Rate KeV[/keV]",  "Rejection Rate Xenon Abs[]",
+                                     'Clean Rate [mHz]']
+                            df[df_cols_to_divide] = df[df_cols_to_divide]*4
 
                         self.fitting_list.append(df_fit)
                         self.Cs_fitting_list.append(df_fit)
@@ -1881,7 +1887,11 @@ class integrated_analysis():
         #compare to Drexel
         plt.tight_layout()
         # plt.show()
-        plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_PSN_v2.pdf")
+        if rate_cut==False:
+            plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_PSN_v2.pdf")
+        else:
+            plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_PSN_ratecut_v2.pdf")
+
 
     def interpolate_all_keys_vectorized(self, target_key, target_values, data_dict):
         """
