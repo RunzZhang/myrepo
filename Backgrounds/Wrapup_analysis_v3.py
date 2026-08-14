@@ -137,8 +137,9 @@ class integrated_analysis():
         # self.bkg_subtracted_analysis(plot=True)
 
         # self.gamma_rejection_plot_v3()
-        self.gamma_rejection_plot_PSN_v2()
+        # self.gamma_rejection_plot_PSN_v2()
         # self.gamma_rejection_plot_PSN_v2(rate_cut=True)
+        self.gamma_rejection_plot_output()
 
 
 
@@ -964,7 +965,8 @@ class integrated_analysis():
                     {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                      "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
                     {"x": "Q_rl-1_rhol-1 [GeVcm**2 g-1]", "xlabel": r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"}]
-
+        data_dict={"data":{"heat":{}, "ion":{},"phot":{}},
+                   "fit":{"heat":{}, "ion":{},"phot":{}}}
         for i in range(4):
             for j in range(3):
                 # Extract the configuration for this specific slot
@@ -979,6 +981,14 @@ class integrated_analysis():
                             ax_ij.errorbar(temp_config["plot"][x_cfg["x"]], temp_config["plot"][y_cfg["y"]],
                                            yerr=temp_config["plot"][y_cfg["y_err"]], label=str(source)+" "+str(temperature), fmt='o',
                                            markersize=8)
+                            if i==0 and j==0:
+                                data_dict["data"]["heat"][f"{source} {temperature}"]={"x":temp_config["plot"][x_cfg["x"]], "y":temp_config["plot"][y_cfg["y"]], "y_err":temp_config["plot"][y_cfg["y_err"]]}
+                            if i==1 and j==1:
+                                data_dict["data"]["ion"][f"{source} {temperature}"]={"x":temp_config["plot"][x_cfg["x"]], "y":temp_config["plot"][y_cfg["y"]], "y_err":temp_config["plot"][y_cfg["y_err"]]}
+                            if i==2 and j==2:
+                                data_dict["data"]["phot"][f"{source} {temperature}"]={"x":temp_config["plot"][x_cfg["x"]], "y":temp_config["plot"][y_cfg["y"]], "y_err":temp_config["plot"][y_cfg["y_err"]]}
+
+
 
 
                 ax_ij.set_xlabel(x_cfg["xlabel"],fontsize=16)
@@ -1009,14 +1019,18 @@ class integrated_analysis():
                 ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
                            color="black", label=label_text)
                 ax_ij.legend(loc='lower left', fontsize=13)
+                if i == 0 and j == 0:
+                    data_dict["fit"]["heat"] = {"x": fitting_matrix[i][j][2],
+                                                                            "y": fitting_matrix[i][j][3],"a_val":a_val, "b_val":b_val}
+                if i == 1 and j == 1:
+                    data_dict["fit"]["ion"] = {"x": fitting_matrix[i][j][2],
+                                                                            "y": fitting_matrix[i][j][3],"a_val":a_val, "b_val":b_val}
+                if i == 2 and j == 2:
+                    data_dict["fit"]["phot"] ={"x": fitting_matrix[i][j][2],
+                                                                            "y": fitting_matrix[i][j][3],"a_val":a_val, "b_val":b_val}
 
-        # plt.show()
-        plt.savefig(self.plot_path + f"gamma_rejection_{self.volume_option}v3.pdf")
+        print("dict", data_dict)
 
-        plt.clf()
-        # self.Qseitz_compound_xe_plot()
-        # self.Ratio_plot()
-        # self.time_plot()
 
     def gamma_rejection_plot_v3(self):
 
