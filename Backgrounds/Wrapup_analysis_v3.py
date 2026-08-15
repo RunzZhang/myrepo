@@ -3105,7 +3105,7 @@ class cross_plot_fiducial_volumes():
 
         plt.tight_layout()
         if plot:
-            plt.savefig(self.plot_path + f"volume_rate_comparison_shift_{self.pressure_plot_str}.pdf")
+            plt.savefig(self.plot_path + f"volume_rate_comparison_shift.pdf")
         else:
             plt.show()
 
