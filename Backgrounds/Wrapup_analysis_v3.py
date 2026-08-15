@@ -3082,8 +3082,8 @@ class cross_plot_fiducial_volumes():
             lower_y = [d_y0, d_y1]
 
             # Plot upper and lower bound lines
-            ax.plot(upper_x, upper_y, 'b', label='Dome Upper Bound')
-            ax.plot(lower_x, lower_y, 'g', label='Dome Lower Bound')
+            # ax.plot(upper_x, upper_y, 'b', label='Dome Upper Bound')
+            # ax.plot(lower_x, lower_y, 'g', label='Dome Lower Bound')
 
             # Fill the region/band between the two bounds
             ax.fill_betweenx(
