@@ -2988,7 +2988,7 @@ class cross_plot_fiducial_volumes():
             axes[i].set_yscale("log")
             axes[i].legend()
 
-        plt.show()
+        # plt.show()
         plt.savefig(self.plot_path+f"volume_rate_comparison_{self.pressure_plot_str}.pdf")
 
 
