@@ -2996,9 +2996,7 @@ class cross_plot_fiducial_volumes():
         plt.show()
         # plt.savefig(self.plot_path+f"volume_rate_comparison_{self.pressure_plot_str}.pdf")
     def temperature_shift(self):
-        if self.pressure_plot:
-            print("have to be other domain than pressure")
-            return 0
+
 
         y_config = [{"y": "Rejection Rate Scattering[]", "y_err": "Rejection Sigma Scattering[]",
                      "ylabel": "Nucleation probability (per interaction) "},
@@ -3056,8 +3054,8 @@ class cross_plot_fiducial_volumes():
             delta_x_upper = (h_d-h_b+(k_b-k_d)*x_d_max)/k_b
             delta_x_lower = (h_d - h_b + (k_b - k_d) * x_b_min) / k_d
 
-            x_fin_uppper = x_d_max-delta_x_upper
-            x_fin_lower = x_d_max-delta_x_lower
+            x_fin_lower = x_d_max-delta_x_upper
+            x_fin_upper = x_d_max-delta_x_lower
             print('x_b_min', x_b_min)
             print("x fin upper ", x_fin_uppper)
             print("x_fin_lower", x_fin_lower)
@@ -3098,7 +3096,6 @@ class cross_plot_fiducial_volumes():
             # Subplot styling
             xlabel = x_config[fig_index]["xlabel"]
             ylabel = y_config[fig_index]["ylabel"]
-            ax.set_title(f"Model: {model.capitalize()}")
             ax.set_xlabel(xlabel)
             ax.set_ylabel(ylabel)
             ax.legend(loc='best')
@@ -3106,7 +3103,9 @@ class cross_plot_fiducial_volumes():
             ax.set_yscale("log")
 
         plt.tight_layout()
-        plt.show()
+        if self.pressure_plot:
+            plt.savefig(self.plot_path + f"volume_rate_comparison_shift_{self.pressure_plot_str}.pdf")
+            # plt.show()
 
 
 
