@@ -2988,8 +2988,13 @@ class cross_plot_fiducial_volumes():
             axes[i].set_yscale("log")
             axes[i].legend()
 
-        # plt.show()
-        plt.savefig(self.plot_path+f"volume_rate_comparison_{self.pressure_plot_str}.pdf")
+        plt.show()
+        # plt.savefig(self.plot_path+f"volume_rate_comparison_{self.pressure_plot_str}.pdf")
+    def temperature_shift(self):
+        if self.pressure_plot:
+            print("have to be other domain than pressure")
+            return 0
+
 
 
 
@@ -3003,4 +3008,5 @@ if __name__=="__main__":
     IA =  integrated_analysis(volume="dome")
     IA = integrated_analysis(volume="bulk")
     # test = test_csv()
-    plot = cross_plot_fiducial_volumes(pressure_plot=True)
+    # plot = cross_plot_fiducial_volumes(pressure_plot=True)
+    plot = cross_plot_fiducial_volumes(pressure_plot=False)
