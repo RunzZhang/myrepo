@@ -2930,7 +2930,8 @@ class cross_plot_fiducial_volumes():
                     {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                      "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
                     {"x": "Q_rl-1_rhol-1 [GeVcm**2 g-1]",
-                     "xlabel": r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"}]
+                     "xlabel": r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
+                    {"x":'Pressure [bara]',"xlabel":'Pressure [bara]'}]
         for i in range(len(y_config)):
 
 
@@ -2943,7 +2944,8 @@ class cross_plot_fiducial_volumes():
                 for k in temp_data["data"][self.models[i]]:
                     axes[i].errorbar(temp_data["data"][self.models[i]][k]["x"], temp_data["data"][self.models[i]][k]["y"],yerr=temp_data["data"][self.models[i]][k]["y_err"], label=f"{self.data_flow['volume_name'][j]} "+k, fmt='o')
 
-            axes[i].set_xlabel(x_config[i]["xlabel"])
+            # axes[i].set_xlabel(x_config[i]["xlabel"])
+            axes[i].set_xlabel(x_config[3]["xlabel"])
             axes[i].set_ylabel(y_config[i]["ylabel"])
             axes[i].set_yscale("log")
             axes[i].legend()
