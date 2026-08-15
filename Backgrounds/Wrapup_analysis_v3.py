@@ -126,8 +126,8 @@ class integrated_analysis():
     def main_v2(self):
         self.predata_process()
 
-        # self.read_Seitz_info()
-        self.read_Seitz_info_v2()
+        self.read_Seitz_info()
+        # self.read_Seitz_info_v2()
         self.read_Seitz_info_C3F8()
         self.pre_background_analysis()
         # self.read_raw_backgrounds_exp()
