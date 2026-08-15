@@ -3054,7 +3054,7 @@ class cross_plot_fiducial_volumes():
             x_d_max = model_content["dome"]["x_1"]
             x_b_min = model_content["bulk"]["x_0"]
             delta_x_upper = (h_d-h_b+(k_b-k_d)*x_d_max)/k_b
-            delta_x_lower = -(h_d - h_b + (k_b - k_d) * x_b_min) / k_d
+            delta_x_lower = (h_d - h_b + (k_b - k_d) * x_b_min) / k_d
 
             x_fin_uppper = x_d_max-delta_x_upper
             x_fin_lower = x_d_max-delta_x_lower
