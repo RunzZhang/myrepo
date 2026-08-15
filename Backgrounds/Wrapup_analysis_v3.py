@@ -2944,7 +2944,8 @@ class cross_plot_fiducial_volumes():
 
     def main_function(self):
         self.read_files()
-        self.plot()
+        # self.plot()
+        self.temperature_shift()
 
     def read_files(self):
 
@@ -2998,6 +2999,38 @@ class cross_plot_fiducial_volumes():
         if self.pressure_plot:
             print("have to be other domain than pressure")
             return 0
+
+        y_config = [{"y": "Rejection Rate Scattering[]", "y_err": "Rejection Sigma Scattering[]",
+                     "ylabel": "Nucleation probability (per interaction) "},
+                    {"y": "Rejection Rate KeV[/keV]", "y_err": "Rejection Sigma KeV[/keV]",
+                     "ylabel": "Probability per energy deposited \n (events/keV) "},
+                    {"y": "Rejection Rate Xenon Abs[]", "y_err": "Rejection Sigma Xenon Abs[]",
+                     "ylabel": "Nucleation probability \n (per xenon photoabsorption in K shell) "},
+                    ]
+        x_config = [{"x": "Seitz [keV]", "xlabel": r"Seitz threshold [keV]"},
+                    {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+                     "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
+                    {"x": "Q_rl-1_rhol-1 [GeVcm**2 g-1]",
+                     "xlabel": r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
+                    {"x": 'Pressure [bara]', "xlabel": 'Pressure [bara]'}]
+        for i in range(len(y_config)):
+
+            for j in range(len(self.data_flow["volume_file"])):
+
+                temp_data = self.data_flow["volume_file"][j]
+                # plot fitting in bulk or dome
+                print("model", self.models[i])
+                print(f"{self.data_flow['volume_name'][j]} fitting","x_0, y_0", temp_data["fit"][self.models[i]]["x"].min(),temp_data["fit"][self.models[i]]["y"].max() )
+                print(f"{self.data_flow['volume_name'][j]} fitting","x_1, y_1", temp_data["fit"][self.models[i]]["x"].max(),
+                      temp_data["fit"][self.models[i]]["y"].min())
+                print(f"{self.data_flow['volume_name'][j]} fitting","a, b", temp_data["fit"][self.models[i]]["a_val"],
+                      temp_data["fit"][self.models[i]]["b_val"])
+
+
+
+
+
+
 
 
 
