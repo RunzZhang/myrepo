@@ -3097,7 +3097,20 @@ class cross_plot_fiducial_volumes():
                 alpha=0.2,
                 label=f'Dome Shift Band ({round(x_fin_lower,3)},{round(x_fin_upper,3)})'
             )
-
+            ax.text(
+                0.05, 0.05,  # 5% from left, 5% from bottom
+                f"T [K] {round(t_lower,3)}, {round(t_upper,3)}",
+                transform=ax.transAxes,
+                fontsize=10,
+                ha="left",
+                va="bottom",
+                bbox=dict(
+                    boxstyle="round,pad=0.4",
+                    facecolor="white",
+                    edgecolor="gray",
+                    alpha=0.9
+                )
+            )
             # Subplot styling
             xlabel = x_config[fig_index]["xlabel"]
             ylabel = y_config[fig_index]["ylabel"]
@@ -3148,7 +3161,7 @@ class cross_plot_fiducial_volumes():
         self.df_energy_tab = pd.DataFrame(self.dict_energy_tab)
 
         if interpolation:
-            print(f"interpolation {model} {value}")
+            # print(f"interpolation {model} {value}")
             if model=="heat":
                 temperature = np.interp(value,Seitz[::-1],Seitz_temp_list[::-1])
             elif model=="ion":
