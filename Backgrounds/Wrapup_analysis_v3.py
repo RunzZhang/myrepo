@@ -1596,7 +1596,7 @@ class integrated_analysis():
             "Seitz [keV]"]
 
         Drex_Q_119_list = [i+0.05 for i in Drex_Q_116_list]
-        Drex_Q_119_list = \
+        # Drex_Q_119_list = \
         # self.interpolate_all_keys_vectorized("Q_rl-1_rhol-1 [GeVcm**2 g-1]", Drex_Q2_list, thermal_119_table)[
         #     "Seitz [keV]"]
         Drex_Q_119_list = \
