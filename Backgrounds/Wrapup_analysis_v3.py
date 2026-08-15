@@ -3057,7 +3057,7 @@ class cross_plot_fiducial_volumes():
             x_fin_lower = x_d_max-delta_x_upper
             x_fin_upper = x_d_max-delta_x_lower
             print('x_b_min', x_b_min)
-            print("x fin upper ", x_fin_uppper)
+            print("x fin upper ", x_fin_upper)
             print("x_fin_lower", x_fin_lower)
             fig_index = self.models.index(model)
             ax = axes[fig_index]
