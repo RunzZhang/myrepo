@@ -2938,7 +2938,7 @@ class cross_plot_fiducial_volumes():
 
                 temp_data = self.data_flow["volume_file"][j]
                 # plot fitting in bulk or dome
-                axes[i].plot(temp_data["fit"][self.models[i]]["x"],temp_data["fit"][self.models[i]]["y"], label = f"{self.data_flow['volume_name'][j]} fitting")
+                # axes[i].plot(temp_data["fit"][self.models[i]]["x"],temp_data["fit"][self.models[i]]["y"], label = f"{self.data_flow['volume_name'][j]} fitting")
                 # plot data points
                 for k in temp_data["data"][self.models[i]]:
                     axes[i].errorbar(temp_data["data"][self.models[i]][k]["x"], temp_data["data"][self.models[i]][k]["y"],yerr=temp_data["data"][self.models[i]][k]["y_err"], label=f"{self.data_flow['volume_name'][j]} "+k, fmt='o')
