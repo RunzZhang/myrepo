@@ -551,7 +551,7 @@ class integrated_analysis():
         self.df_energy_119_tab = pd.DataFrame(self.dict_energy_119_tab)
 
     def read_Seitz_info_v2(self):
-        Seitz_pressure_list = np.arange(1.25, 6.5, 0.25)
+        Seitz_pressure_list = np.arange(0.25, 15, 0.25)
 
         Seitz_116 = [0.8318354532105874, 0.8940418766838347, 0.9631954092292087, 1.0403343615139717, 1.1266932576571842,
                  1.2237481550986595, 1.3332743449138087, 1.4574206436587642, 1.5988055614249703, 1.7606432313822162,
