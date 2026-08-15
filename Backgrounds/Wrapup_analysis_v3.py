@@ -2935,6 +2935,7 @@ class cross_plot_fiducial_volumes():
         # self.data_flow = {"volume_name": ["bulk"], "volume_path": [], "volume_file": []}
         self.models = ["heat", "ion","phot"]
         self.pressure_plot = pressure_plot
+        self.pressure_plot_str = str(self.pressure_plot)
 
         self.main_function()
 
@@ -2953,7 +2954,7 @@ class cross_plot_fiducial_volumes():
             self.data_flow["volume_file"].append(loaded_dict)
 
     def plot(self):
-        fig, axes = plt.subplots(1,3,figsize = (23,5))
+        fig, axes = plt.subplots(1,3,figsize = (25,5))
         y_config = [{"y": "Rejection Rate Scattering[]", "y_err": "Rejection Sigma Scattering[]",
                      "ylabel": "Nucleation probability (per interaction) "},
                     {"y": "Rejection Rate KeV[/keV]", "y_err": "Rejection Sigma KeV[/keV]",
@@ -2988,6 +2989,7 @@ class cross_plot_fiducial_volumes():
             axes[i].legend()
 
         plt.show()
+        plt.savefig(self.plot_path+f"volume_rate_comparison_{self.pressure_plot_str}.pdf")
 
 
 
