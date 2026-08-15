@@ -1032,6 +1032,7 @@ class integrated_analysis():
         print("dict", data_dict)
         with open(self.base_path+f"{self.volume_option}_output_data.pkl", "wb") as f:
             pickle.dump(data_dict, f)
+        print("saved")
 
 
     def gamma_rejection_plot_v3(self):
