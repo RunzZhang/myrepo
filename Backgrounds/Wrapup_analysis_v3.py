@@ -3145,7 +3145,7 @@ class cross_plot_fiducial_volumes():
                 label=f'Dome Shift Band ({round(x_fin_lower,3)},{round(x_fin_upper,3)})'
             )
 
-            ax.errorbar(Cs_119K_list[fig_index]["x"], Cs_119K_list[fig_index]["y"], yerr = Cs_119K_list[fig_index]["y_err"], label="Cs 119K")
+            ax.errorbar(Cs_119K_list[fig_index]["x"], Cs_119K_list[fig_index]["y"], yerr = Cs_119K_list[fig_index]["y_err"], label="Cs 119K",fmt='o')
             ax.text(
                 0.05, 0.05,  # 5% from left, 5% from bottom
                 f"T [K] {round(t_lower,3)}, {round(t_upper,3)}",
