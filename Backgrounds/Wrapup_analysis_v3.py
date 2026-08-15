@@ -3150,15 +3150,15 @@ class cross_plot_fiducial_volumes():
         if interpolation:
             print(f"interpolation {model} {value}")
             if model=="heat":
-                temperature = np.interp(value,Seitz,Seitz_temp_list)
+                temperature = np.interp(value,Seitz[::-1],Seitz_temp_list[::-1])
             elif model=="ion":
-                temperature = np.interp(value, E_ion, Seitz_temp_list)
+                temperature = np.interp(value, E_ion[::-1], Seitz_temp_list[::-1])
             elif model=="phot":
-                temperature = np.interp(value, Q_compound_x, Seitz_temp_list)
+                temperature = np.interp(value, Q_compound_x[::-1], Seitz_temp_list[::-1])
             else:
                 temperature = 0
                 print("wrong model")
-            print("temp",temperature)
+            # print("temp",temperature)
             return temperature
 
 
