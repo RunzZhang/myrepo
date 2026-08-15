@@ -3041,7 +3041,7 @@ class cross_plot_fiducial_volumes():
                 print(f"{self.data_flow['volume_name'][j]} fitting","a, b", a_val,
                       b_val)
 
-        fig, axes = plt.subplots(1, 3, figsize=(23, 5))
+        fig, axes = plt.subplots(1, 3, figsize=(20, 5))
         for model, model_content in data_rearrange.items():
             #d for dome and b for bulk , log y=-Bx +loga , rewrite as log y = -kx+ h
             #
@@ -3054,8 +3054,8 @@ class cross_plot_fiducial_volumes():
             delta_x_upper = (h_d-h_b+(k_b-k_d)*x_d_max)/k_b
             delta_x_lower = (h_d - h_b + (k_b - k_d) * x_b_min) / k_d
 
-            x_fin_lower = x_d_max-delta_x_upper
-            x_fin_upper = x_d_max-delta_x_lower
+            x_fin_upper = x_d_max-delta_x_upper
+            x_fin_lower = x_d_max-delta_x_lower
             print('x_b_min', x_b_min)
             print("x fin upper ", x_fin_upper)
             print("x_fin_lower", x_fin_lower)
