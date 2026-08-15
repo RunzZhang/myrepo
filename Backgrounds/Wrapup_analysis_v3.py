@@ -3013,6 +3013,9 @@ class cross_plot_fiducial_volumes():
                     {"x": "Q_rl-1_rhol-1 [GeVcm**2 g-1]",
                      "xlabel": r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
                     {"x": 'Pressure [bara]', "xlabel": 'Pressure [bara]'}]
+        data_rearrange= {"heat":{"dome":{"x_0":0,"y_0":0,"x_1":0,"y_1":0,"a_val":0,"b_val":0 },"bulk":{"x_0":0,"y_0":0,"x_1":0,"y_1":0,"a_val":0,"b_val":0 }},
+                         "ion":{"dome":{"x_0":0,"y_0":0,"x_1":0,"y_1":0,"a_val":0,"b_val":0 },"bulk":{"x_0":0,"y_0":0,"x_1":0,"y_1":0,"a_val":0,"b_val":0 }},
+                            "phot":{"dome":{"x_0":0,"y_0":0,"x_1":0,"y_1":0,"a_val":0,"b_val":0 },"bulk":{"x_0":0,"y_0":0,"x_1":0,"y_1":0,"a_val":0,"b_val":0 }}}
         for i in range(len(y_config)):
 
             for j in range(len(self.data_flow["volume_file"])):
@@ -3027,11 +3030,39 @@ class cross_plot_fiducial_volumes():
                 y_1 = temp_data["fit"][self.models[i]]["y"][-1]
                 a_val = temp_data["fit"][self.models[i]]["a_val"]
                 b_val=  temp_data["fit"][self.models[i]]["b_val"]
+
+                data_rearrange[self.models[i]][self.data_flow["volume_name"][j]]["x_0"] = x_0
+                data_rearrange[self.models[i]][self.data_flow["volume_name"][j]]["y_0"] = y_0
+                data_rearrange[self.models[i]][self.data_flow["volume_name"][j]]["x_1"] = x_1
+                data_rearrange[self.models[i]][self.data_flow["volume_name"][j]]["y_1"] = y_1
+                data_rearrange[self.models[i]][self.data_flow["volume_name"][j]]["a_val"] = a_val
+                data_rearrange[self.models[i]][self.data_flow["volume_name"][j]]["b_val"] = b_val
                 print(f"{self.data_flow['volume_name'][j]} fitting","x_0, y_0", x_0, y_0 )
                 print(f"{self.data_flow['volume_name'][j]} fitting","x_1, y_1", x_1,
                       y_1)
                 print(f"{self.data_flow['volume_name'][j]} fitting","a, b", a_val,
                       b_val)
+
+        fig, axes = plt.subplots(1, 3, figsize=(23, 5))
+        for model, model_content in data_rearrange.items():
+            #d for dome and b for bulk , log y=-Bx +loga , rewrite as log y = -kx+ h
+            #
+            h_d = np.log(model_content["dome"]["a_val"])
+            h_b = np.log(model_content["bulk"]["a_val"])
+            k_d = model_content["dome"]["b_val"]
+            k_b = model_content["bulk"]["b_val"]
+            x_d_max = model_content["dome"]["x_1"]
+            x_b_min = model_content["bulk"]["x_0"]
+            delta_x_upper = (h_d-h_b+(k_b-k_d)*x_d_max)/k_b
+            delta_x_lower = -(h_d - h_b + (k_b - k_d) * x_b_min) / k_d
+
+            x_fin_uppper = x_d_max-delta_x_upper
+            x_fin_lower = x_d_max-delta_x_lower
+            print('x_b_min', x_b_min)
+            print("x fin upper ", x_fin_uppper)
+            print("x_fin_lower", x_fin_lower)
+
+
 
 
 
