@@ -2893,8 +2893,8 @@ class cross_plot_fiducial_volumes():
         # self.Cs_sim_path = '/lzdata/runzezhang/result/GR_sims/Cs_output_5E6.pkl'
         self.base_path = "/lzdata/runzezhang/result/GR_sims/"
 
-        # self.data_flow = {"volume_name":["bulk", "dome"], "volume_path":[],"volume_file":[]}
-        self.data_flow = {"volume_name": ["bulk"], "volume_path": [], "volume_file": []}
+        self.data_flow = {"volume_name":["bulk", "dome"], "volume_path":[],"volume_file":[]}
+        # self.data_flow = {"volume_name": ["bulk"], "volume_path": [], "volume_file": []}
         self.models = ["heat", "ion","phot"]
 
         self.main_function()
@@ -2914,7 +2914,7 @@ class cross_plot_fiducial_volumes():
             self.data_flow["volume_file"].append(loaded_dict)
 
     def plot(self):
-        fig, axes = plt.subplots(1,3,figsize = (16,5))
+        fig, axes = plt.subplots(1,3,figsize = (18,5))
         y_config = [{"y": "Rejection Rate Scattering[]", "y_err": "Rejection Sigma Scattering[]",
                      "ylabel": "Nucleation probability (per interaction) "},
                     {"y": "Rejection Rate KeV[/keV]", "y_err": "Rejection Sigma KeV[/keV]",
@@ -2937,7 +2937,7 @@ class cross_plot_fiducial_volumes():
                 axes[i].plot(temp_data["fit"][self.models[i]]["x"],temp_data["fit"][self.models[i]]["y"], label = f"{self.data_flow['volume_name'][j]} fitting")
                 # plot data points
                 for k in temp_data["data"][self.models[i]]:
-                    axes[i].errorbar(temp_data["data"][self.models[i]][k]["x"], temp_data["data"][self.models[i]][k]["y"],yerr=temp_data["data"][self.models[i]][k]["y_err"], label=k, fmt='o')
+                    axes[i].errorbar(temp_data["data"][self.models[i]][k]["x"], temp_data["data"][self.models[i]][k]["y"],yerr=temp_data["data"][self.models[i]][k]["y_err"], label=f"{self.data_flow['volume_name'][j]}"+k, fmt='o')
 
             axes[i].set_xlabel(x_config[i]["xlabel"])
             axes[i].set_ylabel(y_config[i]["ylabel"])
@@ -2955,7 +2955,7 @@ class cross_plot_fiducial_volumes():
 
 if __name__=="__main__":
     # IA = integrated_analysis(volume="")
-    # IA =  integrated_analysis(volume="dome")
+    IA =  integrated_analysis(volume="dome")
     IA = integrated_analysis(volume="bulk")
     # test = test_csv()
     plot = cross_plot_fiducial_volumes()
