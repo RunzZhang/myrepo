@@ -964,14 +964,18 @@ class integrated_analysis():
         x_config = [{"x": "Seitz [keV]", "xlabel": r"Seitz threshold [keV]"},
                     {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                      "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
-                    {"x": "Q_rl-1_rhol-1 [GeVcm**2 g-1]", "xlabel": r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"}]
+                    {"x": "Q_rl-1_rhol-1 [GeVcm**2 g-1]", "xlabel": r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
+                    {"x": 'Pressure [bara]', "xlabel": 'Pressure [bara]'}]
         data_dict={"data":{"heat":{}, "ion":{},"phot":{}},
                    "fit":{"heat":{}, "ion":{},"phot":{}}}
         for i in range(4):
             for j in range(3):
                 # Extract the configuration for this specific slot
                 y_cfg = y_config[i]
-                x_cfg = x_config[j]
+                # x for differnt thermo models
+                # x_cfg = x_config[j]
+                # x fixed at pressure bar
+                x_cfg = x_config[3]
                 ax_ij = ax[j, i]
 
                 for source, source_config in self.gamma_source_group.items():
@@ -2914,7 +2918,7 @@ class cross_plot_fiducial_volumes():
             self.data_flow["volume_file"].append(loaded_dict)
 
     def plot(self):
-        fig, axes = plt.subplots(1,3,figsize = (18,5))
+        fig, axes = plt.subplots(1,3,figsize = (20,5))
         y_config = [{"y": "Rejection Rate Scattering[]", "y_err": "Rejection Sigma Scattering[]",
                      "ylabel": "Nucleation probability (per interaction) "},
                     {"y": "Rejection Rate KeV[/keV]", "y_err": "Rejection Sigma KeV[/keV]",
@@ -2937,7 +2941,7 @@ class cross_plot_fiducial_volumes():
                 axes[i].plot(temp_data["fit"][self.models[i]]["x"],temp_data["fit"][self.models[i]]["y"], label = f"{self.data_flow['volume_name'][j]} fitting")
                 # plot data points
                 for k in temp_data["data"][self.models[i]]:
-                    axes[i].errorbar(temp_data["data"][self.models[i]][k]["x"], temp_data["data"][self.models[i]][k]["y"],yerr=temp_data["data"][self.models[i]][k]["y_err"], label=f"{self.data_flow['volume_name'][j]}"+k, fmt='o')
+                    axes[i].errorbar(temp_data["data"][self.models[i]][k]["x"], temp_data["data"][self.models[i]][k]["y"],yerr=temp_data["data"][self.models[i]][k]["y_err"], label=f"{self.data_flow['volume_name'][j]} "+k, fmt='o')
 
             axes[i].set_xlabel(x_config[i]["xlabel"])
             axes[i].set_ylabel(y_config[i]["ylabel"])
