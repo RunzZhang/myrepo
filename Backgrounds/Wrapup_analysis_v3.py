@@ -138,10 +138,10 @@ class integrated_analysis():
         # self.bkg_subtracted_analysis(plot=True)
 
         # self.gamma_rejection_plot_v3()
-        # self.gamma_rejection_plot_PSN_v2()
+        self.gamma_rejection_plot_PSN_v2()
         # self.gamma_rejection_plot_PSN_v2(rate_cut=True)
         # self.gamma_rejection_plot_output(pressure_plot=True)
-        self.gamma_rejection_plot_output()
+        # self.gamma_rejection_plot_output()
 
 
 
@@ -1085,9 +1085,9 @@ class integrated_analysis():
                                                                             "y": fitting_matrix[i][j][3],"a_val":a_val, "b_val":b_val}
 
         # print("dict", data_dict)
-        # with open(self.base_path+f"{self.volume_option}_pressureplot_{pressure_plot_str}_output_data.pkl", "wb") as f:
-        #     pickle.dump(data_dict, f)
-        # print("saved")
+        with open(self.base_path+f"{self.volume_option}_pressureplot_{pressure_plot_str}_output_data.pkl", "wb") as f:
+            pickle.dump(data_dict, f)
+        print("saved")
 
 
     def gamma_rejection_plot_v3(self):
@@ -3089,6 +3089,7 @@ class cross_plot_fiducial_volumes():
                       b_val)
 
         fig, axes = plt.subplots(1, 3, figsize=(20, 5))
+        Cs_119K_list = self.Cs_119K_table()
         for model, model_content in data_rearrange.items():
             #d for dome and b for bulk , log y=-Bx +loga , rewrite as log y = -kx+ h
             #
@@ -3143,6 +3144,8 @@ class cross_plot_fiducial_volumes():
                 alpha=0.2,
                 label=f'Dome Shift Band ({round(x_fin_lower,3)},{round(x_fin_upper,3)})'
             )
+
+            ax.errorbar(Cs_119K_list[fig_index]["x"], Cs_119K_list[fig_index]["y"], y_err = Cs_119K_list[fig_index]["y_err"], label="Cs 119K")
             ax.text(
                 0.05, 0.05,  # 5% from left, 5% from bottom
                 f"T [K] {round(t_lower,3)}, {round(t_upper,3)}",
@@ -3219,6 +3222,28 @@ class cross_plot_fiducial_volumes():
                 print("wrong model")
             # print("temp",temperature)
             return temperature
+    def Cs_119K_table(self):
+        # 1. Seitz [keV] vs Rejection Rate Scattering
+        seitz_scatter = {
+            "x": [0.590974, 0.677768, 0.784268],
+            "y": [3.679560e-07, 3.519865e-07, 3.516183e-07],
+            "y_err": [1.711259e-07, 1.433811e-07, 1.394512e-07]
+        }
+
+        # 2. Eion / (rl * rhol) vs Rejection Rate KeV
+        eion_kev = {
+            "x": [0.677318, 0.718877, 0.766135],
+            "y": [4.587779e-09, 4.380536e-09, 4.365988e-09],
+            "y_err": [2.133646e-09, 1.784403e-09, 1.731542e-09]
+        }
+
+        # 3. Q / (rl * rhol) vs Rejection Rate Xenon Abs
+        q_xenon_abs = {
+            "x": [1.212915, 1.315201, 1.434305],
+            "y": [0.000053, 0.000051, 0.000050],
+            "y_err": [0.000025, 0.000021, 0.000020]
+        }
+        return (seitz_scatter, eion_kev,q_xenon_abs)
 
 
 
@@ -3229,7 +3254,7 @@ class cross_plot_fiducial_volumes():
 if __name__=="__main__":
     # IA = integrated_analysis(volume="")
     # IA =  integrated_analysis(volume="dome")
-    IA = integrated_analysis(volume="bulk")
+    # IA = integrated_analysis(volume="bulk")
     # test = test_csv()
     # plot = cross_plot_fiducial_volumes(pressure_plot=True)
-    # plot = cross_plot_fiducial_volumes(pressure_plot=False)
+    plot = cross_plot_fiducial_volumes(pressure_plot=False)
