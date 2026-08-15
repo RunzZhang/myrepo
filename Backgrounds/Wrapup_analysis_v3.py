@@ -3019,13 +3019,15 @@ class cross_plot_fiducial_volumes():
 
                 temp_data = self.data_flow["volume_file"][j]
 
-                # plot fitting in bulk or dome
+                dict_before_shit = {"heat":{},"ion":{},}
                 print("model", self.models[i],self.data_flow["volume_name"][j])
-                print(f"{self.data_flow['volume_name'][j]} fitting","x_0, y_0", temp_data["fit"][self.models[i]]["x"].min(),temp_data["fit"][self.models[i]]["y"].max() )
-                print(f"{self.data_flow['volume_name'][j]} fitting","x_1, y_1", temp_data["fit"][self.models[i]]["x"].max(),
-                      temp_data["fit"][self.models[i]]["y"].min())
+                print(f"{self.data_flow['volume_name'][j]} fitting","x_0, y_0", temp_data["fit"][self.models[i]]["x"][0],temp_data["fit"][self.models[i]]["y"][0] )
+                print(f"{self.data_flow['volume_name'][j]} fitting","x_1, y_1", temp_data["fit"][self.models[i]]["x"][:-1],
+                      temp_data["fit"][self.models[i]]["y"][-1])
                 print(f"{self.data_flow['volume_name'][j]} fitting","a, b", temp_data["fit"][self.models[i]]["a_val"],
                       temp_data["fit"][self.models[i]]["b_val"])
+
+
 
 
 
