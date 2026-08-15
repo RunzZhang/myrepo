@@ -2992,7 +2992,8 @@ class cross_plot_fiducial_volumes():
         self.read_files()
         # self.plot()
         # self.temperature_shift()
-        self.temperature_shift(plot =True)
+        # self.temperature_shift(plot =True)
+        self.temperature_shift_target_estimate()
 
     def read_files(self):
 
@@ -3042,6 +3043,94 @@ class cross_plot_fiducial_volumes():
 
         plt.show()
         # plt.savefig(self.plot_path+f"volume_rate_comparison_{self.pressure_plot_str}.pdf")
+    def temperature_shift_target_estimate(self, plot=False):
+
+
+        y_config = [{"y": "Rejection Rate Scattering[]", "y_err": "Rejection Sigma Scattering[]",
+                     "ylabel": "Nucleation probability (per interaction) "},
+                    {"y": "Rejection Rate KeV[/keV]", "y_err": "Rejection Sigma KeV[/keV]",
+                     "ylabel": "Probability per energy deposited \n (events/keV) "},
+                    {"y": "Rejection Rate Xenon Abs[]", "y_err": "Rejection Sigma Xenon Abs[]",
+                     "ylabel": "Nucleation probability \n (per xenon photoabsorption in K shell) "},
+                    ]
+        x_config = [{"x": "Seitz [keV]", "xlabel": r"Seitz threshold [keV]"},
+                    {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+                     "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
+                    {"x": "Q_rl-1_rhol-1 [GeVcm**2 g-1]",
+                     "xlabel": r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
+                    {"x": 'Pressure [bara]', "xlabel": 'Pressure [bara]'}]
+        data_rearrange= {"heat":{"dome":{"x_0":0,"y_0":0,"x_1":0,"y_1":0,"a_val":0,"b_val":0 },"bulk":{"x_0":0,"y_0":0,"x_1":0,"y_1":0,"a_val":0,"b_val":0 }},
+                         "ion":{"dome":{"x_0":0,"y_0":0,"x_1":0,"y_1":0,"a_val":0,"b_val":0 },"bulk":{"x_0":0,"y_0":0,"x_1":0,"y_1":0,"a_val":0,"b_val":0 }},
+                            "phot":{"dome":{"x_0":0,"y_0":0,"x_1":0,"y_1":0,"a_val":0,"b_val":0 },"bulk":{"x_0":0,"y_0":0,"x_1":0,"y_1":0,"a_val":0,"b_val":0 }}}
+        for i in range(len(y_config)):
+
+            for j in range(len(self.data_flow["volume_file"])):
+
+                temp_data = self.data_flow["volume_file"][j]
+
+                dict_before_shift = {"heat":{},"ion":{},"phot":{}}
+                print("model", self.models[i],self.data_flow["volume_name"][j])
+                x_0 = temp_data["fit"][self.models[i]]["x"][0]
+                y_0 = temp_data["fit"][self.models[i]]["y"][0]
+                x_1 = temp_data["fit"][self.models[i]]["x"][-1]
+                y_1 = temp_data["fit"][self.models[i]]["y"][-1]
+                a_val = temp_data["fit"][self.models[i]]["a_val"]
+                b_val=  temp_data["fit"][self.models[i]]["b_val"]
+
+                data_rearrange[self.models[i]][self.data_flow["volume_name"][j]]["x_0"] = x_0
+                data_rearrange[self.models[i]][self.data_flow["volume_name"][j]]["y_0"] = y_0
+                data_rearrange[self.models[i]][self.data_flow["volume_name"][j]]["x_1"] = x_1
+                data_rearrange[self.models[i]][self.data_flow["volume_name"][j]]["y_1"] = y_1
+                data_rearrange[self.models[i]][self.data_flow["volume_name"][j]]["a_val"] = a_val
+                data_rearrange[self.models[i]][self.data_flow["volume_name"][j]]["b_val"] = b_val
+                print(f"{self.data_flow['volume_name'][j]} fitting","x_0, y_0", x_0, y_0 )
+                print(f"{self.data_flow['volume_name'][j]} fitting","x_1, y_1", x_1,
+                      y_1)
+                print(f"{self.data_flow['volume_name'][j]} fitting","a, b", a_val,
+                      b_val)
+
+
+
+        k_b = data_rearrange["heat"]["bulk"]["b_val"]
+        h_b = np.log(data_rearrange["heat"]["bulk"]["a_val"])
+        x0_b = data_rearrange["heat"]["bulk"]["x_0"]
+        y0_b = data_rearrange["heat"]["bulk"]["y_0"]
+        target_x =1 #keV
+        target_y = np.log(10e-8) #log(rejection)
+        delta_x = target_x-(target_y-h_b)/(-k_b)
+        final_x = x0_b-delta_x
+        #2.25 bar from
+        print(final_x, "keV at 2.25 bar")
+        temperature = self.parameter_225bar(interpolation=True, model="heat", value=final_x)
+        print("target temp", final_x)
+
+
+
+        fig, ax = plt.subplots(1, 13, figsize=(6, 5))
+        b_x = [data_rearrange["heat"]["bulk"]["x_0"], data_rearrange["heat"]["bulk"]["x_1"]]
+        b_y = [data_rearrange["heat"]["bulk"]["y_0"], data_rearrange["heat"]["bulk"]["y_1"]]
+        ax.plot(b_x, b_y, color='red', label='Bulk fitting', zorder=5)
+
+
+        # Subplot styling
+        xlabel = x_config[0]["xlabel"]
+        ylabel = y_config[0]["ylabel"]
+        ax.set_xlabel(xlabel)
+        ax.set_ylabel(ylabel)
+        ax.legend(loc='best')
+        ax.grid(True)
+        ax.set_yscale("log")
+
+
+
+
+        plt.tight_layout()
+        if plot:
+            plt.savefig(self.plot_path + f"volume_rate_comparison_shift_target.pdf")
+        else:
+            plt.show()
+
+
     def temperature_shift(self, plot=False):
 
 
@@ -3177,9 +3266,6 @@ class cross_plot_fiducial_volumes():
 
 
 
-
-
-
     def parameter_4bar(self, interpolation= False, model="heat", value = 1):
 
         Seitz_temp_list = np.arange(115,135,1)
@@ -3192,6 +3278,44 @@ class cross_plot_fiducial_volumes():
         # nm
         Rl =  [8.269272633770214, 7.364861891716328, 6.590723161454232, 5.921315822965311, 5.337368849858277, 4.824066275138536, 4.369828746411625, 3.9654747110305966, 3.603629872409036, 3.2783035227291917, 2.984579086495859, 2.718384812020133, 2.4763215511130525, 2.2555320116255855, 2.053600966196628, 1.8684791606100648, 1.6984266360624287, 1.5419741851470783, 1.3979070139715166, 1.2652895142107365]
 
+        compound_x = []
+        for i in range(len(E_ion)):
+            x = E_ion[i] * 10 / (rho_l[i] * Rl[i])  # fit unit
+            compound_x.append(x)
+
+        Q_compound_x = []
+        for i in range(len(Seitz)):
+            x = Seitz[i] * 10 / (rho_l[i] * Rl[i])  # fit unit
+            Q_compound_x.append(x)
+
+        self.dict_energy_tab = {"Pressure [bara]": Seitz_temp_list,
+                                    "Seitz [keV]": Seitz,
+                                    "Eion [keV]": E_ion,
+                                    "Eion_rl-1_rhol-1 [GeVcm**2 g-1]": compound_x,
+                                    "Q_rl-1_rhol-1 [GeVcm**2 g-1]": Q_compound_x}
+        self.df_energy_tab = pd.DataFrame(self.dict_energy_tab)
+
+        if interpolation:
+            # print(f"interpolation {model} {value}")
+            if model=="heat":
+                temperature = np.interp(value,Seitz[::-1],Seitz_temp_list[::-1])
+            elif model=="ion":
+                temperature = np.interp(value, E_ion[::-1], Seitz_temp_list[::-1])
+            elif model=="phot":
+                temperature = np.interp(value, Q_compound_x[::-1], Seitz_temp_list[::-1])
+            else:
+                temperature = 0
+                print("wrong model")
+            # print("temp",temperature)
+            return temperature
+    def parameter_225bar(self, interpolation= False, model="heat", value = 1):
+        # 2.25 bar
+        Seitz_temp_list = np.arange(115,135,1)
+
+        Seitz =  [1.7383529197071634, 1.3445287166423177, 1.0452284654364763, 0.8161272552207808, 0.63964558410667, 0.5029346321246131, 0.39650726402673453, 0.3132938270243784, 0.2479820620076034, 0.1965499555934439, 0.15593134539721432, 0.12377407161911275, 0.09826338256818329, 0.07799184817062686, 0.061862751184779546, 0.04901779973463716, 0.0387826580812943, 0.030625644304038108, 0.02412621452560422, 0.018950779847329464]# keV
+        E_ion =  [0.8729247225485156, 0.6935170594033994, 0.553274371665182, 0.44296511073645783, 0.35572434676362746, 0.28639395096089615, 0.23106196467757306, 0.18673644441888979, 0.15111154993839288, 0.12239784994463299, 0.09919787502510426, 0.08041396499587167, 0.06517941276346652, 0.05280658794564179, 0.042747554697118606, 0.03456396644336508, 0.02790390772417157, 0.02248399589957104, 0.018075514708207088, 0.014493778475033334] # g / cc
+        rho_l =  [1.199363458508874, 1.190713998903872, 1.1818769536560594, 1.1728369334270239, 1.1635764095064283, 1.1540752657017057, 1.144310222354498, 1.134254084935152, 1.1238747473283017, 1.1131338445744934, 1.1019848921919402, 1.090370651901758, 1.0782192925860938, 1.065438600253544, 1.0519068767340012, 1.0374578860389438, 1.0218543030549598, 1.004736797446248, 0.9855146588571612, 0.9630891056230214]# nm
+        Rl =  [6.1401023024827275, 5.609511255785613, 5.13266728024538, 4.702348021791835, 4.312559443983779, 3.958284979673324, 3.635294086358812, 3.3399943388438715, 3.069315903141764, 2.8206206139448313, 2.5916297367768215, 2.3803662672981036, 2.1851086855619184, 2.0043539724969617, 1.8367884519012974, 1.681265835570317, 1.5367930238793486, 1.4025268498761156, 1.277791743336402, 1.162153172627319]
         compound_x = []
         for i in range(len(E_ion)):
             x = E_ion[i] * 10 / (rho_l[i] * Rl[i])  # fit unit
