@@ -3090,7 +3090,7 @@ class cross_plot_fiducial_volumes():
                 x2=[d_x0 - delta_x_lower, d_x1 - delta_x_lower],
                 color='blue',
                 alpha=0.2,
-                label=f'Dome Shift Band ({round(x_fin_lower,3)},{round(x_fin_uppper,3)})'
+                label=f'Dome Shift Band ({round(x_fin_lower,3)},{round(x_fin_upper,3)})'
             )
 
             # Subplot styling
