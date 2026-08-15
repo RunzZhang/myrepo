@@ -3020,7 +3020,7 @@ class cross_plot_fiducial_volumes():
                 temp_data = self.data_flow["volume_file"][j]
 
                 # plot fitting in bulk or dome
-                print("model", self.models[i])
+                print("model", self.models[i],self.data_flow["volume_name"][j])
                 print(f"{self.data_flow['volume_name'][j]} fitting","x_0, y_0", temp_data["fit"][self.models[i]]["x"].min(),temp_data["fit"][self.models[i]]["y"].max() )
                 print(f"{self.data_flow['volume_name'][j]} fitting","x_1, y_1", temp_data["fit"][self.models[i]]["x"].max(),
                       temp_data["fit"][self.models[i]]["y"].min())
