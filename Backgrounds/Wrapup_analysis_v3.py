@@ -1987,7 +1987,7 @@ class integrated_analysis():
                 if extrapolate:
                     f = interp1d(x_sorted, y_sorted, kind='linear', fill_value='extrapolate')
                 else:
-                    f = interp1d(x_sorted, y_sorted, kind='linear', fill_value=np.nan)
+                    f = interp1d(x_sorted, y_sorted, kind='linear', fill_value=1)
                 result[key] = f(target_values)
 
         return result
