@@ -3060,6 +3060,10 @@ class cross_plot_fiducial_volumes():
             print('x_b_min', x_b_min)
             print("x fin upper ", x_fin_upper)
             print("x_fin_lower", x_fin_lower)
+            t_lower = self.parameter_4bar(interpolation=True, model=model, value=x_fin_lower)
+            t_upper = self.parameter_4bar(interpolation=True, model=model, value=x_fin_upper)
+            print("t_lower K ", t_lower)
+            print("t_upper K ", t_upper)
             fig_index = self.models.index(model)
             ax = axes[fig_index]
 
@@ -3112,6 +3116,47 @@ class cross_plot_fiducial_volumes():
 
 
 
+
+
+    def parameter_4bar(self, interpolation= False, model="heat", value = 1):
+
+        Seitz_temp_list = np.arange(115,135,1)
+
+        Seitz = [3.748846256369809, 2.698514892785409, 1.970636100840869, 1.456582423379771, 1.0876487352468167, 0.81919014257128, 0.6215088411067538, 0.4744416552214212, 0.36405046753932907, 0.2805459442417557, 0.216954804825198, 0.16824677434544177, 0.13075205209514118, 0.1017661303159491, 0.07927767395240512, 0.06177855193175333, 0.048129563991026886, 0.03746444735286622, 0.029120530079762917, 0.02258814565060544]  # in keV
+        # keV
+        E_ion = [1.6581533525053764, 1.2418491587814853, 0.9411737282544508, 0.7204041659774143, 0.5560257316319909, 0.4321662119422275, 0.3378770016045768, 0.2654616664682347, 0.20941942558591156, 0.16576081701139184, 0.13155465044323458, 0.10462223313520691, 0.08332735619004814, 0.06642976722642202, 0.052981487964282696, 0.042252490334751654, 0.033676798126842045, 0.026812993256839186, 0.021315027229617624, 0.0169105543079032]
+        # g / cc
+        rho_l =  [1.200611976946725, 1.192020288467111, 1.1832460718963043, 1.17427465739683, 1.1650893842043362, 1.1556711939283328, 1.145998110919192, 1.1360445689253937, 1.1257805247114818, 1.1151702703163473, 1.1041708090297635, 1.092729582778819, 1.0807812051713201, 1.06824261395629, 1.0550056000912613, 1.0409247480221695, 1.025796810163609, 1.0093227138027383, 0.9910303030626616, 0.9700938460831293]
+        # nm
+        Rl =  [8.269272633770214, 7.364861891716328, 6.590723161454232, 5.921315822965311, 5.337368849858277, 4.824066275138536, 4.369828746411625, 3.9654747110305966, 3.603629872409036, 3.2783035227291917, 2.984579086495859, 2.718384812020133, 2.4763215511130525, 2.2555320116255855, 2.053600966196628, 1.8684791606100648, 1.6984266360624287, 1.5419741851470783, 1.3979070139715166, 1.2652895142107365]
+
+        compound_x = []
+        for i in range(len(E_ion)):
+            x = E_ion[i] * 10 / (rho_l[i] * Rl[i])  # fit unit
+            compound_x.append(x)
+
+        Q_compound_x = []
+        for i in range(len(Seitz)):
+            x = Seitz[i] * 10 / (rho_l[i] * Rl[i])  # fit unit
+            Q_compound_x.append(x)
+
+        self.dict_energy_tab = {"Pressure [bara]": Seitz_temp_list,
+                                    "Seitz [keV]": Seitz,
+                                    "Eion [keV]": E_ion,
+                                    "Eion_rl-1_rhol-1 [GeVcm**2 g-1]": compound_x,
+                                    "Q_rl-1_rhol-1 [GeVcm**2 g-1]": Q_compound_x}
+        self.df_energy_tab = pd.DataFrame(self.dict_energy_tab)
+
+        if interpolation:
+            if model=="heat":
+                temperature = np.interp(value,Seitz,Seitz_temp_list)
+            elif model=="ion":
+                temperature = np.interp(value, E_ion, Seitz_temp_list)
+            elif model=="phot":
+                temperature = np.interp(value, Q_compound_x, Seitz_temp_list)
+            else:
+                print("wrong model")
+            return temperature
 
 
 
