@@ -139,7 +139,7 @@ class integrated_analysis():
         # self.gamma_rejection_plot_v3()
         # self.gamma_rejection_plot_PSN_v2()
         # self.gamma_rejection_plot_PSN_v2(rate_cut=True)
-        self.gamma_rejection_plot_output()
+        self.gamma_rejection_plot_output(pressure_plot=True)
 
 
 
@@ -895,7 +895,7 @@ class integrated_analysis():
         return output
 
 
-    def gamma_rejection_plot_output(self):
+    def gamma_rejection_plot_output(self, pressure_plot=False):
 
         self.fitting_list = []
         self.Cs_fitting_list = []
@@ -972,10 +972,14 @@ class integrated_analysis():
             for j in range(3):
                 # Extract the configuration for this specific slot
                 y_cfg = y_config[i]
+                if pressure_plot:
+                    # x fixed at pressure bar
+                    x_cfg = x_config[3]
+                else:
                 # x for differnt thermo models
-                # x_cfg = x_config[j]
-                # x fixed at pressure bar
-                x_cfg = x_config[3]
+                    x_cfg = x_config[j]
+
+
                 ax_ij = ax[j, i]
 
                 for source, source_config in self.gamma_source_group.items():
@@ -1002,7 +1006,11 @@ class integrated_analysis():
 
 
         self.fitting_df = pd.concat(self.fitting_list, ignore_index=True)
-        fitting_matrix = self.fitting_gamma_rejection_v3(self.fitting_df,x_config,y_config)
+        if pressure_plot:
+            fitting_matrix = self.fitting_gamma_rejection_pressure(self.fitting_df, x_config, y_config)
+        else:
+            fitting_matrix = self.fitting_gamma_rejection_v3(self.fitting_df,x_config,y_config)
+
 
 
         # plot the fitting function
@@ -2808,6 +2816,32 @@ class integrated_analysis():
 
         return result
 
+
+    def fitting_gamma_rejection_pressure(self, dataframe , x_cfg,y_cfg):
+        # switch Y axis. Now Q vs per kev and Eion vs per interaction
+        result = []
+        for i in range(4):
+            row_result = []
+            for j in range(4):
+                x = dataframe[[x_cfg[3]["x"]]].values.flatten()
+                y = dataframe[[y_cfg[i]["y"]]].values.flatten()
+                print("shape",type(x),x.shape)
+                # dealing with guess
+                x_min = min(x)
+                x_max = max(x)
+                y_min = min(y)
+                y_max = max(y)
+                fit_output = self.fit_combination(x, y, y_max, y_min, x_max, x_min)
+                if i==1 and j==1:
+                    print(f"{i}{j}, x",x_min, x_max,x)
+                    print(f"{i}{j}, y", y_min, y_max, y)
+                    print(fit_output)
+
+                row_result.append(fit_output)
+            result.append(row_result)
+
+        return result
+
     def fitting_doped_gamma_rejection(self):
         #
         x_per_scatter = self.fitting_df["Seitz [keV]"].values
@@ -2886,7 +2920,7 @@ class integrated_analysis():
         return R
 
 class cross_plot_fiducial_volumes():
-    def __init__(self):
+    def __init__(self,pressure_plot=False):
         # """data_dict={"data":{"heat":{}, "ion":{},"phot":{}},"fit":{"heat":{}, "ion":{},"phot":{}}} """
         #data_dict["data"]["heat"][f"{source} {temperature}"]={"x":temp_config["plot"][x_cfg["x"]], "y":temp_config["plot"][y_cfg["y"]], "y_err":temp_config["plot"][y_cfg["y_err"]]}
         #data_dict["fit"]["phot"] ={"x": fitting_matrix[i][j][2],"y": fitting_matrix[i][j][3],"a_val":a_val, "b_val":b_val}
@@ -2900,6 +2934,7 @@ class cross_plot_fiducial_volumes():
         self.data_flow = {"volume_name":["bulk", "dome"], "volume_path":[],"volume_file":[]}
         # self.data_flow = {"volume_name": ["bulk"], "volume_path": [], "volume_file": []}
         self.models = ["heat", "ion","phot"]
+        self.pressure_plot = pressure_plot
 
         self.main_function()
 
@@ -2918,7 +2953,7 @@ class cross_plot_fiducial_volumes():
             self.data_flow["volume_file"].append(loaded_dict)
 
     def plot(self):
-        fig, axes = plt.subplots(1,3,figsize = (20,5))
+        fig, axes = plt.subplots(1,3,figsize = (23,5))
         y_config = [{"y": "Rejection Rate Scattering[]", "y_err": "Rejection Sigma Scattering[]",
                      "ylabel": "Nucleation probability (per interaction) "},
                     {"y": "Rejection Rate KeV[/keV]", "y_err": "Rejection Sigma KeV[/keV]",
@@ -2939,13 +2974,15 @@ class cross_plot_fiducial_volumes():
 
                 temp_data = self.data_flow["volume_file"][j]
                 # plot fitting in bulk or dome
-                # axes[i].plot(temp_data["fit"][self.models[i]]["x"],temp_data["fit"][self.models[i]]["y"], label = f"{self.data_flow['volume_name'][j]} fitting")
+                axes[i].plot(temp_data["fit"][self.models[i]]["x"],temp_data["fit"][self.models[i]]["y"], label = f"{self.data_flow['volume_name'][j]} fitting")
                 # plot data points
                 for k in temp_data["data"][self.models[i]]:
                     axes[i].errorbar(temp_data["data"][self.models[i]][k]["x"], temp_data["data"][self.models[i]][k]["y"],yerr=temp_data["data"][self.models[i]][k]["y_err"], label=f"{self.data_flow['volume_name'][j]} "+k, fmt='o')
+            if self.pressure_plot:
 
-            # axes[i].set_xlabel(x_config[i]["xlabel"])
-            axes[i].set_xlabel(x_config[3]["xlabel"])
+                axes[i].set_xlabel(x_config[3]["xlabel"])
+            else:
+                axes[i].set_xlabel(x_config[i]["xlabel"])
             axes[i].set_ylabel(y_config[i]["ylabel"])
             axes[i].set_yscale("log")
             axes[i].legend()
@@ -2964,4 +3001,4 @@ if __name__=="__main__":
     IA =  integrated_analysis(volume="dome")
     IA = integrated_analysis(volume="bulk")
     # test = test_csv()
-    plot = cross_plot_fiducial_volumes()
+    plot = cross_plot_fiducial_volumes(pressure_plot=True)
