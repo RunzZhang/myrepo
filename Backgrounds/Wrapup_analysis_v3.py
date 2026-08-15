@@ -3158,16 +3158,8 @@ class cross_plot_fiducial_volumes():
             else:
                 temperature = 0
                 print("wrong model")
+            print("temp",temperature)
             return temperature
-
-
-
-
-
-
-
-
-
 
 
 
