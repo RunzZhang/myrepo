@@ -1960,7 +1960,7 @@ class integrated_analysis():
             plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_PSN_ratecut_v2.pdf")
 
 
-    def interpolate_all_keys_vectorized(self, target_key, target_values, data_dict):
+    def interpolate_all_keys_vectorized(self, target_key, target_values, data_dict, extrapolate=False):
         """
         Given a target_key and an array/list of target_values, returns a dictionary
         where each key contains the array of interpolated and extrapolated values.
@@ -1984,7 +1984,10 @@ class integrated_analysis():
                 y_sorted = np.asarray(values, dtype=float)[sort_idx]
 
                 # Create a linear interpolator with extrapolation enabled
-                f = interp1d(x_sorted, y_sorted, kind='linear', fill_value='extrapolate')
+                if extrapolate:
+                    f = interp1d(x_sorted, y_sorted, kind='linear', fill_value='extrapolate')
+                else:
+                    f = interp1d(x_sorted, y_sorted, kind='linear')
                 result[key] = f(target_values)
 
         return result
