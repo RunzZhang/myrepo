@@ -3067,7 +3067,7 @@ class cross_plot_fiducial_volumes():
             # 1. Plot Bulk points
             b_x = [model_content["bulk"]["x_0"], model_content["bulk"]["x_1"]]
             b_y = [model_content["bulk"]["y_0"], model_content["bulk"]["y_1"]]
-            ax.scatter(b_x, b_y, color='red', label='Bulk Data Points', zorder=5)
+            ax.plot(b_x, b_y, color='red', label='Bulk Data Points', zorder=5)
 
             # 2. Extract Dome coordinates
             d_x0, d_y0 = model_content["dome"]["x_0"], model_content["dome"]["y_0"]
@@ -3075,11 +3075,11 @@ class cross_plot_fiducial_volumes():
 
             # Upper bound line coordinates
             upper_x = [d_x0 - delta_x_upper, d_x1 - delta_x_upper]
-            upper_y = [d_y0, d_y0]
+            upper_y = [d_y0, d_y1]
 
             # Lower bound line coordinates
             lower_x = [d_x0 - delta_x_lower, d_x1 - delta_x_lower]
-            lower_y = [d_y0, d_y0]
+            lower_y = [d_y0, d_y1]
 
             # Plot upper and lower bound lines
             ax.plot(upper_x, upper_y, 'b--', label='Dome Upper Bound')
