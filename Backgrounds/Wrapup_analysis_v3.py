@@ -48,8 +48,8 @@ class integrated_analysis():
                                                      "Cold-Cs-12_10-11_fiducial_mix", "Cold-Cs-1_20-21_fiducial_mix"],
                                         "sorted_path": [], "rate_path": [], "rejection_path": [], "plot_list": [],
                                         "plot": pd.DataFrame()},
-                               "119K": {"raw_path": ["Cold-Cs-2_2-3_fiducial_mix"], "sorted_path": [],
-                               # "119K": {"raw_path": [], "sorted_path": [],
+                               # "119K": {"raw_path": ["Cold-Cs-2_2-3_fiducial_mix"], "sorted_path": [],
+                               "119K": {"raw_path": [], "sorted_path": [],
                                         "rate_path": [], "rejection_path": [], "plot_list": [],
                                         "plot": pd.DataFrame()}}},
                 "Co": {"sim": {"pure_address": None, "pure_data": None, "doped_address": None,
@@ -2942,6 +2942,7 @@ class cross_plot_fiducial_volumes():
             axes[i].set_xlabel(x_config[i]["xlabel"])
             axes[i].set_ylabel(y_config[i]["ylabel"])
             axes[i].set_yscale("log")
+            axes[i].legend()
 
         plt.show()
 
