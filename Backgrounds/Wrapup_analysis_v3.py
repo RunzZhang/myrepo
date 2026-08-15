@@ -896,6 +896,7 @@ class integrated_analysis():
 
 
     def gamma_rejection_plot_output(self, pressure_plot=False):
+        pressure_plot_str= str(pressure_plot)
 
         self.fitting_list = []
         self.Cs_fitting_list = []
@@ -1042,7 +1043,7 @@ class integrated_analysis():
                                                                             "y": fitting_matrix[i][j][3],"a_val":a_val, "b_val":b_val}
 
         print("dict", data_dict)
-        with open(self.base_path+f"{self.volume_option}_output_data.pkl", "wb") as f:
+        with open(self.base_path+f"{self.volume_option}_pressureplot_{pressure_plot_str}_output_data.pkl", "wb") as f:
             pickle.dump(data_dict, f)
         print("saved")
 
@@ -2946,7 +2947,8 @@ class cross_plot_fiducial_volumes():
     def read_files(self):
 
         for name in self.data_flow["volume_name"]:
-            self.data_flow["volume_path"].append(self.base_path + f"{name}_output_data.pkl")
+
+            self.data_flow["volume_path"].append(self.base_path + f"{name}_pressureplot_{self.pressure_plot_str}_output_data.pkl")
         for i in range(len(self.data_flow["volume_path"])):
             with open(self.data_flow["volume_path"][i], "rb") as f:
                 loaded_dict = pickle.load(f)
@@ -3005,8 +3007,8 @@ class cross_plot_fiducial_volumes():
 
 if __name__=="__main__":
     # IA = integrated_analysis(volume="")
-    # IA =  integrated_analysis(volume="dome")
-    # IA = integrated_analysis(volume="bulk")
+    IA =  integrated_analysis(volume="dome")
+    IA = integrated_analysis(volume="bulk")
     # test = test_csv()
     # plot = cross_plot_fiducial_volumes(pressure_plot=True)
-    plot = cross_plot_fiducial_volumes(pressure_plot=False)
+    # plot = cross_plot_fiducial_volumes(pressure_plot=False)
