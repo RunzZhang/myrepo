@@ -906,7 +906,8 @@ class integrated_analysis():
 
         for source, source_config in self.gamma_source_group.items():
             # if source != "Ba" and source != "Th":
-            if source != "Ba":
+            if source =="Cs":
+            # if source != "Ba":
             # read_source exp data
                 for temperature, temp_config in source_config["exp"].items():
                     if temp_config["rejection_path"] !=[]:
@@ -2943,7 +2944,7 @@ class cross_plot_fiducial_volumes():
 
     def main_function(self):
         self.read_files()
-        self.plot()
+        # self.plot()
 
     def read_files(self):
 
@@ -3008,8 +3009,8 @@ class cross_plot_fiducial_volumes():
 
 if __name__=="__main__":
     # IA = integrated_analysis(volume="")
-    # IA =  integrated_analysis(volume="dome")
-    # IA = integrated_analysis(volume="bulk")
+    IA =  integrated_analysis(volume="dome")
+    IA = integrated_analysis(volume="bulk")
     # test = test_csv()
     # plot = cross_plot_fiducial_volumes(pressure_plot=True)
     plot = cross_plot_fiducial_volumes(pressure_plot=False)
