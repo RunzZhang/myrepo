@@ -1030,6 +1030,8 @@ class integrated_analysis():
                                                                             "y": fitting_matrix[i][j][3],"a_val":a_val, "b_val":b_val}
 
         print("dict", data_dict)
+        with open(self.base_path+f"{self.volume_option}_output_data.pkl", "wb") as f:
+            pickle.dump(data_dict, f)
 
 
     def gamma_rejection_plot_v3(self):
@@ -2878,6 +2880,73 @@ class integrated_analysis():
             R = 1
         return R
 
+class cross_plot_fiducial_volumes():
+    def __init__(self):
+        # """data_dict={"data":{"heat":{}, "ion":{},"phot":{}},"fit":{"heat":{}, "ion":{},"phot":{}}} """
+        #data_dict["data"]["heat"][f"{source} {temperature}"]={"x":temp_config["plot"][x_cfg["x"]], "y":temp_config["plot"][y_cfg["y"]], "y_err":temp_config["plot"][y_cfg["y_err"]]}
+        #data_dict["fit"]["phot"] ={"x": fitting_matrix[i][j][2],"y": fitting_matrix[i][j][3],"a_val":a_val, "b_val":b_val}
+
+        self.output_path = '/data/runzezhang/result/gamma_rejection/'
+        self.plot_path = '/data/runzezhang/result/gamma_rejection/plot/'
+        # self.Co_sim_path  ='/lzdata/runzezhang/result/GR_sims/Co_output_5E6.pkl'
+        # self.Cs_sim_path = '/lzdata/runzezhang/result/GR_sims/Cs_output_5E6.pkl'
+        self.base_path = "/lzdata/runzezhang/result/GR_sims/"
+
+        # self.data_flow = {"volume_name":["bulk", "dome"], "volume_path":[],"volume_file":[]}
+        self.data_flow = {"volume_name": ["bulk"], "volume_path": [], "volume_file": []}
+        self.models = ["heat", "ion","phot"]
+
+        self.main_function()
+
+    def main_function(self):
+        self.read_files()
+        self.plot()
+
+    def read_files(self):
+
+        for name in self.data_flow["volume_name"]:
+            self.data_flow["volume_path"].append(self.base_path + f"{name}_output_data.pkl")
+        for i in range(len(self.data_flow["volume_path"])):
+            with open(self.data_flow["volume_path"][i], "rb") as f:
+                loaded_dict = pickle.load(f)
+            print(loaded_dict)
+            self.data_flow["volume_file"].append(loaded_dict)
+
+    def plot(self):
+        fig, axes = plt.subplots(1,3,figsize = (16,5))
+        y_config = [{"y": "Rejection Rate Scattering[]", "y_err": "Rejection Sigma Scattering[]",
+                     "ylabel": "Nucleation probability (per interaction) "},
+                    {"y": "Rejection Rate KeV[/keV]", "y_err": "Rejection Sigma KeV[/keV]",
+                     "ylabel": "Probability per energy deposited \n (events/keV) "},
+                    {"y": "Rejection Rate Xenon Abs[]", "y_err": "Rejection Sigma Xenon Abs[]",
+                     "ylabel": "Nucleation probability \n (per xenon photoabsorption in K shell) "},
+                    ]
+        x_config = [{"x": "Seitz [keV]", "xlabel": r"Seitz threshold [keV]"},
+                    {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+                     "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
+                    {"x": "Q_rl-1_rhol-1 [GeVcm**2 g-1]",
+                     "xlabel": r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"}]
+        for i in range(len(y_config)):
+
+
+            for j in range(len(self.data_flow["volume_file"])):
+
+                temp_data = self.data_flow["volume_file"][i]
+                # plot fitting in bulk or dome
+                axes[i].plot(temp_data["fit"][self.models[i]]["x"],temp_data["fit"][self.models[i]]["y"], label = f"{self.data_flow['volume_name'][j]} fitting")
+                # plot data points
+                for k in temp_data["data"][self.models[i]]:
+                    axes[i].errorbar(temp_data["data"][self.models[i]][k]["x"], temp_data["data"][self.models[i]][k]["y"],yerr=temp_data["data"][self.models[i]][k]["y_err"], label=k, fmt='o')
+
+            axes[i].set_xlabel(x_config[i]["xlabel"])
+            axes[i].set_ylabel(y_config[i]["ylabel"])
+            axes[i].set_yscale("log")
+
+        plt.show()
+
+
+
+
 
 
 
@@ -2887,3 +2956,4 @@ if __name__=="__main__":
     # IA =  integrated_analysis(volume="dome")
     IA = integrated_analysis(volume="bulk")
     # test = test_csv()
+    # plot = cross_plot_fiducial_volumes()
