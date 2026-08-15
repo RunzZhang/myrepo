@@ -2944,7 +2944,7 @@ class cross_plot_fiducial_volumes():
 
     def main_function(self):
         self.read_files()
-        # self.plot()
+        self.plot()
 
     def read_files(self):
 
