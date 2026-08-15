@@ -2945,7 +2945,8 @@ class cross_plot_fiducial_volumes():
     def main_function(self):
         self.read_files()
         # self.plot()
-        self.temperature_shift()
+        # self.temperature_shift()
+        self.temperature_shift(plot =True)
 
     def read_files(self):
 
@@ -2995,7 +2996,7 @@ class cross_plot_fiducial_volumes():
 
         plt.show()
         # plt.savefig(self.plot_path+f"volume_rate_comparison_{self.pressure_plot_str}.pdf")
-    def temperature_shift(self):
+    def temperature_shift(self, plot=False):
 
 
         y_config = [{"y": "Rejection Rate Scattering[]", "y_err": "Rejection Sigma Scattering[]",
@@ -3103,8 +3104,9 @@ class cross_plot_fiducial_volumes():
             ax.set_yscale("log")
 
         plt.tight_layout()
-        if self.pressure_plot:
-            # plt.savefig(self.plot_path + f"volume_rate_comparison_shift_{self.pressure_plot_str}.pdf")
+        if plot:
+            plt.savefig(self.plot_path + f"volume_rate_comparison_shift_{self.pressure_plot_str}.pdf")
+        else:
             plt.show()
 
 
@@ -3131,5 +3133,5 @@ if __name__=="__main__":
     # IA =  integrated_analysis(volume="dome")
     # IA = integrated_analysis(volume="bulk")
     # test = test_csv()
-    plot = cross_plot_fiducial_volumes(pressure_plot=True)
-    # plot = cross_plot_fiducial_volumes(pressure_plot=False)
+    # plot = cross_plot_fiducial_volumes(pressure_plot=True)
+    plot = cross_plot_fiducial_volumes(pressure_plot=False)
