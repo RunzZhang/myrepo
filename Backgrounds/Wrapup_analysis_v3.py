@@ -944,7 +944,7 @@ class integrated_analysis():
 
                             # combine the Seitz to the exp data
                             df = pd.read_csv(temp_config["rejection_path"][rejection_path_index])
-                            print("df.columns",source,rejection_path_index,df.columns)
+                            # print("df.columns",source,rejection_path_index,df.columns)
 
                             # if source == "Co" and rejection_path_index == 0 and temperature=="116K":
                             #     print("source Co columns 0", df)
@@ -965,7 +965,7 @@ class integrated_analysis():
                                     self.Cs_fitting_list.append(df_fit)
                             else:
                                 continue
-                        print(temp_config["plot_list"])
+                        # print(temp_config["plot_list"])
                         if len(temp_config["plot_list"])>=1:
                             temp_config["plot"] = pd.concat(temp_config["plot_list"], ignore_index=True)
                             temp_config["plot"] = self.concat_PT_condition(temp_config["plot"])
@@ -1028,8 +1028,8 @@ class integrated_analysis():
                                 data_dict["data"]["ion"][f"{source} {temperature}"]={"x":temp_config["plot"][x_cfg["x"]], "y":temp_config["plot"][y_cfg["y"]], "y_err":temp_config["plot"][y_cfg["y_err"]]}
                             if i==2 and j==2:
                                 data_dict["data"]["phot"][f"{source} {temperature}"]={"x":temp_config["plot"][x_cfg["x"]], "y":temp_config["plot"][y_cfg["y"]], "y_err":temp_config["plot"][y_cfg["y_err"]]}
-                            if source=="Cs" and temperature=="116K" :
-                                print(data_dict["data"]["heat"][f"{source} {temperature}"])
+                            # if source=="Cs" and temperature=="116K" :
+                            #     print(data_dict["data"]["heat"][f"{source} {temperature}"])
 
 
 
@@ -1084,7 +1084,7 @@ class integrated_analysis():
                     data_dict["fit"]["phot"] ={"x": fitting_matrix[i][j][2],
                                                                             "y": fitting_matrix[i][j][3],"a_val":a_val, "b_val":b_val}
 
-        print("dict", data_dict)
+        # print("dict", data_dict)
         # with open(self.base_path+f"{self.volume_option}_pressureplot_{pressure_plot_str}_output_data.pkl", "wb") as f:
         #     pickle.dump(data_dict, f)
         # print("saved")
