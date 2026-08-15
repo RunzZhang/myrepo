@@ -2957,4 +2957,4 @@ if __name__=="__main__":
     # IA =  integrated_analysis(volume="dome")
     IA = integrated_analysis(volume="bulk")
     # test = test_csv()
-    # plot = cross_plot_fiducial_volumes()
+    plot = cross_plot_fiducial_volumes()
