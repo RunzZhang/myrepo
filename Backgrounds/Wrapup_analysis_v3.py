@@ -3021,11 +3021,18 @@ class cross_plot_fiducial_volumes():
 
                 dict_before_shit = {"heat":{},"ion":{},}
                 print("model", self.models[i],self.data_flow["volume_name"][j])
-                print(f"{self.data_flow['volume_name'][j]} fitting","x_0, y_0", temp_data["fit"][self.models[i]]["x"][0],temp_data["fit"][self.models[i]]["y"][0] )
-                print(f"{self.data_flow['volume_name'][j]} fitting","x_1, y_1", temp_data["fit"][self.models[i]]["x"][-1],
-                      temp_data["fit"][self.models[i]]["y"][-1])
-                print(f"{self.data_flow['volume_name'][j]} fitting","a, b", temp_data["fit"][self.models[i]]["a_val"],
-                      temp_data["fit"][self.models[i]]["b_val"])
+                x_0 = temp_data["fit"][self.models[i]]["x"][0]
+                y_0 = temp_data["fit"][self.models[i]]["y"][0]
+                x_1 = temp_data["fit"][self.models[i]]["x"][-1]
+                y_1 = temp_data["fit"][self.models[i]]["y"][-1]
+                a_val = temp_data["fit"][self.models[i]]["a_val"]
+                b_val=  temp_data["fit"][self.models[i]]["b_val"]
+                print(f"{self.data_flow['volume_name'][j]} fitting","x_0, y_0", x_0, y_0 )
+                print(f"{self.data_flow['volume_name'][j]} fitting","x_1, y_1", x_1,
+                      y_1)
+                print(f"{self.data_flow['volume_name'][j]} fitting","a, b", a_val,
+                      b_val)
+
 
 
 
