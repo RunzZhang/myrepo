@@ -3101,6 +3101,7 @@ class cross_plot_fiducial_volumes():
             ax.set_ylabel("Y")
             ax.legend(loc='best')
             ax.grid(True)
+            ax.set_yscale("log")
 
         plt.tight_layout()
         plt.show()
