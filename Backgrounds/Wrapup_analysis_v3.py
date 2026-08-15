@@ -3148,6 +3148,7 @@ class cross_plot_fiducial_volumes():
         self.df_energy_tab = pd.DataFrame(self.dict_energy_tab)
 
         if interpolation:
+            print(f"interpolation {model} {value}")
             if model=="heat":
                 temperature = np.interp(value,Seitz,Seitz_temp_list)
             elif model=="ion":
