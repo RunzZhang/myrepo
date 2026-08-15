@@ -3061,6 +3061,49 @@ class cross_plot_fiducial_volumes():
             print('x_b_min', x_b_min)
             print("x fin upper ", x_fin_uppper)
             print("x_fin_lower", x_fin_lower)
+            fig_index = self.models.index(model)
+            ax = axes[fig_index]
+
+            # 1. Plot Bulk points
+            b_x = [model_content["bulk"]["x_0"], model_content["bulk"]["x_1"]]
+            b_y = [model_content["bulk"]["y_0"], model_content["bulk"]["y_1"]]
+            ax.scatter(b_x, b_y, color='red', label='Bulk Data Points', zorder=5)
+
+            # 2. Extract Dome coordinates
+            d_x0, d_y0 = model_content["dome"]["x_0"], model_content["dome"]["y_0"]
+            d_x1, d_y1 = model_content["dome"]["x_1"], model_content["dome"]["y_1"]
+
+            # Upper bound line coordinates
+            upper_x = [d_x0 - delta_x_upper, d_x1 - delta_x_upper]
+            upper_y = [d_y0, d_y0]
+
+            # Lower bound line coordinates
+            lower_x = [d_x0 - delta_x_lower, d_x1 - delta_x_lower]
+            lower_y = [d_y0, d_y0]
+
+            # Plot upper and lower bound lines
+            ax.plot(upper_x, upper_y, 'b--', label='Dome Upper Bound')
+            ax.plot(lower_x, lower_y, 'g--', label='Dome Lower Bound')
+
+            # Fill the region/band between the two bounds
+            ax.fill_betweenx(
+                y=[d_y0, d_y1],
+                x1=[d_x0 - delta_x_upper, d_x1 - delta_x_upper],
+                x2=[d_x0 - delta_x_lower, d_x1 - delta_x_lower],
+                color='blue',
+                alpha=0.2,
+                label='Dome Shift Band'
+            )
+
+            # Subplot styling
+            ax.set_title(f"Model: {model.capitalize()}")
+            ax.set_xlabel("X")
+            ax.set_ylabel("Y")
+            ax.legend(loc='best')
+            ax.grid(True)
+
+        plt.tight_layout()
+        plt.show()
 
 
 
