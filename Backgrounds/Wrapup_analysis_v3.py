@@ -3021,7 +3021,7 @@ class cross_plot_fiducial_volumes():
 
                 temp_data = self.data_flow["volume_file"][j]
 
-                dict_before_shit = {"heat":{},"ion":{},}
+                dict_before_shift = {"heat":{},"ion":{},"phot":{}}
                 print("model", self.models[i],self.data_flow["volume_name"][j])
                 x_0 = temp_data["fit"][self.models[i]]["x"][0]
                 y_0 = temp_data["fit"][self.models[i]]["y"][0]
@@ -3155,6 +3155,7 @@ class cross_plot_fiducial_volumes():
             elif model=="phot":
                 temperature = np.interp(value, Q_compound_x, Seitz_temp_list)
             else:
+                temperature = 0
                 print("wrong model")
             return temperature
 
