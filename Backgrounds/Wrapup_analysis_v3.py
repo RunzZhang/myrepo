@@ -3067,7 +3067,7 @@ class cross_plot_fiducial_volumes():
             # 1. Plot Bulk points
             b_x = [model_content["bulk"]["x_0"], model_content["bulk"]["x_1"]]
             b_y = [model_content["bulk"]["y_0"], model_content["bulk"]["y_1"]]
-            ax.plot(b_x, b_y, color='red', label='Bulk Data Points', zorder=5)
+            ax.plot(b_x, b_y, color='red', label='Bulk fitting', zorder=5)
 
             # 2. Extract Dome coordinates
             d_x0, d_y0 = model_content["dome"]["x_0"], model_content["dome"]["y_0"]
@@ -3092,13 +3092,15 @@ class cross_plot_fiducial_volumes():
                 x2=[d_x0 - delta_x_lower, d_x1 - delta_x_lower],
                 color='blue',
                 alpha=0.2,
-                label='Dome Shift Band'
+                label=f'Dome Shift Band ({x_fin_lower},{x_fin_uppper})'
             )
 
             # Subplot styling
+            xlabel = x_config[fig_index]["xlabel"]
+            ylabel = y_config[fig_index]["ylabel"]
             ax.set_title(f"Model: {model.capitalize()}")
-            ax.set_xlabel("X")
-            ax.set_ylabel("Y")
+            ax.set_xlabel(xlabel)
+            ax.set_ylabel(ylabel)
             ax.legend(loc='best')
             ax.grid(True)
             ax.set_yscale("log")
