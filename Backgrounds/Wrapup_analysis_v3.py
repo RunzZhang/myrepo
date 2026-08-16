@@ -3112,8 +3112,8 @@ class cross_plot_fiducial_volumes():
         ax.plot(b_x, b_y, color='red', label='Bulk fitting', zorder=5)
 
         # 3. Generate x-points and calculate y for shifted line
-        b_x_shift = [data_rearrange["heat"]["bulk"]["x_0"]+delta_x, data_rearrange["heat"]["bulk"]["x_1"]]
-        b_y_shift = [data_rearrange["heat"]["bulk"]["y_0"]+delta_x, data_rearrange["heat"]["bulk"]["y_1"]]
+        b_x_shift = [data_rearrange["heat"]["bulk"]["x_0"]+delta_x, data_rearrange["heat"]["bulk"]["x_1"]+delta_x]
+        b_y_shift = [data_rearrange["heat"]["bulk"]["y_0"], data_rearrange["heat"]["bulk"]["y_1"]]
         ax.plot(b_x_shift, b_y_shift, color='black',  label=f'Target (1 keV, log(1e-8))')
 
 
