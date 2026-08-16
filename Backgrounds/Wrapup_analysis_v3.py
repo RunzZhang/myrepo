@@ -3098,7 +3098,7 @@ class cross_plot_fiducial_volumes():
         target_x =1 #keV
         target_y = np.log(10e-8) #log(rejection)
         delta_x = target_x-(target_y-h_b)/(-k_b)
-        final_x = x0_b-delta_x
+        final_x = x0_b+delta_x
         #2.25 bar from
         print(final_x, "keV at 2.25 bar")
         temperature = self.parameter_225bar(interpolation=True, model="heat", value=final_x)
@@ -3106,7 +3106,7 @@ class cross_plot_fiducial_volumes():
 
 
 
-        fig, ax = plt.subplots(1, 13, figsize=(6, 5))
+        fig, ax = plt.subplots(1, 1, figsize=(6, 5))
         b_x = [data_rearrange["heat"]["bulk"]["x_0"], data_rearrange["heat"]["bulk"]["x_1"]]
         b_y = [data_rearrange["heat"]["bulk"]["y_0"], data_rearrange["heat"]["bulk"]["y_1"]]
         ax.plot(b_x, b_y, color='red', label='Bulk fitting', zorder=5)
