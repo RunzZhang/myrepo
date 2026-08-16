@@ -3096,7 +3096,7 @@ class cross_plot_fiducial_volumes():
         x0_b = data_rearrange["heat"]["bulk"]["x_0"]
         y0_b = data_rearrange["heat"]["bulk"]["y_0"]
         target_x =1 #keV
-        target_y = np.log(10e-8) #log(rejection)
+        target_y = np.log(1e-8) #log(rejection)
         delta_x = target_x-(target_y-h_b)/(-k_b)
         final_x = x0_b+delta_x
         #2.25 bar from
