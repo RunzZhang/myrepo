@@ -3102,7 +3102,7 @@ class cross_plot_fiducial_volumes():
         #2.25 bar from
         print(final_x, "keV at 2.25 bar")
         temperature = self.parameter_225bar(interpolation=True, model="heat", value=final_x)
-        print("target temp", final_x)
+        print("target temp", temperature)
 
 
 
