@@ -3113,8 +3113,8 @@ class cross_plot_fiducial_volumes():
 
         # 3. Generate x-points and calculate y for shifted line
         x_vals = np.linspace(0, 3, 100)
-        y_shifted = np.exp(-k_b * (x_vals - delta_x))*10**(h_b)
-        ax.scatter(x_vals, y_shifted, color='black', zorder=6, label=f'Target (1 keV, log(1e-8))')
+        y_shifted = np.exp(-k_b * (x_vals + delta_x))*10**(h_b)
+        ax.scatter(x_vals, y_shifted, color='black',  label=f'Target (1 keV, log(1e-8))')
 
 
 
