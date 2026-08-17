@@ -143,9 +143,9 @@ class integrated_analysis():
         #
         # self.gamma_rejection_plot_v3()
         # self.gamma_rejection_plot_PSN_v2()
-        # self.gamma_rejection_plot_PSN_v2(rate_cut=True)
-        # self.gamma_rejection_plot_PSN_v2(rate_cut=True, radi_source="Co",plot_fitting=False)
-        self.gamma_rejection_plot_output(pressure_plot=True)
+        self.gamma_rejection_plot_PSN_v2(rate_cut=True, plot_fitting=False)
+        self.gamma_rejection_plot_PSN_v2(rate_cut=True, radi_source="Co",plot_fitting=False)
+        # self.gamma_rejection_plot_output(pressure_plot=True)
         # self.gamma_rejection_plot_output()
 
 
@@ -1310,28 +1310,28 @@ class integrated_analysis():
                 ax_ij.legend(loc='upper right', fontsize=13)
 
 
-        self.fitting_df = pd.concat(self.fitting_list, ignore_index=True)
-        fitting_matrix = self.fitting_gamma_rejection_v3(self.fitting_df,x_config,y_config)
-
-
-        # plot the fitting function
-        for i in range(4):
-            for j in range(3):
-                # Extract the configuration for this specific slot
-                y_cfg = y_config[i]
-                x_cfg = x_config[j]
-                ax_ij = ax[j, i]
-                a_val = fitting_matrix[i][j][0]
-                b_val = fitting_matrix[i][j][1]
-
-                # ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
-                #            color="black")
-                label_text = f"A = {a_val:.2e},\nB = {b_val:.2e}"
-                # ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],label = label_text,
-                #       color="black")
-                ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
-                           color="black", label=label_text)
-                ax_ij.legend(loc='lower left', fontsize=13)
+        # self.fitting_df = pd.concat(self.fitting_list, ignore_index=True)
+        # fitting_matrix = self.fitting_gamma_rejection_v3(self.fitting_df,x_config,y_config)
+        #
+        #
+        # # plot the fitting function
+        # for i in range(4):
+        #     for j in range(3):
+        #         # Extract the configuration for this specific slot
+        #         y_cfg = y_config[i]
+        #         x_cfg = x_config[j]
+        #         ax_ij = ax[j, i]
+        #         a_val = fitting_matrix[i][j][0]
+        #         b_val = fitting_matrix[i][j][1]
+        #
+        #         # ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
+        #         #            color="black")
+        #         label_text = f"A = {a_val:.2e},\nB = {b_val:.2e}"
+        #         # ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],label = label_text,
+        #         #       color="black")
+        #         ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
+        #                    color="black", label=label_text)
+        #         ax_ij.legend(loc='lower left', fontsize=13)
 
         # plt.show()
         if uplimit:
@@ -2123,11 +2123,11 @@ class integrated_analysis():
 
         #compare to Drexel
         plt.tight_layout()
-        plt.show()
-        # if rate_cut==False:
-        #     plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_v2.pdf")
-        # else:
-        #     plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_ratecut_v2.pdf")
+        # plt.show()
+        if rate_cut==False:
+            plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_v2.pdf")
+        else:
+            plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_ratecut_v2.pdf")
 
 
     def interpolate_all_keys_vectorized(self, target_key, target_values, data_dict, extrapolate=False):
@@ -3587,8 +3587,8 @@ class cross_plot_fiducial_volumes():
 
 if __name__=="__main__":
     # IA = integrated_analysis(volume="")
-    IA =  integrated_analysis(volume="dome")
+    # IA =  integrated_analysis(volume="dome")
     IA = integrated_analysis(volume="bulk")
     # test = test_csv()
-    plot = cross_plot_fiducial_volumes(pressure_plot=True)
+    # plot = cross_plot_fiducial_volumes(pressure_plot=True)
     # plot = cross_plot_fiducial_volumes(pressure_plot=False)
