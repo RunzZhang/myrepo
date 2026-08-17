@@ -1617,7 +1617,7 @@ class integrated_analysis():
                         df = pd.read_csv(temp_config["rejection_path"][i])
                         df_cols_to_divide = ["Rejection Rate Scattering[]",
                                              "Rejection Rate KeV[/keV]", "Rejection Rate Xenon Abs[]",
-                                             'Clean Rate [mHz]']
+                                             'Clean Rate [mHz]',  "Rejection Sigma KeV[/keV]", "Rejection Sigma Xenon Abs[]" ]
                         # print(df.columns)
                         # doc_label = self.Cs_exp_raw_path[i].replace('_exposures', '')
                         # doc_label = self.Cs_label[i]
