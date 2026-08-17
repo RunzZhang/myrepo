@@ -1320,7 +1320,7 @@ class integrated_analysis():
                 ax_ij.set_xlabel(x_cfg["xlabel"],fontsize=16)
                 ax_ij.set_ylabel(y_cfg["ylabel"],fontsize=16)
                 # ax_ij.set_yscale("log")
-                ax_ij.legend(loc='lower left', fontsize=13)
+                ax_ij.legend(loc='upper right', fontsize=13)
 
 
         # self.fitting_df = pd.concat(self.fitting_list, ignore_index=True)
