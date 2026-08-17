@@ -136,14 +136,14 @@ class integrated_analysis():
         #
         #
 
-        # self.bkg_subtracted_analysis(plot=False, upperlimit=True)
+        self.bkg_subtracted_analysis(plot=False, upperlimit=True)
         # self.gamma_rejection_plot_v3(uplimit=True)
-        self.bkg_subtracted_analysis()
+        # self.bkg_subtracted_analysis()
         # self.bkg_subtracted_analysis(plot=True)
         #
         # self.gamma_rejection_plot_v3()
-        self.gamma_rejection_plot_PSN_v2()
-        # self.gamma_rejection_plot_PSN_v2(rate_cut=True)
+        # self.gamma_rejection_plot_PSN_v2()
+        self.gamma_rejection_plot_PSN_v2(rate_cut=True)
         # self.gamma_rejection_plot_output(pressure_plot=True)
         # self.gamma_rejection_plot_output()
 
