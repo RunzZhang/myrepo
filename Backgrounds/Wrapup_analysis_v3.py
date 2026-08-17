@@ -1312,6 +1312,7 @@ class integrated_analysis():
                     # read_source exp data
                     for temperature, temp_config in source_config["exp"].items():
                         if not temp_config["plot"].empty:
+                            
                             ax_ij.errorbar(temp_config["plot"][x_cfg["x"]], temp_config["plot"][y_cfg["y"]],
                                            yerr=temp_config["plot"][y_cfg["y_err"]], label=str(source)+" "+str(temperature), fmt='o',
                                            markersize=8)
@@ -1319,7 +1320,7 @@ class integrated_analysis():
 
                 ax_ij.set_xlabel(x_cfg["xlabel"],fontsize=16)
                 ax_ij.set_ylabel(y_cfg["ylabel"],fontsize=16)
-                # ax_ij.set_yscale("log")
+                ax_ij.set_yscale("log")
                 ax_ij.legend(loc='upper right', fontsize=13)
 
 
