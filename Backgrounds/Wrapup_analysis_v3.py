@@ -136,7 +136,7 @@ class integrated_analysis():
         #
         #
 
-        # self.bkg_subtracted_analysis(plot=False, upperlimit=True)
+        # self.bkg_subtracted_analysis(plot=False)
         # self.gamma_rejection_plot_v3(uplimit=True)
         self.bkg_subtracted_analysis()
         # self.bkg_subtracted_analysis(plot=True)
@@ -373,7 +373,7 @@ class integrated_analysis():
         result_df_119_full_info.to_csv(self.Bkg_average_119_full_info_path, index=False)
 
 
-    def bkg_subtracted_analysis(self, plot=False, upperlimit= False):
+    def bkg_subtracted_analysis(self, plot=False):
         self.df_bkg_116 = pd.read_csv(self.background_group["116K"]["average_path"])
         print("bkg 116", self.df_bkg_116)
         # self.df_bkg_116.columns = ['Pressure [bara]','Bkg Lifetime [s]','Bkg Lifetime Error [s]','Bkg Rate [mHz]', 'Bkg Rate Sigma [mHz]']
@@ -421,21 +421,7 @@ class integrated_analysis():
                             merged_df['Clean Rate Sigma [mHz]'] = np.sqrt(
                                 merged_df['Exp Rate Sigma [mHz]'] ** 2 + merged_df['Bkg Rate Sigma [mHz]'] ** 2)
 
-                            if upperlimit:
-                                condition = (merged_df['Clean Rate [mHz]']<0) | (merged_df['Clean Rate [mHz]']-merged_df['Clean Rate Sigma [mHz]']<0)
-                                # 1. Option A: Calculate standard 1-sided Gaussian 95% Upper Limit (Rate + 1.645 * Sigma)
-                                # For rate < 0, setting negative rates to 0 before calculating bound prevents unphysical bounds
-                                bounded_rate = np.maximum(merged_df['Clean Rate [mHz]'], 0)
-                                merged_df.loc[condition, 'Upper Limit [mHz]'] = bounded_rate + 1.645 * \
-                                                                                    merged_df.loc[
-                                                                                        condition, 'Clean Rate Sigma [mHz]']
-
-                                # 2. Assign the standard central value for non-upper limit points
-                                merged_df.loc[~condition, 'Upper Limit [mHz]'] = merged_df.loc[
-                                    ~condition, 'Clean Rate [mHz]']
-                            else:
-
-                                merged_df =  merged_df[merged_df['Clean Rate [mHz]']>0]
+                            # merged_df =  merged_df[merged_df['Clean Rate [mHz]']>0]
 
                             # add Seitz and Eion unit
                             if temperature =="116K":
@@ -460,10 +446,7 @@ class integrated_analysis():
                             exp_df = pd.read_csv(temp_config["rate_path"][sorted_path_index])
 
 
-                            if upperlimit:
-                                columns_added = exp_df.apply(self.calculate_rejection_by_row_uplimit, axis=1, args=(source,))
-                            else:
-                                columns_added = exp_df.apply(self.calculate_rejection_by_row_v2, axis=1, args=(source,))
+                            columns_added = exp_df.apply(self.calculate_rejection_by_row_v2, axis=1, args=(source,))
 
 
                             merged_df_rejection = pd.concat([exp_df, columns_added], axis=1)
