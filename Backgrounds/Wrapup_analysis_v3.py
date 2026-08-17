@@ -752,11 +752,11 @@ class integrated_analysis():
                 df = df[df['N quality events']>=self.N_cut]
                 df = df[['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]']]
             elif volume =="bulk":
-                df = df[df['N quality events'] >= self.N_cut]
+                df = df[df['N Bulk'] >= self.N_cut]
                 df = df[['Pressure [bara]', 'Bulk Lifetime [s]', 'Bulk Lifetime Error [s]']]
                 df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]']
             elif volume =="dome":
-                df = df[df['N quality events'] >= self.N_cut]
+                df = df[df['N Dome'] >= self.N_cut]
                 df = df[['Pressure [bara]', 'Dome Lifetime [s]', 'Dome Lifetime Error [s]']]
                 df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]']
             else:
@@ -1312,7 +1312,7 @@ class integrated_analysis():
                     # read_source exp data
                     for temperature, temp_config in source_config["exp"].items():
                         if not temp_config["plot"].empty:
-                            
+
                             ax_ij.errorbar(temp_config["plot"][x_cfg["x"]], temp_config["plot"][y_cfg["y"]],
                                            yerr=temp_config["plot"][y_cfg["y_err"]], label=str(source)+" "+str(temperature), fmt='o',
                                            markersize=8)
