@@ -3134,10 +3134,10 @@ class cross_plot_fiducial_volumes():
 
     def main_function(self):
         self.read_files()
-        # self.plot()
+        self.plot()
         # self.temperature_shift()
         # self.temperature_shift(plot =True)
-        self.temperature_shift_target_estimate()
+        # self.temperature_shift_target_estimate()
 
     def read_files(self):
 
