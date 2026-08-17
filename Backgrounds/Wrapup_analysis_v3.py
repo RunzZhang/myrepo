@@ -1628,7 +1628,7 @@ class integrated_analysis():
                         pressure_drop_list = []
                         df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
                         # only positive rate
-                        df = df[df['Clean Rate [mHz]'] > 0]
+                        # df = df[df['Clean Rate [mHz]'] > 0]
                         if rate_cut:
 
                             df[df_cols_to_divide] = df[df_cols_to_divide]*4
