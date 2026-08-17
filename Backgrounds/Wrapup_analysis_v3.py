@@ -1649,7 +1649,8 @@ class integrated_analysis():
                         self.fitting_list.append(df_fit)
                         self.Cs_fitting_list.append(df_fit)
         self.df_Cs_116_plot = pd.concat(self.df_Cs_116_plot_list, ignore_index=True)
-        print("sum Cs 116", self.df_Cs_116_plot)
+        print("sum Cs 116", self.df_Cs_116_plot[['Seitz [keV]',
+                                     "Rejection Rate KeV[/keV]", "Rejection Sigma KeV[/keV]"]])
         self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
         self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
 
