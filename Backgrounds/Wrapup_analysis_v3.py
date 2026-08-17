@@ -2929,6 +2929,8 @@ class integrated_analysis():
         return [(a_fit_scatter, b_fit_scatter,x_fitted_scatter,y_fitted_scatter),(a_fit_keV, b_fit_keV,x_fitted_keV,y_fitted_keV)]
     def fitting_gamma_rejection_v2(self, dataframe):
         # switch Y axis. Now Q vs per kev and Eion vs per interaction
+
+        dataframe.sort_values(by='Seitz [keV]', inplace=True)
         x_Q = dataframe["Seitz [keV]"].values
         y_per_scatter = dataframe["Rejection Rate Scattering[]"].values
         # dealing with guess
