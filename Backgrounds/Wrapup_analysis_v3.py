@@ -143,7 +143,7 @@ class integrated_analysis():
 
         # self.gamma_rejection_plot_v3()
         # self.gamma_rejection_plot_PSN_v2()
-        # self.gamma_rejection_plot_PSN_v2(rate_cut=True)
+        self.gamma_rejection_plot_PSN_v2(rate_cut=True)
         # self.gamma_rejection_plot_output(pressure_plot=True)
         self.gamma_rejection_plot_output()
 
@@ -1590,7 +1590,7 @@ class integrated_analysis():
         plt.tight_layout()
         plt.savefig(self.plot_path + "Time_stability_updated.pdf")
 
-    def gamma_rejection_plot_PSN_v2(self, rate_cut = False):
+    def gamma_rejection_plot_PSN_v2(self, rate_cut = False, radi_source ="Cs"):
         # print Q vs per keV and Eion per interaction
 
         self.fitting_list = []
@@ -1610,7 +1610,7 @@ class integrated_analysis():
         self.Ba_116_label = ["Ba 11/19/2025 116K"]
 
         for source, source_config in self.gamma_source_group.items():
-            if source == "Cs":
+            if source == radi_source:
                 for temperature, temp_config in source_config["exp"].items():
                     for i in range(len(temp_config["rejection_path"])):
                         df = pd.read_csv(temp_config["rejection_path"][i])
@@ -2111,9 +2111,9 @@ class integrated_analysis():
         plt.tight_layout()
         plt.show()
         if rate_cut==False:
-            plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_PSN_v2.pdf")
+            plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_v2.pdf")
         else:
-            plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_PSN_ratecut_v2.pdf")
+            plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_ratecut_v2.pdf")
 
 
     def interpolate_all_keys_vectorized(self, target_key, target_values, data_dict, extrapolate=False):
@@ -3548,8 +3548,8 @@ class cross_plot_fiducial_volumes():
 
 if __name__=="__main__":
     # IA = integrated_analysis(volume="")
-    # IA =  integrated_analysis(volume="dome")
-    # IA = integrated_analysis(volume="bulk")
+    IA =  integrated_analysis(volume="dome")
+    IA = integrated_analysis(volume="bulk")
     # test = test_csv()
-    plot = cross_plot_fiducial_volumes(pressure_plot=True)
+    # plot = cross_plot_fiducial_volumes(pressure_plot=True)
     # plot = cross_plot_fiducial_volumes(pressure_plot=False)
