@@ -2698,6 +2698,8 @@ class integrated_analysis():
 
                     # Update rate values where condition is met
                     df_combined.loc[cond, rate_col] = upper_limit
+        else:
+            df_combined = df[df["Clean Rate [mHz]"]>0]
         return df_combined
 
     def doped_gamma_rejection_plot(self):
