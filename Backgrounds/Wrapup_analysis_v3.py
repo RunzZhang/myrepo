@@ -1708,6 +1708,9 @@ class integrated_analysis():
 
         # plot the fitting lines
         self.Cs_df = pd.concat(self.Cs_fitting_list, ignore_index=True)
+        print("fit df",self.Cs_df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+                                     "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
+                                     'Clean Rate [mHz]', "Eion [keV]"]])
         # self.Cs_df = self.df_Cs_116_plot
         [result_Q_scatter, result_Q_keV, result_Q_xe, result_Eion_scatter, result_Eion_keV, result_Eion_xe,
          result_Q2_xe, result_Q_rate] = self.fitting_gamma_rejection_v2(self.Cs_df)
