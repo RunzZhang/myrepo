@@ -1636,10 +1636,10 @@ class integrated_analysis():
         self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
 
 
-        self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
-        self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
-        # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
-        # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
+        # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
+        # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
+        self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
+        self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
 
         print("sum Cs 116", self.df_Cs_116_plot[['Seitz [keV]',
                                                  "Rejection Rate KeV[/keV]", "Rejection Sigma KeV[/keV]"]])
