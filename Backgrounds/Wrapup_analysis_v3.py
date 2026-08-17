@@ -17,7 +17,7 @@ class integrated_analysis():
         # self.Cs_sim_path = '/lzdata/runzezhang/result/GR_sims/Cs_output_5E6.pkl'
         self.base_path = "/lzdata/runzezhang/result/GR_sims/"
         self.color_code = {"Cs":"green", "Co": "cyan", "Ba": "orange", "Th":"brown", "Hot_Cs":"gray"}
-        self.N_cut = 0
+        self.N_cut = 5
         self.bkg_uncertainty_cut = {"":0.3, "dome":0.15, "bulk":0.2}
         self.exp_uncertainty_cut = {"":0.3, "dome":0.3, "bulk":0.4}
         self.volume_option =  volume
@@ -203,8 +203,8 @@ class integrated_analysis():
                         exposure_df = exposure_df[
                             (exposure_df['Lifetime [s]'] <= 6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
 
-                        exposure_df = exposure_df[
-                            (exposure_df['Lifetime Error [s]'] / exposure_df['Lifetime [s]'] <= self.exp_uncertainty_cut[self.volume_option])]
+                        # exposure_df = exposure_df[
+                        #     (exposure_df['Lifetime Error [s]'] / exposure_df['Lifetime [s]'] <= self.exp_uncertainty_cut[self.volume_option])]
                         # add rate column
                         exposure_df['Exp Rate [mHz]'] = 1000 / exposure_df['Lifetime [s]']
                         exposure_df['Exp Rate Sigma [mHz]'] = exposure_df['Lifetime Error [s]'] * 1000 / (
@@ -237,8 +237,8 @@ class integrated_analysis():
             exposure_df = exposure_df[
                 (exposure_df['Lifetime [s]'] <= 6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
 
-            exposure_df = exposure_df[
-                (exposure_df['Lifetime Error [s]'] / exposure_df['Lifetime [s]'] <= self.bkg_uncertainty_cut[self.volume_option])]
+            # exposure_df = exposure_df[
+            #     (exposure_df['Lifetime Error [s]'] / exposure_df['Lifetime [s]'] <= self.bkg_uncertainty_cut[self.volume_option])]
 
             exposure_df['Bkg Rate [mHz]'] = 1000 / exposure_df['Lifetime [s]']
             exposure_df['Bkg Rate Sigma [mHz]'] = exposure_df['Lifetime Error [s]'] * 1000 / (
