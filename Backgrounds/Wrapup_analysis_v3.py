@@ -202,6 +202,7 @@ class integrated_analysis():
                         #                        'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]']
                         exposure_df = exposure_df[
                             (exposure_df['Lifetime [s]'] <= 6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
+
                         # exposure_df = exposure_df[
                         #     (exposure_df['Lifetime Error [s]'] / exposure_df['Lifetime [s]'] <= self.exp_uncertainty_cut[self.volume_option])]
                         # add rate column
@@ -235,6 +236,7 @@ class integrated_analysis():
             #                        'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]']
             exposure_df = exposure_df[
                 (exposure_df['Lifetime [s]'] <= 6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
+
             # exposure_df = exposure_df[
             #     (exposure_df['Lifetime Error [s]'] / exposure_df['Lifetime [s]'] <= self.bkg_uncertainty_cut[self.volume_option])]
 
@@ -747,7 +749,7 @@ class integrated_analysis():
                           'Dome Lifetime Error [s]',	'N Bottom',	'Bottom Fraction',	'Bottom Fraction Error',
                           'Bottom Lifetime [s]'	,'Bottom Lifetime Error [s]']
             if volume == "":
-                df = df[df['N quality events']>=5]
+                df = df[df['N quality events']>=self.N_cut]
                 df = df[['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]']]
             elif volume =="bulk":
                 df = df[['Pressure [bara]', 'Bulk Lifetime [s]', 'Bulk Lifetime Error [s]']]
@@ -763,14 +765,14 @@ class integrated_analysis():
             df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]',
                                'Exponential Fit 2xNLL',
                                'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]']
-            df = df[df['N.d.o.f.'] >= 5]
+            df = df[df['N.d.o.f.'] >= self.N_cut]
             df = df[['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]']]
         else:
             df = df.iloc[:, :7]
             df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]',
                           'Exponential Fit 2xNLL',
                           'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]']
-            df = df[df['N.d.o.f.'] >= 5]
+            df = df[df['N.d.o.f.'] >= self.N_cut]
             df = df[['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]']]
             print("Column doesn't match", num_cols)
 
