@@ -1651,6 +1651,10 @@ class integrated_analysis():
         self.df_Cs_116_plot = pd.concat(self.df_Cs_116_plot_list, ignore_index=True)
 
         self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
+
+
+        # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
+        # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
         self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
         self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
 
@@ -2680,7 +2684,7 @@ class integrated_analysis():
         )
         return new_edges, rebinned_counts
 
-    def concat_PT_condition(self, df):
+    def concat_PT_condition(self, df, upperlimit = True):
 
         df_combined = df.groupby(['Pressure [bara]', 'Seitz [keV]', 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]', 'Q_rl-1_rhol-1 [GeVcm**2 g-1]' , 'Eion [keV]'], as_index=False).agg({
             "Clean Rate [mHz]": 'mean',
@@ -2692,6 +2696,25 @@ class integrated_analysis():
             "Rejection Rate Xenon Abs[]": 'mean',
             "Rejection Sigma Xenon Abs[]": lambda x: np.sqrt(np.sum(x ** 2)),
         })
+        if upperlimit:
+            rate_pairs = [
+                ("Clean Rate [mHz]", "Clean Rate Sigma [mHz]"),
+                ("Rejection Rate Scattering[]", "Rejection Sigma Scattering[]"),
+                ("Rejection Rate KeV[/keV]", "Rejection Sigma KeV[/keV]"),
+                ("Rejection Rate Xenon Abs[]", "Rejection Sigma Xenon Abs[]")
+            ]
+
+            # 3. Apply the 95% upper limit condition to each rate column
+            for rate_col, sigma_col in rate_pairs:
+                if rate_col in df_combined.columns and sigma_col in df_combined.columns:
+                    # Condition: rate < 0 OR (rate - sigma) < 0
+                    cond = (df_combined[rate_col] < 0) | ((df_combined[rate_col] - df_combined[sigma_col]) < 0)
+
+                    # Upper Limit = 1.645 * Sigma (using np.maximum to ensure non-negative baseline)
+                    upper_limit = np.maximum(df_combined[rate_col], 0) + 1.645 * df_combined[sigma_col]
+
+                    # Update rate values where condition is met
+                    df_combined.loc[cond, rate_col] = upper_limit
         return df_combined
 
     def doped_gamma_rejection_plot(self):
