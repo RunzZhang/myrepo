@@ -143,7 +143,8 @@ class integrated_analysis():
         #
         # self.gamma_rejection_plot_v3()
         # self.gamma_rejection_plot_PSN_v2()
-        self.gamma_rejection_plot_PSN_v2(rate_cut=True)
+        # self.gamma_rejection_plot_PSN_v2(rate_cut=True)
+        self.gamma_rejection_plot_PSN_v2(rate_cut=True, radi_source="Co")
         # self.gamma_rejection_plot_output(pressure_plot=True)
         # self.gamma_rejection_plot_output()
 
@@ -1577,6 +1578,12 @@ class integrated_analysis():
     def gamma_rejection_plot_PSN_v2(self, rate_cut = False, radi_source ="Cs"):
         # print Q vs per keV and Eion per interaction
 
+        if radi_source=="Cs":
+            rate_factor = 4
+        elif radi_source=="Co":
+            rate_factor = 1/4
+        else:
+            rate_factor  = 1
         self.fitting_list = []
         self.Cs_fitting_list = []
         self.Co_fitting_list = []
@@ -1618,7 +1625,7 @@ class integrated_analysis():
                                      "Rejection Rate KeV[/keV]", "Rejection Sigma KeV[/keV]"]])
                         if rate_cut:
 
-                            df[df_cols_to_divide] = df[df_cols_to_divide]*4
+                            df[df_cols_to_divide] = df[df_cols_to_divide]*rate_factor
                         if temperature=="116K":
                             self.df_Cs_116_plot_list.append(df)
                         elif temperature=="119K":
@@ -1710,7 +1717,7 @@ class integrated_analysis():
 
         # plot the fitting lines
         self.Cs_df = pd.concat(self.Cs_fitting_list, ignore_index=True)
-        
+
         print("fit df",self.Cs_df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                                      "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]', "Rejection Rate Xenon Abs[]",
                                      'Clean Rate [mHz]', "Eion [keV]"]])
