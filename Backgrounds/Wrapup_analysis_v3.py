@@ -2241,6 +2241,7 @@ class integrated_analysis():
         self.df_Cs_116_time_plot=self.df_Cs_116_plot
         # make Cs 116 show just as one series
         self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
+        self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
 
 
 
