@@ -2124,10 +2124,10 @@ class integrated_analysis():
         #compare to Drexel
         plt.tight_layout()
         # plt.show()
-        if rate_cut==False:
-            plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_v2.pdf")
-        else:
-            plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_ratecut_v2.pdf")
+        # if rate_cut==False:
+        #     plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_v2.pdf")
+        # else:
+        #     plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_ratecut_v2.pdf")
         if rate_cut==False:
             plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_v2.png")
         else:
@@ -3250,7 +3250,7 @@ class cross_plot_fiducial_volumes():
         # Automatically adjust subplot spacing to prevent legend overlaps
         plt.tight_layout()
         # plt.show()
-        plt.savefig(self.plot_path+f"volume_rate_comparison_{self.pressure_plot_str}.pdf")
+        # plt.savefig(self.plot_path+f"volume_rate_comparison_{self.pressure_plot_str}.pdf")
         plt.savefig(self.plot_path + f"volume_rate_comparison_{self.pressure_plot_str}.png")
     def temperature_shift_target_estimate(self, plot=False):
 
