@@ -3151,40 +3151,58 @@ class cross_plot_fiducial_volumes():
             self.data_flow["volume_file"].append(loaded_dict)
 
     def plot(self):
-        fig, axes = plt.subplots(1,3,figsize = (23,5))
-        y_config = [{"y": "Rejection Rate Scattering[]", "y_err": "Rejection Sigma Scattering[]",
-                     "ylabel": "Nucleation probability (per interaction) "},
-                    {"y": "Rejection Rate KeV[/keV]", "y_err": "Rejection Sigma KeV[/keV]",
-                     "ylabel": "Probability per energy deposited \n (events/keV) "},
-                    {"y": "Rejection Rate Xenon Abs[]", "y_err": "Rejection Sigma Xenon Abs[]",
-                     "ylabel": "Nucleation probability \n (per xenon photoabsorption in K shell) "},
-                    ]
-        x_config = [{"x": "Seitz [keV]", "xlabel": r"Seitz threshold [keV]"},
-                    {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
-                     "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
-                    {"x": "Q_rl-1_rhol-1 [GeVcm**2 g-1]",
-                     "xlabel": r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
-                    {"x":'Pressure [bara]',"xlabel":'Pressure [bara]'}]
+        # Expanded figure width from 23 to 28 to comfortably fit external legends
+        fig, axes = plt.subplots(1, 3, figsize=(28, 5))
+
+        y_config = [
+            {"y": "Rejection Rate Scattering[]", "y_err": "Rejection Sigma Scattering[]",
+             "ylabel": "Nucleation probability (per interaction) "},
+            {"y": "Rejection Rate KeV[/keV]", "y_err": "Rejection Sigma KeV[/keV]",
+             "ylabel": "Probability per energy deposited \n (events/keV) "},
+            {"y": "Rejection Rate Xenon Abs[]", "y_err": "Rejection Sigma Xenon Abs[]",
+             "ylabel": "Nucleation probability \n (per xenon photoabsorption in K shell) "}
+        ]
+        x_config = [
+            {"x": "Seitz [keV]", "xlabel": r"Seitz threshold [keV]"},
+            {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+             "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
+            {"x": "Q_rl-1_rhol-1 [GeVcm**2 g-1]",
+             "xlabel": r"$Q_{Seitz} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
+            {"x": 'Pressure [bara]', "xlabel": 'Pressure [bara]'}
+        ]
+
         for i in range(len(y_config)):
-
-
             for j in range(len(self.data_flow["volume_file"])):
-
                 temp_data = self.data_flow["volume_file"][j]
                 # plot fitting in bulk or dome
-                axes[i].plot(temp_data["fit"][self.models[i]]["x"],temp_data["fit"][self.models[i]]["y"], label = f"{self.data_flow['volume_name'][j]} fitting")
+                axes[i].plot(
+                    temp_data["fit"][self.models[i]]["x"],
+                    temp_data["fit"][self.models[i]]["y"],
+                    label=f"{self.data_flow['volume_name'][j]} fitting"
+                )
                 # plot data points
                 for k in temp_data["data"][self.models[i]]:
-                    axes[i].errorbar(temp_data["data"][self.models[i]][k]["x"], temp_data["data"][self.models[i]][k]["y"],yerr=temp_data["data"][self.models[i]][k]["y_err"], label=f"{self.data_flow['volume_name'][j]} "+k, fmt='o')
-            if self.pressure_plot:
+                    axes[i].errorbar(
+                        temp_data["data"][self.models[i]][k]["x"],
+                        temp_data["data"][self.models[i]][k]["y"],
+                        yerr=temp_data["data"][self.models[i]][k]["y_err"],
+                        label=f"{self.data_flow['volume_name'][j]} " + k,
+                        fmt='o'
+                    )
 
+            if self.pressure_plot:
                 axes[i].set_xlabel(x_config[3]["xlabel"])
             else:
                 axes[i].set_xlabel(x_config[i]["xlabel"])
+
             axes[i].set_ylabel(y_config[i]["ylabel"])
             axes[i].set_yscale("log")
-            axes[i].legend()
 
+            # Place legend outside the right side of each subplot
+            axes[i].legend(bbox_to_anchor=(1.02, 1.0), loc='upper left', borderaxespad=0.)
+
+        # Automatically adjust subplot spacing to prevent legend overlaps
+        plt.tight_layout()
         plt.show()
         # plt.savefig(self.plot_path+f"volume_rate_comparison_{self.pressure_plot_str}.pdf")
     def temperature_shift_target_estimate(self, plot=False):
