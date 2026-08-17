@@ -1631,7 +1631,8 @@ class integrated_analysis():
                         # only positive rate
                         # df = df[df['Clean Rate [mHz]'] > 0]
 
-                        print("source rate",df)
+                        print("source rate",df[['Seitz [keV]',
+                                     "Rejection Rate KeV[/keV]", "Rejection Sigma KeV[/keV]"]])
                         if rate_cut:
 
                             df[df_cols_to_divide] = df[df_cols_to_divide]*4
