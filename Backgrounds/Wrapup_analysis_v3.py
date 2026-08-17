@@ -1188,41 +1188,41 @@ class integrated_analysis():
         print("ion", data_dict["data"]["ion"][f"Cs 119K"])
         print("phot", data_dict["data"]["phot"][f"Cs 119K"])
 
-        self.fitting_df = pd.concat(self.fitting_list, ignore_index=True)
-        if pressure_plot:
-            fitting_matrix = self.fitting_gamma_rejection_pressure(self.fitting_df, x_config, y_config)
-        else:
-            fitting_matrix = self.fitting_gamma_rejection_v3(self.fitting_df,x_config,y_config)
-
-
-
-        # plot the fitting function
-        for i in range(4):
-            for j in range(3):
-                # Extract the configuration for this specific slot
-                y_cfg = y_config[i]
-                x_cfg = x_config[j]
-                ax_ij = ax[j, i]
-                a_val = fitting_matrix[i][j][0]
-                b_val = fitting_matrix[i][j][1]
-
-                # ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
-                #            color="black")
-                label_text = f"A = {a_val:.2e},\nB = {b_val:.2e}"
-                # ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],label = label_text,
-                #       color="black")
-                ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
-                           color="black", label=label_text)
-                ax_ij.legend(loc='lower left', fontsize=13)
-                if i == 0 and j == 0:
-                    data_dict["fit"]["heat"] = {"x": fitting_matrix[i][j][2],
-                                                                            "y": fitting_matrix[i][j][3],"a_val":a_val, "b_val":b_val}
-                if i == 1 and j == 1:
-                    data_dict["fit"]["ion"] = {"x": fitting_matrix[i][j][2],
-                                                                            "y": fitting_matrix[i][j][3],"a_val":a_val, "b_val":b_val}
-                if i == 2 and j == 2:
-                    data_dict["fit"]["phot"] ={"x": fitting_matrix[i][j][2],
-                                                                            "y": fitting_matrix[i][j][3],"a_val":a_val, "b_val":b_val}
+        # self.fitting_df = pd.concat(self.fitting_list, ignore_index=True)
+        # if pressure_plot:
+        #     fitting_matrix = self.fitting_gamma_rejection_pressure(self.fitting_df, x_config, y_config)
+        # else:
+        #     fitting_matrix = self.fitting_gamma_rejection_v3(self.fitting_df,x_config,y_config)
+        #
+        #
+        #
+        # # plot the fitting function
+        # for i in range(4):
+        #     for j in range(3):
+        #         # Extract the configuration for this specific slot
+        #         y_cfg = y_config[i]
+        #         x_cfg = x_config[j]
+        #         ax_ij = ax[j, i]
+        #         a_val = fitting_matrix[i][j][0]
+        #         b_val = fitting_matrix[i][j][1]
+        #
+        #         # ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
+        #         #            color="black")
+        #         label_text = f"A = {a_val:.2e},\nB = {b_val:.2e}"
+        #         # ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],label = label_text,
+        #         #       color="black")
+        #         ax_ij.plot(fitting_matrix[i][j][2], fitting_matrix[i][j][3],
+        #                    color="black", label=label_text)
+        #         ax_ij.legend(loc='lower left', fontsize=13)
+        #         if i == 0 and j == 0:
+        #             data_dict["fit"]["heat"] = {"x": fitting_matrix[i][j][2],
+        #                                                                     "y": fitting_matrix[i][j][3],"a_val":a_val, "b_val":b_val}
+        #         if i == 1 and j == 1:
+        #             data_dict["fit"]["ion"] = {"x": fitting_matrix[i][j][2],
+        #                                                                     "y": fitting_matrix[i][j][3],"a_val":a_val, "b_val":b_val}
+        #         if i == 2 and j == 2:
+        #             data_dict["fit"]["phot"] ={"x": fitting_matrix[i][j][2],
+        #                                                                     "y": fitting_matrix[i][j][3],"a_val":a_val, "b_val":b_val}
 
         # print("dict", data_dict)
         with open(self.base_path+f"{self.volume_option}_pressureplot_{pressure_plot_str}_output_data.pkl", "wb") as f:
