@@ -2110,10 +2110,10 @@ class integrated_analysis():
         #compare to Drexel
         plt.tight_layout()
         plt.show()
-        if rate_cut==False:
-            plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_v2.pdf")
-        else:
-            plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_ratecut_v2.pdf")
+        # if rate_cut==False:
+        #     plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_v2.pdf")
+        # else:
+        #     plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_ratecut_v2.pdf")
 
 
     def interpolate_all_keys_vectorized(self, target_key, target_values, data_dict, extrapolate=False):
