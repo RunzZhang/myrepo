@@ -2705,6 +2705,7 @@ class integrated_analysis():
 
                     # Update rate values where condition is met
                     df_combined.loc[cond, rate_col] = upper_limit
+            df_combined = df_combined[df_combined["Clean Rate [mHz]"] > 0]
         else:
             df_combined = df_combined[df_combined["Clean Rate [mHz]"]>0]
         return df_combined
