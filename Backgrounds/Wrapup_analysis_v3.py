@@ -1074,8 +1074,8 @@ class integrated_analysis():
 
         for source, source_config in self.gamma_source_group.items():
             # if source != "Ba" and source != "Th":
-            if source =="Cs" or source =="Co":
-            # if source != "Ba":
+            # if source =="Cs" or source =="Co":
+            if source != "Ba":
 
             # read_source exp data
                 for temperature, temp_config in source_config["exp"].items():
@@ -3177,19 +3177,20 @@ class cross_plot_fiducial_volumes():
             for j in range(len(self.data_flow["volume_file"])):
                 temp_data = self.data_flow["volume_file"][j]
                 # plot fitting in bulk or dome
-                axes[i].plot(
-                    temp_data["fit"][self.models[i]]["x"],
-                    temp_data["fit"][self.models[i]]["y"],
-                    label=f"{self.data_flow['volume_name'][j]} fitting")
+                # axes[i].plot(
+                #     temp_data["fit"][self.models[i]]["x"],
+                #     temp_data["fit"][self.models[i]]["y"],
+                #     label=f"{self.data_flow['volume_name'][j]} fitting")
                 # plot data points
                 for k in temp_data["data"][self.models[i]]:
-                    axes[i].errorbar(
-                        temp_data["data"][self.models[i]][k]["x"],
-                        temp_data["data"][self.models[i]][k]["y"],
-                        yerr=temp_data["data"][self.models[i]][k]["y_err"],
-                        label=f"{self.data_flow['volume_name'][j]} " + k,
-                        fmt= self.dot_style[j]
-                    )
+                    if k== "Cs" or k=="Co":
+                        axes[i].errorbar(
+                            temp_data["data"][self.models[i]][k]["x"],
+                            temp_data["data"][self.models[i]][k]["y"],
+                            yerr=temp_data["data"][self.models[i]][k]["y_err"],
+                            label=f"{self.data_flow['volume_name'][j]} " + k,
+                            fmt= self.dot_style[j]
+                        )
 
             if self.pressure_plot:
                 axes[i].set_xlabel(x_config[3]["xlabel"])
