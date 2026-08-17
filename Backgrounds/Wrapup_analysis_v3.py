@@ -1732,7 +1732,7 @@ class integrated_analysis():
         SBC_Eion_list = result_Eion_keV[2]
         SBC_Q_kev_fitting = (result_Q_keV[0],result_Q_keV[1])
         SBC_Q_xe_fitting = (result_Q_xe[0], result_Q_xe[1])
-        print("fitting  SBC_Q_kev_fitting", SBC_Q_kev_fitting, SBC_Q_kev_fitting[2], SBC_Q_kev_fitting[3])
+        print("fitting  SBC_Q_kev_fitting", SBC_Q_kev_fitting, result_Q_keV[2], result_Q_keV[3])
         print("fitting SBC_Q_xe_fitting ", SBC_Q_xe_fitting )
 
         print("fitting  SBC_Eion_kev_fitting", result_Eion_keV)
