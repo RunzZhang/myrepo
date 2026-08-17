@@ -200,8 +200,8 @@ class integrated_analysis():
                         # exposure_df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]',
                         #                        'Exponential Fit 2xNLL',
                         #                        'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]']
-                        exposure_df = exposure_df[
-                            (exposure_df['Lifetime [s]'] <= 6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
+                        # exposure_df = exposure_df[
+                        #     (exposure_df['Lifetime [s]'] <= 6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
 
                         # exposure_df = exposure_df[
                         #     (exposure_df['Lifetime Error [s]'] / exposure_df['Lifetime [s]'] <= self.exp_uncertainty_cut[self.volume_option])]
@@ -234,8 +234,8 @@ class integrated_analysis():
             exposure_df = self.read_exposure(self.background_group["total"]["raw_path"][i] + ".txt", volume=self.volume_option)
             # exposure_df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]', 'Exponential Fit 2xNLL',
             #                        'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]']
-            exposure_df = exposure_df[
-                (exposure_df['Lifetime [s]'] <= 6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
+            # exposure_df = exposure_df[
+            #     (exposure_df['Lifetime [s]'] <= 6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
 
             # exposure_df = exposure_df[
             #     (exposure_df['Lifetime Error [s]'] / exposure_df['Lifetime [s]'] <= self.bkg_uncertainty_cut[self.volume_option])]
