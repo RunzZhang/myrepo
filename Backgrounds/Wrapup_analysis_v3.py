@@ -1631,7 +1631,7 @@ class integrated_analysis():
                         # only positive rate
                         # df = df[df['Clean Rate [mHz]'] > 0]
 
-                        print("source rate",df[['Seitz [keV]',
+                        print("source rate",source,temperature,df[['Seitz [keV]',
                                      "Rejection Rate KeV[/keV]", "Rejection Sigma KeV[/keV]"]])
                         if rate_cut:
 
