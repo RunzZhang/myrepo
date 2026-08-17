@@ -1641,6 +1641,8 @@ class integrated_analysis():
         self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
         self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
 
+
+
         print("sum Cs 116", self.df_Cs_116_plot[['Seitz [keV]',
                                                  "Rejection Rate KeV[/keV]", "Rejection Sigma KeV[/keV]"]])
 
@@ -1705,7 +1707,7 @@ class integrated_analysis():
         secax0.spines['right'].set_color("blue")
 
         # plot the fitting lines
-        self.Cs_df = pd.concat(self.Cs_fitting_list, ignore_index=True)
+        self.Cs_df = pd.concat([self.df_Cs_116_plot,self.df_Cs_119_plot], ignore_index=True)
         [result_Q_scatter, result_Q_keV, result_Q_xe, result_Eion_scatter, result_Eion_keV, result_Eion_xe,
          result_Q2_xe, result_Q_rate] = self.fitting_gamma_rejection_v2(self.Cs_df)
 
