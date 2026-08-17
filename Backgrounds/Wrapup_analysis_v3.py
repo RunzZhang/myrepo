@@ -1235,7 +1235,8 @@ class integrated_analysis():
 
         for source, source_config in self.gamma_source_group.items():
             # if source != "Ba" and source != "Th":
-            if source != "Ba":
+            # if source != "Ba":
+            if True:
             # read_source exp data
                 for temperature, temp_config in source_config["exp"].items():
                     if temp_config["rejection_path"] !=[]:
