@@ -141,11 +141,11 @@ class integrated_analysis():
         self.bkg_subtracted_analysis()
         # self.bkg_subtracted_analysis(plot=True)
         #
-        self.gamma_rejection_plot_v3()
+        # self.gamma_rejection_plot_v3()
         # self.gamma_rejection_plot_PSN_v2()
         # self.gamma_rejection_plot_PSN_v2(rate_cut=True)
         # self.gamma_rejection_plot_PSN_v2(rate_cut=True, radi_source="Co",plot_fitting=False)
-        # self.gamma_rejection_plot_output(pressure_plot=True)
+        self.gamma_rejection_plot_output(pressure_plot=True)
         # self.gamma_rejection_plot_output()
 
 
@@ -3587,8 +3587,8 @@ class cross_plot_fiducial_volumes():
 
 if __name__=="__main__":
     # IA = integrated_analysis(volume="")
-    # IA =  integrated_analysis(volume="dome")
+    IA =  integrated_analysis(volume="dome")
     IA = integrated_analysis(volume="bulk")
     # test = test_csv()
-    # plot = cross_plot_fiducial_volumes(pressure_plot=True)
+    plot = cross_plot_fiducial_volumes(pressure_plot=True)
     # plot = cross_plot_fiducial_volumes(pressure_plot=False)
