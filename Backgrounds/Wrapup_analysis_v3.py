@@ -1643,10 +1643,10 @@ class integrated_analysis():
         self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
 
 
-        # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
-        # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
-        self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
-        self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
+        self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
+        self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
+        # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
+        # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
 
         self.Cs_fitting_list = [self.df_Cs_116_plot,self.df_Cs_119_plot]
 
@@ -2713,8 +2713,8 @@ class integrated_analysis():
             for rate_col, sigma_col in rate_pairs:
                 if rate_col in df_combined.columns and sigma_col in df_combined.columns:
                     # Condition: rate < 0 OR (rate - sigma) < 0
+                    # cond = (df_combined[rate_col] < 0) | ((df_combined[rate_col] - df_combined[sigma_col]) < 0)
                     cond = (df_combined[rate_col] < 0) | ((df_combined[rate_col] - df_combined[sigma_col]) < 0)
-
                     # Upper Limit = 1.645 * Sigma (using np.maximum to ensure non-negative baseline)
                     upper_limit = df_combined[rate_col] + 1.645 * df_combined[sigma_col]
 
