@@ -144,7 +144,7 @@ class integrated_analysis():
         # self.gamma_rejection_plot_v3()
         # self.gamma_rejection_plot_PSN_v2()
         # self.gamma_rejection_plot_PSN_v2(rate_cut=True)
-        self.gamma_rejection_plot_PSN_v2(rate_cut=True, radi_source="Co")
+        self.gamma_rejection_plot_PSN_v2(rate_cut=True, radi_source="Co",plot_fitting=False)
         # self.gamma_rejection_plot_output(pressure_plot=True)
         # self.gamma_rejection_plot_output()
 
@@ -1575,7 +1575,7 @@ class integrated_analysis():
         plt.tight_layout()
         plt.savefig(self.plot_path + "Time_stability_updated.pdf")
 
-    def gamma_rejection_plot_PSN_v2(self, rate_cut = False, radi_source ="Cs"):
+    def gamma_rejection_plot_PSN_v2(self, rate_cut = False, radi_source ="Cs", plot_fitting= True):
         # print Q vs per keV and Eion per interaction
 
         if radi_source=="Cs":
@@ -1817,8 +1817,8 @@ class integrated_analysis():
             label="PICO (C$_3$F$_8$)")
 
 
-
-        ax[0,0].plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
+        if plot_fitting:
+            ax[0,0].plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
 
         # fitting parameter
 
@@ -2016,8 +2016,8 @@ class integrated_analysis():
             color="red",
             alpha=0.3,
             label="PICO (C$_3$F$_8$)")
-
-        ax[0, 1].plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
+        if plot_fitting:
+            ax[0, 1].plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
 
         # ax[0, 1].legend(loc='lower left', fontsize=16, title=" ", title_fontsize=15, frameon=False)
         ax[0, 1].legend(loc='upper right', fontsize=16, frameon=False,borderaxespad=0,  # Eliminates space between legend and upper/right boundary
@@ -2047,7 +2047,8 @@ class integrated_analysis():
             markersize=8,
             color="tab:green"
         )
-        ax[1, 0].plot(result_Eion_keV[2], result_Eion_keV[3], label="SBC Best Fit", color="black")
+        if plot_fitting:
+            ax[1, 0].plot(result_Eion_keV[2], result_Eion_keV[3], label="SBC Best Fit", color="black")
 
 
         # pICO result
@@ -2094,7 +2095,8 @@ class integrated_analysis():
             markersize=8,
             color="tab:green"
         )
-        ax[1, 1].plot(result_Q2_xe[2], result_Q2_xe[3], label="SBC Best Fit", color="black")
+        if plot_fitting:
+            ax[1, 1].plot(result_Q2_xe[2], result_Q2_xe[3], label="SBC Best Fit", color="black")
 
         A = 58  # 0.017
         B = 0.287  # 0.037
@@ -2930,7 +2932,7 @@ class integrated_analysis():
     def fitting_gamma_rejection_v2(self, dataframe):
         # switch Y axis. Now Q vs per kev and Eion vs per interaction
 
-        dataframe.sort_values(by='Seitz [keV]', inplace=True)
+        # dataframe.sort_values(by='Seitz [keV]', inplace=True)
         x_Q = dataframe["Seitz [keV]"].values
         y_per_scatter = dataframe["Rejection Rate Scattering[]"].values
         # dealing with guess
