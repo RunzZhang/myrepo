@@ -1694,7 +1694,7 @@ class integrated_analysis():
         # Set main (left) y-axis and x-axis labels
         ax[0,0].set_xlabel(r"Seitz threshold [keV]", fontsize=16)
         ax[0,0].set_xlim(0.50, 2.8)
-        ax[0,0].set_ylim(1e-12, 1e-4)
+        ax[0,0].set_ylim(2e-11, 1e-4)
         ax[0,0].set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
         ax[0,0].set_yscale("log")
         ax[0,0].yaxis.label.set_color("red")
@@ -1924,7 +1924,7 @@ class integrated_analysis():
         # Set main (left) y-axis and x-axis labels
         ax[0, 1].set_xlabel(r"Seitz threshold [keV]", fontsize=16)
         ax[0, 1].set_xlim(0.50, 2.8)
-        ax[0, 1].set_ylim(1e-12, 1e-4)
+        ax[0, 1].set_ylim(2e-11, 1e-4)
         ax[0, 1].set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
         ax[0, 1].set_yscale("log")
         ax[0, 1].yaxis.label.set_color("red")
@@ -2067,7 +2067,7 @@ class integrated_analysis():
         # Set main (left) y-axis and x-axis labels
         ax[1, 0].set_xlabel(r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]", fontsize=16)
         ax[1, 0].set_xlim(0.7, 1.5)
-        ax[1, 0].set_ylim(1e-12, 1e-5)
+        ax[1, 0].set_ylim(2e-11, 1e-5)
         ax[1, 0].set_ylabel("Probability per energy deposited [events/keV] ", fontsize=16)
         ax[1, 0].set_yscale("log")
         ax[1, 0].tick_params(axis='y',  which='both')  # 'both' colors major & minor ticks
