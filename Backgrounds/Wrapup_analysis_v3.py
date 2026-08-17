@@ -2128,6 +2128,10 @@ class integrated_analysis():
             plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_v2.pdf")
         else:
             plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_ratecut_v2.pdf")
+        if rate_cut==False:
+            plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_v2.png")
+        else:
+            plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_ratecut_v2.png")
 
 
     def interpolate_all_keys_vectorized(self, target_key, target_values, data_dict, extrapolate=False):
@@ -3247,6 +3251,7 @@ class cross_plot_fiducial_volumes():
         plt.tight_layout()
         # plt.show()
         plt.savefig(self.plot_path+f"volume_rate_comparison_{self.pressure_plot_str}.pdf")
+        plt.savefig(self.plot_path + f"volume_rate_comparison_{self.pressure_plot_str}.png")
     def temperature_shift_target_estimate(self, plot=False):
 
 
@@ -3590,5 +3595,5 @@ if __name__=="__main__":
     # IA =  integrated_analysis(volume="dome")
     IA = integrated_analysis(volume="bulk")
     # test = test_csv()
-    # plot = cross_plot_fiducial_volumes(pressure_plot=True)
+    plot = cross_plot_fiducial_volumes(pressure_plot=True)
     # plot = cross_plot_fiducial_volumes(pressure_plot=False)
