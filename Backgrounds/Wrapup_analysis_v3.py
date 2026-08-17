@@ -3206,8 +3206,8 @@ class cross_plot_fiducial_volumes():
 
         # Automatically adjust subplot spacing to prevent legend overlaps
         plt.tight_layout()
-        plt.show()
-        # plt.savefig(self.plot_path+f"volume_rate_comparison_{self.pressure_plot_str}.pdf")
+        # plt.show()
+        plt.savefig(self.plot_path+f"volume_rate_comparison_{self.pressure_plot_str}.pdf")
     def temperature_shift_target_estimate(self, plot=False):
 
 
