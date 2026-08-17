@@ -3183,6 +3183,7 @@ class cross_plot_fiducial_volumes():
                 #     label=f"{self.data_flow['volume_name'][j]} fitting")
                 # plot data points
                 for k in temp_data["data"][self.models[i]]:
+                    print(k)
                     if k== "Cs" or k=="Co":
                         axes[i].errorbar(
                             temp_data["data"][self.models[i]][k]["x"],
@@ -3547,8 +3548,8 @@ class cross_plot_fiducial_volumes():
 
 if __name__=="__main__":
     # IA = integrated_analysis(volume="")
-    IA =  integrated_analysis(volume="dome")
-    IA = integrated_analysis(volume="bulk")
+    # IA =  integrated_analysis(volume="dome")
+    # IA = integrated_analysis(volume="bulk")
     # test = test_csv()
     plot = cross_plot_fiducial_volumes(pressure_plot=True)
     # plot = cross_plot_fiducial_volumes(pressure_plot=False)
