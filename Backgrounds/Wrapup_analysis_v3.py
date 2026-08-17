@@ -1319,7 +1319,7 @@ class integrated_analysis():
 
                 ax_ij.set_xlabel(x_cfg["xlabel"],fontsize=16)
                 ax_ij.set_ylabel(y_cfg["ylabel"],fontsize=16)
-                ax_ij.set_yscale("log")
+                # ax_ij.set_yscale("log")
                 ax_ij.legend(loc='lower left', fontsize=13)
 
 
