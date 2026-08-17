@@ -3526,9 +3526,9 @@ class cross_plot_fiducial_volumes():
 
 
 if __name__=="__main__":
-    IA = integrated_analysis(volume="")
+    # IA = integrated_analysis(volume="")
     IA =  integrated_analysis(volume="dome")
     IA = integrated_analysis(volume="bulk")
     # test = test_csv()
-    # plot = cross_plot_fiducial_volumes(pressure_plot=True)
+    plot = cross_plot_fiducial_volumes(pressure_plot=True)
     # plot = cross_plot_fiducial_volumes(pressure_plot=False)
