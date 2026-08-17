@@ -1342,9 +1342,9 @@ class integrated_analysis():
 
         # plt.show()
         if uplimit:
-            plt.savefig(self.plot_path + f"gamma_rejection_{self.volume_option}v3.pdf")
-        else:
             plt.savefig(self.plot_path + f"gamma_rejection_{self.volume_option}_uplimitv3.pdf")
+        else:
+            plt.savefig(self.plot_path + f"gamma_rejection_{self.volume_option}_v3.pdf")
 
         plt.clf()
         # self.Qseitz_compound_xe_plot()
