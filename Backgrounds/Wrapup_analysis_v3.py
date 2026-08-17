@@ -3183,8 +3183,8 @@ class cross_plot_fiducial_volumes():
                 #     label=f"{self.data_flow['volume_name'][j]} fitting")
                 # plot data points
                 for k in temp_data["data"][self.models[i]]:
-                    print(k)
-                    if k== "Cs" or k=="Co":
+                    # print(k)
+                    if ("Cs" in k) or ("Co" in k):
                         axes[i].errorbar(
                             temp_data["data"][self.models[i]][k]["x"],
                             temp_data["data"][self.models[i]][k]["y"],
