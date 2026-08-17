@@ -2694,7 +2694,7 @@ class integrated_analysis():
                     cond = (df_combined[rate_col] < 0) | ((df_combined[rate_col] - df_combined[sigma_col]) < 0)
 
                     # Upper Limit = 1.645 * Sigma (using np.maximum to ensure non-negative baseline)
-                    upper_limit = np.maximum(df_combined[rate_col], 0) + 1.645 * df_combined[sigma_col]
+                    upper_limit = df_combined[rate_col] + 1.645 * df_combined[sigma_col]
 
                     # Update rate values where condition is met
                     df_combined.loc[cond, rate_col] = upper_limit
