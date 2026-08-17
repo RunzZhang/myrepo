@@ -144,8 +144,8 @@ class integrated_analysis():
         # self.gamma_rejection_plot_v3()
         # self.gamma_rejection_plot_PSN_v2()
         # self.gamma_rejection_plot_PSN_v2(rate_cut=True)
-        self.gamma_rejection_plot_output(pressure_plot=True)
-        # self.gamma_rejection_plot_output()
+        # self.gamma_rejection_plot_output(pressure_plot=True)
+        self.gamma_rejection_plot_output()
 
 
 
@@ -1074,8 +1074,9 @@ class integrated_analysis():
 
         for source, source_config in self.gamma_source_group.items():
             # if source != "Ba" and source != "Th":
-            # if source =="Cs":
-            if source != "Ba":
+            if source =="Cs" or source =="Co":
+            # if source != "Ba":
+
             # read_source exp data
                 for temperature, temp_config in source_config["exp"].items():
                     if temp_config["rejection_path"] !=[]:
@@ -3176,10 +3177,10 @@ class cross_plot_fiducial_volumes():
             for j in range(len(self.data_flow["volume_file"])):
                 temp_data = self.data_flow["volume_file"][j]
                 # plot fitting in bulk or dome
-                # axes[i].plot(
-                #     temp_data["fit"][self.models[i]]["x"],
-                #     temp_data["fit"][self.models[i]]["y"],
-                #     label=f"{self.data_flow['volume_name'][j]} fitting")
+                axes[i].plot(
+                    temp_data["fit"][self.models[i]]["x"],
+                    temp_data["fit"][self.models[i]]["y"],
+                    label=f"{self.data_flow['volume_name'][j]} fitting")
                 # plot data points
                 for k in temp_data["data"][self.models[i]]:
                     axes[i].errorbar(
