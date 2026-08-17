@@ -17,6 +17,7 @@ class integrated_analysis():
         # self.Cs_sim_path = '/lzdata/runzezhang/result/GR_sims/Cs_output_5E6.pkl'
         self.base_path = "/lzdata/runzezhang/result/GR_sims/"
         self.color_code = {"Cs":"green", "Co": "cyan", "Ba": "orange", "Th":"brown", "Hot_Cs":"gray"}
+        self.N_cut = 5
         self.bkg_uncertainty_cut = {"":0.3, "dome":0.15, "bulk":0.2}
         self.exp_uncertainty_cut = {"":0.3, "dome":0.3, "bulk":0.4}
         self.volume_option =  volume
@@ -134,11 +135,14 @@ class integrated_analysis():
         # self.average_background_analysis()
         #
         #
-        self.bkg_subtracted_analysis()
+
+        self.bkg_subtracted_analysis(plot=False, upperlimit=True)
+        self.gamma_rejection_plot_v3(uplimit=True)
+        # self.bkg_subtracted_analysis()
         # self.bkg_subtracted_analysis(plot=True)
 
         # self.gamma_rejection_plot_v3()
-        self.gamma_rejection_plot_PSN_v2()
+        # self.gamma_rejection_plot_PSN_v2()
         # self.gamma_rejection_plot_PSN_v2(rate_cut=True)
         # self.gamma_rejection_plot_output(pressure_plot=True)
         # self.gamma_rejection_plot_output()
@@ -198,8 +202,8 @@ class integrated_analysis():
                         #                        'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]']
                         exposure_df = exposure_df[
                             (exposure_df['Lifetime [s]'] <= 6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
-                        exposure_df = exposure_df[
-                            (exposure_df['Lifetime Error [s]'] / exposure_df['Lifetime [s]'] <= self.exp_uncertainty_cut[self.volume_option])]
+                        # exposure_df = exposure_df[
+                        #     (exposure_df['Lifetime Error [s]'] / exposure_df['Lifetime [s]'] <= self.exp_uncertainty_cut[self.volume_option])]
                         # add rate column
                         exposure_df['Exp Rate [mHz]'] = 1000 / exposure_df['Lifetime [s]']
                         exposure_df['Exp Rate Sigma [mHz]'] = exposure_df['Lifetime Error [s]'] * 1000 / (
@@ -231,8 +235,9 @@ class integrated_analysis():
             #                        'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]']
             exposure_df = exposure_df[
                 (exposure_df['Lifetime [s]'] <= 6.92e-1) | (exposure_df['Lifetime [s]'] >= 6.94e-1)]
-            exposure_df = exposure_df[
-                (exposure_df['Lifetime Error [s]'] / exposure_df['Lifetime [s]'] <= self.bkg_uncertainty_cut[self.volume_option])]
+            # exposure_df = exposure_df[
+            #     (exposure_df['Lifetime Error [s]'] / exposure_df['Lifetime [s]'] <= self.bkg_uncertainty_cut[self.volume_option])]
+
             exposure_df['Bkg Rate [mHz]'] = 1000 / exposure_df['Lifetime [s]']
             exposure_df['Bkg Rate Sigma [mHz]'] = exposure_df['Lifetime Error [s]'] * 1000 / (
                 exposure_df['Lifetime [s]']) ** 2
@@ -366,7 +371,7 @@ class integrated_analysis():
         result_df_119_full_info.to_csv(self.Bkg_average_119_full_info_path, index=False)
 
 
-    def bkg_subtracted_analysis(self, plot=False):
+    def bkg_subtracted_analysis(self, plot=False, upperlimit= False):
         self.df_bkg_116 = pd.read_csv(self.background_group["116K"]["average_path"])
         print("bkg 116", self.df_bkg_116)
         # self.df_bkg_116.columns = ['Pressure [bara]','Bkg Lifetime [s]','Bkg Lifetime Error [s]','Bkg Rate [mHz]', 'Bkg Rate Sigma [mHz]']
@@ -414,8 +419,22 @@ class integrated_analysis():
                             merged_df['Clean Rate Sigma [mHz]'] = np.sqrt(
                                 merged_df['Exp Rate Sigma [mHz]'] ** 2 + merged_df['Bkg Rate Sigma [mHz]'] ** 2)
 
+                            if upperlimit:
+                                condition = (merged_df['Clean Rate [mHz]']<0) | (merged_df['Clean Rate [mHz]']-merged_df['Clean Rate Sigma [mHz]']<0)
+                                # 1. Option A: Calculate standard 1-sided Gaussian 95% Upper Limit (Rate + 1.645 * Sigma)
+                                # For rate < 0, setting negative rates to 0 before calculating bound prevents unphysical bounds
+                                bounded_rate = np.maximum(merged_df['Clean Rate [mHz]'], 0)
+                                merged_df.loc[condition, 'Upper Limit [mHz]'] = bounded_rate + 1.645 * \
+                                                                                    merged_df.loc[
+                                                                                        condition, 'Clean Rate Sigma [mHz]']
 
-                            merged_df =  merged_df[merged_df['Clean Rate [mHz]']>0]
+                                # 2. Assign the standard central value for non-upper limit points
+                                merged_df.loc[~condition, 'Upper Limit [mHz]'] = merged_df.loc[
+                                    ~condition, 'Clean Rate [mHz]']
+                            else:
+
+                                merged_df =  merged_df[merged_df['Clean Rate [mHz]']>0]
+
                             # add Seitz and Eion unit
                             if temperature =="116K":
                                 merged_df = pd.merge(merged_df, self.df_energy_116_tab, on='Pressure [bara]', how="inner")
@@ -438,8 +457,11 @@ class integrated_analysis():
 
                             exp_df = pd.read_csv(temp_config["rate_path"][sorted_path_index])
 
-                            columns_added = exp_df.apply(self.calculate_rejection_by_row_v2, axis=1, args=(source,))
 
+                            if upperlimit:
+                                columns_added = exp_df.apply(self.calculate_rejection_by_row_uplimit, axis=1, args=(source,))
+                            else:
+                                columns_added = exp_df.apply(self.calculate_rejection_by_row_v2, axis=1, args=(source,))
 
 
                             merged_df_rejection = pd.concat([exp_df, columns_added], axis=1)
@@ -725,6 +747,7 @@ class integrated_analysis():
                           'Dome Lifetime Error [s]',	'N Bottom',	'Bottom Fraction',	'Bottom Fraction Error',
                           'Bottom Lifetime [s]'	,'Bottom Lifetime Error [s]']
             if volume == "":
+                df = df[df['N quality events']>=5]
                 df = df[['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]']]
             elif volume =="bulk":
                 df = df[['Pressure [bara]', 'Bulk Lifetime [s]', 'Bulk Lifetime Error [s]']]
@@ -736,15 +759,18 @@ class integrated_analysis():
                 df = df[['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]']]
 
         elif num_cols ==7:
+
             df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]',
                                'Exponential Fit 2xNLL',
                                'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]']
+            df = df[df['N.d.o.f.'] >= 5]
             df = df[['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]']]
         else:
             df = df.iloc[:, :7]
             df.columns = ['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]',
                           'Exponential Fit 2xNLL',
                           'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]']
+            df = df[df['N.d.o.f.'] >= 5]
             df = df[['Pressure [bara]', 'Lifetime [s]', 'Lifetime Error [s]']]
             print("Column doesn't match", num_cols)
 
@@ -924,7 +950,115 @@ class integrated_analysis():
               "Xe abs Rate[mHz]: ", self.Rate_factor_doped * self.counts_cum_bin_doped[0])
         return output
 
+    def calculate_rejection_by_row_uplimit(self, row, source):
+        try:
 
+            self.sim_list = self.gamma_source_group[source]["sim"]["pure_data"]
+            self.sim_doped_list = self.gamma_source_group[source]["sim"]["doped_data"]
+        except:
+            print("NA sources")
+
+
+        self.Rate_factor = self.sim_list[0]
+
+        # print("self.Rate_factor",self.Rate_factor)
+        self.energy_edges = self.sim_list[1][0][1]
+        # print("self.energy_edges", self.energy_edges)
+        self.counts_cum_bin = self.sim_list[2]
+        # print("self.counts_cum_bin", self.counts_cum_bin)
+        self.counts_energy_cum_bin = self.sim_list[6]
+        # print("self.counts_energy_cum_bin", self.counts_energy_cum_bin)
+        rejection_PS = 0
+        rejection_PS_sigma = 0
+        rejection_PK = 0
+        rejection_PK_sigma = 0
+        rejection_uplimit_PS = 0
+        rejection_uplimit_PK = 0
+        for i in range(len(self.energy_edges)):
+            if row['Seitz [keV]'] >= self.energy_edges[i]:
+                # rejection per scattering, PS meaning perscattering
+                counts = self.counts_cum_bin[i] + (row['Seitz [keV]'] - self.energy_edges[i]) * (
+                        self.counts_cum_bin[i + 1] -
+                        self.counts_cum_bin[i]) / (
+                                 self.energy_edges[i + 1] - self.energy_edges[i])
+                rate_PS = self.Rate_factor * (counts)
+
+                rate_PS_sigma = rate_PS / np.sqrt(counts)
+
+                rejection_PS = row['Upper Limit [mHz]'] / rate_PS
+                # rejection_uplimit_PS = row['Bkg Rate Sigma [mHz]']/rate_PS
+
+                # will be returned
+                rejection_PS_sigma = np.sqrt(
+                    (row['Clean Rate Sigma [mHz]'] / rate_PS) ** 2 + (
+                                row['Upper Limit [mHz]'] * rate_PS_sigma / rate_PS ** 2) ** 2)
+                # will be returned
+                break
+        for i in range(len(self.energy_edges)):
+            if row['Eion [keV]'] >= self.energy_edges[i]:
+                counts_times_keV = self.counts_energy_cum_bin[0]  # all energy
+                counts_Eion = self.counts_cum_bin[i] + (row['Eion [keV]'] - self.energy_edges[i]) * (
+                        self.counts_cum_bin[i + 1] -
+                        self.counts_cum_bin[i]) / (
+                                      self.energy_edges[i + 1] - self.energy_edges[i])
+
+                rate_PK = self.Rate_factor * (counts_times_keV)
+                rate_PK_sigma = rate_PK / np.sqrt(counts_Eion)
+                rejection_PK = row['Upper Limit [mHz]'] / rate_PK
+
+                rejection_PK_sigma = np.sqrt(
+                    (row['Clean Rate Sigma [mHz]'] / rate_PK) ** 2 + (
+                                row['Upper Limit [mHz]'] * rate_PK_sigma / rate_PK ** 2) ** 2)
+                # rejection_uplimit_PK = row['Bkg Rate Sigma [mHz]'] / rate_PK
+                break
+        # for xenon k shell absorption
+        # only counts interactions that > 34.56 keV
+        self.Rate_factor_doped = self.sim_doped_list[0]
+        # print("self.Rate_factor",self.Rate_factor)
+        self.energy_edges_doped = self.sim_doped_list[1][0][1]
+        # print("self.energy_edges", self.energy_edges)
+        self.counts_cum_bin_doped = self.sim_doped_list[2]
+        # print("self.counts_cum_bin", self.counts_cum_bin)
+        self.counts_energy_cum_bin_doped = self.sim_doped_list[3]
+        rejection_PX = 0
+        rejection_PX_sigma = 0
+        energy_K = 34.56
+
+        for i in range(len(self.energy_edges_doped)):
+            # if row['Seitz [keV]']>= self.energy_edges[i]:
+            #     # rejection per xenon photo absorption in k shell, PX meaning per xenon
+            #     counts = self.counts_cum_bin[i] + (row['Seitz [keV]'] - self.energy_edges[i]) * (
+            #             self.counts_cum_bin[i + 1] -
+            #             self.counts_cum_bin[i]) / (
+            #                      self.energy_edges[i + 1] - self.energy_edges[i])
+            if self.energy_edges_doped[i] >= self.xe_shell_threshold:
+                counts = self.counts_cum_bin_doped[i]
+
+                rate_PX = self.Rate_factor_doped * (counts)
+
+                rate_PX_sigma = rate_PX / np.sqrt(counts)
+
+                rejection_PX = row['Upper Limit [mHz]'] / rate_PX
+                # rejection_uplimit_PX = row['Bkg Rate Sigma [mHz]']/rate_PX
+
+                # will be returned
+                rejection_PX_sigma = np.sqrt(
+                    (row['Clean Rate Sigma [mHz]'] / rate_PX) ** 2 + (
+                                row['Upper Limit [mHz]'] * rate_PX_sigma / rate_PX ** 2) ** 2)
+                # will be returned
+                break
+        output = pd.Series({"Rejection Rate Scattering[]": rejection_PS,
+                            "Rejection Sigma Scattering[]": rejection_PS_sigma,
+                            "Rejection Rate KeV[/keV]": rejection_PK,
+                            "Rejection Sigma KeV[/keV]": rejection_PK_sigma,
+                            "Rejection Rate Xenon Abs[]": rejection_PX,
+                            "Rejection Sigma Xenon Abs[]": rejection_PX_sigma,
+                            })
+
+        print("source", source, "Rate[mHz]:", self.Rate_factor * self.counts_cum_bin[0], "Energy deposit [keV]",
+              self.Rate_factor * self.counts_energy_cum_bin[0],
+              "Xe abs Rate[mHz]: ", self.Rate_factor_doped * self.counts_cum_bin_doped[0])
+        return output
     def gamma_rejection_plot_output(self, pressure_plot=False):
         pressure_plot_str= str(pressure_plot)
 
@@ -1090,7 +1224,7 @@ class integrated_analysis():
         print("saved")
 
 
-    def gamma_rejection_plot_v3(self):
+    def gamma_rejection_plot_v3(self,uplimit = False):
 
         self.fitting_list = []
         self.Cs_fitting_list = []
@@ -1115,7 +1249,7 @@ class integrated_analysis():
                                 pressure_drop_list = []
                                 df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
                                 # only positive rate
-                                df = df[df['Clean Rate [mHz]'] > 0]
+                                # df = df[df['Clean Rate [mHz]'] > 0]
                                 temp_config["plot_list"].append(df)
 
                                 df_fit = df[['Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
@@ -1207,7 +1341,10 @@ class integrated_analysis():
                 ax_ij.legend(loc='lower left', fontsize=13)
 
         # plt.show()
-        plt.savefig(self.plot_path + f"gamma_rejection_{self.volume_option}v3.pdf")
+        if uplimit:
+            plt.savefig(self.plot_path + f"gamma_rejection_{self.volume_option}v3.pdf")
+        else:
+            plt.savefig(self.plot_path + f"gamma_rejection_{self.volume_option}_uplimitv3.pdf")
 
         plt.clf()
         # self.Qseitz_compound_xe_plot()
@@ -3382,9 +3519,9 @@ class cross_plot_fiducial_volumes():
 
 
 if __name__=="__main__":
-    # IA = integrated_analysis(volume="")
-    # IA =  integrated_analysis(volume="dome")
-    # IA = integrated_analysis(volume="bulk")
+    IA = integrated_analysis(volume="")
+    IA =  integrated_analysis(volume="dome")
+    IA = integrated_analysis(volume="bulk")
     # test = test_csv()
     # plot = cross_plot_fiducial_volumes(pressure_plot=True)
-    plot = cross_plot_fiducial_volumes(pressure_plot=False)
+    # plot = cross_plot_fiducial_volumes(pressure_plot=False)
