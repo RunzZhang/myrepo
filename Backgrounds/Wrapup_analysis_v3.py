@@ -141,10 +141,10 @@ class integrated_analysis():
         self.bkg_subtracted_analysis()
         # self.bkg_subtracted_analysis(plot=True)
 
-        self.gamma_rejection_plot_v3()
+        # self.gamma_rejection_plot_v3()
         # self.gamma_rejection_plot_PSN_v2()
         # self.gamma_rejection_plot_PSN_v2(rate_cut=True)
-        # self.gamma_rejection_plot_output(pressure_plot=True)
+        self.gamma_rejection_plot_output(pressure_plot=True)
         # self.gamma_rejection_plot_output()
 
 
@@ -1091,7 +1091,7 @@ class integrated_analysis():
                                 pressure_drop_list = []
                                 df = df[~df['Pressure [bara]'].isin(pressure_drop_list)]
                                 # only positive rate
-                                df = df[df['Clean Rate [mHz]'] > 0]
+                                # df = df[df['Clean Rate [mHz]'] > 0]
                                 temp_config["plot_list"].append(df)
 
                                 df_fit = df[['Pressure [bara]','Seitz [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
