@@ -2972,7 +2972,7 @@ class integrated_analysis():
 
         result_Q_keV = self.fit_combination(x_Q, y_per_keV, y_max_per_keV, y_min_per_keV, x_max_Q,
                                                 x_min_Q)
-        print("resul_Q_keV, " , x_Q, y_per_keV, y_max_per_keV, y_min_per_keV, x_max_Q,
+        print("resul_Q_keV, " ,  y_max_per_keV, y_min_per_keV, x_max_Q,
                                                 x_min_Q)
         result_Q_xe = self.fit_combination(x_Q, y_per_xe, y_max_per_xe, y_min_per_xe, x_max_Q,
                                             x_min_Q)
