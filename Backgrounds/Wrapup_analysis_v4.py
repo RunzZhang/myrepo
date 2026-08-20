@@ -1825,6 +1825,10 @@ class integrated_analysis():
         fig, ax = plt.subplots(2, 2, figsize=(15, 13))
 
         # Plot Cs 116K ONCE on the left axis
+        print("116K",self.df_Cs_116_plot["Seitz Threshold [keV]"],
+            self.df_Cs_116_plot["Rejection Rate KeV[/keV]"])
+        print("119K", self.df_Cs_119_plot["Seitz Threshold [keV]"],
+            self.df_Cs_119_plot["Rejection Rate KeV[/keV]"])
         ax[0, 0].errorbar(
             self.df_Cs_116_plot["Seitz Threshold [keV]"],
             self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
