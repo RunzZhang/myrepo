@@ -439,10 +439,10 @@ class integrated_analysis():
 
                             # merge both has the pressure value, on pressure
                             if temperature == "116K":
-                                merged_df = exposure_df[exposure_df["Temperature [K]"].isin(116,117)]
+                                merged_df = exposure_df[exposure_df["Temperature [K]"].between(116,117)]
                                 # merged_df = pd.merge(self.df_bkg_116, exposure_df, on='Pressure [bara]', how="inner")
                             elif temperature == "119K":
-                                merged_df = exposure_df[exposure_df["Temperature [K]"].isin(119,120)]
+                                merged_df = exposure_df[exposure_df["Temperature [K]"].between(119,120)]
                             else:
                                 print("wrong temp")
 
