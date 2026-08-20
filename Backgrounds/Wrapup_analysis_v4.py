@@ -747,8 +747,8 @@ class integrated_analysis():
         # sep='\s+' handles any number of spaces or tabs as delimiters
         df = pd.read_csv(file_path, sep='\s+', skiprows=1, header=None)
         num_cols = len(df.columns)
-        # print(file_path, df.head(1))
-        print(df.columns)
+        print(file_path, df.head(1))
+        
         df.columns = [
             "Pressure [bara]",
             "Temperature [K]",
