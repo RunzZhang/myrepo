@@ -243,7 +243,7 @@ class integrated_analysis():
                         #     exposure_df['Lifetime [s]']) ** 2
                         # exposure_df = exposure_df.drop(columns=['Exponential Fit 2xNLL',
                         #                                         'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]'])
-                        # print("exposure", temperature, source, exposure_df[["Seitz Threshold [keV]",'Clean Rate [mHz]', 'Temperature [K]']])
+                        print("exposure", temperature, source, exposure_df[["Seitz Threshold [keV]",'Clean Rate [mHz]', 'Temperature [K]']])
                         exposure_df.to_csv(temp_config["sorted_path"][raw_path_index], index=False)
 
     def pre_background_analysis(self):
@@ -440,11 +440,11 @@ class integrated_analysis():
                             # merge both has the pressure value, on pressure
                             if temperature == "116K":
                                 merged_df = exposure_df[exposure_df["Temperature [K]"].between(116,117)]
-                                print("116K data", temperature, source,merged_df)
+                                print("116K data", temperature, source,merged_df[["Seitz Threshold [keV]",'Clean Rate [mHz]', 'Temperature [K]']])
                                 # merged_df = pd.merge(self.df_bkg_116, exposure_df, on='Pressure [bara]', how="inner")
                             elif temperature == "119K":
                                 merged_df = exposure_df[exposure_df["Temperature [K]"].between(119,120)]
-                                print("119K data", temperature, source,merged_df)
+                                print("119K data", temperature, source,merged_df[["Seitz Threshold [keV]",'Clean Rate [mHz]', 'Temperature [K]']])
                             else:
                                 print("wrong temp")
 
