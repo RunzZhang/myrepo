@@ -330,7 +330,7 @@ class integrated_analysis():
                         yerr=self.df_bkg_119["Bkg Rate Sigma [mHz]"], label="combined bkg 119.6 K ", fmt='o', color='b')
             ax.set_xlim(0.0, 3.6)
             ax.set_ylim(0, 55)
-            ax.set_xlabel("Seitz [keV]")
+            ax.set_xlabel("Seitz Threshold [keV]")
             ax.set_ylabel("Bkg Rate [mHz]")
             ax.legend()
             # plt.show()
@@ -472,7 +472,7 @@ class integrated_analysis():
         # if plot:
         #     # ax.set_xlim(0.4, 3.6)
         #     # ax.set_ylim(5, 55)
-        #     ax.set_xlabel("Seitz [keV]")
+        #     ax.set_xlabel("Seitz Threshold [keV]")
         #     ax.set_ylabel(f"{self.volume_option} Rate [mHz]")
         #     ax.legend()
         #     plt.show()
@@ -516,7 +516,7 @@ class integrated_analysis():
             Q_compound_x_116.append(x)
 
         self.dict_energy_116_tab = {"Pressure [bara]": Seitz_pressure_list,
-                                    "Seitz [keV]": Seitz_116,
+                                    "Seitz Threshold [keV]": Seitz_116,
                                     "Eion [keV]": E_ion_116,
                                     "Eion_rl-1_rhol-1 [GeVcm**2 g-1]": compound_x_116,
                                     "Q_rl-1_rhol-1 [GeVcm**2 g-1]": Q_compound_x_116}
@@ -557,7 +557,7 @@ class integrated_analysis():
             Q_compound_x_119.append(x)
 
         self.dict_energy_119_tab = {"Pressure [bara]": Seitz_pressure_list,
-                                    "Seitz [keV]": Seitz_119,
+                                    "Seitz Threshold [keV]": Seitz_119,
                                     "Eion [keV]": E_ion_119,
                                     "Eion_rl-1_rhol-1 [GeVcm**2 g-1]": compound_x_119,
                                     "Q_rl-1_rhol-1 [GeVcm**2 g-1]": Q_compound_x_119}
@@ -614,7 +614,7 @@ class integrated_analysis():
             Q_compound_x_116.append(x)
 
         self.dict_energy_116_tab = {"Pressure [bara]": Seitz_pressure_list,
-                                    "Seitz [keV]": Seitz_116,
+                                    "Seitz Threshold [keV]": Seitz_116,
                                     "Eion [keV]": E_ion_116,
                                     "Eion_rl-1_rhol-1 [GeVcm**2 g-1]": compound_x_116,
                                     "Q_rl-1_rhol-1 [GeVcm**2 g-1]": Q_compound_x_116}
@@ -669,7 +669,7 @@ class integrated_analysis():
             Q_compound_x_119.append(x)
 
         self.dict_energy_119_tab = {"Pressure [bara]": Seitz_pressure_list,
-                                    "Seitz [keV]": Seitz_119,
+                                    "Seitz Threshold [keV]": Seitz_119,
                                     "Eion [keV]": E_ion_119,
                                     "Eion_rl-1_rhol-1 [GeVcm**2 g-1]": compound_x_119,
                                     "Q_rl-1_rhol-1 [GeVcm**2 g-1]": Q_compound_x_119}
@@ -687,7 +687,7 @@ class integrated_analysis():
         Q_compound_x_10 = [2.04, 2.23, 2.46, 2.74, 3.08, 3.51, 4.04, 4.75, 5.69, 7.0, 8.92]
 
         self.dict_energy_10_tab = {"Pressure [bara]": Seitz_pressure_list,
-                                   "Seitz [keV]": Seitz_10,
+                                   "Seitz Threshold [keV]": Seitz_10,
                                    "Eion [keV]": E_ion_10,
                                    "Eion_rl-1_rhol-1 [GeVcm**2 g-1]": compound_x_10,
                                    "Q_rl-1_rhol-1 [GeVcm**2 g-1]": Q_compound_x_10}
@@ -702,7 +702,7 @@ class integrated_analysis():
         Q_compound_x_24 = [0.81, 0.86, 0.91, 0.97, 1.03, 1.1, 1.19, 1.28, 1.4, 1.53, 1.69]
 
         self.dict_energy_24_tab = {"Pressure [bara]": Seitz_pressure_list,
-                                   "Seitz [keV]": Seitz_24,
+                                   "Seitz Threshold [keV]": Seitz_24,
                                    "Eion [keV]": E_ion_24,
                                    "Eion_rl-1_rhol-1 [GeVcm**2 g-1]": compound_x_24,
                                    "Q_rl-1_rhol-1 [GeVcm**2 g-1]": Q_compound_x_24}
@@ -1276,7 +1276,7 @@ class integrated_analysis():
                      "ylabel": "Nucleation probability \n (per xenon photoabsorption in K shell) "},
                     {"y": "Clean Rate [mHz]", "y_err": 'Clean Rate Sigma [mHz]',
                      "ylabel": "Background Substacted Rate [mHz]"}]
-        x_config = [{"x": "Seitz [keV]", "xlabel": r"Seitz threshold [keV]"},
+        x_config = [{"x": "Seitz Threshold [keV]", "xlabel": r"Seitz threshold [keV]"},
                     {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                      "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
                     {"x": "Q_rl-1_rhol-1 [GeVcm**2 g-1]",
@@ -1435,7 +1435,7 @@ class integrated_analysis():
                      "ylabel": "Nucleation probability \n (per xenon photoabsorption in K shell) "},
                     {"y": "Clean Rate [mHz]", "y_err": 'Clean Rate Sigma [mHz]',
                      "ylabel": "Background Substacted Rate [mHz]"}]
-        x_config = [{"x": "Seitz [keV]", "xlabel": r"Seitz threshold [keV]"},
+        x_config = [{"x": "Seitz Threshold [keV]", "xlabel": r"Seitz threshold [keV]"},
                     {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                      "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
                     {"x": "Q_rl-1_rhol-1 [GeVcm**2 g-1]",
@@ -1594,7 +1594,7 @@ class integrated_analysis():
         print("Ba, ", self.Ba_counts_cum_bin[0], "counts,", self.Ba_doped_counts_energy_cum_bin[0], "keV")
         print("Co, ", self.Co_counts_cum_bin[0], "counts,", self.Co_doped_counts_energy_cum_bin[0], "keV")
 
-        merged_df_Co_Cs = pd.merge(self.Cs_list, self.Co_list, on="Seitz [keV]", suffixes=('1', '2'))
+        merged_df_Co_Cs = pd.merge(self.Cs_list, self.Co_list, on="Seitz Threshold [keV]", suffixes=('1', '2'))
         print(merged_df_Co_Cs)
         merged_df_Co_Cs['Clean Rate ratio'] = merged_df_Co_Cs['Clean Rate [mHz]1'] / merged_df_Co_Cs[
             'Clean Rate [mHz]2']
@@ -1603,7 +1603,7 @@ class integrated_analysis():
                     merged_df_Co_Cs['Clean Rate Sigma [mHz]2'] / merged_df_Co_Cs['Clean Rate [mHz]2']) ** 2
         )
 
-        merged_df_Ba_Cs = pd.merge(self.Cs_list, self.Ba_list, on="Seitz [keV]", suffixes=('1', '2'))
+        merged_df_Ba_Cs = pd.merge(self.Cs_list, self.Ba_list, on="Seitz Threshold [keV]", suffixes=('1', '2'))
         merged_df_Ba_Cs['Clean Rate ratio'] = merged_df_Ba_Cs['Clean Rate [mHz]1'] / merged_df_Ba_Cs[
             'Clean Rate [mHz]2']
         merged_df_Ba_Cs['Clean Rate Sigma ratio'] = merged_df_Ba_Cs['Clean Rate ratio'] * np.sqrt(
@@ -1611,13 +1611,13 @@ class integrated_analysis():
                     merged_df_Ba_Cs['Clean Rate Sigma [mHz]2'] / merged_df_Ba_Cs['Clean Rate [mHz]2']) ** 2
         )
 
-        ax[0].errorbar(merged_df_Co_Cs["Seitz [keV]"],
+        ax[0].errorbar(merged_df_Co_Cs["Seitz Threshold [keV]"],
                        merged_df_Co_Cs['Clean Rate ratio'],
                        yerr=merged_df_Co_Cs['Clean Rate Sigma ratio'], label="Cs/Co", fmt='o', color='r')
-        # ax[1].errorbar(merged_df_Ba_Cs["Seitz [keV]"],
+        # ax[1].errorbar(merged_df_Ba_Cs["Seitz Threshold [keV]"],
         #                merged_df_Ba_Cs['Clean Rate ratio'],
         #                yerr=merged_df_Ba_Cs['Clean Rate Sigma ratio'], label="Cs/Ba", fmt='o', color='r')
-        ax[1].plot(merged_df_Ba_Cs["Seitz [keV]"],
+        ax[1].plot(merged_df_Ba_Cs["Seitz Threshold [keV]"],
                    merged_df_Ba_Cs['Clean Rate ratio'], marker='v', linestyle='None', label="Cs/Ba", color='r')
 
         print("Cs/Ba clean rate ratio", merged_df_Ba_Cs['Clean Rate ratio'])
@@ -1696,7 +1696,7 @@ class integrated_analysis():
         # Add the column to your existing dataframe and cast it to datetime objects
         self.df_Cs_116_time_plot['Run_Date'] = pd.to_datetime(run_dates)
 
-        grouped = self.df_Cs_116_time_plot.groupby("Seitz [keV]")
+        grouped = self.df_Cs_116_time_plot.groupby("Seitz Threshold [keV]")
 
         fig, ax = plt.subplots(figsize=(8, 6))
 
@@ -1826,7 +1826,7 @@ class integrated_analysis():
 
         # Plot Cs 116K ONCE on the left axis
         ax[0, 0].errorbar(
-            self.df_Cs_116_plot["Seitz [keV]"],
+            self.df_Cs_116_plot["Seitz Threshold [keV]"],
             self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_116_plot["Rejection Sigma KeV[/keV]"],
             label="SBC (Ar+CF$_4$+Xe) 116.7 K",
@@ -1837,7 +1837,7 @@ class integrated_analysis():
 
         # Plot Cs 119K ONCE on the left axis
         ax[0, 0].errorbar(
-            self.df_Cs_119_plot["Seitz [keV]"],
+            self.df_Cs_119_plot["Seitz Threshold [keV]"],
             self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
             label="SBC (Ar+CF$_4$+Xe) 119.6 K",
@@ -1914,11 +1914,11 @@ class integrated_analysis():
         Drex_phot_list = 58 * np.exp(-Drex_Q2_list / 0.2877)
         Drex_Q_116_list = \
         self.interpolate_all_keys_vectorized("Q_rl-1_rhol-1 [GeVcm**2 g-1]", Drex_Q2_list, thermal_116_table)[
-            "Seitz [keV]"]
+            "Seitz Threshold [keV]"]
 
         Drex_Q_119_list = \
             self.interpolate_all_keys_vectorized("Q_rl-1_rhol-1 [GeVcm**2 g-1]", Drex_Q2_list, thermal_119_table)[
-                "Seitz [keV]"]
+                "Seitz Threshold [keV]"]
 
         # PICO Eion to keV calculations
         SBC_fitting_len = len(SBC_Q_list)
@@ -1927,11 +1927,11 @@ class integrated_analysis():
         PICO_keV_list = 17e3 * np.exp(-PICO_Eion_list / 37e-3)
         PICO_Q_116_list = \
         self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list, thermal_116_table)[
-            "Seitz [keV]"]
+            "Seitz Threshold [keV]"]
 
         PICO_Q_119_list = \
             self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list, thermal_119_table)[
-                "Seitz [keV]"]
+                "Seitz Threshold [keV]"]
 
         # ax[0,0].plot(
         #     Drex_Q_116_list,
@@ -2048,7 +2048,7 @@ class integrated_analysis():
 
         # 2nd graph that use c3F8 mapping:
         ax[0, 1].errorbar(
-            self.df_Cs_116_plot["Seitz [keV]"],
+            self.df_Cs_116_plot["Seitz Threshold [keV]"],
             self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_116_plot["Rejection Sigma KeV[/keV]"],
             label="SBC (Ar+CF$_4$+Xe) 116.7 K",
@@ -2059,7 +2059,7 @@ class integrated_analysis():
 
         # Plot Cs 119K ONCE on the left axis
         ax[0, 1].errorbar(
-            self.df_Cs_119_plot["Seitz [keV]"],
+            self.df_Cs_119_plot["Seitz Threshold [keV]"],
             self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
             label="SBC (Ar+CF$_4$+Xe) 119.6 K",
@@ -2124,12 +2124,12 @@ class integrated_analysis():
         Drex_phot_list = 58 * np.exp(-Drex_Q2_list / 0.2877)
         Drex_Q_10_list = \
             self.interpolate_all_keys_vectorized("Q_rl-1_rhol-1 [GeVcm**2 g-1]", Drex_Q2_list, thermal_10_table)[
-                "Seitz [keV]"]
+                "Seitz Threshold [keV]"]
 
         # Drex_Q_24_list = [i+0.05 for i in Drex_Q_10_list]
         Drex_Q_24_list = \
             self.interpolate_all_keys_vectorized("Q_rl-1_rhol-1 [GeVcm**2 g-1]", Drex_Q2_list, thermal_24_table)[
-                "Seitz [keV]"]
+                "Seitz Threshold [keV]"]
 
         # PICO Eion to keV calculations
         SBC_fitting_len = len(SBC_Q_list)
@@ -2138,12 +2138,12 @@ class integrated_analysis():
         PICO_keV_list = 17e3 * np.exp(-PICO_Eion_list / 37e-3)
         PICO_Q_10_list = \
             self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list, thermal_10_table)[
-                "Seitz [keV]"]
+                "Seitz Threshold [keV]"]
 
         # PICO_Q_24_list = [i+0.05 for i in PICO_Q_10_list]
         PICO_Q_24_list = \
             self.interpolate_all_keys_vectorized("Eion_rl-1_rhol-1 [GeVcm**2 g-1]", PICO_Eion_list, thermal_24_table)[
-                "Seitz [keV]"]
+                "Seitz Threshold [keV]"]
 
         ax[0, 1].fill_betweenx(
             Drex_phot_list / SCALE_FACTOR,
@@ -2518,7 +2518,7 @@ class integrated_analysis():
                      "ylabel": "Nucleation probability (per xenon photoabsorption in K shell) "},
                     {"y": "Clean Rate [mHz]", "y_err": 'Clean Rate Sigma [mHz]',
                      "ylabel": "Background Substacted Rate [mHz]"}]
-        x_config = [{"x": "Seitz [keV]", "xlabel": r"Seitz threshold [keV]"},
+        x_config = [{"x": "Seitz Threshold [keV]", "xlabel": r"Seitz threshold [keV]"},
                     {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                      "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
                     {"x": "Eion [keV]", "xlabel": r"$E_{ion}$"}]
@@ -3027,7 +3027,7 @@ class integrated_analysis():
 
     def fitting_gamma_rejection(self):
         #
-        x_per_scatter = self.fitting_df["Seitz [keV]"].values
+        x_per_scatter = self.fitting_df["Seitz Threshold [keV]"].values
         y_per_scatter = self.fitting_df["Rejection Rate Scattering[]"].values
         # dealing with guess
         x_min_per_scattering = min(x_per_scatter)
@@ -3070,7 +3070,7 @@ class integrated_analysis():
         # switch Y axis. Now Q vs per kev and Eion vs per interaction
 
         # dataframe.sort_values(by='Seitz Threshold [keV]', inplace=True)
-        x_Q = dataframe["Seitz [keV]"].values
+        x_Q = dataframe["Seitz Threshold [keV]"].values
         y_per_scatter = dataframe["Rejection Rate Scattering[]"].values
         # dealing with guess
         x_min_Q = min(x_Q)
@@ -3214,7 +3214,7 @@ class integrated_analysis():
 
     def fitting_doped_gamma_rejection(self):
         #
-        x_per_scatter = self.fitting_df["Seitz [keV]"].values
+        x_per_scatter = self.fitting_df["Seitz Threshold [keV]"].values
         y_per_scatter = self.fitting_df["Rejection Rate Scattering[]"].values
         # dealing with guess
         x_min_per_scattering = min(x_per_scatter)
@@ -3341,7 +3341,7 @@ class cross_plot_fiducial_volumes():
              "ylabel": "Nucleation probability \n (per xenon photoabsorption in K shell) "}
         ]
         x_config = [
-            {"x": "Seitz [keV]", "xlabel": r"Seitz threshold [keV]"},
+            {"x": "Seitz Threshold [keV]", "xlabel": r"Seitz threshold [keV]"},
             {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
              "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
             {"x": "Q_rl-1_rhol-1 [GeVcm**2 g-1]",
@@ -3395,7 +3395,7 @@ class cross_plot_fiducial_volumes():
                     {"y": "Rejection Rate Xenon Abs[]", "y_err": "Rejection Sigma Xenon Abs[]",
                      "ylabel": "Nucleation probability \n (per xenon photoabsorption in K shell) "},
                     ]
-        x_config = [{"x": "Seitz [keV]", "xlabel": r"Seitz threshold [keV]"},
+        x_config = [{"x": "Seitz Threshold [keV]", "xlabel": r"Seitz threshold [keV]"},
                     {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                      "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
                     {"x": "Q_rl-1_rhol-1 [GeVcm**2 g-1]",
@@ -3480,7 +3480,7 @@ class cross_plot_fiducial_volumes():
                     {"y": "Rejection Rate Xenon Abs[]", "y_err": "Rejection Sigma Xenon Abs[]",
                      "ylabel": "Nucleation probability \n (per xenon photoabsorption in K shell) "},
                     ]
-        x_config = [{"x": "Seitz [keV]", "xlabel": r"Seitz threshold [keV]"},
+        x_config = [{"x": "Seitz Threshold [keV]", "xlabel": r"Seitz threshold [keV]"},
                     {"x": 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
                      "xlabel": r"$E_{ion} r_l^{-1} \rho_l^{-1}$ [GeV cm$^2$ g$^{-1}$]"},
                     {"x": "Q_rl-1_rhol-1 [GeVcm**2 g-1]",
@@ -3643,7 +3643,7 @@ class cross_plot_fiducial_volumes():
             Q_compound_x.append(x)
 
         self.dict_energy_tab = {"Pressure [bara]": Seitz_temp_list,
-                                "Seitz [keV]": Seitz,
+                                "Seitz Threshold [keV]": Seitz,
                                 "Eion [keV]": E_ion,
                                 "Eion_rl-1_rhol-1 [GeVcm**2 g-1]": compound_x,
                                 "Q_rl-1_rhol-1 [GeVcm**2 g-1]": Q_compound_x}
@@ -3697,7 +3697,7 @@ class cross_plot_fiducial_volumes():
             Q_compound_x.append(x)
 
         self.dict_energy_tab = {"Pressure [bara]": Seitz_temp_list,
-                                "Seitz [keV]": Seitz,
+                                "Seitz Threshold [keV]": Seitz,
                                 "Eion [keV]": E_ion,
                                 "Eion_rl-1_rhol-1 [GeVcm**2 g-1]": compound_x,
                                 "Q_rl-1_rhol-1 [GeVcm**2 g-1]": Q_compound_x}
@@ -3718,7 +3718,7 @@ class cross_plot_fiducial_volumes():
             return temperature
 
     def Cs_119K_table(self):
-        # 1. Seitz [keV] vs Rejection Rate Scattering
+        # 1. Seitz Threshold [keV] vs Rejection Rate Scattering
         seitz_scatter = {
             "x": [0.590974, 0.677768, 0.784268],
             "y": [3.679560e-07, 3.519865e-07, 3.516183e-07],
