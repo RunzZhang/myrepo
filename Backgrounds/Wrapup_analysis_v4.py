@@ -444,7 +444,7 @@ class integrated_analysis():
                                 # merged_df = pd.merge(self.df_bkg_116, exposure_df, on='Pressure [bara]', how="inner")
                             elif temperature == "119K":
                                 merged_df = exposure_df[exposure_df["Temperature [K]"].between(119,120)]
-                                print("116K data", merged_df)
+                                print("119K data", merged_df)
                             else:
                                 print("wrong temp")
 
