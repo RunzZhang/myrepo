@@ -243,7 +243,7 @@ class integrated_analysis():
                         #     exposure_df['Lifetime [s]']) ** 2
                         # exposure_df = exposure_df.drop(columns=['Exponential Fit 2xNLL',
                         #                                         'N.d.o.f.', 'Time Cut High [s]', 'Time Cut Low [s]'])
-                        print("exposure", temperature, source, exposure_df["Seitz Threshold [keV]","Clean Rate Sigma [mHz]"])
+                        print("exposure", temperature, source, exposure_df["Seitz Threshold [keV]",'Clean Rate [mHz]'])
                         exposure_df.to_csv(temp_config["sorted_path"][raw_path_index], index=False)
 
     def pre_background_analysis(self):
