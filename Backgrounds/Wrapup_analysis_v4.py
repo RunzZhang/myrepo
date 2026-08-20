@@ -180,20 +180,20 @@ class integrated_analysis():
         # source data
         for source, source_config in self.gamma_source_group.items():
             # print
-            if source =="Cs" or source=="Co":
-                source_config["sim"]["pure_address"] = self.base_path + source + self.volume_option + "_output_5E6_ERv2.pkl"
-                source_config["sim"][
-                    "doped_address"] = self.base_path + source + self.volume_option + "_doped_output_full_track.pkl"
 
-            for temperature, temp_config in source_config["exp"].items():
-                if temp_config["raw_path"] != []:
-                    for raw_path in temp_config["raw_path"]:
-                        temp_config["sorted_path"].append(
-                            self.output_path + raw_path + self.volume_option + "_sortedv3.csv")
-                        temp_config["rate_path"].append(
-                            self.output_path + raw_path + self.volume_option + "_ratev3.csv")
-                        temp_config["rejection_path"].append(
-                            self.output_path + raw_path + self.volume_option + "_rejectionv3.csv")
+            source_config["sim"]["pure_address"] = self.base_path + source + self.volume_option + "_output_5E6_ERv2.pkl"
+            source_config["sim"][
+                    "doped_address"] = self.base_path + source + self.volume_option + "_doped_output_full_track.pkl"
+            if source == "Cs" or source == "Co":
+                for temperature, temp_config in source_config["exp"].items():
+                    if temp_config["raw_path"] != []:
+                        for raw_path in temp_config["raw_path"]:
+                            temp_config["sorted_path"].append(
+                                self.output_path + raw_path + self.volume_option + "_sortedv3.csv")
+                            temp_config["rate_path"].append(
+                                self.output_path + raw_path + self.volume_option + "_ratev3.csv")
+                            temp_config["rejection_path"].append(
+                                self.output_path + raw_path + self.volume_option + "_rejectionv3.csv")
             # read sims
             with open(source_config["sim"]["pure_address"], "rb") as f:
                 source_config["sim"]["pure_data"] = pickle.load(f)
