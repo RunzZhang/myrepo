@@ -180,10 +180,10 @@ class integrated_analysis():
         # source data
         for source, source_config in self.gamma_source_group.items():
             # print
-
-            source_config["sim"]["pure_address"] = self.base_path + source + self.volume_option + "_output_5E6_ERv2.pkl"
-            source_config["sim"][
-                "doped_address"] = self.base_path + source + self.volume_option + "_doped_output_full_track.pkl"
+            if source =="Cs" or source=="Co":
+                source_config["sim"]["pure_address"] = self.base_path + source + self.volume_option + "_output_5E6_ERv2.pkl"
+                source_config["sim"][
+                    "doped_address"] = self.base_path + source + self.volume_option + "_doped_output_full_track.pkl"
 
             for temperature, temp_config in source_config["exp"].items():
                 if temp_config["raw_path"] != []:
@@ -748,7 +748,7 @@ class integrated_analysis():
         df = pd.read_csv(file_path, sep='\s+', skiprows=1, header=None)
         num_cols = len(df.columns)
         print(file_path, df.head(1))
-        
+
         df.columns = [
             "Pressure [bara]",
             "Temperature [K]",
