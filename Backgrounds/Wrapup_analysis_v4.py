@@ -3407,6 +3407,7 @@ class integrated_analysis():
         y_min_per_xe = min(y_per_xe)
         y_max_per_xe = max(y_per_xe)
         print("Rejection Rate Xenon Abs[], min max", y_min_per_xe, y_max_per_xe)
+        print(x_Q2, y_max_per_xe)
 
         y_rate = dataframe["Clean Rate [mHz]"].values
         y_min_rate = min(y_rate)
