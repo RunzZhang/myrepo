@@ -469,6 +469,7 @@ class integrated_analysis():
                             # print('Cs print(merged_df)',self.Cs_exp_rate_path[i],'\n',merged_df)
 
                             merged_df_rejection.to_csv(temp_config["rejection_path"][sorted_path_index], index=False)
+                            print("write", source, temperature,temp_config["rejection_path"][sorted_path_index] )
                         else:
                             exposure_df.to_csv(temp_config["rate_path"][sorted_path_index], index=False)
                             exposure_df.to_csv(temp_config["rejection_path"][sorted_path_index], index=False)
@@ -1768,6 +1769,7 @@ class integrated_analysis():
             if source == radi_source:
                 for temperature, temp_config in source_config["exp"].items():
                     for i in range(len(temp_config["rejection_path"])):
+                        print("psn read path", source, temperature , temp_config["rejection_path"][i])
                         df = pd.read_csv(temp_config["rejection_path"][i])
                         df_cols_to_divide = ["Rejection Rate Scattering[]",
                                              "Rejection Rate KeV[/keV]", "Rejection Rate Xenon Abs[]",
