@@ -176,7 +176,7 @@ class SN():
             # self.gamma_rejection_rate_vs_Setiz()
 
 
-            # self.find_boundary(plot=True)
+            self.find_boundary(plot=True)
             # self.find_boundary()
             self.write_sims_results()
             # self.write_sims_results_thesis()
@@ -1091,7 +1091,7 @@ class SN():
             num_bins = 100
 
             # Create figure with 2 subplots
-            fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+            fig, axes = plt.subplots(1, 2, figsize=(10, 16))
 
             # -------------------------------------------------------------
             # Plot 1: Standard 2D Histogram (R vs Z)
