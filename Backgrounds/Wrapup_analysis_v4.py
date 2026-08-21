@@ -2923,13 +2923,13 @@ class integrated_analysis():
                 # 4. Final filter to ensure no remaining values are <= 0 (e.g. if sigma was 0)
                 df_combined = df_combined[df_combined["Clean Rate [mHz]"] > 0]
         else:
-            # print("PT concat upperlimit faLse", df_combined[['Seitz Threshold [keV]',"Clean Rate [mHz]","Clean Rate Sigma [mHz]"]] )
+            print("PT concat upperlimit faLse", df_combined[['Seitz Threshold [keV]',"Clean Rate [mHz]","Clean Rate Sigma [mHz]"]] )
             cond = (df_combined["Clean Rate [mHz]"] > 0) & (
                     (df_combined["Clean Rate [mHz]"] - df_combined["Clean Rate Sigma [mHz]"]) > 0
             )
-            # cond = (df_combined["Rejection Rate Scattering[]"] < 0) | (
-            #         (df_combined["Rejection Rate Scattering[]"] - df_combined["Rejection Sigma Scattering[]"]) < 0
-            # )
+            cond = (df_combined["Rejection Rate Scattering[]"] < 0) | (
+                    (df_combined["Rejection Rate Scattering[]"] - df_combined["Rejection Sigma Scattering[]"]) < 0
+            )
             df_combined = df_combined[cond]
             # print("PT concat upperlimit faLse after", df_combined[['Seitz Threshold [keV]',"Clean Rate [mHz]", "Clean Rate Sigma [mHz]"]])
         return df_combined
