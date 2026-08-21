@@ -464,6 +464,8 @@ class integrated_analysis():
                             columns_added = exp_df.apply(self.calculate_rejection_by_row_v2, axis=1, args=(source,))
 
                             merged_df_rejection = pd.concat([exp_df, columns_added], axis=1)
+                            if temperature == "116K" and source =="Cs":
+                                print("Cs 116 merge", merged_df_rejection[["Seitz Threshold [keV]",'Clean Rate [mHz]', 'Temperature [K]']])
                             # print('Cs print(merged_df)',self.Cs_exp_rate_path[i],'\n',merged_df)
 
                             merged_df_rejection.to_csv(temp_config["rejection_path"][sorted_path_index], index=False)
