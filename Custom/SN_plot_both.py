@@ -1117,7 +1117,8 @@ class SN():
             axes[1].set_title("Equal-Volume Density Histogram ($R^2$ vs $Z$)")
             axes[1].set_xlabel("$R^2$ [$mm^2$]")
             axes[1].set_xlim(0, 116**2)
-            axes[1].set_ylim(200, 620)
+            # axes[1].set_ylim(200, 620)
+            axes[1].set_ylim(370, 620)
             axes[1].set_ylabel("$Z$ [mm]")
 
             # Format X-axis tick labels to display as base^2 (e.g. 10^2, 20^2) instead of flat numbers
