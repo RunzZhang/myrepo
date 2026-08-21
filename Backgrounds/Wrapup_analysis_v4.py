@@ -1811,10 +1811,12 @@ class integrated_analysis():
 
         self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
 
-        # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
-        # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
-        self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
-        self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
+        self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
+        self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
+        self.df_Cs_116_plot_uplimit = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=True, keep=False)
+        self.df_Cs_119_plot_uplimit = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=True, keep=False)
+        # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
+        # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
 
         self.Cs_fitting_list = [self.df_Cs_116_plot, self.df_Cs_119_plot]
 
@@ -1860,6 +1862,27 @@ class integrated_analysis():
             yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
             label="SBC (Ar+CF$_4$+Xe) 119.6 K",
             fmt='s',
+            markersize=8,
+            color="tab:green"
+        )
+
+        ax[0, 0].errorbar(
+            self.df_Cs_116_plot_uplimit["Seitz Threshold [keV]"],
+            self.df_Cs_116_plot_uplimit["Rejection Rate KeV[/keV]"],
+            yerr=self.df_Cs_116_plot_uplimit["Rejection Sigma KeV[/keV]"],
+            label="SBC Upper Limits (Ar+CF$_4$+Xe) 116.7 K",
+            fmt='v',
+            markersize=8,
+            color="tab:brown"  # Give datasets distinct colors
+        )
+
+        # Plot Cs 119K ONCE on the left axis
+        ax[0, 0].errorbar(
+            self.df_Cs_119_plot_uplimit["Seitz Threshold [keV]"],
+            self.df_Cs_119_plot_uplimit["Rejection Rate KeV[/keV]"],
+            yerr=self.df_Cs_119_plot_uplimit["Rejection Sigma KeV[/keV]"],
+            label="SBC Upper Limits (Ar+CF$_4$+Xe) 119.6 K",
+            fmt='v',
             markersize=8,
             color="tab:green"
         )
@@ -2838,7 +2861,7 @@ class integrated_analysis():
         )
         return new_edges, rebinned_counts
 
-    def concat_PT_condition(self, df, upperlimit=True):
+    def concat_PT_condition(self, df, upperlimit=True, keep=True):
 
         df_combined = df.groupby(
             ['Pressure [bara]', 'Seitz Threshold [keV]', 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]', 'Q_rl-1_rhol-1 [GeVcm**2 g-1]',
@@ -2853,25 +2876,49 @@ class integrated_analysis():
             "Rejection Sigma Xenon Abs[]": lambda x: np.sqrt(np.sum(x ** 2)),
         })
         if upperlimit:
-            rate_pairs = [
-                ("Clean Rate [mHz]", "Clean Rate Sigma [mHz]"),
-                ("Rejection Rate Scattering[]", "Rejection Sigma Scattering[]"),
-                ("Rejection Rate KeV[/keV]", "Rejection Sigma KeV[/keV]"),
-                ("Rejection Rate Xenon Abs[]", "Rejection Sigma Xenon Abs[]")
-            ]
+            if keep:
+                rate_pairs = [
+                    ("Clean Rate [mHz]", "Clean Rate Sigma [mHz]"),
+                    ("Rejection Rate Scattering[]", "Rejection Sigma Scattering[]"),
+                    ("Rejection Rate KeV[/keV]", "Rejection Sigma KeV[/keV]"),
+                    ("Rejection Rate Xenon Abs[]", "Rejection Sigma Xenon Abs[]")
+                ]
 
-            # 3. Apply the 95% upper limit condition to each rate column
-            for rate_col, sigma_col in rate_pairs:
-                if rate_col in df_combined.columns and sigma_col in df_combined.columns:
-                    # Condition: rate < 0 OR (rate - sigma) < 0
-                    # cond = (df_combined[rate_col] < 0) | ((df_combined[rate_col] - df_combined[sigma_col]) < 0)
-                    cond = (df_combined[rate_col] < 0) | ((df_combined[rate_col] - df_combined[sigma_col]) < 0)
-                    # Upper Limit = 1.645 * Sigma (using np.maximum to ensure non-negative baseline)
-                    upper_limit = df_combined[rate_col] + 1.645 * df_combined[sigma_col]
+                # 3. Apply the 95% upper limit condition to each rate column
+                for rate_col, sigma_col in rate_pairs:
+                    if rate_col in df_combined.columns and sigma_col in df_combined.columns:
+                        # Condition: rate < 0 OR (rate - sigma) < 0
+                        # cond = (df_combined[rate_col] < 0) | ((df_combined[rate_col] - df_combined[sigma_col]) < 0)
+                        cond = (df_combined[rate_col] < 0) | ((df_combined[rate_col] - df_combined[sigma_col]) < 0)
+                        # Upper Limit = 1.645 * Sigma (using np.maximum to ensure non-negative baseline)
+                        upper_limit = df_combined[rate_col] + 1.645 * df_combined[sigma_col]
 
-                    # Update rate values where condition is met
-                    df_combined.loc[cond, rate_col] = upper_limit
-            df_combined = df_combined[df_combined["Clean Rate [mHz]"] > 0]
+                        # Update rate values where condition is met
+                        df_combined.loc[cond, rate_col] = upper_limit
+                df_combined = df_combined[df_combined["Clean Rate [mHz]"] > 0]
+            else:
+                rate_pairs = [
+                    ("Clean Rate [mHz]", "Clean Rate Sigma [mHz]"),
+                    ("Rejection Rate Scattering[]", "Rejection Sigma Scattering[]"),
+                    ("Rejection Rate KeV[/keV]", "Rejection Sigma KeV[/keV]"),
+                    ("Rejection Rate Xenon Abs[]", "Rejection Sigma Xenon Abs[]")
+                ]
+
+                # Apply the 90% or 95% CL upper limit condition to each rate column
+                for rate_col, sigma_col in rate_pairs:
+                    if rate_col in df_combined.columns and sigma_col in df_combined.columns:
+                        # Condition: Central value is consistent with 0 (Rate < 0 or Rate - Sigma < 0)
+                        cond = (df_combined[rate_col] < 0) | ((df_combined[rate_col] - df_combined[sigma_col]) < 0)
+
+                        # Upper Limit formula: max(0, Rate) + 1.645 * Sigma
+                        # Truncating negative central values at 0 prevents unphysical zero/negative upper limits
+                        upper_limit = np.maximum(0, df_combined[rate_col]) + 1.645 * df_combined[sigma_col]
+
+                        # Update rate values where upper limit condition is met
+                        df_combined= upper_limit
+
+                # Filter out only remaining non-positive entries (if sigma was 0 or invalid)
+                df_combined = df_combined[df_combined["Clean Rate [mHz]"] > 0]
         else:
             df_combined = df_combined[df_combined["Clean Rate [mHz]"] > 0]
         return df_combined
@@ -3132,7 +3179,7 @@ class integrated_analysis():
                                                    x_min_Eion, log_fit=log_fit)
         result_Eion_keV = self.fit_combination(x_Eion, y_per_keV, y_max_per_keV, y_min_per_keV, x_max_Eion,
                                                x_min_Eion, log_fit=log_fit)
-        print("result, Eion,kev", result_Eion_keV)
+        # print("result, Eion,kev", result_Eion_keV)
         result_Eion_xe = self.fit_combination(x_Eion, y_per_xe, y_max_per_xe, y_min_per_xe, x_max_Eion,
                                               x_min_Eion, log_fit=log_fit)
 
@@ -3314,7 +3361,7 @@ class integrated_analysis():
             # 6. Generate fitted points
             x_fitted_scatter = np.linspace(np.min(x_valid), np.max(x_valid), 100)
             y_fitted_scatter = self.exp_func(x_fitted_scatter, a_fit_scatter, b_fit_scatter)
-            print("y_fiting", y_fitted_scatter)
+            # print("y_fiting", y_fitted_scatter)
         return (a_fit_scatter, b_fit_scatter, x_fitted_scatter, y_fitted_scatter)
 
 
