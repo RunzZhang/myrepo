@@ -2017,13 +2017,13 @@ class integrated_analysis():
             min_value = min_row["Seitz Threshold [keV]"]
             max_value = max_row["Seitz Threshold [keV]"]
 
-            SBC_Q_plot = np.linspace(min_value, max_value, 100)
-            SBC_keV_plot = a2 * np.exp(-b2 * SBC_Q_plot)
+            SBC_x_plot = np.linspace(min_value, max_value, 100)
+            SBC_y_plot = a2 * np.exp(-b2 * SBC_x_plot)
 
             # Plotting on Matplotlib axis
             ax[0, 0].plot(
-                SBC_Q_plot,
-                SBC_keV_plot,
+                SBC_x_plot,
+                SBC_y_plot,
                 label="SBC Best Fit",
                 color="black",
 
@@ -2273,6 +2273,7 @@ class integrated_analysis():
             color="tab:green"
         )
         if plot_fitting:
+
             ax[1, 0].plot(result_Eion_keV[2], result_Eion_keV[3], label="SBC Best Fit", color="black")
 
         # pICO result
