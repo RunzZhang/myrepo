@@ -1860,8 +1860,8 @@ class integrated_analysis():
             self.df_Cs_119_plot["Seitz Threshold [keV]"],
             self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
-            label="SBC (Ar+CF$_4$+Xe) 119.6 K",
-            fmt='s',
+            label="SBC (Ar+CF$_4$+Xe) 119.6 K (95% CL UL)",
+            fmt='v',
             markersize=8,
             color="tab:green"
         )
