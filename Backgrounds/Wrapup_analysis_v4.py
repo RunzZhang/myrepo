@@ -1810,10 +1810,10 @@ class integrated_analysis():
 
         self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
 
-        # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
-        # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
-        self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
-        self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
+        self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
+        self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
+        # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
+        # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
 
         self.Cs_fitting_list = [self.df_Cs_116_plot, self.df_Cs_119_plot]
 
@@ -1824,6 +1824,7 @@ class integrated_analysis():
         #             self.df_Cs_116_plot["Rejection Rate Xenon Abs[]"][0]
         ratio_119 = self.df_Cs_119_plot["Rejection Rate KeV[/keV]"][0] / \
                     self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"][0]
+
         # print("ratio_116", ratio_116, 'ratio_119', ratio_119)
         SCALE_FACTOR = (ratio_119) ** (-1)  # Xenon Abs = Rate [/keV] * SCALE_FACTOR
 
