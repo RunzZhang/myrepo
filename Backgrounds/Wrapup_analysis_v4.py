@@ -2925,6 +2925,7 @@ class integrated_analysis():
                     (df_combined["Clean Rate [mHz]"] - df_combined["Clean Rate Sigma [mHz]"]) > 0
             )
             df_combined = df_combined[cond]
+            print("PT concat upperlimit faLse after", df_combined[["Clean Rate [mHz]", "Clean Rate Sigma [mHz]"]])
         return df_combined
 
     def doped_gamma_rejection_plot(self):
