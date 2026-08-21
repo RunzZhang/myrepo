@@ -2090,9 +2090,9 @@ class integrated_analysis():
 
         # 2nd graph that use c3F8 mapping:
         ax[0, 1].errorbar(
-            self.df_Cs_116_plot["Seitz Threshold [keV]"],
-            self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
-            yerr=self.df_Cs_116_plot["Rejection Sigma KeV[/keV]"],
+            self.df_Cs_116_plot_valid["Seitz Threshold [keV]"],
+            self.df_Cs_116_plot_valid["Rejection Rate KeV[/keV]"],
+            yerr=self.df_Cs_116_plot_valid["Rejection Sigma KeV[/keV]"],
             label="SBC (Ar+CF$_4$+Xe) 116.7 K",
             fmt='o',
             markersize=8,
@@ -2101,9 +2101,9 @@ class integrated_analysis():
 
         # Plot Cs 119K ONCE on the left axis
         ax[0, 1].errorbar(
-            self.df_Cs_119_plot["Seitz Threshold [keV]"],
-            self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
-            yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
+            self.df_Cs_119_plot_valid["Seitz Threshold [keV]"],
+            self.df_Cs_119_plot_valid["Rejection Rate KeV[/keV]"],
+            yerr=self.df_Cs_119_plot_valid["Rejection Sigma KeV[/keV]"],
             label="SBC (Ar+CF$_4$+Xe) 119.6 K",
             fmt='s',
             markersize=8,
@@ -2213,9 +2213,9 @@ class integrated_analysis():
 
         # compare to PICO
         ax[1, 0].errorbar(
-            self.df_Cs_116_plot["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"],
-            self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
-            yerr=self.df_Cs_116_plot["Rejection Sigma KeV[/keV]"],
+            self.df_Cs_116_plot_valid["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"],
+            self.df_Cs_116_plot_valid["Rejection Rate KeV[/keV]"],
+            yerr=self.df_Cs_116_plot_valid["Rejection Sigma KeV[/keV]"],
             label=r"SBC (Ar+CF$_4$+Xe) 116K",
             fmt='o',
             markersize=8,
@@ -2224,9 +2224,9 @@ class integrated_analysis():
 
         # Plot Cs 119K ONCE on the left axis
         ax[1, 0].errorbar(
-            self.df_Cs_119_plot["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"],
-            self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
-            yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
+            self.df_Cs_119_plot_valid["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"],
+            self.df_Cs_119_plot_valid["Rejection Rate KeV[/keV]"],
+            yerr=self.df_Cs_119_plot_valid["Rejection Sigma KeV[/keV]"],
             label=r"SBC (Ar+CF$_4$+Xe) 119K",
             fmt='s',
             markersize=8,
@@ -2260,9 +2260,9 @@ class integrated_analysis():
 
         # Drexel result
         ax[1, 1].errorbar(
-            self.df_Cs_116_plot["Q_rl-1_rhol-1 [GeVcm**2 g-1]"],
-            self.df_Cs_116_plot["Rejection Rate Xenon Abs[]"],
-            yerr=self.df_Cs_116_plot["Rejection Sigma Xenon Abs[]"],
+            self.df_Cs_116_plot_valid["Q_rl-1_rhol-1 [GeVcm**2 g-1]"],
+            self.df_Cs_116_plot_valid["Rejection Rate Xenon Abs[]"],
+            yerr=self.df_Cs_116_plot_valid["Rejection Sigma Xenon Abs[]"],
             label=r"SBC (Ar+CF$_4$+Xe) 116K",
             fmt='o',
             markersize=8,
@@ -2271,9 +2271,9 @@ class integrated_analysis():
 
         # Plot Cs 119K ONCE on the left axis
         ax[1, 1].errorbar(
-            self.df_Cs_119_plot["Q_rl-1_rhol-1 [GeVcm**2 g-1]"],
-            self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"],
-            yerr=self.df_Cs_119_plot["Rejection Sigma Xenon Abs[]"],
+            self.df_Cs_119_plot_valid["Q_rl-1_rhol-1 [GeVcm**2 g-1]"],
+            self.df_Cs_119_plot_valid["Rejection Rate Xenon Abs[]"],
+            yerr=self.df_Cs_119_plot_valid["Rejection Sigma Xenon Abs[]"],
             label=r"SBC (Ar+CF$_4$+Xe) 119K",
             fmt='s',
             markersize=8,
