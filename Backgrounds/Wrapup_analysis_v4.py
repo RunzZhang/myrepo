@@ -1824,6 +1824,8 @@ class integrated_analysis():
         print("sum Cs 119", self.df_Cs_119_plot[['Seitz Threshold [keV]',
                                                  "Rejection Rate KeV[/keV]", "Rejection Sigma KeV[/keV]",
                                                  'Eion_rl-1_rhol-1 [GeVcm**2 g-1]']])
+        print("columns", self.df_Cs_119_plot["Rejection Rate KeV[/keV]"][0],
+              self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"][0])
 
         # ratio_116 = self.df_Cs_116_plot["Rejection Rate KeV[/keV]"][0] / \
         #             self.df_Cs_116_plot["Rejection Rate Xenon Abs[]"][0]
