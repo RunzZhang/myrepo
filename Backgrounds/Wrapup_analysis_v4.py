@@ -3132,6 +3132,7 @@ class integrated_analysis():
                                                    x_min_Eion, log_fit=log_fit)
         result_Eion_keV = self.fit_combination(x_Eion, y_per_keV, y_max_per_keV, y_min_per_keV, x_max_Eion,
                                                x_min_Eion, log_fit=log_fit)
+        print("result, Eion,kev", result_Eion_keV)
         result_Eion_xe = self.fit_combination(x_Eion, y_per_xe, y_max_per_xe, y_min_per_xe, x_max_Eion,
                                               x_min_Eion, log_fit=log_fit)
 
@@ -3313,7 +3314,7 @@ class integrated_analysis():
             # 6. Generate fitted points
             x_fitted_scatter = np.linspace(np.min(x_valid), np.max(x_valid), 100)
             y_fitted_scatter = self.exp_func(x_fitted_scatter, a_fit_scatter, b_fit_scatter)
-            print("y_fiting", y_fitted_scatter)
+            # print("y_fiting", y_fitted_scatter)
         return (a_fit_scatter, b_fit_scatter, x_fitted_scatter, y_fitted_scatter)
 
 
