@@ -2884,17 +2884,33 @@ class integrated_analysis():
                     ("Rejection Rate Xenon Abs[]", "Rejection Sigma Xenon Abs[]")
                 ]
 
-                # 3. Apply the 95% upper limit condition to each rate column
+                CL = 0.90
+
                 for rate_col, sigma_col in rate_pairs:
                     if rate_col in df_combined.columns and sigma_col in df_combined.columns:
-                        # Condition: rate < 0 OR (rate - sigma) < 0
-                        # cond = (df_combined[rate_col] < 0) | ((df_combined[rate_col] - df_combined[sigma_col]) < 0)
-                        cond = (df_combined[rate_col] < 0) | ((df_combined[rate_col] - df_combined[sigma_col]) < 0)
-                        # Upper Limit = 1.645 * Sigma (using np.maximum to ensure non-negative baseline)
-                        upper_limit = df_combined[rate_col] + 1.645 * df_combined[sigma_col]
+                        r = df_combined[rate_col]
+                        s = df_combined[sigma_col]
 
-                        # Update rate values where condition is met
-                        df_combined.loc[cond, rate_col] = upper_limit
+                        # Condition where upper limit treatment is required
+                        cond = (r < 0) | ((r - s) < 0)
+
+                        # Vectorized truncated Gaussian upper limit (Helene Method)
+                        # phi_z = Phi(R / sigma)
+                        phi_z = norm.cdf(r / s)
+
+                        # target_prob = 1 - (1 - CL) * Phi(R / sigma)
+                        target_prob = 1.0 - (1.0 - CL) * phi_z
+
+                        # z_score = Phi^-1(target_prob)
+                        z_score = norm.ppf(target_prob)
+
+                        # R_UL = R + sigma * z_score
+                        upper_limit = r + s * z_score
+
+                        # Assign upper limit to rate_col where condition holds
+                        df_combined.loc[cond, rate_col] = upper_limit[cond]
+
+                # Filter out non-positive rates if needed
                 df_combined = df_combined[df_combined["Clean Rate [mHz]"] > 0]
             else:
                 rate_pairs = [
@@ -2915,12 +2931,33 @@ class integrated_analysis():
                 # 2. DROP all positive measurements and keep ONLY the upper-limit rows
                 df_combined = df_combined[cond].copy()
 
-                # 3. Calculate and overwrite upper limits for the remaining rows
+                CL = 0.90
+
                 for rate_col, sigma_col in rate_pairs:
                     if rate_col in df_combined.columns and sigma_col in df_combined.columns:
-                        df_combined[rate_col] = np.maximum(0, df_combined[rate_col]) + 1.645 * df_combined[sigma_col]
+                        r = df_combined[rate_col]
+                        s = df_combined[sigma_col]
 
-                # 4. Final filter to ensure no remaining values are <= 0 (e.g. if sigma was 0)
+                        # Condition where upper limit treatment is required
+                        cond = (r < 0) | ((r - s) < 0)
+
+                        # Vectorized truncated Gaussian upper limit (Helene Method)
+                        # phi_z = Phi(R / sigma)
+                        phi_z = norm.cdf(r / s)
+
+                        # target_prob = 1 - (1 - CL) * Phi(R / sigma)
+                        target_prob = 1.0 - (1.0 - CL) * phi_z
+
+                        # z_score = Phi^-1(target_prob)
+                        z_score = norm.ppf(target_prob)
+
+                        # R_UL = R + sigma * z_score
+                        upper_limit = r + s * z_score
+
+                        # Assign upper limit to rate_col where condition holds
+                        df_combined.loc[cond, rate_col] = upper_limit[cond]
+
+                # Filter out non-positive rates if needed
                 df_combined = df_combined[df_combined["Clean Rate [mHz]"] > 0]
         else:
             # print("PT concat upperlimit faLse", df_combined[['Seitz Threshold [keV]',"Clean Rate [mHz]","Clean Rate Sigma [mHz]"]] )
@@ -2932,6 +2969,44 @@ class integrated_analysis():
             # print("PT concat upperlimit faLse after", df_combined[['Seitz Threshold [keV]',"Clean Rate [mHz]", "Clean Rate Sigma [mHz]"]])
         return df_combined
 
+    def calculate_upper_limit(self, R: float, sigma: float, cl: float = 0.90) -> float:
+        """
+        Calculates the physical upper limit (R_UL) at a given confidence level
+        for a measured rate R and uncertainty sigma using a truncated Gaussian prior (R >= 0).
+
+        Parameters:
+        -----------
+        R : float
+            Measured central rate (can be negative due to background subtraction).
+        sigma : float
+            Standard deviation / uncertainty of the measurement.
+        cl : float, optional
+            Confidence level (default is 0.90 for 90% CL).
+
+        Returns:
+        --------
+        float
+            The upper limit R_UL.
+        """
+        if sigma <= 0:
+            raise ValueError("Uncertainty (sigma) must be positive.")
+
+        # Cumulative distribution function of standard normal at R/sigma
+        phi_z = norm.cdf(R / sigma)
+
+        # Renormalized target probability density
+        target_prob = 1.0 - (1.0 - cl) * phi_z
+
+        # Quantile function (inverse CDF)
+        z_score = norm.ppf(target_prob)
+
+        # Calculate R_UL
+        R_ul = R + sigma * z_score
+        return R_ul
+
+    # Example Usage:
+    R_meas = 0.5
+    sigma_meas = 1.0
     def doped_gamma_rejection_plot(self):
         fig, ax = plt.subplots(2, 1, figsize=(8, 14))
         # fig, ax = plt.subplots(2, 1, figsize=(6, 10))
