@@ -1813,7 +1813,7 @@ class integrated_analysis():
 
         self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
         self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
-        self.df_Cs_116_plot_uplimit = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=True, keep=False)
+        # self.df_Cs_116_plot_uplimit = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=True, keep=False)
         self.df_Cs_119_plot_uplimit = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=True, keep=False)
         # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
         # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
@@ -2930,6 +2930,7 @@ class integrated_analysis():
 
                 # 2. DROP all positive measurements and keep ONLY the upper-limit rows
                 df_combined = df_combined[cond].copy()
+                print("PT concat upperlimit faLse", df_combined[['Seitz Threshold [keV]',"Clean Rate [mHz]","Clean Rate Sigma [mHz]"]] )
 
                 CL = 0.90
 
@@ -2956,7 +2957,8 @@ class integrated_analysis():
 
                         # Assign upper limit to rate_col where condition holds
                         df_combined.loc[cond, rate_col] = upper_limit[cond]
-
+                print("PT concat upperlimit faLse",
+                      df_combined[['Seitz Threshold [keV]', "Clean Rate [mHz]", "Clean Rate Sigma [mHz]"]])
                 # Filter out non-positive rates if needed
                 df_combined = df_combined[df_combined["Clean Rate [mHz]"] > 0]
         else:
