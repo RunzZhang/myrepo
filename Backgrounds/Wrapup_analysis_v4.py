@@ -1818,21 +1818,21 @@ class integrated_analysis():
 
         self.Cs_fitting_list = [self.df_Cs_116_plot, self.df_Cs_119_plot]
 
-        print("sum Cs 116", self.df_Cs_116_plot[['Seitz Threshold [keV]',
-                                                 "Rejection Rate KeV[/keV]", "Rejection Sigma KeV[/keV]",'Eion_rl-1_rhol-1 [GeVcm**2 g-1]']])
-
-        print("sum Cs 119", self.df_Cs_119_plot[['Seitz Threshold [keV]',
-                                                 "Rejection Rate KeV[/keV]", "Rejection Sigma KeV[/keV]",
-                                                 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]']])
-        print("columns", self.df_Cs_119_plot["Rejection Rate KeV[/keV]"].iloc[0],
-              self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"].iloc[0])
+        # print("sum Cs 116", self.df_Cs_116_plot[['Seitz Threshold [keV]',
+        #                                          "Rejection Rate KeV[/keV]", "Rejection Sigma KeV[/keV]",'Eion_rl-1_rhol-1 [GeVcm**2 g-1]']])
+        #
+        # print("sum Cs 119", self.df_Cs_119_plot[['Seitz Threshold [keV]',
+        #                                          "Rejection Rate KeV[/keV]", "Rejection Sigma KeV[/keV]",
+        #                                          'Eion_rl-1_rhol-1 [GeVcm**2 g-1]']])
+        # print("columns", self.df_Cs_119_plot["Rejection Rate KeV[/keV]"].iloc[0],
+        #       self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"].iloc[0])
 
         # ratio_116 = self.df_Cs_116_plot["Rejection Rate KeV[/keV]"][0] / \
         #             self.df_Cs_116_plot["Rejection Rate Xenon Abs[]"][0]
         ratio_119 = self.df_Cs_119_plot["Rejection Rate KeV[/keV]"].iloc[0] / \
                     self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"].iloc[0]
 
-        print("columns",self.df_Cs_119_plot["Rejection Rate KeV[/keV]"].iloc[0], self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"].iloc[0])
+        # print("columns",self.df_Cs_119_plot["Rejection Rate KeV[/keV]"].iloc[0], self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"].iloc[0])
 
         # print("ratio_116", ratio_116, 'ratio_119', ratio_119)
         SCALE_FACTOR = (ratio_119) ** (-1)  # Xenon Abs = Rate [/keV] * SCALE_FACTOR
@@ -3285,6 +3285,7 @@ class integrated_analysis():
             x_fitted_scatter = np.linspace(min(x), max(x), 100)
             y_fitted_scatter = self.exp_func(x_fitted_scatter, *popt_scatter)
         else:
+            print(y)
             log_y = np.log(y)
 
             # 2. Fit straight line: log(y) = m*x + c
