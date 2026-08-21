@@ -1927,7 +1927,7 @@ class integrated_analysis():
         #                             "Rejection Rate KeV[/keV]"]])
         # self.Cs_df = self.df_Cs_116_plot
         [result_Q_scatter, result_Q_keV, result_Q_xe, result_Eion_scatter, result_Eion_keV, result_Eion_xe,
-         result_Q2_xe, result_Q_rate] = self.fitting_gamma_rejection_v2(self.Cs_df, log_fit=True)
+         result_Q2_xe, result_Q_rate] = self.fitting_gamma_rejection_v2(self.Cs_df, log_fit=False)
 
         # SBC
         SBC_Q_list = result_Q_keV[2]
