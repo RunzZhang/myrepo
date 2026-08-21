@@ -1816,7 +1816,7 @@ class integrated_analysis():
         # self.df_Cs_116_plot_uplimit = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=True, keep=False)
         # self.df_Cs_119_plot_uplimit = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=True, keep=False)
         # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
-        self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
+        self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=True, keep=False)
 
         self.Cs_fitting_list = [self.df_Cs_116_plot, self.df_Cs_119_plot]
 
