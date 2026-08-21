@@ -3285,22 +3285,32 @@ class integrated_analysis():
             x_fitted_scatter = np.linspace(min(x), max(x), 100)
             y_fitted_scatter = self.exp_func(x_fitted_scatter, *popt_scatter)
         else:
-            print(y)
-            log_y = np.log(y)
+            x = np.asarray(x, dtype=float).flatten()
+            y = np.asarray(y, dtype=float).flatten()
 
-            # 2. Fit straight line: log(y) = m*x + c
-            # polyfit returns [slope (m), intercept (c)]
-            m, c = np.polyfit(x, log_y, 1)
+            # 2. Filter out non-finite (NaN, Inf) and non-positive (<= 0) y values
+            valid_mask = np.isfinite(x) & np.isfinite(y) & (y > 0)
 
-            # 3. Convert back to exponential parameters: a*exp(-b*x)
-            # log(y) = ln(a) - b*x  ==>  b = -m, a = exp(c)
+            x_valid = x[valid_mask]
+            y_valid = y[valid_mask]
+
+            if len(x_valid) < 2:
+                raise ValueError("Not enough valid positive y-data points (>0) to perform log-linear fit.")
+
+            # 3. Transform to log space
+            log_y = np.log(y_valid)
+
+            # 4. Perform log-linear fit
+            m, c = np.polyfit(x_valid, log_y, 1)
+
+            # 5. Extract exponential parameters: a * exp(-b * x)
             a_fit_scatter = np.exp(c)
             b_fit_scatter = -m
 
             print('a_fit_scatter, b_fit_scatter:', a_fit_scatter, b_fit_scatter)
 
-            # 4. Generate fitted points
-            x_fitted_scatter = np.linspace(np.min(x), np.max(x), 100)
+            # 6. Generate fitted points
+            x_fitted_scatter = np.linspace(np.min(x_valid), np.max(x_valid), 100)
             y_fitted_scatter = self.exp_func(x_fitted_scatter, a_fit_scatter, b_fit_scatter)
         return (a_fit_scatter, b_fit_scatter, x_fitted_scatter, y_fitted_scatter)
 
