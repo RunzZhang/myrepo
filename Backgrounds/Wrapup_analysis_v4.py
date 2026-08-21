@@ -2920,6 +2920,7 @@ class integrated_analysis():
                 # 4. Final filter to ensure no remaining values are <= 0 (e.g. if sigma was 0)
                 df_combined = df_combined[df_combined["Clean Rate [mHz]"] > 0]
         else:
+            print("PT concat upperlimit faLse", df_combined )
             cond = (df_combined["Clean Rate [mHz]"] > 0) & (
                     (df_combined["Clean Rate [mHz]"] - df_combined["Clean Rate Sigma [mHz]"]) > 0
             )
