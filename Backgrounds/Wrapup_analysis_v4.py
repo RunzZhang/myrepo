@@ -1867,23 +1867,23 @@ class integrated_analysis():
             color="tab:green"
         )
 
-        ax[0, 0].errorbar(
+        ax[0, 0].plot(
             self.df_Cs_116_plot_uplimit["Seitz Threshold [keV]"],
             self.df_Cs_116_plot_uplimit["Rejection Rate KeV[/keV]"],
-            yerr=self.df_Cs_116_plot_uplimit["Rejection Sigma KeV[/keV]"],
             label="SBC Upper Limits (Ar+CF$_4$+Xe) 116.7 K",
-            fmt='v',
+            marker='v',
+            linestyle='none',
             markersize=8,
-            color="tab:brown"  # Give datasets distinct colors
+            color="tab:brown"
         )
 
         # Plot Cs 119K ONCE on the left axis
-        ax[0, 0].errorbar(
+        ax[0, 0].plot(
             self.df_Cs_119_plot_uplimit["Seitz Threshold [keV]"],
             self.df_Cs_119_plot_uplimit["Rejection Rate KeV[/keV]"],
-            yerr=self.df_Cs_119_plot_uplimit["Rejection Sigma KeV[/keV]"],
             label="SBC Upper Limits (Ar+CF$_4$+Xe) 119.6 K",
-            fmt='v',
+            marker='v',
+            linestyle='none',
             markersize=8,
             color="tab:green"
         )
