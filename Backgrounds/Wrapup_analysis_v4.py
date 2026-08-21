@@ -1811,7 +1811,7 @@ class integrated_analysis():
 
         self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
 
-        # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
+        self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
         self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
         # self.df_Cs_116_plot_uplimit = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=True, keep=False)
         # self.df_Cs_119_plot_uplimit = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=True, keep=False)
@@ -1823,9 +1823,9 @@ class integrated_analysis():
         # print("sum Cs 116", self.df_Cs_116_plot[['Seitz Threshold [keV]',
         #                                          "Rejection Rate KeV[/keV]", "Rejection Sigma KeV[/keV]",'Eion_rl-1_rhol-1 [GeVcm**2 g-1]']])
         #
-        print("sum Cs 119", self.df_Cs_119_plot[['Seitz Threshold [keV]',
-                                                 "Rejection Rate KeV[/keV]", "Rejection Sigma KeV[/keV]",
-                                                 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]']])
+        # print("sum Cs 119", self.df_Cs_119_plot[['Seitz Threshold [keV]',
+        #                                          "Rejection Rate KeV[/keV]", "Rejection Sigma KeV[/keV]",
+        #                                          'Eion_rl-1_rhol-1 [GeVcm**2 g-1]']])
         # print("columns", self.df_Cs_119_plot["Rejection Rate KeV[/keV]"].iloc[0],
         #       self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"].iloc[0])
 
@@ -2862,7 +2862,7 @@ class integrated_analysis():
         return new_edges, rebinned_counts
 
     def concat_PT_condition(self, df, upperlimit=True, keep=True):
-        print("df test", df[['Seitz Threshold [keV]',"Clean Rate [mHz]","Clean Rate Sigma [mHz]"]])
+        # print("df test", df[['Seitz Threshold [keV]',"Clean Rate [mHz]","Clean Rate Sigma [mHz]"]])
         df_combined = df.groupby(
             ['Pressure [bara]', 'Seitz Threshold [keV]', 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]', 'Q_rl-1_rhol-1 [GeVcm**2 g-1]',
              'Eion [keV]'], as_index=False).agg({
@@ -2923,13 +2923,11 @@ class integrated_analysis():
                 # 4. Final filter to ensure no remaining values are <= 0 (e.g. if sigma was 0)
                 df_combined = df_combined[df_combined["Clean Rate [mHz]"] > 0]
         else:
-            print("PT concat upperlimit faLse", df_combined[['Seitz Threshold [keV]',"Clean Rate [mHz]","Clean Rate Sigma [mHz]"]] )
+            # print("PT concat upperlimit faLse", df_combined[['Seitz Threshold [keV]',"Clean Rate [mHz]","Clean Rate Sigma [mHz]"]] )
             cond = (df_combined["Clean Rate [mHz]"] > 0) & (
                     (df_combined["Clean Rate [mHz]"] - df_combined["Clean Rate Sigma [mHz]"]) > 0
             )
-            cond = (df_combined["Rejection Rate Scattering[]"] < 0) | (
-                    (df_combined["Rejection Rate Scattering[]"] - df_combined["Rejection Sigma Scattering[]"]) < 0
-            )
+
             df_combined = df_combined[cond]
             # print("PT concat upperlimit faLse after", df_combined[['Seitz Threshold [keV]',"Clean Rate [mHz]", "Clean Rate Sigma [mHz]"]])
         return df_combined
