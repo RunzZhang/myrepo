@@ -1812,11 +1812,11 @@ class integrated_analysis():
         self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
 
         # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
-        # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
+        self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
         # self.df_Cs_116_plot_uplimit = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=True, keep=False)
         # self.df_Cs_119_plot_uplimit = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=True, keep=False)
         self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
-        self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
+        # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
 
         self.Cs_fitting_list = [self.df_Cs_116_plot, self.df_Cs_119_plot]
 
@@ -1860,7 +1860,7 @@ class integrated_analysis():
             self.df_Cs_119_plot["Seitz Threshold [keV]"],
             self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
-            label="SBC (Ar+CF$_4$+Xe) 119.6 K\n (95% CL UL)",
+            label="SBC (Ar+CF$_4$+Xe) 119.6 K",
             fmt='v',
             markersize=8,
             color="tab:green"
