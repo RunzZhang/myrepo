@@ -1811,8 +1811,8 @@ class integrated_analysis():
 
         self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
 
-        self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
-        self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
+        # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
+        # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
         # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
         # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
 
@@ -1899,7 +1899,7 @@ class integrated_analysis():
         #                             "Rejection Rate KeV[/keV]"]])
         # self.Cs_df = self.df_Cs_116_plot
         [result_Q_scatter, result_Q_keV, result_Q_xe, result_Eion_scatter, result_Eion_keV, result_Eion_xe,
-         result_Q2_xe, result_Q_rate] = self.fitting_gamma_rejection_v2(self.Cs_df)
+         result_Q2_xe, result_Q_rate] = self.fitting_gamma_rejection_v2(self.Cs_df, log_fit=True)
 
         # SBC
         SBC_Q_list = result_Q_keV[2]
@@ -3084,7 +3084,7 @@ class integrated_analysis():
         return [(a_fit_scatter, b_fit_scatter, x_fitted_scatter, y_fitted_scatter),
                 (a_fit_keV, b_fit_keV, x_fitted_keV, y_fitted_keV)]
 
-    def fitting_gamma_rejection_v2(self, dataframe):
+    def fitting_gamma_rejection_v2(self, dataframe, log_fit =False):
         # switch Y axis. Now Q vs per kev and Eion vs per interaction
 
         # dataframe.sort_values(by='Seitz Threshold [keV]', inplace=True)
@@ -3117,27 +3117,27 @@ class integrated_analysis():
         y_max_rate = max(y_rate)
 
         result_Q_scatter = self.fit_combination(x_Q, y_per_scatter, y_max_per_scattering, y_min_per_scattering, x_max_Q,
-                                                x_min_Q)
+                                                x_min_Q, log_fit=log_fit)
 
         result_Q_keV = self.fit_combination(x_Q, y_per_keV, y_max_per_keV, y_min_per_keV, x_max_Q,
-                                            x_min_Q)
+                                            x_min_Q, log_fit=log_fit)
         # print("resul_Q_keV, " ,  y_max_per_keV, y_min_per_keV, x_max_Q,
         #                                         x_min_Q)
         result_Q_xe = self.fit_combination(x_Q, y_per_xe, y_max_per_xe, y_min_per_xe, x_max_Q,
-                                           x_min_Q)
+                                           x_min_Q, log_fit=log_fit)
 
         result_Eion_scatter = self.fit_combination(x_Eion, y_per_scatter, y_max_per_scattering, y_min_per_scattering,
                                                    x_max_Eion,
-                                                   x_min_Eion)
+                                                   x_min_Eion, log_fit=log_fit)
         result_Eion_keV = self.fit_combination(x_Eion, y_per_keV, y_max_per_keV, y_min_per_keV, x_max_Eion,
-                                               x_min_Eion)
+                                               x_min_Eion, log_fit=log_fit)
         result_Eion_xe = self.fit_combination(x_Eion, y_per_xe, y_max_per_xe, y_min_per_xe, x_max_Eion,
-                                              x_min_Eion)
+                                              x_min_Eion, log_fit=log_fit)
 
         result_Q2_xe = self.fit_combination(x_Q2, y_per_xe, y_max_per_xe, y_min_per_xe, x_max_Q2,
-                                            x_min_Q2)
+                                            x_min_Q2, log_fit=log_fit)
         result_Q_rate = self.fit_combination(x_Q, y_rate, y_max_rate, y_min_rate, x_max_Q,
-                                             x_min_Q)
+                                             x_min_Q, log_fit=log_fit)
 
         return [result_Q_scatter, result_Q_keV, result_Q_xe, result_Eion_scatter, result_Eion_keV, result_Eion_xe,
                 result_Q2_xe, result_Q_rate]
@@ -3273,17 +3273,37 @@ class integrated_analysis():
         return [(a_fit_scatter, b_fit_scatter, x_fitted_scatter, y_fitted_scatter),
                 (a_fit_keV, b_fit_keV, x_fitted_keV, y_fitted_keV)]
 
-    def fit_combination(self, x, y, y_max, y_min, x_max, x_min):
-        b_guess_per_scattering = (np.log(y_max) - np.log(y_min)) / (x_max - x_min)
-        # a_guess_scattering = y_max*np.exp(b_guess_per_scattering*x_min)
-        a_guess_scattering = (y_max + y_min) / 2
-        initial_guess_scatter = [a_guess_scattering, b_guess_per_scattering]
-        popt_scatter, pcov_scatter = curve_fit(self.exp_func, x, y, p0=initial_guess_scatter)
-        a_fit_scatter, b_fit_scatter = popt_scatter
-        print('a_fit_scatter, b_fit_scatter', a_fit_scatter, b_fit_scatter)
-        x_fitted_scatter = np.linspace(min(x), max(x), 100)
-        y_fitted_scatter = self.exp_func(x_fitted_scatter, *popt_scatter)
+    def fit_combination(self, x, y, y_max, y_min, x_max, x_min, log_fit = False):
+        if not log_fit:
+            b_guess_per_scattering = (np.log(y_max) - np.log(y_min)) / (x_max - x_min)
+            # a_guess_scattering = y_max*np.exp(b_guess_per_scattering*x_min)
+            a_guess_scattering = (y_max + y_min) / 2
+            initial_guess_scatter = [a_guess_scattering, b_guess_per_scattering]
+            popt_scatter, pcov_scatter = curve_fit(self.exp_func, x, y, p0=initial_guess_scatter)
+            a_fit_scatter, b_fit_scatter = popt_scatter
+            print('a_fit_scatter, b_fit_scatter', a_fit_scatter, b_fit_scatter)
+            x_fitted_scatter = np.linspace(min(x), max(x), 100)
+            y_fitted_scatter = self.exp_func(x_fitted_scatter, *popt_scatter)
+        else:
+            log_y = np.log(y)
+
+            # 2. Fit straight line: log(y) = m*x + c
+            # polyfit returns [slope (m), intercept (c)]
+            m, c = np.polyfit(x, log_y, 1)
+
+            # 3. Convert back to exponential parameters: a*exp(-b*x)
+            # log(y) = ln(a) - b*x  ==>  b = -m, a = exp(c)
+            a_fit_scatter = np.exp(c)
+            b_fit_scatter = -m
+
+            print('a_fit_scatter, b_fit_scatter:', a_fit_scatter, b_fit_scatter)
+
+            # 4. Generate fitted points
+            x_fitted_scatter = np.linspace(np.min(x), np.max(x), 100)
+            y_fitted_scatter = self.exp_func(x_fitted_scatter, a_fit_scatter, b_fit_scatter)
         return (a_fit_scatter, b_fit_scatter, x_fitted_scatter, y_fitted_scatter)
+
+
 
     def calculate_rss(self, series):
         """Calculates sqrt(a^2 + b^2 + ...)"""
