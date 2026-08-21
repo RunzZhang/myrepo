@@ -1832,7 +1832,7 @@ class integrated_analysis():
         ratio_119 = self.df_Cs_119_plot["Rejection Rate KeV[/keV]"].iloc[0] / \
                     self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"].iloc[0]
 
-        print("columns",self.df_Cs_119_plot["Rejection Rate KeV[/keV]"][0], self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"][0])
+        print("columns",self.df_Cs_119_plot["Rejection Rate KeV[/keV]"].iloc[0], self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"].iloc[0])
 
         # print("ratio_116", ratio_116, 'ratio_119', ratio_119)
         SCALE_FACTOR = (ratio_119) ** (-1)  # Xenon Abs = Rate [/keV] * SCALE_FACTOR
