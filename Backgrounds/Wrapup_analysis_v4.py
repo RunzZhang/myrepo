@@ -1818,6 +1818,9 @@ class integrated_analysis():
         # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
         # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
 
+        # get the minimum and maximum threshold columns
+        (min_row, max_row) = self.find_min_max_row(self.df_Cs_116_plot_valid,self.df_Cs_119_plot_valid, self.df_Cs_116_plot_uplimit, self.df_Cs_119_plot_uplimit)
+
         self.Cs_fitting_list = [self.df_Cs_116_plot_valid, self.df_Cs_119_plot_valid]
 
         # print("sum Cs 116", self.df_Cs_116_plot[['Seitz Threshold [keV]',
@@ -2011,6 +2014,20 @@ class integrated_analysis():
         if plot_fitting:
             a = result_Q_keV[0]
             b = result_Q_keV[1]
+            min_value = min_row["Seitz Threshold [keV]"]
+            max_value = max_row["Seitz Threshold [keV]"]
+
+            SBC_Q_plot = np.linspace(min_value, max_value, 100)
+            SBC_keV_plot = a * np.exp(-b * SBC_Q_list)
+
+            # Plotting on Matplotlib axis
+            ax[0, 0].plot(
+                SBC_Q_plot,
+                SBC_keV_plot,
+                label="SBC Best Fit",
+                color="black",
+                linestyle="--"
+            )
 
             ax[0, 0].plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
 
@@ -2357,7 +2374,30 @@ class integrated_analysis():
         #     plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_v2.png")
         # else:
         #     plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_ratecut_v2.png")
+    def find_min_max_row(self, df1, df2, df3, df4):
+        # find the minimum/maximum seitz energy and their other thermdynamic properties
+        dfs = {
+            '116_valid': df1,
+            '119_valid': df2,
+            '116_uplimit': df3,
+            '119_uplimit': df4,
+        }
 
+        df_all = pd.concat(dfs, names=['source_dataset', 'original_index'])
+
+        # 2. Get the row with the global minimum Seitz Threshold
+        min_row = df_all.loc[df_all["Seitz Threshold [keV]"].idxmin()]
+
+        # Extract minimum value and source dataset name
+        min_val = min_row["Seitz Threshold [keV]"]
+
+        # 2. Get the row with the global minimum Seitz Threshold
+        max_row = df_all.loc[df_all["Seitz Threshold [keV]"].idxmax()]
+
+        # Extract minimum value and source dataset name
+        max_val = max_row["Seitz Threshold [keV]"]
+
+        return(min_row, max_row)
     def interpolate_all_keys_vectorized(self, target_key, target_values, data_dict, extrapolate=False):
         """
         Given a target_key and an array/list of target_values, returns a dictionary
