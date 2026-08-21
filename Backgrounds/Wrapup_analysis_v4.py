@@ -1811,15 +1811,15 @@ class integrated_analysis():
 
         self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
 
-        self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
-        self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
+        self.df_Cs_116_plot_valid = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
+        self.df_Cs_119_plot_valid = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
         self.df_Cs_116_plot_uplimit = self.df_Cs_116_plot
         # self.df_Cs_116_plot_uplimit = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=True, keep=False)
         self.df_Cs_119_plot_uplimit = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=True, keep=False)
         # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
         # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
 
-        self.Cs_fitting_list = [self.df_Cs_116_plot, self.df_Cs_119_plot]
+        self.Cs_fitting_list = [self.df_Cs_116_plot_valid, self.df_Cs_119_plot_valid]
 
         # print("sum Cs 116", self.df_Cs_116_plot[['Seitz Threshold [keV]',
         #                                          "Rejection Rate KeV[/keV]", "Rejection Sigma KeV[/keV]",'Eion_rl-1_rhol-1 [GeVcm**2 g-1]']])
@@ -1847,9 +1847,9 @@ class integrated_analysis():
         print("116K",self.df_Cs_116_plot[["Seitz Threshold [keV]","Rejection Rate KeV[/keV]"]])
         print("119K", self.df_Cs_119_plot[["Seitz Threshold [keV]","Rejection Rate KeV[/keV]"]])
         ax[0, 0].errorbar(
-            self.df_Cs_116_plot["Seitz Threshold [keV]"],
-            self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
-            yerr=self.df_Cs_116_plot["Rejection Sigma KeV[/keV]"],
+            self.df_Cs_116_plot_valid["Seitz Threshold [keV]"],
+            self.df_Cs_116_plot_valid["Rejection Rate KeV[/keV]"],
+            yerr=self.df_Cs_116_plot_valid["Rejection Sigma KeV[/keV]"],
             label="SBC (Ar+CF$_4$+Xe) 116.7 K",
             fmt='s',
             markersize=8,
@@ -1858,9 +1858,9 @@ class integrated_analysis():
 
         # Plot Cs 119K ONCE on the left axis
         ax[0, 0].errorbar(
-            self.df_Cs_119_plot["Seitz Threshold [keV]"],
-            self.df_Cs_119_plot["Rejection Rate KeV[/keV]"],
-            yerr=self.df_Cs_119_plot["Rejection Sigma KeV[/keV]"],
+            self.df_Cs_119_plot_valid["Seitz Threshold [keV]"],
+            self.df_Cs_119_plot_valid["Rejection Rate KeV[/keV]"],
+            yerr=self.df_Cs_119_plot_valid["Rejection Sigma KeV[/keV]"],
             label="SBC (Ar+CF$_4$+Xe) 119.6 K",
             fmt='s',
             markersize=8,
