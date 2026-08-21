@@ -3397,6 +3397,7 @@ class integrated_analysis():
         x_max_Eion = max(x_Eion)
         y_min_per_keV = min(y_per_keV)
         y_max_per_keV = max(y_per_keV)
+        print("Rejection Rate KeV[/keV]", y_min_per_keV, y_max_per_keV)
 
         x_Q2 = dataframe["Q_rl-1_rhol-1 [GeVcm**2 g-1]"].values
         y_per_xe = dataframe["Rejection Rate Xenon Abs[]"].values
@@ -3405,6 +3406,7 @@ class integrated_analysis():
         x_max_Q2 = max(x_Q2)
         y_min_per_xe = min(y_per_xe)
         y_max_per_xe = max(y_per_xe)
+        print("Rejection Rate Xenon Abs[], min max", y_min_per_xe, y_max_per_xe)
 
         y_rate = dataframe["Clean Rate [mHz]"].values
         y_min_rate = min(y_rate)
