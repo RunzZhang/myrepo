@@ -2862,7 +2862,7 @@ class integrated_analysis():
         return new_edges, rebinned_counts
 
     def concat_PT_condition(self, df, upperlimit=True, keep=True):
-        # print("df test", df[['Seitz Threshold [keV]',"Clean Rate [mHz]","Clean Rate Sigma [mHz]"]])
+        print("df test", df[['Seitz Threshold [keV]',"Clean Rate [mHz]","Clean Rate Sigma [mHz]"]])
         df_combined = df.groupby(
             ['Pressure [bara]', 'Seitz Threshold [keV]', 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]', 'Q_rl-1_rhol-1 [GeVcm**2 g-1]',
              'Eion [keV]'], as_index=False).agg({
