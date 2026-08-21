@@ -1910,9 +1910,9 @@ class integrated_analysis():
         SBC_Q_xe_fitting = (result_Q_xe[0], result_Q_xe[1])
         # print("fitting  SBC_Q_kev_fitting", SBC_Q_kev_fitting, result_Q_keV[2], result_Q_keV[3])
         # print("fitting SBC_Q_xe_fitting ", SBC_Q_xe_fitting)
-        #
-        # print("fitting  SBC_Eion_kev_fitting", result_Eion_keV)
-        # print("fitting SBC_Q2_xe_fitting ", result_Q2_xe)
+
+        print("fitting  SBC_Eion_kev_fitting", result_Eion_keV)
+        print("fitting SBC_Q2_xe_fitting ", result_Q2_xe)
 
         # Compute ratio list
 
@@ -2257,7 +2257,7 @@ class integrated_analysis():
         )
         if plot_fitting:
             ax[1, 1].plot(result_Q2_xe[2], result_Q2_xe[3], label="SBC Best Fit", color="black")
-            print("1 1 fiitng",(result_Q2_xe[2], result_Q2_xe[3]))
+            # print("1 1 fiitng",(result_Q2_xe[2], result_Q2_xe[3]))
 
         A = 58  # 0.017
         B = 0.287  # 0.037
