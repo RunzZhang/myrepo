@@ -8,7 +8,8 @@ from scipy.optimize import curve_fit
 import math
 from scipy.stats import norm
 from scipy.interpolate import interp1d
-
+from matplotlib.legend_handler import HandlerTuple
+from matplotlib.lines import Line2D
 
 class integrated_analysis():
     def __init__(self, volume=""):
@@ -1852,7 +1853,7 @@ class integrated_analysis():
             self.df_Cs_116_plot_valid["Seitz Threshold [keV]"],
             self.df_Cs_116_plot_valid["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_116_plot_valid["Rejection Sigma KeV[/keV]"],
-            label="SBC (Ar+CF$_4$+Xe) 116.7 K",
+            # label="SBC (Ar+CF$_4$+Xe) 116.7 K",
             fmt='s',
             markersize=8,
             color="tab:brown"  # Give datasets distinct colors
@@ -1863,7 +1864,7 @@ class integrated_analysis():
             self.df_Cs_119_plot_valid["Seitz Threshold [keV]"],
             self.df_Cs_119_plot_valid["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_119_plot_valid["Rejection Sigma KeV[/keV]"],
-            label="SBC (Ar+CF$_4$+Xe) 119.6 K",
+            # label="SBC (Ar+CF$_4$+Xe) 119.6 K",
             fmt='s',
             markersize=8,
             color="tab:green"
@@ -1872,7 +1873,7 @@ class integrated_analysis():
         ax[0, 0].plot(
             self.df_Cs_116_plot_uplimit["Seitz Threshold [keV]"],
             self.df_Cs_116_plot_uplimit["Rejection Rate KeV[/keV]"],
-            label="SBC Upper Limits (Ar+CF$_4$+Xe) 116.7 K",
+            # label="SBC Upper Limits (Ar+CF$_4$+Xe) 116.7 K",
             marker='v',
             linestyle='none',
             markersize=8,
@@ -1883,7 +1884,7 @@ class integrated_analysis():
         ax[0, 0].plot(
             self.df_Cs_119_plot_uplimit["Seitz Threshold [keV]"],
             self.df_Cs_119_plot_uplimit["Rejection Rate KeV[/keV]"],
-            label="SBC Upper Limits (Ar+CF$_4$+Xe) 119.6 K",
+            # label="SBC Upper Limits (Ar+CF$_4$+Xe) 119.6 K",
             marker='v',
             linestyle='none',
             markersize=8,
@@ -2106,6 +2107,44 @@ class integrated_analysis():
         # ax[0,0].legend(loc='lower left', fontsize=15, title=" ", title_fontsize=16,frameon=False)
         ax[0, 0].legend(loc='upper right', fontsize=16, frameon=False, borderaxespad=0,
                         alignment="left")
+
+        existing_handles, existing_labels = ax[0, 0].get_legend_handles_labels()
+
+        # --- 2. Create custom handles for SBC datasets ---
+        sbc_custom_handles = [
+            (
+                Line2D([0], [0], marker='s', color='none', markerfacecolor='tab:brown', markeredgecolor='tab:brown',
+                       markersize=8),
+                Line2D([0], [0], marker='v', color='none', markerfacecolor='tab:brown', markeredgecolor='tab:brown',
+                       markersize=8)
+            ),
+            (
+                Line2D([0], [0], marker='s', color='none', markerfacecolor='tab:green', markeredgecolor='tab:green',
+                       markersize=8),
+                Line2D([0], [0], marker='v', color='none', markerfacecolor='tab:green', markeredgecolor='tab:green',
+                       markersize=8)
+            )
+        ]
+
+        sbc_custom_labels = [
+            "SBC (Ar+CF$_4$+Xe) 116.7 K",
+            "SBC (Ar+CF$_4$+Xe) 119.6 K"
+        ]
+
+        # --- 3. Combine everything into one single legend ---
+        all_handles = existing_handles + sbc_custom_handles
+        all_labels = existing_labels + sbc_custom_labels
+
+        ax[0, 0].legend(
+            handles=all_handles,
+            labels=all_labels,
+            handler_map={tuple: HandlerTuple(ndivide=None)},
+            loc='upper right',
+            fontsize=16,
+            frameon=False,
+            borderaxespad=0,
+            alignment="left"
+        )
 
         # 2nd graph that use c3F8 mapping:
         ax[0, 1].errorbar(
