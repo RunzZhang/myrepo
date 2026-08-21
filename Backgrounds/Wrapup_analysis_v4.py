@@ -2923,7 +2923,7 @@ class integrated_analysis():
             cond = (df_combined["Clean Rate [mHz]"] > 0) | (
                     (df_combined["Clean Rate [mHz]"] - df_combined["Clean Rate Sigma [mHz]"]) > 0
             )
-            df_combined = df_combined[df_combined[cond]]
+            df_combined = df_combined[cond]
         return df_combined
 
     def doped_gamma_rejection_plot(self):
