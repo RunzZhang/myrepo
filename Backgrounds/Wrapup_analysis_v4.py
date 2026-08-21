@@ -179,7 +179,7 @@ class integrated_analysis():
         # self.gamma_rejection_plot_v3()
         # self.gamma_rejection_plot_PSN_v2()
         # self.gamma_rejection_plot_PSN_v2(rate_cut=True, plot_fitting=False)
-        self.gamma_rejection_plot_PSN_v2(rate_cut=True, radi_source="Cs", plot_fitting=True)
+        self.gamma_rejection_plot_PSN_v2(rate_cut=True, radi_source="Cs", plot_fitting=False)
         # self.gamma_rejection_plot_output(pressure_plot=True)
         # self.gamma_rejection_plot_output()
 
