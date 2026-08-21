@@ -2223,6 +2223,23 @@ class integrated_analysis():
             alpha=0.3,
             label="PICO (C$_3$F$_8$)")
         if plot_fitting:
+            a2 = result_Eion_keV[0]
+            b2 = result_Eion_keV[1]
+            min_value = min_row["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"]
+            max_value = max_row["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"]
+
+            SBC_x_plot = np.linspace(min_value, max_value, 100)
+            SBC_y_plot = a2 * np.exp(-b2 * SBC_x_plot)
+
+            # Plotting on Matplotlib axis
+            ax[1, 0].plot(
+                SBC_x_plot,
+                SBC_y_plot,
+                label="SBC Best Fit",
+                color="black",
+
+            )
+
             ax[0, 1].plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
 
         # ax[0, 1].legend(loc='lower left', fontsize=16, title=" ", title_fontsize=15, frameon=False)
