@@ -2400,13 +2400,13 @@ class integrated_analysis():
             color="tab:green"
         )
         if plot_fitting:
-            a2 = result_Q2_xe[0]
-            b2 = result_Q2_xe[1]
+            a3 = result_Q2_xe[0]
+            b3 = result_Q2_xe[1]
             min_value = min_row["Q_rl-1_rhol-1 [GeVcm**2 g-1]"]
             max_value = max_row["Q_rl-1_rhol-1 [GeVcm**2 g-1]"]
 
             SBC_x_plot = np.linspace(min_value, max_value, 100)
-            SBC_y_plot = a2 * np.exp(-b2 * SBC_x_plot)
+            SBC_y_plot = a3 * np.exp(-b3 * SBC_x_plot)
 
             # Plotting on Matplotlib axis
             ax[1, 1].plot(
@@ -3584,31 +3584,32 @@ class integrated_analysis():
             x_fitted_scatter = np.linspace(min(x), max(x), 100)
             y_fitted_scatter = self.exp_func(x_fitted_scatter, *popt_scatter)
         else:
-            x_arr = np.asarray(x, dtype=float).flatten()
-            y_arr = np.asarray(y, dtype=float).flatten()
+            x = np.asarray(x, dtype=float).flatten()
+            y = np.asarray(y, dtype=float).flatten()
 
-            # 2. Filter out invalid/non-positive y values
-            valid_mask = np.isfinite(x_arr) & np.isfinite(y_arr) & (y_arr > 0)
-            x_valid = x_arr[valid_mask]
-            y_valid = y_arr[valid_mask]
+            # 2. Filter out non-finite (NaN, Inf) and non-positive (<= 0) y values
+            valid_mask = np.isfinite(x) & np.isfinite(y) & (y > 0)
+
+            x_valid = x[valid_mask]
+            y_valid = y[valid_mask]
 
             if len(x_valid) < 2:
                 raise ValueError("Not enough valid positive y-data points (>0) to perform log-linear fit.")
 
-            # 3. Transform y to log space
+            # 3. Transform to log space
             log_y = np.log(y_valid)
 
-            # 4. Perform log-linear fit: ln(y) = m * x + c
+            # 4. Perform log-linear fit
             m, c = np.polyfit(x_valid, log_y, 1)
 
-            # 5. Map back to y = a * exp(-b * x)
+            # 5. Extract exponential parameters: a * exp(-b * x)
             a_fit_scatter = np.exp(c)
-            b_fit_scatter = -m  # Since m = -b for decay exp(-b*x)
+            b_fit_scatter = -m
 
-            # 6. Generate fitted evaluation curve
+            print('a_fit_scatter, b_fit_scatter:', a_fit_scatter, b_fit_scatter)
+
+            # 6. Generate fitted points
             x_fitted_scatter = np.linspace(np.min(x_valid), np.max(x_valid), 100)
-
-            # Make sure self.exp_func(x, a, b) uses y = a * exp(-b * x)
             y_fitted_scatter = self.exp_func(x_fitted_scatter, a_fit_scatter, b_fit_scatter)
             # print("y_fiting", y_fitted_scatter)
         return (a_fit_scatter, b_fit_scatter, x_fitted_scatter, y_fitted_scatter)
