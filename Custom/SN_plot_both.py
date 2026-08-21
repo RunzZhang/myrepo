@@ -1154,7 +1154,7 @@ class SN():
             fig.colorbar(im2, ax=axes[1], label="Probability Density")
 
             plt.tight_layout()
-            plt.show()
+            # plt.show()
             plt.savefig(self.plot_path+"boundary_finder.png")
 
 
