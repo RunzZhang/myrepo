@@ -2223,22 +2223,7 @@ class integrated_analysis():
             alpha=0.3,
             label="PICO (C$_3$F$_8$)")
         if plot_fitting:
-            a2 = result_Eion_keV[0]
-            b2 = result_Eion_keV[1]
-            min_value = min_row["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"]
-            max_value = max_row["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"]
 
-            SBC_x_plot = np.linspace(min_value, max_value, 100)
-            SBC_y_plot = a2 * np.exp(-b2 * SBC_x_plot)
-
-            # Plotting on Matplotlib axis
-            ax[1, 0].plot(
-                SBC_x_plot,
-                SBC_y_plot,
-                label="SBC Best Fit",
-                color="black",
-
-            )
 
             ax[0, 1].plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
 
@@ -2290,8 +2275,23 @@ class integrated_analysis():
             color="tab:green"
         )
         if plot_fitting:
+            a2 = result_Eion_keV[0]
+            b2 = result_Eion_keV[1]
+            min_value = min_row["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"]
+            max_value = max_row["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"]
 
-            ax[1, 0].plot(result_Eion_keV[2], result_Eion_keV[3], label="SBC Best Fit", color="black")
+            SBC_x_plot = np.linspace(min_value, max_value, 100)
+            SBC_y_plot = a2 * np.exp(-b2 * SBC_x_plot)
+
+            # Plotting on Matplotlib axis
+            ax[1, 0].plot(
+                SBC_x_plot,
+                SBC_y_plot,
+                label="SBC Best Fit",
+                color="black",
+
+            )
+            # ax[1, 0].plot(result_Eion_keV[2], result_Eion_keV[3], label="SBC Best Fit", color="black")
 
         # pICO result
         A = 17e3  # 0.017
@@ -2359,7 +2359,23 @@ class integrated_analysis():
             color="tab:green"
         )
         if plot_fitting:
-            ax[1, 1].plot(result_Q2_xe[2], result_Q2_xe[3], label="SBC Best Fit", color="black")
+            a2 = result_Q2_xe[0]
+            b2 = result_Q2_xe[1]
+            min_value = min_row["Q_rl-1_rhol-1 [GeVcm**2 g-1]"]
+            max_value = max_row["Q_rl-1_rhol-1 [GeVcm**2 g-1]"]
+
+            SBC_x_plot = np.linspace(min_value, max_value, 100)
+            SBC_y_plot = a2 * np.exp(-b2 * SBC_x_plot)
+
+            # Plotting on Matplotlib axis
+            ax[1, 1].plot(
+                SBC_x_plot,
+                SBC_y_plot,
+                label="SBC Best Fit",
+                color="black",
+
+            )
+            # ax[1, 1].plot(result_Q2_xe[2], result_Q2_xe[3], label="SBC Best Fit", color="black")
             # print("1 1 fiitng",(result_Q2_xe[2], result_Q2_xe[3]))
 
         A = 58  # 0.017
