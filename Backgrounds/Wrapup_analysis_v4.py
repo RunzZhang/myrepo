@@ -1812,11 +1812,11 @@ class integrated_analysis():
         self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
 
         # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
-        self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
+        # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
         # self.df_Cs_116_plot_uplimit = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=True, keep=False)
         # self.df_Cs_119_plot_uplimit = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=True, keep=False)
         self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
-        # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
+        self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
 
         self.Cs_fitting_list = [self.df_Cs_116_plot, self.df_Cs_119_plot]
 
@@ -2905,12 +2905,12 @@ class integrated_analysis():
                 ]
 
                 # 1. Define the upper-limit condition based on Clean Rate
-                # cond = (df_combined["Clean Rate [mHz]"] < 0) | (
-                #         (df_combined["Clean Rate [mHz]"] - df_combined["Clean Rate Sigma [mHz]"]) < 0
-                # )
-                cond = (df_combined["Rejection Rate Scattering[]"] < 0) | (
-                        (df_combined["Rejection Rate Scattering[]"] - df_combined["Rejection Sigma Scattering[]"]) < 0
+                cond = (df_combined["Clean Rate [mHz]"] < 0) | (
+                        (df_combined["Clean Rate [mHz]"] - df_combined["Clean Rate Sigma [mHz]"]) < 0
                 )
+                # cond = (df_combined["Rejection Rate Scattering[]"] < 0) | (
+                #         (df_combined["Rejection Rate Scattering[]"] - df_combined["Rejection Sigma Scattering[]"]) < 0
+                # )
 
                 # 2. DROP all positive measurements and keep ONLY the upper-limit rows
                 df_combined = df_combined[cond].copy()
@@ -2924,12 +2924,12 @@ class integrated_analysis():
                 df_combined = df_combined[df_combined["Clean Rate [mHz]"] > 0]
         else:
             # print("PT concat upperlimit faLse", df_combined[['Seitz Threshold [keV]',"Clean Rate [mHz]","Clean Rate Sigma [mHz]"]] )
-            # cond = (df_combined["Clean Rate [mHz]"] > 0) & (
-            #         (df_combined["Clean Rate [mHz]"] - df_combined["Clean Rate Sigma [mHz]"]) > 0
-            # )
-            cond = (df_combined["Rejection Rate Scattering[]"] < 0) | (
-                    (df_combined["Rejection Rate Scattering[]"] - df_combined["Rejection Sigma Scattering[]"]) < 0
+            cond = (df_combined["Clean Rate [mHz]"] > 0) & (
+                    (df_combined["Clean Rate [mHz]"] - df_combined["Clean Rate Sigma [mHz]"]) > 0
             )
+            # cond = (df_combined["Rejection Rate Scattering[]"] < 0) | (
+            #         (df_combined["Rejection Rate Scattering[]"] - df_combined["Rejection Sigma Scattering[]"]) < 0
+            # )
             df_combined = df_combined[cond]
             # print("PT concat upperlimit faLse after", df_combined[['Seitz Threshold [keV]',"Clean Rate [mHz]", "Clean Rate Sigma [mHz]"]])
         return df_combined
