@@ -2029,7 +2029,7 @@ class integrated_analysis():
 
             )
 
-            ax[0, 0].plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
+            # ax[0, 0].plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
 
         # fitting parameter
 
