@@ -178,7 +178,7 @@ class integrated_analysis():
         # self.gamma_rejection_plot_v3()
         # self.gamma_rejection_plot_PSN_v2()
         # self.gamma_rejection_plot_PSN_v2(rate_cut=True, plot_fitting=False)
-        self.gamma_rejection_plot_PSN_v2(rate_cut=True, radi_source="Cs", plot_fitting=True)
+        self.gamma_rejection_plot_PSN_v2(rate_cut=True, radi_source="Co", plot_fitting=True)
         # self.gamma_rejection_plot_output(pressure_plot=True)
         # self.gamma_rejection_plot_output()
 
@@ -855,7 +855,7 @@ class integrated_analysis():
 
             # Calculate new Eion column: (Eion / (rion * rho_l)) * 10
             df["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"] = 10 * (
-                        df["Eion [keV]"] / (df["rion [nm]"] * df["rho_l [g/cc]"])) 
+                        df["Eion [keV]"] / (df["rion [nm]"] * df["rho_l [g/cc]"]))
 
             # Calculate new Q column: (Seitz Threshold / (rion * rho_l)) * 10
             df["Q_rl-1_rhol-1 [GeVcm**2 g-1]"] = 10 * (df["Seitz Threshold [keV]"] / (
