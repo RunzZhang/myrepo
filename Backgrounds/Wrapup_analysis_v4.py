@@ -2232,6 +2232,27 @@ class integrated_analysis():
             markersize=8,
             color="tab:green"
         )
+
+        ax[1, 0].plot(
+            self.df_Cs_116_plot_uplimit["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"],
+            self.df_Cs_116_plot_uplimit["Rejection Rate KeV[/keV]"],
+            label="SBC Upper Limits (Ar+CF$_4$+Xe) 116.7 K",
+            marker='v',
+            linestyle='none',
+            markersize=8,
+            color="tab:brown"
+        )
+
+        # Plot Cs 119K ONCE on the left axis
+        ax[1, 0].plot(
+            self.df_Cs_119_plot_uplimit["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"],
+            self.df_Cs_119_plot_uplimit["Rejection Rate KeV[/keV]"],
+            label="SBC Upper Limits (Ar+CF$_4$+Xe) 119.6 K",
+            marker='v',
+            linestyle='none',
+            markersize=8,
+            color="tab:green"
+        )
         if plot_fitting:
             ax[1, 0].plot(result_Eion_keV[2], result_Eion_keV[3], label="SBC Best Fit", color="black")
 
@@ -2276,6 +2297,27 @@ class integrated_analysis():
             yerr=self.df_Cs_119_plot_valid["Rejection Sigma Xenon Abs[]"],
             label=r"SBC (Ar+CF$_4$+Xe) 119K",
             fmt='s',
+            markersize=8,
+            color="tab:green"
+        )
+
+        ax[1, 1].plot(
+            self.df_Cs_116_plot_uplimit["Q_rl-1_rhol-1 [GeVcm**2 g-1]"],
+            self.df_Cs_116_plot_uplimit["Rejection Rate Xenon Abs[]"],
+            label="SBC Upper Limits (Ar+CF$_4$+Xe) 116.7 K",
+            marker='v',
+            linestyle='none',
+            markersize=8,
+            color="tab:brown"
+        )
+
+        # Plot Cs 119K ONCE on the left axis
+        ax[1, 1].plot(
+            self.df_Cs_119_plot_uplimit["Q_rl-1_rhol-1 [GeVcm**2 g-1]"],
+            self.df_Cs_119_plot_uplimit["Rejection Rate Xenon Abs[]"],
+            label="SBC Upper Limits (Ar+CF$_4$+Xe) 119.6 K",
+            marker='v',
+            linestyle='none',
             markersize=8,
             color="tab:green"
         )
