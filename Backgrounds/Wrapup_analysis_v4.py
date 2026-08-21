@@ -108,9 +108,9 @@ class integrated_analysis():
                                         "plot": pd.DataFrame()}}},
                 "Co": {"sim": {"pure_address": None, "pure_data": None, "doped_address": None,
                                "doped_data": None},
-                       "exp": {"116K": {"raw_path": ["cobalt_final_rates"], "sorted_path": [],
+                       "exp": {"116K": {"raw_path": ["cobalt_final_ratesv2"], "sorted_path": [],
                                         "rate_path": [], "rejection_path": [], "plot_list": [], "plot": pd.DataFrame()},
-                               "119K": {"raw_path": ["cobalt_final_rates2"], "sorted_path": [],
+                               "119K": {"raw_path": ["cobalt_final_ratesv22"], "sorted_path": [],
                                         "rate_path": [], "rejection_path": [], "plot_list": [],
                                         "plot": pd.DataFrame()}}}
 
@@ -1810,10 +1810,10 @@ class integrated_analysis():
 
         self.df_Cs_119_plot = pd.concat(self.df_Cs_119_plot_list, ignore_index=True)
 
-        self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
-        self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
-        # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
-        # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
+        # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
+        # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
+        self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
+        self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
 
         self.Cs_fitting_list = [self.df_Cs_116_plot, self.df_Cs_119_plot]
 
