@@ -3434,6 +3434,7 @@ class integrated_analysis():
 
         result_Q2_xe = self.fit_combination(x_Q2, y_per_xe, y_max_per_xe, y_min_per_xe, x_max_Q2,
                                             x_min_Q2, log_fit=log_fit)
+        print("result, Q_stoppping, xe", result_Q2_xe)
         result_Q_rate = self.fit_combination(x_Q, y_rate, y_max_rate, y_min_rate, x_max_Q,
                                              x_min_Q, log_fit=log_fit)
 
