@@ -1813,8 +1813,8 @@ class integrated_analysis():
 
         self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
         self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
-        self.df_Cs_116_plot_uplimit = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=True, keep=False)
-        self.df_Cs_119_plot_uplimit = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=True, keep=False)
+        # self.df_Cs_116_plot_uplimit = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=True, keep=False)
+        # self.df_Cs_119_plot_uplimit = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=True, keep=False)
         # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
         # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
 
@@ -1866,26 +1866,26 @@ class integrated_analysis():
             color="tab:green"
         )
 
-        ax[0, 0].errorbar(
-            self.df_Cs_116_plot_uplimit["Seitz Threshold [keV]"],
-            self.df_Cs_116_plot_uplimit["Rejection Rate KeV[/keV]"],
-            yerr=self.df_Cs_116_plot_uplimit["Rejection Sigma KeV[/keV]"],
-            label="SBC Upper Limits (Ar+CF$_4$+Xe) 116.7 K",
-            fmt='v',
-            markersize=8,
-            color="tab:brown"  # Give datasets distinct colors
-        )
-
-        # Plot Cs 119K ONCE on the left axis
-        ax[0, 0].errorbar(
-            self.df_Cs_119_plot_uplimit["Seitz Threshold [keV]"],
-            self.df_Cs_119_plot_uplimit["Rejection Rate KeV[/keV]"],
-            yerr=self.df_Cs_119_plot_uplimit["Rejection Sigma KeV[/keV]"],
-            label="SBC Upper Limits (Ar+CF$_4$+Xe) 119.6 K",
-            fmt='v',
-            markersize=8,
-            color="tab:green"
-        )
+        # ax[0, 0].errorbar(
+        #     self.df_Cs_116_plot_uplimit["Seitz Threshold [keV]"],
+        #     self.df_Cs_116_plot_uplimit["Rejection Rate KeV[/keV]"],
+        #     yerr=self.df_Cs_116_plot_uplimit["Rejection Sigma KeV[/keV]"],
+        #     label="SBC Upper Limits (Ar+CF$_4$+Xe) 116.7 K",
+        #     fmt='v',
+        #     markersize=8,
+        #     color="tab:brown"  # Give datasets distinct colors
+        # )
+        #
+        # # Plot Cs 119K ONCE on the left axis
+        # ax[0, 0].errorbar(
+        #     self.df_Cs_119_plot_uplimit["Seitz Threshold [keV]"],
+        #     self.df_Cs_119_plot_uplimit["Rejection Rate KeV[/keV]"],
+        #     yerr=self.df_Cs_119_plot_uplimit["Rejection Sigma KeV[/keV]"],
+        #     label="SBC Upper Limits (Ar+CF$_4$+Xe) 119.6 K",
+        #     fmt='v',
+        #     markersize=8,
+        #     color="tab:green"
+        # )
 
         # Set main (left) y-axis and x-axis labels
         ax[0, 0].set_xlabel(r"Seitz threshold [keV]", fontsize=16)
