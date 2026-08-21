@@ -2257,6 +2257,7 @@ class integrated_analysis():
         )
         if plot_fitting:
             ax[1, 1].plot(result_Q2_xe[2], result_Q2_xe[3], label="SBC Best Fit", color="black")
+            print("1 1 fiitng",(result_Q2_xe[2], result_Q2_xe[3]))
 
         A = 58  # 0.017
         B = 0.287  # 0.037
