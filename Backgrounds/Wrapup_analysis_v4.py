@@ -464,8 +464,8 @@ class integrated_analysis():
                             columns_added = exp_df.apply(self.calculate_rejection_by_row_v2, axis=1, args=(source,))
 
                             merged_df_rejection = pd.concat([exp_df, columns_added], axis=1)
-                            if temperature == "116K" and source =="Cs":
-                                print("Cs 116 merge", merged_df_rejection[["Seitz Threshold [keV]",'Clean Rate [mHz]', 'Temperature [K]']])
+                            # if temperature == "116K" and source =="Cs":
+                            #     print("Cs 116 merge", merged_df_rejection[["Seitz Threshold [keV]",'Clean Rate [mHz]', 'Temperature [K]']])
                             # print('Cs print(merged_df)',self.Cs_exp_rate_path[i],'\n',merged_df)
 
                             merged_df_rejection.to_csv(temp_config["rejection_path"][sorted_path_index], index=False)
@@ -1822,17 +1822,15 @@ class integrated_analysis():
                     self.df_Cs_116_plot["Rejection Rate Xenon Abs[]"][0]
         ratio_119 = self.df_Cs_119_plot["Rejection Rate KeV[/keV]"][0] / \
                     self.df_Cs_119_plot["Rejection Rate Xenon Abs[]"][0]
-        print("ratio_116", ratio_116, 'ratio_119', ratio_119)
+        # print("ratio_116", ratio_116, 'ratio_119', ratio_119)
         SCALE_FACTOR = (ratio_119) ** (-1)  # Xenon Abs = Rate [/keV] * SCALE_FACTOR
 
         # Fix: changed subplots(1, 0) to subplots()
         fig, ax = plt.subplots(2, 2, figsize=(15, 13))
 
         # Plot Cs 116K ONCE on the left axis
-        print("116K",self.df_Cs_116_plot["Seitz Threshold [keV]"],
-            self.df_Cs_116_plot["Rejection Rate KeV[/keV]"])
-        print("119K", self.df_Cs_119_plot["Seitz Threshold [keV]"],
-            self.df_Cs_119_plot["Rejection Rate KeV[/keV]"])
+        print("116K",self.df_Cs_116_plot[["Seitz Threshold [keV]","Rejection Rate KeV[/keV]"]])
+        print("119K", self.df_Cs_119_plot[["Seitz Threshold [keV]","Rejection Rate KeV[/keV]"]])
         ax[0, 0].errorbar(
             self.df_Cs_116_plot["Seitz Threshold [keV]"],
             self.df_Cs_116_plot["Rejection Rate KeV[/keV]"],
