@@ -1091,7 +1091,7 @@ class SN():
             num_bins = 100
 
             # Create figure with 2 subplots
-            fig, axes = plt.subplots(1, 2, figsize=(10, 16))
+            fig, axes = plt.subplots(1, 2, figsize=(12, 12))
 
             # -------------------------------------------------------------
             # Plot 1: Standard 2D Histogram (R vs Z)
