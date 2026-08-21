@@ -2171,6 +2171,7 @@ class integrated_analysis():
         # Set main (left) y-axis and x-axis labels
         ax[0, 1].set_xlabel(r"Seitz threshold [keV]", fontsize=16)
         ax[0, 1].set_xlim(0.50, 2.8)
+        ax[0, 1].set_xlim(0.50, 4.2)
         ax[0, 1].set_ylim(2e-11, 1e-4)
         ax[0, 1].set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
         ax[0, 1].set_yscale("log")
