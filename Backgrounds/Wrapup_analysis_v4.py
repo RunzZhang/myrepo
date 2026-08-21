@@ -3397,7 +3397,7 @@ class integrated_analysis():
         x_max_Eion = max(x_Eion)
         y_min_per_keV = min(y_per_keV)
         y_max_per_keV = max(y_per_keV)
-        print("Rejection Rate KeV[/keV]", y_min_per_keV, y_max_per_keV)
+        # print("Rejection Rate KeV[/keV]", y_min_per_keV, y_max_per_keV)
 
         x_Q2 = dataframe["Q_rl-1_rhol-1 [GeVcm**2 g-1]"].values
         y_per_xe = dataframe["Rejection Rate Xenon Abs[]"].values
@@ -3406,7 +3406,7 @@ class integrated_analysis():
         x_max_Q2 = max(x_Q2)
         y_min_per_xe = min(y_per_xe)
         y_max_per_xe = max(y_per_xe)
-        print("Rejection Rate Xenon Abs[], min max", y_min_per_xe, y_max_per_xe)
+        # print("Rejection Rate Xenon Abs[], min max", y_min_per_xe, y_max_per_xe)
         print(x_Q2, y_per_xe)
 
         y_rate = dataframe["Clean Rate [mHz]"].values
@@ -3434,7 +3434,7 @@ class integrated_analysis():
 
         result_Q2_xe = self.fit_combination(x_Q2, y_per_xe, y_max_per_xe, y_min_per_xe, x_max_Q2,
                                             x_min_Q2, log_fit=log_fit)
-        print("result, Q_stoppping, xe", result_Q2_xe)
+        # print("result, Q_stoppping, xe", result_Q2_xe)
         result_Q_rate = self.fit_combination(x_Q, y_rate, y_max_rate, y_min_rate, x_max_Q,
                                              x_min_Q, log_fit=log_fit)
 
@@ -3584,32 +3584,31 @@ class integrated_analysis():
             x_fitted_scatter = np.linspace(min(x), max(x), 100)
             y_fitted_scatter = self.exp_func(x_fitted_scatter, *popt_scatter)
         else:
-            x = np.asarray(x, dtype=float).flatten()
-            y = np.asarray(y, dtype=float).flatten()
+            x_arr = np.asarray(x, dtype=float).flatten()
+            y_arr = np.asarray(y, dtype=float).flatten()
 
-            # 2. Filter out non-finite (NaN, Inf) and non-positive (<= 0) y values
-            valid_mask = np.isfinite(x) & np.isfinite(y) & (y > 0)
-
-            x_valid = x[valid_mask]
-            y_valid = y[valid_mask]
+            # 2. Filter out invalid/non-positive y values
+            valid_mask = np.isfinite(x_arr) & np.isfinite(y_arr) & (y_arr > 0)
+            x_valid = x_arr[valid_mask]
+            y_valid = y_arr[valid_mask]
 
             if len(x_valid) < 2:
                 raise ValueError("Not enough valid positive y-data points (>0) to perform log-linear fit.")
 
-            # 3. Transform to log space
+            # 3. Transform y to log space
             log_y = np.log(y_valid)
 
-            # 4. Perform log-linear fit
+            # 4. Perform log-linear fit: ln(y) = m * x + c
             m, c = np.polyfit(x_valid, log_y, 1)
 
-            # 5. Extract exponential parameters: a * exp(-b * x)
+            # 5. Map back to y = a * exp(-b * x)
             a_fit_scatter = np.exp(c)
-            b_fit_scatter = -m
+            b_fit_scatter = -m  # Since m = -b for decay exp(-b*x)
 
-            print('a_fit_scatter, b_fit_scatter:', a_fit_scatter, b_fit_scatter)
-
-            # 6. Generate fitted points
+            # 6. Generate fitted evaluation curve
             x_fitted_scatter = np.linspace(np.min(x_valid), np.max(x_valid), 100)
+
+            # Make sure self.exp_func(x, a, b) uses y = a * exp(-b * x)
             y_fitted_scatter = self.exp_func(x_fitted_scatter, a_fit_scatter, b_fit_scatter)
             # print("y_fiting", y_fitted_scatter)
         return (a_fit_scatter, b_fit_scatter, x_fitted_scatter, y_fitted_scatter)
