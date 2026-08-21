@@ -1772,10 +1772,10 @@ class integrated_analysis():
                     for i in range(len(temp_config["rejection_path"])):
                         print("psn read path", source, temperature , temp_config["rejection_path"][i])
                         df = pd.read_csv(temp_config["rejection_path"][i])
-                        df_cols_to_divide = ["Rejection Rate Scattering[]",
-                                             "Rejection Rate KeV[/keV]", "Rejection Rate Xenon Abs[]",
-                                             'Clean Rate [mHz]', "Rejection Sigma KeV[/keV]",
-                                             "Rejection Sigma Xenon Abs[]"]
+                        df_cols_to_divide = ["Rejection Rate Scattering[]","Rejection Sigma Scattering[]",
+                                             "Rejection Rate KeV[/keV]", "Rejection Sigma KeV[/keV]",
+                                             "Rejection Rate Xenon Abs[]","Rejection Sigma Xenon Abs[]",
+                                             'Clean Rate [mHz]','Clean Rate Sigma [mHz]']
                         # print(df.columns)
                         # doc_label = self.Cs_exp_raw_path[i].replace('_exposures', '')
                         # doc_label = self.Cs_label[i]
