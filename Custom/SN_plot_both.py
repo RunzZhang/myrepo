@@ -1776,29 +1776,29 @@ class test_csv():
 
 
 if __name__=="__main__":
-    sn = SN(doped=True, source="Cs", volume="bulk")
-    sn = SN(doped=True, source="Cs", volume="dome")
+    # sn = SN(doped=True, source="Cs", volume="bulk")
+    # sn = SN(doped=True, source="Cs", volume="dome")
     sn = SN(doped=False, source="Cs", volume="bulk")
-    sn = SN(doped=False, source="Cs", volume="dome")
-
-    sn = SN(doped=True, source="Co", volume="bulk")
-    sn = SN(doped=True, source="Co", volume="dome")
-    sn = SN(doped=False, source="Co", volume="bulk")
-    sn = SN(doped=False, source="Co", volume="dome")
-
-    sn = SN(doped=True, source="Ba", volume="bulk")
-    sn = SN(doped=True, source="Ba", volume="dome")
-    sn = SN(doped=False, source="Ba", volume="bulk")
-    sn = SN(doped=False, source="Ba", volume="dome")
-
-    sn = SN(doped=True, source="Th", volume="bulk")
-    sn = SN(doped=True, source="Th", volume="dome")
-    sn = SN(doped=False, source="Th", volume="bulk")
-    sn = SN(doped=False, source="Th", volume="dome")
-
-    sn = SN(doped=True, source="Hot_Cs", volume="bulk")
-    sn = SN(doped=True, source="Hot_Cs", volume="dome")
-    sn = SN(doped=False, source="Hot_Cs", volume="bulk")
-    sn = SN(doped=False, source="Hot_Cs", volume="dome")
+    # sn = SN(doped=False, source="Cs", volume="dome")
+    #
+    # sn = SN(doped=True, source="Co", volume="bulk")
+    # sn = SN(doped=True, source="Co", volume="dome")
+    # sn = SN(doped=False, source="Co", volume="bulk")
+    # sn = SN(doped=False, source="Co", volume="dome")
+    #
+    # sn = SN(doped=True, source="Ba", volume="bulk")
+    # sn = SN(doped=True, source="Ba", volume="dome")
+    # sn = SN(doped=False, source="Ba", volume="bulk")
+    # sn = SN(doped=False, source="Ba", volume="dome")
+    #
+    # sn = SN(doped=True, source="Th", volume="bulk")
+    # sn = SN(doped=True, source="Th", volume="dome")
+    # sn = SN(doped=False, source="Th", volume="bulk")
+    # sn = SN(doped=False, source="Th", volume="dome")
+    #
+    # sn = SN(doped=True, source="Hot_Cs", volume="bulk")
+    # sn = SN(doped=True, source="Hot_Cs", volume="dome")
+    # sn = SN(doped=False, source="Hot_Cs", volume="bulk")
+    # sn = SN(doped=False, source="Hot_Cs", volume="dome")
 
     # test = test_csv()
