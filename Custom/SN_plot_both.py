@@ -1155,7 +1155,7 @@ class SN():
 
             plt.tight_layout()
             # plt.show()
-            plt.savefig(self.plot_path+"boundary_finder.png")
+            plt.savefig(self.plot_path+"boundary_finder.pdf")
 
 
 
