@@ -824,7 +824,7 @@ class integrated_analysis():
             df["Clean Rate Sigma [mHz]"] = df["Clean Rate Sigma [mHz]"] / 3.6
 
             # Calculate new Eion column: (Eion / (rion * rho_l)) * 10
-            df["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"] = 10* (df["Eion [keV]"] / (df["rion [nm]"] * df["rho_l [g/cc]"]))* 10
+            df["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"] = 10* (df["Eion [keV]"] / (df["rion [nm]"] * df["rho_l [g/cc]"]))
 
             # Calculate new Q column: (Seitz Threshold / (rion * rho_l)) * 10
             df["Q_rl-1_rhol-1 [GeVcm**2 g-1]"] = 10* (df["Seitz Threshold [keV]"] / (
@@ -855,7 +855,7 @@ class integrated_analysis():
 
             # Calculate new Eion column: (Eion / (rion * rho_l)) * 10
             df["Eion_rl-1_rhol-1 [GeVcm**2 g-1]"] = 10 * (
-                        df["Eion [keV]"] / (df["rion [nm]"] * df["rho_l [g/cc]"])) * 10
+                        df["Eion [keV]"] / (df["rion [nm]"] * df["rho_l [g/cc]"])) 
 
             # Calculate new Q column: (Seitz Threshold / (rion * rho_l)) * 10
             df["Q_rl-1_rhol-1 [GeVcm**2 g-1]"] = 10 * (df["Seitz Threshold [keV]"] / (
