@@ -1791,7 +1791,7 @@ class integrated_analysis():
 
                         print("source rate", source, temperature, df[['Seitz Threshold [keV]',
                                                                       "Rejection Rate KeV[/keV]",
-                                                                      "Rejection Sigma KeV[/keV]"]])
+                                                                      "Rejection Sigma KeV[/keV]",'Clean Rate [mHz]', 'Clean Rate Sigma [mHz]']])
                         if rate_cut:
                             df[df_cols_to_divide] = df[df_cols_to_divide] * rate_factor
                         if temperature == "116K":
