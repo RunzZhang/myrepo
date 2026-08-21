@@ -102,7 +102,7 @@ class integrated_analysis():
                        "exp": {"116K": {"raw_path": ["cold-cs_final_rates"],
                                         "sorted_path": [], "rate_path": [], "rejection_path": [], "plot_list": [],
                                         "plot": pd.DataFrame()},
-                               "119K": {"raw_path": ["cold-cs_final_rates"], "sorted_path": [],
+                               "119K": {"raw_path": ["cold-cs_final_rates2"], "sorted_path": [],
                                         # "119K": {"raw_path": [], "sorted_path": [],
                                         "rate_path": [], "rejection_path": [], "plot_list": [],
                                         "plot": pd.DataFrame()}}},
@@ -110,7 +110,7 @@ class integrated_analysis():
                                "doped_data": None},
                        "exp": {"116K": {"raw_path": ["cobalt_final_rates"], "sorted_path": [],
                                         "rate_path": [], "rejection_path": [], "plot_list": [], "plot": pd.DataFrame()},
-                               "119K": {"raw_path": ["cobalt_final_rates"], "sorted_path": [],
+                               "119K": {"raw_path": ["cobalt_final_rates2"], "sorted_path": [],
                                         "rate_path": [], "rejection_path": [], "plot_list": [],
                                         "plot": pd.DataFrame()}}}
 
