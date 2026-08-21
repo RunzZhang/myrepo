@@ -2904,20 +2904,20 @@ class integrated_analysis():
                     ("Rejection Rate Xenon Abs[]", "Rejection Sigma Xenon Abs[]")
                 ]
 
-                # Apply upper limits to each rate column
+                # 1. Define the upper-limit condition based on Clean Rate
+                cond = (df_combined["Clean Rate [mHz]"] < 0) | (
+                        (df_combined["Clean Rate [mHz]"] - df_combined["Clean Rate Sigma [mHz]"]) < 0
+                )
+
+                # 2. DROP all positive measurements and keep ONLY the upper-limit rows
+                df_combined = df_combined[cond].copy()
+
+                # 3. Calculate and overwrite upper limits for the remaining rows
                 for rate_col, sigma_col in rate_pairs:
                     if rate_col in df_combined.columns and sigma_col in df_combined.columns:
-                        # Condition: rate < 0 OR (rate - sigma) < 0
-                        cond = (df_combined[rate_col] < 0) | ((df_combined[rate_col] - df_combined[sigma_col]) < 0)
+                        df_combined[rate_col] = np.maximum(0, df_combined[rate_col]) + 1.645 * df_combined[sigma_col]
 
-                        # Upper Limit formula: max(0, Rate) + 1.645 * Sigma
-                        # Truncating negative central values at 0 ensures non-negative baseline limits
-                        upper_limit = np.maximum(0, df_combined[rate_col]) + 1.645 * df_combined[sigma_col]
-
-                        # Update ONLY the specific rate column where condition is met
-                        df_combined.loc[cond, rate_col] = upper_limit[cond]
-
-                # Keep rows with valid positive rate values
+                # 4. Final filter to ensure no remaining values are <= 0 (e.g. if sigma was 0)
                 df_combined = df_combined[df_combined["Clean Rate [mHz]"] > 0]
         else:
             df_combined = df_combined[df_combined["Clean Rate [mHz]"] > 0]
