@@ -1878,13 +1878,13 @@ class integrated_analysis():
         # plot the fitting lines
         self.Cs_df = pd.concat(self.Cs_fitting_list, ignore_index=True)
 
-        print("fit df", self.Cs_df[['Seitz Threshold [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
-                                    "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]',
-                                    "Rejection Rate Xenon Abs[]",
-                                    'Clean Rate [mHz]', "Eion [keV]"]])
-
-        print("fit df", self.Cs_df[['Seitz Threshold [keV]',
-                                    "Rejection Rate KeV[/keV]"]])
+        # print("fit df", self.Cs_df[['Seitz Threshold [keV]', "Rejection Rate Scattering[]", 'Eion_rl-1_rhol-1 [GeVcm**2 g-1]',
+        #                             "Rejection Rate KeV[/keV]", 'Q_rl-1_rhol-1 [GeVcm**2 g-1]',
+        #                             "Rejection Rate Xenon Abs[]",
+        #                             'Clean Rate [mHz]', "Eion [keV]"]])
+        #
+        # print("fit df", self.Cs_df[['Seitz Threshold [keV]',
+        #                             "Rejection Rate KeV[/keV]"]])
         # self.Cs_df = self.df_Cs_116_plot
         [result_Q_scatter, result_Q_keV, result_Q_xe, result_Eion_scatter, result_Eion_keV, result_Eion_xe,
          result_Q2_xe, result_Q_rate] = self.fitting_gamma_rejection_v2(self.Cs_df)
@@ -1896,11 +1896,11 @@ class integrated_analysis():
         SBC_Eion_list = result_Eion_keV[2]
         SBC_Q_kev_fitting = (result_Q_keV[0], result_Q_keV[1])
         SBC_Q_xe_fitting = (result_Q_xe[0], result_Q_xe[1])
-        print("fitting  SBC_Q_kev_fitting", SBC_Q_kev_fitting, result_Q_keV[2], result_Q_keV[3])
-        print("fitting SBC_Q_xe_fitting ", SBC_Q_xe_fitting)
-
-        print("fitting  SBC_Eion_kev_fitting", result_Eion_keV)
-        print("fitting SBC_Q2_xe_fitting ", result_Q2_xe)
+        # print("fitting  SBC_Q_kev_fitting", SBC_Q_kev_fitting, result_Q_keV[2], result_Q_keV[3])
+        # print("fitting SBC_Q_xe_fitting ", SBC_Q_xe_fitting)
+        #
+        # print("fitting  SBC_Eion_kev_fitting", result_Eion_keV)
+        # print("fitting SBC_Q2_xe_fitting ", result_Q2_xe)
 
         # Compute ratio list
 
