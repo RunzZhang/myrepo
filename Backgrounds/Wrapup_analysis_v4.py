@@ -1813,8 +1813,7 @@ class integrated_analysis():
 
         self.df_Cs_116_plot_valid = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=False)
         self.df_Cs_119_plot_valid = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=False)
-        self.df_Cs_116_plot_uplimit = self.df_Cs_116_plot
-        # self.df_Cs_116_plot_uplimit = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=True, keep=False)
+        self.df_Cs_116_plot_uplimit = self.concat_PT_condition(self.df_Cs_116_plot, upperlimit=True, keep=False)
         self.df_Cs_119_plot_uplimit = self.concat_PT_condition(self.df_Cs_119_plot, upperlimit=True, keep=False)
         # self.df_Cs_116_plot = self.concat_PT_condition(self.df_Cs_116_plot)
         # self.df_Cs_119_plot = self.concat_PT_condition(self.df_Cs_119_plot)
@@ -2010,6 +2009,9 @@ class integrated_analysis():
             label="PICO (C$_3$F$_8$)")
 
         if plot_fitting:
+            a = result_Q_keV[0]
+            b = result_Q_keV[1]
+
             ax[0, 0].plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
 
         # fitting parameter
