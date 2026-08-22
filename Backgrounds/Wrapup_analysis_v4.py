@@ -2264,9 +2264,24 @@ class integrated_analysis():
             alpha=0.3,
             label="PICO (C$_3$F$_8$)")
         if plot_fitting:
+            a2 = result_Q_keV[0]
+            b2 = result_Q_keV[1]
+            min_value = min_row["Seitz Threshold [keV]"]
+            max_value = max_row["Seitz Threshold [keV]"]
 
+            SBC_x_plot = np.linspace(min_value, max_value, 100)
+            SBC_y_plot = a2 * np.exp(-b2 * SBC_x_plot)
 
-            ax[0, 1].plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
+            # Plotting on Matplotlib axis
+            ax[0, 1].plot(
+                SBC_x_plot,
+                SBC_y_plot,
+                label="SBC Best Fit",
+                color="black",
+
+            )
+
+            # ax[0, 1].plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
 
         # ax[0, 1].legend(loc='lower left', fontsize=16, title=" ", title_fontsize=15, frameon=False)
         ax[0, 1].legend(loc='upper right', fontsize=16, frameon=False, borderaxespad=0,
