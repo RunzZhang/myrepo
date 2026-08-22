@@ -3653,7 +3653,7 @@ class integrated_analysis():
             sigma_a_sym = a_fit_scatter * sigma_c
 
             print(f"a central value : {a_fit_scatter:.6e}")
-            print(f"Asymmetric errors:{np.exp(sigma_c)};  +{delta_a_plus:.6e} / -{delta_a_minus:.6e}")
+            print(f"Asymmetric errors:{np.log(np.exp(sigma_c))};  +{delta_a_plus:.6e} / -{delta_a_minus:.6e}")
             print(f"Symmetric approx : ±{sigma_a_sym:.6e}")
 
             # print(f"a     = {a_fit_scatter:.6e} ± {sigma_a_scatter:.6e}")
