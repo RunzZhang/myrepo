@@ -180,7 +180,7 @@ class integrated_analysis():
         # self.gamma_rejection_plot_v3()
         # self.gamma_rejection_plot_PSN_v2()
         # self.gamma_rejection_plot_PSN_v2(rate_cut=True, plot_fitting=False)
-        self.gamma_rejection_plot_PSN_v2(rate_cut=True, radi_source="Cs", plot_fitting=False)
+        self.gamma_rejection_plot_PSN_v2(rate_cut=True, radi_source="Co", plot_fitting=False)
         # self.gamma_rejection_plot_output(pressure_plot=True)
         # self.gamma_rejection_plot_output()
 
@@ -3658,7 +3658,7 @@ class integrated_analysis():
 
             # print(f"a     = {a_fit_scatter:.6e} ± {sigma_a_scatter:.6e}")
             print(f"b     = {b_fit_scatter:.6f} ± {sigma_b_scatter:.6f}")
-            print(f"1/b   = {inv_b_fit_scatter:.6f} ± {sigma_inv_b_scatter:.6f}")
+            print(f"1/b   = {inv_b_fit_scatter:.6f} ± {sigma_inv_b_scatter:.6f} \n")
 
             # 7. Generate fitted points
             x_fitted_scatter = np.linspace(np.min(x_valid), np.max(x_valid), 100)
