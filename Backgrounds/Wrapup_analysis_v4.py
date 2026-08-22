@@ -3643,7 +3643,20 @@ class integrated_analysis():
             # d(1/b)/db = -1 / b^2  =>  sigma_(1/b) = |d(1/b)/db| * sigma_b = sigma_b / b^2
             sigma_inv_b_scatter = sigma_b_scatter / (b_fit_scatter ** 2)
 
-            print(f"a     = {a_fit_scatter:.6e} ± {sigma_a_scatter:.6e}")
+            a_upper = a_fit_scatter * np.exp(sigma_c)
+            a_lower = a_fit_scatter * np.exp(-sigma_c)
+
+            delta_a_plus = a_upper - a_fit_scatter
+            delta_a_minus = a_fit_scatter - a_lower
+
+            # Compare with the linear symmetric approximation:
+            sigma_a_sym = a_fit_scatter * sigma_c
+
+            print(f"a central value : {a_fit_scatter:.6e}")
+            print(f"Asymmetric errors: +{delta_a_plus:.6e} / -{delta_a_minus:.6e}")
+            print(f"Symmetric approx : ±{sigma_a_sym:.6e}")
+
+            # print(f"a     = {a_fit_scatter:.6e} ± {sigma_a_scatter:.6e}")
             print(f"b     = {b_fit_scatter:.6f} ± {sigma_b_scatter:.6f}")
             print(f"1/b   = {inv_b_fit_scatter:.6f} ± {sigma_inv_b_scatter:.6f}")
 
