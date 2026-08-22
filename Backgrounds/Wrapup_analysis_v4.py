@@ -3613,31 +3613,39 @@ class integrated_analysis():
             x_valid = x[valid_mask]
             y_valid = y[valid_mask]
 
-            if len(x_valid) < 2:
-                raise ValueError("Not enough valid positive y-data points (>0) to perform log-linear fit.")
-
-            log_y = np.log(y_valid)
+            if len(x_valid) < 3:
+                raise ValueError("Not enough valid points to estimate covariance (need at least 3).")
 
             # 3. Transform to log space
+            log_y = np.log(y_valid)
+
+            # 4. Perform log-linear fit with covariance matrix return
             (m, c), cov = np.polyfit(x_valid, log_y, 1, cov=True)
 
             # 5. Extract exponential parameters: y = a * exp(-b * x)
             a_fit_scatter = np.exp(c)
             b_fit_scatter = -m
 
+            # Extract scale factor tau = 1/b
+            inv_b_fit_scatter = 1.0 / b_fit_scatter
+
             # 6. Extract uncertainties (standard errors) from the covariance matrix
-            # Variances are along the diagonal of cov: cov[0,0] is Var(m), cov[1,1] is Var(c)
             sigma_m = np.sqrt(cov[0, 0])
             sigma_c = np.sqrt(cov[1, 1])
 
             # Propagation of error:
-            # For b = -m: sigma_b = sigma_m
-            # For a = exp(c): sigma_a = d(exp(c))/dc * sigma_c = exp(c) * sigma_c = a * sigma_c
+            # sigma_b = sigma_m
+            # sigma_a = a * sigma_c
             sigma_b_scatter = sigma_m
             sigma_a_scatter = a_fit_scatter * sigma_c
 
-            print(f"a = {a_fit_scatter:.6e} ± {sigma_a_scatter:.6e}")
-            print(f"b = {b_fit_scatter:.6f} ± {sigma_b_scatter:.6f}")
+            # Propagation of error for 1/b:
+            # d(1/b)/db = -1 / b^2  =>  sigma_(1/b) = |d(1/b)/db| * sigma_b = sigma_b / b^2
+            sigma_inv_b_scatter = sigma_b_scatter / (b_fit_scatter ** 2)
+
+            print(f"a     = {a_fit_scatter:.6e} ± {sigma_a_scatter:.6e}")
+            print(f"b     = {b_fit_scatter:.6f} ± {sigma_b_scatter:.6f}")
+            print(f"1/b   = {inv_b_fit_scatter:.6f} ± {sigma_inv_b_scatter:.6f}")
 
             # 7. Generate fitted points
             x_fitted_scatter = np.linspace(np.min(x_valid), np.max(x_valid), 100)
