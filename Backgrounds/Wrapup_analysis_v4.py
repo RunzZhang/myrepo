@@ -180,7 +180,7 @@ class integrated_analysis():
         # self.gamma_rejection_plot_v3()
         # self.gamma_rejection_plot_PSN_v2()
         # self.gamma_rejection_plot_PSN_v2(rate_cut=True, plot_fitting=False)
-        self.gamma_rejection_plot_PSN_v2(rate_cut=True, radi_source="Cs", plot_fitting=True)
+        self.gamma_rejection_plot_PSN_v2(rate_cut=True, radi_source="Co", plot_fitting=True)
         # self.gamma_rejection_plot_output(pressure_plot=True)
         # self.gamma_rejection_plot_output()
 
@@ -2459,15 +2459,15 @@ class integrated_analysis():
 
         # compare to Drexel
         plt.tight_layout()
-        # plt.show()
+        plt.show()
         # if rate_cut==False:
         #     plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_v2.pdf")
         # else:
         #     plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_ratecut_v2.pdf")
-        if rate_cut==False:
-            plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_v2.png")
-        else:
-            plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_ratecut_v2.png")
+        # if rate_cut==False:
+        #     plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_v2.png")
+        # else:
+        #     plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_ratecut_v2.png")
     def find_min_max_row(self, df1, df2, df3, df4):
         # find the minimum/maximum seitz energy and their other thermdynamic properties
         dfs = {
