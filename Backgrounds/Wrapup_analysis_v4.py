@@ -180,7 +180,7 @@ class integrated_analysis():
         # self.gamma_rejection_plot_v3()
         # self.gamma_rejection_plot_PSN_v2()
         # self.gamma_rejection_plot_PSN_v2(rate_cut=True, plot_fitting=False)
-        self.gamma_rejection_plot_PSN_v2(rate_cut=True, radi_source="Cs", plot_fitting=True)
+        self.gamma_rejection_plot_PSN_v2(rate_cut=True, radi_source="Cs", plot_fitting=False)
         # self.gamma_rejection_plot_output(pressure_plot=True)
         # self.gamma_rejection_plot_output()
 
@@ -3427,7 +3427,7 @@ class integrated_analysis():
         y_min_per_xe = min(y_per_xe)
         y_max_per_xe = max(y_per_xe)
         # print("Rejection Rate Xenon Abs[], min max", y_min_per_xe, y_max_per_xe)
-        print(x_Q2, y_per_xe)
+        # print(x_Q2, y_per_xe)
 
         y_rate = dataframe["Clean Rate [mHz]"].values
         y_min_rate = min(y_rate)
@@ -3454,7 +3454,7 @@ class integrated_analysis():
 
         result_Q2_xe = self.fit_combination(x_Q2, y_per_xe, y_max_per_xe, y_min_per_xe, x_max_Q2,
                                             x_min_Q2, log_fit=log_fit)
-        print("result, Q_stoppping, xe", result_Q2_xe)
+        # print("result, Q_stoppping, xe", result_Q2_xe)
         result_Q_rate = self.fit_combination(x_Q, y_rate, y_max_rate, y_min_rate, x_max_Q,
                                              x_min_Q, log_fit=log_fit)
 
@@ -3616,22 +3616,33 @@ class integrated_analysis():
             if len(x_valid) < 2:
                 raise ValueError("Not enough valid positive y-data points (>0) to perform log-linear fit.")
 
-            # 3. Transform to log space
             log_y = np.log(y_valid)
 
-            # 4. Perform log-linear fit
-            m, c = np.polyfit(x_valid, log_y, 1)
+            # 3. Transform to log space
+            (m, c), cov = np.polyfit(x_valid, log_y, 1, cov=True)
 
-            # 5. Extract exponential parameters: a * exp(-b * x)
+            # 5. Extract exponential parameters: y = a * exp(-b * x)
             a_fit_scatter = np.exp(c)
             b_fit_scatter = -m
 
-            print('a_fit_scatter, b_fit_scatter:', a_fit_scatter, b_fit_scatter)
+            # 6. Extract uncertainties (standard errors) from the covariance matrix
+            # Variances are along the diagonal of cov: cov[0,0] is Var(m), cov[1,1] is Var(c)
+            sigma_m = np.sqrt(cov[0, 0])
+            sigma_c = np.sqrt(cov[1, 1])
 
-            # 6. Generate fitted points
+            # Propagation of error:
+            # For b = -m: sigma_b = sigma_m
+            # For a = exp(c): sigma_a = d(exp(c))/dc * sigma_c = exp(c) * sigma_c = a * sigma_c
+            sigma_b_scatter = sigma_m
+            sigma_a_scatter = a_fit_scatter * sigma_c
+
+            print(f"a = {a_fit_scatter:.6e} ± {sigma_a_scatter:.6e}")
+            print(f"b = {b_fit_scatter:.6f} ± {sigma_b_scatter:.6f}")
+
+            # 7. Generate fitted points
             x_fitted_scatter = np.linspace(np.min(x_valid), np.max(x_valid), 100)
             y_fitted_scatter = self.exp_func(x_fitted_scatter, a_fit_scatter, b_fit_scatter)
-            # print("y_fiting", y_fitted_scatter)
+
         return (a_fit_scatter, b_fit_scatter, x_fitted_scatter, y_fitted_scatter)
 
 
