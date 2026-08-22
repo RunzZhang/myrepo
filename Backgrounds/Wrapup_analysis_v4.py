@@ -2400,13 +2400,13 @@ class integrated_analysis():
             color="tab:green"
         )
         if plot_fitting:
-            a3 = result_Q2_xe[0]
-            b3 = result_Q2_xe[1]
+            a2 = result_Q2_xe[0]
+            b2 = result_Q2_xe[1]
             min_value = min_row["Q_rl-1_rhol-1 [GeVcm**2 g-1]"]
             max_value = max_row["Q_rl-1_rhol-1 [GeVcm**2 g-1]"]
 
             SBC_x_plot = np.linspace(min_value, max_value, 100)
-            SBC_y_plot = a3 * np.exp(-b3 * SBC_x_plot)
+            SBC_y_plot = a2 * np.exp(-b2 * SBC_x_plot)
 
             # Plotting on Matplotlib axis
             ax[1, 1].plot(
@@ -3434,7 +3434,7 @@ class integrated_analysis():
 
         result_Q2_xe = self.fit_combination(x_Q2, y_per_xe, y_max_per_xe, y_min_per_xe, x_max_Q2,
                                             x_min_Q2, log_fit=log_fit)
-        # print("result, Q_stoppping, xe", result_Q2_xe)
+        print("result, Q_stoppping, xe", result_Q2_xe)
         result_Q_rate = self.fit_combination(x_Q, y_rate, y_max_rate, y_min_rate, x_max_Q,
                                              x_min_Q, log_fit=log_fit)
 
