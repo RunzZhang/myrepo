@@ -2147,6 +2147,10 @@ class integrated_analysis():
             alignment="left"
         )
 
+
+
+
+
         # 2nd graph that use c3F8 mapping:
         ax[0, 1].errorbar(
             self.df_Cs_116_plot_valid["Seitz Threshold [keV]"],
@@ -2196,7 +2200,7 @@ class integrated_analysis():
         # plot the fitting lines
         self.Cs_df = pd.concat(self.Cs_fitting_list, ignore_index=True)
         [result_Q_scatter, result_Q_keV, result_Q_xe, result_Eion_scatter, result_Eion_keV, result_Eion_xe,
-         result_Q2_xe, result_Q_rate] = self.fitting_gamma_rejection_v2(self.Cs_df)
+         result_Q2_xe, result_Q_rate] = self.fitting_gamma_rejection_v2(self.Cs_df, log_fit=True)
 
         # SBC
         SBC_Q_list = result_Q_keV[2]
