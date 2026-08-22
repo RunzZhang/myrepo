@@ -2273,13 +2273,13 @@ class integrated_analysis():
             SBC_y_plot = a2 * np.exp(-b2 * SBC_x_plot)
 
             # Plotting on Matplotlib axis
-            # ax[0, 1].plot(
-            #     SBC_x_plot,
-            #     SBC_y_plot,
-            #     label="SBC Best Fit",
-            #     color="black",
-            #
-            # )
+            ax[0, 1].plot(
+                SBC_x_plot,
+                SBC_y_plot,
+                label="SBC Best Fit",
+                color="black",
+
+            )
 
             # ax[0, 1].plot(SBC_Q_list, SBC_keV_list, label="SBC Best Fit", color="black")
 
