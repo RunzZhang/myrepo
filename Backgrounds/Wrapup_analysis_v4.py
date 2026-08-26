@@ -2581,7 +2581,7 @@ class integrated_analysis():
         # Plot Cs 116K ONCE on the left axis
         print("116K",self.df_Cs_116_plot[["Seitz Threshold [keV]","Rejection Rate KeV[/keV]"]])
         print("119K", self.df_Cs_119_plot[["Seitz Threshold [keV]","Rejection Rate KeV[/keV]"]])
-        ax[0, 0].errorbar(
+        ax.errorbar(
             self.df_Cs_116_plot_valid["Seitz Threshold [keV]"],
             self.df_Cs_116_plot_valid["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_116_plot_valid["Rejection Sigma KeV[/keV]"],
@@ -2592,7 +2592,7 @@ class integrated_analysis():
         )
 
         # Plot Cs 119K ONCE on the left axis
-        ax[0, 0].errorbar(
+        ax.errorbar(
             self.df_Cs_119_plot_valid["Seitz Threshold [keV]"],
             self.df_Cs_119_plot_valid["Rejection Rate KeV[/keV]"],
             yerr=self.df_Cs_119_plot_valid["Rejection Sigma KeV[/keV]"],
@@ -2602,7 +2602,7 @@ class integrated_analysis():
             color="tab:green"
         )
 
-        ax[0, 0].plot(
+        ax.plot(
             self.df_Cs_116_plot_uplimit["Seitz Threshold [keV]"],
             self.df_Cs_116_plot_uplimit["Rejection Rate KeV[/keV]"],
             # label="SBC Upper Limits (Ar+CF$_4$+Xe) 116.7 K",
@@ -2613,7 +2613,7 @@ class integrated_analysis():
         )
 
         # Plot Cs 119K ONCE on the left axis
-        ax[0, 0].plot(
+        ax.plot(
             self.df_Cs_119_plot_uplimit["Seitz Threshold [keV]"],
             self.df_Cs_119_plot_uplimit["Rejection Rate KeV[/keV]"],
             # label="SBC Upper Limits (Ar+CF$_4$+Xe) 119.6 K",
@@ -2624,16 +2624,16 @@ class integrated_analysis():
         )
 
         # Set main (left) y-axis and x-axis labels
-        ax[0, 0].set_xlabel(r"Seitz threshold [keV]", fontsize=16)
+        ax.set_xlabel(r"Seitz threshold [keV]", fontsize=16)
 
-        # ax[0, 0].set_xlim(0.50, 4.2)
-        ax[0, 0].set_xlim(0.40, 3)
-        ax[0, 0].set_ylim(2e-11, 1e-4)
-        ax[0, 0].set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
-        ax[0, 0].set_yscale("log")
-        ax[0, 0].yaxis.label.set_color("red")
-        ax[0, 0].tick_params(axis='y', colors="red", which='both')  # 'both' colors major & minor ticks
-        ax[0, 0].spines['left'].set_color("red")
+        # ax.set_xlim(0.50, 4.2)
+        ax.set_xlim(0.40, 3)
+        ax.set_ylim(2e-11, 1e-4)
+        ax.set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
+        ax.set_yscale("log")
+        ax.yaxis.label.set_color("red")
+        ax.tick_params(axis='y', colors="red", which='both')  # 'both' colors major & minor ticks
+        ax.spines['left'].set_color("red")
 
         # Add secondary (right) y-axis with proportional mapping
         def forward(y):
@@ -2642,7 +2642,7 @@ class integrated_analysis():
         def inverse(y):
             return y / SCALE_FACTOR
 
-        secax0 = ax[0, 0].secondary_yaxis('right', functions=(forward, inverse))
+        secax0 = ax.secondary_yaxis('right', functions=(forward, inverse))
         secax0.set_ylabel("Nucleation probability\n(per xenon photoabsorption in K shell) ", fontsize=16)
         secax0.yaxis.label.set_color("blue")
         secax0.tick_params(axis='y', colors="blue", which='both')
