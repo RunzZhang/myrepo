@@ -184,7 +184,7 @@ class integrated_analysis():
         # self.gamma_rejection_plot_output(pressure_plot=True)
         # self.gamma_rejection_plot_output()
 
-        self.gamma_rejection_plot_PSN_v3(rate_cut=True, radi_source="Co", plot_fitting=False)
+        self.gamma_rejection_plot_PSN_v3(rate_cut=True, radi_source="Cs", plot_fitting=False)
 
 
     def predata_process(self):
