@@ -2576,7 +2576,7 @@ class integrated_analysis():
         SCALE_FACTOR = (ratio_119) ** (-1)  # Xenon Abs = Rate [/keV] * SCALE_FACTOR
 
         # Fix: changed subplots(1, 0) to subplots()
-        fig, ax = plt.subplots(  figsize=(5, 4))
+        fig, ax = plt.subplots(  figsize=(10, 8))
 
         # Plot Cs 116K ONCE on the left axis
         print("116K",self.df_Cs_116_plot[["Seitz Threshold [keV]","Rejection Rate KeV[/keV]"]])
