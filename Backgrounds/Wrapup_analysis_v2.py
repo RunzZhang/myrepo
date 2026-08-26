@@ -2242,8 +2242,8 @@ class integrated_analysis():
                            yerr=self.df_Co_119_plot[y_cfg["y_err"]], label="Co 119K", fmt='o',markersize=8)
                 # ax_ij.errorbar(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
                 #            yerr=self.df_Ba_116_plot[y_cfg["y_err"]], label="Ba 116K", fmt='o')
-                ax_ij.plot(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
-                               label="Ba 116K 95% CL \nUpper Limit", marker='v',linestyle='None',markersize=8)
+                # ax_ij.plot(self.df_Ba_116_plot[x_cfg["x"]], self.df_Ba_116_plot[y_cfg["y"]],
+                #                label="Ba 116K 95% CL \nUpper Limit", marker='v',linestyle='None',markersize=8)
 
                 ax_ij.set_xlabel(x_cfg["xlabel"],fontsize=16)
                 ax_ij.set_ylabel(y_cfg["ylabel"],fontsize=16)
@@ -2281,8 +2281,8 @@ class integrated_analysis():
 
         plt.clf()
         self.Qseitz_compound_xe_plot()
-        self.Ratio_plot()
-        self.time_plot()
+        # self.Ratio_plot()
+        # self.time_plot()
     def Qseitz_compound_xe_plot(self):
         fig, ax = plt.subplots(1, 2, figsize=(16, 6))
         [result_Q_scatter, result_Q_keV, result_Q_xe, result_Eion_scatter, result_Eion_keV, result_Eion_xe,
@@ -2320,8 +2320,8 @@ class integrated_analysis():
         #                self.df_Ba_116_plot["Rejection Rate Xenon Abs[]"],
         #                yerr=self.df_Ba_116_plot["Rejection Sigma Xenon Abs[]"], label="Ba 116K", fmt='o')
 
-        ax[0].plot(self.df_Ba_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_Ba_116_plot["Rejection Rate Xenon Abs[]"],
-                   label="Ba 116K 95% CL \nUpper Limit", marker='v', linestyle='None')
+        # ax[0].plot(self.df_Ba_116_plot['Q_rl-1_rhol-1 [GeVcm**2 g-1]'], self.df_Ba_116_plot["Rejection Rate Xenon Abs[]"],
+        #            label="Ba 116K 95% CL \nUpper Limit", marker='v', linestyle='None')
         a_val = result_Q2_xe[0]
         b_val = result_Q2_xe[1]
         label_text = f"A = {a_val:.2e},\nB = {b_val:.2e}"
