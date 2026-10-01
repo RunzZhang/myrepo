@@ -3309,11 +3309,15 @@ class integrated_analysis():
 
         # compare to Drexel
         plt.tight_layout()
-        plt.show()
+        # plt.show()
         # if rate_cut==False:
         #     plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_v3_PICOonly.pdf")
         # else:
         #     plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_ratecut_v3_PICOonly.pdf")
+        if rate_cut==False:
+            plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_v3_PICOonly.png")
+        else:
+            plt.savefig(self.plot_path + f"gamma_rejection{self.volume_option}_{radi_source}_PSN_ratecut_v3_PICOonly.png")
     def find_min_max_row(self, df1, df2, df3, df4):
         # find the minimum/maximum seitz energy and their other thermdynamic properties
         dfs = {
