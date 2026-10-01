@@ -3055,12 +3055,12 @@ class integrated_analysis():
         # ax.set_xlim(0.50, 4.2)
         ax.set_xlim(0.40, 3)
         ax.set_ylim(2e-11, 1e-4)
-        ax.set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
+        # ax.set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
         ax.tick_params(left=False, labelleft=False)
         ax.set_yscale("log")
-        ax.yaxis.label.set_color("red")
-        ax.tick_params(axis='y', colors="red", which='both')  # 'both' colors major & minor ticks
-        ax.spines['left'].set_color("red")
+        # ax.yaxis.label.set_color("red")
+        # ax.tick_params(axis='y', colors="red", which='both')  # 'both' colors major & minor ticks
+        # ax.spines['left'].set_color("red")
 
         # Add secondary (right) y-axis with proportional mapping
         def forward(y):
