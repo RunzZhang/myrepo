@@ -3154,24 +3154,24 @@ class integrated_analysis():
         #     color="blue"
         # )
 
-        # ax.fill_betweenx(
-        #     Drex_phot_list / SCALE_FACTOR,
-        #     Drex_Q_116_list,
-        #     Drex_Q_119_list,
-        #     color="blue",
-        #     alpha=0.3,
-        #     label="Drexel (C$_3$F$_8$+Xe)"
-        # )
+        ax.fill_betweenx(
+            Drex_phot_list / SCALE_FACTOR,
+            Drex_Q_116_list,
+            Drex_Q_119_list,
+            color="blue",
+            alpha=0.3,
+            label="Drexel (C$_3$F$_8$+Xe)"
+        )
 
         # ax[0,0].plot(PICO_Q_116_list, PICO_keV_list, label="PICO C$_3$F$_8$ 116K", color="red")
         # ax[0,0].plot(PICO_Q_119_list, PICO_keV_list, label="PICO C$_3$F$_8$ 119K",  linestyle= '--', color="red")
-        ax.fill_betweenx(
-            PICO_keV_list,
-            PICO_Q_116_list,
-            PICO_Q_119_list,
-            color="red",
-            alpha=0.3,
-            label="PICO (C$_3$F$_8$)")
+        # ax.fill_betweenx(
+        #     PICO_keV_list,
+        #     PICO_Q_116_list,
+        #     PICO_Q_119_list,
+        #     color="red",
+        #     alpha=0.3,
+        #     label="PICO (C$_3$F$_8$)")
 
         if plot_fitting:
             a2 = result_Q_keV[0]
