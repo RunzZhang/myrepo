@@ -3072,7 +3072,7 @@ class integrated_analysis():
         secax0 = ax.secondary_yaxis('right', functions=(forward, inverse))
         secax0.set_ylabel("Nucleation probability\n(per xenon photoabsorption in K shell) ", fontsize=16)
         secax0.yaxis.label.set_color("blue")
-        secax0.tick_params(axis='y', colors="blue", which='both')
+        secax0.tick_params(axis='y', colors="blue", which='right')
         secax0.spines['right'].set_color("blue")
 
         # plot the fitting lines
