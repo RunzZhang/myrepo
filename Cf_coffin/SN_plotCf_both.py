@@ -68,9 +68,9 @@ class SN():
         # self.NR_spectrum_moderated_by_sstl()
 
 
-        # self.NR_spectrum()
+        self.NR_spectrum()
         # self.write_sims_results()
-        self.NR_multiplicity()
+        # self.NR_multiplicity()
         # for ploting PN background tagging and SNR
         # self.untagged_bubble_rate()
         # if self.gamma:
@@ -1231,8 +1231,8 @@ class SN():
         # cbar = plt.colorbar(sc[3], ax=ax[3])
         # cbar.set_label("Counts(log)")
 
-
-        plt.savefig(self.plot_path+f"Cf_1E7_energy_density_{self.config_string}.pdf")
+        plt.show()
+        # plt.savefig(self.plot_path+f"Cf_1E7_energy_density_{self.config_string}.pdf")
         print(self.plot_path)
 
 
