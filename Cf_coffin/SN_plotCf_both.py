@@ -68,7 +68,8 @@ class SN():
         # self.NR_spectrum_moderated_by_sstl()
 
 
-        self.NR_spectrum()
+        # self.NR_spectrum()
+        self.NR_spectrum(single=True)
         # self.write_sims_results()
         # self.NR_multiplicity()
         # for ploting PN background tagging and SNR
@@ -1151,7 +1152,7 @@ class SN():
         plt.savefig(self.plot_path+f"Cf_1E7_position_density_source_{self.config_string}.pdf")
 
 
-    def NR_spectrum(self):
+    def NR_spectrum(self, single=False):
         rate_factor = 1000*self.rate*self.Activity/(self.original_Activity*self.G4_events) # /ms
 
         # # filter NR = 0 events
@@ -1197,53 +1198,62 @@ class SN():
 
 
 
+        if single==False:
+            fig, ax = plt.subplots(1,4,figsize=(20, 4))
 
-        fig, ax = plt.subplots(1,4,figsize=(20, 4))
-
-        ax[0].bar(scatter_edge, scatter_rate_list, width=width, align="edge")
-        ax[0].set_xlabel("Energy threshold [eV]")
-        ax[0].set_ylabel("Rate [mHz]")
-        ax[0].set_yscale("log")
-        # ax[0].set_xlim(0,2000)
-
-
-        ax[1].bar(capture_edge, capture_rate_list, width=width, align="edge")
-        ax[1].set_xlabel("Energy threshold [eV]")
-        ax[1].set_ylabel("Rate [mHz]")
-        ax[1].set_yscale("log")
-        ax[1].set_xlim(0, 2000)
-
-        # # ax[2].bar(capture_edge, total_rate_list, width=width, align="edge")
-        # ax[2].bar(scatter_edge, scatter_rate_list, width=width, align="edge")
-        # ax[2].set_xlabel("Energy threshold [eV]")
-        # ax[2].set_ylabel("Rate [mHz]")
-        # # ax[2].set_yscale("log")
-        # ax[2].set_xlim(0, 3500)
-
-        ax[2].plot(scatter_edge, scatter_rate_list)
-        ax[2].set_xlabel("Energy threshold [eV]")
-        ax[2].set_ylabel("Rate [mHz]")
-        # ax[2].set_yscale("log")
-        ax[2].set_xlim(0, 3500)
-
-        # sc = ax[3].hist2d(self.scatter["PreKinetic/MeV"]*1e6, self.scatter["Recoiled/MeV"]*1e6, bins=50,
-        #                   cmap="plasma", norm="log", alpha=0.7)
-        #
-        #
-        #
-        # ax[3].set_xlabel("PreKinetic [eV]")
-        # ax[3].set_ylabel("Recoil [eV]")
-        # # ax[0].set_xlim(0,400)
-        # # ax[0].set_ylim(-100,800)
-        # cbar = plt.colorbar(sc[3], ax=ax[3])
-        # cbar.set_label("Counts(log)")
-
-        plt.show()
-        # plt.savefig(self.plot_path+f"Cf_1E7_energy_density_{self.config_string}.pdf")
-        print(self.plot_path)
+            ax[0].bar(scatter_edge, scatter_rate_list, width=width, align="edge")
+            ax[0].set_xlabel("Energy threshold [eV]")
+            ax[0].set_ylabel("Rate [mHz]")
+            ax[0].set_yscale("log")
+            # ax[0].set_xlim(0,2000)
 
 
-        self.NR_rate_zoomed(capture_edge, total_rate_list)
+            ax[1].bar(capture_edge, capture_rate_list, width=width, align="edge")
+            ax[1].set_xlabel("Energy threshold [eV]")
+            ax[1].set_ylabel("Rate [mHz]")
+            ax[1].set_yscale("log")
+            ax[1].set_xlim(0, 2000)
+
+            ax[2].bar(capture_edge, total_rate_list, width=width, align="edge")
+            # ax[2].bar(scatter_edge, scatter_rate_list, width=width, align="edge")
+            ax[2].set_xlabel("Energy threshold [eV]")
+            ax[2].set_ylabel("Rate [mHz]")
+            # ax[2].set_yscale("log")
+            ax[2].set_xlim(0, 3500)
+
+
+
+            # sc = ax[3].hist2d(self.scatter["PreKinetic/MeV"]*1e6, self.scatter["Recoiled/MeV"]*1e6, bins=50,
+            #                   cmap="plasma", norm="log", alpha=0.7)
+            #
+            #
+            #
+            # ax[3].set_xlabel("PreKinetic [eV]")
+            # ax[3].set_ylabel("Recoil [eV]")
+            # # ax[0].set_xlim(0,400)
+            # # ax[0].set_ylim(-100,800)
+            # cbar = plt.colorbar(sc[3], ax=ax[3])
+            # cbar.set_label("Counts(log)")
+
+            plt.show()
+            # plt.savefig(self.plot_path+f"Cf_1E7_energy_density_{self.config_string}.pdf")
+            print(self.plot_path)
+
+
+            self.NR_rate_zoomed(capture_edge, total_rate_list)
+        else:
+            x = np.asarray(scatter_edge) / 1000.0  # eV -> keV
+            rate = np.asarray(total_rate_list)
+
+            # Normalize so the area under the curve = 1
+            density = rate / np.trapz(rate, x)  # 1/keV  (use np.trapezoid on NumPy >= 2.0)
+
+            fig, ax = plt.subplots(1, 1, figsize=(12, 5))
+            ax.plot(x, density, color="purple")
+            ax.set_xlabel("Energy threshold [keV]")
+            ax.set_ylabel("Normalized rate [1/keV]")
+            ax.set_xlim(0, 3.5)
+            plt.show()
 
 
     def NR_spectrum_moderated_by_sstl(self):
