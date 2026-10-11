@@ -1248,9 +1248,9 @@ class SN():
             norm_rate = rate / rate[0]  # normalized to the first point
 
             fig, ax = plt.subplots(1, 1, figsize=(12, 5))
-            ax.plot(x, norm_rate, color="purple")
+            ax.plot(x, norm_rate, color="purple", linewidth=3)
             ax.set_xlabel("Energy threshold [keV]", fontsize=16)
-            ax.set_ylabel("Normalized Rate [1]", fontsize=16)
+            ax.set_ylabel("Normalized Rate", fontsize=16)
             ax.tick_params(axis="both", labelsize=16)
             ax.set_xlim(0, 3.5)
             plt.show()
