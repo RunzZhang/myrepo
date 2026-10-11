@@ -1243,15 +1243,15 @@ class SN():
             self.NR_rate_zoomed(capture_edge, total_rate_list)
         else:
             x = np.asarray(scatter_edge) / 1000.0  # eV -> keV
-            rate = np.asarray(total_rate_list)
+            rate = np.asarray(scatter_rate_list)
 
-            # Normalize so the area under the curve = 1
-            density = rate / np.trapz(rate, x)  # 1/keV  (use np.trapezoid on NumPy >= 2.0)
+            norm_rate = rate / rate[0]  # normalized to the first point
 
             fig, ax = plt.subplots(1, 1, figsize=(12, 5))
-            ax.plot(x, density, color="purple")
-            ax.set_xlabel("Energy threshold [keV]")
-            ax.set_ylabel("Normalized rate [1/keV]")
+            ax.plot(x, norm_rate, color="purple")
+            ax.set_xlabel("Energy threshold [keV]", fontsize=16)
+            ax.set_ylabel("Normalized rate", fontsize=16)
+            ax.tick_params(axis="both", labelsize=16)
             ax.set_xlim(0, 3.5)
             plt.show()
 
