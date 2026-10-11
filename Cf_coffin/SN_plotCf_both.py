@@ -1214,7 +1214,7 @@ class SN():
         ax[1].set_xlim(0, 2000)
 
         # ax[2].bar(capture_edge, total_rate_list, width=width, align="edge")
-        ax[2].bar(scatter_edge, scatter_rate_list, width=width, align="edge")
+        ax[2].plot(scatter_edge, scatter_rate_list, width=width, align="edge")
         ax[2].set_xlabel("Energy threshold [eV]")
         ax[2].set_ylabel("Rate [mHz]")
         # ax[2].set_yscale("log")
