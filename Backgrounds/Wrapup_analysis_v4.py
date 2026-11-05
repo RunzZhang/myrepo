@@ -185,7 +185,8 @@ class integrated_analysis():
         # self.gamma_rejection_plot_output()
 
         # self.gamma_rejection_plot_PSN_v3(rate_cut=True, radi_source="Cs", plot_fitting=False)
-        self.gamma_rejection_plot_PSN_v3_PICOonly(rate_cut=True, radi_source="Cs", plot_fitting=False)
+        self.gamma_rejection_plot_PSN_v3(rate_cut=True, radi_source="Cs", plot_fitting=True)
+        # self.gamma_rejection_plot_PSN_v3_PICOonly(rate_cut=True, radi_source="Cs", plot_fitting=False)
 
 
 
