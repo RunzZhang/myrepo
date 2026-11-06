@@ -2632,7 +2632,8 @@ class integrated_analysis():
 
         # ax.set_xlim(0.50, 4.2)
         ax.set_xlim(0.40, 3)
-        ax.set_ylim(2e-11, 1e-4)
+        # ax.set_ylim(2e-11, 1e-4)
+        ax.set_ylim(2e-11, 1e-3)
         ax.set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
         ax.set_yscale("log")
         ax.yaxis.label.set_color("red")
@@ -2875,7 +2876,7 @@ class integrated_analysis():
         all_labels = existing_labels + sbc_custom_labels
 
         all_handles = sbc_custom_handles+ existing_handles
-        all_labels = sbc_custom_labels + existing_labels 
+        all_labels = sbc_custom_labels + existing_labels
         ax.legend(
             handles=all_handles,
             labels=all_labels,
