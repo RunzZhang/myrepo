@@ -2661,6 +2661,7 @@ class integrated_analysis():
         ax.set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
         ax.set_yscale("log")
         ax.yaxis.label.set_color("red")
+        ax.tick_params(axis="x", labelsize=14)
         ax.tick_params(axis='y', colors="red", which='both',labelsize=14)  # 'both' colors major & minor ticks
         ax.spines['left'].set_color("red")
 
