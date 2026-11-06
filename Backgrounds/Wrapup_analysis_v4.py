@@ -2764,8 +2764,8 @@ class integrated_analysis():
             ax.plot(
                 SBC_x_plot,
                 SBC_y_plot,
-                label="SBC Best Fit",
-                color="darkblue",  # or "#00008B"
+                label=r"SBC $\gamma$ Rejection Function Fit",
+                color="blue",  # or "#00008B"
                 linestyle="--",
 
             )
