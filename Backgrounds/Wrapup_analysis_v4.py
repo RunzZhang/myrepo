@@ -2619,12 +2619,24 @@ class integrated_analysis():
         ax.errorbar(
             self.df_Cs_116_plot_uplimit["Seitz Threshold [keV]"],
             self.df_Cs_116_plot_uplimit["Rejection Rate KeV[/keV]"],
-            yerr=0.3 * self.df_Cs_116_plot_uplimit["Rejection Rate KeV[/keV]"],
+            yerr=0.5 * self.df_Cs_116_plot_uplimit["Rejection Rate KeV[/keV]"],
             uplims=True,
-            marker='o',  # 's' for square
+            marker='s',  # 's' for square
             markersize=6,
             linestyle='none',
             color="tab:brown",
+            capsize=0,
+        )
+
+        ax.errorbar(
+            self.df_Cs_119_plot_uplimit["Seitz Threshold [keV]"],
+                self.df_Cs_119_plot_uplimit["Rejection Rate KeV[/keV]"],
+            yerr=0.5 * self.df_Cs_119_plot_uplimit["Rejection Rate KeV[/keV]"],
+            uplims=True,
+            marker='s',  # 's' for square
+            markersize=6,
+            linestyle='none',
+            color="tab:green",
             capsize=0,
         )
 
