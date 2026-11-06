@@ -2872,11 +2872,15 @@ class integrated_analysis():
         ]
 
         # --- 3. Combine everything into one single legend ---
-        all_handles = existing_handles + sbc_custom_handles
-        all_labels = existing_labels + sbc_custom_labels
+        # all_handles = existing_handles + sbc_custom_handles
+        # all_labels = existing_labels + sbc_custom_labels
 
-        all_handles = sbc_custom_handles+ existing_handles
-        all_labels = sbc_custom_labels + existing_labels
+        primary_exp_handles = existing_handles[:2]
+        primary_exp_labels = existing_labels[:2]
+        sbc_exp_handles = existing_handles[-1:]
+        sbc_exp_labels = existing_labels[-1:]
+        all_handles = primary_exp_handles + sbc_custom_handles + sbc_exp_handles
+        all_labels = primary_exp_labels + sbc_custom_labels +sbc_exp_labels
         ax.legend(
             handles=all_handles,
             labels=all_labels,
