@@ -2606,26 +2606,38 @@ class integrated_analysis():
             color="tab:green"
         )
 
-        ax.plot(
+        # ax.plot(
+        #     self.df_Cs_116_plot_uplimit["Seitz Threshold [keV]"],
+        #     self.df_Cs_116_plot_uplimit["Rejection Rate KeV[/keV]"],
+        #     # label="SBC Upper Limits (Ar+CF$_4$+Xe) 116.7 K",
+        #     marker='$\downarrow$',
+        #     linestyle='none',
+        #     markersize=14,
+        #     color="tab:brown"
+        # )
+
+        ax.errorbar(
             self.df_Cs_116_plot_uplimit["Seitz Threshold [keV]"],
             self.df_Cs_116_plot_uplimit["Rejection Rate KeV[/keV]"],
-            # label="SBC Upper Limits (Ar+CF$_4$+Xe) 116.7 K",
-            marker='$\downarrow$',
+            yerr=0.3 * self.df_Cs_116_plot_uplimit["Rejection Rate KeV[/keV]"],
+            uplims=True,
+            marker='o',  # 's' for square
+            markersize=6,
             linestyle='none',
-            markersize=8,
-            color="tab:brown"
+            color="tab:brown",
+            capsize=0,
         )
 
         # Plot Cs 119K ONCE on the left axis
-        ax.plot(
-            self.df_Cs_119_plot_uplimit["Seitz Threshold [keV]"],
-            self.df_Cs_119_plot_uplimit["Rejection Rate KeV[/keV]"],
-            # label="SBC Upper Limits (Ar+CF$_4$+Xe) 119.6 K",
-            marker='$\downarrow$',
-            linestyle='none',
-            markersize=8,
-            color="tab:green"
-        )
+        # ax.plot(
+        #     self.df_Cs_119_plot_uplimit["Seitz Threshold [keV]"],
+        #     self.df_Cs_119_plot_uplimit["Rejection Rate KeV[/keV]"],
+        #     # label="SBC Upper Limits (Ar+CF$_4$+Xe) 119.6 K",
+        #     marker='$\downarrow$',
+        #     linestyle='none',
+        #     markersize=14,
+        #     color="tab:green"
+        # )
 
         # Set main (left) y-axis and x-axis labels
         ax.set_xlabel(r"Seitz threshold [keV]", fontsize=16)
