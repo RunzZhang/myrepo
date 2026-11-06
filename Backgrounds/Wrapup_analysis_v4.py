@@ -2661,7 +2661,7 @@ class integrated_analysis():
         ax.set_ylabel("Probability per energy deposited (events/keV) ", fontsize=16)
         ax.set_yscale("log")
         ax.yaxis.label.set_color("red")
-        ax.tick_params(axis='y', colors="red", which='both')  # 'both' colors major & minor ticks
+        ax.tick_params(axis='y', colors="red", which='both',labelsize=14)  # 'both' colors major & minor ticks
         ax.spines['left'].set_color("red")
 
         # Add secondary (right) y-axis with proportional mapping
@@ -2674,7 +2674,7 @@ class integrated_analysis():
         secax0 = ax.secondary_yaxis('right', functions=(forward, inverse))
         secax0.set_ylabel("Nucleation probability\n(per xenon photoabsorption in K shell) ", fontsize=16)
         secax0.yaxis.label.set_color("blue")
-        secax0.tick_params(axis='y', colors="blue", which='both')
+        secax0.tick_params(axis='y', colors="blue", which='both',labelsize=14)
         secax0.spines['right'].set_color("blue")
 
         # plot the fitting lines
