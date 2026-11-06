@@ -2622,7 +2622,7 @@ class integrated_analysis():
             yerr=0.5 * self.df_Cs_116_plot_uplimit["Rejection Rate KeV[/keV]"],
             uplims=True,
             marker='s',  # 's' for square
-            markersize=6,
+            markersize=8,
             linestyle='none',
             color="tab:brown",
             capsize=0,
@@ -2634,7 +2634,7 @@ class integrated_analysis():
             yerr=0.5 * self.df_Cs_119_plot_uplimit["Rejection Rate KeV[/keV]"],
             uplims=True,
             marker='s',  # 's' for square
-            markersize=6,
+            markersize=8,
             linestyle='none',
             color="tab:green",
             capsize=0,
