@@ -2619,7 +2619,7 @@ class integrated_analysis():
         ax.errorbar(
             self.df_Cs_116_plot_uplimit["Seitz Threshold [keV]"],
             self.df_Cs_116_plot_uplimit["Rejection Rate KeV[/keV]"],
-            yerr=0.5 * self.df_Cs_116_plot_uplimit["Rejection Rate KeV[/keV]"],
+            yerr=0.7 * self.df_Cs_116_plot_uplimit["Rejection Rate KeV[/keV]"],
             uplims=True,
             marker='s',  # 's' for square
             markersize=8,
@@ -2631,7 +2631,7 @@ class integrated_analysis():
         ax.errorbar(
             self.df_Cs_119_plot_uplimit["Seitz Threshold [keV]"],
                 self.df_Cs_119_plot_uplimit["Rejection Rate KeV[/keV]"],
-            yerr=0.5 * self.df_Cs_119_plot_uplimit["Rejection Rate KeV[/keV]"],
+            yerr=0.7 * self.df_Cs_119_plot_uplimit["Rejection Rate KeV[/keV]"],
             uplims=True,
             marker='s',  # 's' for square
             markersize=8,
@@ -2875,17 +2875,28 @@ class integrated_analysis():
         existing_handles, existing_labels = ax.get_legend_handles_labels()
 
         # --- 2. Create custom handles for SBC datasets ---
+        # sbc_custom_handles = [
+        #     (
+        #         Line2D([0], [0], marker='s', color='none', markerfacecolor='tab:brown', markeredgecolor='tab:brown',
+        #                markersize=8),
+        #         Line2D([0], [0], marker='v', color='none', markerfacecolor='tab:brown', markeredgecolor='tab:brown',
+        #                markersize=8)
+        #     ),
+        #     (
+        #         Line2D([0], [0], marker='s', color='none', markerfacecolor='tab:green', markeredgecolor='tab:green',
+        #                markersize=8),
+        #         Line2D([0], [0], marker='v', color='none', markerfacecolor='tab:green', markeredgecolor='tab:green',
+        #                markersize=8)
+        #     )
+        # ]
+
         sbc_custom_handles = [
             (
                 Line2D([0], [0], marker='s', color='none', markerfacecolor='tab:brown', markeredgecolor='tab:brown',
-                       markersize=8),
-                Line2D([0], [0], marker='v', color='none', markerfacecolor='tab:brown', markeredgecolor='tab:brown',
                        markersize=8)
             ),
             (
                 Line2D([0], [0], marker='s', color='none', markerfacecolor='tab:green', markeredgecolor='tab:green',
-                       markersize=8),
-                Line2D([0], [0], marker='v', color='none', markerfacecolor='tab:green', markeredgecolor='tab:green',
                        markersize=8)
             )
         ]
