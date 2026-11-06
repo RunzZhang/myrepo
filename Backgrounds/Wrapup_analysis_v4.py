@@ -2610,7 +2610,7 @@ class integrated_analysis():
             self.df_Cs_116_plot_uplimit["Seitz Threshold [keV]"],
             self.df_Cs_116_plot_uplimit["Rejection Rate KeV[/keV]"],
             # label="SBC Upper Limits (Ar+CF$_4$+Xe) 116.7 K",
-            marker='v',
+            marker='$\downarrow$',
             linestyle='none',
             markersize=8,
             color="tab:brown"
@@ -2621,7 +2621,7 @@ class integrated_analysis():
             self.df_Cs_119_plot_uplimit["Seitz Threshold [keV]"],
             self.df_Cs_119_plot_uplimit["Rejection Rate KeV[/keV]"],
             # label="SBC Upper Limits (Ar+CF$_4$+Xe) 119.6 K",
-            marker='v',
+            marker='$\downarrow$',
             linestyle='none',
             markersize=8,
             color="tab:green"
