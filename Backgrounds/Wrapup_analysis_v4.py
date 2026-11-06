@@ -2764,7 +2764,8 @@ class integrated_analysis():
                 SBC_x_plot,
                 SBC_y_plot,
                 label="SBC Best Fit",
-                color="black",
+                color="darkblue",  # or "#00008B"
+                linestyle="--",
 
             )
 
@@ -2873,6 +2874,8 @@ class integrated_analysis():
         all_handles = existing_handles + sbc_custom_handles
         all_labels = existing_labels + sbc_custom_labels
 
+        all_handles = sbc_custom_handles+ existing_handles
+        all_labels = sbc_custom_labels + existing_labels 
         ax.legend(
             handles=all_handles,
             labels=all_labels,
